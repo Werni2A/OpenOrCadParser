@@ -10,6 +10,7 @@ OrCAD allows exporting its designs to XML files which are easy to read and verif
 The following two XSD files provide a good overview of the `XML` file structure, types and much more. They can be used as a reference what features are actually stored in the binary file and which we do already parse and which not.
 
 `C:\Cadence\SPB_17.4\tools\capture\tclscripts\capDB\dsn.xsd`
+
 `C:\Cadence\SPB_17.4\tools\capture\tclscripts\capDB\olb.xsd`
 
 ---
@@ -23,6 +24,7 @@ The following two XSD files provide a good overview of the `XML` file structure,
 Some files are provided in:
 
 `C:\Cadence\SPB_17.4\share\orcad\examples\pcbdesign`
+
 `C:\Cadence\SPB_17.4\share\pcb\pcb_lib\symbols`
 
 ## Online Cadence Designs
