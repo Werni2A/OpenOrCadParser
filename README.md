@@ -3,7 +3,9 @@
 
 Purpose of this project is to provide an C++ library for parsing [Cadence](https://en.wikipedia.org/wiki/Cadence_Design_Systems)'s OrCAD Capture binary file formats. This library can be linked to other software for reading/modifying?/writing? OrCAD binary files.
 
-The focus lies on schematics (`*.DSN`) and symbol libraries (`*.OLB`/`*.OBK`).
+**See also the complementary project [OpenAllegroParser](https://github.com/Werni2A/OpenAllegroParser).**
+
+The focus lies on schematics (`*.DSN`/`*.DBK`) and symbol libraries (`*.OLB`/`*.OBK`), the second file format is just the extension for its corresponding backup file. Backups should be identical, just with a different file extension.
 
 OrCAD allows exporting its designs to XML files which are easy to read and verify the interpretation of bytes in the `DSN`/`OLB`-files. E.g. enums are stored as a numeric value which should be the same that is used in the binary formats. However, it seems like not all information is stored in the XML.
 
@@ -147,6 +149,12 @@ Some files are provided in:
 
 [CutiePi](https://github.com/cutiepi-io/cutiepi-board)
 
+[CadenceLibrary](https://github.com/VasiliyPodlesniy/CadenceLibrary)
+
+[allegrolib](https://github.com/hypeer/allegrolib)
+
+[nixie](https://github.com/tbriggs6/nixie)
+
 ## OrCAD Libraries
 
 [OrCAD Lib](https://github.com/BerZerKku/ORCAD_lib)
@@ -181,22 +189,33 @@ Some files are provided in:
 
 [Kinoma Element](https://github.com/Kinoma/Kinoma-Element-Open-source-hardware-1st-Generation)
 
+## Allegro
+
+[PCB_LIB](https://github.com/taoyilee/PCB_LIB)
+
 # Related Projects
 
-[orlib2ki - OrCAD Library to KiCad Converter](https://github.com/fjullien/orlib2ki)
+[orlib2ki](https://github.com/fjullien/orlib2ki) (C based OrCAD XML Library to KiCad Converter)
 
-[pyorlib2ki - OrCAD Library to KiCad Converter](https://github.com/fjullien/pyorlib2ki)
+[pyorlib2ki](https://github.com/fjullien/pyorlib2ki) (Python based OrCAD XML Library to KiCad Converter)
 
-[rnif2ki - OrCAD to KiCad Netlist Converter](https://github.com/fjullien/rnif2ki)
+# How to Contribute?
 
-[EDIF to KiCad Converter by svn2github](https://github.com/svn2github/edif2kicad)
+There are different ways to help this project forward. Some are
 
-[EDIF to KiCad Converter by THLN47](https://github.com/THLN47/Edif_to_Kicad)
+- provide test files (manually created or automated via Tcl/Tk),
+- help reverse engineering/documenting the file format, or
+- implement some unit tests.
 
-[OrCAD2KiCADtranslator](https://github.com/ehrenberdg/OrCAD2KiCADtranslator)
+In case you don't have access to OrCAD you can get
+- [OrCAD Viewer](https://www.orcad.com/downloads/orcad-viewer) free of charge,
+- [OrCAD Trial](https://dev.orcad.com/orcad-free-trial) with all its functionality for a trial period of 30 days or
+- [OrCAD Academic Program](https://www.orcad.com/orcad-academic-program) with all functionality for one semester.
 
-[Orcad2Kicad](https://github.com/Michifumi/Orcad2Kicad)
+What about OrCAD Lite? It was was replaced with OrCAD Viewer/Trial [[1]](https://www.orcad.com/resources/download-orcad-lite).
 
-# OrCAD Terms and Conditions
+# Cadence Terms and Conditions
 
 [Terms and Conditions](https://www.cadence.com/content/dam/cadence-www/global/en_US/documents/terms-and-conditions/cadence-orcad.pdf)
+
+[Terms of Use Agreement](https://www.cadence.com/en_US/home/terms-of-use-agreement.html)
