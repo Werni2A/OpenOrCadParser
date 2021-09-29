@@ -21,6 +21,54 @@ The following two XSD files provide a good overview of the `XML` file structure,
 
 OrCAD's file formats `DSN` and `OLB` use [Microsoft's Compound File Binary File Format (CFBF)]((https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-cfb/53989ce4-7b05-4f8d-829b-d08d6148375b)) or the older version [OLE1.0 and OLE2.0 Formats](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-oleds/fdc5e702-d09e-4344-a77f-eb079d41f23f), see also [Wikipedia](https://en.wikipedia.org/wiki/Compound_File_Binary_Format). According to the `file` command on Linux, version 2 is used. This format can be read via [CompoundFileReader](https://github.com/microsoft/compoundfilereader).
 
+## Container Structure
+
+The file structure for DSN and OLB files is almost similar, DSN files only include a few more streams. The following list gives an overview of which streams are contained and where they are placed.
+
+In front of each entry is a specifier placed that shows of which type the entry is. [D] represents a directory and [S] a stream (file). Directories are also bold. Cursive texts represent names that are provided by the designer. E.g. *Package Name 1* might become `NE555`.
+
+- [S] `AdminData` (DSN only)
+- [S] `Cache`
+- [D] **`Cells`**
+- [S] `Cells Directory`
+- [S] `DsnStream` (DSN only)
+- [D] **`ExportBlocks`**
+- [S] `ExportBlocks Directory`
+- [D] **`Graphics`**
+  - [S] `$Types$`
+- [S] `Graphics Directory`
+- [S] `HSObjects` (DSN only)
+- [S] `Library`
+- [S] `NetBundleMapData` (since version...?)
+- [D] **`Packages`**
+  - [S] *Package Name 1*
+  - [S] *Package Name 2*
+  - [S] *...*
+- [S] `Packages Directory`
+- [D] **`Parts`**
+- [S] `Parts Directory`
+- [D] **`Symbols`**
+  - [S] `$Types$`
+  - [S] `ERC` (DSN only)
+  - [S] *Symbol Name 1*
+  - [S] *Symbol Name 2*
+  - [S] *...*
+- [S] `Symbols Directory`
+- [D] **`Views`**
+  - [D] ***View Name 1***
+    - [D] **`Hierarchy`** (DSN only)
+      - [S] `Hierarchy` (DSN only)
+    - [D] **`Pages`**
+      - [S] *Page Name 1*
+      - [S] *Page Name 2*
+      - [S] *...*
+    - [S] `Schematic`
+  - [D] ***View Name 2***
+  - [D] ***...***
+- [S] `Views Directory`
+
+---
+
 # File Format Changes
 
 Changelogs and some history is provided in
