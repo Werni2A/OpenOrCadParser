@@ -1,7 +1,7 @@
 
 # OpenOrCadParser
 
-Purpose of this project is to provide an C++ library for parsing [Cadence](https://en.wikipedia.org/wiki/Cadence_Design_Systems)'s OrCAD Capture binary file formats. This library can be linked to other software for reading/modifying?/writing? OrCAD binary files.
+Purpose of this project is to provide a C++17 library for parsing [Cadence](https://en.wikipedia.org/wiki/Cadence_Design_Systems)'s OrCAD Capture binary file formats. This library can be linked to other software for reading/modifying?/writing? OrCAD binary files.
 
 **See also the complementary project [OpenAllegroParser](https://github.com/Werni2A/OpenAllegroParser).**
 
@@ -129,11 +129,18 @@ The format seems really old, but maybe the current file format is somehow based 
 
 ---
 
+# Current State
+
+- Working on parsing library symbols.
+
+---
 # Related Projects
 
 [orlib2ki](https://github.com/fjullien/orlib2ki) (C based OrCAD XML Library to KiCad Converter)
 
 [pyorlib2ki](https://github.com/fjullien/pyorlib2ki) (Python based OrCAD XML Library to KiCad Converter)
+
+---
 
 # How to Contribute?
 
@@ -149,6 +156,8 @@ In case you don't have access to OrCAD you can get
 - [OrCAD Academic Program](https://www.orcad.com/orcad-academic-program) with all functionality for one semester.
 
 What about OrCAD Lite? It was was replaced with OrCAD Viewer/Trial [[1]](https://www.orcad.com/resources/download-orcad-lite).
+
+---
 
 # Cadence Terms and Conditions
 
