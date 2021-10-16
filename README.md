@@ -129,11 +129,53 @@ The format seems really old, but maybe the current file format is somehow based 
 
 ---
 
-# Current State
+# Current State &mdash; October 2021
 
 - Working on parsing library symbols.
 
 ---
+
+# Build
+
+```bash
+# Get build dependency
+cd thirdparty
+git clone https://github.com/microsoft/compoundfilereader.git
+cd ..
+
+# Build
+mkdir build
+cd build
+cmake ..
+make
+cd ..
+```
+
+---
+
+# Usage
+
+```bash
+./OpenOrCadParser --help
+Allowed options:
+  -h [ --help ]         produce help message
+  -t [ --print_tree ]   print container tree
+  -e [ --extract ]      extract files from within the binary
+  -i [ --input ] arg    input file to parse
+  -o [ --output ] arg   output path (required iff extract is set)
+
+./OpenOrCadParser --input file.DSN --extract --output out/
+./OpenOrCadParser --input file.DSN --print_tree
+```
+
+## Dependencies
+
+- Compiler with C++17 Support
+- CMake 2.8.12
+- [compoundfilereader](https://github.com/Microsoft/compoundfilereader)
+
+---
+
 # Related Projects
 
 [orlib2ki](https://github.com/fjullien/orlib2ki) (C based OrCAD XML Library to KiCad Converter)
