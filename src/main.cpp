@@ -16,7 +16,7 @@ void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& e
     desc.add_options()
         ("help,h",                                                "produce help message")
         ("print_tree,t", po::bool_switch()->default_value(false), "print container tree")
-        ("extract,e",    po::bool_switch()->default_value(false), "extract files from within the binary")
+        ("extract,e",    po::bool_switch()->default_value(false), "extract binary files from CFBF container")
         ("input,i",      po::value<std::string>(),                "input file to parse")
         ("output,o",     po::value<std::string>(),                "output path (required iff extract is set)")
     ;
