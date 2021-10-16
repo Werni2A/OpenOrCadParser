@@ -139,6 +139,7 @@ The format seems really old, but maybe the current file format is somehow based 
 
 ```bash
 # Get build dependency
+mkdir thirdparty
 cd thirdparty
 git clone https://github.com/microsoft/compoundfilereader.git
 cd ..
@@ -172,6 +173,7 @@ Allowed options:
 
 - Compiler with C++17 Support
 - CMake 2.8.12
+- Boost - Program Options
 - [compoundfilereader](https://github.com/Microsoft/compoundfilereader)
 
 ---

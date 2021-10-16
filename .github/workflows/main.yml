@@ -1,0 +1,23 @@
+name: CI
+
+on: [push]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup dependencies
+      run: |
+        apt install libboost-program-options-dev
+        mkdir thirdparty
+        cd thirdparty
+        git clone https://github.com/microsoft/compoundfilereader.git
+        cd -
+    - name: Build application
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        make
