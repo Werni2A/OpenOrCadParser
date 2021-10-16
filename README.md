@@ -48,6 +48,13 @@ make
 cd ..
 ```
 
+## Dependencies
+
+- Compiler with C++17 Support
+- [CMake](https://cmake.org/) >= 2.8.12
+- [Boost](https://www.boost.org/) - Program Options
+- [compoundfilereader](https://github.com/Microsoft/compoundfilereader)
+
 ---
 
 # Usage
@@ -64,13 +71,6 @@ Allowed options:
 ./OpenOrCadParser --input file.DSN --extract --output out/
 ./OpenOrCadParser --input file.DSN --print_tree
 ```
-
-## Dependencies
-
-- Compiler with C++17 Support
-- [CMake](https://cmake.org/) >= 2.8.12
-- [Boost](https://www.boost.org/) - Program Options
-- [compoundfilereader](https://github.com/Microsoft/compoundfilereader)
 
 ---
 
