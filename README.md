@@ -34,18 +34,10 @@ The following two XSD files provide a good overview of the `XML` file structure,
 # Build
 
 ```bash
-# Get build dependency
-mkdir thirdparty
-cd thirdparty
-git clone https://github.com/microsoft/compoundfilereader.git
-cd ..
-
 # Build
 mkdir build
-cd build
-cmake ..
-make
-cd ..
+cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake --build build
 ```
 
 ## Dependencies
@@ -91,6 +83,7 @@ There are different ways to help this project forward. Some are
 - implement some unit tests.
 
 In case you don't have access to OrCAD you can get
+
 - [OrCAD Viewer](https://www.orcad.com/downloads/orcad-viewer) free of charge,
 - [OrCAD Trial](https://dev.orcad.com/orcad-free-trial) with all its functionality for a trial period of 30 days or
 - [OrCAD Academic Program](https://www.orcad.com/orcad-academic-program) with all functionality for one semester.

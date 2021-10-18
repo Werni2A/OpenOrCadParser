@@ -17,20 +17,12 @@ if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g3")
 endif()
 
-set(THIRDPARTY ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
-
 # Add Boost dependency
 find_package(Boost COMPONENTS program_options REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
 # Add CompoundFileReader dependency
-set(compoundfilereader_INCLUDE_DIR ${THIRDPARTY}/compoundfilereader/src/include)
-
-set(HEADERS
-   ${HEADERS}
-   ${compoundfilereader_INCLUDE_DIR}/compoundfilereader.h
-   ${compoundfilereader_INCLUDE_DIR}/utf.h
-)
+find_path(COMPOUNDFILEREADER_INCLUDE_DIRS "compoundfilereader.h")
 
 set(SOURCES
    ${SOURCES}
@@ -53,7 +45,7 @@ add_executable(${CMAKE_PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
                            ${Boost_INCLUDE_DIR}
-                           ${compoundfilereader_INCLUDE_DIR}
+                           ${COMPOUNDFILEREADER_INCLUDE_DIRS}
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE

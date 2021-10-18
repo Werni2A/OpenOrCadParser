@@ -8,16 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Setup dependencies
+    - name: Set up vcpkg
       run: |
         sudo apt update
-        sudo apt install -y libboost-program-options-dev
-        mkdir thirdparty
-        cd thirdparty
-        git clone https://github.com/microsoft/compoundfilereader.git
-        cd -
+        sudo apt install -y cmake
+        git clone https://github.com/microsoft/vcpkg.git
+        ./vcpkg/bootstrap-vcpkg.sh
+
     - name: Build application
       run: |
         mkdir build
-        cmake -B build
+        cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake
         cmake --build build
