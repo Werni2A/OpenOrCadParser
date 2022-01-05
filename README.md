@@ -34,9 +34,12 @@ The following two XSD files provide a good overview of the `XML` file structure,
 # Build
 
 ```bash
+# Set path to vcpkg
+VCPKG_DIR=../vcpkg
+
 # Build
-mkdir build
-cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+mkdir -p build
+cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=$VCPKG_DIR/scripts/buildsystems/vcpkg.cmake
 cmake --build build
 ```
 

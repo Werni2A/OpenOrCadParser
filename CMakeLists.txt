@@ -26,18 +26,43 @@ find_path(COMPOUNDFILEREADER_INCLUDE_DIRS "compoundfilereader.h")
 
 set(SOURCES
    ${SOURCES}
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
    ${CMAKE_CURRENT_SOURCE_DIR}/src/ContainerExtractor.cpp
    ${CMAKE_CURRENT_SOURCE_DIR}/src/DataStream.cpp
    ${CMAKE_CURRENT_SOURCE_DIR}/src/Parser.cpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Parser/parseDirectory.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Parser/parsePackage.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Parser/parseSymbolsLibrary.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Structures/CommentText.cpp
 )
 
 set(HEADERS
    ${HEADERS}
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Structures/Arc.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Enums/Color.hpp
    ${CMAKE_CURRENT_SOURCE_DIR}/src/ContainerExtractor.hpp
    ${CMAKE_CURRENT_SOURCE_DIR}/src/DataStream.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Structures/Point.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Structures/Ellipse.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Enums/FillStyle.hpp
    ${CMAKE_CURRENT_SOURCE_DIR}/src/General.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Structures/GeneralProperties.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Enums/GeometryStructure.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Enums/HatchStyle.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Enums/ImplementationType.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Structures/Line.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Enums/LineStyle.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Enums/LineWidth.hpp
    ${CMAKE_CURRENT_SOURCE_DIR}/src/Parser.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Structures/SymbolPinScalar.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Structures/CommentText.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Structures/PinIdxMapping.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Structures/Polygon.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Enums/PortType.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Structures/Properties.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Structures/Properties2.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Structures//Rect.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/Structures/Structure.hpp
 )
 
 # Create executable file from sources
