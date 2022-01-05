@@ -2,6 +2,7 @@
 #define PARSER_H
 
 
+#include <any>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -9,18 +10,119 @@
 #include <vector>
 
 #include "DataStream.hpp"
+#include "Structures/Arc.hpp"
+#include "Structures/Bezier.hpp"
+#include "Structures/Bitmap.hpp"
+#include "Structures/Point.hpp"
+#include "Structures/Ellipse.hpp"
 #include "General.hpp"
+#include "Structures/GeneralProperties.hpp"
+#include "Structures/SymbolVector.hpp"
+#include "Structures/Library.hpp"
+#include "Structures/Line.hpp"
+#include "Structures/SymbolPinBus.hpp"
+#include "Structures/SymbolPinScalar.hpp"
+#include "Structures/CommentText.hpp"
+#include "Structures/PinIdxMapping.hpp"
+#include "Structures/Polygon.hpp"
+#include "Structures/Polyline.hpp"
+#include "Structures/Properties.hpp"
+#include "Structures/Properties2.hpp"
+#include "Structures/Rect.hpp"
+#include "Structures/Structure.hpp"
+
+#include "Structures/SymbolsLibrary.hpp"
+#include "Structures/SymbolBBox.hpp"
+
+#include "Structures/T0x1f.hpp"
+#include "Structures/SymbolDisplayProp.hpp"
+#include "Structures/TextFont.hpp"
+#include "Enums/GeometryStructure.hpp"
+
+#include "Structures/Package.hpp"
+#include "Structures/GeometrySpecification.hpp"
+#include "Structures/DirectoryStruct.hpp"
 
 
 namespace fs = std::filesystem;
+
+
+// Forward declaration
+struct Library;
 
 
 class Parser
 {
 public:
 
-    Parser(const fs::path& aFile);
+    static uint16_t storedVersion;
 
+    Parser(const fs::path& aFile, FileFormatVersion aFileFormatVersion = FileFormatVersion::C);
+
+public:
+
+    size_t getFileErrCtr() const
+    {
+        return mFileErrCtr;
+    }
+
+
+    Library parseLibrary();
+
+private:
+
+
+    void checkInterpretedDataLen(const std::string& aFuncName, size_t aStartOffset, size_t aEndOffset, size_t aExpectedLen);
+
+
+    void readTitleBlockSymbol();
+
+
+    GeometrySpecification parseGlobalSymbol();
+
+
+    GeometrySpecification parseSymbolHierarchic();
+
+
+    GeometrySpecification parseOffPageSymbol();
+
+
+    GeometrySpecification readPinShapeSymbol();
+
+
+    Package parseSymbol();
+
+
+    Package parsePackage();
+
+
+    SymbolsLibrary parseSymbolsLibrary();
+
+
+    void parseSchematic();
+
+
+    void parseHierarchy();
+
+
+    void parseSymbolsERC();
+
+
+    void parsePage();
+
+
+    void readPartInst();
+
+
+    void readT0x10();
+
+
+    TextFont readTextFont();
+
+
+    DirectoryStruct parseDirectory();
+
+public:
     /**
      * @brief Extract container.
      *
@@ -42,6 +144,7 @@ public:
      * @brief Print container tree structure to console.
      */
     void printContainerTree() const;
+private:
 
     /**
      * @brief Get the file type from file extension.
@@ -51,10 +154,180 @@ public:
      */
     FileType getFileTypeByExtension(const fs::path& aFile) const;
 
+
+    std::string printCurrentOffset();
+
+
+    void discard_bytes(size_t discard);
+
+
+    void discard_until_preamble();
+
+
+    std::vector<uint8_t> read_bytes(size_t amount);
+
+
+    std::string print_data(const std::vector<uint8_t>& data);
+
+
+    void assume_data(const std::vector<uint8_t>& expectedData, const std::string& comment = "");
+
+
+    std::pair<Structure, std::any> parseStructure(Structure structure);
+
+
+    void pushStructure(const std::pair<Structure, std::any>& structure, Package& container);
+
+
+    /**
+     * @brief Read string that has preceeding length definition and
+     *        is additionally zero terminated
+     *
+     * @return std::string
+     */
+    std::string readStringBothTerm();
+
+
+    /**
+     * @brief Read string that has null byte termination.
+     *
+     * @return std::string
+     */
+    std::string readStringZeroTerm();
+
+
+    /**
+     * @brief Pad the current file stream pointer such that
+     *        we have read the whole block size.
+     *
+     * @param startOffset
+     * @param blockSize
+     */
+    void padRest(size_t startOffset, size_t blockSize);
+
+
+    Structure read_type_prefix_long();
+
+
+    Structure read_type_prefix();
+
+
+    Structure read_type_prefix_short();
+
+
+    uint32_t readPreamble(bool readOptionalLen = true);
+
+
+    uint32_t readConditionalPreamble(Structure structure, bool readOptionalLen = true);
+
+
+    std::string print_unknown_data(size_t amount, const std::string& comment);
+
+
+    void readGeometryStructure(GeometryStructure geometryStructure, GeometrySpecification* geometrySpecification = nullptr);
+
+
+    void readSthInPages0();
+
+
+    void readGraphicCommentTextInst();
+
+
+    void readWireScalar();
+
+
+    void readAlias();
+
+
+    void readGraphicBoxInst();
+
+
+    void readDevHelper();
+
+
+    Line readLine();
+
+
+    Point readPoint();
+
+
+    Ellipse readEllipse();
+
+
+    Polygon readPolygon();
+
+
+    Polyline readPolyline();
+
+
+    Bezier readBezier();
+
+
+    Rect readRect();
+
+
+    SymbolVector readSymbolVector();
+
+
+    Bitmap readBitmap();
+
+
+    CommentText readCommentText();
+
+
+    PinIdxMapping readPinIdxMapping();
+
+
+    Arc readArc();
+
+
+    SymbolPinScalar readSymbolPinScalar();
+
+
+    SymbolPinBus readSymbolPinBus();
+
+
+    SymbolDisplayProp readSymbolDisplayProp();
+
+
+    void readERCSymbol();
+
+
+    SymbolBBox readSymbolBBox();
+
+
+    T0x1f readT0x1f();
+
+
+    GeneralProperties readGeneralProperties();
+
+
+    Properties readProperties();
+
+
+    Properties2 readProperties2();
+
+
+    std::vector<Type> parseTypes();
+
+
+    GeometrySpecification readSymbolProperties();
+
+
+    GeometrySpecification parseGeometrySpecification();
+
+public:
+
+    // Public data
+
+
+    Library mLibrary; //!< This stores the content of the parsed library file
+
 private:
 
     void openFile(const fs::path& aFile);
     void closeFile();
+    void exceptionHandling();
 
     FileType mFileType;
     FileFormatVersion mFileFormatVersion;
@@ -67,7 +340,12 @@ private:
 
     fs::path mExtractedPath;
 
+    size_t mFileCtr;    //!< Counts all files that were opend for parsing
+    size_t mFileErrCtr; //!< Counts all files that failed somewhere
+
     DataStream mDs;
+
+    uint32_t mByteOffset;
 };
 
 
