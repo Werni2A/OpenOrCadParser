@@ -11,28 +11,32 @@
 
 enum class HatchStyle
 {
-    LinesHorizontal = 0, // -
-    LinesVertical   = 1, // |
-    DiagonalLeft    = 2, // \'
-    DiagonalRight   = 3, // /
-    Checkerboard    = 4, // +
-    Mesh            = 5  // x
+    // @todo NotValid is probably a new value in later OrCad versions. I think
+    //       previous versions just ignore the value set here but it could be any value
+    NotValid        = -1, // When FillStyle != HatchPattern @todo could also mean Solid! Verify this
+    LinesHorizontal =  0, // -
+    LinesVertical   =  1, // |
+    DiagonalLeft    =  2, // \'
+    DiagonalRight   =  3, // /
+    Checkerboard    =  4, // +
+    Mesh            =  5  // x
 };
 
 
 [[maybe_unused]]
-static HatchStyle ToHatchStyle(uint32_t val)
+static HatchStyle ToHatchStyle(int32_t val)
 {
     HatchStyle hatchStyle;
 
     switch(val)
     {
-        case 0: hatchStyle = HatchStyle::LinesHorizontal; break;
-        case 1: hatchStyle = HatchStyle::LinesVertical;   break;
-        case 2: hatchStyle = HatchStyle::DiagonalLeft;    break;
-        case 3: hatchStyle = HatchStyle::DiagonalRight;   break;
-        case 4: hatchStyle = HatchStyle::Checkerboard;    break;
-        case 5: hatchStyle = HatchStyle::Mesh;            break;
+        case -1: hatchStyle = HatchStyle::NotValid;        break;
+        case  0: hatchStyle = HatchStyle::LinesHorizontal; break;
+        case  1: hatchStyle = HatchStyle::LinesVertical;   break;
+        case  2: hatchStyle = HatchStyle::DiagonalLeft;    break;
+        case  3: hatchStyle = HatchStyle::DiagonalRight;   break;
+        case  4: hatchStyle = HatchStyle::Checkerboard;    break;
+        case  5: hatchStyle = HatchStyle::Mesh;            break;
         default:
             std::string errorMsg = "HatchStyle with value " + std::to_string(val)
                                  + " is not implemented!";
@@ -51,6 +55,7 @@ static std::string to_string(const HatchStyle& hatchStyle)
 
     switch(hatchStyle)
     {
+        case HatchStyle::NotValid:        str = "NotValid";        break;
         case HatchStyle::LinesHorizontal: str = "LinesHorizontal"; break;
         case HatchStyle::LinesVertical:   str = "LinesVertical";   break;
         case HatchStyle::DiagonalLeft:    str = "DiagonalLeft";    break;
