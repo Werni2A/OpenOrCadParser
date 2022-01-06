@@ -1,0 +1,9 @@
+{
+  "name": "unit-tests",
+  "version": "0.1.0",
+  "dependencies": [
+    "boost-program-options",
+    "catch2",
+    "compoundfilereader"
+  ]
+}

@@ -14,10 +14,20 @@ jobs:
         sudo apt install -y cmake
         git clone https://github.com/microsoft/vcpkg.git
         ./vcpkg/bootstrap-vcpkg.sh
+        VCPKG_DIR=$PWD/vcpkg
 
     - name: Build application
       run: |
-        VCPKG_DIR=vcpkg
-        mkdir build
         cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=$VCPKG_DIR/scripts/buildsystems/vcpkg.cmake
         cmake --build build
+
+    - name: Build unit tests
+      run: |
+        cd unit_test
+        cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=VCPKG_DIR/scripts/buildsystems/vcpkg.cmake
+        cmake --build build
+
+    - name: Run unit tests
+      run: |
+        cd unit_test
+        ./build/unit_tests
