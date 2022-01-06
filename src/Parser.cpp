@@ -1667,7 +1667,7 @@ Ellipse Parser::readEllipse()
     if(mFileFormatVersion >= FileFormatVersion::C)
     {
         ellipse.fillStyle  = ToFillStyle(mDs.readUint32());
-        ellipse.hatchStyle = ToHatchStyle(mDs.readUint32());
+        ellipse.hatchStyle = ToHatchStyle(mDs.readInt32());
     }
     else
     {
@@ -1733,7 +1733,7 @@ Polygon Parser::readPolygon()
     if(mFileFormatVersion >= FileFormatVersion::C)
     {
         polygon.fillStyle  = ToFillStyle(mDs.readUint32());
-        polygon.hatchStyle = ToHatchStyle(mDs.readUint32());
+        polygon.hatchStyle = ToHatchStyle(mDs.readInt32());
     }
     else
     {
@@ -2000,7 +2000,7 @@ Rect Parser::readRect()
     if(mFileFormatVersion >= FileFormatVersion::C)
     {
         rect.fillStyle  = ToFillStyle(mDs.readUint32());
-        rect.hatchStyle = ToHatchStyle(mDs.readUint32());
+        rect.hatchStyle = ToHatchStyle(mDs.readInt32());
     }
     else
     {
@@ -2178,7 +2178,7 @@ Bitmap Parser::readBitmap()
         bitmap.rawImgData.push_back(mDs.readUint8());
     }
 
-    bitmap.writeBmpToFile("foo" + std::to_string(imgSize) + ".bmp");
+    bitmap.writeBmpToFile("foo" + std::to_string(imgSize) + ".bmp"); // @todo Require useful name
 
     if(mDs.getCurrentOffset() != startOffset + byteLength)
     {
