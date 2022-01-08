@@ -10,38 +10,35 @@
 #include <vector>
 
 #include "DataStream.hpp"
+#include "Enums/GeometryStructure.hpp"
+#include "Enums/Structure.hpp"
+#include "General.hpp"
 #include "Structures/Arc.hpp"
 #include "Structures/Bezier.hpp"
 #include "Structures/Bitmap.hpp"
-#include "Structures/Point.hpp"
+#include "Structures/CommentText.hpp"
+#include "Structures/DirectoryStruct.hpp"
 #include "Structures/Ellipse.hpp"
-#include "General.hpp"
 #include "Structures/GeneralProperties.hpp"
-#include "Structures/SymbolVector.hpp"
+#include "Structures/GeometrySpecification.hpp"
 #include "Structures/Library.hpp"
 #include "Structures/Line.hpp"
-#include "Structures/SymbolPinBus.hpp"
-#include "Structures/SymbolPinScalar.hpp"
-#include "Structures/CommentText.hpp"
+#include "Structures/Package.hpp"
 #include "Structures/PinIdxMapping.hpp"
+#include "Structures/Point.hpp"
 #include "Structures/Polygon.hpp"
 #include "Structures/Polyline.hpp"
 #include "Structures/Properties.hpp"
 #include "Structures/Properties2.hpp"
 #include "Structures/Rect.hpp"
-#include "Structures/Structure.hpp"
-
-#include "Structures/SymbolsLibrary.hpp"
 #include "Structures/SymbolBBox.hpp"
-
-#include "Structures/T0x1f.hpp"
 #include "Structures/SymbolDisplayProp.hpp"
+#include "Structures/SymbolPinBus.hpp"
+#include "Structures/SymbolPinScalar.hpp"
+#include "Structures/SymbolsLibrary.hpp"
+#include "Structures/SymbolVector.hpp"
+#include "Structures/T0x1f.hpp"
 #include "Structures/TextFont.hpp"
-#include "Enums/GeometryStructure.hpp"
-
-#include "Structures/Package.hpp"
-#include "Structures/GeometrySpecification.hpp"
-#include "Structures/DirectoryStruct.hpp"
 
 
 namespace fs = std::filesystem;
@@ -155,55 +152,13 @@ private:
     FileType getFileTypeByExtension(const fs::path& aFile) const;
 
 
-    std::string printCurrentOffset();
-
-
-    void discard_bytes(size_t discard);
-
-
     void discard_until_preamble();
-
-
-    std::vector<uint8_t> read_bytes(size_t amount);
-
-
-    std::string print_data(const std::vector<uint8_t>& data);
-
-
-    void assume_data(const std::vector<uint8_t>& expectedData, const std::string& comment = "");
 
 
     std::pair<Structure, std::any> parseStructure(Structure structure);
 
 
     void pushStructure(const std::pair<Structure, std::any>& structure, Package& container);
-
-
-    /**
-     * @brief Read string that has preceeding length definition and
-     *        is additionally zero terminated
-     *
-     * @return std::string
-     */
-    std::string readStringBothTerm();
-
-
-    /**
-     * @brief Read string that has null byte termination.
-     *
-     * @return std::string
-     */
-    std::string readStringZeroTerm();
-
-
-    /**
-     * @brief Pad the current file stream pointer such that
-     *        we have read the whole block size.
-     *
-     * @param startOffset
-     * @param blockSize
-     */
-    void padRest(size_t startOffset, size_t blockSize);
 
 
     Structure read_type_prefix_long();
@@ -219,9 +174,6 @@ private:
 
 
     uint32_t readConditionalPreamble(Structure structure, bool readOptionalLen = true);
-
-
-    std::string print_unknown_data(size_t amount, const std::string& comment);
 
 
     void readGeometryStructure(GeometryStructure geometryStructure, GeometrySpecification* geometrySpecification = nullptr);

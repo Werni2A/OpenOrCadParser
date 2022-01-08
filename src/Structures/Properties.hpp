@@ -18,25 +18,25 @@ struct Properties
 
 
 [[maybe_unused]]
-static std::string to_string(const Properties& properties)
+static std::string to_string(const Properties& aObj)
 {
     std::string str;
 
-    str += "Properties:" + newLine();
-    str += indent(1) + "name = " + properties.name + newLine();
-    str += indent(1) + "ref  = " + properties.ref  + newLine();
-    str += indent(1) + "convertName = " + properties.convertName + newLine();
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "name = " + aObj.name + newLine();
+    str += indent(1) + "ref  = " + aObj.ref  + newLine();
+    str += indent(1) + "convertName = " + aObj.convertName + newLine();
 
     return str;
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const Properties& properties)
+static std::ostream& operator<<(std::ostream& aOs, const Properties& aVal)
 {
-    os << to_string(properties);
+    aOs << to_string(aVal);
 
-    return os;
+    return aOs;
 }
 
 

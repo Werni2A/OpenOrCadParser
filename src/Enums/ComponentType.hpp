@@ -2,21 +2,11 @@
 #define COMPONENTTYPE_H
 
 
-#include <algorithm>
-#include <any>
-#include <cassert>
-#include <filesystem>
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <memory>
-#include <sstream>
-#include <stdexcept>
-#include <stdio.h>
+#include <cstdint>
+#include <ostream>
 #include <string>
-#include <ctime>
-#include <utility>
-#include <vector>
+
+#include <magic_enum.hpp>
 
 #include "../General.hpp"
 
@@ -48,71 +38,50 @@ enum class ComponentType
 
 
 [[maybe_unused]]
-static ComponentType ToComponentType(uint16_t val)
+static constexpr ComponentType ToComponentType(uint16_t aVal)
 {
-    ComponentType componentType;
-
-    switch(val)
-    {
-        case 0x06: componentType = ComponentType::Cell;             break;
-        case 0x09: componentType = ComponentType::View;             break;
-        case 0x18: componentType = ComponentType::Part;             break;
-        case 0x1f: componentType = ComponentType::Package;          break;
-        case 0x21: componentType = ComponentType::GlobalSymbol;     break;
-        case 0x22: componentType = ComponentType::PortSymbol;       break;
-        case 0x23: componentType = ComponentType::OffPageSymbol;    break;
-        case 0x40: componentType = ComponentType::TitleBlockSymbol; break;
-        case 0x4b: componentType = ComponentType::ERCSymbol;        break;
-        case 0x62: componentType = ComponentType::PinShapeSymbol;   break;
-        case 0x2e80: componentType = ComponentType::CT0x2e80;       break;
-        case 0x444e: componentType = ComponentType::CT0x444e;       break;
-        default:
-            std::string errorMsg = "ComponentType with value 0x" + ToHex(val, 2)
-                                 + " is not implemented!";
-            throw std::invalid_argument(errorMsg);
-            break;
-    }
-
-    return componentType;
+    return ToEnum<ComponentType, decltype(aVal)>(aVal);
 }
 
 
 [[maybe_unused]]
-static std::string to_string(const ComponentType& componentType)
+static std::string to_string(const ComponentType& aVal)
 {
-    std::string str;
-
-    switch(componentType)
-    {
-        case ComponentType::Cell:             str = "Cell";             break;
-        case ComponentType::View:             str = "View";             break;
-        case ComponentType::Part:             str = "Part";             break;
-        case ComponentType::Package:          str = "Package";          break;
-        case ComponentType::GlobalSymbol:     str = "GlobalSymbol";     break;
-        case ComponentType::PortSymbol:       str = "PortSymbol";       break;
-        case ComponentType::OffPageSymbol:    str = "OffPageSymbol";    break;
-        case ComponentType::TitleBlockSymbol: str = "TitleBlockSymbol"; break;
-        case ComponentType::ERCSymbol:        str = "ERCSymbol";        break;
-        case ComponentType::PinShapeSymbol:   str = "PinShapeSymbol";   break;
-        case ComponentType::CT0x2e80:         str = "CT0x2e80";         break;
-        case ComponentType::CT0x444e:         str = "CT0x444e";         break;
-        default:
-            std::string errorMsg = "ComponentType 0x" + ToHex(componentType, 2)
-                                 + " is not implemented!";
-            throw std::invalid_argument(errorMsg);
-            break;
-    }
-
-    return str;
+    return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const ComponentType& componentType)
+static std::ostream& operator<<(std::ostream& aOs, const ComponentType& aVal)
 {
-    os << to_string(componentType);
-    return os;
+    aOs << to_string(aVal);
+    return aOs;
 }
+
+
+
+
+
+
+
+#include <algorithm>
+#include <any>
+#include <cassert>
+#include <filesystem>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <memory>
+#include <sstream>
+#include <stdexcept>
+#include <stdio.h>
+#include <string>
+#include <ctime>
+#include <utility>
+#include <vector>
+
+#include "../General.hpp"
+
 
 
 // @todo Type has nothing to do with ComponentType, therefore move it to its own file.
@@ -125,24 +94,24 @@ struct Type
 
 
 [[maybe_unused]]
-static std::string to_string(const Type& type)
+static std::string to_string(const Type& aVal)
 {
     std::string str;
 
     str += "Type:" + newLine();
-    str += "  name = " + type.name + newLine();
-    str += "  componentType = " + to_string(type.componentType) + newLine();
+    str += "  name = " + aVal.name + newLine();
+    str += "  componentType = " + to_string(aVal.componentType) + newLine();
 
     return str;
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const Type& type)
+static std::ostream& operator<<(std::ostream& aOs, const Type& aVal)
 {
-    os << to_string(type);
+    aOs << to_string(aVal);
 
-    return os;
+    return aOs;
 }
 
 

@@ -23,7 +23,7 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
 
     SymbolsLibrary symbolsLibrary;
 
-    symbolsLibrary.introduction = readStringZeroTerm();
+    symbolsLibrary.introduction = mDs.readStringZeroTerm();
     // Looks like OrCAD creates a fixed size buffer where the string
     // is copied into. However, when the string does not requrie the
     // full buffer size it contains still data from the previous
@@ -34,14 +34,14 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
     // char buffer[32];
     // strcpy(buffer, srcStr);
     // write_data_to_file(buffer, sizeof(buffer));
-    padRest(startOffset, 32);
+    mDs.padRest(startOffset, 32, false);
 
-    assume_data({0x03, 0x00, 0x02, 0x00}, std::string(__func__) + " - 0");
+    mDs.assumeData({0x03, 0x00, 0x02, 0x00}, std::string(__func__) + " - 0");
 
     symbolsLibrary.createDate = static_cast<time_t>(mDs.readUint32());
     symbolsLibrary.modifyDate = static_cast<time_t>(mDs.readUint32());
 
-    assume_data({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
+    mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
 
     const uint16_t textFontLen = mDs.readUint16();
 
@@ -56,7 +56,7 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
     }
 
     // Even this big chunk of data seems to be constant
-    // assume_data(
+    // mDs.assumeData(
     //     { 0x18, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00,
     //       0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00,
     //       0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00,
@@ -76,41 +76,41 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
     // 0x864: 01 00 01 00 01 00 01 00 01 00 01 00 02 00 01 00 | ................
     // 0x864: 01 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 | ................
     // 0x864: 00 00 00 00 00 00 01 00 00 00                   | ..........
-    std::clog << print_unknown_data(58, std::string(__func__) + " - 2") << std::endl;
+    mDs.printUnknownData(std::clog, 58, std::string(__func__) + " - 2");
 
     // Looks like this has always the same size as it consists of
     // the mandatory package fields '1ST PART FIELD' up to the
     // '7TH PART FIELD' plus 'PCB Footprint'.
     for(size_t i = 0u; i < 8u; ++i)
     {
-        symbolsLibrary.strLstPartField.push_back(readStringBothTerm());
+        symbolsLibrary.strLstPartField.push_back(mDs.readStringLenZeroTerm());
     }
 
     // Even this big chunk of data seems to be constant
-    std::cout << print_unknown_data(156, std::string(__func__) + " - 3") << std::endl;
+    mDs.printUnknownData(std::clog, 156, std::string(__func__) + " - 3");
 
     const uint32_t strLstLen = mDs.readUint32();
 
-    assume_data({0x00, 0x00, 0x00}, std::string(__func__) + " - 4");
+    mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 4");
 
     for(size_t i = 0u; i < strLstLen - 1; ++i)
     {
-        symbolsLibrary.strLst.push_back(readStringBothTerm());
+        symbolsLibrary.strLst.push_back(mDs.readStringLenZeroTerm());
     }
 
     const uint16_t aliasLstLen = mDs.readUint16();
 
     for(size_t i = 0u; i < aliasLstLen; ++i)
     {
-        std::string alias   = readStringBothTerm();
-        std::string package = readStringBothTerm();
+        std::string alias   = mDs.readStringLenZeroTerm();
+        std::string package = mDs.readStringLenZeroTerm();
         symbolsLibrary.partAliases.push_back(std::make_pair(alias, package));
     }
 
     if(mFileType == FileType::Schematic)
     {
-        std::clog << print_unknown_data(8, std::string(__func__) + " - 5") << std::endl;
-        std::string schematicName = readStringBothTerm();
+        mDs.printUnknownData(std::clog, 8, std::string(__func__) + " - 5");
+        std::string schematicName = mDs.readStringLenZeroTerm();
         std::clog << schematicName << std::endl;
     }
 
@@ -136,19 +136,19 @@ void Parser::parseSchematic()
     {
         // @todo throw some exception
     }
-    // std::clog << print_unknown_data(12, std::string(__func__) + " - 0") << std::endl;
+    // mDs.printUnknownData(std::clog, 12, std::string(__func__) + " - 0");
 
     readPreamble();
 
-    std::string schematic_name = readStringBothTerm();
+    std::string schematic_name = mDs.readStringLenZeroTerm();
 
-    std::clog << print_unknown_data(4, std::string(__func__) + " - 1") << std::endl;
+    mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 1");
 
     const uint16_t schematicPages = mDs.readUint16();
 
     for(size_t i = 0u; i < schematicPages; ++i)
     {
-        std::string page_name = readStringBothTerm();
+        std::string page_name = mDs.readStringLenZeroTerm();
         std::cout << page_name << std::endl;
     }
 
@@ -156,17 +156,17 @@ void Parser::parseSchematic()
 
     for(size_t i = 0u; i < len; ++i)
     {
-        std::clog << print_unknown_data(4, std::string(__func__) + " - 1") << std::endl;
+        mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 1");
     }
 
     const uint16_t len2 = mDs.readUint16();
 
     for(size_t i = 0u; i < len2; ++i)
     {
-        std::clog << print_unknown_data(5, std::string(__func__) + " - 2") << std::endl;
+        mDs.printUnknownData(std::clog, 5, std::string(__func__) + " - 2");
     }
 
-    std::clog << print_unknown_data(4, std::string(__func__) + " - 3") << std::endl;
+    mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 3");
 
     if(!mDs.isEoF())
     {
@@ -181,11 +181,11 @@ void Parser::parseHierarchy()
 {
     std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
 
-    std::clog << print_unknown_data(9, std::string(__func__) + " - 0") << std::endl;
+    mDs.printUnknownData(std::clog, 9, std::string(__func__) + " - 0");
 
-    std::string schematicName = readStringBothTerm();
+    std::string schematicName = mDs.readStringLenZeroTerm();
 
-    std::clog << print_unknown_data(9, std::string(__func__) + " - 1") << std::endl;
+    mDs.printUnknownData(std::clog, 9, std::string(__func__) + " - 1");
 
     const uint16_t netLen = mDs.readUint16();
 
@@ -199,7 +199,7 @@ void Parser::parseHierarchy()
 
         uint32_t dbId = mDs.readUint32();
 
-        std::string name = readStringBothTerm(); // net name
+        std::string name = mDs.readStringLenZeroTerm(); // net name
     }
 
     std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
@@ -211,9 +211,9 @@ void Parser::parseSymbolsERC()
     std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
 
     // @todo Should I introduce something like read_type_prefix_very_long()?
-    assume_data({0x4b}, std::string(__func__) + " - 0"); // Proably stands for ERC
+    mDs.assumeData({0x4b}, std::string(__func__) + " - 0"); // Proably stands for ERC
 
-    std::clog << print_unknown_data(8, std::string(__func__) + " - 1");
+    mDs.printUnknownData(std::clog, 8, std::string(__func__) + " - 1");
 
     Structure structure = read_type_prefix_long();
     readConditionalPreamble(structure);

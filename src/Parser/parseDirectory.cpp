@@ -30,15 +30,15 @@ DirectoryStruct Parser::parseDirectory()
     {
         DirItemType dirItemType;
 
-        dirItemType.name = readStringBothTerm();
+        dirItemType.name = mDs.readStringLenZeroTerm();
 
         dirItemType.componentType = ToComponentType(mDs.readUint16());
 
         // @todo This changes with the version of the file format, so maybe it contains
         //       more details for the format? Or some hash of the specified stream?
-        std::cout << print_unknown_data(14, "item " + std::to_string(i)) << std::endl;
+        mDs.printUnknownData(std::clog, 14, "item " + std::to_string(i));
 
-        // @todo Just a guess that this is the version
+        // @todo Just a guess that this is the version but's highly likely
         uint16_t probFileVersion = mDs.readUint16();
         std::cout << "FileVersion?? = " << std::to_string(probFileVersion) << std::endl;
 
@@ -54,7 +54,9 @@ DirectoryStruct Parser::parseDirectory()
             }
         }
 
-        std::vector<unsigned> knownFileVersions{445, 458, 459, 460, 461, 465, 466, 467, 468, 470, 471};
+        // 471 in 17.4-2019 S012 (3898062) [10/18/202]
+        // 472 in 17.4-2019 S019 (3959056) [7/8/2021]
+        std::vector<unsigned> knownFileVersions{445, 458, 459, 460, 461, 465, 466, 467, 468, 470, 471, 472};
 
         if(!std::any_of(knownFileVersions.begin(), knownFileVersions.end(), [&](unsigned version){ return version == probFileVersion; }))
         {
@@ -63,7 +65,7 @@ DirectoryStruct Parser::parseDirectory()
 
         dirItemType.timezone = mDs.readInt16();
 
-        std::cout << print_unknown_data(2, "item " + std::to_string(i)) << std::endl;
+        mDs.printUnknownData(std::clog, 2, "item " + std::to_string(i));
 
         directoryStruct.items.push_back(dirItemType);
     }

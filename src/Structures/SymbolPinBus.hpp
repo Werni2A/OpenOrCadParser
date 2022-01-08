@@ -28,32 +28,32 @@ struct SymbolPinBus
 
 
 [[maybe_unused]]
-static std::string to_string(const SymbolPinBus& symbolPinBus)
+static std::string to_string(const SymbolPinBus& aObj)
 {
     std::string str;
 
-    str += "SymbolPinBus:" + newLine();
-    str += indent(1) + "name     = " + symbolPinBus.name + newLine();
-    str += indent(1) + "startX   = " + std::to_string(symbolPinBus.startX) + newLine();
-    str += indent(1) + "startY   = " + std::to_string(symbolPinBus.startY) + newLine();
-    str += indent(1) + "hotptX   = " + std::to_string(symbolPinBus.hotptX) + newLine();
-    str += indent(1) + "hotptY   = " + std::to_string(symbolPinBus.hotptY) + newLine();
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "name     = " + aObj.name + newLine();
+    str += indent(1) + "startX   = " + std::to_string(aObj.startX) + newLine();
+    str += indent(1) + "startY   = " + std::to_string(aObj.startY) + newLine();
+    str += indent(1) + "hotptX   = " + std::to_string(aObj.hotptX) + newLine();
+    str += indent(1) + "hotptY   = " + std::to_string(aObj.hotptY) + newLine();
 
     str += indent(1) + "pinShape:" + newLine();
-    str += indent(to_string(symbolPinBus.pinShape), 2);
+    str += indent(to_string(aObj.pinShape), 2);
 
-    str += indent(1) + "portType = " + to_string(symbolPinBus.portType) + newLine();
+    str += indent(1) + "portType = " + to_string(aObj.portType) + newLine();
 
     return str;
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const SymbolPinBus& symbolPinBus)
+static std::ostream& operator<<(std::ostream& aOs, const SymbolPinBus& aVal)
 {
-    os << to_string(symbolPinBus);
+    aOs << to_string(aVal);
 
-    return os;
+    return aOs;
 }
 
 

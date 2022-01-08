@@ -17,25 +17,25 @@ struct T0x1f
 
 
 [[maybe_unused]]
-static std::string to_string(const T0x1f& t0x1f)
+static std::string to_string(const T0x1f& aObj)
 {
     std::string str;
 
-    str += "T0x1f:" + newLine();
-    str += indent(1) + "name   = " + t0x1f.name   + newLine();
-    str += indent(1) + "refDes = " + t0x1f.refDes + newLine();
-    str += indent(1) + "pcbFootprint = " + t0x1f.pcbFootprint + newLine();
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "name   = " + aObj.name   + newLine();
+    str += indent(1) + "refDes = " + aObj.refDes + newLine();
+    str += indent(1) + "pcbFootprint = " + aObj.pcbFootprint + newLine();
 
     return str;
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const T0x1f& t0x1f)
+static std::ostream& operator<<(std::ostream& aOs, const T0x1f& aVal)
 {
-    os << to_string(t0x1f);
+    aOs << to_string(aVal);
 
-    return os;
+    return aOs;
 }
 
 

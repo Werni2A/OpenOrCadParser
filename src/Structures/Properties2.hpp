@@ -19,26 +19,26 @@ struct Properties2
 
 
 [[maybe_unused]]
-static std::string to_string(const Properties2& properties2)
+static std::string to_string(const Properties2& aObj)
 {
     std::string str;
 
-    str += "Properties2:" + newLine();
-    str += indent(1) + "name   = " + properties2.name   + newLine();
-    str += indent(1) + "refDes = " + properties2.refDes + newLine();
-    str += indent(1) + "footprint    = " + properties2.footprint + newLine();
-    str += indent(1) + "sectionCount = " + std::to_string(properties2.sectionCount) + newLine();
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "name   = " + aObj.name   + newLine();
+    str += indent(1) + "refDes = " + aObj.refDes + newLine();
+    str += indent(1) + "footprint    = " + aObj.footprint + newLine();
+    str += indent(1) + "sectionCount = " + std::to_string(aObj.sectionCount) + newLine();
 
     return str;
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const Properties2& properties2)
+static std::ostream& operator<<(std::ostream& aOs, const Properties2& aVal)
 {
-    os << to_string(properties2);
+    aOs << to_string(aVal);
 
-    return os;
+    return aOs;
 }
 
 

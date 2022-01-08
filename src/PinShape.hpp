@@ -43,6 +43,21 @@ enum class ShapeType
 };
 
 
+[[maybe_unused]]
+static std::string to_string(const ShapeType& aVal)
+{
+    return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
+}
+
+
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const ShapeType& aVal)
+{
+    aOs << to_string(aVal);
+    return aOs;
+}
+
+
 // @todo Move table to Kaitai file
 // See OrCAD: 'Pin Properties' -> 'Shape'
 // 'Clock'             <-  isLong &&  isClock && !isDot
@@ -108,41 +123,6 @@ static ShapeType ToShapeType(const PinShape& pinShape)
 
 
 [[maybe_unused]]
-static std::string to_string(const ShapeType& shapeType)
-{
-    std::string str;
-
-    switch(shapeType)
-    {
-        case ShapeType::Clock:         str = "Clock";         break;
-        case ShapeType::Dot:           str = "Dot";           break;
-        case ShapeType::DotClock:      str = "DotClock";      break;
-        case ShapeType::Line:          str = "Line";          break;
-        case ShapeType::Short:         str = "Short";         break;
-        case ShapeType::ShortClock:    str = "ShortClock";    break;
-        case ShapeType::ShortDot:      str = "ShortDot";      break;
-        case ShapeType::ShortDotClock: str = "ShortDotClock"; break;
-        case ShapeType::ZeroLength:    str = "ZeroLength";    break;
-        default:
-            std::string errorMsg = "ShapeType " + std::to_string(static_cast<size_t>(shapeType))
-                                 + " is not implemented!";
-            throw std::invalid_argument(errorMsg);
-            break;
-    }
-
-    return str;
-}
-
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const ShapeType& shapeType)
-{
-    os << to_string(shapeType) << std::endl;
-    return os;
-}
-
-
-[[maybe_unused]]
 static PinShape ToPinShape(uint16_t val)
 {
     PinShape pinShape;
@@ -178,33 +158,33 @@ static PinShape ToPinShape(uint16_t val)
 
 
 [[maybe_unused]]
-static std::string to_string(const PinShape& pinShape)
+static std::string to_string(const PinShape& aObj)
 {
     std::string str;
 
-    str += "PinShape:" + newLine();
-    str += indent(1) + "isLong          = " + std::to_string(pinShape.isLong)          + newLine();
-    str += indent(1) + "isClock         = " + std::to_string(pinShape.isClock)         + newLine();
-    str += indent(1) + "isDot           = " + std::to_string(pinShape.isDot)           + newLine();
-    str += indent(1) + "isLeftPointing  = " + std::to_string(pinShape.isLeftPointing)  + newLine();
-    str += indent(1) + "isRightPointing = " + std::to_string(pinShape.isRightPointing) + newLine();
-    str += indent(1) + "isNetStyle      = " + std::to_string(pinShape.isNetStyle)      + newLine();
-    str += indent(1) + "isNoConnect     = " + std::to_string(pinShape.isNoConnect)     + newLine();
-    str += indent(1) + "isGlobal        = " + std::to_string(pinShape.isGlobal)        + newLine();
-    str += indent(1) + "isNumberVisible = " + std::to_string(pinShape.isNumberVisible) + newLine();
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "isLong          = " + std::to_string(aObj.isLong)          + newLine();
+    str += indent(1) + "isClock         = " + std::to_string(aObj.isClock)         + newLine();
+    str += indent(1) + "isDot           = " + std::to_string(aObj.isDot)           + newLine();
+    str += indent(1) + "isLeftPointing  = " + std::to_string(aObj.isLeftPointing)  + newLine();
+    str += indent(1) + "isRightPointing = " + std::to_string(aObj.isRightPointing) + newLine();
+    str += indent(1) + "isNetStyle      = " + std::to_string(aObj.isNetStyle)      + newLine();
+    str += indent(1) + "isNoConnect     = " + std::to_string(aObj.isNoConnect)     + newLine();
+    str += indent(1) + "isGlobal        = " + std::to_string(aObj.isGlobal)        + newLine();
+    str += indent(1) + "isNumberVisible = " + std::to_string(aObj.isNumberVisible) + newLine();
 
     // @todo Deactivated until isLong is handled correctly
-    // str += indent(1) + "ShapeType       = " + ToShapeType(pinShape) + newLine();
+    // str += indent(1) + "ShapeType       = " + ToShapeType(aObj) + newLine();
 
     return str;
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const PinShape& pinShape)
+static std::ostream& operator<<(std::ostream& aOs, const PinShape& aVal)
 {
-    os << to_string(pinShape);
-    return os;
+    aOs << to_string(aVal);
+    return aOs;
 }
 
 

@@ -7,8 +7,6 @@
 #include <ostream>
 #include <string>
 
-#include "../Enums/LineStyle.hpp"
-#include "../Enums/LineWidth.hpp"
 #include "TextFont.hpp"
 
 
@@ -46,31 +44,31 @@ struct CommentText
 
 
 [[maybe_unused]]
-static std::string to_string(const CommentText& commentText)
+static std::string to_string(const CommentText& aObj)
 {
     std::string str;
 
-    str += "CommentText:" + newLine();
-    str += indent(1) + "locX = " + std::to_string(commentText.locX) + newLine();
-    str += indent(1) + "locY = " + std::to_string(commentText.locY) + newLine();
-    str += indent(1) + "name = " + commentText.name + newLine();
-    str += indent(1) + "x1   = " + std::to_string(commentText.x1) + newLine();
-    str += indent(1) + "y1   = " + std::to_string(commentText.y1) + newLine();
-    str += indent(1) + "x2   = " + std::to_string(commentText.x2) + newLine();
-    str += indent(1) + "y2   = " + std::to_string(commentText.y2) + newLine();
-    str += indent(1) + "textFontIdx = " + std::to_string(commentText.textFontIdx) + newLine();
-    str += indent(to_string(commentText.getTextFont()), 2);
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "locX = " + std::to_string(aObj.locX) + newLine();
+    str += indent(1) + "locY = " + std::to_string(aObj.locY) + newLine();
+    str += indent(1) + "name = " + aObj.name + newLine();
+    str += indent(1) + "x1   = " + std::to_string(aObj.x1) + newLine();
+    str += indent(1) + "y1   = " + std::to_string(aObj.y1) + newLine();
+    str += indent(1) + "x2   = " + std::to_string(aObj.x2) + newLine();
+    str += indent(1) + "y2   = " + std::to_string(aObj.y2) + newLine();
+    str += indent(1) + "textFontIdx = " + std::to_string(aObj.textFontIdx) + newLine();
+    str += indent(to_string(aObj.getTextFont()), 2);
 
     return str;
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const CommentText& commentText)
+static std::ostream& operator<<(std::ostream& aOs, const CommentText& aVal)
 {
-    os << to_string(commentText);
+    aOs << to_string(aVal);
 
-    return os;
+    return aOs;
 }
 
 

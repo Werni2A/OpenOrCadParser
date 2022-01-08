@@ -3,89 +3,49 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
-#include <stdexcept>
 #include <string>
+
+#include <magic_enum.hpp>
+
+#include "../General.hpp"
 
 
 // @todo Rename to something like Graphics this would make more sense
 enum class GeometryStructure
 {
-    Rect         = 0x2828,
-    Line         = 0x2929,
-    Arc          = 0x2a2a,
-    Ellipse      = 0x2b2b,
-    Polygon      = 0x2c2c,
-    Polyline     = 0x2d2d,
-    CommentText  = 0x2e2e,
-    Bitmap       = 0x2f2f,
-    SymbolVector = 0x3030,
-    Bezier       = 0x5757
+    Rect         = 40,
+    Line         = 41,
+    Arc          = 42,
+    Ellipse      = 43,
+    Polygon      = 44,
+    Polyline     = 45,
+    CommentText  = 46,
+    Bitmap       = 47,
+    SymbolVector = 48,
+    Bezier       = 87
 };
 
 
 [[maybe_unused]]
-static GeometryStructure ToGeometryStructure(uint16_t val)
+static constexpr GeometryStructure ToGeometryStructure(uint8_t aVal)
 {
-    GeometryStructure geometryStructure;
-
-    switch(val)
-    {
-        case 0x2828: geometryStructure = GeometryStructure::Rect;         break;
-        case 0x2929: geometryStructure = GeometryStructure::Line;         break;
-        case 0x2a2a: geometryStructure = GeometryStructure::Arc;          break;
-        case 0x2b2b: geometryStructure = GeometryStructure::Ellipse;      break;
-        case 0x2c2c: geometryStructure = GeometryStructure::Polygon;      break;
-        case 0x2d2d: geometryStructure = GeometryStructure::Polyline;     break;
-        case 0x2e2e: geometryStructure = GeometryStructure::CommentText;  break;
-        case 0x2f2f: geometryStructure = GeometryStructure::Bitmap;       break;
-        case 0x3030: geometryStructure = GeometryStructure::SymbolVector; break;
-        case 0x5757: geometryStructure = GeometryStructure::Bezier;       break;
-        default:
-            std::string errorMsg = "GeometryStructure with value 0x" + ToHex(val, 4)
-                                 + " is not implemented!";
-            throw std::invalid_argument(errorMsg);
-            break;
-    }
-
-    return geometryStructure;
+    return ToEnum<GeometryStructure, decltype(aVal)>(aVal);
 }
 
 
 [[maybe_unused]]
-static std::string to_string(const GeometryStructure& geometryStructure)
+static std::string to_string(const GeometryStructure& aVal)
 {
-    std::string str;
-
-    switch(geometryStructure)
-    {
-        case GeometryStructure::Rect:         str = "Rect";         break;
-        case GeometryStructure::Line:         str = "Line";         break;
-        case GeometryStructure::Arc:          str = "Arc";          break;
-        case GeometryStructure::Ellipse:      str = "Ellipse";      break;
-        case GeometryStructure::Polygon:      str = "Polygon";      break;
-        case GeometryStructure::Polyline:     str = "Polyline";     break;
-        case GeometryStructure::CommentText:  str = "CommentText";  break;
-        case GeometryStructure::Bitmap:       str = "Bitmap";       break;
-        case GeometryStructure::SymbolVector: str = "SymbolVector"; break;
-        case GeometryStructure::Bezier:       str = "Bezier";       break;
-        default:
-            std::string errorMsg = "GeometryStructure with value 0x" + ToHex(geometryStructure, 4)
-                                 + " is not implemented!";
-            throw std::invalid_argument(errorMsg);
-            break;
-    }
-
-    return str;
+    return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const GeometryStructure& geometryStructure)
+static std::ostream& operator<<(std::ostream& aOs, const GeometryStructure& aVal)
 {
-    os << to_string(geometryStructure);
-    return os;
+    aOs << to_string(aVal);
+    return aOs;
 }
 
 

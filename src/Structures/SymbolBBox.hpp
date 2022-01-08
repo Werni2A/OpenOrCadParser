@@ -21,26 +21,26 @@ struct SymbolBBox
 
 
 [[maybe_unused]]
-static std::string to_string(const SymbolBBox& symbolBBox)
+static std::string to_string(const SymbolBBox& aObj)
 {
     std::string str;
 
-    str += "SymbolBBox:" + newLine();
-    str += indent(1) + "x1 = " + std::to_string(symbolBBox.x1) + newLine();
-    str += indent(1) + "y1 = " + std::to_string(symbolBBox.y1) + newLine();
-    str += indent(1) + "x2 = " + std::to_string(symbolBBox.x2) + newLine();
-    str += indent(1) + "y2 = " + std::to_string(symbolBBox.y2) + newLine();
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "x1 = " + std::to_string(aObj.x1) + newLine();
+    str += indent(1) + "y1 = " + std::to_string(aObj.y1) + newLine();
+    str += indent(1) + "x2 = " + std::to_string(aObj.x2) + newLine();
+    str += indent(1) + "y2 = " + std::to_string(aObj.y2) + newLine();
 
     return str;
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const SymbolBBox& symbolBBox)
+static std::ostream& operator<<(std::ostream& aOs, const SymbolBBox& aVal)
 {
-    os << to_string(symbolBBox);
+    aOs << to_string(aVal);
 
-    return os;
+    return aOs;
 }
 
 

@@ -10,24 +10,13 @@
 #include <stdexcept>
 #include <stdio.h>
 #include <string>
+#include <utility>
 #include <vector>
 
-
-#include "../Parser.hpp"
-#include "../Structures/Package.hpp"
-
-
-#include <utility>
-
 #include "../Enums/GeometryStructure.hpp"
-
-
-
-
-
-
+#include "../Parser.hpp"
 #include "../Structures/CommentText.hpp"
-
+#include "../Structures/Package.hpp"
 #include "../Structures/TextFont.hpp"
 // #include "Library.hpp"
 
@@ -145,7 +134,7 @@ std::string SymbolUserProp::getVal() const
 
 void Parser::readTitleBlockSymbol()
 {
-    std::cout << print_unknown_data(36, std::string(__func__) + " - 0") << std::endl;
+    mDs.printUnknownData(std::clog, 36, std::string(__func__) + " - 0");
 
     std::vector<SymbolUserProp> symbolUserProps; // @todo store in symbol
 
@@ -171,9 +160,9 @@ void Parser::readTitleBlockSymbol()
 
     // The following should be its own structure
     readPreamble();
-    std::string str0 = readStringBothTerm();
+    std::string str0 = mDs.readStringLenZeroTerm();
 
-    std::cout << print_unknown_data(7, std::string(__func__) + " - 1") << std::endl;
+    mDs.printUnknownData(std::clog, 7, std::string(__func__) + " - 1");
 
     const uint16_t someLen = mDs.readUint16();
 
@@ -190,8 +179,8 @@ void Parser::readTitleBlockSymbol()
 
     readPreamble();
 
-    assume_data({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 2");
-    std::cout << print_unknown_data(6, std::string(__func__) + " - 3");
+    mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 2");
+    mDs.printUnknownData(std::clog, 6, std::string(__func__) + " - 3");
 
     const uint16_t followingLen = mDs.readUint16();
 
@@ -305,8 +294,8 @@ Package Parser::parseSymbol()
         case Structure::PortSymbol:
         case Structure::OffPageSymbol:
         case Structure::PinShapeSymbol:
-            std::cout << print_unknown_data(2, std::string(__func__) + " - 0") << std::endl;
-            assume_data({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
+            mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 0");
+            mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
             structure = read_type_prefix_long();
             break;
 
@@ -331,7 +320,7 @@ Package Parser::parseSymbol()
     }
     else
     {
-        std::cout << print_unknown_data(10, std::string(__func__) + " - 1.1") << std::endl;
+        mDs.printUnknownData(std::clog, 10, std::string(__func__) + " - 1.1");
     }
 
     // @todo how often does it repeat? This should be specified somewhere....
@@ -348,7 +337,7 @@ Package Parser::parseSymbol()
         // readPreamble();
         pushStructure(parseStructure(structure), symbol);
 
-        std::cout << print_unknown_data(2, std::string(__func__) + " - 2") << std::endl;
+        mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 2");
     }
 
     if(!mDs.isEoF())
@@ -389,7 +378,7 @@ Package Parser::parsePackage()
         pushStructure(parseStructure(structure), package);
 
         // if(structure == Structure::GeoDefinition && mFileFormatVersion == FileFormatVersion::C)
-        //     discard_bytes(6);
+        //     mDs.discardBytes(6);
 
         // structure = read_type_prefix();
 
@@ -397,8 +386,8 @@ Package Parser::parsePackage()
 
         if(mFileFormatVersion == FileFormatVersion::B)
         {
-            assume_data({0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
-            // std::cout << print_unknown_data(8, std::string(__func__) + " - 1");
+            mDs.assumeData({0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
+            // mDs.printUnknownData(std::clog, 8, std::string(__func__) + " - 1");
         }
         else if(mFileFormatVersion >= FileFormatVersion::C)
         {
@@ -407,9 +396,9 @@ Package Parser::parsePackage()
 
         std::cout << "Marker 3" << std::endl;
 
-        assume_data({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 2");
-        std::cout << print_unknown_data(4, std::string(__func__) + " - 2") << std::endl;
-        // std::cout << print_unknown_data(12, std::string(__func__) + " - 2") << std::endl;
+        mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 2");
+        mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 2");
+        // mDs.printUnknownData(std::clog, 12, std::string(__func__) + " - 2");
 
         const uint16_t followingLen1 = mDs.readUint16();
 
@@ -440,7 +429,7 @@ Package Parser::parsePackage()
         std::cout << "Marker 5" << std::endl;
 
         /*
-        std::cout << print_unknown_data(22, std::string(__func__) + " - w") << std::endl;
+        mDs.printUnknownData(std::clog, 22, std::string(__func__) + " - w");
         structure = read_type_prefix();
         readConditionalPreamble(structure);
         // readPreamble();

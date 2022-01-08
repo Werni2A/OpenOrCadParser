@@ -23,25 +23,25 @@ struct DirItemType
 
 
 [[maybe_unused]]
-static std::string to_string(const DirItemType& dirItemType)
+static std::string to_string(const DirItemType& aObj)
 {
     std::string str;
 
-    str += "DirItemType:" + newLine();
-    str += indent(1) + "name  = " + dirItemType.name + newLine();
-    str += indent(1) + "componentType = " + to_string(dirItemType.componentType) + newLine();
-    str += indent(1) + "timezone      = " + TimezoneToStr(dirItemType.timezone)  + newLine();
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "name  = " + aObj.name + newLine();
+    str += indent(1) + "componentType = " + to_string(aObj.componentType) + newLine();
+    str += indent(1) + "timezone      = " + TimezoneToStr(aObj.timezone)  + newLine();
 
     return str;
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const DirItemType& dirItemType)
+static std::ostream& operator<<(std::ostream& aOs, const DirItemType& aVal)
 {
-    os << to_string(dirItemType);
+    aOs << to_string(aVal);
 
-    return os;
+    return aOs;
 }
 
 
@@ -54,17 +54,17 @@ struct DirectoryStruct
 
 
 [[maybe_unused]]
-static std::string to_string(const DirectoryStruct& directoryStruct)
+static std::string to_string(const DirectoryStruct& aObj)
 {
     std::string str;
 
     str += "DirectoryStruct:" + newLine();
-    str += indent(1) + "lastModifiedDate = " + DateTimeToStr(directoryStruct.lastModifiedDate) + newLine();;
+    str += indent(1) + "lastModifiedDate = " + DateTimeToStr(aObj.lastModifiedDate) + newLine();;
 
     str += indent(1) + "items:" + newLine();
-    for(size_t i = 0u; i < directoryStruct.items.size(); ++i)
+    for(size_t i = 0u; i < aObj.items.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(directoryStruct.items[i]), 2);
+        str += indent(std::to_string(i) + ": " + to_string(aObj.items[i]), 2);
     }
 
     return str;
@@ -72,10 +72,10 @@ static std::string to_string(const DirectoryStruct& directoryStruct)
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const DirectoryStruct& directoryStruct)
+static std::ostream& operator<<(std::ostream& aOs, const DirectoryStruct& aVal)
 {
-    os << to_string(directoryStruct);
-    return os;
+    aOs << to_string(aVal);
+    return aOs;
 }
 
 

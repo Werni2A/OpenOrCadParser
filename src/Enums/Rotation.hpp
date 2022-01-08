@@ -3,10 +3,12 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
-#include <stdexcept>
 #include <string>
+
+#include <magic_enum.hpp>
+
+#include "../General.hpp"
 
 
 enum class Rotation
@@ -19,54 +21,24 @@ enum class Rotation
 
 
 [[maybe_unused]]
-static Rotation ToRotation(uint8_t val)
+static constexpr Rotation ToRotation(uint8_t aVal)
 {
-    Rotation rotation;
-
-    switch(val)
-    {
-        case 0: rotation = Rotation::Deg_0;   break;
-        case 1: rotation = Rotation::Deg_90;  break;
-        case 2: rotation = Rotation::Deg_180; break;
-        case 3: rotation = Rotation::Deg_270; break;
-        default:
-            std::string errorMsg = "Rotation with value " + std::to_string(val)
-                                 + " is not implemented!";
-            throw std::invalid_argument(errorMsg);
-            break;
-    }
-
-    return rotation;
+    return ToEnum<Rotation, decltype(aVal)>(aVal);
 }
 
 
 [[maybe_unused]]
-static std::string to_string(const Rotation& rotation)
+static std::string to_string(const Rotation& aVal)
 {
-    std::string str;
-
-    switch(rotation)
-    {
-        case Rotation::Deg_0:   str = "0°";   break;
-        case Rotation::Deg_90:  str = "90°";  break;
-        case Rotation::Deg_180: str = "180°"; break;
-        case Rotation::Deg_270: str = "270°"; break;
-        default:
-            std::string errorMsg = "Rotation " + std::to_string(static_cast<size_t>(rotation))
-                                 + " is not implemented!";
-            throw std::invalid_argument(errorMsg);
-            break;
-    }
-
-    return str;
+    return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const Rotation& rotation)
+static std::ostream& operator<<(std::ostream& aOs, const Rotation& aVal)
 {
-    os << to_string(rotation);
-    return os;
+    aOs << to_string(aVal);
+    return aOs;
 }
 
 

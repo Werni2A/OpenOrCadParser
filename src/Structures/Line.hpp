@@ -4,6 +4,7 @@
 
 #include <cstdint>
 #include <iostream>
+#include <optional>
 #include <ostream>
 #include <string>
 
@@ -13,40 +14,64 @@
 
 struct Line
 {
+    static size_t getExpectedStructSize(FileFormatVersion aVersion);
+
+    void setLineStyle(const LineStyle& aVal)
+    {
+        mLineStyle = std::make_optional<LineStyle>(aVal);
+    }
+
+    LineStyle getLineStyle() const
+    {
+        return mLineStyle.value_or(LineStyle::Solid);
+    }
+
+    void setLineWidth(const LineWidth& aVal)
+    {
+        mLineWidth = std::make_optional<LineWidth>(aVal);
+    }
+
+    LineWidth getLineWidth() const
+    {
+        return mLineWidth.value_or(LineWidth::Default);
+    }
+
     int32_t x1;
     int32_t y1;
 
     int32_t x2;
     int32_t y2;
 
-    LineStyle lineStyle;
-    LineWidth lineWidth;
+private:
+
+    std::optional<LineStyle> mLineStyle;
+    std::optional<LineWidth> mLineWidth;
 };
 
 
 [[maybe_unused]]
-static std::string to_string(const Line& line)
+static std::string to_string(const Line& aObj)
 {
     std::string str;
 
-    str += "Line:" + newLine();
-    str += indent(1) + "x1 = " + std::to_string(line.x1) + newLine();
-    str += indent(1) + "y1 = " + std::to_string(line.y1) + newLine();
-    str += indent(1) + "x2 = " + std::to_string(line.x2) + newLine();
-    str += indent(1) + "y2 = " + std::to_string(line.y2) + newLine();
-    str += indent(1) + "lineStyle = " + to_string(line.lineStyle) + newLine();
-    str += indent(1) + "lineWidth = " + to_string(line.lineWidth) + newLine();
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "x1 = " + std::to_string(aObj.x1) + newLine();
+    str += indent(1) + "y1 = " + std::to_string(aObj.y1) + newLine();
+    str += indent(1) + "x2 = " + std::to_string(aObj.x2) + newLine();
+    str += indent(1) + "y2 = " + std::to_string(aObj.y2) + newLine();
+    str += indent(1) + "lineStyle = " + to_string(aObj.getLineStyle()) + newLine();
+    str += indent(1) + "lineWidth = " + to_string(aObj.getLineWidth()) + newLine();
 
     return str;
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const Line& line)
+static std::ostream& operator<<(std::ostream& aOs, const Line& aVal)
 {
-    os << to_string(line);
+    aOs << to_string(aVal);
 
-    return os;
+    return aOs;
 }
 
 

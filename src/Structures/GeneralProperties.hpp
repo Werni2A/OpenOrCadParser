@@ -27,30 +27,30 @@ struct GeneralProperties
 
 
 [[maybe_unused]]
-static std::string to_string(const GeneralProperties& generalProperties)
+static std::string to_string(const GeneralProperties& aObj)
 {
     std::string str;
 
-    str += "GeneralProperties:" + newLine();
-    str += indent(1) + "implementationPath = " + generalProperties.implementationPath + newLine();
-    str += indent(1) + "implementation     = " + generalProperties.implementation     + newLine();
-    str += indent(1) + "refDes             = " + generalProperties.refDes             + newLine();
-    str += indent(1) + "partValue          = " + generalProperties.partValue          + newLine();
-    str += indent(1) + "implementationType = " + to_string(generalProperties.implementationType)    + newLine();
-    str += indent(1) + "pinNameVisible     = " + std::to_string(generalProperties.pinNameVisible)   + newLine();
-    str += indent(1) + "pinNameRotate      = " + std::to_string(generalProperties.pinNameRotate)    + newLine();
-    str += indent(1) + "pinNumberVisible   = " + std::to_string(generalProperties.pinNumberVisible) + newLine();
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "implementationPath = " + aObj.implementationPath + newLine();
+    str += indent(1) + "implementation     = " + aObj.implementation     + newLine();
+    str += indent(1) + "refDes             = " + aObj.refDes             + newLine();
+    str += indent(1) + "partValue          = " + aObj.partValue          + newLine();
+    str += indent(1) + "implementationType = " + to_string(aObj.implementationType)    + newLine();
+    str += indent(1) + "pinNameVisible     = " + std::to_string(aObj.pinNameVisible)   + newLine();
+    str += indent(1) + "pinNameRotate      = " + std::to_string(aObj.pinNameRotate)    + newLine();
+    str += indent(1) + "pinNumberVisible   = " + std::to_string(aObj.pinNumberVisible) + newLine();
 
     return str;
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const GeneralProperties& generalProperties)
+static std::ostream& operator<<(std::ostream& aOs, const GeneralProperties& aVal)
 {
-    os << to_string(generalProperties);
+    aOs << to_string(aVal);
 
-    return os;
+    return aOs;
 }
 
 

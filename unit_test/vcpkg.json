@@ -4,6 +4,8 @@
   "dependencies": [
     "boost-program-options",
     "catch2",
-    "compoundfilereader"
+    "compoundfilereader",
+    "magic-enum",
+    "nameof"
   ]
 }

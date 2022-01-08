@@ -31,37 +31,37 @@ struct SymbolsLibrary
 
 
 [[maybe_unused]]
-static std::string to_string(const SymbolsLibrary& symbolsLibrary)
+static std::string to_string(const SymbolsLibrary& aObj)
 {
     std::string str;
 
-    str += "SymbolsLibrary:" + newLine();
-    str += indent(1) + "introduction = " + symbolsLibrary.introduction + newLine();
-    str += indent(1) + "createDate   = " + DateTimeToStr(symbolsLibrary.createDate) + newLine();
-    str += indent(1) + "modifyDate   = " + DateTimeToStr(symbolsLibrary.modifyDate) + newLine();
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "introduction = " + aObj.introduction + newLine();
+    str += indent(1) + "createDate   = " + DateTimeToStr(aObj.createDate) + newLine();
+    str += indent(1) + "modifyDate   = " + DateTimeToStr(aObj.modifyDate) + newLine();
 
     str += indent(1) + "textFonts:" + newLine();
-    for(size_t i = 0u; i < symbolsLibrary.textFonts.size(); ++i)
+    for(size_t i = 0u; i < aObj.textFonts.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(symbolsLibrary.textFonts[i]), 2);
+        str += indent(std::to_string(i) + ": " + to_string(aObj.textFonts[i]), 2);
     }
 
     str += indent(1) + "strLstPartField:" + newLine();
-    for(size_t i = 0u; i < symbolsLibrary.strLstPartField.size(); ++i)
+    for(size_t i = 0u; i < aObj.strLstPartField.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + symbolsLibrary.strLstPartField[i], 2) + newLine();
+        str += indent(std::to_string(i) + ": " + aObj.strLstPartField[i], 2) + newLine();
     }
 
     str += indent(1) + "strLst:" + newLine();
-    for(size_t i = 0u; i < symbolsLibrary.strLst.size(); ++i)
+    for(size_t i = 0u; i < aObj.strLst.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + symbolsLibrary.strLst[i], 2) + newLine();
+        str += indent(std::to_string(i) + ": " + aObj.strLst[i], 2) + newLine();
     }
 
     str += indent(1) + "partAliases:" + newLine();
-    for(size_t i = 0u; i < symbolsLibrary.partAliases.size(); ++i)
+    for(size_t i = 0u; i < aObj.partAliases.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + symbolsLibrary.partAliases[i].first + " = " + symbolsLibrary.partAliases[i].second, 2) + newLine();
+        str += indent(std::to_string(i) + ": " + aObj.partAliases[i].first + " = " + aObj.partAliases[i].second, 2) + newLine();
     }
 
     return str;
@@ -69,10 +69,10 @@ static std::string to_string(const SymbolsLibrary& symbolsLibrary)
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const SymbolsLibrary& symbolsLibrary)
+static std::ostream& operator<<(std::ostream& aOs, const SymbolsLibrary& aVal)
 {
-    os << to_string(symbolsLibrary);
-    return os;
+    aOs << to_string(aVal);
+    return aOs;
 }
 
 

@@ -3,10 +3,12 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
-#include <stdexcept>
 #include <string>
+
+#include <magic_enum.hpp>
+
+#include "../General.hpp"
 
 
 enum class HatchStyle
@@ -24,60 +26,24 @@ enum class HatchStyle
 
 
 [[maybe_unused]]
-static HatchStyle ToHatchStyle(int32_t val)
+static constexpr HatchStyle ToHatchStyle(int32_t aVal)
 {
-    HatchStyle hatchStyle;
-
-    switch(val)
-    {
-        case -1: hatchStyle = HatchStyle::NotValid;        break;
-        case  0: hatchStyle = HatchStyle::LinesHorizontal; break;
-        case  1: hatchStyle = HatchStyle::LinesVertical;   break;
-        case  2: hatchStyle = HatchStyle::DiagonalLeft;    break;
-        case  3: hatchStyle = HatchStyle::DiagonalRight;   break;
-        case  4: hatchStyle = HatchStyle::Checkerboard;    break;
-        case  5: hatchStyle = HatchStyle::Mesh;            break;
-        default:
-            std::string errorMsg = "HatchStyle with value " + std::to_string(val)
-                                 + " is not implemented!";
-            throw std::invalid_argument(errorMsg);
-            break;
-    }
-
-    return hatchStyle;
+    return ToEnum<HatchStyle, decltype(aVal)>(aVal);
 }
 
 
 [[maybe_unused]]
-static std::string to_string(const HatchStyle& hatchStyle)
+static std::string to_string(const HatchStyle& aVal)
 {
-    std::string str;
-
-    switch(hatchStyle)
-    {
-        case HatchStyle::NotValid:        str = "NotValid";        break;
-        case HatchStyle::LinesHorizontal: str = "LinesHorizontal"; break;
-        case HatchStyle::LinesVertical:   str = "LinesVertical";   break;
-        case HatchStyle::DiagonalLeft:    str = "DiagonalLeft";    break;
-        case HatchStyle::DiagonalRight:   str = "DiagonalRight";   break;
-        case HatchStyle::Checkerboard:    str = "Checkerboard";    break;
-        case HatchStyle::Mesh:            str = "Mesh";            break;
-        default:
-            std::string errorMsg = "HatchStyle " + std::to_string(static_cast<size_t>(hatchStyle))
-                                 + " is not implemented!";
-            throw std::invalid_argument(errorMsg);
-            break;
-    }
-
-    return str;
+    return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const HatchStyle& hatchStyle)
+static std::ostream& operator<<(std::ostream& aOs, const HatchStyle& aVal)
 {
-    os << to_string(hatchStyle);
-    return os;
+    aOs << to_string(aVal);
+    return aOs;
 }
 
 

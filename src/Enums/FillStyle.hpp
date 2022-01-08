@@ -3,10 +3,12 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
-#include <stdexcept>
 #include <string>
+
+#include <magic_enum.hpp>
+
+#include "../General.hpp"
 
 
 // This configuration dominates the hatch_style.
@@ -21,52 +23,24 @@ enum class FillStyle
 
 
 [[maybe_unused]]
-static FillStyle ToFillStyle(uint32_t val)
+static constexpr FillStyle ToFillStyle(uint32_t aVal)
 {
-    FillStyle fillStyle;
-
-    switch(val)
-    {
-        case 0: fillStyle = FillStyle::Solid;        break;
-        case 1: fillStyle = FillStyle::None;         break;
-        case 2: fillStyle = FillStyle::HatchPattern; break;
-        default:
-            std::string errorMsg = "FillStyle with value " + std::to_string(val)
-                                 + " is not implemented!";
-            throw std::invalid_argument(errorMsg);
-            break;
-    }
-
-    return fillStyle;
+    return ToEnum<FillStyle, decltype(aVal)>(aVal);
 }
 
 
 [[maybe_unused]]
-static std::string to_string(const FillStyle& fillStyle)
+static std::string to_string(const FillStyle& aVal)
 {
-    std::string str;
-
-    switch(fillStyle)
-    {
-        case FillStyle::Solid:        str = "Solid";        break;
-        case FillStyle::None:         str = "None";         break;
-        case FillStyle::HatchPattern: str = "HatchPattern"; break;
-        default:
-            std::string errorMsg = "FillStyle " + std::to_string(static_cast<size_t>(fillStyle))
-                                 + " is not implemented!";
-            throw std::invalid_argument(errorMsg);
-            break;
-    }
-
-    return str;
+    return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const FillStyle& fillStyle)
+static std::ostream& operator<<(std::ostream& aOs, const FillStyle& aVal)
 {
-    os << to_string(fillStyle) << std::endl;
-    return os;
+    aOs << to_string(aVal);
+    return aOs;
 }
 
 

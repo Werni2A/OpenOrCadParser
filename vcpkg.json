@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "dependencies": [
     "boost-program-options",
-    "compoundfilereader"
+    "compoundfilereader",
+    "magic-enum",
+    "nameof"
   ]
 }

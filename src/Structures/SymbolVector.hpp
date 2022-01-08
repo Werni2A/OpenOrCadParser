@@ -40,61 +40,61 @@ struct SymbolVector
 
 
 [[maybe_unused]]
-static std::string to_string(const SymbolVector& symbolVector)
+static std::string to_string(const SymbolVector& aObj)
 {
     std::string str;
 
-    str += "SymbolVector:" + newLine();
-    str += indent(1) + "locX = " + std::to_string(symbolVector.locX) + newLine();
-    str += indent(1) + "locY = " + std::to_string(symbolVector.locY) + newLine();
-    str += indent(1) + "name = " + symbolVector.name + newLine();
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "locX = " + std::to_string(aObj.locX) + newLine();
+    str += indent(1) + "locY = " + std::to_string(aObj.locY) + newLine();
+    str += indent(1) + "name = " + aObj.name + newLine();
 
     str += indent(1) + "rects:" + newLine();
-    for(size_t i = 0u; i < symbolVector.rects.size(); ++i)
+    for(size_t i = 0u; i < aObj.rects.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(symbolVector.rects[i]), 2);
+        str += indent(std::to_string(i) + ": " + to_string(aObj.rects[i]), 2);
     }
 
     str += indent(1) + "lines:" + newLine();
-    for(size_t i = 0u; i < symbolVector.lines.size(); ++i)
+    for(size_t i = 0u; i < aObj.lines.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(symbolVector.lines[i]), 2);
+        str += indent(std::to_string(i) + ": " + to_string(aObj.lines[i]), 2);
     }
 
     str += indent(1) + "arcs:" + newLine();
-    for(size_t i = 0u; i < symbolVector.arcs.size(); ++i)
+    for(size_t i = 0u; i < aObj.arcs.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(symbolVector.arcs[i]), 2);
+        str += indent(std::to_string(i) + ": " + to_string(aObj.arcs[i]), 2);
     }
 
     str += indent(1) + "ellipses:" + newLine();
-    for(size_t i = 0u; i < symbolVector.ellipses.size(); ++i)
+    for(size_t i = 0u; i < aObj.ellipses.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(symbolVector.ellipses[i]), 2);
+        str += indent(std::to_string(i) + ": " + to_string(aObj.ellipses[i]), 2);
     }
 
     str += indent(1) + "polygons:" + newLine();
-    for(size_t i = 0u; i < symbolVector.polygons.size(); ++i)
+    for(size_t i = 0u; i < aObj.polygons.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(symbolVector.polygons[i]), 2);
+        str += indent(std::to_string(i) + ": " + to_string(aObj.polygons[i]), 2);
     }
 
     str += indent(1) + "polylines:" + newLine();
-    for(size_t i = 0u; i < symbolVector.polylines.size(); ++i)
+    for(size_t i = 0u; i < aObj.polylines.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(symbolVector.polylines[i]), 2);
+        str += indent(std::to_string(i) + ": " + to_string(aObj.polylines[i]), 2);
     }
 
     str += indent(1) + "commentTexts:" + newLine();
-    for(size_t i = 0u; i < symbolVector.commentTexts.size(); ++i)
+    for(size_t i = 0u; i < aObj.commentTexts.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(symbolVector.commentTexts[i]), 2);
+        str += indent(std::to_string(i) + ": " + to_string(aObj.commentTexts[i]), 2);
     }
 
     str += indent(1) + "beziers:" + newLine();
-    for(size_t i = 0u; i < symbolVector.beziers.size(); ++i)
+    for(size_t i = 0u; i < aObj.beziers.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(symbolVector.beziers[i]), 2);
+        str += indent(std::to_string(i) + ": " + to_string(aObj.beziers[i]), 2);
     }
 
     return str;
@@ -102,11 +102,11 @@ static std::string to_string(const SymbolVector& symbolVector)
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const SymbolVector& symbolVector)
+static std::ostream& operator<<(std::ostream& aOs, const SymbolVector& aVal)
 {
-    os << to_string(symbolVector);
+    aOs << to_string(aVal);
 
-    return os;
+    return aOs;
 }
 
 

@@ -20,23 +20,23 @@ struct Point
 
 
 [[maybe_unused]]
-static std::string to_string(const Point& point)
+static std::string to_string(const Point& aObj)
 {
     std::string str;
 
-    str += "Point:" + newLine();
-    str += indent(1) + "x = " + std::to_string(point.x) + newLine();
-    str += indent(1) + "y = " + std::to_string(point.y) + newLine();
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "x = " + std::to_string(aObj.x) + newLine();
+    str += indent(1) + "y = " + std::to_string(aObj.y) + newLine();
     return str;
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const Point& point)
+static std::ostream& operator<<(std::ostream& aOs, const Point& aVal)
 {
-    os << to_string(point);
+    aOs << to_string(aVal);
 
-    return os;
+    return aOs;
 }
 
 

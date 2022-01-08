@@ -8,6 +8,7 @@
 
 #include <cstdint>
 #include <iostream>
+#include <optional>
 #include <ostream>
 #include <string>
 #include <vector>
@@ -20,26 +21,52 @@
 
 struct Bezier
 {
-    LineStyle lineStyle;
-    LineWidth lineWidth;
+    static size_t getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount);
+
+    void setLineStyle(const LineStyle& aVal)
+    {
+        mLineStyle = std::make_optional<LineStyle>(aVal);
+    }
+
+    LineStyle getLineStyle() const
+    {
+        return mLineStyle.value_or(LineStyle::Solid);
+    }
+
+    void setLineWidth(const LineWidth& aVal)
+    {
+        mLineWidth = std::make_optional<LineWidth>(aVal);
+    }
+
+    LineWidth getLineWidth() const
+    {
+        return mLineWidth.value_or(LineWidth::Default);
+    }
+
+private:
+
+    std::optional<LineStyle> mLineStyle;
+    std::optional<LineWidth> mLineWidth;
+
+public:
 
     std::vector<Point> points;
 };
 
 
 [[maybe_unused]]
-static std::string to_string(const Bezier& bezier)
+static std::string to_string(const Bezier& aObj)
 {
     std::string str;
 
-    str += "Bezier:" + newLine();
-    str += indent(1) + "lineStyle  = " + to_string(bezier.lineStyle) + newLine();;
-    str += indent(1) + "lineWidth  = " + to_string(bezier.lineWidth) + newLine();;
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "lineStyle  = " + to_string(aObj.getLineStyle()) + newLine();;
+    str += indent(1) + "lineWidth  = " + to_string(aObj.getLineWidth()) + newLine();;
 
     str += indent(1) + "points:" + newLine();
-    for(size_t i = 0u; i < bezier.points.size(); ++i)
+    for(size_t i = 0u; i < aObj.points.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(bezier.points[i]), 2);
+        str += indent(std::to_string(i) + ": " + to_string(aObj.points[i]), 2);
     }
 
     return str;
@@ -47,11 +74,11 @@ static std::string to_string(const Bezier& bezier)
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const Bezier& bezier)
+static std::ostream& operator<<(std::ostream& aOs, const Bezier& aVal)
 {
-    os << to_string(bezier);
+    aOs << to_string(aVal);
 
-    return os;
+    return aOs;
 }
 
 

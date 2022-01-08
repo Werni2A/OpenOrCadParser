@@ -3,10 +3,12 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
-#include <stdexcept>
 #include <string>
+
+#include <magic_enum.hpp>
+
+#include "../General.hpp"
 
 
 enum class LineWidth
@@ -20,54 +22,24 @@ enum class LineWidth
 
 
 [[maybe_unused]]
-static LineWidth ToLineWidth(uint32_t val)
+static constexpr LineWidth ToLineWidth(uint32_t aVal)
 {
-    LineWidth lineWidth;
-
-    switch(val)
-    {
-        case 0: lineWidth = LineWidth::Thin;    break;
-        case 1: lineWidth = LineWidth::Medium;  break;
-        case 2: lineWidth = LineWidth::Wide;    break;
-        case 3: lineWidth = LineWidth::Default; break;
-        default:
-            std::string errorMsg = "LineWidth with value " + std::to_string(val)
-                                 + " is not implemented!";
-            throw std::invalid_argument(errorMsg);
-            break;
-    }
-
-    return lineWidth;
+    return ToEnum<LineWidth, decltype(aVal)>(aVal);
 }
 
 
 [[maybe_unused]]
-static std::string to_string(const LineWidth& lineWidth)
+static std::string to_string(const LineWidth& aVal)
 {
-    std::string str;
-
-    switch(lineWidth)
-    {
-        case LineWidth::Thin:    str = "Thin";    break;
-        case LineWidth::Medium:  str = "Medium";  break;
-        case LineWidth::Wide:    str = "Wide";    break;
-        case LineWidth::Default: str = "Default"; break;
-        default:
-            std::string errorMsg = "LineWidth " + std::to_string(static_cast<size_t>(lineWidth))
-                                 + " is not implemented!";
-            throw std::invalid_argument(errorMsg);
-            break;
-    }
-
-    return str;
+    return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const LineWidth& lineWidth)
+static std::ostream& operator<<(std::ostream& aOs, const LineWidth& aVal)
 {
-    os << to_string(lineWidth);
-    return os;
+    aOs << to_string(aVal);
+    return aOs;
 }
 
 

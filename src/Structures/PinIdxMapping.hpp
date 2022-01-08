@@ -28,18 +28,18 @@ struct PinIdxMapping
 
 
 [[maybe_unused]]
-static std::string to_string(const PinIdxMapping& pinIdxMapping)
+static std::string to_string(const PinIdxMapping& aObj)
 {
     std::string str;
 
-    str += "PinIdxMapping:" + newLine();
-    str += indent(1) + "unitRef = " + pinIdxMapping.unitRef + newLine();
-    str += indent(1) + "refDes  = " + pinIdxMapping.refDes  + newLine();
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "unitRef = " + aObj.unitRef + newLine();
+    str += indent(1) + "refDes  = " + aObj.refDes  + newLine();
 
     str += indent(1) + "pinMap:" + newLine();
-    for(size_t i = 0u; i < pinIdxMapping.pinMap.size(); ++i)
+    for(size_t i = 0u; i < aObj.pinMap.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + pinIdxMapping.pinMap[i], 2) + newLine();
+        str += indent(std::to_string(i) + ": " + aObj.pinMap[i], 2) + newLine();
     }
 
     return str;
@@ -47,11 +47,11 @@ static std::string to_string(const PinIdxMapping& pinIdxMapping)
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const PinIdxMapping& pinIdxMapping)
+static std::ostream& operator<<(std::ostream& aOs, const PinIdxMapping& aVal)
 {
-    os << to_string(pinIdxMapping);
+    aOs << to_string(aVal);
 
-    return os;
+    return aOs;
 }
 
 

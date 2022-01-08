@@ -27,28 +27,28 @@ struct TextFont
 
 
 [[maybe_unused]]
-static std::string to_string(const TextFont& textFont)
+static std::string to_string(const TextFont& aObj)
 {
     std::string str;
 
-    str += "TextFont:" + newLine();
-    str += indent(1) + "height = " + std::to_string(textFont.height) + newLine();
-    str += indent(1) + "width  = " + std::to_string(textFont.width)  + newLine();
-    str += indent(1) + "escapement = " + std::to_string(textFont.escapement) + newLine();
-    str += indent(1) + "weight = " + std::to_string(textFont.weight) + newLine();
-    str += indent(1) + "italic = " + std::to_string(textFont.italic) + newLine();
-    str += indent(1) + "fontName = " + textFont.fontName + newLine();
+    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += indent(1) + "height = " + std::to_string(aObj.height) + newLine();
+    str += indent(1) + "width  = " + std::to_string(aObj.width)  + newLine();
+    str += indent(1) + "escapement = " + std::to_string(aObj.escapement) + newLine();
+    str += indent(1) + "weight = " + std::to_string(aObj.weight) + newLine();
+    str += indent(1) + "italic = " + std::to_string(aObj.italic) + newLine();
+    str += indent(1) + "fontName = " + aObj.fontName + newLine();
 
     return str;
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& os, const TextFont& textFont)
+static std::ostream& operator<<(std::ostream& aOs, const TextFont& aVal)
 {
-    os << to_string(textFont);
+    aOs << to_string(aVal);
 
-    return os;
+    return aOs;
 }
 
 

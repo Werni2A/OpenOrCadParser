@@ -15,8 +15,8 @@ TEST_CASE("0000: Check Line - Complex", "[Line]")
 
     const Line& line = lib.packages.at(0).geometrySpecifications.at(0).lines.at(0);
 
-    REQUIRE(line.lineStyle == LineStyle::DashDot);
-    REQUIRE(line.lineWidth == LineWidth::Wide);
+    REQUIRE(line.getLineStyle() == LineStyle::DashDot);
+    REQUIRE(line.getLineWidth() == LineWidth::Wide);
 
     REQUIRE(line.x1 == 10);
     REQUIRE(line.y1 == 20);
@@ -69,8 +69,8 @@ TEST_CASE("0002: Check Rect - Complex", "[Rect]")
     REQUIRE(rect.fillStyle  == FillStyle::HatchPattern);
     REQUIRE(rect.hatchStyle == HatchStyle::Mesh);
 
-    REQUIRE(rect.lineStyle == LineStyle::Dash);
-    REQUIRE(rect.lineWidth == LineWidth::Thin);
+    REQUIRE(rect.getLineStyle() == LineStyle::Dash);
+    REQUIRE(rect.getLineWidth() == LineWidth::Thin);
 
     REQUIRE(rect.x1 == 20);
     REQUIRE(rect.y1 == 12);
@@ -92,8 +92,8 @@ TEST_CASE("0003: Check Ellipse - Complex", "[Ellipse]")
     REQUIRE(ellipse.fillStyle  == FillStyle::Solid);
     REQUIRE(ellipse.hatchStyle == HatchStyle::NotValid);
 
-    REQUIRE(ellipse.lineStyle == LineStyle::Default);
-    REQUIRE(ellipse.lineWidth == LineWidth::Thin);
+    REQUIRE(ellipse.getLineStyle() == LineStyle::Default);
+    REQUIRE(ellipse.getLineWidth() == LineWidth::Thin);
 
     REQUIRE(ellipse.x1 == 10);
     REQUIRE(ellipse.y1 == 20);
@@ -112,8 +112,8 @@ TEST_CASE("0004: Check Arc - Complex", "[Arc]")
 
     const Arc& arc = lib.packages.at(0).geometrySpecifications.at(0).arcs.at(0);
 
-    REQUIRE(arc.lineStyle == LineStyle::Dash);
-    REQUIRE(arc.lineWidth == LineWidth::Medium);
+    REQUIRE(arc.getLineStyle() == LineStyle::Dash);
+    REQUIRE(arc.getLineWidth() == LineWidth::Medium);
 
     REQUIRE(arc.x1 ==  0);
     REQUIRE(arc.y1 == 20);
@@ -138,8 +138,8 @@ TEST_CASE("0005: Check Bezier - Complex", "[Bezier]")
 
     const Bezier& bezier = lib.packages.at(0).geometrySpecifications.at(0).beziers.at(0);
 
-    REQUIRE(bezier.lineStyle == LineStyle::Solid);
-    REQUIRE(bezier.lineWidth == LineWidth::Thin);
+    REQUIRE(bezier.getLineStyle() == LineStyle::Solid);
+    REQUIRE(bezier.getLineWidth() == LineWidth::Thin);
 
     REQUIRE(bezier.points.at(0).x == 10);
     REQUIRE(bezier.points.at(0).y == 10);
@@ -191,8 +191,8 @@ TEST_CASE("0006: Check Polyline - Complex", "[Polyline]")
 
     const Polyline& polyline = lib.packages.at(0).geometrySpecifications.at(0).polylines.at(0);
 
-    REQUIRE(polyline.lineStyle == LineStyle::Solid);
-    REQUIRE(polyline.lineWidth == LineWidth::Thin);
+    REQUIRE(polyline.getLineStyle() == LineStyle::Solid);
+    REQUIRE(polyline.getLineWidth() == LineWidth::Thin);
 
     REQUIRE(polyline.points.at(0).x == 10);
     REQUIRE(polyline.points.at(0).y == 10);
