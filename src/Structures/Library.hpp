@@ -11,6 +11,7 @@
 #include "DirectoryStruct.hpp"
 #include "Package.hpp"
 #include "SymbolsLibrary.hpp"
+#include "Type.hpp"
 
 
 struct Library

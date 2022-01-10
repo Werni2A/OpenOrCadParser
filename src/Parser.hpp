@@ -39,6 +39,7 @@
 #include "Structures/SymbolVector.hpp"
 #include "Structures/T0x1f.hpp"
 #include "Structures/TextFont.hpp"
+#include "Structures/Type.hpp"
 
 
 namespace fs = std::filesystem;
