@@ -38,6 +38,7 @@
 #include "Structures/SymbolPinScalar.hpp"
 #include "Structures/SymbolsLibrary.hpp"
 #include "Structures/T0x1f.hpp"
+#include "Structures/Type.hpp"
 
 
 namespace fs = std::filesystem;

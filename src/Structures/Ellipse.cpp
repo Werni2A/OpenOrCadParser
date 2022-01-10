@@ -54,14 +54,8 @@ Ellipse Parser::readEllipse()
 
     if(mFileFormatVersion >= FileFormatVersion::C)
     {
-        obj.fillStyle  = ToFillStyle(mDs.readUint32());
-        obj.hatchStyle = ToHatchStyle(mDs.readInt32());
-    }
-    else
-    {
-        // Set default values
-        obj.fillStyle  = FillStyle::None;
-        obj.hatchStyle = HatchStyle::LinesHorizontal;
+        obj.setFillStyle(ToFillStyle(mDs.readUint32()));
+        obj.setHatchStyle(ToHatchStyle(mDs.readInt32()));
     }
 
     if(mDs.getCurrentOffset() != startOffset + byteLength)

@@ -42,16 +42,39 @@ struct Ellipse
         return mLineWidth.value_or(LineWidth::Default);
     }
 
+    void setFillStyle(const FillStyle& aVal)
+    {
+        mFillStyle = std::make_optional<FillStyle>(aVal);
+    }
+
+    FillStyle getFillStyle() const
+    {
+        return mFillStyle.value_or(FillStyle::None);
+    }
+
+    void setHatchStyle(const HatchStyle& aVal)
+    {
+        mHatchStyle = std::make_optional<HatchStyle>(aVal);
+    }
+
+    HatchStyle getHatchStyle() const
+    {
+        return mHatchStyle.value_or(HatchStyle::NotValid);
+    }
+
     int32_t x1;
     int32_t y1;
 
     int32_t x2;
     int32_t y2;
 
-    std::optional<LineStyle> mLineStyle;
-    std::optional<LineWidth> mLineWidth;
-    FillStyle fillStyle;
-    HatchStyle hatchStyle;
+private:
+
+    std::optional<LineStyle>  mLineStyle;
+    std::optional<LineWidth>  mLineWidth;
+
+    std::optional<FillStyle>  mFillStyle;
+    std::optional<HatchStyle> mHatchStyle;
 };
 
 
@@ -67,8 +90,8 @@ static std::string to_string(const Ellipse& aObj)
     str += indent(1) + "y2 = " + std::to_string(aObj.y2) + newLine();
     str += indent(1) + "lineStyle  = " + to_string(aObj.getLineStyle()) + newLine();
     str += indent(1) + "lineWidth  = " + to_string(aObj.getLineWidth()) + newLine();
-    str += indent(1) + "fillStyle  = " + to_string(aObj.fillStyle) + newLine();
-    str += indent(1) + "hatchStyle = " + to_string(aObj.hatchStyle) + newLine();
+    str += indent(1) + "fillStyle  = " + to_string(aObj.getFillStyle()) + newLine();
+    str += indent(1) + "hatchStyle = " + to_string(aObj.getHatchStyle()) + newLine();
 
     return str;
 }

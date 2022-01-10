@@ -89,8 +89,8 @@ TEST_CASE("0003: Check Ellipse - Complex", "[Ellipse]")
 
     const Ellipse& ellipse = lib.packages.at(0).geometrySpecifications.at(0).ellipses.at(0);
 
-    REQUIRE(ellipse.fillStyle  == FillStyle::Solid);
-    REQUIRE(ellipse.hatchStyle == HatchStyle::NotValid);
+    REQUIRE(ellipse.getFillStyle()  == FillStyle::Solid);
+    REQUIRE(ellipse.getHatchStyle() == HatchStyle::NotValid);
 
     REQUIRE(ellipse.getLineStyle() == LineStyle::Default);
     REQUIRE(ellipse.getLineWidth() == LineWidth::Thin);

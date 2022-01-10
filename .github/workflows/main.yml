@@ -15,18 +15,12 @@ jobs:
         git clone https://github.com/microsoft/vcpkg.git
         ./vcpkg/bootstrap-vcpkg.sh
 
-    - name: Build application
+    - name: Build
       run: |
         cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake
         cmake --build build
 
-    - name: Build unit tests
-      run: |
-        cd unit_test
-        cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
-        cmake --build build
-
     - name: Run unit tests
       run: |
-        cd unit_test
-        ./build/unit_tests
+        cd test
+        ./../build/test/test
