@@ -25,7 +25,7 @@ The following two XSD files provide a good overview of the `XML` file structure,
 
 ---
 
-# Current State &mdash; October 2021
+# Current State &mdash; January 2022
 
 - Working on parsing library symbols.
 
@@ -38,7 +38,6 @@ The following two XSD files provide a good overview of the `XML` file structure,
 VCPKG_DIR=../vcpkg
 
 # Build
-mkdir -p build
 cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=$VCPKG_DIR/scripts/buildsystems/vcpkg.cmake
 cmake --build build
 ```
@@ -49,13 +48,15 @@ cmake --build build
 - [CMake](https://cmake.org/) >= 2.8.12
 - [Boost](https://www.boost.org/) - Program Options
 - [compoundfilereader](https://github.com/Microsoft/compoundfilereader)
+- [Magic Enum](https://github.com/Neargye/magic_enum)
+- [Nameof](https://github.com/Neargye/magic_enum)
 
 ---
 
 # Usage
 
 ```bash
-./OpenOrCadParser --help
+./cli/OpenOrCadParser --help
 Allowed options:
   -h [ --help ]         produce help message
   -t [ --print_tree ]   print container tree
@@ -63,8 +64,8 @@ Allowed options:
   -i [ --input ] arg    input file to parse
   -o [ --output ] arg   output path (required iff extract is set)
 
-./OpenOrCadParser --input file.DSN --extract --output out/
-./OpenOrCadParser --input file.DSN --print_tree
+./cli/OpenOrCadParser --input file.DSN --extract --output out/
+./cli/OpenOrCadParser --input file.DSN --print_tree
 ```
 
 ---
