@@ -1,2 +1,5 @@
 .vscode/
 build/
+test/src/Misc
+!test/src/Misc/.gitkeep
+thirdparty

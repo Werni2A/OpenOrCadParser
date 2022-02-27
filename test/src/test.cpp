@@ -6,6 +6,9 @@
 #include <Parser.hpp>
 
 
+namespace fs = std::filesystem;
+
+
 TEST_CASE("0000: Check Line - Complex", "[Line]")
 {
     const fs::path inputFile{"test_cases/0000.OLB"};

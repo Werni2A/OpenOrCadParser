@@ -4,6 +4,7 @@
 
 #include <cstdint>
 #include <ctime>
+#include <filesystem>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -16,6 +17,9 @@
 
 
 #define TURN_MSG_STYLE_ON (false)
+
+
+namespace fs = std::filesystem;
 
 
 /**

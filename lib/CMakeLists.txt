@@ -60,7 +60,7 @@ set(HEADERS
 )
 
 # Create library file from sources
-add_library(${NAME_LIB} ${SOURCES} ${HEADERS})
+add_library(${NAME_LIB} SHARED ${SOURCES} ${HEADERS})
 
 target_include_directories(${NAME_LIB} PRIVATE
                            ${COMPOUNDFILEREADER_INCLUDE_DIRS}
