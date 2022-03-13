@@ -1,2 +1,7 @@
+__pycache__
+!test/src/Misc/.gitkeep
 .vscode/
 build/
+test/src/Misc
+!test/src/Misc/.gitkeep
+thirdparty

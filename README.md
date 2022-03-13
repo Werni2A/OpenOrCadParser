@@ -25,9 +25,10 @@ The following two XSD files provide a good overview of the `XML` file structure,
 
 ---
 
-# Current State &mdash; January 2022
+# Current State &mdash; March 2022
 
 - Working on parsing library symbols.
+- Improving test coverage.
 
 ---
 
@@ -56,7 +57,7 @@ cmake --build build
 # Usage
 
 ```bash
-./cli/OpenOrCadParser --help
+./cli/OpenOrCadParser-cli --help
 Allowed options:
   -h [ --help ]         produce help message
   -t [ --print_tree ]   print container tree
@@ -64,9 +65,15 @@ Allowed options:
   -i [ --input ] arg    input file to parse
   -o [ --output ] arg   output path (required iff extract is set)
 
-./cli/OpenOrCadParser --input file.DSN --extract --output out/
-./cli/OpenOrCadParser --input file.DSN --print_tree
+./cli/OpenOrCadParser-cli --input file.DSN --extract --output out/
+./cli/OpenOrCadParser-cli --input file.DSN --print_tree
 ```
+
+---
+
+# Unit Tests
+
+[Test Documentation](doc/tests.md)
 
 ---
 

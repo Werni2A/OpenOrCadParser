@@ -7,10 +7,13 @@ find_package(magic_enum CONFIG REQUIRED)
 # Add Nameof dependency
 find_package(nameof CONFIG REQUIRED)
 
+# Add automatically generated test files
+file(GLOB TEST_MISC_SRC ${TEST_SRC_DIR}/Misc/Test_*.cpp)
+
 set(SOURCES
    ${TEST_SRC_DIR}/catch_main.cpp
    ${TEST_SRC_DIR}/test.cpp
-   
+   ${TEST_MISC_SRC}
 )
 
 set(HEADERS

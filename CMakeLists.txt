@@ -24,8 +24,8 @@ set(CLI_INCLUDE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(TEST_SRC_DIR     ${CMAKE_CURRENT_SOURCE_DIR}/test/src)
 set(TEST_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test/src)
 
-set(NAME_LIB  LibOpenOrCadParser)
-set(NAME_CLI  OpenOrCadParser)
+set(NAME_LIB  OpenOrCadParser)
+set(NAME_CLI  OpenOrCadParser-cli)
 set(NAME_TEST test)
 
 add_subdirectory(lib)

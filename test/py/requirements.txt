@@ -1,0 +1,2 @@
+GitPython==3.1.26
+pydantic==1.9.0

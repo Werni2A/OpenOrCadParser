@@ -57,6 +57,30 @@ void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& e
         std::cout << desc << std::endl;
         std::exit(1);
     }
+
+    if(vm.count("output"))
+    {
+        output = fs::path{vm["output"].as<std::string>()};
+        if(!fs::exists(output))
+        {
+            std::cout << "The following output directory was not found: " << output.string() << std::endl;
+            std::cout << desc << std::endl;
+            std::exit(1);
+        }
+
+        if(!fs::is_directory(output))
+        {
+            std::cout << "The following output path is not a directory: " << output.string() << std::endl;
+            std::cout << desc << std::endl;
+            std::exit(1);
+        }
+    }
+    else if(extract)
+    {
+        std::cout << "output was not specified but is required." << std::endl;
+        std::cout << desc << std::endl;
+        std::exit(1);
+    }
 }
 
 
