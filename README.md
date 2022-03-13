@@ -25,9 +25,10 @@ The following two XSD files provide a good overview of the `XML` file structure,
 
 ---
 
-# Current State &mdash; January 2022
+# Current State &mdash; March 2022
 
 - Working on parsing library symbols.
+- Improving test coverage.
 
 ---
 
@@ -67,6 +68,12 @@ Allowed options:
 ./cli/OpenOrCadParser-cli --input file.DSN --extract --output out/
 ./cli/OpenOrCadParser-cli --input file.DSN --print_tree
 ```
+
+---
+
+# Unit Tests
+
+[Test Documentation](doc/tests.md)
 
 ---
 
