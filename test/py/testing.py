@@ -1,6 +1,7 @@
 
 import argparse
 import os
+import re
 
 from pathlib import Path
 from typing import List, Optional
@@ -77,8 +78,8 @@ def write_back_err_count(db: FileErrorDatabase, path_err_cnt_log: str, path_thir
         actual_err = int(matches[1])
         file_path  = str(matches[2])
 
-        author  = file_path.split(os.path.sep)[2]
-        project = file_path.split(os.path.sep)[3]
+        author  = file_path.split(os.path.sep)[1]
+        project = file_path.split(os.path.sep)[2]
 
         path_repo = os.path.join(path_thirdparty_designs, author, project)
 
@@ -174,7 +175,7 @@ parser.add_argument('-t', '--third_party_path',
                     )
 
 parser.add_argument('-e', '--err_cnt_log_path',
-                    default=os.path.join('test', 'test_err_cnt.log'),
+                    default='test_err_cnt.log',
                     dest='path_err_cnt_log',
                     help='Path to the Error Counter Log File',
                     type=str
