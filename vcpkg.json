@@ -7,5 +7,6 @@
     "compoundfilereader",
     "magic-enum",
     "nameof"
-  ]
+  ],
+  "builtin-baseline": "9b22b40c6c61bf0da2d46346dd44a11e90972cc9"
 }
