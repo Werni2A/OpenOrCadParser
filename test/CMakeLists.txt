@@ -11,7 +11,6 @@ find_package(nameof CONFIG REQUIRED)
 file(GLOB TEST_MISC_SRC ${TEST_SRC_DIR}/Misc/Test_*.cpp)
 
 set(SOURCES
-   ${TEST_SRC_DIR}/catch_main.cpp
    ${TEST_SRC_DIR}/test.cpp
    ${TEST_MISC_SRC}
 )
@@ -28,6 +27,7 @@ target_include_directories(${NAME_TEST} PRIVATE
 )
 
 target_link_libraries(${NAME_TEST} PRIVATE
+                      Catch2::Catch2WithMain
                       magic_enum::magic_enum
                       nameof::nameof
                       ${NAME_LIB}

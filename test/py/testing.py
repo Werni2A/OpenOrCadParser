@@ -100,7 +100,7 @@ def create_repo_cpp_unit_test(repo: Repository, path_repo: str, path_unit_test: 
 
 #include <filesystem>
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <Parser.hpp>
 
