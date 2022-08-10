@@ -18,14 +18,13 @@ jobs:
     - name: Download Unit Test Designs
       run: |
         python -m pip install -r test/py/requirements.txt
-        mkdir test/designs
         python test/py/testing.py --download_repos true --database_file_path repos.yaml --third_party_path test/designs
         ls -la test/designs
 
     - name: Create Unit Tests
       run: |
-        python test/py/testing.py --generate_unit_tests true --database_file_path repos.yaml --unit_test_path test/src/Misc --third_party_path test/designs
-        ls -la test/src/Misc
+        python test/py/testing.py --generate_unit_tests true --database_file_path repos.yaml --unit_test_path test/src/generated_tests --third_party_path test/designs
+        ls -la test/src/generated_tests
 
     - name: Build Library, CLI Application and Tests
       run: |

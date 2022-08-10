@@ -8,7 +8,7 @@ find_package(magic_enum CONFIG REQUIRED)
 find_package(nameof CONFIG REQUIRED)
 
 # Add automatically generated test files
-file(GLOB TEST_MISC_SRC ${TEST_SRC_DIR}/Misc/Test_*.cpp)
+file(GLOB TEST_MISC_SRC ${TEST_SRC_DIR}/generated_tests/Test_*.cpp)
 
 set(SOURCES
    ${TEST_SRC_DIR}/test.cpp
