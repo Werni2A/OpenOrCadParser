@@ -575,18 +575,18 @@ void Parser::exceptionHandling()
     {
         ++mFileErrCtr;
 
-        std::cerr << printRed("--------ERROR REPORT--------") << newLine();
-        std::cerr << printRed("File: " + mCurrOpenFile.string() + newLine());
+        spdlog::error(printRed("--------ERROR REPORT--------"));
+        spdlog::error(printRed("File: " + mCurrOpenFile.string()));
         mDs.printCurrentOffset(std::cerr);
-        std::cerr << newLine();
-        std::cerr << printRed("Error Message: " + newLine() + std::string(e.what()) + newLine());
-        std::cerr << std::endl;
+        spdlog::error("");
+        spdlog::error(printRed("Error Message: " + newLine() + std::string(e.what())));
+        spdlog::error("");
     }
     catch(...)
     {
-        std::cerr << printRed("--------ERROR REPORT--------") << newLine();
-        std::cerr << printRed("Unknown exception caugt!") << newLine();
-        std::cerr << std::endl;
+        spdlog::error(printRed("--------ERROR REPORT--------"));
+        spdlog::error(printRed("Unknown exception caugt!"));
+        spdlog::error("");
     }
 }
 
