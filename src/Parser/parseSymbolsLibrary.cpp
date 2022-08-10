@@ -76,7 +76,7 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
     // 0x864: 01 00 01 00 01 00 01 00 01 00 01 00 02 00 01 00 | ................
     // 0x864: 01 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 | ................
     // 0x864: 00 00 00 00 00 00 01 00 00 00                   | ..........
-    mDs.printUnknownData(std::clog, 58, std::string(__func__) + " - 2");
+    mDs.printUnknownData(58, std::string(__func__) + " - 2");
 
     // Looks like this has always the same size as it consists of
     // the mandatory package fields '1ST PART FIELD' up to the
@@ -87,7 +87,7 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
     }
 
     // Even this big chunk of data seems to be constant
-    mDs.printUnknownData(std::clog, 156, std::string(__func__) + " - 3");
+    mDs.printUnknownData(156, std::string(__func__) + " - 3");
 
     const uint32_t strLstLen = mDs.readUint32();
 
@@ -109,7 +109,7 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
 
     if(mFileType == FileType::Schematic)
     {
-        mDs.printUnknownData(std::clog, 8, std::string(__func__) + " - 5");
+        mDs.printUnknownData(8, std::string(__func__) + " - 5");
         std::string schematicName = mDs.readStringLenZeroTerm();
         std::clog << schematicName << std::endl;
     }
@@ -136,13 +136,13 @@ void Parser::parseSchematic()
     {
         // @todo throw some exception
     }
-    // mDs.printUnknownData(std::clog, 12, std::string(__func__) + " - 0");
+    // mDs.printUnknownData(12, std::string(__func__) + " - 0");
 
     readPreamble();
 
     std::string schematic_name = mDs.readStringLenZeroTerm();
 
-    mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 1");
+    mDs.printUnknownData(4, std::string(__func__) + " - 1");
 
     const uint16_t schematicPages = mDs.readUint16();
 
@@ -156,17 +156,17 @@ void Parser::parseSchematic()
 
     for(size_t i = 0u; i < len; ++i)
     {
-        mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 1");
+        mDs.printUnknownData(4, std::string(__func__) + " - 1");
     }
 
     const uint16_t len2 = mDs.readUint16();
 
     for(size_t i = 0u; i < len2; ++i)
     {
-        mDs.printUnknownData(std::clog, 5, std::string(__func__) + " - 2");
+        mDs.printUnknownData(5, std::string(__func__) + " - 2");
     }
 
-    mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 3");
+    mDs.printUnknownData(4, std::string(__func__) + " - 3");
 
     if(!mDs.isEoF())
     {
@@ -181,11 +181,11 @@ void Parser::parseHierarchy()
 {
     std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
 
-    mDs.printUnknownData(std::clog, 9, std::string(__func__) + " - 0");
+    mDs.printUnknownData(9, std::string(__func__) + " - 0");
 
     std::string schematicName = mDs.readStringLenZeroTerm();
 
-    mDs.printUnknownData(std::clog, 9, std::string(__func__) + " - 1");
+    mDs.printUnknownData(9, std::string(__func__) + " - 1");
 
     const uint16_t netLen = mDs.readUint16();
 
@@ -213,7 +213,7 @@ void Parser::parseSymbolsERC()
     // @todo Should I introduce something like read_type_prefix_very_long()?
     mDs.assumeData({0x4b}, std::string(__func__) + " - 0"); // Proably stands for ERC
 
-    mDs.printUnknownData(std::clog, 8, std::string(__func__) + " - 1");
+    mDs.printUnknownData(8, std::string(__func__) + " - 1");
 
     Structure structure = read_type_prefix_long();
     readConditionalPreamble(structure);

@@ -13,6 +13,8 @@
 #include <utility>
 #include <vector>
 
+#include <spdlog/spdlog.h>
+
 #include "../Enums/GeometryStructure.hpp"
 #include "../Parser.hpp"
 #include "../Structures/CommentText.hpp"
@@ -134,7 +136,7 @@ std::string SymbolUserProp::getVal() const
 
 void Parser::readTitleBlockSymbol()
 {
-    mDs.printUnknownData(std::clog, 36, std::string(__func__) + " - 0");
+    mDs.printUnknownData(36, std::string(__func__) + " - 0");
 
     std::vector<SymbolUserProp> symbolUserProps; // @todo store in symbol
 
@@ -155,14 +157,14 @@ void Parser::readTitleBlockSymbol()
         std::string name = symbolUserProps[i].getName();
         std::string val  = symbolUserProps[i].getVal();
 
-        std::cout << std::to_string(i) << ": " << name << " <- " << val << std::endl;
+        spdlog::debug("{}: {} <- {}", i, name, val);
     }
 
     // The following should be its own structure
     readPreamble();
     std::string str0 = mDs.readStringLenZeroTerm();
 
-    mDs.printUnknownData(std::clog, 7, std::string(__func__) + " - 1");
+    mDs.printUnknownData(7, std::string(__func__) + " - 1");
 
     const uint16_t someLen = mDs.readUint16();
 
@@ -180,7 +182,7 @@ void Parser::readTitleBlockSymbol()
     readPreamble();
 
     mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 2");
-    mDs.printUnknownData(std::clog, 6, std::string(__func__) + " - 3");
+    mDs.printUnknownData(6, std::string(__func__) + " - 3");
 
     const uint16_t followingLen = mDs.readUint16();
 
@@ -294,7 +296,7 @@ Package Parser::parseSymbol()
         case Structure::PortSymbol:
         case Structure::OffPageSymbol:
         case Structure::PinShapeSymbol:
-            mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 0");
+            mDs.printUnknownData(2, std::string(__func__) + " - 0");
             mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
             structure = read_type_prefix_long();
             break;
@@ -320,7 +322,7 @@ Package Parser::parseSymbol()
     }
     else
     {
-        mDs.printUnknownData(std::clog, 10, std::string(__func__) + " - 1.1");
+        mDs.printUnknownData(10, std::string(__func__) + " - 1.1");
     }
 
     // @todo how often does it repeat? This should be specified somewhere....
@@ -328,7 +330,7 @@ Package Parser::parseSymbol()
     {
         if(mDs.isEoF())
         {
-            std::cout << "i = " << std::to_string(i) << std::endl;
+            spdlog::debug("i = {}", i);
             break;
         }
 
@@ -337,7 +339,7 @@ Package Parser::parseSymbol()
         // readPreamble();
         pushStructure(parseStructure(structure), symbol);
 
-        mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 2");
+        mDs.printUnknownData(2, std::string(__func__) + " - 2");
     }
 
     if(!mDs.isEoF())
@@ -364,17 +366,17 @@ Package Parser::parsePackage()
 
     for(size_t i = 0u; i < sectionCount; ++i)
     {
-        std::cout << "Marker 0" << std::endl;
+        spdlog::debug("Marker 0");
 
         structure = read_type_prefix_long();
         readConditionalPreamble(structure);
         pushStructure(parseStructure(structure), package);
 
-        std::cout << "Marker 1" << std::endl;
+        spdlog::debug("Marker 1");
 
         structure = read_type_prefix();
         readConditionalPreamble(structure);
-        std::cout << "Marker 1.5" << std::endl;
+        spdlog::debug("Marker 1.5");
         pushStructure(parseStructure(structure), package);
 
         // if(structure == Structure::GeoDefinition && mFileFormatVersion == FileFormatVersion::C)
@@ -382,23 +384,23 @@ Package Parser::parsePackage()
 
         // structure = read_type_prefix();
 
-        std::cout << "Marker 2" << std::endl;
+        spdlog::debug("Marker 2");
 
         if(mFileFormatVersion == FileFormatVersion::B)
         {
             mDs.assumeData({0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
-            // mDs.printUnknownData(std::clog, 8, std::string(__func__) + " - 1");
+            // mDs.printUnknownData(8, std::string(__func__) + " - 1");
         }
         else if(mFileFormatVersion >= FileFormatVersion::C)
         {
             readPreamble();
         }
 
-        std::cout << "Marker 3" << std::endl;
+        spdlog::debug("Marker 3");
 
         mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 2");
-        mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 2");
-        // mDs.printUnknownData(std::clog, 12, std::string(__func__) + " - 2");
+        mDs.printUnknownData(4, std::string(__func__) + " - 2");
+        // mDs.printUnknownData(12, std::string(__func__) + " - 2");
 
         const uint16_t followingLen1 = mDs.readUint16();
 
@@ -412,24 +414,24 @@ Package Parser::parsePackage()
             pushStructure(parseStructure(structure), package);
         }
 
-        std::cout << "Marker 4" << std::endl;
+        spdlog::debug("Marker 4");
 
         const uint16_t followingLen2 = mDs.readUint16();
 
         for(size_t i = 0u; i < followingLen2; ++i)
         {
-            std::clog << "0x" << ToHex(mDs.getCurrentOffset(), 8) << ": followingLen2 Iteration "
-                    << std::to_string(i + 1) << "/" << std::to_string(followingLen2) << std::endl;
+            spdlog::debug("0x{}: followingLen2 Iteration {}/{}",
+                ToHex(mDs.getCurrentOffset(),8), i + 1, followingLen2);
 
             structure = read_type_prefix();
             readConditionalPreamble(structure);
             pushStructure(parseStructure(structure), package);
         }
 
-        std::cout << "Marker 5" << std::endl;
+        spdlog::debug("Marker 5");
 
         /*
-        mDs.printUnknownData(std::clog, 22, std::string(__func__) + " - w");
+        mDs.printUnknownData(22, std::string(__func__) + " - w");
         structure = read_type_prefix();
         readConditionalPreamble(structure);
         // readPreamble();
@@ -437,21 +439,21 @@ Package Parser::parsePackage()
 
         package.generalProperties = readGeneralProperties();
 
-        std::cout << "Section count " << std::to_string(i) << " finished" << std::endl;
+        spdlog::debug("Section count {} finished", i);
     }
 
-    std::cout << "Marker 6" << std::endl;
+    spdlog::debug("Marker 6");
 
     // @todo how often does it repeat? This should be specified somewhere....
     for(size_t i = 0u; true; ++i)
     {
         if(mDs.isEoF())
         {
-            std::cout << "i = " << std::to_string(i) << std::endl;
+            spdlog::debug("i = {}", i);
             break;
         }
 
-        std::cout << "Marker 7" << std::endl;
+        spdlog::debug("Marker 7");
 
         if(i == 0u)
         {
@@ -466,15 +468,15 @@ Package Parser::parsePackage()
         pushStructure(parseStructure(structure), package);
     }
 
-    std::cout << "Marker 8" << std::endl;
+    spdlog::debug("Marker 8");
 
     if(!mDs.isEoF())
     {
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << package << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(to_string(package));
 
     return package;
 }

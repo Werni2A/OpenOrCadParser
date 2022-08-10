@@ -7,6 +7,9 @@ find_package(magic_enum CONFIG REQUIRED)
 # Add Nameof dependency
 find_package(nameof CONFIG REQUIRED)
 
+# Add spdlog dependency
+find_package(spdlog CONFIG REQUIRED)
+
 set(SOURCES
    ${LIB_SRC_DIR}/ContainerExtractor.cpp
    ${LIB_SRC_DIR}/DataStream.cpp
@@ -70,4 +73,6 @@ target_include_directories(${NAME_LIB} PRIVATE
 target_link_libraries(${NAME_LIB} PRIVATE
                       magic_enum::magic_enum
                       nameof::nameof
+                      spdlog::spdlog
+                      spdlog::spdlog_header_only
 )

@@ -39,7 +39,7 @@ CommentText Parser::readCommentText()
             std::to_string(mLibrary.symbolsLibrary.textFonts.size()) + "!");
     }
 
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 0");
+    mDs.printUnknownData(2, std::string(__func__) + " - 0");
 
     obj.name = mDs.readStringLenZeroTerm();
 

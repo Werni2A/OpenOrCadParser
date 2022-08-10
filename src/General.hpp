@@ -169,7 +169,7 @@ static std::string TimezoneToStr(int16_t timezone)
 //   std::time_t rawtime;
 //   std::tm* timeInfo;
 
-//   const size_t lenBuffer = 24u;;
+//   const size_t lenBuffer = 24u;
 //   char buffer[lenBuffer];
 
 //   std::time(&rawtime);

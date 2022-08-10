@@ -13,6 +13,8 @@
 #include <string>
 #include <vector>
 
+#include <nameof.hpp>
+
 #include "../Structures/Point.hpp"
 #include "../Enums/LineStyle.hpp"
 #include "../Enums/LineWidth.hpp"
@@ -60,8 +62,8 @@ static std::string to_string(const Bezier& aObj)
     std::string str;
 
     str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "lineStyle  = " + to_string(aObj.getLineStyle()) + newLine();;
-    str += indent(1) + "lineWidth  = " + to_string(aObj.getLineWidth()) + newLine();;
+    str += indent(1) + "lineStyle  = " + to_string(aObj.getLineStyle()) + newLine();
+    str += indent(1) + "lineWidth  = " + to_string(aObj.getLineWidth()) + newLine();
 
     str += indent(1) + "points:" + newLine();
     for(size_t i = 0u; i < aObj.points.size(); ++i)

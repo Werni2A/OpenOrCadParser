@@ -22,15 +22,15 @@ TextFont Parser::readTextFont()
 
     obj.escapement = mDs.readUint16(); // @todo not sure
 
-    mDs.printUnknownData(std::clog, 6, std::string(__func__) + " - 0");
+    mDs.printUnknownData(6, std::string(__func__) + " - 0");
 
     obj.weight = mDs.readUint16();
 
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 1");
+    mDs.printUnknownData(2, std::string(__func__) + " - 1");
 
     obj.italic = mDs.readUint16(); // @todo not sure
 
-    mDs.printUnknownData(std::clog, 6, std::string(__func__) + " - 2");
+    mDs.printUnknownData(6, std::string(__func__) + " - 2");
 
     obj.fontName = mDs.readStringZeroTerm();
     // Looks like OrCAD creates a fixed size buffer where the string

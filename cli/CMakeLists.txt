@@ -8,6 +8,9 @@ find_package(magic_enum CONFIG REQUIRED)
 # Add Nameof dependency
 find_package(nameof CONFIG REQUIRED)
 
+# Add spdlog dependency
+find_package(spdlog CONFIG REQUIRED)
+
 set(SOURCES
     ${CLI_SRC_DIR}/main.cpp
 )
@@ -29,4 +32,6 @@ target_link_libraries(${NAME_CLI} PRIVATE
                       ${Boost_LIBRARIES}
                       magic_enum::magic_enum
                       nameof::nameof
+                      spdlog::spdlog
+                      spdlog::spdlog_header_only
 )

@@ -144,7 +144,7 @@ public:
      */
     std::string readStringLenZeroTerm();
 
-    std::ostream& printUnknownData(std::ostream& aOs, size_t aLen, const std::string& aComment = "");
+    void printUnknownData(size_t aLen, const std::string& aComment = "");
 
     /**
      * @brief Pad stream such that the whole block size is read.
@@ -158,7 +158,9 @@ public:
 
     std::ostream& printCurrentOffset(std::ostream& aOs);
 
-    std::ostream& printData(std::ostream& aOs, const std::vector<uint8_t>& aData);
+    void printData(const std::vector<uint8_t>& aData);
+
+    std::string dataToStr(const std::vector<uint8_t>& aData);
 
     void assumeData(const std::vector<uint8_t>& aExpectedData, const std::string& aComment = "");
 };

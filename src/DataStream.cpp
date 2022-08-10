@@ -3,6 +3,8 @@
 #include <fstream>
 #include <string>
 
+#include <spdlog/spdlog.h>
+
 #include "DataStream.hpp"
 #include "General.hpp"
 
@@ -52,8 +54,12 @@ std::string DataStream::readStringZeroTerm()
     //       stable because strings can actually be very long.
     if(str.length() == max_chars)
     {
-        throw std::runtime_error("Loop cancled because the string is unexpectedly large. More than "
-                                 + std::to_string(max_chars) + " characters!");
+        const std::string msg = "Loop cancled because the string is unexpectedly large. More than "
+                                 + std::to_string(max_chars) + " characters!";
+
+        spdlog::error(msg);
+
+        throw std::runtime_error(msg);
     }
 
     return str;
@@ -78,7 +84,11 @@ std::string DataStream::readStringLenTerm()
         }
         else
         {
-            throw std::runtime_error("Didn't expect null byte within string!");
+            const std::string msg = "Didn't expect null byte within string!";
+
+            spdlog::error(msg);
+
+            throw std::runtime_error(msg);
         }
     }
 
@@ -87,8 +97,12 @@ std::string DataStream::readStringLenTerm()
     //       stable because strings can actually be very long.
     if(str.length() == max_chars)
     {
-        throw std::runtime_error("Loop cancled because the string is unexpectedly large. More than "
-                                 + std::to_string(max_chars) + " characters!");
+        const std::string msg = "Loop cancled because the string is unexpectedly large. More than "
+                                 + std::to_string(max_chars) + " characters!";
+
+        spdlog::error(msg);
+
+        throw std::runtime_error(msg);
     }
 
     return str;
@@ -103,26 +117,28 @@ std::string DataStream::readStringLenZeroTerm()
 
     if(str.length() != len)
     {
-        throw std::runtime_error("Zero terminated string lenght (" + std::to_string(str.length())
+        const std::string msg = "Zero terminated string lenght (" + std::to_string(str.length())
                                  + ") does not match the preceeding length ("
-                                 + std::to_string(len) + ") definition!");
+                                 + std::to_string(len) + ") definition!";
+
+        spdlog::error(msg);
+
+        throw std::runtime_error(msg);
     }
 
     return str;
 }
 
 
-std::ostream& DataStream::printUnknownData(std::ostream& aOs, size_t aLen, const std::string& aComment)
+void DataStream::printUnknownData(size_t aLen, const std::string& aComment)
 {
     const auto data = readBytes(aLen);
 
     if(aLen > 0u)
     {
-        aOs << aComment << '\n';
-        printData(aOs, data);
+        spdlog::info(aComment);
+        printData(data);
     }
-
-    return aOs;
 }
 
 
@@ -133,9 +149,13 @@ void DataStream::padRest(size_t aStartOffset, size_t aBlockSize, bool aPadIsZero
 
     if(offsetDiff > aBlockSize)
     {
-        throw std::runtime_error("Already parsed " + std::to_string(offsetDiff)
+        const std::string msg = "Already parsed " + std::to_string(offsetDiff)
                                  + " bytes but should have only been "
-                                 + std::to_string(aBlockSize) + "!");
+                                 + std::to_string(aBlockSize) + "!";
+
+        spdlog::error(msg);
+
+        throw std::runtime_error(msg);
     }
 
     const size_t paddingLen = aBlockSize - offsetDiff;
@@ -148,7 +168,11 @@ void DataStream::padRest(size_t aStartOffset, size_t aBlockSize, bool aPadIsZero
 
             if(padByte != 0x00u)
             {
-                throw std::runtime_error("Padding byte is expected to be 0x00!");
+                const std::string msg = "Padding byte is expected to be 0x00!";
+
+                spdlog::error(msg);
+
+                throw std::runtime_error(msg);
             }
         }
     }
@@ -169,10 +193,16 @@ std::ostream& DataStream::printCurrentOffset(std::ostream& aOs)
     aOs << std::string(buffer);
 
     return aOs;
-};
+}
 
 
-std::ostream& DataStream::printData(std::ostream& aOs, const std::vector<uint8_t>& aData)
+void DataStream::printData(const std::vector<uint8_t>& aData)
+{
+    spdlog::info(dataToStr(aData));
+}
+
+
+std::string DataStream::dataToStr(const std::vector<uint8_t>& aData)
 {
     const unsigned int line_width = 16u;
     const std::string hex_spacing = " ";
@@ -220,9 +250,7 @@ std::ostream& DataStream::printData(std::ostream& aOs, const std::vector<uint8_t
         }
     }
 
-    aOs << output;
-
-    return aOs;
+    return output;
 }
 
 
@@ -239,14 +267,12 @@ void DataStream::assumeData(const std::vector<uint8_t>& aExpectedData, const std
 
     if(!std::all_of(data.cbegin(), data.cend(), checkByte))
     {
-        std::ostringstream expectedDataStr;
-        printData(expectedDataStr, aExpectedData);
+        const std::string msg = "Assumption failed: " + aComment + '\n'
+            + "Expected:\n" + dataToStr(aExpectedData) +
+            + "but got:\n" + dataToStr(data);
 
-        std::ostringstream actualDataStr;
-        printData(actualDataStr, data);
+        spdlog::error(msg);
 
-        throw std::runtime_error("Assumption failed: " + aComment + '\n'
-            + "Expected:\n" + expectedDataStr.str() +
-            + "but got:\n" + actualDataStr.str());
+        throw std::runtime_error(msg);
     }
 }

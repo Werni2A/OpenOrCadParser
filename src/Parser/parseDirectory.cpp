@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <any>
 #include <cassert>
+#include <cstdio>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
@@ -8,7 +9,6 @@
 #include <memory>
 #include <sstream>
 #include <stdexcept>
-#include <stdio.h>
 #include <string>
 #include <vector>
 
@@ -20,6 +20,8 @@
 // @todo check whether this works for all directory files or just a few
 DirectoryStruct Parser::parseDirectory()
 {
+    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+
     DirectoryStruct directoryStruct;
 
     directoryStruct.lastModifiedDate = static_cast<time_t>(mDs.readUint32());
@@ -36,7 +38,7 @@ DirectoryStruct Parser::parseDirectory()
 
         // @todo This changes with the version of the file format, so maybe it contains
         //       more details for the format? Or some hash of the specified stream?
-        mDs.printUnknownData(std::clog, 14, "item " + std::to_string(i));
+        mDs.printUnknownData(14, "item " + std::to_string(i));
 
         // @todo Just a guess that this is the version but's highly likely
         uint16_t probFileVersion = mDs.readUint16();
@@ -65,7 +67,7 @@ DirectoryStruct Parser::parseDirectory()
 
         dirItemType.timezone = mDs.readInt16();
 
-        mDs.printUnknownData(std::clog, 2, "item " + std::to_string(i));
+        mDs.printUnknownData(2, "item " + std::to_string(i));
 
         directoryStruct.items.push_back(dirItemType);
     }
@@ -75,6 +77,7 @@ DirectoryStruct Parser::parseDirectory()
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
+    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
     std::clog << directoryStruct << std::endl;
 
     return directoryStruct;

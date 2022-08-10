@@ -2,6 +2,7 @@
 #include <string>
 
 #include <boost/program_options.hpp>
+#include <spdlog/spdlog.h>
 
 #include "Parser.hpp"
 
@@ -10,7 +11,7 @@ namespace fs = std::filesystem;
 namespace po = boost::program_options;
 
 
-void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& extract, fs::path& output)
+void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& extract, fs::path& output, bool& verbose)
 {
     po::options_description desc("Allowed options");
     desc.add_options()
@@ -19,6 +20,7 @@ void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& e
         ("extract,e",    po::bool_switch()->default_value(false), "extract binary files from CFBF container")
         ("input,i",      po::value<std::string>(),                "input file to parse")
         ("output,o",     po::value<std::string>(),                "output path (required iff extract is set)")
+        ("verbose,v",    po::bool_switch()->default_value(false), "verbose output")
     ;
 
     po::variables_map vm;
@@ -33,6 +35,7 @@ void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& e
 
     printTree = vm.count("print_tree") ? vm["print_tree"].as<bool>() : false;
     extract   = vm.count("extract") ? vm["extract"].as<bool>() : false;
+    verbose   = vm.count("verbose") ? vm["verbose"].as<bool>() : false;
 
     if(vm.count("input"))
     {
@@ -90,8 +93,20 @@ int main(int argc, char* argv[])
     bool     printTree;
     bool     extract;
     fs::path outputPath;
+    bool     verbose;
 
-    parseArgs(argc, argv, inputFile, printTree, extract, outputPath);
+    parseArgs(argc, argv, inputFile, printTree, extract, outputPath, verbose);
+
+    if(!verbose)
+    {
+        spdlog::set_level(spdlog::level::off);
+    }
+    else
+    {
+        spdlog::set_level(spdlog::level::debug);
+    }
+
+    spdlog::set_pattern("[%^%l%$] %v");
 
     Parser parser{inputFile};
 
