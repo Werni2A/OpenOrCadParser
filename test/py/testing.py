@@ -4,11 +4,11 @@ import os
 import re
 
 from pathlib import Path
-from typing import List, Optional
+from typing import List
 
 from git import Repo
 
-from FileErrorDatabase import RepoFile, Repository, Repositories, FileErrorDatabase
+from FileErrorDatabase import RepoFile, Repository, FileErrorDatabase
 
 
 ExtensionsOfInterest = ['*.OBK', '*.OLB', '*.DSN', '*.DBK']
