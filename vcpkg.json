@@ -5,6 +5,7 @@
     "boost-program-options",
     "catch2",
     "compoundfilereader",
+    "fmt",
     "magic-enum",
     "nameof",
     "spdlog"

@@ -17,7 +17,7 @@
 
 SymbolsLibrary Parser::parseSymbolsLibrary()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     size_t startOffset = mDs.getCurrentOffset();
 
@@ -111,7 +111,7 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
     {
         mDs.printUnknownData(8, std::string(__func__) + " - 5");
         std::string schematicName = mDs.readStringLenZeroTerm();
-        std::clog << schematicName << std::endl;
+        spdlog::debug("schematicName = {}", schematicName);
     }
 
     if(!mDs.isEoF())
@@ -119,8 +119,8 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << symbolsLibrary << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(symbolsLibrary));
 
     return symbolsLibrary;
 }
@@ -128,7 +128,7 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
 
 void Parser::parseSchematic()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     Structure structure = read_type_prefix_short();
 
@@ -149,7 +149,7 @@ void Parser::parseSchematic()
     for(size_t i = 0u; i < schematicPages; ++i)
     {
         std::string page_name = mDs.readStringLenZeroTerm();
-        std::cout << page_name << std::endl;
+        spdlog::debug(page_name);
     }
 
     const uint16_t len = mDs.readUint16();
@@ -173,13 +173,13 @@ void Parser::parseSchematic()
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
 void Parser::parseHierarchy()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     mDs.printUnknownData(9, std::string(__func__) + " - 0");
 
@@ -202,13 +202,13 @@ void Parser::parseHierarchy()
         std::string name = mDs.readStringLenZeroTerm(); // net name
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
 void Parser::parseSymbolsERC()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     // @todo Should I introduce something like read_type_prefix_very_long()?
     mDs.assumeData({0x4b}, std::string(__func__) + " - 0"); // Proably stands for ERC
@@ -224,5 +224,5 @@ void Parser::parseSymbolsERC()
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }

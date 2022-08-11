@@ -198,17 +198,17 @@ void Parser::readTitleBlockSymbol()
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
 GeometrySpecification Parser::parseGlobalSymbol()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     GeometrySpecification geometrySpecification = parseGeometrySpecification();
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     // std::clog << geometrySpecification << std::endl;
 
     return geometrySpecification;
@@ -217,11 +217,11 @@ GeometrySpecification Parser::parseGlobalSymbol()
 
 GeometrySpecification Parser::parseSymbolHierarchic()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     GeometrySpecification geometrySpecification = parseGeometrySpecification();
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     // std::clog << geometrySpecification << std::endl;
 
     return geometrySpecification;
@@ -230,11 +230,11 @@ GeometrySpecification Parser::parseSymbolHierarchic()
 
 GeometrySpecification Parser::parseOffPageSymbol()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     GeometrySpecification geometrySpecification = parseGeometrySpecification();
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     // std::clog << geometrySpecification << std::endl;
 
     return geometrySpecification;
@@ -243,11 +243,11 @@ GeometrySpecification Parser::parseOffPageSymbol()
 
 GeometrySpecification Parser::readPinShapeSymbol()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     GeometrySpecification geometrySpecification = parseGeometrySpecification();
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     // std::clog << geometrySpecification << std::endl;
 
     return geometrySpecification;
@@ -256,7 +256,7 @@ GeometrySpecification Parser::readPinShapeSymbol()
 
 void Parser::pushStructure(const std::pair<Structure, std::any>& structure, Package& container)
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     switch(structure.first)
     {
@@ -276,13 +276,13 @@ void Parser::pushStructure(const std::pair<Structure, std::any>& structure, Pack
         default: throw std::runtime_error("Structure " + to_string(structure.first) + " is not yet handled by " + __func__ + "!"); break;
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
 Package Parser::parseSymbol()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     Package symbol; // @todo make to symbol
 
@@ -347,8 +347,8 @@ Package Parser::parseSymbol()
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << symbol << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(symbol));
 
     return symbol;
 }
@@ -356,7 +356,7 @@ Package Parser::parseSymbol()
 
 Package Parser::parsePackage()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     Package package;
 
@@ -406,8 +406,8 @@ Package Parser::parsePackage()
 
         for(size_t i = 0u; i < followingLen1; ++i)
         {
-            std::clog << "0x" << ToHex(mDs.getCurrentOffset(), 8) << ": followingLen1 Iteration "
-                    << std::to_string(i + 1) << "/" << std::to_string(followingLen1) << std::endl;
+            spdlog::debug("0x{}: followingLen1 Iteration {}/{}",
+                ToHex(mDs.getCurrentOffset(), 8), i + 1, followingLen1);
 
             structure = read_type_prefix();
             readConditionalPreamble(structure);

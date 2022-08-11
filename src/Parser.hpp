@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#include <spdlog/spdlog.h>
+
 #include "DataStream.hpp"
 #include "Enums/GeometryStructure.hpp"
 #include "Enums/Structure.hpp"

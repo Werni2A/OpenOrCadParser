@@ -20,7 +20,7 @@
 // @todo check whether this works for all directory files or just a few
 DirectoryStruct Parser::parseDirectory()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     DirectoryStruct directoryStruct;
 
@@ -77,8 +77,8 @@ DirectoryStruct Parser::parseDirectory()
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << directoryStruct << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(directoryStruct));
 
     return directoryStruct;
 }

@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 
+#include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
 #include "DataStream.hpp"
@@ -137,7 +138,7 @@ void DataStream::printUnknownData(size_t aLen, const std::string& aComment)
     if(aLen > 0u)
     {
         spdlog::info(aComment);
-        printData(data);
+        spdlog::info(dataToStr(data));
     }
 }
 
@@ -184,13 +185,18 @@ void DataStream::padRest(size_t aStartOffset, size_t aBlockSize, bool aPadIsZero
 }
 
 
-std::ostream& DataStream::printCurrentOffset(std::ostream& aOs)
+std::string DataStream::getCurrentOffsetStrMsg()
 {
     const size_t offset = getCurrentOffset();
-    // @todo improve with fmt lib!
-    char buffer[128];
-    std::sprintf(buffer, "Offset at 0x%s", ToHex(offset, 8).c_str());
-    aOs << std::string(buffer);
+
+    return fmt::format("Offset at 0x{}", ToHex(offset, 8));
+}
+
+
+// @todo Remove and replace with getCurrentOffsetStrMsg in source code
+std::ostream& DataStream::printCurrentOffset(std::ostream& aOs)
+{
+    spdlog::debug(getCurrentOffsetStrMsg());
 
     return aOs;
 }

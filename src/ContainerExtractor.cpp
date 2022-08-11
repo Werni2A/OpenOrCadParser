@@ -12,6 +12,8 @@
 
 #include <utf.h>
 
+#include <spdlog/spdlog.h>
+
 #include "ContainerExtractor.hpp"
 
 
@@ -133,27 +135,27 @@ void ContainerExtractor::printContainerTree() const
     mReader->EnumFiles(mReader->GetRootEntry(), -1,
         [&](const CFB::COMPOUND_FILE_ENTRY* entry, const CFB::utf16string& dir, int level) -> void
         {
+            std::string prefix;
+
             for(int i = 1; i < level; ++i)
             {
-                std::clog << "  ";
+                prefix += "  ";
             }
-
-            std::string type;
 
             if(mReader->IsStream(entry))
             {
-                type = "[S]";
+                prefix = "[S]";
             }
             else if(mReader->IsPropertyStream(entry))
             {
-                type = "[P]";
+                prefix = "[P]";
             }
             else
             {
-                type = "[D]";
+                prefix = "[D]";
             }
 
-            std::clog << type << " " << UTF16ToUTF8(entry->name) << " (" << std::to_string(entry->size) << " Byte)" << std::endl;
+            spdlog::info("{} {} ({} Byte)", prefix, UTF16ToUTF8(entry->name), entry->size);
         }
     );
 }
@@ -191,7 +193,7 @@ fs::path ContainerExtractor::extract(const fs::path& aOutputDir)
 
     if(fs::exists(baseOutputDir))
     {
-        std::clog << "Removing " << baseOutputDir.string() << std::endl;
+        spdlog::info("Removing existing {}", baseOutputDir.string());
         fs::remove_all(baseOutputDir);
     }
 
@@ -259,7 +261,7 @@ void ContainerExtractor::dumpBuffer(const fs::path& aPath, const void* aBuffer, 
 
     if(fp == nullptr)
     {
-        std::cerr << "Write file error!" << std::endl;
+        spdlog::critical("Write file error!");
         std::exit(1);
     }
 
