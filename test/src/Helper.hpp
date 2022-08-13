@@ -8,8 +8,19 @@
 #include <iostream>
 #include <string>
 
+#include <spdlog/spdlog.h>
+
 
 namespace fs = std::filesystem;
+
+
+[[maybe_unused]]
+inline void configure_spdlog()
+{
+    spdlog::set_level(spdlog::level::off);
+
+    spdlog::set_pattern("[%^%l%$] %v");
+}
 
 
 [[maybe_unused]]
@@ -17,9 +28,10 @@ inline void check_error_count(const fs::path& aFilePath, size_t aActualErrCnt, s
 {
     if(aActualErrCnt < aExpectedErrCnt)
     {
-        std::clog << std::to_string(aActualErrCnt) << " (actual errors) < "
-                  << std::to_string(aExpectedErrCnt) << " (expected errors) in "
-                  << aFilePath.string() << std::endl;
+        const std::string msg = fmt::format("{} (actual errors) < {} (expected errors) in {}",
+            aActualErrCnt, aExpectedErrCnt, aFilePath.string());
+
+        std::clog << msg << std::endl;
     }
 
     const fs::path logPath = fs::current_path() / "test_err_cnt.log";

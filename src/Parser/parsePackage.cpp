@@ -206,12 +206,12 @@ GeometrySpecification Parser::parseGlobalSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    GeometrySpecification geometrySpecification = parseGeometrySpecification();
+    GeometrySpecification obj = parseGeometrySpecification();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    // std::clog << geometrySpecification << std::endl;
+    // spdlog::info(to_string(obj));
 
-    return geometrySpecification;
+    return obj;
 }
 
 
@@ -219,12 +219,12 @@ GeometrySpecification Parser::parseSymbolHierarchic()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    GeometrySpecification geometrySpecification = parseGeometrySpecification();
+    GeometrySpecification obj = parseGeometrySpecification();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    // std::clog << geometrySpecification << std::endl;
+    // spdlog::info(to_string(obj));
 
-    return geometrySpecification;
+    return obj;
 }
 
 
@@ -232,12 +232,12 @@ GeometrySpecification Parser::parseOffPageSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    GeometrySpecification geometrySpecification = parseGeometrySpecification();
+    GeometrySpecification obj = parseGeometrySpecification();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    // std::clog << geometrySpecification << std::endl;
+    // spdlog::info(to_string(obj));
 
-    return geometrySpecification;
+    return obj;
 }
 
 
@@ -245,12 +245,12 @@ GeometrySpecification Parser::readPinShapeSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    GeometrySpecification geometrySpecification = parseGeometrySpecification();
+    GeometrySpecification obj = parseGeometrySpecification();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    // std::clog << geometrySpecification << std::endl;
+    // spdlog::info(to_string(obj));
 
-    return geometrySpecification;
+    return obj;
 }
 
 

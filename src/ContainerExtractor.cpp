@@ -219,8 +219,10 @@ fs::path ContainerExtractor::extract(const fs::path& aOutputDir)
                     // @todo OrCAD is able to read those files. Maybe the filesize is corrupted but OrCAD just parses them
                     //       and stops when it thinks that the stream ended. But maybe there is some different information
                     //       hidden in the size value?
-                    std::cerr << "Stream " + internalPath.string() + " has size of " + std::to_string(contentSize) + " Byte"
-                        + " which is too large. Skipping stream! The original container might be corrupted!" << std::endl;
+                    spdlog::error("Stream {} has size of {} Byte which is too large."
+                        " Skipping stream! The original container might be corrupted!",
+                        internalPath.string(), contentSize);
+
                     return;
                 }
 
@@ -240,9 +242,10 @@ fs::path ContainerExtractor::extract(const fs::path& aOutputDir)
 
                 if(contentSize > 0u)
                 {
-                    std::cerr << "Directory " + internalPath.string() + " has size of " + std::to_string(contentSize) + " Byte"
-                        + " but should be 0 Byte! Creating the directory anyway but the original container might"
-                        + " be corrupted!" << std::endl;
+                    spdlog::error("Directory {} has size of {} Byte but should be 0 Byte!"
+                        " Creating the directory anyway but the original container might be corrupted!",
+                        internalPath.string(), contentSize);
+
                     return;
                 }
 

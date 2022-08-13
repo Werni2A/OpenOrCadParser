@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+#include <fmt/color.h>
+#include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
 #include "ContainerExtractor.hpp"
@@ -575,18 +577,15 @@ void Parser::exceptionHandling()
     {
         ++mFileErrCtr;
 
-        spdlog::error(printRed("--------ERROR REPORT--------"));
-        spdlog::error(printRed("File: " + mCurrOpenFile.string()));
-        mDs.printCurrentOffset(std::cerr);
-        spdlog::error("");
-        spdlog::error(printRed("Error Message: " + newLine() + std::string(e.what())));
-        spdlog::error("");
+        spdlog::error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
+        spdlog::error(fmt::format(fg(fmt::color::crimson), "File: {}", mCurrOpenFile.string()));
+        spdlog::error(fmt::format(fg(fmt::color::crimson), mDs.getCurrentOffsetStrMsg()));
+        spdlog::error(fmt::format(fg(fmt::color::crimson), ("\nError Message: {}\n\n", e.what())));
     }
     catch(...)
     {
-        spdlog::error(printRed("--------ERROR REPORT--------"));
-        spdlog::error(printRed("Unknown exception caugt!"));
-        spdlog::error("");
+        spdlog::error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
+        spdlog::error(fmt::format(fg(fmt::color::crimson), "Unknown exception caught!\n"));
     }
 }
 
@@ -1093,7 +1092,7 @@ uint32_t Parser::readPreamble(bool readOptionalLen)
     if(optionalLen > 0u)
     {
         // @todo Looks like this correlates to setting a lock for an object.
-        std::cout << std::string(__func__) << ": Figure out when optionalLen is used! Currently it's 0x" << ToHex(optionalLen, 4) << std::endl;
+        spdlog::debug("{}: Figure out when optionalLen is used! Currently it's 0x{}", __func__, ToHex(optionalLen, 4));
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
@@ -1483,7 +1482,7 @@ PinIdxMapping Parser::readPinIdxMapping()
 
         const uint8_t separator = mDs.readUint8();
 
-        // std::cout << "Sep = 0x" << ToHex(separator, 2) << std::endl;
+        spdlog::debug("Sep = 0x{}", ToHex(separator, 2));
 
         // @todo maybe this is not a separator but the additional property of the pin?
         // As soon as I add a property like NET_SHORT the separator changes from 0x7f to 0xaa

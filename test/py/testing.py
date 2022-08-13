@@ -101,7 +101,6 @@ def create_repo_cpp_unit_test(repo: Repository, path_repo: str, path_unit_test: 
 #include <filesystem>
 
 #include <catch2/catch_all.hpp>
-#include <spdlog/spdlog.h>
 
 #include <Parser.hpp>
 
@@ -120,7 +119,7 @@ namespace fs = std::filesystem;"""
 
 TEST_CASE("{repo.author} - {repo.project} - {file_name} : Check File {full_path}", "[Misc]")
 {{
-    spdlog::set_level(spdlog::level::off);
+    configure_spdlog();
 
     const fs::path inputFile{{"{full_path}"}};
 

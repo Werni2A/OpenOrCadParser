@@ -5,12 +5,16 @@
 
 #include <Parser.hpp>
 
+#include "Helper.hpp"
+
 
 namespace fs = std::filesystem;
 
 
 TEST_CASE("0000: Check Line - Complex", "[Line]")
 {
+    configure_spdlog();
+
     const fs::path inputFile{"test/test_cases/0000.OLB"};
 
     Parser parser{inputFile};
@@ -31,6 +35,8 @@ TEST_CASE("0000: Check Line - Complex", "[Line]")
 
 TEST_CASE("0000: Check CommentText - Complex", "[CommentText]")
 {
+    configure_spdlog();
+
     const fs::path inputFile{"test/test_cases/0001.OLB"};
 
     Parser parser{inputFile};
@@ -62,6 +68,8 @@ TEST_CASE("0000: Check CommentText - Complex", "[CommentText]")
 
 TEST_CASE("0002: Check Rect - Complex", "[Rect]")
 {
+    configure_spdlog();
+
     const fs::path inputFile{"test/test_cases/0002.OLB"};
 
     Parser parser{inputFile};
@@ -85,6 +93,8 @@ TEST_CASE("0002: Check Rect - Complex", "[Rect]")
 
 TEST_CASE("0003: Check Ellipse - Complex", "[Ellipse]")
 {
+    configure_spdlog();
+
     const fs::path inputFile{"test/test_cases/0003.OLB"};
 
     Parser parser{inputFile};
@@ -108,6 +118,8 @@ TEST_CASE("0003: Check Ellipse - Complex", "[Ellipse]")
 
 TEST_CASE("0004: Check Arc - Complex", "[Arc]")
 {
+    configure_spdlog();
+
     const fs::path inputFile{"test/test_cases/0004.OLB"};
 
     Parser parser{inputFile};
@@ -134,6 +146,8 @@ TEST_CASE("0004: Check Arc - Complex", "[Arc]")
 
 TEST_CASE("0005: Check Bezier - Complex", "[Bezier]")
 {
+    configure_spdlog();
+
     const fs::path inputFile{"test/test_cases/0005.OLB"};
 
     Parser parser{inputFile};
@@ -187,6 +201,8 @@ TEST_CASE("0005: Check Bezier - Complex", "[Bezier]")
 
 TEST_CASE("0006: Check Polyline - Complex", "[Polyline]")
 {
+    configure_spdlog();
+
     const fs::path inputFile{"test/test_cases/0006.OLB"};
 
     Parser parser{inputFile};
@@ -213,6 +229,8 @@ TEST_CASE("0006: Check Polyline - Complex", "[Polyline]")
 
 TEST_CASE("0007: Check Bitmap - Complex", "[Bitmap]")
 {
+    configure_spdlog();
+
     const fs::path inputFile{"test/test_cases/0007.OLB"};
 
     Parser parser{inputFile};
