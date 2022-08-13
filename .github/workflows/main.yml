@@ -31,4 +31,7 @@ jobs:
 
     - name: Run Tests
       run: |
-        ./build/test/test
+        sudo apt update
+        sudo apt install -y parallel
+        ./run_parallel_tests.sh
+        # ./build/test/test
