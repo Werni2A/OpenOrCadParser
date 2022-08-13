@@ -2145,9 +2145,9 @@ repositories:
 - author: sangphanthanh
   commit: 032f605cc1d97f0b293c117c269594f6b710cd25
   files:
-  - errors: 0
-    options: null
-    path: ./OrCAD/LIBRARY1_0.OBK
+  # - errors: 0
+  #   options: null
+  #   path: ./OrCAD/LIBRARY1_0.OBK
   - errors: 1
     options: null
     path: ./OrCAD/SmartGardenShield/LIBRARY1_0.OBK
