@@ -180,7 +180,7 @@ void DataStream::padRest(size_t aStartOffset, size_t aBlockSize, bool aPadIsZero
     else
     {
         discardBytes(paddingLen);
-        // printUnknownData(std::clog, paddingLen, "Padding Bytes");
+        // printUnknownData(paddingLen, "Padding Bytes");
     }
 }
 

@@ -107,7 +107,7 @@ Library Parser::parseLibrary()
 {
     const std::string aLibPath = mExtractedPath;
 
-    std::clog << "Start parsing library " << aLibPath << std::endl;
+    spdlog::info("Start parsing library {}", aLibPath);
 
     fs::path pathLib = fs::path(aLibPath);
 
@@ -231,7 +231,7 @@ Library Parser::parseLibrary()
             exceptionHandling();
         }
 
-        std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+        spdlog::info("----------------------------------------------------------------------------------\n");
 
         return directoryStruct;
     };
@@ -242,7 +242,7 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathExportBlocksDir.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathExportBlocksDir.string());
     }
 
     if(fs::exists(pathGraphicsDir))
@@ -251,7 +251,7 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathGraphicsDir.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathGraphicsDir.string());
     }
 
     if(fs::exists(pathPackagesDir))
@@ -260,7 +260,7 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathPackagesDir.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathPackagesDir.string());
     }
 
     if(fs::exists(pathPartsDir))
@@ -269,7 +269,7 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathPartsDir.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathPartsDir.string());
     }
 
     if(fs::exists(pathSymbolsDir))
@@ -278,7 +278,7 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathSymbolsDir.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathSymbolsDir.string());
     }
 
     if(fs::exists(pathCellsDir))
@@ -287,7 +287,7 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathCellsDir.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathCellsDir.string());
     }
 
     if(fs::exists(pathViewsDir))
@@ -296,10 +296,10 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathViewsDir.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathViewsDir.string());
     }
 
-    std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+    spdlog::info("----------------------------------------------------------------------------------\n");
 
     if(fs::exists(pathGraphicsTypes))
     {
@@ -317,11 +317,11 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathGraphicsTypes.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathGraphicsTypes.string());
     }
 
 
-    std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+    spdlog::info("----------------------------------------------------------------------------------\n");
 
     if(fs::exists(pathSymbolsTypes))
     {
@@ -339,10 +339,10 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathSymbolsTypes.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathSymbolsTypes.string());
     }
 
-    std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+    spdlog::info("----------------------------------------------------------------------------------\n");
 
     if(fs::exists(pathLibrary))
     {
@@ -360,10 +360,10 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathLibrary.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathLibrary.string());
     }
 
-    std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+    spdlog::info("----------------------------------------------------------------------------------\n");
 
     if(fs::exists(pathSymbolsERC))
     {
@@ -382,10 +382,10 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathSymbolsERC.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathSymbolsERC.string());
     }
 
-    std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+    spdlog::info("----------------------------------------------------------------------------------\n");
 
     if(fs::exists(pathPackages))
     {
@@ -410,15 +410,16 @@ Library Parser::parseLibrary()
 
             if(!hasError)
             {
-                std::cout << printGreen("Package " + mCurrOpenFile.string() + " parsed successfuly.") << std::endl;
+                spdlog::info(fmt::format(fg(fmt::color::green),
+                    "Package {} parsed successfuly.", mCurrOpenFile.string()));
             }
 
-            std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+            spdlog::info("----------------------------------------------------------------------------------\n");
         }
     }
     else
     {
-        std::clog << "Directory does not exist: " << pathPackages.string() << std::endl;
+        spdlog::debug("Directory does not exist: {}", pathPackages.string());
     }
 
     if(fs::exists(pathSymbols))
@@ -454,15 +455,16 @@ Library Parser::parseLibrary()
 
             if(!hasError)
             {
-                std::cout << printGreen("Symbol " + mCurrOpenFile.string() + " parsed successfuly.") << std::endl;
+                spdlog::info(fmt::format(fg(fmt::color::green),
+                    "Symbol {} parsed successfuly.", mCurrOpenFile.string()));
             }
 
-            std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+            spdlog::info("----------------------------------------------------------------------------------\n");
         }
     }
     else
     {
-        std::clog << "Directory does not exist: " << pathSymbols.string() << std::endl;
+        spdlog::warn("Directory does not exist: {}", pathSymbols.string());
     }
 
     for(const auto& schematic : pathViewsSchematicsSchematic)
@@ -484,10 +486,10 @@ Library Parser::parseLibrary()
         }
         else
         {
-            std::clog << "File does not exist: " << schematic.string() << std::endl;
+            spdlog::debug("File does not exist: {}", schematic.string());
         }
 
-        std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+        spdlog::info("----------------------------------------------------------------------------------\n");
     }
 
     for(const auto& hierarchy : pathViewsSchematicsHierarchyHierarchy)
@@ -509,10 +511,10 @@ Library Parser::parseLibrary()
         }
         else
         {
-            std::clog << "File does not exist: " << hierarchy.string() << std::endl;
+            spdlog::debug("File does not exist: {}", hierarchy.string());
         }
 
-        std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+        spdlog::info("----------------------------------------------------------------------------------\n");
     }
 
     for(const auto& pages : pathViewsSchematicsPagesPages)
@@ -536,32 +538,33 @@ Library Parser::parseLibrary()
             }
             else
             {
-                std::clog << "File does not exist: " << page.string() << std::endl;
+                spdlog::warn("File does not exist: {}", page.string());
             }
 
-            std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+            spdlog::info("\n----------------------------------------------------------------------------------\n");
         }
     }
 
-    std::string errCtrStr = "Errors in " + std::to_string(mFileErrCtr) + "/" + std::to_string(mFileCtr) + " files!";
+    std::string errCtrStr = fmt::format("Errors in {}/{} files!", mFileErrCtr, mFileCtr);
 
-    errCtrStr = (mFileErrCtr == 0u) ? printGreen(errCtrStr) : printRed(errCtrStr);
+    errCtrStr = fmt::format((mFileErrCtr == 0u) ? fg(fmt::color::green) : fg(fmt::color::crimson),
+        errCtrStr);
 
-    std::cout << errCtrStr << std::endl;
+    spdlog::info(errCtrStr);
 
-    // std::cout << "Print parsed library" << std::endl;
+    // spdlog::info("Print parsed library");
 
     // for(const auto& package : mLibrary.packages)
     // {
     //     if(package.properties.at(0).name == "VDD")
     //     {
-    //         std::cout << package << std::endl;
+    //        spdlog::info(to_string(package));
     //     }
     // }
 
-    // std::cout << mLibrary.symbolsLibrary << std::endl;
+    // spdlog::info(to_string(mLibrary.symbolsLibrary));
 
-    // std::cout << mLibrary << std::endl;
+    // spdlog::info(to_string(mLibrary));
 
     return mLibrary;
 }

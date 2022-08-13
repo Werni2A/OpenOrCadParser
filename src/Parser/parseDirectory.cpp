@@ -42,7 +42,7 @@ DirectoryStruct Parser::parseDirectory()
 
         // @todo Just a guess that this is the version but's highly likely
         uint16_t probFileVersion = mDs.readUint16();
-        std::cout << "FileVersion?? = " << std::to_string(probFileVersion) << std::endl;
+        spdlog::debug("FileVersion?? = {}", probFileVersion);
 
         if(storedVersion == 0)
         {
@@ -52,7 +52,7 @@ DirectoryStruct Parser::parseDirectory()
         {
             if(static_cast<int>(storedVersion / 10) != static_cast<int>(probFileVersion / 10))
             {
-                std::cout << "FileVersion Difference " << std::to_string(storedVersion) << " != " << std::to_string(probFileVersion) << std::endl;
+                spdlog::debug("FileVersion Difference {} != {}", storedVersion, probFileVersion);
             }
         }
 
