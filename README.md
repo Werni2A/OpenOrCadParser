@@ -49,8 +49,10 @@ cmake --build build
 - [CMake](https://cmake.org/) >= 2.8.12
 - [Boost](https://www.boost.org/) - Program Options
 - [compoundfilereader](https://github.com/Microsoft/compoundfilereader)
+- [fmt](https://github.com/fmtlib/fmt)
 - [Magic Enum](https://github.com/Neargye/magic_enum)
 - [Nameof](https://github.com/Neargye/magic_enum)
+- [spdlog](https://github.com/gabime/spdlog)
 
 ---
 

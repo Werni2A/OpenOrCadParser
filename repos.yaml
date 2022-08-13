@@ -74,9 +74,9 @@ repositories:
   - errors: 154
     options: null
     path: ./library/fpga/actel/ACT_SEQ.OLB
-  - errors: 99999
-    options: null
-    path: ./library/fpga/actel/ACT_SOFT.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/fpga/actel/ACT_SOFT.OLB
   - errors: 13
     options: null
     path: ./library/fpga/actel/ACT_RAM.OLB
@@ -89,7 +89,7 @@ repositories:
   - errors: 8
     options: null
     path: ./library/fpga/xilinx/X5K_MISC.OLB
-  - errors: 99999
+  - errors: 114
     options: null
     path: ./library/fpga/xilinx/LOGIBLOX.OLB
   - errors: 6
@@ -104,19 +104,19 @@ repositories:
   - errors: 1108
     options: null
     path: ./library/fpga/xilinx/Spartan2/SPARTAN2.OLB
-  - errors: 99999
+  - errors: 24
     options: null
     path: ./library/fpga/lucent/SPECFUNC.OLB
-  - errors: 99999
+  - errors: 138
     options: null
     path: ./library/fpga/lucent/LUCENT.OLB
-  - errors: 99999
-    options: null
-    path: ./library/fpga/lucent/L4000E.OLB
-  - errors: 99999
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/fpga/lucent/L4000E.OLB
+  - errors: 106
     options: null
     path: ./library/fpga/amd/AMD_LS.OLB
-  - errors: 99999
+  - errors: 66
     options: null
     path: ./library/fpga/amd/PLDPRIMS.OLB
   - errors: 7
@@ -125,63 +125,63 @@ repositories:
   - errors: 4
     options: null
     path: ./library/fpga/altera/MEGA.OLB
-  - errors: 99999
+  - errors: 125
     options: null
     path: ./library/fpga/altera/ALTERA_M.OLB
   - errors: 2
     options: null
     path: ./library/fpga/altera/PCI_A.OLB
-  - errors: 99999
+  - errors: 67
     options: null
     path: ./library/fpga/altera/ALTERA_P.OLB
-  - errors: 99999
-    options: null
-    path: ./library/fpga/lattice/MUX.OLB
-  - errors: 99999
-    options: null
-    path: ./library/fpga/lattice/IOPINS.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/fpga/lattice/MUX.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/fpga/lattice/IOPINS.OLB
   - errors: 3
     options: null
     path: ./library/fpga/lattice/PWRGND.OLB
-  - errors: 99999
-    options: null
-    path: ./library/fpga/lattice/COUNTERS.OLB
-  - errors: 99999
-    options: null
-    path: ./library/fpga/lattice/LOGIC.OLB
-  - errors: 99999
-    options: null
-    path: ./library/fpga/lattice/REG.OLB
-  - errors: 99999
-    options: null
-    path: ./library/fpga/lattice/CODERS.OLB
-  - errors: 99999
-    options: null
-    path: ./library/fpga/lattice/ARITH.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/fpga/lattice/COUNTERS.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/fpga/lattice/LOGIC.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/fpga/lattice/REG.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/fpga/lattice/CODERS.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/fpga/lattice/ARITH.OLB
   - errors: 52
     options: null
     path: ./library/pspice/advanls/CONTROLLER.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/IEEE3.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/VLSITEC.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/DEVICE.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/IEEE3.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/VLSITEC.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/DEVICE.OLB
   - errors: 23
     options: null
     path: ./library/oldlibs/OPTOISOL.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/PANASONC.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/PANASONC.OLB
   - errors: 34
     options: null
     path: ./library/oldlibs/LADDER.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/ANALOG.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/ANALOG.OLB
   - errors: 18
     options: null
     path: ./library/oldlibs/ASSEMBLY.OLB
@@ -191,60 +191,60 @@ repositories:
   - errors: 19
     options: null
     path: ./library/oldlibs/SPICE.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/DALLAS.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/DALLAS.OLB
   - errors: 15
     options: null
     path: ./library/oldlibs/HITACHI.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/IEEE4.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/IEEE4.OLB
   - errors: 12
     options: null
     path: ./library/oldlibs/LCAS_SNS.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/OPTT_SNS.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/SONY.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/OPTT_SNS.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/SONY.OLB
   - errors: 38
     options: null
     path: ./library/oldlibs/TXN_DSP.OLB
   - errors: 14
     options: null
     path: ./library/oldlibs/POWER.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/MAXIM.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/MAXIM.OLB
   - errors: 42
     options: null
     path: ./library/oldlibs/TI2.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/ELNT_VID.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/IEEE2.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/ANALOG3.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/ELNT_VID.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/IEEE2.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/ANALOG3.OLB
   - errors: 25
     options: null
     path: ./library/oldlibs/CHIPSMC.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/MOSEL.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/MITSUBIS.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/CMOS.OLB
-  - errors: 99999
-    options: null
-    path: ./library/oldlibs/CHIPS.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/MOSEL.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/MITSUBIS.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/CMOS.OLB
+  # - errors: 99999
+  #   options: null
+  #   path: ./library/oldlibs/CHIPS.OLB
   - errors: 10
     options: null
     path: ./library/oldlibs/INMOS.OLB
@@ -568,14 +568,14 @@ repositories:
   files: []
   project: beagleboard-x15
   url: https://github.com/beagleboard/beagleboard-x15
-- author: beagleboard
-  commit: a14c542f0de8507e001a6d652daaf85bc654e422
-  files:
-  - errors: 178
-    options: null
-    path: ./SCH/BeagleBoard-xM_ORCAD.DSN
-  project: beagleboard-xm
-  url: https://github.com/beagleboard/beagleboard-xm
+# - author: beagleboard
+#   commit: a14c542f0de8507e001a6d652daaf85bc654e422
+#   files:
+#   - errors: 178
+#     options: null
+#     path: ./SCH/BeagleBoard-xM_ORCAD.DSN
+#   project: beagleboard-xm
+#   url: https://github.com/beagleboard/beagleboard-xm
 - author: beagleboard
   commit: 1a732ca598999bf4c6c08e1d1546cdecaa0ca30b
   files:
@@ -2145,15 +2145,15 @@ repositories:
 - author: sangphanthanh
   commit: 032f605cc1d97f0b293c117c269594f6b710cd25
   files:
-  - errors: 0
-    options: null
-    path: ./OrCAD/LIBRARY1_0.OBK
+  # - errors: 0
+  #   options: null
+  #   path: ./OrCAD/LIBRARY1_0.OBK
   - errors: 1
     options: null
     path: ./OrCAD/SmartGardenShield/LIBRARY1_0.OBK
-  - errors: 0
-    options: null
-    path: ./OrCAD/LIBRARY1.OLB
+  # - errors: 0
+  #   options: null
+  #   path: ./OrCAD/LIBRARY1.OLB
   - errors: 1
     options: null
     path: ./OrCAD/SmartGardenShield/LIBRARY1.OLB

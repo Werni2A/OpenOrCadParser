@@ -12,7 +12,7 @@
 
 CommentText Parser::readCommentText()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const size_t startOffset = mDs.getCurrentOffset();
 
@@ -39,7 +39,7 @@ CommentText Parser::readCommentText()
             std::to_string(mLibrary.symbolsLibrary.textFonts.size()) + "!");
     }
 
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 0");
+    mDs.printUnknownData(2, std::string(__func__) + " - 0");
 
     obj.name = mDs.readStringLenZeroTerm();
 
@@ -53,8 +53,8 @@ CommentText Parser::readCommentText()
         throw FileFormatChanged("CommentText");
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << obj << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(obj));
 
     return obj;
 }

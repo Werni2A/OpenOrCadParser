@@ -12,6 +12,10 @@
 #include <string>
 #include <vector>
 
+#include <fmt/color.h>
+#include <fmt/core.h>
+#include <spdlog/spdlog.h>
+
 #include "ContainerExtractor.hpp"
 #include "DataStream.hpp"
 #include "Enums/FillStyle.hpp"
@@ -103,7 +107,7 @@ Library Parser::parseLibrary()
 {
     const std::string aLibPath = mExtractedPath;
 
-    std::clog << "Start parsing library " << aLibPath << std::endl;
+    spdlog::info("Start parsing library {}", aLibPath);
 
     fs::path pathLib = fs::path(aLibPath);
 
@@ -227,7 +231,7 @@ Library Parser::parseLibrary()
             exceptionHandling();
         }
 
-        std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+        spdlog::info("----------------------------------------------------------------------------------\n");
 
         return directoryStruct;
     };
@@ -238,7 +242,7 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathExportBlocksDir.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathExportBlocksDir.string());
     }
 
     if(fs::exists(pathGraphicsDir))
@@ -247,7 +251,7 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathGraphicsDir.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathGraphicsDir.string());
     }
 
     if(fs::exists(pathPackagesDir))
@@ -256,7 +260,7 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathPackagesDir.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathPackagesDir.string());
     }
 
     if(fs::exists(pathPartsDir))
@@ -265,7 +269,7 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathPartsDir.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathPartsDir.string());
     }
 
     if(fs::exists(pathSymbolsDir))
@@ -274,7 +278,7 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathSymbolsDir.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathSymbolsDir.string());
     }
 
     if(fs::exists(pathCellsDir))
@@ -283,7 +287,7 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathCellsDir.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathCellsDir.string());
     }
 
     if(fs::exists(pathViewsDir))
@@ -292,10 +296,10 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathViewsDir.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathViewsDir.string());
     }
 
-    std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+    spdlog::info("----------------------------------------------------------------------------------\n");
 
     if(fs::exists(pathGraphicsTypes))
     {
@@ -313,11 +317,11 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathGraphicsTypes.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathGraphicsTypes.string());
     }
 
 
-    std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+    spdlog::info("----------------------------------------------------------------------------------\n");
 
     if(fs::exists(pathSymbolsTypes))
     {
@@ -335,10 +339,10 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathSymbolsTypes.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathSymbolsTypes.string());
     }
 
-    std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+    spdlog::info("----------------------------------------------------------------------------------\n");
 
     if(fs::exists(pathLibrary))
     {
@@ -356,10 +360,10 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathLibrary.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathLibrary.string());
     }
 
-    std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+    spdlog::info("----------------------------------------------------------------------------------\n");
 
     if(fs::exists(pathSymbolsERC))
     {
@@ -378,10 +382,10 @@ Library Parser::parseLibrary()
     }
     else
     {
-        std::clog << "File does not exist: " << pathSymbolsERC.string() << std::endl;
+        spdlog::debug("File does not exist: {}", pathSymbolsERC.string());
     }
 
-    std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+    spdlog::info("----------------------------------------------------------------------------------\n");
 
     if(fs::exists(pathPackages))
     {
@@ -406,15 +410,16 @@ Library Parser::parseLibrary()
 
             if(!hasError)
             {
-                std::cout << printGreen("Package " + mCurrOpenFile.string() + " parsed successfuly.") << std::endl;
+                spdlog::info(fmt::format(fg(fmt::color::green),
+                    "Package {} parsed successfuly.", mCurrOpenFile.string()));
             }
 
-            std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+            spdlog::info("----------------------------------------------------------------------------------\n");
         }
     }
     else
     {
-        std::clog << "Directory does not exist: " << pathPackages.string() << std::endl;
+        spdlog::debug("Directory does not exist: {}", pathPackages.string());
     }
 
     if(fs::exists(pathSymbols))
@@ -450,15 +455,16 @@ Library Parser::parseLibrary()
 
             if(!hasError)
             {
-                std::cout << printGreen("Symbol " + mCurrOpenFile.string() + " parsed successfuly.") << std::endl;
+                spdlog::info(fmt::format(fg(fmt::color::green),
+                    "Symbol {} parsed successfuly.", mCurrOpenFile.string()));
             }
 
-            std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+            spdlog::info("----------------------------------------------------------------------------------\n");
         }
     }
     else
     {
-        std::clog << "Directory does not exist: " << pathSymbols.string() << std::endl;
+        spdlog::warn("Directory does not exist: {}", pathSymbols.string());
     }
 
     for(const auto& schematic : pathViewsSchematicsSchematic)
@@ -480,10 +486,10 @@ Library Parser::parseLibrary()
         }
         else
         {
-            std::clog << "File does not exist: " << schematic.string() << std::endl;
+            spdlog::debug("File does not exist: {}", schematic.string());
         }
 
-        std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+        spdlog::info("----------------------------------------------------------------------------------\n");
     }
 
     for(const auto& hierarchy : pathViewsSchematicsHierarchyHierarchy)
@@ -505,10 +511,10 @@ Library Parser::parseLibrary()
         }
         else
         {
-            std::clog << "File does not exist: " << hierarchy.string() << std::endl;
+            spdlog::debug("File does not exist: {}", hierarchy.string());
         }
 
-        std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+        spdlog::info("----------------------------------------------------------------------------------\n");
     }
 
     for(const auto& pages : pathViewsSchematicsPagesPages)
@@ -532,32 +538,33 @@ Library Parser::parseLibrary()
             }
             else
             {
-                std::clog << "File does not exist: " << page.string() << std::endl;
+                spdlog::warn("File does not exist: {}", page.string());
             }
 
-            std::cout << newLine() << "----------------------------------------------------------------------------------" << newLine() << std::endl;
+            spdlog::info("\n----------------------------------------------------------------------------------\n");
         }
     }
 
-    std::string errCtrStr = "Errors in " + std::to_string(mFileErrCtr) + "/" + std::to_string(mFileCtr) + " files!";
+    std::string errCtrStr = fmt::format("Errors in {}/{} files!", mFileErrCtr, mFileCtr);
 
-    errCtrStr = (mFileErrCtr == 0u) ? printGreen(errCtrStr) : printRed(errCtrStr);
+    errCtrStr = fmt::format((mFileErrCtr == 0u) ? fg(fmt::color::green) : fg(fmt::color::crimson),
+        errCtrStr);
 
-    std::cout << errCtrStr << std::endl;
+    spdlog::info(errCtrStr);
 
-    // std::cout << "Print parsed library" << std::endl;
+    // spdlog::info("Print parsed library");
 
     // for(const auto& package : mLibrary.packages)
     // {
     //     if(package.properties.at(0).name == "VDD")
     //     {
-    //         std::cout << package << std::endl;
+    //        spdlog::info(to_string(package));
     //     }
     // }
 
-    // std::cout << mLibrary.symbolsLibrary << std::endl;
+    // spdlog::info(to_string(mLibrary.symbolsLibrary));
 
-    // std::cout << mLibrary << std::endl;
+    // spdlog::info(to_string(mLibrary));
 
     return mLibrary;
 }
@@ -573,32 +580,29 @@ void Parser::exceptionHandling()
     {
         ++mFileErrCtr;
 
-        std::cerr << printRed("--------ERROR REPORT--------") << newLine();
-        std::cerr << printRed("File: " + mCurrOpenFile.string() + newLine());
-        mDs.printCurrentOffset(std::cerr);
-        std::cerr << newLine();
-        std::cerr << printRed("Error Message: " + newLine() + std::string(e.what()) + newLine());
-        std::cerr << std::endl;
+        spdlog::error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
+        spdlog::error(fmt::format(fg(fmt::color::crimson), "File: {}", mCurrOpenFile.string()));
+        spdlog::error(fmt::format(fg(fmt::color::crimson), mDs.getCurrentOffsetStrMsg()));
+        spdlog::error(fmt::format(fg(fmt::color::crimson), ("\nError Message: {}\n\n", e.what())));
     }
     catch(...)
     {
-        std::cerr << printRed("--------ERROR REPORT--------") << newLine();
-        std::cerr << printRed("Unknown exception caugt!") << newLine();
-        std::cerr << std::endl;
+        spdlog::error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
+        spdlog::error(fmt::format(fg(fmt::color::crimson), "Unknown exception caught!\n"));
     }
 }
 
 
 void Parser::parsePage()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     // readDevHelper();
     // return;
 
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    mDs.printUnknownData(std::clog, 21, std::string(__func__) + " - 0");
+    mDs.printUnknownData(21, std::string(__func__) + " - 0");
     readPreamble();
 
     std::string name = mDs.readStringLenZeroTerm();
@@ -608,63 +612,63 @@ void Parser::parsePage()
     time_t createDateTime = static_cast<time_t>(mDs.readUint32());
     time_t modifyDateTime = static_cast<time_t>(mDs.readUint32());
 
-    std::cout << "createDateTime = " << DateTimeToStr(createDateTime) << " | modifyDateTime = " << DateTimeToStr(modifyDateTime) << std::endl;
+    spdlog::debug("createDateTime = {} | modifyDateTime = {}", DateTimeToStr(createDateTime), DateTimeToStr(modifyDateTime));
 
-    mDs.printUnknownData(std::clog, 16, std::string(__func__) + " - 1");
+    mDs.printUnknownData(16, std::string(__func__) + " - 1");
 
     uint32_t width  = mDs.readUint32();
     uint32_t height = mDs.readUint32();
 
-    std::cout << "width = " << std::to_string(width) << " | height = " << std::to_string(height) << std::endl;
+    spdlog::debug("width = {} | height = {}", width, height);
 
     uint32_t pinToPin = mDs.readUint32(); //!< Pin-to-pin spacing
 
-    std::cout << "pinToPin = " << std::to_string(pinToPin) << std::endl;
+    spdlog::debug("pinToPin = {}", pinToPin);
 
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 2");
+    mDs.printUnknownData(2, std::string(__func__) + " - 2");
 
     uint16_t horizontalCount = mDs.readUint16(); //!< See 'Schematic Page Properties' -> 'Grid Reference'
     uint16_t verticalCount   = mDs.readUint16(); //!< See 'Schematic Page Properties' -> 'Grid Reference'
 
-    std::cout << "horizontalCount = " << std::to_string(horizontalCount) << " | verticalCount = " << std::to_string(verticalCount) << std::endl;
+    spdlog::debug("horizontalCount = {} | verticalCount = {}", horizontalCount, verticalCount);
 
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 3");
+    mDs.printUnknownData(2, std::string(__func__) + " - 3");
 
     uint32_t horizontalWidth = mDs.readUint32(); //!< See 'Schematic Page Properties' -> 'Grid Reference'
     uint32_t verticalWidth   = mDs.readUint32(); //!< See 'Schematic Page Properties' -> 'Grid Reference'
 
-    std::cout << "horizontalWidth = " << std::to_string(horizontalWidth) << " | verticalWidth = " << std::to_string(verticalWidth) << std::endl;
+    spdlog::debug("horizontalWidth = {} | verticalWidth = {}", horizontalWidth, verticalWidth);
 
-    mDs.printUnknownData(std::clog, 48, std::string(__func__) + " - 4");
+    mDs.printUnknownData(48, std::string(__func__) + " - 4");
 
     uint32_t horizontalChar = mDs.readUint32(); //!<       See 'Schematic Page Properties' -> 'Grid Reference' ->
                                              //             'Horizontal' -> 'Alphabetic' = 1
                                              //                             'Numeric'    = 0
 
-    std::cout << "horizontalChar = " << std::to_string(horizontalChar) << std::endl;
+    spdlog::debug("horizontalChar = {}", horizontalChar);
 
-    mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 5");
+    mDs.printUnknownData(4, std::string(__func__) + " - 5");
 
     uint32_t horizontalAscending = mDs.readUint32(); //!<       See 'Schematic Page Properties' -> 'Grid Reference' ->
                                                   //         'Horizontal'
                                                   //         Select 'ascending' (1) or 'decending' (0).
 
-    std::cout << "horizontalAscending = " << std::to_string(horizontalAscending) << std::endl;
+    spdlog::debug("horizontalAscending = {}", horizontalAscending);
 
     uint32_t verticalChar   = mDs.readUint32(); //!< See 'Schematic Page Properties' -> 'Grid Reference' ->
                                              //       'Vertical' -> 'Alphabetic' = 1
                                              //                     'Numeric'    = 0
 
-    std::cout << "verticalChar = " << std::to_string(verticalChar) << std::endl;
+    spdlog::debug("verticalChar = {}", verticalChar);
 
-    mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 6");
+    mDs.printUnknownData(4, std::string(__func__) + " - 6");
 
 
     uint32_t verticalAscending = mDs.readUint32(); //!<       See 'Schematic Page Properties' -> 'Grid Reference' ->
                                                   //         'Vertical'
                                                   //         Select 'ascending' (1) or 'decending' (0).
 
-    std::cout << "verticalAscending = " << std::to_string(verticalAscending) << std::endl;
+    spdlog::debug("verticalAscending = {}", verticalAscending);
 
     uint32_t isMetric            = mDs.readUint32();
     uint32_t borderDisplayed     = mDs.readUint32();
@@ -674,72 +678,71 @@ void Parser::parsePage()
     uint32_t titleblockDisplayed = mDs.readUint32();
     uint32_t titleblockPrinted   = mDs.readUint32();
     // @todo XML is always 1, maybe a bug in OrCad?
-    uint32_t ansiGridRefs = mDs.readUint32(); //!<       Use ANSI grid references.
-                                            //   See 'Schematic Page Properties' -> 'Grid Reference'
+    uint32_t ansiGridRefs = mDs.readUint32(); //!< Use ANSI grid references.
+                                              //   See 'Schematic Page Properties' -> 'Grid Reference'
 
-
-    std::cout << "isMetric            = " << std::to_string(isMetric) << std::endl;
-    std::cout << "borderDisplayed     = " << std::to_string(borderDisplayed) << std::endl;
-    std::cout << "borderPrinted       = " << std::to_string(borderPrinted) << std::endl;
-    std::cout << "gridRefDisplayed    = " << std::to_string(gridRefDisplayed) << std::endl;
-    std::cout << "gridRefPrinted      = " << std::to_string(gridRefPrinted) << std::endl;
-    std::cout << "titleblockDisplayed = " << std::to_string(titleblockDisplayed) << std::endl;
-    std::cout << "titleblockPrinted   = " << std::to_string(titleblockPrinted) << std::endl;
-    std::cout << "ansiGridRefs        = " << std::to_string(ansiGridRefs) << std::endl;
+    spdlog::debug("isMetric            = {}", isMetric);
+    spdlog::debug("borderDisplayed     = {}", borderDisplayed);
+    spdlog::debug("borderPrinted       = {}", borderPrinted);
+    spdlog::debug("gridRefDisplayed    = {}", gridRefDisplayed);
+    spdlog::debug("gridRefPrinted      = {}", gridRefPrinted);
+    spdlog::debug("titleblockDisplayed = {}", titleblockDisplayed);
+    spdlog::debug("titleblockPrinted   = {}", titleblockPrinted);
+    spdlog::debug("ansiGridRefs        = {}", ansiGridRefs);
 
     const uint16_t lenA = mDs.readUint16();
 
-    std::cout << "lenA = " << std::to_string(lenA) << std::endl;
+    spdlog::debug("lenA = {}", lenA);
 
     for(size_t i = 0u; i < lenA; ++i)
     {
-        mDs.printUnknownData(std::clog, 8, std::string(__func__) + " - a");
+        mDs.printUnknownData(8, std::string(__func__) + " - a");
     }
 
     const uint16_t len0 = mDs.readUint16();
 
-    std::cout << "len0 = " << std::to_string(len0) << std::endl;
+    spdlog::debug("len0 = {}", len0);
 
     for(size_t i = 0u; i < len0; ++i)
     {
-        mDs.printUnknownData(std::clog, 32, std::string(__func__) + " - 8");
+        mDs.printUnknownData(32, std::string(__func__) + " - 8");
     }
 
-    // mDs.printUnknownData(std::clog, 30, std::string(__func__) + " - 7");
+    // mDs.printUnknownData(30, std::string(__func__) + " - 7");
 
 
-    // mDs.printUnknownData(std::clog, 38, std::string(__func__) + " - 1.5");
+    // mDs.printUnknownData(38, std::string(__func__) + " - 1.5");
 
     // @todo required for CONTENT page but not for the others? This offset must be somehow
     //       dynamic
-    // mDs.printUnknownData(std::clog, 14, std::string(__func__) + " - 1.6");
+    // mDs.printUnknownData(14, std::string(__func__) + " - 1.6");
 
 
 
 
 
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 9");
+    mDs.printUnknownData(2, std::string(__func__) + " - 9");
 
     const uint16_t len1 = mDs.readUint16();
 
-    std::cout << "len1 = " << std::to_string(len1) << std::endl;
+    spdlog::debug("len1 = {}", len1);
 
     for(size_t i = 0u; i < len1; ++i)
     {
         std::string name = mDs.readStringLenZeroTerm();
-        mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 10");
+        mDs.printUnknownData(4, std::string(__func__) + " - 10");
     }
 
     const uint16_t len2 = mDs.readUint16();
 
-    std::cout << "len2 = " << std::to_string(len2) << std::endl;
+    spdlog::debug("len2 = {}", len2);
 
     for(size_t i = 0u; i < len2; ++i)
     {
         // if(i > 0u)
         // {
         //     readPreamble();
-        //     mDs.printUnknownData(std::clog, 8, std::string(__func__) + " - 11");
+        //     mDs.printUnknownData(8, std::string(__func__) + " - 11");
         // }
 
         Structure structure = read_type_prefix();
@@ -753,14 +756,14 @@ void Parser::parsePage()
 
     const uint16_t len3 = mDs.readUint16();
 
-    std::cout << "len3 = " << std::to_string(len3) << std::endl;
+    spdlog::debug("len3 = {}", len3);
 
     for(size_t i = 0u; i < len3; ++i)
     {
         // if(i > 0u)
         // {
         //     readPreamble();
-        //     mDs.printUnknownData(std::clog, 8, std::string(__func__) + " - 11");
+        //     mDs.printUnknownData(8, std::string(__func__) + " - 11");
         // }
 
         Structure structure;
@@ -768,7 +771,7 @@ void Parser::parsePage()
         if(i == 0u)
         {
             // @todo this is type_prefix_very_long()
-            mDs.printUnknownData(std::clog, 47, std::string(__func__) + " - 11");
+            mDs.printUnknownData(47, std::string(__func__) + " - 11");
             structure = ToStructure(0x0d); // Parse package instance for now until type_prefix_very_long is implemented
         }
         else
@@ -786,13 +789,13 @@ void Parser::parsePage()
     }
 
     // readPreamble();
-    // mDs.printUnknownData(std::clog, 12, std::string(__func__) + " - 12");
+    // mDs.printUnknownData(12, std::string(__func__) + " - 12");
 
-    mDs.printUnknownData(std::clog, 10, std::string(__func__) + " - 10");
+    mDs.printUnknownData(10, std::string(__func__) + " - 10");
 
     const uint16_t lenX = mDs.readUint16();
 
-    std::cout << "lenX = " << std::to_string(lenX) << std::endl;
+    spdlog::debug("lenX = {}", lenX);
 
     for(size_t i = 0u; i < lenX; ++i)
     {
@@ -806,28 +809,28 @@ void Parser::parsePage()
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
 void Parser::readPartInst()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    mDs.printUnknownData(std::clog, 8, std::string(__func__) + " - 0");
+    mDs.printUnknownData(8, std::string(__func__) + " - 0");
 
     std::string pkgName = mDs.readStringLenZeroTerm();
 
     uint32_t dbId = mDs.readUint32();
 
-    mDs.printUnknownData(std::clog, 8, std::string(__func__) + " - 1");
+    mDs.printUnknownData(8, std::string(__func__) + " - 1");
 
     int16_t locX = mDs.readInt16();
     int16_t locY = mDs.readInt16();
 
     Color color = ToColor(mDs.readUint16()); // @todo educated guess
 
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 2");
+    mDs.printUnknownData(2, std::string(__func__) + " - 2");
 
     uint16_t len = mDs.readUint16();
 
@@ -838,11 +841,11 @@ void Parser::readPartInst()
         parseStructure(structure); // @todo push struct
     }
 
-    mDs.printUnknownData(std::clog, 1, std::string(__func__) + " - 3");
+    mDs.printUnknownData(1, std::string(__func__) + " - 3");
 
     std::string reference = mDs.readStringLenZeroTerm();
 
-    mDs.printUnknownData(std::clog, 14, std::string(__func__) + " - 4");
+    mDs.printUnknownData(14, std::string(__func__) + " - 4");
 
     uint16_t len2 = mDs.readUint16();
 
@@ -855,32 +858,32 @@ void Parser::readPartInst()
 
     std::string sth1 = mDs.readStringLenZeroTerm(); // @todo needs verification
 
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 5");
+    mDs.printUnknownData(2, std::string(__func__) + " - 5");
 
     // @todo implement type_prefix_very_long
-    mDs.printUnknownData(std::clog, 18, std::string(__func__) + " - 6");
+    mDs.printUnknownData(18, std::string(__func__) + " - 6");
     Structure structure = read_type_prefix_long();
     readPreamble();
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
 void Parser::readT0x10()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    mDs.printUnknownData(std::clog, 16, std::string(__func__) + " - 0");
+    mDs.printUnknownData(16, std::string(__func__) + " - 0");
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
 std::pair<Structure, std::any> Parser::parseStructure(Structure structure)
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    std::cout << "Parsing " << structure << std::endl;
+    spdlog::debug("Parsing ", to_string(structure));
 
     std::any parseStruct;
 
@@ -912,7 +915,7 @@ std::pair<Structure, std::any> Parser::parseStructure(Structure structure)
             break;
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 
     return std::make_pair(structure, parseStruct);
 }
@@ -923,7 +926,8 @@ void Parser::discard_until_preamble()
     const int patternSize = 4;
     std::array<uint8_t, patternSize> buffer = {0};
 
-    const std::array<uint8_t, patternSize> preamble = {0xff, 0xe4, 0x5c, 0x39}; // Magic number for beginning of struct
+    // Magic number specifying the beginning of a struct
+    const std::array<uint8_t, patternSize> preamble = {0xff, 0xe4, 0x5c, 0x39};
 
     auto shift_left = [](std::array<uint8_t, patternSize>& buffer)
     {
@@ -949,11 +953,11 @@ void Parser::discard_until_preamble()
 
 Structure Parser::read_type_prefix_long()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const Structure typeId = ToStructure(mDs.readUint8());
 
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 0");
+    mDs.printUnknownData(2, std::string(__func__) + " - 0");
 
     mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
 
@@ -966,7 +970,7 @@ Structure Parser::read_type_prefix_long()
                                     + std::to_string(static_cast<size_t>(typeIdRep)) + ")!");
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 
     return typeId;
 }
@@ -974,7 +978,7 @@ Structure Parser::read_type_prefix_long()
 
 Structure Parser::read_type_prefix()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const Structure typeId = ToStructure(mDs.readUint8());
 
@@ -982,8 +986,8 @@ Structure Parser::read_type_prefix()
     //       the beginning of the next read_type_prefix() where all the previous
     //       structures belong to this one.
     mByteOffset = mDs.readUint32();
-    std::cout << std::string(__func__) << " - 0 | mByteOffset = " << std::to_string(mByteOffset) << std::endl;
-    // mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 0");
+    spdlog::debug("{} - 0 | mByteOffset = {}", __func__, mByteOffset);
+    // mDs.printUnknownData(4, std::string(__func__) + " - 0");
 
     mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
 
@@ -996,7 +1000,7 @@ Structure Parser::read_type_prefix()
                                     + std::to_string(static_cast<size_t>(typeIdRep)) + ")!");
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 
     return typeId;
 }
@@ -1004,7 +1008,7 @@ Structure Parser::read_type_prefix()
 
 Structure Parser::read_type_prefix_short()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const Structure typeId = ToStructure(mDs.readUint8());
 
@@ -1019,14 +1023,14 @@ Structure Parser::read_type_prefix_short()
         // throw std::runtime_error("Unexpected lock value 0x" + ToHex(byteLength, 2));
     }
 
-    mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 0");;
+    mDs.printUnknownData(4, std::string(__func__) + " - 0");
     // mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
 
     const Structure typeIdRep = ToStructure(mDs.readUint8());
 
     const int16_t size = mDs.readInt16();
-    std::cout << std::string(__func__) << " - 1 | typeId = " << to_string(typeId) << std::endl;
-    std::cout << std::string(__func__) << " - 2 | size   = " << std::to_string(size) << std::endl;
+    spdlog::debug("{} - 1 | typeId = {}", __func__, to_string(typeId));
+    spdlog::debug("{} - 2 | size   = {}", __func__, size);
 
     if(size >= 0)
     {
@@ -1051,7 +1055,7 @@ Structure Parser::read_type_prefix_short()
                         return newIdx >= 0 ? mLibrary.symbolsLibrary.strLst.at(newIdx) : "";
                     };
 
-                std::cout << "  " << std::to_string(i) << ": " << getStr(nameValueMapping.at(i).first) << " <- " << getStr(nameValueMapping.at(i).second) << std::endl;
+                spdlog::debug("  {}: {} <- {}", i, getStr(nameValueMapping.at(i).first), getStr(nameValueMapping.at(i).second));
             }
             catch(const std::exception& e)
             {
@@ -1063,7 +1067,7 @@ Structure Parser::read_type_prefix_short()
     {
         // @todo Why is -1 used? The value 0 would also suffice...
         // Until now I only saw it for PinIdxMapping, Properties and SymbolDisplayProp
-        std::cout << to_string(typeId) + ": What does " + std::to_string(size) + " mean?" << std::endl; // @todo Figure out
+        spdlog::warn("{}: What does {} mean?", to_string(typeId), std::to_string(size)); // @todo Figure out
     }
 
     // if(mDs.getCurrentOffset() != startOffset + byteLength)
@@ -1071,7 +1075,7 @@ Structure Parser::read_type_prefix_short()
     //     throw MisinterpretedData(__func__, startOffset, byteLength, mDs.getCurrentOffset());
     // }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 
     return typeId;
 }
@@ -1079,22 +1083,22 @@ Structure Parser::read_type_prefix_short()
 
 uint32_t Parser::readPreamble(bool readOptionalLen)
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    // Magic constant
+    // Magic number specifying the beginning of a struct
     mDs.assumeData({0xff, 0xe4, 0x5c, 0x39}, std::string(__func__) + " - 0");
 
     const uint32_t optionalLen = readOptionalLen ? mDs.readUint32() : 0u;
 
-    mDs.printUnknownData(std::clog, optionalLen, std::string(__func__) + " - 1 | Correlates to locks");
+    mDs.printUnknownData(optionalLen, std::string(__func__) + " - 1 | Correlates to locks");
 
     if(optionalLen > 0u)
     {
         // @todo Looks like this correlates to setting a lock for an object.
-        std::cout << std::string(__func__) << ": Figure out when optionalLen is used! Currently it's 0x" << ToHex(optionalLen, 4) << std::endl;
+        spdlog::debug("{}: Figure out when optionalLen is used! Currently it's 0x{}", __func__, ToHex(optionalLen, 4));
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 
     return optionalLen;
 }
@@ -1117,7 +1121,7 @@ uint32_t Parser::readConditionalPreamble(Structure structure, bool readOptionalL
 // @todo needs some way to push the results into the final object
 void Parser::readGeometryStructure(GeometryStructure geometryStructure, GeometrySpecification* geometrySpecification)
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     GeometrySpecification container;
 
@@ -1146,17 +1150,17 @@ void Parser::readGeometryStructure(GeometryStructure geometryStructure, Geometry
         *geometrySpecification = container;
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
 // @todo Probably a wrapper for Inst (Instances)
 void Parser::readSthInPages0()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    mDs.printUnknownData(std::clog, 6, std::string(__func__) + " - 0");
-    mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 1");
+    mDs.printUnknownData(6, std::string(__func__) + " - 0");
+    mDs.printUnknownData(4, std::string(__func__) + " - 1");
 
     const uint16_t len = mDs.readUint16();
 
@@ -1173,29 +1177,29 @@ void Parser::readSthInPages0()
         readGeometryStructure(geometryStructure1, nullptr); // @todo write output to structure
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
 void Parser::readGraphicCommentTextInst()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    mDs.printUnknownData(std::clog, 34, std::string(__func__) + " - 0");
+    mDs.printUnknownData(34, std::string(__func__) + " - 0");
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
 void Parser::readWireScalar()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     uint32_t dbId = mDs.readUint32();
 
-    std::cout << "dbId = " << std::to_string(dbId) << std::endl;
+    spdlog::debug("dbId = {}", dbId);
 
-    mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 0");
+    mDs.printUnknownData(4, std::string(__func__) + " - 0");
 
     Color wireColor = ToColor(mDs.readUint32());
 
@@ -1204,24 +1208,21 @@ void Parser::readWireScalar()
     int32_t endX   = mDs.readInt32();
     int32_t endY   = mDs.readInt32();
 
-    std::cout << "startX = " << std::to_string(startX) << " | "
-              << "startY = " << std::to_string(startY) << " | "
-              << "endX = " << std::to_string(endX) << " | "
-              << "endY = " << std::to_string(endY) << " | " << std::endl;
+    spdlog::debug("startX = {} | startY = {} | endX = {} | endY = {}", startX, startY, endX, endY);
 
-    mDs.printUnknownData(std::clog, 1, std::string(__func__) + " - 1");
+    mDs.printUnknownData(1, std::string(__func__) + " - 1");
 
-    std::cout << "mByteOffset = " << mByteOffset << std::endl;
+    spdlog::debug("mByteOffset = {}", mByteOffset);
 
     if(mByteOffset == 0x3d)
     {
-        mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 2");
+        mDs.printUnknownData(2, std::string(__func__) + " - 2");
     }
     else if(mByteOffset > 0x3d)
     {
         const uint16_t len = mDs.readUint16();
 
-        std::cout << "len = " << std::to_string(len) << std::endl;
+        spdlog::debug("len = {}", len);
 
         for(size_t i = 0u; i < len; ++i)
         {
@@ -1232,53 +1233,52 @@ void Parser::readWireScalar()
         }
     }
 
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 3");
+    mDs.printUnknownData(2, std::string(__func__) + " - 3");
 
     LineWidth wireLineWidth = ToLineWidth(mDs.readUint32());
     LineStyle wireLineStyle = ToLineStyle(mDs.readUint32());
 
-    std::cout << "wireLineWidth = " << wireLineWidth << " | "
-              << "wireLineStyle = " << wireLineStyle << std::endl;
+    spdlog::debug("wireLineWidth = {} | wireLineStyle = {}", to_string(wireLineWidth), to_string(wireLineStyle));
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
 void Parser::readAlias()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     int32_t locX = mDs.readInt32();
     int32_t locY = mDs.readInt32();
 
-    std::cout << "locX = " << std::to_string(locX) << " | "
-              << "locY = " << std::to_string(locY) << std::endl;
+    spdlog::debug("locX = {} | locY = {}", locX, locY);
 
     Color color = ToColor(mDs.readUint32());
 
-    std::cout << "color = " << color << std::endl;
+    spdlog::debug("color = {}", to_string(color));
 
     Rotation rotation = ToRotation(mDs.readUint32()); // @todo Why is it 4 byte? Probably increase Rotation size
 
-    std::cout << "rotation = " << rotation << std::endl;
+    spdlog::debug("rotation = {}", to_string(rotation));
 
     uint16_t textFontIdx = mDs.readUint16(); // @todo educated guess
-    std::cout << "Alias fontIdx = " << std::to_string(textFontIdx) << std::endl;
 
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 0");
+    spdlog::debug("Alias fontIdx = {}", textFontIdx);
+
+    mDs.printUnknownData(2, std::string(__func__) + " - 0");
 
     std::string name = mDs.readStringLenZeroTerm();
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
 // @todo is this a specialized instance for Rects or general for all types?
 void Parser::readGraphicBoxInst()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    mDs.printUnknownData(std::clog, 11, std::string(__func__) + " - 0");
+    mDs.printUnknownData(11, std::string(__func__) + " - 0");
 
     uint32_t dbId = mDs.readUint32();
 
@@ -1293,7 +1293,7 @@ void Parser::readGraphicBoxInst()
 
     Color color = ToColor(mDs.readUint16()); // @todo is it really not a 4 byte value?
 
-    mDs.printUnknownData(std::clog, 5, std::string(__func__) + " - 1");
+    mDs.printUnknownData(5, std::string(__func__) + " - 1");
 
     // @todo Only Rect as a shape would make sense here. Maybe this should be passed
     //       as a parameter to readSthInPages0 to check this condition. Further,
@@ -1302,13 +1302,13 @@ void Parser::readGraphicBoxInst()
     readPreamble();
     parseStructure(structure);
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
 void Parser::readDevHelper()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     mDs.discardBytes(0x2a1);
 
@@ -1317,7 +1317,7 @@ void Parser::readDevHelper()
 
     readGraphicBoxInst();
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
@@ -1339,7 +1339,7 @@ void Parser::checkInterpretedDataLen(const std::string& aFuncName, size_t aStart
 
 SymbolVector Parser::readSymbolVector()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     SymbolVector symbolVector;
 
@@ -1352,7 +1352,7 @@ SymbolVector Parser::readSymbolVector()
             return structure;
         };
 
-    // mDs.printUnknownData(std::clog, 20, std::string(__func__) + " - x");
+    // mDs.printUnknownData(20, std::string(__func__) + " - x");
     // read_type_prefix();
 
     discard_until_preamble();
@@ -1377,10 +1377,10 @@ SymbolVector Parser::readSymbolVector()
     symbolVector.name = mDs.readStringLenZeroTerm();
 
     mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x32, 0x00, 0x32, 0x00, 0x00, 0x00, 0x02, 0x00}, std::string(__func__) + " - 2");
-    // mDs.printUnknownData(std::clog, 12, std::string(__func__) + " - 2");
+    // mDs.printUnknownData(12, std::string(__func__) + " - 2");
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << symbolVector << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(symbolVector));
 
     return symbolVector;
 }
@@ -1405,7 +1405,6 @@ void Parser::printContainerTree() const
     ContainerExtractor extractor{mInputFile};
     extractor.printContainerTree();
 }
-
 
 
 FileType Parser::getFileTypeByExtension(const fs::path& aFile) const
@@ -1441,7 +1440,7 @@ FileType Parser::getFileTypeByExtension(const fs::path& aFile) const
 
 void Parser::openFile(const fs::path& aFile)
 {
-    std::cout << "Opening file: " << aFile << std::endl;
+    spdlog::info("Opening file: {}", aFile.string());
 
     mDs = DataStream{aFile};
     if(!mDs)
@@ -1452,13 +1451,13 @@ void Parser::openFile(const fs::path& aFile)
     mCurrOpenFile     = aFile;
     mCurrOpenFileSize = fs::file_size(aFile);
 
-    std::cout << "File contains " << mCurrOpenFileSize << " byte." << std::endl;
+    spdlog::info("File contains {} byte.", mCurrOpenFileSize);
 }
 
 
 void Parser::closeFile()
 {
-    std::cout << "Closing file: " << mCurrOpenFile << std::endl;
+    spdlog::info("Closing file: {}", mCurrOpenFile.string());
 
     mDs.close();
 
@@ -1469,7 +1468,7 @@ void Parser::closeFile()
 
 PinIdxMapping Parser::readPinIdxMapping()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     PinIdxMapping pinIdxMapping;
 
@@ -1486,7 +1485,7 @@ PinIdxMapping Parser::readPinIdxMapping()
 
         const uint8_t separator = mDs.readUint8();
 
-        // std::cout << "Sep = 0x" << ToHex(separator, 2) << std::endl;
+        spdlog::debug("Sep = 0x{}", ToHex(separator, 2));
 
         // @todo maybe this is not a separator but the additional property of the pin?
         // As soon as I add a property like NET_SHORT the separator changes from 0x7f to 0xaa
@@ -1498,8 +1497,8 @@ PinIdxMapping Parser::readPinIdxMapping()
         }
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << pinIdxMapping << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(pinIdxMapping));
 
     return pinIdxMapping;
 }
@@ -1507,7 +1506,7 @@ PinIdxMapping Parser::readPinIdxMapping()
 
 SymbolPinScalar Parser::readSymbolPinScalar()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     SymbolPinScalar symbolPinScalar;
 
@@ -1520,14 +1519,14 @@ SymbolPinScalar Parser::readSymbolPinScalar()
 
     symbolPinScalar.pinShape = ToPinShape(mDs.readUint16());
 
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 0");
+    mDs.printUnknownData(2, std::string(__func__) + " - 0");
 
     symbolPinScalar.portType = ToPortType(mDs.readUint32());
 
-    mDs.printUnknownData(std::clog, 6, std::string(__func__) + " - 1");
+    mDs.printUnknownData(6, std::string(__func__) + " - 1");
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << symbolPinScalar << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(symbolPinScalar));
 
     return symbolPinScalar;
 }
@@ -1535,7 +1534,7 @@ SymbolPinScalar Parser::readSymbolPinScalar()
 
 SymbolPinBus Parser::readSymbolPinBus()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     SymbolPinBus symbolPinBus;
 
@@ -1548,14 +1547,14 @@ SymbolPinBus Parser::readSymbolPinBus()
 
     symbolPinBus.pinShape = ToPinShape(mDs.readUint16());
 
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 0");
+    mDs.printUnknownData(2, std::string(__func__) + " - 0");
 
     symbolPinBus.portType = ToPortType(mDs.readUint32());
 
-    mDs.printUnknownData(std::clog, 6, std::string(__func__) + " - 1");
+    mDs.printUnknownData(6, std::string(__func__) + " - 1");
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << symbolPinBus << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(symbolPinBus));
 
     return symbolPinBus;
 }
@@ -1563,7 +1562,7 @@ SymbolPinBus Parser::readSymbolPinBus()
 
 SymbolDisplayProp Parser::readSymbolDisplayProp()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     SymbolDisplayProp symbolDisplayProp;
 
@@ -1571,7 +1570,7 @@ SymbolDisplayProp Parser::readSymbolDisplayProp()
 
     // @todo move to left shift operator
     // @bug The required string is not this one but the value of the associated property!!!! This is just the name of the property!!
-    std::cout << "strLst Item = " << mLibrary.symbolsLibrary.strLst.at(symbolDisplayProp.nameIdx - 1) << std::endl;
+    spdlog::debug("strLst Item = {}", mLibrary.symbolsLibrary.strLst.at(symbolDisplayProp.nameIdx - 1));
 
     symbolDisplayProp.x = mDs.readInt16();
     symbolDisplayProp.y = mDs.readInt16();
@@ -1589,7 +1588,7 @@ SymbolDisplayProp Parser::readSymbolDisplayProp()
     }
 
     // @todo The meaning of the bits in between is unknown
-    std::clog << "Unknown bits in bitmap: " << std::to_string((packedStruct >> 8u) & 0x3f) << std::endl; // Bit 13 downto  8
+    spdlog::debug("Unknown bits in bitmap: {}", (packedStruct >> 8u) & 0x3f); // Bit 13 downto  8
     if(((packedStruct >> 8u) & 0x3f) != 0x00)
     {
         throw std::runtime_error("Some bits in the bitmap are used but what is the meaning of them?");
@@ -1606,12 +1605,12 @@ SymbolDisplayProp Parser::readSymbolDisplayProp()
     // 00 03  Name only
     // 00 04  Both if value exist
     //        Value if value exist
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 0");
+    mDs.printUnknownData(2, std::string(__func__) + " - 0");
 
     mDs.assumeData({0x00}, std::string(__func__) + " - 1");
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << symbolDisplayProp << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(symbolDisplayProp));
 
     return symbolDisplayProp;
 }
@@ -1624,9 +1623,9 @@ void Parser::readERCSymbol()
 
     // @todo Probably 'sourceLibName' which is a string but I'm not sure. Could also be the
     //       last part of the next unknown block
-    mDs.printUnknownData(std::clog, 3, std::string(__func__) + " - 0");
+    mDs.printUnknownData(3, std::string(__func__) + " - 0");
 
-    mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 1");
+    mDs.printUnknownData(4, std::string(__func__) + " - 1");
 
     uint16_t len = mDs.readUint16();
 
@@ -1652,7 +1651,7 @@ void Parser::readERCSymbol()
 
 SymbolBBox Parser::readSymbolBBox()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     SymbolBBox symbolBBox;
 
@@ -1662,10 +1661,10 @@ SymbolBBox Parser::readSymbolBBox()
     symbolBBox.y2 = mDs.readInt16();
 
     // @todo not sure weather this belongs to the structure or should be outside of it
-    mDs.printUnknownData(std::clog, 4, std::string(__func__) + " - 0");
+    mDs.printUnknownData(4, std::string(__func__) + " - 0");
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << symbolBBox << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(symbolBBox));
 
     return symbolBBox;
 }
@@ -1674,28 +1673,28 @@ SymbolBBox Parser::readSymbolBBox()
 // @todo Probably specifies the 'Package Properties'
 T0x1f Parser::readT0x1f()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     T0x1f t0x1f;
 
     t0x1f.name = mDs.readStringLenZeroTerm();
 
     std::string unknownStr0 = mDs.readStringLenZeroTerm(); // @todo figure out
-    std::cout << "readT0x1f unknownStr0 = " << unknownStr0 << std::endl;
+    spdlog::debug("readT0x1f unknownStr0 = {}", unknownStr0);
 
     t0x1f.refDes = mDs.readStringLenZeroTerm();
 
     std::string unknownStr1 = mDs.readStringLenZeroTerm(); // @todo figure out
-    std::cout << "readT0x1f unknownStr1 = " << unknownStr1 << std::endl;
+    spdlog::debug("readT0x1f unknownStr1 = {}", unknownStr1);
 
     t0x1f.pcbFootprint = mDs.readStringLenZeroTerm();
 
     // Maybe the last two bytes specify the amount of units the symbols has?
     // Also called "Section Count"
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 0 - Prob. Unit Count");
+    mDs.printUnknownData(2, std::string(__func__) + " - 0 - Prob. Unit Count");
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << t0x1f << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(t0x1f));
 
     return t0x1f;
 }
@@ -1704,33 +1703,33 @@ T0x1f Parser::readT0x1f()
 // @todo create/update Kaitai file
 GeneralProperties Parser::readGeneralProperties()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    GeneralProperties generalProperties;
+    GeneralProperties obj;
 
     // @todo move to kaitai file
     // doc: |
     //   Implementation path of the symbol.
     //   See OrCAD: 'Part Properties' -> 'Implementation Path'
-    generalProperties.implementationPath = mDs.readStringLenZeroTerm();
+    obj.implementationPath = mDs.readStringLenZeroTerm();
 
     // @todo move to kaitai file
     // doc: |
     //   Implementation of the symbol.
     //   See OrCAD: 'Part Properties' -> 'Implementation'
-    generalProperties.implementation = mDs.readStringLenZeroTerm();
+    obj.implementation = mDs.readStringLenZeroTerm();
 
     // @todo move to kaitai file
     // doc: |
     //   Reference descriptor for the symbol. E.g. 'R' for resistor.
     //   See OrCAD: 'Package Properties' -> 'Part Reference Prefix'
-    generalProperties.refDes = mDs.readStringLenZeroTerm();
+    obj.refDes = mDs.readStringLenZeroTerm();
 
     // @todo move to kaitai file
     // doc: |
     //   Value of the symbol. E.g. '10k' for a resistor.
     //   See OrCAD: 'Part Properties' -> 'Value'
-    generalProperties.partValue = mDs.readStringLenZeroTerm();
+    obj.partValue = mDs.readStringLenZeroTerm();
 
     const uint8_t properties = mDs.readUint8();
 
@@ -1743,18 +1742,18 @@ GeneralProperties Parser::readGeneralProperties()
     const uint8_t pinProperties      =  properties       & 0x07; // Get bits 2 down to 0
     const uint8_t implementationType = (properties >> 3) & 0x07; // Get bits 5 down to 3
 
-    generalProperties.pinNameVisible   =  static_cast<bool>((pinProperties & 0x01) >> 0); // Bit 0
-    generalProperties.pinNameRotate    =  static_cast<bool>((pinProperties & 0x02) >> 1); // Bit 1
-    generalProperties.pinNumberVisible = !static_cast<bool>((pinProperties & 0x04) >> 2); // Bit 2 - Note that this bit is inverted
+    obj.pinNameVisible   =  static_cast<bool>((pinProperties & 0x01) >> 0); // Bit 0
+    obj.pinNameRotate    =  static_cast<bool>((pinProperties & 0x02) >> 1); // Bit 1
+    obj.pinNumberVisible = !static_cast<bool>((pinProperties & 0x04) >> 2); // Bit 2 - Note that this bit is inverted
 
-    generalProperties.implementationType = ToImplementationType(implementationType);
+    obj.implementationType = ToImplementationType(implementationType);
 
-    mDs.printUnknownData(std::clog, 1, std::string(__func__) + " - 0");
+    mDs.printUnknownData(1, std::string(__func__) + " - 0");
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << generalProperties << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(obj));
 
-    return generalProperties;
+    return obj;
 }
 
 
@@ -1762,11 +1761,11 @@ Properties Parser::readProperties()
 {
     // @todo this structure contains somehow .Normal and .Convert variants
 
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    Properties properties;
+    Properties obj;
 
-    properties.ref = mDs.readStringLenZeroTerm();
+    obj.ref = mDs.readStringLenZeroTerm();
 
     mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 0"); // Unknown but probably string
 
@@ -1774,7 +1773,7 @@ Properties Parser::readProperties()
     const uint16_t viewNumber = mDs.readUint16(); // @todo I assume that this is the amount of views
                                                // the symbol has. Typically 1 (.Normal) or maybe
                                                // 2 with (.Normal and .Convert)
-                                               // Add to properties
+                                               // Add to obj
 
     switch(viewNumber)
     {
@@ -1784,7 +1783,7 @@ Properties Parser::readProperties()
 
         case 2: // ".Convert"
             // @todo how to handle optional attributes in my structures?
-            properties.convertName = mDs.readStringLenZeroTerm(); // @todo include into Kaitai file
+            obj.convertName = mDs.readStringLenZeroTerm(); // @todo include into Kaitai file
             break;
 
         default:
@@ -1793,45 +1792,47 @@ Properties Parser::readProperties()
             break;
     }
 
-    properties.name = mDs.readStringLenZeroTerm();
+    obj.name = mDs.readStringLenZeroTerm();
 
     // This really looks like an TypePrefix! Maybe this property can be split up?
-    mDs.printUnknownData(std::clog, 29, std::string(__func__) + " - 1");
+    mDs.printUnknownData(29, std::string(__func__) + " - 1");
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << properties << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(obj));
 
-    return properties;
+    return obj;
 }
 
 
 Properties2 Parser::readProperties2()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    Properties2 properties2;
+    Properties2 obj;
 
-    properties2.name = mDs.readStringLenZeroTerm();
+    obj.name = mDs.readStringLenZeroTerm();
 
     mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 0"); // Unknown but probably string
 
-    properties2.refDes = mDs.readStringLenZeroTerm();
+    obj.refDes = mDs.readStringLenZeroTerm();
 
     mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 1"); // Unknown but probably string
 
-    properties2.footprint = mDs.readStringLenZeroTerm();
+    obj.footprint = mDs.readStringLenZeroTerm();
 
-    properties2.sectionCount = mDs.readUint16(); // @todo has this something to do with units? Or was this just bad naming from myself?
+    obj.sectionCount = mDs.readUint16(); // @todo has this something to do with units? Or was this just bad naming from myself?
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << properties2 << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(obj));
 
-    return properties2;
+    return obj;
 }
 
 
 std::vector<Type> Parser::parseTypes()
 {
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
     std::vector<Type> types;
 
     // File can be completely empty (size of 0 byte)
@@ -1845,36 +1846,38 @@ std::vector<Type> Parser::parseTypes()
         types.push_back(type);
     }
 
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+
     return types;
 }
 
 
 GeometrySpecification Parser::readSymbolProperties()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     return parseGeometrySpecification();
 }
 
 
 GeometrySpecification Parser::parseGeometrySpecification()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    GeometrySpecification geometrySpecification;
+    GeometrySpecification obj;
 
-    geometrySpecification.name = mDs.readStringLenZeroTerm(); // @todo add to struct and Kaitai file
+    obj.name = mDs.readStringLenZeroTerm(); // @todo add to struct and Kaitai file
 
     mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 0"); // Unknown but probably a string
     mDs.assumeData({0x30}, std::string(__func__) + " - 1");
     mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 2"); // Unknown but probably a string
 
     const uint16_t geometryCount = mDs.readUint16();
-    std::clog << "geometryCount = " << std::to_string(geometryCount) << std::endl;
+    spdlog::debug("geometryCount = {}", geometryCount);
 
     for(size_t i = 0u; i < geometryCount; ++i)
     {
-        std::cout << "i of geometryCount = " << std::to_string(i) << std::endl;
+        spdlog::debug("i of geometryCount = {}", i);
 
         if(i > 0u)
         {
@@ -1899,30 +1902,30 @@ GeometrySpecification Parser::parseGeometrySpecification()
 
         auto geoStruct = geometryStructure1;
 
-        readGeometryStructure(geoStruct, &geometrySpecification);
+        readGeometryStructure(geoStruct, &obj);
 
         // uint16_t foo = mDs.readUint8();
         // foo = (foo << 8) | foo;
         // geoStruct = ToGeometryStructure(foo);
 
-        // mDs.printUnknownData(std::clog, 40, std::string(__func__) + " - 1");
+        // mDs.printUnknownData(40, std::string(__func__) + " - 1");
         // readPreamble();
 
         if(mFileFormatVersion == FileFormatVersion::A)
         {
-            mDs.printUnknownData(std::clog, 8, std::string(__func__) + " - 3.5");
+            mDs.printUnknownData(8, std::string(__func__) + " - 3.5");
         }
     }
 
     if(geometryCount == 0u)
     {
         // throw std::runtime_error("CatchMeIfYouCan");
-        // mDs.printUnknownData(std::clog, 6, std::string(__func__) + " - 4");
+        // mDs.printUnknownData(6, std::string(__func__) + " - 4");
     }
 
     // if(geometryCount == 0u)
     // {
-    //     mDs.printUnknownData(std::clog, 10, std::string(__func__) + " - 3");
+    //     mDs.printUnknownData(10, std::string(__func__) + " - 3");
 
     //     {
     //         GeometryStructure geoStruct;
@@ -1944,7 +1947,7 @@ GeometrySpecification Parser::parseGeometrySpecification()
     //             parseStructure(structure);
     //         }
 
-    //         mDs.printUnknownData(std::clog, 24, "foo");
+    //         mDs.printUnknownData(24, "foo");
 
     //         structure = read_type_prefix();
     //         readConditionalPreamble(structure);
@@ -1959,12 +1962,12 @@ GeometrySpecification Parser::parseGeometrySpecification()
     //         // uint16_t foo = mDs.readUint8();
     //         // foo = (foo << 8) | foo;
     //         // geoStruct = ToGeometryStructure(foo);
-    //         // readGeometryStructure(geoStruct, &geometrySpecification);
+    //         // readGeometryStructure(geoStruct, &obj);
     //     }
     // }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << geometrySpecification << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(obj));
 
-    return geometrySpecification;
+    return obj;
 }

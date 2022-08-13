@@ -20,7 +20,7 @@ void Bitmap::writeBmpToFile(const std::string& aFilePath) const
 
     if(!bmp)
     {
-        std::cerr << "Cannot open file!" << std::endl;
+        spdlog::error("Cannot open file for writing! {}", aFilePath);
         exit(1);
     }
 
@@ -35,7 +35,7 @@ void Bitmap::writeBmpToFile(const std::string& aFilePath) const
 
 Bitmap Parser::readBitmap()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const size_t startOffset = mDs.getCurrentOffset();
 
@@ -77,8 +77,8 @@ Bitmap Parser::readBitmap()
         throw FileFormatChanged("Bitmap");
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << obj << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(obj));
 
     return obj;
 }

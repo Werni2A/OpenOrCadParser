@@ -4,11 +4,11 @@ import os
 import re
 
 from pathlib import Path
-from typing import List, Optional
+from typing import List
 
 from git import Repo
 
-from FileErrorDatabase import RepoFile, Repository, Repositories, FileErrorDatabase
+from FileErrorDatabase import RepoFile, Repository, FileErrorDatabase
 
 
 ExtensionsOfInterest = ['*.OBK', '*.OLB', '*.DSN', '*.DBK']
@@ -119,6 +119,8 @@ namespace fs = std::filesystem;"""
 
 TEST_CASE("{repo.author} - {repo.project} - {file_name} : Check File {full_path}", "[Misc]")
 {{
+    configure_spdlog();
+
     const fs::path inputFile{{"{full_path}"}};
 
     Parser parser{{inputFile}};

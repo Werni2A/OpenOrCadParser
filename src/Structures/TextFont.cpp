@@ -11,7 +11,7 @@
 
 TextFont Parser::readTextFont()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const size_t startOffset = mDs.getCurrentOffset();
 
@@ -22,15 +22,15 @@ TextFont Parser::readTextFont()
 
     obj.escapement = mDs.readUint16(); // @todo not sure
 
-    mDs.printUnknownData(std::clog, 6, std::string(__func__) + " - 0");
+    mDs.printUnknownData(6, std::string(__func__) + " - 0");
 
     obj.weight = mDs.readUint16();
 
-    mDs.printUnknownData(std::clog, 2, std::string(__func__) + " - 1");
+    mDs.printUnknownData(2, std::string(__func__) + " - 1");
 
     obj.italic = mDs.readUint16(); // @todo not sure
 
-    mDs.printUnknownData(std::clog, 6, std::string(__func__) + " - 2");
+    mDs.printUnknownData(6, std::string(__func__) + " - 2");
 
     obj.fontName = mDs.readStringZeroTerm();
     // Looks like OrCAD creates a fixed size buffer where the string
@@ -46,11 +46,11 @@ TextFont Parser::readTextFont()
     mDs.padRest(startOffset, 60, false);
 
     static size_t ctr = 0u;
-    std::cout << "Index = " << std::to_string(ctr) << std::endl;
+    spdlog::debug("Index = {}", ctr);
     ctr++;
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << obj << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(obj));
 
     return obj;
 }

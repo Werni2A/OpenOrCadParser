@@ -39,7 +39,7 @@ size_t Polygon::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointC
 
 Polygon Parser::readPolygon()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const size_t startOffset = mDs.getCurrentOffset();
 
@@ -90,8 +90,8 @@ Polygon Parser::readPolygon()
         throw FileFormatChanged(std::string(nameof::nameof_type<decltype(obj)>()));
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << obj << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(obj));
 
     return obj;
 }

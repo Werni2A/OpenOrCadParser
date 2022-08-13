@@ -5,8 +5,10 @@
     "boost-program-options",
     "catch2",
     "compoundfilereader",
+    "fmt",
     "magic-enum",
-    "nameof"
+    "nameof",
+    "spdlog"
   ],
   "builtin-baseline": "9b22b40c6c61bf0da2d46346dd44a11e90972cc9"
 }

@@ -33,7 +33,7 @@ size_t Rect::getExpectedStructSize(FileFormatVersion aVersion)
 
 Rect Parser::readRect()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const size_t startOffset = mDs.getCurrentOffset();
 
@@ -75,8 +75,8 @@ Rect Parser::readRect()
     // @todo use for all read methods.
     checkInterpretedDataLen(__func__, startOffset, mDs.getCurrentOffset(), byteLength);
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << obj << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(obj));
 
     return obj;
 }

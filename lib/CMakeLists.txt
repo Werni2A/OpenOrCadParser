@@ -1,11 +1,17 @@
 # Add CompoundFileReader dependency
 find_path(COMPOUNDFILEREADER_INCLUDE_DIRS "compoundfilereader.h")
 
+# Add fmt dependency
+find_package(fmt CONFIG REQUIRED)
+
 # Add Magic Enum dependency
 find_package(magic_enum CONFIG REQUIRED)
 
 # Add Nameof dependency
 find_package(nameof CONFIG REQUIRED)
+
+# Add spdlog dependency
+find_package(spdlog CONFIG REQUIRED)
 
 set(SOURCES
    ${LIB_SRC_DIR}/ContainerExtractor.cpp
@@ -68,6 +74,9 @@ target_include_directories(${NAME_LIB} PRIVATE
 )
 
 target_link_libraries(${NAME_LIB} PRIVATE
+                      fmt::fmt
                       magic_enum::magic_enum
                       nameof::nameof
+                      spdlog::spdlog
+                      spdlog::spdlog_header_only
 )

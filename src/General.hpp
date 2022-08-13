@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include <fmt/core.h>
 #include <magic_enum.hpp>
 #include <nameof.hpp>
 
@@ -56,34 +57,6 @@ template<typename T>
 
 
 [[maybe_unused]]
-static std::string printRed(const std::string& str)
-{
-    return TURN_MSG_STYLE_ON ? "\e[0;31m" + str + "\e[0m" : str;
-}
-
-
-[[maybe_unused]]
-static std::string printGreen(const std::string& str)
-{
-    return TURN_MSG_STYLE_ON ? "\e[0;32m" + str + "\e[0m" : str;
-}
-
-
-[[maybe_unused]]
-static std::string printBlue(const std::string& str)
-{
-    return TURN_MSG_STYLE_ON ? "\e[0;34m" + str + "\e[0m" : str;
-}
-
-
-[[maybe_unused]]
-static std::string printYellow(const std::string& str)
-{
-    return TURN_MSG_STYLE_ON ? "\e[0;33m" + str + "\e[0m" : str;
-}
-
-
-[[maybe_unused]]
 static std::string newLine()
 {
     return "\r\n";
@@ -93,14 +66,14 @@ static std::string newLine()
 [[maybe_unused]]
 static std::string getOpeningMsg(const char* aFuncName, size_t aCurrOffset)
 {
-     return "0x" + ToHex(aCurrOffset, 8) + ": Beginning " + std::string(aFuncName);
+    return fmt::format("0x{}: Beginning {}", ToHex(aCurrOffset, 8), aFuncName);
 }
 
 
 [[maybe_unused]]
 static std::string getClosingMsg(const char* aFuncName, size_t aCurrOffset)
 {
-     return "0x" + ToHex(aCurrOffset, 8) + ": Ending " + std::string(aFuncName);
+    return fmt::format("0x{}: Ending {}", ToHex(aCurrOffset, 8), aFuncName);
 }
 
 
@@ -169,7 +142,7 @@ static std::string TimezoneToStr(int16_t timezone)
 //   std::time_t rawtime;
 //   std::tm* timeInfo;
 
-//   const size_t lenBuffer = 24u;;
+//   const size_t lenBuffer = 24u;
 //   char buffer[lenBuffer];
 
 //   std::time(&rawtime);

@@ -15,12 +15,23 @@ jobs:
         git clone https://github.com/microsoft/vcpkg.git
         ./vcpkg/bootstrap-vcpkg.sh
 
-    - name: Build
+    - name: Download Unit Test Designs
+      run: |
+        python -m pip install -r test/py/requirements.txt
+        python test/py/testing.py --download_repos true --database_file_path repos.yaml --third_party_path test/designs
+
+    - name: Create Unit Tests
+      run: |
+        python test/py/testing.py --generate_unit_tests true --database_file_path repos.yaml --unit_test_path test/src/generated_tests --third_party_path test/designs
+
+    - name: Build Library, CLI Application and Tests
       run: |
         cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake
         cmake --build build
 
-    - name: Run unit tests
+    - name: Run Tests
       run: |
-        cd test
-        ./../build/test/test
+        sudo apt update
+        sudo apt install -y parallel
+        ./run_parallel_tests.sh
+        # ./build/test/test

@@ -32,7 +32,7 @@ size_t Bezier::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCo
 
 Bezier Parser::readBezier()
 {
-    std::clog << getOpeningMsg(__func__, mDs.getCurrentOffset()) << std::endl;
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const size_t startOffset = mDs.getCurrentOffset();
 
@@ -99,8 +99,8 @@ Bezier Parser::readBezier()
         throw FileFormatChanged(std::string(nameof::nameof_type<decltype(obj)>()));
     }
 
-    std::clog << getClosingMsg(__func__, mDs.getCurrentOffset()) << std::endl;
-    std::clog << obj << std::endl;
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(obj));
 
     return obj;
 }

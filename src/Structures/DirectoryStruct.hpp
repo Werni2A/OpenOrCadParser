@@ -59,7 +59,7 @@ static std::string to_string(const DirectoryStruct& aObj)
     std::string str;
 
     str += "DirectoryStruct:" + newLine();
-    str += indent(1) + "lastModifiedDate = " + DateTimeToStr(aObj.lastModifiedDate) + newLine();;
+    str += indent(1) + "lastModifiedDate = " + DateTimeToStr(aObj.lastModifiedDate) + newLine();
 
     str += indent(1) + "items:" + newLine();
     for(size_t i = 0u; i < aObj.items.size(); ++i)
