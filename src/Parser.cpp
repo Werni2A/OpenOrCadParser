@@ -10,6 +10,7 @@
 #include <map>
 #include <stdexcept>
 #include <string>
+#include <random>
 #include <vector>
 
 #include <fmt/color.h>
@@ -58,7 +59,14 @@ Parser::Parser(const fs::path& aFile, FileFormatVersion aFileFormatVersion) :
     mInputFile     = aFile;
     mInputFileSize = fs::file_size(aFile);
 
-    const fs::path extractTo = fs::temp_directory_path() / "OpenOrCadParser";
+    // Extract to a unique folder in case two similar named files
+    // are extracted at the same time. E.g. in parallel execution.
+    std::random_device rnd;
+    std::mt19937 gen(rnd());
+
+    const std::string uuid = fmt::format("{:08x}{:08x}{:08x}{:08x}", gen(), gen(), gen(), gen());
+
+    const fs::path extractTo = fs::temp_directory_path() / "OpenOrCadParser" / uuid;
     mExtractedPath = extractContainer(aFile, extractTo);
 
     // @todo Figure out the file format version and set it here
@@ -67,6 +75,13 @@ Parser::Parser(const fs::path& aFile, FileFormatVersion aFileFormatVersion) :
     // @todo Figure out the file format version and set it here instead of an argument in
     //       the constructor
     storedVersion = 0;
+}
+
+
+Parser::~Parser()
+{
+    // Remove temporary extracted files
+    fs::remove_all(mExtractedPath.parent_path());
 }
 
 
@@ -198,6 +213,11 @@ Library Parser::parseLibrary()
 
     for(const auto& pagesDir: pathViewsSchematicsPages)
     {
+        if(!std::filesystem::exists(pagesDir))
+        {
+            continue;
+        }
+
         std::vector<fs::path> schematicPages;
 
         for(const auto& page : std::filesystem::directory_iterator{pagesDir})

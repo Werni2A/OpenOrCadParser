@@ -59,6 +59,8 @@ public:
 
     Parser(const fs::path& aFile, FileFormatVersion aFileFormatVersion = FileFormatVersion::C);
 
+    ~Parser();
+
 public:
 
     size_t getFileErrCtr() const
