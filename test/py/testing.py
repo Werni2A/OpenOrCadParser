@@ -78,8 +78,8 @@ def write_back_err_count(db: FileErrorDatabase, path_err_cnt_log: str, path_thir
         actual_err = int(matches[1])
         file_path  = str(matches[2])
 
-        author  = file_path.split(os.path.sep)[1]
-        project = file_path.split(os.path.sep)[2]
+        author  = file_path[len(path_thirdparty_designs):].split(os.path.sep)[1]
+        project = file_path[len(path_thirdparty_designs):].split(os.path.sep)[2]
 
         path_repo = os.path.join(path_thirdparty_designs, author, project)
 

@@ -74,9 +74,9 @@ repositories:
   - errors: 154
     options: null
     path: ./library/fpga/actel/ACT_SEQ.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/fpga/actel/ACT_SOFT.OLB
+  - errors: 85
+    options: null
+    path: ./library/fpga/actel/ACT_SOFT.OLB
   - errors: 13
     options: null
     path: ./library/fpga/actel/ACT_RAM.OLB
@@ -110,9 +110,9 @@ repositories:
   - errors: 138
     options: null
     path: ./library/fpga/lucent/LUCENT.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/fpga/lucent/L4000E.OLB
+  - errors: 93
+    options: null
+    path: ./library/fpga/lucent/L4000E.OLB
   - errors: 106
     options: null
     path: ./library/fpga/amd/AMD_LS.OLB
@@ -134,54 +134,45 @@ repositories:
   - errors: 67
     options: null
     path: ./library/fpga/altera/ALTERA_P.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/fpga/lattice/MUX.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/fpga/lattice/IOPINS.OLB
   - errors: 3
     options: null
     path: ./library/fpga/lattice/PWRGND.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/fpga/lattice/COUNTERS.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/fpga/lattice/LOGIC.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/fpga/lattice/REG.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/fpga/lattice/CODERS.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/fpga/lattice/ARITH.OLB
+  - errors: 51
+    options: null
+    path: ./library/fpga/lattice/LOGIC.OLB
+  - errors: 58
+    options: null
+    path: ./library/fpga/lattice/REG.OLB
+  - errors: 38
+    options: null
+    path: ./library/fpga/lattice/CODERS.OLB
+  - errors: 48
+    options: null
+    path: ./library/fpga/lattice/ARITH.OLB
   - errors: 52
     options: null
     path: ./library/pspice/advanls/CONTROLLER.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/IEEE3.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/VLSITEC.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/DEVICE.OLB
+  - errors: 59
+    options: null
+    path: ./library/oldlibs/IEEE3.OLB
+  - errors: 48
+    options: null
+    path: ./library/oldlibs/VLSITEC.OLB
+  - errors: 136
+    options: null
+    path: ./library/oldlibs/DEVICE.OLB
   - errors: 23
     options: null
     path: ./library/oldlibs/OPTOISOL.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/PANASONC.OLB
+  - errors: 62
+    options: null
+    path: ./library/oldlibs/PANASONC.OLB
   - errors: 34
     options: null
     path: ./library/oldlibs/LADDER.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/ANALOG.OLB
+  - errors: 97
+    options: null
+    path: ./library/oldlibs/ANALOG.OLB
   - errors: 18
     options: null
     path: ./library/oldlibs/ASSEMBLY.OLB
@@ -191,64 +182,64 @@ repositories:
   - errors: 19
     options: null
     path: ./library/oldlibs/SPICE.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/DALLAS.OLB
+  - errors: 66
+    options: null
+    path: ./library/oldlibs/DALLAS.OLB
   - errors: 15
     options: null
     path: ./library/oldlibs/HITACHI.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/IEEE4.OLB
+  - errors: 58
+    options: null
+    path: ./library/oldlibs/IEEE4.OLB
   - errors: 12
     options: null
     path: ./library/oldlibs/LCAS_SNS.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/OPTT_SNS.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/SONY.OLB
+  - errors: 54
+    options: null
+    path: ./library/oldlibs/OPTT_SNS.OLB
+  - errors: 58
+    options: null
+    path: ./library/oldlibs/SONY.OLB
   - errors: 38
     options: null
     path: ./library/oldlibs/TXN_DSP.OLB
   - errors: 14
     options: null
     path: ./library/oldlibs/POWER.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/MAXIM.OLB
+  - errors: 54
+    options: null
+    path: ./library/oldlibs/MAXIM.OLB
   - errors: 42
     options: null
     path: ./library/oldlibs/TI2.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/ELNT_VID.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/IEEE2.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/ANALOG3.OLB
+  - errors: 19
+    options: null
+    path: ./library/oldlibs/ELNT_VID.OLB
+  - errors: 82
+    options: null
+    path: ./library/oldlibs/IEEE2.OLB
+  - errors: 118
+    options: null
+    path: ./library/oldlibs/ANALOG3.OLB
   - errors: 25
     options: null
     path: ./library/oldlibs/CHIPSMC.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/MOSEL.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/MITSUBIS.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/CMOS.OLB
-  # - errors: 99999
-  #   options: null
-  #   path: ./library/oldlibs/CHIPS.OLB
+  - errors: 41
+    options: null
+    path: ./library/oldlibs/MOSEL.OLB
+  - errors: 50
+    options: null
+    path: ./library/oldlibs/MITSUBIS.OLB
+  - errors: 98
+    options: null
+    path: ./library/oldlibs/CMOS.OLB
+  - errors: 52
+    options: null
+    path: ./library/oldlibs/CHIPS.OLB
   - errors: 10
     options: null
     path: ./library/oldlibs/INMOS.OLB
-  - errors: 99999
+  - errors: 58
     options: null
     path: ./library/oldlibs/OKI.OLB
   - errors: 8
@@ -257,10 +248,10 @@ repositories:
   - errors: 34
     options: null
     path: ./library/oldlibs/SHAPES.OLB
-  - errors: 99999
+  - errors: 54
     options: null
     path: ./library/oldlibs/MPS.OLB
-  - errors: 99999
+  - errors: 57
     options: null
     path: ./library/oldlibs/INTEL_P.OLB
   - errors: 10
@@ -269,25 +260,25 @@ repositories:
   - errors: 25
     options: null
     path: ./library/oldlibs/SEEQ.OLB
-  - errors: 99999
+  - errors: 57
     options: null
     path: ./library/oldlibs/MOTO5.OLB
-  - errors: 99999
+  - errors: 66
     options: null
     path: ./library/oldlibs/MEMORY.OLB
-  - errors: 99999
+  - errors: 126
     options: null
     path: ./library/oldlibs/ANALOG1.OLB
   - errors: 9
     options: null
     path: ./library/oldlibs/AMDMACH.OLB
-  - errors: 99999
+  - errors: 82
     options: null
     path: ./library/oldlibs/TI1.OLB
-  - errors: 99999
+  - errors: 50
     options: null
     path: ./library/oldlibs/SGSTHOM.OLB
-  - errors: 99999
+  - errors: 54
     options: null
     path: ./library/oldlibs/SMOS.OLB
   - errors: 14
@@ -308,7 +299,7 @@ repositories:
   - errors: 3
     options: null
     path: ./library/oldlibs/WEITEK.OLB
-  - errors: 99999
+  - errors: 74
     options: null
     path: ./library/oldlibs/ANALOG4.OLB
   - errors: 9
@@ -317,7 +308,7 @@ repositories:
   - errors: 35
     options: null
     path: ./library/oldlibs/RF.OLB
-  - errors: 99999
+  - errors: 149
     options: null
     path: ./library/oldlibs/TTL.OLB
   - errors: 8
@@ -326,25 +317,25 @@ repositories:
   - errors: 12
     options: null
     path: ./library/oldlibs/EXEL.OLB
-  - errors: 99999
+  - errors: 145
     options: null
     path: ./library/oldlibs/PCBDEV.OLB
   - errors: 9
     options: null
     path: ./library/oldlibs/ZILOG.OLB
-  - errors: 99999
+  - errors: 50
     options: null
     path: ./library/oldlibs/MOTO.OLB
-  - errors: 99999
+  - errors: 48
     options: null
     path: ./library/oldlibs/XICOR.OLB
-  - errors: 99999
+  - errors: 46
     options: null
     path: ./library/oldlibs/TILSI.OLB
   - errors: 23
     options: null
     path: ./library/oldlibs/PSPICE.OLB
-  - errors: 99999
+  - errors: 65
     options: null
     path: ./library/oldlibs/HARRIS.OLB
   - errors: 2
@@ -365,25 +356,25 @@ repositories:
   - errors: 19
     options: null
     path: ./library/oldlibs/MOTO1.OLB
-  - errors: 99999
+  - errors: 54
     options: null
     path: ./library/oldlibs/CONNECTR.OLB
-  - errors: 99999
+  - errors: 131
     options: null
     path: ./library/oldlibs/ECL.OLB
-  - errors: 99999
+  - errors: 66
     options: null
     path: ./library/oldlibs/SIPEX.OLB
   - errors: 41
     options: null
     path: ./library/oldlibs/MICRON.OLB
-  - errors: 99999
+  - errors: 56
     options: null
     path: ./library/oldlibs/AMD.OLB
-  - errors: 99999
+  - errors: 42
     options: null
     path: ./library/oldlibs/MOT_UP.OLB
-  - errors: 99999
+  - errors: 19
     options: null
     path: ./library/oldlibs/NSM_MISC.OLB
   - errors: 15
@@ -395,31 +386,31 @@ repositories:
   - errors: 2
     options: null
     path: ./library/oldlibs/PANASON2.OLB
-  - errors: 99999
+  - errors: 82
     options: null
     path: ./library/oldlibs/ATMEL.OLB
-  - errors: 99999
+  - errors: 47
     options: null
     path: ./library/oldlibs/INTELFLA.OLB
-  - errors: 99999
+  - errors: 57
     options: null
     path: ./library/oldlibs/FUJITSU.OLB
   - errors: 3
     options: null
     path: ./library/oldlibs/TAI_NVM.OLB
-  - errors: 99999
+  - errors: 126
     options: null
     path: ./library/oldlibs/ANALOG2.OLB
   - errors: 18
     options: null
     path: ./library/oldlibs/IR.OLB
-  - errors: 99999
+  - errors: 102
     options: null
     path: ./library/oldlibs/IEEE1.OLB
-  - errors: 99999
+  - errors: 46
     options: null
     path: ./library/oldlibs/MCHP_UC.OLB
-  - errors: 99999
+  - errors: 146
     options: null
     path: ./library/oldlibs/LAYOUT.OLB
   - errors: 40
@@ -428,13 +419,13 @@ repositories:
   - errors: 49
     options: null
     path: ./library/oldlibs/MCHP_NVM.OLB
-  - errors: 99999
+  - errors: 66
     options: null
     path: ./library/oldlibs/TTL1.OLB
-  - errors: 99999
+  - errors: 114
     options: null
     path: ./library/oldlibs/INTEL_M.OLB
-  - errors: 99999
+  - errors: 54
     options: null
     path: ./library/oldlibs/INTEL.OLB
   - errors: 32
@@ -443,7 +434,7 @@ repositories:
   - errors: 31
     options: null
     path: ./library/oldlibs/HUGHES.OLB
-  - errors: 99999
+  - errors: 46
     options: null
     path: ./library/oldlibs/DATL_ADC.OLB
   - errors: 19
@@ -452,25 +443,25 @@ repositories:
   - errors: 2
     options: null
     path: ./library/oldlibs/MOTO3.OLB
-  - errors: 99999
+  - errors: 22
     options: null
     path: ./library/oldlibs/WSI.OLB
-  - errors: 99999
+  - errors: 46
     options: null
     path: ./library/oldlibs/AMD_PLD.OLB
-  - errors: 99999
+  - errors: 39
     options: null
     path: ./library/ieeelibs/IEEEMUX.OLB
-  - errors: 99999
+  - errors: 62
     options: null
     path: ./library/ieeelibs/IEEE.OLB
-  - errors: 99999
+  - errors: 72
     options: null
     path: ./library/ieeelibs/IEEEGATE.OLB
-  - errors: 99999
+  - errors: 45
     options: null
     path: ./library/ieeelibs/IEEECOUNTER.OLB
-  - errors: 99999
+  - errors: 50
     options: null
     path: ./library/ieeelibs/IEEELATCH.OLB
   - errors: 15
@@ -479,28 +470,28 @@ repositories:
   - errors: 39
     options: null
     path: ./library/ieeelibs/IEEESHIFTREGISTER.OLB
-  - errors: 99999
+  - errors: 58
     options: null
     path: ./library/ieeelibs/IEEEBUSDRIVERTRANSCEIVER.OLB
   - errors: 11
     options: null
     path: ./library/iec/TTL12.OLB
-  - errors: 99999
+  - errors: 110
     options: null
     path: ./library/iec/DEVICE.OLB
-  - errors: 99999
+  - errors: 66
     options: null
     path: ./library/iec/ANALOG.OLB
-  - errors: 99999
+  - errors: 42
     options: null
     path: ./library/iec/TTL2.OLB
-  - errors: 99999
+  - errors: 38
     options: null
     path: ./library/iec/TTL7.OLB
   - errors: 32
     options: null
     path: ./library/iec/TTL14.OLB
-  - errors: 99999
+  - errors: 42
     options: null
     path: ./library/iec/TTL10.OLB
   - errors: 34
@@ -512,10 +503,10 @@ repositories:
   - errors: 27
     options: null
     path: ./library/iec/TTL11.OLB
-  - errors: 99999
+  - errors: 44
     options: null
     path: ./library/iec/CMOS1.OLB
-  - errors: 99999
+  - errors: 42
     options: null
     path: ./library/iec/TTL13.OLB
   - errors: 36
@@ -524,28 +515,28 @@ repositories:
   - errors: 48
     options: null
     path: ./library/iec/CMOS3.OLB
-  - errors: 99999
+  - errors: 42
     options: null
     path: ./library/iec/TTL6.OLB
-  - errors: 99999
+  - errors: 42
     options: null
     path: ./library/iec/HEADER.OLB
-  - errors: 99999
+  - errors: 44
     options: null
     path: ./library/iec/CMOS2.OLB
-  - errors: 99999
+  - errors: 46
     options: null
     path: ./library/iec/CMOS4.OLB
-  - errors: 99999
+  - errors: 42
     options: null
     path: ./library/iec/TTL5.OLB
-  - errors: 99999
+  - errors: 42
     options: null
     path: ./library/iec/TTL3.OLB
   - errors: 67
     options: null
     path: ./library/iec/TTL1.OLB
-  - errors: 99999
+  - errors: 43
     options: null
     path: ./library/iec/TTL4.OLB
   project: orcad_lib
@@ -568,14 +559,14 @@ repositories:
   files: []
   project: beagleboard-x15
   url: https://github.com/beagleboard/beagleboard-x15
-# - author: beagleboard
-#   commit: a14c542f0de8507e001a6d652daaf85bc654e422
-#   files:
-#   - errors: 178
-#     options: null
-#     path: ./SCH/BeagleBoard-xM_ORCAD.DSN
-#   project: beagleboard-xm
-#   url: https://github.com/beagleboard/beagleboard-xm
+- author: beagleboard
+  commit: a14c542f0de8507e001a6d652daaf85bc654e422
+  files:
+  - errors: 179
+    options: null
+    path: ./SCH/BeagleBoard-xM_ORCAD.DSN
+  project: beagleboard-xm
+  url: https://github.com/beagleboard/beagleboard-xm
 - author: beagleboard
   commit: 1a732ca598999bf4c6c08e1d1546cdecaa0ca30b
   files:
@@ -596,7 +587,7 @@ repositories:
   - errors: 8
     options: null
     path: ./POWER.OLB
-  - errors: 16
+  - errors: 10
     options: null
     path: ./TRANSISTOR.OLB
   - errors: 31
@@ -608,7 +599,7 @@ repositories:
   - errors: 6
     options: null
     path: ./TITLE.OLB
-  - errors: 20
+  - errors: 11
     options: null
     path: ./SAMPLE.OLB
   - errors: 10
@@ -629,7 +620,7 @@ repositories:
   - errors: 1
     options: null
     path: ./PASSIVE.OLB
-  - errors: 20
+  - errors: 7
     options: null
     path: ./SYMBOLS_GOST.OLB
   - errors: 4
@@ -662,7 +653,7 @@ repositories:
 - author: fenlogic
   commit: eee280535c9ab5b1b0f4a4cb277fa372a7bc5eb8
   files:
-  - errors: 6
+  - errors: 5
     options: null
     path: ./schematics/MULTIO.DSN
   project: multio
@@ -670,10 +661,10 @@ repositories:
 - author: hypeer
   commit: 907d2a8d3e631860ace9666b726bfbde489a8f1e
   files:
-  - errors: 16
+  - errors: 15
     options: null
     path: ./orcad/XXXLZJXXX_0.OBK
-  - errors: 16
+  - errors: 15
     options: null
     path: ./orcad/XXXLZJXXX.OLB
   project: allegrolib
@@ -960,28 +951,28 @@ repositories:
   - errors: 863
     options: null
     path: ./orcad capture/unsorted/_archive/MuxDecoder.olb
-  - errors: 9999
+  - errors: 46
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/AMD_PLD.OLB
-  - errors: 9999
+  - errors: 56
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/AMD.OLB
   - errors: 9
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/AMDMACH.OLB
-  - errors: 9999
+  - errors: 97
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/ANALOG.OLB
   - errors: 357
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/ANALOG1.OLB
-  - errors: 9999
+  - errors: 126
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/ANALOG2.OLB
-  - errors: 9999
+  - errors: 118
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/ANALOG3.OLB
-  - errors: 9999
+  - errors: 74
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/ANALOG4.OLB
   - errors: 8
@@ -993,7 +984,7 @@ repositories:
   - errors: 18
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/ASSEMBLY.OLB
-  - errors: 9999
+  - errors: 82
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/ATMEL.OLB
   - errors: 9
@@ -1005,28 +996,28 @@ repositories:
   - errors: 8
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/CATS_NVM.OLB
-  - errors: 9999
+  - errors: 52
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/CHIPS.OLB
   - errors: 25
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/CHIPSMC.OLB
-  - errors: 9999
+  - errors: 98
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/CMOS.OLB
-  - errors: 9999
+  - errors: 54
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/CONNECTR.OLB
-  - errors: 9999
+  - errors: 66
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/DALLAS.OLB
-  - errors: 9999
+  - errors: 46
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/DATL_ADC.OLB
-  - errors: 9999
+  - errors: 136
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/DEVICE.OLB
-  - errors: 9999
+  - errors: 131
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/ECL.OLB
   - errors: 32
@@ -1044,7 +1035,7 @@ repositories:
   - errors: 22
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/ELNT_FET.OLB
-  - errors: 9999
+  - errors: 19
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/ELNT_VID.OLB
   - errors: 12
@@ -1053,13 +1044,13 @@ repositories:
   - errors: 23
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/FLOWCHT.OLB
-  - errors: 9999
+  - errors: 57
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/FUJITSU.OLB
   - errors: 12
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/GOLDSTAR.OLB
-  - errors: 9999
+  - errors: 65
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/HARRIS.OLB
   - errors: 15
@@ -1071,31 +1062,31 @@ repositories:
   - errors: 12
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/HYUNDAI.OLB
-  - errors: 9999
+  - errors: 102
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/IEEE1.OLB
-  - errors: 9999
+  - errors: 82
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/IEEE2.OLB
-  - errors: 9999
+  - errors: 59
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/IEEE3.OLB
-  - errors: 9999
+  - errors: 58
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/IEEE4.OLB
   - errors: 10
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/INMOS.OLB
-  - errors: 9999
+  - errors: 114
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/INTEL_M.OLB
-  - errors: 9999
+  - errors: 57
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/INTEL_P.OLB
-  - errors: 9999
+  - errors: 54
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/INTEL.OLB
-  - errors: 9999
+  - errors: 47
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/INTELFLA.OLB
   - errors: 18
@@ -1104,7 +1095,7 @@ repositories:
   - errors: 34
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/LADDER.OLB
-  - errors: 9999
+  - errors: 146
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/LAYOUT.OLB
   - errors: 12
@@ -1113,16 +1104,16 @@ repositories:
   - errors: 40
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/LLTC_REG.OLB
-  - errors: 9999
+  - errors: 54
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/MAXIM.OLB
   - errors: 49
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/MCHP_NVM.OLB
-  - errors: 9999
+  - errors: 46
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/MCHP_UC.OLB
-  - errors: 9999
+  - errors: 66
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/MEMORY.OLB
   - errors: 42
@@ -1131,16 +1122,16 @@ repositories:
   - errors: 41
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/MICRON.OLB
-  - errors: 9999
+  - errors: 50
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/MITSUBIS.OLB
-  - errors: 9999
+  - errors: 41
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/MOSEL.OLB
-  - errors: 9999
+  - errors: 42
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/MOT_UP.OLB
-  - errors: 9999
+  - errors: 50
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/MOTO.OLB
   - errors: 19
@@ -1155,34 +1146,34 @@ repositories:
   - errors: 19
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/MOTO4.OLB
-  - errors: 9999
+  - errors: 57
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/MOTO5.OLB
   - errors: 39
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/MOTO7.OLB
-  - errors: 9999
+  - errors: 54
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/MPS.OLB
-  - errors: 9999
+  - errors: 19
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/NSM_MISC.OLB
-  - errors: 9999
+  - errors: 58
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/OKI.OLB
   - errors: 23
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/OPTOISOL.OLB
-  - errors: 9999
+  - errors: 54
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/OPTT_SNS.OLB
   - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/PANASON2.OLB
-  - errors: 9999
+  - errors: 62
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/PANASONC.OLB
-  - errors: 9999
+  - errors: 145
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/PCBDEV.OLB
   - errors: 14
@@ -1203,19 +1194,19 @@ repositories:
   - errors: 25
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/SEEQ.OLB
-  - errors: 9999
+  - errors: 50
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/SGSTHOM.OLB
   - errors: 34
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/SHAPES.OLB
-  - errors: 9999
+  - errors: 66
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/SIPEX.OLB
-  - errors: 9999
+  - errors: 54
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/SMOS.OLB
-  - errors: 9999
+  - errors: 58
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/SONY.OLB
   - errors: 19
@@ -1224,34 +1215,34 @@ repositories:
   - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/TAI_NVM.OLB
-  - errors: 9999
+  - errors: 82
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/TI1.OLB
   - errors: 42
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/TI2.OLB
-  - errors: 9999
+  - errors: 46
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/TILSI.OLB
-  - errors: 9999
+  - errors: 149
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/TTL.OLB
-  - errors: 9999
+  - errors: 66
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/TTL1.OLB
   - errors: 38
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/TXN_DSP.OLB
-  - errors: 9999
+  - errors: 48
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/VLSITEC.OLB
   - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/WEITEK.OLB
-  - errors: 9999
+  - errors: 22
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/WSI.OLB
-  - errors: 9999
+  - errors: 48
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/XICOR.OLB
   - errors: 9
@@ -1866,7 +1857,7 @@ repositories:
   - errors: 291
     options: null
     path: ./orcad capture/unsorted/_archive/TRANSISTOR.OLB
-  - errors: 9999
+  - errors: 114
     options: null
     path: ./orcad capture/unsorted/_archive/zetex.olb
   - errors: 1
@@ -1971,7 +1962,7 @@ repositories:
   - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/TRANSFORMERS.OBK
-  - errors: 99999
+  - errors: 126
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/ANALOG1_2_0_0.OBK
   - errors: 83
@@ -2134,10 +2125,10 @@ repositories:
 - author: radualexandrub
   commit: 935e733c301946f5df54c1b54a796d228759f590
   files:
-  - errors: 5
+  - errors: 0
     options: null
     path: ./Schematics/PREAMPL_SCHEM.DSN
-  - errors: 5
+  - errors: 0
     options: null
     path: ./Schematics/PREAMPL_SCHEM_0.DBK
   project: ElectronicDevices-Circuits
@@ -2145,15 +2136,15 @@ repositories:
 - author: sangphanthanh
   commit: 032f605cc1d97f0b293c117c269594f6b710cd25
   files:
-  # - errors: 0
-  #   options: null
-  #   path: ./OrCAD/LIBRARY1_0.OBK
+  - errors: 0
+    options: null
+    path: ./OrCAD/LIBRARY1_0.OBK
   - errors: 1
     options: null
     path: ./OrCAD/SmartGardenShield/LIBRARY1_0.OBK
-  # - errors: 0
-  #   options: null
-  #   path: ./OrCAD/LIBRARY1.OLB
+  - errors: 0
+    options: null
+    path: ./OrCAD/LIBRARY1.OLB
   - errors: 1
     options: null
     path: ./OrCAD/SmartGardenShield/LIBRARY1.OLB
@@ -2175,7 +2166,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/SmartGardenShield/CP_CC1310LAUNCHPAD.DSN
-  - errors: 4
+  - errors: 3
     options: null
     path: ./Document/Hardware/mcu/swrc319/Cadence/LAUNCHXL-CC1310.DSN
   - errors: 0
@@ -2190,7 +2181,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/SmartGardenShield/CP_CC1310LAUNCHPAD_0.DBK
-  - errors: 4
+  - errors: 3
     options: null
     path: ./Document/Hardware/mcu/swrc319/Cadence/LAUNCHXL-CC1310_0.DBK
   project: CP_SmartGarden
@@ -2222,16 +2213,16 @@ repositories:
 - author: wwng2333
   commit: c2718b9d74f6bb07b1a13634ed3b4fcd504490c1
   files:
-  - errors: 3
+  - errors: 1
     options: null
     path: ./LIB1_0.OBK
-  - errors: 3
+  - errors: 1
     options: null
     path: "./ORCAD/\u5171\u4EAB\u5E93/LIB1_0.OBK"
-  - errors: 3
+  - errors: 1
     options: null
     path: ./lib1.OLB
-  - errors: 3
+  - errors: 1
     options: null
     path: "./ORCAD/\u5171\u4EAB\u5E93/lib1.OLB"
   - errors: 1
