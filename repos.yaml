@@ -540,7 +540,7 @@ repositories:
     options: null
     path: ./library/iec/TTL4.OLB
   project: orcad_lib
-  url: https://github.com/18959263172/orcad_lib
+  url: https://github.com/Werni2A/18959263172_orcad_lib
 - author: beagleboard
   commit: 6db2f5203c7a172aa6ce9c49b3ef5745ba78c91c
   files:
@@ -548,17 +548,17 @@ repositories:
     options: null
     path: ./BEAGLE1.OLB
   project: beagle-cadence-libraries
-  url: https://github.com/beagleboard/beagle-cadence-libraries
+  url: https://github.com/Werni2A/beagleboard_beagle-cadence-libraries
 - author: beagleboard
   commit: 513ea1bbacd605b751c022be3d8cddb14b45e2b3
   files: []
   project: BeagleBoard
-  url: https://github.com/beagleboard/BeagleBoard
+  url: https://github.com/Werni2A/beagleboard_BeagleBoard
 - author: beagleboard
   commit: 0e2a7d171ba05c14010a29bd4eaeb9ae3ccf18e3
   files: []
   project: beagleboard-x15
-  url: https://github.com/beagleboard/beagleboard-x15
+  url: https://github.com/Werni2A/beagleboard_beagleboard-x15
 - author: beagleboard
   commit: a14c542f0de8507e001a6d652daaf85bc654e422
   files:
@@ -566,7 +566,7 @@ repositories:
     options: null
     path: ./SCH/BeagleBoard-xM_ORCAD.DSN
   project: beagleboard-xm
-  url: https://github.com/beagleboard/beagleboard-xm
+  url: https://github.com/Werni2A/beagleboard_beagleboard-xm
 - author: beagleboard
   commit: 1a732ca598999bf4c6c08e1d1546cdecaa0ca30b
   files:
@@ -574,7 +574,7 @@ repositories:
     options: null
     path: ./ALLEGRO/BEAGLEBONEBLK_C3.DSN
   project: beaglebone-black
-  url: https://github.com/beagleboard/beaglebone-black
+  url: https://github.com/Werni2A/beagleboard_beaglebone-black
 - author: BerZerKku
   commit: 4c8f982beb7da57222bed6af9d1536f6845c3115
   files:
@@ -636,12 +636,12 @@ repositories:
     options: null
     path: ./symbol/SYMBOL_GOST_0.DBK
   project: ORCAD_lib
-  url: https://github.com/BerZerKku/ORCAD_lib
+  url: https://github.com/Werni2A/BerZerKku_ORCAD_lib
 - author: CircuitCo
   commit: 83e5236753566a8b1bb67acfc292ce9dea67754a
   files: []
   project: BeagleBone-RevA6
-  url: https://github.com/CircuitCo/BeagleBone-RevA6
+  url: https://github.com/Werni2A/CircuitCo_BeagleBone-RevA6
 - author: cutiepi-io
   commit: 1c5492733812fe1ae23d3b046f65bc3c73a0dd2f
   files:
@@ -649,7 +649,7 @@ repositories:
     options: null
     path: ./CutiePi_V2.3-20210409.DSN
   project: cutiepi-board
-  url: https://github.com/cutiepi-io/cutiepi-board
+  url: https://github.com/Werni2A/cutiepi-io_cutiepi-board
 - author: fenlogic
   commit: eee280535c9ab5b1b0f4a4cb277fa372a7bc5eb8
   files:
@@ -657,7 +657,7 @@ repositories:
     options: null
     path: ./schematics/MULTIO.DSN
   project: multio
-  url: https://github.com/fenlogic/multio
+  url: https://github.com/Werni2A/fenlogic_multio
 - author: hypeer
   commit: 907d2a8d3e631860ace9666b726bfbde489a8f1e
   files:
@@ -668,7 +668,7 @@ repositories:
     options: null
     path: ./orcad/XXXLZJXXX.OLB
   project: allegrolib
-  url: https://github.com/hypeer/allegrolib
+  url: https://github.com/Werni2A/hypeer_allegrolib
 - author: jmerdich
   commit: e137d22401d5fa747485357f92b2b745a31cbac7
   files:
@@ -1990,12 +1990,12 @@ repositories:
     options: null
     path: ./orcad capture/unsorted/_archive/Fairchild/CONTROLLERS.OBK
   project: allegro-library
-  url: https://github.com/jmerdich/allegro-library
+  url: https://github.com/Werni2A/jmerdich_allegro-library
 - author: Kinoma
   commit: 1be8971d16f5bcd2ff237599cb8e84962672e951
   files: []
   project: kinoma-create-pcb
-  url: https://github.com/Kinoma/kinoma-create-pcb
+  url: https://github.com/Werni2A/Kinoma_kinoma-create-pcb
 - author: Kinoma
   commit: 1078d98f83c4971c167e32ef6f5b59c91c8c2b19
   files:
@@ -2003,7 +2003,7 @@ repositories:
     options: null
     path: ./sch/ELEMENT-DVT.DSN
   project: Kinoma-Element-Open-source-hardware-1st-Generation
-  url: https://github.com/Kinoma/Kinoma-Element-Open-source-hardware-1st-Generation
+  url: https://github.com/Werni2A/Kinoma_Kinoma-Element-Open-source-hardware-1st-Generation
 - author: looke
   commit: e41506e8aea1b69fada903530d4ac2667d3f80a1
   files:
@@ -2026,7 +2026,7 @@ repositories:
     options: null
     path: ./Pspice/NE5534.OLB
   project: ORCAD_Lib
-  url: https://github.com/looke/ORCAD_Lib
+  url: https://github.com/Werni2A/looke_ORCAD_Lib
 - author: ottoragam
   commit: 52cdfb2a14df84b6dd9187f980e49174054c12d3
   files:
@@ -2121,7 +2121,7 @@ repositories:
     options: null
     path: ./resistors/array/0804/ARRAY_0.OBK
   project: Orcad-libraries
-  url: https://github.com/ottoragam/Orcad-libraries
+  url: https://github.com/Werni2A/ottoragam_Orcad-libraries
 - author: radualexandrub
   commit: 935e733c301946f5df54c1b54a796d228759f590
   files:
@@ -2132,7 +2132,7 @@ repositories:
     options: null
     path: ./Schematics/PREAMPL_SCHEM_0.DBK
   project: ElectronicDevices-Circuits
-  url: https://github.com/radualexandrub/ElectronicDevices-Circuits
+  url: https://github.com/Werni2A/radualexandrub_ElectronicDevices-Circuits
 - author: sangphanthanh
   commit: 032f605cc1d97f0b293c117c269594f6b710cd25
   files:
@@ -2185,12 +2185,12 @@ repositories:
     options: null
     path: ./Document/Hardware/mcu/swrc319/Cadence/LAUNCHXL-CC1310_0.DBK
   project: CP_SmartGarden
-  url: https://github.com/sangphanthanh/CP_SmartGarden
+  url: https://github.com/Werni2A/sangphanthanh_CP_SmartGarden
 - author: taoyilee
   commit: 18f98208128eab9213626113e162625a6432a978
   files: []
   project: PCB_LIB
-  url: https://github.com/taoyilee/PCB_LIB
+  url: https://github.com/Werni2A/taoyilee_PCB_LIB
 - author: tbriggs6
   commit: fb12598d93cac59953d3ac5670d820954e9a6b99
   files:
@@ -2204,12 +2204,12 @@ repositories:
     options: null
     path: ./NIXIE_0.DBK
   project: nixie
-  url: https://github.com/tbriggs6/nixie
+  url: https://github.com/Werni2A/tbriggs6_nixie
 - author: tbriggs6
   commit: 3ec4f3b25597c3df950db8bfe3798e3391db1f6d
   files: []
   project: trs80_powersupply
-  url: https://github.com/tbriggs6/trs80_powersupply
+  url: https://github.com/Werni2A/tbriggs6_trs80_powersupply
 - author: wwng2333
   commit: c2718b9d74f6bb07b1a13634ed3b4fcd504490c1
   files:
@@ -2258,4 +2258,4 @@ repositories:
     path: "./ORCAD/\u539F\u7406\u56FE/\u72D7\u7FA4\u4E3B\u5347\u538B\u677F/\u72D7\u7FA4\
       \u4E3B\u5347\u538B\u677F_0.DBK"
   project: orcad-schematic-symbol
-  url: https://github.com/wwng2333/orcad-schematic-symbol
+  url: https://github.com/Werni2A/wwng2333_orcad-schematic-symbol
