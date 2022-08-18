@@ -17,6 +17,8 @@ set(SOURCES
    ${LIB_SRC_DIR}/ContainerExtractor.cpp
    ${LIB_SRC_DIR}/DataStream.cpp
    ${LIB_SRC_DIR}/Parser.cpp
+   ${LIB_SRC_DIR}/Files/AdminData.cpp
+   ${LIB_SRC_DIR}/Files/NetBundleMapData.cpp
    ${LIB_SRC_DIR}/Parser/parseDirectory.cpp
    ${LIB_SRC_DIR}/Parser/parsePackage.cpp
    ${LIB_SRC_DIR}/Parser/parseSymbolsLibrary.cpp
@@ -45,6 +47,8 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Enums/LineWidth.hpp
    ${LIB_INCLUDE_DIR}/Enums/PortType.hpp
    ${LIB_INCLUDE_DIR}/Enums/Structure.hpp
+   ${LIB_INCLUDE_DIR}/Files/AdminData.hpp
+   ${LIB_INCLUDE_DIR}/Files/NetBundleMapData.hpp
    ${LIB_INCLUDE_DIR}/General.hpp
    ${LIB_INCLUDE_DIR}/Parser.hpp
    ${LIB_INCLUDE_DIR}/Structures/Arc.hpp
