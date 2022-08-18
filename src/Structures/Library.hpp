@@ -3,10 +3,12 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
 #include <string>
 #include <vector>
+
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 #include "DirectoryStruct.hpp"
 #include "Package.hpp"
@@ -40,42 +42,43 @@ static std::string to_string(const Library& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
 
-    str += indent(1) + "exportBlocksDir:" + newLine();
+    str += fmt::format("{}exportBlocksDir:\n", indent(1));
+    str += fmt::format("{}exportBlocksDir:\n", indent(1));
     str += indent(to_string(aObj.exportBlocksDir), 2);
 
-    str += indent(1) + "graphicsDir:" + newLine();
+    str += fmt::format("{}graphicsDir:\n", indent(1));
     str += indent(to_string(aObj.graphicsDir), 2);
 
-    str += indent(1) + "packagesDir:" + newLine();
+    str += fmt::format("{}packagesDir:\n", indent(1));
     str += indent(to_string(aObj.packagesDir), 2);
 
-    str += indent(1) + "partsDir:" + newLine();
+    str += fmt::format("{}partsDir:\n", indent(1));
     str += indent(to_string(aObj.partsDir), 2);
 
-    str += indent(1) + "symbolsDir:" + newLine();
+    str += fmt::format("{}symbolsDir:\n", indent(1));
     str += indent(to_string(aObj.symbolsDir), 2);
 
-    str += indent(1) + "cellsDir:" + newLine();
+    str += fmt::format("{}cellsDir:\n", indent(1));
     str += indent(to_string(aObj.cellsDir), 2);
 
-    str += indent(1) + "viewsDir:" + newLine();
+    str += fmt::format("{}viewsDir:\n", indent(1));
     str += indent(to_string(aObj.viewsDir), 2);
 
-    str += indent(1) + "symbolsLibrary:" + newLine();
+    str += fmt::format("{}symbolsLibrary:\n", indent(1));
     str += indent(to_string(aObj.symbolsLibrary), 2);
 
-    str += indent(1) + "symbolsTypes:" + newLine();
+    str += fmt::format("{}symbolsTypes:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbolsTypes.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.symbolsTypes[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.symbolsTypes[i])), 2);
     }
 
-    str += indent(1) + "packages:" + newLine();
+    str += fmt::format("{}packages:\n", indent(1));
     for(size_t i = 0u; i < aObj.packages.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.packages[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.packages[i])), 2);
     }
 
     return str;

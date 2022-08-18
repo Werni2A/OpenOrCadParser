@@ -3,9 +3,11 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
 #include <string>
+
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 #include "../PinShape.hpp"
 #include "../Enums/PortType.hpp"
@@ -32,17 +34,17 @@ static std::string to_string(const SymbolPinBus& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "name     = " + aObj.name + newLine();
-    str += indent(1) + "startX   = " + std::to_string(aObj.startX) + newLine();
-    str += indent(1) + "startY   = " + std::to_string(aObj.startY) + newLine();
-    str += indent(1) + "hotptX   = " + std::to_string(aObj.hotptX) + newLine();
-    str += indent(1) + "hotptY   = " + std::to_string(aObj.hotptY) + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}name     = {}\n", indent(1), aObj.name);
+    str += fmt::format("{}startX   = {}\n", indent(1), aObj.startX);
+    str += fmt::format("{}startY   = {}\n", indent(1), aObj.startY);
+    str += fmt::format("{}hotptX   = {}\n", indent(1), aObj.hotptX);
+    str += fmt::format("{}hotptY   = {}\n", indent(1), aObj.hotptY);
 
-    str += indent(1) + "pinShape:" + newLine();
+    str += fmt::format("{}pinShape:\n", indent(1));
     str += indent(to_string(aObj.pinShape), 2);
 
-    str += indent(1) + "portType = " + to_string(aObj.portType) + newLine();
+    str += fmt::format("{}portType = {}\n", indent(1), to_string(aObj.portType));
 
     return str;
 }

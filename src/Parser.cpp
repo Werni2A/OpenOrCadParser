@@ -27,6 +27,8 @@
 #include "Enums/PortType.hpp"
 #include "Enums/Rotation.hpp"
 #include "Enums/Structure.hpp"
+#include "Files/AdminData.hpp"
+#include "Files/NetBundleMapData.hpp"
 #include "Exception.hpp"
 #include "General.hpp"
 #include "Parser.hpp"
@@ -620,14 +622,12 @@ void Parser::parsePage()
     // readDevHelper();
     // return;
 
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
     mDs.printUnknownData(21, std::string(__func__) + " - 0");
     readPreamble();
 
     std::string name = mDs.readStringLenZeroTerm();
 
-    std::string PageSize = mDs.readStringLenZeroTerm();
+    std::string pageSize = mDs.readStringLenZeroTerm();
 
     time_t createDateTime = static_cast<time_t>(mDs.readUint32());
     time_t modifyDateTime = static_cast<time_t>(mDs.readUint32());
@@ -736,10 +736,6 @@ void Parser::parsePage()
     // @todo required for CONTENT page but not for the others? This offset must be somehow
     //       dynamic
     // mDs.printUnknownData(14, std::string(__func__) + " - 1.6");
-
-
-
-
 
     mDs.printUnknownData(2, std::string(__func__) + " - 9");
 
@@ -929,8 +925,8 @@ std::pair<Structure, std::any> Parser::parseStructure(Structure structure)
         case Structure::ERCSymbol:              readPreamble(); /*parseStruct =*/ readERCSymbol();              break;
         case Structure::PinShapeSymbol:         readPreamble(); parseStruct = readPinShapeSymbol();             break;
         default:
-            std::string errorMsg = "Structure with value 0x" + ToHex(structure, 2)
-                                + " is not implemented!";
+            const std::string errorMsg = fmt::format("Structure with value 0x{:02x} is not implemented!",
+                to_string(structure));
             throw std::invalid_argument(errorMsg);
             break;
     }
@@ -1079,7 +1075,9 @@ Structure Parser::read_type_prefix_short()
             }
             catch(const std::exception& e)
             {
-                throw std::out_of_range("Tried to access strLst out of range!" + newLine() + std::string(e.what()));
+                const std::string msg = fmt::format("Tried to access strLst out of range!\n{}", e.what());
+                spdlog::error(msg);
+                throw std::out_of_range(msg);
             }
         }
     }
@@ -1087,7 +1085,7 @@ Structure Parser::read_type_prefix_short()
     {
         // @todo Why is -1 used? The value 0 would also suffice...
         // Until now I only saw it for PinIdxMapping, Properties and SymbolDisplayProp
-        spdlog::warn("{}: What does {} mean?", to_string(typeId), std::to_string(size)); // @todo Figure out
+        spdlog::warn("{}: What does {} mean?", to_string(typeId), size); // @todo Figure out
     }
 
     // if(mDs.getCurrentOffset() != startOffset + byteLength)
@@ -1115,7 +1113,7 @@ uint32_t Parser::readPreamble(bool readOptionalLen)
     if(optionalLen > 0u)
     {
         // @todo Looks like this correlates to setting a lock for an object.
-        spdlog::debug("{}: Figure out when optionalLen is used! Currently it's 0x{}", __func__, ToHex(optionalLen, 4));
+        spdlog::debug("{}: Figure out when optionalLen is used! Currently it's 0x{:04x}", __func__, optionalLen);
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
@@ -1158,8 +1156,8 @@ void Parser::readGeometryStructure(GeometryStructure geometryStructure, Geometry
         case GeometryStructure::SymbolVector: container.symbolVectors.push_back(readSymbolVector()); break;
         case GeometryStructure::Bezier:       container.beziers.push_back(readBezier());             break;
         default:
-            throw std::runtime_error("GeometryStructure not yet implemented value 0x"
-                                    + ToHex(geometryStructure, 4));
+            throw std::runtime_error(fmt::format("GeometryStructure has not yet implemented value 0x{:04x}",
+                to_string(geometryStructure)));
             break;
     }
 
@@ -1361,7 +1359,7 @@ SymbolVector Parser::readSymbolVector()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    SymbolVector symbolVector;
+    SymbolVector obj;
 
     const auto readSmallTypePrefix = [&, this]() -> GeometryStructure
         {
@@ -1378,8 +1376,8 @@ SymbolVector Parser::readSymbolVector()
     discard_until_preamble();
     readPreamble();
 
-    symbolVector.locX = mDs.readInt16();
-    symbolVector.locY = mDs.readInt16();
+    obj.locX = mDs.readInt16();
+    obj.locY = mDs.readInt16();
 
     uint16_t repetition = mDs.readUint16();
 
@@ -1394,15 +1392,15 @@ SymbolVector Parser::readSymbolVector()
     }
 
     readPreamble();
-    symbolVector.name = mDs.readStringLenZeroTerm();
+    obj.name = mDs.readStringLenZeroTerm();
 
     mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x32, 0x00, 0x32, 0x00, 0x00, 0x00, 0x02, 0x00}, std::string(__func__) + " - 2");
     // mDs.printUnknownData(12, std::string(__func__) + " - 2");
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(symbolVector));
+    spdlog::info(to_string(obj));
 
-    return symbolVector;
+    return obj;
 }
 
 
@@ -1490,10 +1488,10 @@ PinIdxMapping Parser::readPinIdxMapping()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    PinIdxMapping pinIdxMapping;
+    PinIdxMapping obj;
 
-    pinIdxMapping.unitRef = mDs.readStringLenZeroTerm();
-    pinIdxMapping.refDes  = mDs.readStringLenZeroTerm();
+    obj.unitRef = mDs.readStringLenZeroTerm();
+    obj.refDes  = mDs.readStringLenZeroTerm();
 
     const uint16_t pinCount = mDs.readUint16();
 
@@ -1501,26 +1499,26 @@ PinIdxMapping Parser::readPinIdxMapping()
     // See OrCAD: 'Pin Properties' -> 'Order'
     for(size_t i = 0u; i < pinCount; ++i)
     {
-        pinIdxMapping.pinMap.push_back(mDs.readStringLenZeroTerm());
+        obj.pinMap.push_back(mDs.readStringLenZeroTerm());
 
         const uint8_t separator = mDs.readUint8();
 
-        spdlog::debug("Sep = 0x{}", ToHex(separator, 2));
+        spdlog::debug("Sep = 0x{:02x}", separator);
 
         // @todo maybe this is not a separator but the additional property of the pin?
         // As soon as I add a property like NET_SHORT the separator changes from 0x7f to 0xaa
         // This is probably also affected by units and convert view.
         if(separator != 0x7f && separator != 0xaa && separator != 0xff)
         {
-            throw std::runtime_error("Separator should be 0x" + ToHex(0x7f, 2) + " or 0x" + ToHex(0xaa, 2) + " or 0x" + ToHex(0xff, 2)
-                                     + " but got 0x" + ToHex(separator, 2) + "!");
+            throw std::runtime_error(fmt::format("Separator should be 0x{:02x}, 0x{:02x} or"
+                " 0x{:02x} but got 0x{:02x}!", 0x7f, 0xaa, 0xff, separator));
         }
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(pinIdxMapping));
+    spdlog::info(to_string(obj));
 
-    return pinIdxMapping;
+    return obj;
 }
 
 
@@ -1673,20 +1671,20 @@ SymbolBBox Parser::readSymbolBBox()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    SymbolBBox symbolBBox;
+    SymbolBBox obj;
 
-    symbolBBox.x1 = mDs.readInt16();
-    symbolBBox.y1 = mDs.readInt16();
-    symbolBBox.x2 = mDs.readInt16();
-    symbolBBox.y2 = mDs.readInt16();
+    obj.x1 = mDs.readInt16();
+    obj.y1 = mDs.readInt16();
+    obj.x2 = mDs.readInt16();
+    obj.y2 = mDs.readInt16();
 
     // @todo not sure weather this belongs to the structure or should be outside of it
-    mDs.printUnknownData(4, std::string(__func__) + " - 0");
+    mDs.printUnknownData(4, fmt::format("{} - 0", __func__));
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(symbolBBox));
+    spdlog::info(to_string(obj));
 
-    return symbolBBox;
+    return obj;
 }
 
 
@@ -1695,28 +1693,28 @@ T0x1f Parser::readT0x1f()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    T0x1f t0x1f;
+    T0x1f obj;
 
-    t0x1f.name = mDs.readStringLenZeroTerm();
+    obj.name = mDs.readStringLenZeroTerm();
 
     std::string unknownStr0 = mDs.readStringLenZeroTerm(); // @todo figure out
-    spdlog::debug("readT0x1f unknownStr0 = {}", unknownStr0);
+    spdlog::debug("{} unknownStr0 = {}", __func__, unknownStr0);
 
-    t0x1f.refDes = mDs.readStringLenZeroTerm();
+    obj.refDes = mDs.readStringLenZeroTerm();
 
     std::string unknownStr1 = mDs.readStringLenZeroTerm(); // @todo figure out
-    spdlog::debug("readT0x1f unknownStr1 = {}", unknownStr1);
+    spdlog::debug("{} unknownStr1 = {}", __func__, unknownStr1);
 
-    t0x1f.pcbFootprint = mDs.readStringLenZeroTerm();
+    obj.pcbFootprint = mDs.readStringLenZeroTerm();
 
     // Maybe the last two bytes specify the amount of units the symbols has?
     // Also called "Section Count"
     mDs.printUnknownData(2, std::string(__func__) + " - 0 - Prob. Unit Count");
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(t0x1f));
+    spdlog::info(to_string(obj));
 
-    return t0x1f;
+    return obj;
 }
 
 
@@ -1756,7 +1754,8 @@ GeneralProperties Parser::readGeneralProperties()
     // Expect that upper bits are unused => 00xx xxxxb
     if((properties & 0xc0) != 0x00)
     {
-        throw std::runtime_error("Expected 00xx xxxxb but got 0x" + ToHex(properties & 0xc0, 2));
+        throw std::runtime_error(fmt::format("Expected 00xx xxxxb but got 0x{:02x}",
+            properties & 0xc0));
     }
 
     const uint8_t pinProperties      =  properties       & 0x07; // Get bits 2 down to 0

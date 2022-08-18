@@ -3,11 +3,12 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
-#include <stdexcept>
 #include <string>
 #include <vector>
+
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 #include "Arc.hpp"
 #include "Bezier.hpp"
@@ -43,67 +44,67 @@ static std::string to_string(const GeometrySpecification& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "name = " + aObj.name + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}name = {}\n", indent(1), aObj.name);
 
-    str += indent(1) + "rects:" + newLine();
+    str += fmt::format("{}rects:\n", indent(1));
     for(size_t i = 0u; i < aObj.rects.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.rects[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.rects[i])), 2);
     }
 
-    str += indent(1) + "lines:" + newLine();
+    str += fmt::format("{}lines:\n", indent(1));
     for(size_t i = 0u; i < aObj.lines.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.lines[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.lines[i])), 2);
     }
 
-    str += indent(1) + "arcs:" + newLine();
+    str += fmt::format("{}arcs:\n", indent(1));
     for(size_t i = 0u; i < aObj.arcs.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.arcs[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.arcs[i])), 2);
     }
 
-    str += indent(1) + "ellipses:" + newLine();
+    str += fmt::format("{}ellipses:\n", indent(1));
     for(size_t i = 0u; i < aObj.ellipses.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.ellipses[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.ellipses[i])), 2);
     }
 
-    str += indent(1) + "polygons:" + newLine();
+    str += fmt::format("{}polygons:\n", indent(1));
     for(size_t i = 0u; i < aObj.polygons.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.polygons[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.polygons[i])), 2);
     }
 
-    str += indent(1) + "polylines:" + newLine();
+    str += fmt::format("{}polylines:\n", indent(1));
     for(size_t i = 0u; i < aObj.polylines.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.polylines[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.polylines[i])), 2);
     }
 
-    str += indent(1) + "commentTexts:" + newLine();
+    str += fmt::format("{}commentTexts:\n", indent(1));
     for(size_t i = 0u; i < aObj.commentTexts.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.commentTexts[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.commentTexts[i])), 2);
     }
 
-    str += indent(1) + "bitmaps:" + newLine();
+    str += fmt::format("{}bitmaps:\n", indent(1));
     for(size_t i = 0u; i < aObj.bitmaps.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.bitmaps[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.bitmaps[i])), 2);
     }
 
-    str += indent(1) + "symbolVectors:" + newLine();
+    str += fmt::format("{}symbolVectors:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbolVectors.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.symbolVectors[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.symbolVectors[i])), 2);
     }
 
-    str += indent(1) + "beziers:" + newLine();
+    str += fmt::format("{}beziers:\n", indent(1));
     for(size_t i = 0u; i < aObj.beziers.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.beziers[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.beziers[i])), 2);
     }
 
     return str;

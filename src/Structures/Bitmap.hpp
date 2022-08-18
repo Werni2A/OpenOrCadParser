@@ -6,6 +6,9 @@
 #include <ostream>
 #include <string>
 
+#include <fmt/core.h>
+#include <nameof.hpp>
+
 #include "../General.hpp"
 
 
@@ -39,15 +42,15 @@ static std::string to_string(const Bitmap& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "locX = " + std::to_string(aObj.locX) + newLine();
-    str += indent(1) + "locY = " + std::to_string(aObj.locY) + newLine();
-    str += indent(1) + "x1   = " + std::to_string(aObj.x1)   + newLine();
-    str += indent(1) + "y1   = " + std::to_string(aObj.y1)   + newLine();
-    str += indent(1) + "x2   = " + std::to_string(aObj.x2)   + newLine();
-    str += indent(1) + "y2   = " + std::to_string(aObj.y2)   + newLine();
-    str += indent(1) + "bmpWidth  = " + std::to_string(aObj.bmpWidth)  + newLine();
-    str += indent(1) + "bmpHeight = " + std::to_string(aObj.bmpHeight) + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}locX = {}\n", indent(1), aObj.locX);
+    str += fmt::format("{}locY = {}\n", indent(1), aObj.locY);
+    str += fmt::format("{}x1   = {}\n", indent(1), aObj.x1);
+    str += fmt::format("{}y1   = {}\n", indent(1), aObj.y1);
+    str += fmt::format("{}x2   = {}\n", indent(1), aObj.x2);
+    str += fmt::format("{}y2   = {}\n", indent(1), aObj.y2);
+    str += fmt::format("{}bmpWidth  = {}\n", indent(1), aObj.bmpWidth);
+    str += fmt::format("{}bmpHeight = {}\n", indent(1), aObj.bmpHeight);
 
     // @todo Should we print rawImgData somehow?
 

@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <string>
 
+#include <fmt/core.h>
 #include <magic_enum.hpp>
 #include <nameof.hpp>
 
@@ -21,8 +22,7 @@ template<typename T, typename TVal>
 struct InvalidEnumEntry : public std::invalid_argument
 {
     InvalidEnumEntry(TVal aVal) :
-        std::invalid_argument("Enum `" + std::string(nameof::nameof_type<T>())
-            + "` does not implement value " + std::to_string(aVal) + "!")
+        std::invalid_argument(fmt::format("Enum `{}` does not implement value {}!", nameof::nameof_type<T>(), aVal))
     { }
 };
 
@@ -31,7 +31,7 @@ struct InvalidEnumEntry : public std::invalid_argument
 struct FileFormatChanged : public std::runtime_error
 {
     FileFormatChanged(std::string aStructName) :
-        std::runtime_error((aStructName + " structure changed (differs between file format versions)!").c_str())
+        std::runtime_error((aStructName + " structure changed (differs between file format versions)!"))
     { }
 };
 
@@ -39,8 +39,8 @@ struct FileFormatChanged : public std::runtime_error
 struct MisinterpretedData : public std::runtime_error
 {
     MisinterpretedData(std::string aStructName, size_t aStartOffset, size_t aExpectedByteLen, size_t aCurrOffset) :
-        std::runtime_error((aStructName + " data size check failed. 0x" + ToHex(aStartOffset, 8)
-                                 + " + 0x" + ToHex(aExpectedByteLen, 8) + " != 0x" + ToHex(aCurrOffset, 8)).c_str())
+        std::runtime_error(fmt::format("{} data size check failed. 0x{:08x} + 0x{:08x} != 0x{:08x}",
+            aStructName, aStartOffset, aExpectedByteLen, aCurrOffset))
     { }
 };
 
@@ -48,8 +48,8 @@ struct MisinterpretedData : public std::runtime_error
 struct MissingFileFormatCheck : public std::runtime_error
 {
     MissingFileFormatCheck(std::string aFunctionName, size_t aLine, FileFormatVersion aVersion) :
-        std::runtime_error((aFunctionName + " in line " + std::to_string(aLine) +
-            " is missing a file format check for version " + std::to_string(static_cast<int>(aVersion))).c_str())
+        std::runtime_error(fmt::format("{} in line {} is missing a file format check for version {}",
+            aFunctionName, aLine, static_cast<int>(aVersion)))
     { }
 };
 

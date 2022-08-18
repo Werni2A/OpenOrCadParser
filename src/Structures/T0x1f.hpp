@@ -3,10 +3,11 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
 #include <string>
 
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 struct T0x1f
 {
@@ -21,10 +22,10 @@ static std::string to_string(const T0x1f& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "name   = " + aObj.name   + newLine();
-    str += indent(1) + "refDes = " + aObj.refDes + newLine();
-    str += indent(1) + "pcbFootprint = " + aObj.pcbFootprint + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}name   = {}\n", indent(1), aObj.name);
+    str += fmt::format("{}refDes = {}\n", indent(1), aObj.refDes);
+    str += fmt::format("{}pcbFootprint = {}\n", indent(1), aObj.pcbFootprint);
 
     return str;
 }

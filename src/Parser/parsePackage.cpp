@@ -406,8 +406,8 @@ Package Parser::parsePackage()
 
         for(size_t i = 0u; i < followingLen1; ++i)
         {
-            spdlog::debug("0x{}: followingLen1 Iteration {}/{}",
-                ToHex(mDs.getCurrentOffset(), 8), i + 1, followingLen1);
+            spdlog::debug("0x{:08x}: followingLen1 Iteration {}/{}",
+                mDs.getCurrentOffset(), i + 1, followingLen1);
 
             structure = read_type_prefix();
             readConditionalPreamble(structure);
@@ -420,8 +420,8 @@ Package Parser::parsePackage()
 
         for(size_t i = 0u; i < followingLen2; ++i)
         {
-            spdlog::debug("0x{}: followingLen2 Iteration {}/{}",
-                ToHex(mDs.getCurrentOffset(),8), i + 1, followingLen2);
+            spdlog::debug("0x{:08x}: followingLen2 Iteration {}/{}",
+                mDs.getCurrentOffset(), i + 1, followingLen2);
 
             structure = read_type_prefix();
             readConditionalPreamble(structure);

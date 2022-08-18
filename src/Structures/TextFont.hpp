@@ -3,10 +3,12 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
 #include <string>
 #include <vector>
+
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 #include "../General.hpp"
 
@@ -31,13 +33,13 @@ static std::string to_string(const TextFont& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "height = " + std::to_string(aObj.height) + newLine();
-    str += indent(1) + "width  = " + std::to_string(aObj.width)  + newLine();
-    str += indent(1) + "escapement = " + std::to_string(aObj.escapement) + newLine();
-    str += indent(1) + "weight = " + std::to_string(aObj.weight) + newLine();
-    str += indent(1) + "italic = " + std::to_string(aObj.italic) + newLine();
-    str += indent(1) + "fontName = " + aObj.fontName + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}height = {}\n", indent(1), aObj.height);
+    str += fmt::format("{}width  = {}\n", indent(1), aObj.width);
+    str += fmt::format("{}escapement = {}\n", indent(1), aObj.escapement);
+    str += fmt::format("{}weight = {}\n", indent(1), aObj.weight);
+    str += fmt::format("{}italic = {}\n", indent(1), aObj.italic);
+    str += fmt::format("{}fontName = {}\n", indent(1), aObj.fontName);
 
     return str;
 }

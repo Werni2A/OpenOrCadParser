@@ -3,9 +3,11 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
 #include <string>
+
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 
 struct Properties
@@ -22,10 +24,10 @@ static std::string to_string(const Properties& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "name = " + aObj.name + newLine();
-    str += indent(1) + "ref  = " + aObj.ref  + newLine();
-    str += indent(1) + "convertName = " + aObj.convertName + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}name = {}\n", indent(1), aObj.name);
+    str += fmt::format("{}ref  = {}\n", indent(1), aObj.ref);
+    str += fmt::format("{}convertName = {}\n", indent(1), aObj.convertName);
 
     return str;
 }

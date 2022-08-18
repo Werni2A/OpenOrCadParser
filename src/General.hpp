@@ -66,14 +66,14 @@ static std::string newLine()
 [[maybe_unused]]
 static std::string getOpeningMsg(const char* aFuncName, size_t aCurrOffset)
 {
-    return fmt::format("0x{}: Beginning {}", ToHex(aCurrOffset, 8), aFuncName);
+    return fmt::format("0x{:08x}: Beginning {}", aCurrOffset, aFuncName);
 }
 
 
 [[maybe_unused]]
 static std::string getClosingMsg(const char* aFuncName, size_t aCurrOffset)
 {
-    return fmt::format("0x{}: Ending {}", ToHex(aCurrOffset, 8), aFuncName);
+    return fmt::format("0x{:08x}: Ending {}", aCurrOffset, aFuncName);
 }
 
 
@@ -81,7 +81,7 @@ static std::string getClosingMsg(const char* aFuncName, size_t aCurrOffset)
 static std::string indent(std::string str, size_t level)
 {
     const std::string indent = "  ";
-    const std::string delimiter = newLine();
+    const std::string delimiter = fmt::format("\n");
 
     std::vector<std::string> lines;
 
@@ -90,7 +90,7 @@ static std::string indent(std::string str, size_t level)
     while ((pos = str.find(delimiter)) != std::string::npos)
     {
         token = str.substr(0, pos);
-        lines.push_back(std::move(token) + newLine());
+        lines.push_back(fmt::format("{}\n", std::move(token)));
         str.erase(0, pos + delimiter.length());
     }
 

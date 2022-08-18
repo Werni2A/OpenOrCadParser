@@ -3,9 +3,11 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
 #include <string>
+
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 #include "../Enums/Color.hpp"
 #include "../Enums/Rotation.hpp"
@@ -31,13 +33,13 @@ static std::string to_string(const SymbolDisplayProp& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "nameIdx     = " + std::to_string(aObj.nameIdx) + newLine();
-    str += indent(1) + "textFontIdx = " + std::to_string(aObj.textFontIdx) + newLine();
-    str += indent(1) + "rotation    = " + to_string(aObj.rotation) + newLine();
-    str += indent(1) + "x = " + std::to_string(aObj.x) + newLine();
-    str += indent(1) + "y = " + std::to_string(aObj.y) + newLine();
-    str += indent(1) + "propColor = " + to_string(aObj.propColor) + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}nameIdx     = {}\n", indent(1), aObj.nameIdx);
+    str += fmt::format("{}textFontIdx = {}\n", indent(1), aObj.textFontIdx);
+    str += fmt::format("{}rotation    = {}\n", indent(1), to_string(aObj.rotation));
+    str += fmt::format("{}x = {}\n", indent(1), aObj.x);
+    str += fmt::format("{}y = {}\n", indent(1), aObj.y);
+    str += fmt::format("{}propColor   = {}\n", indent(1), to_string(aObj.propColor));
 
     return str;
 }

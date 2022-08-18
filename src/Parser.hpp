@@ -71,6 +71,10 @@ public:
 
     Library parseLibrary();
 
+
+    void readAdminData(const fs::path& aFilePath);
+    void readNetBundleMapData(const fs::path& aFilePath);
+
 private:
 
 

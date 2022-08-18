@@ -3,10 +3,12 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
 #include <string>
 #include <vector>
+
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 #include "../General.hpp"
 #include "../Enums/ComponentType.hpp"
@@ -18,7 +20,7 @@ struct DirItemType
 
     ComponentType componentType;
 
-    int16_t timezone; // @todo Write to Kaitai file: Refer to http://time.unitarium.com/military/ for more details.
+    int16_t timezone; // Refer to http://time.unitarium.com/military/ for more details.
 };
 
 
@@ -27,10 +29,10 @@ static std::string to_string(const DirItemType& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "name  = " + aObj.name + newLine();
-    str += indent(1) + "componentType = " + to_string(aObj.componentType) + newLine();
-    str += indent(1) + "timezone      = " + TimezoneToStr(aObj.timezone)  + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}name          = {}\n", indent(1), aObj.name);
+    str += fmt::format("{}componentType = {}\n", indent(1), to_string(aObj.componentType));
+    str += fmt::format("{}timezone      = {}\n", indent(1), TimezoneToStr(aObj.timezone));
 
     return str;
 }
@@ -58,13 +60,13 @@ static std::string to_string(const DirectoryStruct& aObj)
 {
     std::string str;
 
-    str += "DirectoryStruct:" + newLine();
-    str += indent(1) + "lastModifiedDate = " + DateTimeToStr(aObj.lastModifiedDate) + newLine();
+    str += fmt::format("DirectoryStruct:\n");
+    str += fmt::format("{}lastModifiedDate = {}\n", indent(1), DateTimeToStr(aObj.lastModifiedDate));
 
-    str += indent(1) + "items:" + newLine();
+    str += fmt::format("{}items:\n", indent(1));
     for(size_t i = 0u; i < aObj.items.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.items[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.items[i])), 2);
     }
 
     return str;
