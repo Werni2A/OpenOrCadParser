@@ -1499,15 +1499,15 @@ PinIdxMapping Parser::readPinIdxMapping()
 
         const uint8_t separator = mDs.readUint8();
 
-        spdlog::debug("Sep = 0x{}", ToHex(separator, 2));
+        spdlog::debug("Sep = 0x{:02x}", separator);
 
         // @todo maybe this is not a separator but the additional property of the pin?
         // As soon as I add a property like NET_SHORT the separator changes from 0x7f to 0xaa
         // This is probably also affected by units and convert view.
         if(separator != 0x7f && separator != 0xaa && separator != 0xff)
         {
-            throw std::runtime_error("Separator should be 0x" + ToHex(0x7f, 2) + " or 0x" + ToHex(0xaa, 2) + " or 0x" + ToHex(0xff, 2)
-                                     + " but got 0x" + ToHex(separator, 2) + "!");
+            throw std::runtime_error(fmt::format("Separator should be 0x{:02x}, 0x{:02x} or"
+                " 0x{:02x} but got 0x{:02x}!", 0x7f, 0xaa, 0xff, separator));
         }
     }
 
@@ -1675,7 +1675,7 @@ SymbolBBox Parser::readSymbolBBox()
     obj.y2 = mDs.readInt16();
 
     // @todo not sure weather this belongs to the structure or should be outside of it
-    mDs.printUnknownData(4, std::string(__func__) + " - 0");
+    mDs.printUnknownData(4, fmt::format("{} - 0", __func__));
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));
@@ -1694,12 +1694,12 @@ T0x1f Parser::readT0x1f()
     obj.name = mDs.readStringLenZeroTerm();
 
     std::string unknownStr0 = mDs.readStringLenZeroTerm(); // @todo figure out
-    spdlog::debug("readT0x1f unknownStr0 = {}", unknownStr0);
+    spdlog::debug("{} unknownStr0 = {}", __func__, unknownStr0);
 
     obj.refDes = mDs.readStringLenZeroTerm();
 
     std::string unknownStr1 = mDs.readStringLenZeroTerm(); // @todo figure out
-    spdlog::debug("readT0x1f unknownStr1 = {}", unknownStr1);
+    spdlog::debug("{} unknownStr1 = {}", __func__, unknownStr1);
 
     obj.pcbFootprint = mDs.readStringLenZeroTerm();
 
@@ -1750,7 +1750,8 @@ GeneralProperties Parser::readGeneralProperties()
     // Expect that upper bits are unused => 00xx xxxxb
     if((properties & 0xc0) != 0x00)
     {
-        throw std::runtime_error("Expected 00xx xxxxb but got 0x" + ToHex(properties & 0xc0, 2));
+        throw std::runtime_error(fmt::format("Expected 00xx xxxxb but got 0x{:02x}",
+            properties & 0xc0));
     }
 
     const uint8_t pinProperties      =  properties       & 0x07; // Get bits 2 down to 0
