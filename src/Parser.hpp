@@ -293,6 +293,8 @@ private:
     FileType mFileType;
     FileFormatVersion mFileFormatVersion;
 
+    std::vector<fs::path> mRemainingFiles; //!< Files that have not yet been parsed
+
     fs::path mInputFile;
     size_t   mInputFileSize;
 

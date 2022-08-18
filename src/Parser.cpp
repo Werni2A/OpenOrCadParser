@@ -71,6 +71,16 @@ Parser::Parser(const fs::path& aFile, FileFormatVersion aFileFormatVersion) :
     const fs::path extractTo = fs::temp_directory_path() / "OpenOrCadParser" / uuid;
     mExtractedPath = extractContainer(aFile, extractTo);
 
+    // All files in the container need to be parsed, therefore add
+    // them to the remaining ones.
+    for(const auto& dir_entry : fs::recursive_directory_iterator(mExtractedPath))
+    {
+        if(dir_entry.is_regular_file() && !dir_entry.is_symlink())
+        {
+            mRemainingFiles.push_back(dir_entry.path());
+        }
+    }
+
     // @todo Figure out the file format version and set it here
     // mFileFormatVersion = FileFormatVersion::Unknown;
 
@@ -84,6 +94,18 @@ Parser::~Parser()
 {
     // Remove temporary extracted files
     fs::remove_all(mExtractedPath.parent_path());
+
+    if(!mRemainingFiles.empty())
+    {
+        std::string msg = "The following files have not been parsed:\n";
+
+        for(size_t i = 0U; i < mRemainingFiles.size(); ++i)
+        {
+            msg += fmt::format("  {}\n", mRemainingFiles[i].string());
+        }
+
+        spdlog::warn(msg);
+    }
 }
 
 
@@ -1459,6 +1481,15 @@ FileType Parser::getFileTypeByExtension(const fs::path& aFile) const
 void Parser::openFile(const fs::path& aFile)
 {
     spdlog::info("Opening file: {}", aFile.string());
+
+    auto it = std::find(mRemainingFiles.begin(), mRemainingFiles.end(), aFile);
+
+    if(it == mRemainingFiles.end())
+    {
+        throw std::runtime_error("File should have been in mRemainingFiles!");
+    }
+
+    mRemainingFiles.erase(it);
 
     mDs = DataStream{aFile};
     if(!mDs)
