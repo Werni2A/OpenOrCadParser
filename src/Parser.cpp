@@ -27,6 +27,8 @@
 #include "Enums/PortType.hpp"
 #include "Enums/Rotation.hpp"
 #include "Enums/Structure.hpp"
+#include "Files/AdminData.hpp"
+#include "Files/NetBundleMapData.hpp"
 #include "Exception.hpp"
 #include "General.hpp"
 #include "Parser.hpp"
