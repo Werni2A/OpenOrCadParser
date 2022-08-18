@@ -925,8 +925,8 @@ std::pair<Structure, std::any> Parser::parseStructure(Structure structure)
         case Structure::ERCSymbol:              readPreamble(); /*parseStruct =*/ readERCSymbol();              break;
         case Structure::PinShapeSymbol:         readPreamble(); parseStruct = readPinShapeSymbol();             break;
         default:
-            std::string errorMsg = "Structure with value 0x" + ToHex(structure, 2)
-                                + " is not implemented!";
+            const std::string errorMsg = fmt::format("Structure with value 0x{:02x} is not implemented!",
+                to_string(structure));
             throw std::invalid_argument(errorMsg);
             break;
     }
@@ -1075,7 +1075,9 @@ Structure Parser::read_type_prefix_short()
             }
             catch(const std::exception& e)
             {
-                throw std::out_of_range("Tried to access strLst out of range!" + newLine() + std::string(e.what()));
+                const std::string msg = fmt::format("Tried to access strLst out of range!\n{}", e.what());
+                spdlog::error(msg);
+                throw std::out_of_range(msg);
             }
         }
     }
@@ -1083,7 +1085,7 @@ Structure Parser::read_type_prefix_short()
     {
         // @todo Why is -1 used? The value 0 would also suffice...
         // Until now I only saw it for PinIdxMapping, Properties and SymbolDisplayProp
-        spdlog::warn("{}: What does {} mean?", to_string(typeId), std::to_string(size)); // @todo Figure out
+        spdlog::warn("{}: What does {} mean?", to_string(typeId), size); // @todo Figure out
     }
 
     // if(mDs.getCurrentOffset() != startOffset + byteLength)
@@ -1111,7 +1113,7 @@ uint32_t Parser::readPreamble(bool readOptionalLen)
     if(optionalLen > 0u)
     {
         // @todo Looks like this correlates to setting a lock for an object.
-        spdlog::debug("{}: Figure out when optionalLen is used! Currently it's 0x{}", __func__, ToHex(optionalLen, 4));
+        spdlog::debug("{}: Figure out when optionalLen is used! Currently it's 0x{:04x}", __func__, optionalLen);
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
@@ -1154,8 +1156,8 @@ void Parser::readGeometryStructure(GeometryStructure geometryStructure, Geometry
         case GeometryStructure::SymbolVector: container.symbolVectors.push_back(readSymbolVector()); break;
         case GeometryStructure::Bezier:       container.beziers.push_back(readBezier());             break;
         default:
-            throw std::runtime_error("GeometryStructure not yet implemented value 0x"
-                                    + ToHex(geometryStructure, 4));
+            throw std::runtime_error(fmt::format("GeometryStructure has not yet implemented value 0x{:04x}",
+                to_string(geometryStructure)));
             break;
     }
 
