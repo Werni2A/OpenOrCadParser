@@ -10,20 +10,38 @@ echo
 echo ---------------------------------------------------------
 echo
 
-$test --list-tests --verbosity quiet |
-    awk '{print "\042" $0 "\042"}' |
-    parallel --halt now,fail=1 -j $(nproc) $test "{}" ">" "test.log"
+# $test --list-tests --verbosity quiet |
+#     awk '{print "\042" $0 "\042"}' |
+#     parallel --halt now,fail=1 -j $(nproc) $test "{}" ">>" "test.log"
 
 # $test --list-tests --verbosity quiet |
 #     awk '{print "\042" $0 "\042"}' |
-#     parallel --bar -j $(nproc) $test "{}" ">>" "test.log"
+#     parallel --bar $test "{}" ">>" "test.log"
 
-echo
-echo ---------------------------------------------------------
-echo
-echo Unit Test Log
-echo
-echo ---------------------------------------------------------
-echo
+./build/test/test 2>&1 > test.log
 
-cat test.log
+if [ $? -eq 0 ]; then
+
+    echo
+    echo ---------------------------------------------------------
+    echo
+    echo Unit Tests Completed Successfully
+    echo
+    echo ---------------------------------------------------------
+    echo
+
+    exit 0
+
+else
+
+    echo
+    echo ---------------------------------------------------------
+    echo
+    echo Unit Tests Failed
+    echo
+    echo ---------------------------------------------------------
+    echo
+
+    exit 1
+
+fi
