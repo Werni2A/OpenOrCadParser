@@ -8,6 +8,15 @@ In front of each entry is a specifier placed that shows of which type the entry 
 - [S] `Cache`
 - [D] **`Cells`**
 - [S] `Cells Directory`
+- [D] **`CIS`** (since version ...?)
+  - [D] **`CISSchematicStore`**
+    - [S] `CISSchematicStream`
+  - [D] **`VariantStore`**
+    - [D] **`BOM`**
+      - [S] `BOMDataStream`
+    - [D] **`Groups`**
+      - [S] `GroupsDataStream`
+    - [S] `VariantNames`
 - [S] `DsnStream` (DSN only)
 - [D] **`ExportBlocks`**
 - [S] `ExportBlocks Directory`
@@ -15,6 +24,8 @@ In front of each entry is a specifier placed that shows of which type the entry 
   - [S] `$Types$`
 - [S] `Graphics Directory`
 - [S] `HSObjects` (DSN only)
+- [D] **`LayoutReuse`** (since version...?)
+  - [S] `ReuseSchematics`
 - [S] `Library`
 - [S] `NetBundleMapData` (since version...?)
 - [D] **`Packages`**
@@ -43,3 +54,7 @@ In front of each entry is a specifier placed that shows of which type the entry 
   - [D] ***View Name 2***
   - [D] ***...***
 - [S] `Views Directory`
+
+## `NetBundleMapData`
+
+The `NetBundleMapData` stream was introduced in later file format versions and contains the association of wires and busses to a net group. This structure is identified with `0x67`.
