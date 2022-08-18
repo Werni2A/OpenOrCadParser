@@ -4,11 +4,13 @@
 
 #include <cstdint>
 #include <ctime>
-#include <iostream>
 #include <ostream>
 #include <string>
 #include <utility>
 #include <vector>
+
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 #include "TextFont.hpp"
 
@@ -35,33 +37,33 @@ static std::string to_string(const SymbolsLibrary& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "introduction = " + aObj.introduction + newLine();
-    str += indent(1) + "createDate   = " + DateTimeToStr(aObj.createDate) + newLine();
-    str += indent(1) + "modifyDate   = " + DateTimeToStr(aObj.modifyDate) + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}introduction = {}\n", indent(1), aObj.introduction);
+    str += fmt::format("{}createDate   = {}\n", indent(1), DateTimeToStr(aObj.createDate));
+    str += fmt::format("{}modifyDate   = {}\n", indent(1), DateTimeToStr(aObj.modifyDate));
 
-    str += indent(1) + "textFonts:" + newLine();
+    str += fmt::format("{}textFonts:\n", indent(1));
     for(size_t i = 0u; i < aObj.textFonts.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.textFonts[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.textFonts[i])), 2);
     }
 
-    str += indent(1) + "strLstPartField:" + newLine();
+    str += fmt::format("{}strLstPartField:\n", indent(1));
     for(size_t i = 0u; i < aObj.strLstPartField.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + aObj.strLstPartField[i], 2) + newLine();
+        str += indent(fmt::format("[{}]: {}\n", i, aObj.strLstPartField[i]), 2);
     }
 
-    str += indent(1) + "strLst:" + newLine();
+    str += fmt::format("{}strLst:\n", indent(1));
     for(size_t i = 0u; i < aObj.strLst.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + aObj.strLst[i], 2) + newLine();
+        str += indent(fmt::format("[{}]: {}\n", i, aObj.strLst[i]), 2);
     }
 
-    str += indent(1) + "partAliases:" + newLine();
+    str += fmt::format("{}partAliases:\n", indent(1));
     for(size_t i = 0u; i < aObj.partAliases.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + aObj.partAliases[i].first + " = " + aObj.partAliases[i].second, 2) + newLine();
+        str += indent(fmt::format("[{}]: {} = {}\n", i, aObj.partAliases[i].first, aObj.partAliases[i].second), 2);
     }
 
     return str;

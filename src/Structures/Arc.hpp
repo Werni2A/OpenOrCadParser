@@ -7,6 +7,7 @@
 #include <ostream>
 #include <string>
 
+#include <fmt/core.h>
 #include <nameof.hpp>
 
 #include "../Enums/LineStyle.hpp"
@@ -63,17 +64,17 @@ static std::string to_string(const Arc& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "x1 = " + std::to_string(aObj.x1) + newLine();
-    str += indent(1) + "y1 = " + std::to_string(aObj.y1) + newLine();
-    str += indent(1) + "x2 = " + std::to_string(aObj.x2) + newLine();
-    str += indent(1) + "y2 = " + std::to_string(aObj.y2) + newLine();
-    str += indent(1) + "startX = " + std::to_string(aObj.startX)  + newLine();
-    str += indent(1) + "startY = " + std::to_string(aObj.startY)  + newLine();
-    str += indent(1) + "endX   = " + std::to_string(aObj.endX)    + newLine();
-    str += indent(1) + "endY   = " + std::to_string(aObj.endY)    + newLine();
-    str += indent(1) + "lineStyle = " + to_string(aObj.getLineStyle()) + newLine();
-    str += indent(1) + "lineWidth = " + to_string(aObj.getLineWidth()) + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("x1     = {}\n", aObj.x1);
+    str += fmt::format("y1     = {}\n", aObj.y1);
+    str += fmt::format("x2     = {}\n", aObj.x2);
+    str += fmt::format("y2     = {}\n", aObj.y2);
+    str += fmt::format("startX = {}\n", aObj.startX);
+    str += fmt::format("startY = {}\n", aObj.startY);
+    str += fmt::format("endX   = {}\n", aObj.endX);
+    str += fmt::format("endY   = {}\n", aObj.endY);
+    str += fmt::format("lineStyle = {}\n", to_string(aObj.getLineStyle()));
+    str += fmt::format("lineWidth = {}\n", to_string(aObj.getLineWidth()));
 
     return str;
 }

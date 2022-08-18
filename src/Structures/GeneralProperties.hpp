@@ -3,10 +3,11 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
-#include <stdexcept>
 #include <string>
+
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 #include "../Enums/ImplementationType.hpp"
 
@@ -31,15 +32,15 @@ static std::string to_string(const GeneralProperties& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "implementationPath = " + aObj.implementationPath + newLine();
-    str += indent(1) + "implementation     = " + aObj.implementation     + newLine();
-    str += indent(1) + "refDes             = " + aObj.refDes             + newLine();
-    str += indent(1) + "partValue          = " + aObj.partValue          + newLine();
-    str += indent(1) + "implementationType = " + to_string(aObj.implementationType)    + newLine();
-    str += indent(1) + "pinNameVisible     = " + std::to_string(aObj.pinNameVisible)   + newLine();
-    str += indent(1) + "pinNameRotate      = " + std::to_string(aObj.pinNameRotate)    + newLine();
-    str += indent(1) + "pinNumberVisible   = " + std::to_string(aObj.pinNumberVisible) + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}implementationPath = {}\n", indent(1), aObj.implementationPath);
+    str += fmt::format("{}implementation     = {}\n", indent(1), aObj.implementation);
+    str += fmt::format("{}refDes             = {}\n", indent(1), aObj.refDes);
+    str += fmt::format("{}partValue          = {}\n", indent(1), aObj.partValue);
+    str += fmt::format("{}implementationType = {}\n", indent(1), to_string(aObj.implementationType));
+    str += fmt::format("{}pinNameVisible     = {}\n", indent(1), aObj.pinNameVisible);
+    str += fmt::format("{}pinNameRotate      = {}\n", indent(1), aObj.pinNameRotate);
+    str += fmt::format("{}pinNumberVisible   = {}\n", indent(1), aObj.pinNumberVisible);
 
     return str;
 }

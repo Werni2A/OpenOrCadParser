@@ -3,9 +3,11 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
 #include <string>
+
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 #include "../General.hpp"
 
@@ -24,9 +26,9 @@ static std::string to_string(const Point& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "x = " + std::to_string(aObj.x) + newLine();
-    str += indent(1) + "y = " + std::to_string(aObj.y) + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}x = {}\n", indent(1), aObj.x);
+    str += fmt::format("{}y = {}\n", indent(1), aObj.y);
     return str;
 }
 

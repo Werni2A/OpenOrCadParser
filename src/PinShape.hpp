@@ -8,6 +8,8 @@
 #include <stdexcept>
 #include <string>
 
+#include <fmt/core.h>
+
 #include "General.hpp"
 
 
@@ -162,16 +164,16 @@ static std::string to_string(const PinShape& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "isLong          = " + std::to_string(aObj.isLong)          + newLine();
-    str += indent(1) + "isClock         = " + std::to_string(aObj.isClock)         + newLine();
-    str += indent(1) + "isDot           = " + std::to_string(aObj.isDot)           + newLine();
-    str += indent(1) + "isLeftPointing  = " + std::to_string(aObj.isLeftPointing)  + newLine();
-    str += indent(1) + "isRightPointing = " + std::to_string(aObj.isRightPointing) + newLine();
-    str += indent(1) + "isNetStyle      = " + std::to_string(aObj.isNetStyle)      + newLine();
-    str += indent(1) + "isNoConnect     = " + std::to_string(aObj.isNoConnect)     + newLine();
-    str += indent(1) + "isGlobal        = " + std::to_string(aObj.isGlobal)        + newLine();
-    str += indent(1) + "isNumberVisible = " + std::to_string(aObj.isNumberVisible) + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}isLong          = {}\n", indent(1), aObj.isLong);
+    str += fmt::format("{}isClock         = {}\n", indent(1), aObj.isClock);
+    str += fmt::format("{}isDot           = {}\n", indent(1), aObj.isDot);
+    str += fmt::format("{}isLeftPointing  = {}\n", indent(1), aObj.isLeftPointing);
+    str += fmt::format("{}isRightPointing = {}\n", indent(1), aObj.isRightPointing);
+    str += fmt::format("{}isNetStyle      = {}\n", indent(1), aObj.isNetStyle);
+    str += fmt::format("{}isNoConnect     = {}\n", indent(1), aObj.isNoConnect);
+    str += fmt::format("{}isGlobal        = {}\n", indent(1), aObj.isGlobal);
+    str += fmt::format("{}isNumberVisible = {}\n", indent(1), aObj.isNumberVisible);
 
     // @todo Deactivated until isLong is handled correctly
     // str += indent(1) + "ShapeType       = " + ToShapeType(aObj) + newLine();

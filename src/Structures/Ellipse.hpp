@@ -7,10 +7,12 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <optional>
 #include <ostream>
 #include <string>
+
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 #include "../Enums/HatchStyle.hpp"
 #include "../Enums/FillStyle.hpp"
@@ -83,15 +85,15 @@ static std::string to_string(const Ellipse& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "x1 = " + std::to_string(aObj.x1) + newLine();
-    str += indent(1) + "y1 = " + std::to_string(aObj.y1) + newLine();
-    str += indent(1) + "x2 = " + std::to_string(aObj.x2) + newLine();
-    str += indent(1) + "y2 = " + std::to_string(aObj.y2) + newLine();
-    str += indent(1) + "lineStyle  = " + to_string(aObj.getLineStyle()) + newLine();
-    str += indent(1) + "lineWidth  = " + to_string(aObj.getLineWidth()) + newLine();
-    str += indent(1) + "fillStyle  = " + to_string(aObj.getFillStyle()) + newLine();
-    str += indent(1) + "hatchStyle = " + to_string(aObj.getHatchStyle()) + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}x1 = {}\n", indent(1), aObj.x1);
+    str += fmt::format("{}y1 = {}\n", indent(1), aObj.y1);
+    str += fmt::format("{}x2 = {}\n", indent(1), aObj.x2);
+    str += fmt::format("{}y2 = {}\n", indent(1), aObj.y2);
+    str += fmt::format("{}lineStyle  = {}\n", indent(1), to_string(aObj.getLineStyle()));
+    str += fmt::format("{}lineWidth  = {}\n", indent(1), to_string(aObj.getLineWidth()));
+    str += fmt::format("{}fillStyle  = {}\n", indent(1), to_string(aObj.getFillStyle()));
+    str += fmt::format("{}hatchStyle = {}\n", indent(1), to_string(aObj.getHatchStyle()));
 
     return str;
 }

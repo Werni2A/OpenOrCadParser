@@ -3,10 +3,12 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
 #include <string>
 #include <vector>
+
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 #include "GeneralProperties.hpp"
 #include "GeometrySpecification.hpp"
@@ -47,87 +49,87 @@ static std::string to_string(const Package& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
 
-    str += indent(1) + "generalProperties" + newLine();
+    str += fmt::format("{}generalProperties\n", indent(1));
     str += indent(to_string(aObj.generalProperties), 2);
 
-    str += indent(1) + "properties:" + newLine();
+    str += fmt::format("{}properties:\n", indent(1));
     for(size_t i = 0u; i < aObj.properties.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.properties[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.properties[i])), 2);
     }
 
-    str += indent(1) + "geometrySpecifications:" + newLine();
+    str += fmt::format("{}geometrySpecifications:\n", indent(1));
     for(size_t i = 0u; i < aObj.geometrySpecifications.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.geometrySpecifications[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.geometrySpecifications[i])), 2);
     }
 
-    str += indent(1) + "symbolPinScalars:" + newLine();
+    str += fmt::format("{}symbolPinScalars:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbolPinScalars.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.symbolPinScalars[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.symbolPinScalars[i])), 2);
     }
 
-    str += indent(1) + "t0x1fs:" + newLine();
+    str += fmt::format("{}t0x1fs:\n", indent(1));
     for(size_t i = 0u; i < aObj.t0x1fs.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.t0x1fs[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.t0x1fs[i])), 2);
     }
 
-    str += indent(1) + "pinIdxMappings:" + newLine();
+    str += fmt::format("{}pinIdxMappings:\n", indent(1));
     for(size_t i = 0u; i < aObj.pinIdxMappings.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.pinIdxMappings[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.pinIdxMappings[i])), 2);
     }
 
-    str += indent(1) + "globalSymbols:" + newLine();
+    str += fmt::format("{}globalSymbols:\n", indent(1));
     for(size_t i = 0u; i < aObj.globalSymbols.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.globalSymbols[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.globalSymbols[i])), 2);
     }
 
-    str += indent(1) + "portSymbols:" + newLine();
+    str += fmt::format("{}portSymbols:\n", indent(1));
     for(size_t i = 0u; i < aObj.portSymbols.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.portSymbols[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.portSymbols[i])), 2);
     }
 
-    str += indent(1) + "offPageSymbols:" + newLine();
+    str += fmt::format("{}offPageSymbols:\n", indent(1));
     for(size_t i = 0u; i < aObj.offPageSymbols.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.offPageSymbols[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.offPageSymbols[i])), 2);
     }
 
-    str += indent(1) + "symbolDisplayProps:" + newLine();
+    str += fmt::format("{}symbolDisplayProps:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbolDisplayProps.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.symbolDisplayProps[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.symbolDisplayProps[i])), 2);
     }
 
-    str += indent(1) + "symbolVectors:" + newLine();
+    str += fmt::format("{}symbolVectors:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbolVectors.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.symbolVectors[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.symbolVectors[i])), 2);
     }
 
-    str += indent(1) + "titleBlockSymbols:" + newLine();
+    str += fmt::format("{}titleBlockSymbols:\n", indent(1));
     for(size_t i = 0u; i < aObj.titleBlockSymbols.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.titleBlockSymbols[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.titleBlockSymbols[i])), 2);
     }
 
-    str += indent(1) + "ercSymbols:" + newLine();
+    str += fmt::format("{}ercSymbols:\n", indent(1));
     for(size_t i = 0u; i < aObj.ercSymbols.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.ercSymbols[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.ercSymbols[i])), 2);
     }
 
-    str += indent(1) + "pinShapeSymbols:" + newLine();
+    str += fmt::format("{}pinShapeSymbols:\n", indent(1));
     for(size_t i = 0u; i < aObj.pinShapeSymbols.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.pinShapeSymbols[i]), 2);
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.pinShapeSymbols[i])), 2);
     }
 
     return str;

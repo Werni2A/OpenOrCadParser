@@ -225,11 +225,11 @@ std::string DataStream::dataToStr(const std::vector<uint8_t>& aData)
     {
         if(i % line_width == 0u)
         {
-            preamble = "0x" + ToHex(getCurrentOffset(), 8) + ": ";
+            preamble = fmt::format("0x{:08x}: ", getCurrentOffset());
         }
 
         char c = static_cast<char>(aData[i]);
-        line_hex += ToHex(aData[i], 2);
+        line_hex += fmt::format("{:02x}", aData[i]);
         line_str += std::isprint(c) ? c : '.';
 
         if((i + 1) % line_width == 0u)

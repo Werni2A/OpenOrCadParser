@@ -7,11 +7,12 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
 #include <string>
 #include <vector>
 
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 // @todo Probably called 'PhysicalPart' in the XSD
 //       Structure should also contain 'PinShared' and 'PinSwap'
@@ -32,14 +33,14 @@ static std::string to_string(const PinIdxMapping& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "unitRef = " + aObj.unitRef + newLine();
-    str += indent(1) + "refDes  = " + aObj.refDes  + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}unitRef = {}\n", indent(1), aObj.unitRef);
+    str += fmt::format("{}refDes  = {}\n", indent(1), aObj.refDes);
 
-    str += indent(1) + "pinMap:" + newLine();
+    str += fmt::format("{}pinMap:\n", indent(1));
     for(size_t i = 0u; i < aObj.pinMap.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + aObj.pinMap[i], 2) + newLine();
+        str += indent(fmt::format("[{}]: {}\n", i, aObj.pinMap[i]), 2);
     }
 
     return str;

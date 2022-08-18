@@ -3,9 +3,11 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <ostream>
 #include <string>
+
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 #include "TextFont.hpp"
 
@@ -48,15 +50,15 @@ static std::string to_string(const CommentText& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "locX = " + std::to_string(aObj.locX) + newLine();
-    str += indent(1) + "locY = " + std::to_string(aObj.locY) + newLine();
-    str += indent(1) + "name = " + aObj.name + newLine();
-    str += indent(1) + "x1   = " + std::to_string(aObj.x1) + newLine();
-    str += indent(1) + "y1   = " + std::to_string(aObj.y1) + newLine();
-    str += indent(1) + "x2   = " + std::to_string(aObj.x2) + newLine();
-    str += indent(1) + "y2   = " + std::to_string(aObj.y2) + newLine();
-    str += indent(1) + "textFontIdx = " + std::to_string(aObj.textFontIdx) + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}locX = {}\n", indent(1), aObj.locX);
+    str += fmt::format("{}locY = {}\n", indent(1), aObj.locY);
+    str += fmt::format("{}name = {}\n", indent(1), aObj.name);
+    str += fmt::format("{}x1   = {}\n", indent(1), aObj.x1);
+    str += fmt::format("{}y1   = {}\n", indent(1), aObj.y1);
+    str += fmt::format("{}x2   = {}\n", indent(1), aObj.x2);
+    str += fmt::format("{}y2   = {}\n", indent(1), aObj.y2);
+    str += fmt::format("{}textFontIdx = {}\n", indent(1), aObj.textFontIdx);
     str += indent(to_string(aObj.getTextFont()), 2);
 
     return str;

@@ -3,11 +3,13 @@
 
 
 #include <cstdint>
-#include <iostream>
 #include <optional>
 #include <ostream>
 #include <string>
 #include <vector>
+
+#include <fmt/core.h>
+#include <nameof.hpp>
 
 #include "../Structures/Point.hpp"
 #include "../Enums/LineStyle.hpp"
@@ -54,14 +56,14 @@ static std::string to_string(const Polyline& aObj)
 {
     std::string str;
 
-    str += std::string(nameof::nameof_type<decltype(aObj)>()) + ":" + newLine();
-    str += indent(1) + "lineStyle = " + to_string(aObj.getLineStyle()) + newLine();
-    str += indent(1) + "lineWidth = " + to_string(aObj.getLineWidth()) + newLine();
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+    str += fmt::format("{}lineStyle  = {}\n", indent(1), to_string(aObj.getLineStyle()));
+    str += fmt::format("{}lineWidth  = {}\n", indent(1), to_string(aObj.getLineWidth()));
 
-    str += indent(1) + "points:" + newLine();
+    str += fmt::format("{}points:\n", indent(1));
     for(size_t i = 0u; i < aObj.points.size(); ++i)
     {
-        str += indent(std::to_string(i) + ": " + to_string(aObj.points[i]), 2);
+        str += indent(fmt::format("{}: {}", i, to_string(aObj.points[i])), 2);
     }
 
     return str;
