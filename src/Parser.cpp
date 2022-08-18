@@ -620,14 +620,12 @@ void Parser::parsePage()
     // readDevHelper();
     // return;
 
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
     mDs.printUnknownData(21, std::string(__func__) + " - 0");
     readPreamble();
 
     std::string name = mDs.readStringLenZeroTerm();
 
-    std::string PageSize = mDs.readStringLenZeroTerm();
+    std::string pageSize = mDs.readStringLenZeroTerm();
 
     time_t createDateTime = static_cast<time_t>(mDs.readUint32());
     time_t modifyDateTime = static_cast<time_t>(mDs.readUint32());
@@ -736,10 +734,6 @@ void Parser::parsePage()
     // @todo required for CONTENT page but not for the others? This offset must be somehow
     //       dynamic
     // mDs.printUnknownData(14, std::string(__func__) + " - 1.6");
-
-
-
-
 
     mDs.printUnknownData(2, std::string(__func__) + " - 9");
 
@@ -1361,7 +1355,7 @@ SymbolVector Parser::readSymbolVector()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    SymbolVector symbolVector;
+    SymbolVector obj;
 
     const auto readSmallTypePrefix = [&, this]() -> GeometryStructure
         {
@@ -1378,8 +1372,8 @@ SymbolVector Parser::readSymbolVector()
     discard_until_preamble();
     readPreamble();
 
-    symbolVector.locX = mDs.readInt16();
-    symbolVector.locY = mDs.readInt16();
+    obj.locX = mDs.readInt16();
+    obj.locY = mDs.readInt16();
 
     uint16_t repetition = mDs.readUint16();
 
@@ -1394,15 +1388,15 @@ SymbolVector Parser::readSymbolVector()
     }
 
     readPreamble();
-    symbolVector.name = mDs.readStringLenZeroTerm();
+    obj.name = mDs.readStringLenZeroTerm();
 
     mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x32, 0x00, 0x32, 0x00, 0x00, 0x00, 0x02, 0x00}, std::string(__func__) + " - 2");
     // mDs.printUnknownData(12, std::string(__func__) + " - 2");
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(symbolVector));
+    spdlog::info(to_string(obj));
 
-    return symbolVector;
+    return obj;
 }
 
 
@@ -1490,10 +1484,10 @@ PinIdxMapping Parser::readPinIdxMapping()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    PinIdxMapping pinIdxMapping;
+    PinIdxMapping obj;
 
-    pinIdxMapping.unitRef = mDs.readStringLenZeroTerm();
-    pinIdxMapping.refDes  = mDs.readStringLenZeroTerm();
+    obj.unitRef = mDs.readStringLenZeroTerm();
+    obj.refDes  = mDs.readStringLenZeroTerm();
 
     const uint16_t pinCount = mDs.readUint16();
 
@@ -1501,7 +1495,7 @@ PinIdxMapping Parser::readPinIdxMapping()
     // See OrCAD: 'Pin Properties' -> 'Order'
     for(size_t i = 0u; i < pinCount; ++i)
     {
-        pinIdxMapping.pinMap.push_back(mDs.readStringLenZeroTerm());
+        obj.pinMap.push_back(mDs.readStringLenZeroTerm());
 
         const uint8_t separator = mDs.readUint8();
 
@@ -1518,9 +1512,9 @@ PinIdxMapping Parser::readPinIdxMapping()
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(pinIdxMapping));
+    spdlog::info(to_string(obj));
 
-    return pinIdxMapping;
+    return obj;
 }
 
 
@@ -1673,20 +1667,20 @@ SymbolBBox Parser::readSymbolBBox()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    SymbolBBox symbolBBox;
+    SymbolBBox obj;
 
-    symbolBBox.x1 = mDs.readInt16();
-    symbolBBox.y1 = mDs.readInt16();
-    symbolBBox.x2 = mDs.readInt16();
-    symbolBBox.y2 = mDs.readInt16();
+    obj.x1 = mDs.readInt16();
+    obj.y1 = mDs.readInt16();
+    obj.x2 = mDs.readInt16();
+    obj.y2 = mDs.readInt16();
 
     // @todo not sure weather this belongs to the structure or should be outside of it
     mDs.printUnknownData(4, std::string(__func__) + " - 0");
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(symbolBBox));
+    spdlog::info(to_string(obj));
 
-    return symbolBBox;
+    return obj;
 }
 
 
@@ -1695,28 +1689,28 @@ T0x1f Parser::readT0x1f()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    T0x1f t0x1f;
+    T0x1f obj;
 
-    t0x1f.name = mDs.readStringLenZeroTerm();
+    obj.name = mDs.readStringLenZeroTerm();
 
     std::string unknownStr0 = mDs.readStringLenZeroTerm(); // @todo figure out
     spdlog::debug("readT0x1f unknownStr0 = {}", unknownStr0);
 
-    t0x1f.refDes = mDs.readStringLenZeroTerm();
+    obj.refDes = mDs.readStringLenZeroTerm();
 
     std::string unknownStr1 = mDs.readStringLenZeroTerm(); // @todo figure out
     spdlog::debug("readT0x1f unknownStr1 = {}", unknownStr1);
 
-    t0x1f.pcbFootprint = mDs.readStringLenZeroTerm();
+    obj.pcbFootprint = mDs.readStringLenZeroTerm();
 
     // Maybe the last two bytes specify the amount of units the symbols has?
     // Also called "Section Count"
     mDs.printUnknownData(2, std::string(__func__) + " - 0 - Prob. Unit Count");
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(t0x1f));
+    spdlog::info(to_string(obj));
 
-    return t0x1f;
+    return obj;
 }
 
 

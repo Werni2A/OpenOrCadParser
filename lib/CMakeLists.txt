@@ -67,6 +67,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/Rect.hpp
    ${LIB_INCLUDE_DIR}/Structures/SymbolPinScalar.hpp
    ${LIB_INCLUDE_DIR}/Structures/TextFont.hpp
+   ${LIB_INCLUDE_DIR}/Structures/Type.hpp
 )
 
 # Create library file from sources

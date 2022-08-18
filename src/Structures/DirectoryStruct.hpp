@@ -18,7 +18,7 @@ struct DirItemType
 
     ComponentType componentType;
 
-    int16_t timezone; // @todo Write to Kaitai file: Refer to http://time.unitarium.com/military/ for more details.
+    int16_t timezone; // Refer to http://time.unitarium.com/military/ for more details.
 };
 
 
