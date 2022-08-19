@@ -51,6 +51,81 @@ namespace fs = std::filesystem;
 struct Library;
 
 
+#include <optional>
+#include <functional>
+
+struct FileStructure
+{
+    // All known standard files
+
+    std::optional<fs::path> AdminData;
+
+    fs::path Cache;
+
+    fs::path Cells;
+    std::optional<fs::path> CellsDir;
+
+    fs::path DsnStream;
+
+    fs::path ExportBlocks;
+    fs::path ExportBlocksDir;
+
+    fs::path HSObjects;
+
+    fs::path Graphics;
+    fs::path GraphicsDir;
+    fs::path GraphicsTypes;
+
+    fs::path Library;
+
+    std::optional<fs::path> NetBundleMapData;
+
+    fs::path Packages;
+    std::vector<fs::path> PackagesPackages;
+    fs::path PackagesDir;
+
+    fs::path Parts;
+    fs::path PartsDir;
+
+    fs::path Symbols;
+    fs::path SymbolsERC;
+    fs::path SymbolsTypes;
+    std::vector<fs::path> SymbolsSymbols;
+    fs::path SymbolsDir;
+
+    fs::path Views;
+    fs::path ViewsDir;
+
+    // struct View
+    // {
+    //     fs::path ViewsViewsSchematics;
+    //     fs::path ViewsViewsHierarchyHierarchy;
+    //     fs::path ViewsViewsPages;
+
+            // struct Page
+            // {
+            //     std::string name;
+            //     fs::path    path;
+            // };
+
+    //     std::vector<Page> ViewsViewsPagesPages;
+    // };
+
+    // std::vector<View> ViewsViews;
+
+
+    std::vector<fs::path> ViewsSchematics;
+
+    std::vector<fs::path> ViewsSchematicsSchematic;
+
+    std::vector<std::optional<fs::path>> ViewsSchematicsHierarchyHierarchy;
+
+    std::vector<std::optional<fs::path>> ViewsSchematicsPages;
+
+    std::vector<std::vector<fs::path>> ViewsSchematicsPagesPages;
+};
+
+
 class Parser
 {
 public:
@@ -71,7 +146,53 @@ public:
     void readAdminData(const fs::path& aFilePath);
     void readNetBundleMapData(const fs::path& aFilePath);
 
+    // @todo adapt to pass variadic arguments into aParseFct
+    template<typename T>
+    T parseFile(const fs::path& aFilePath, const std::function<T()>& aParseFct)
+    {
+        T t;
+
+        ++mFileCtr;
+        try
+        {
+            openFile(aFilePath);
+            t = aParseFct();
+            closeFile();
+        }
+        catch(...)
+        {
+            exceptionHandling();
+        }
+
+        spdlog::info("\n----------------------------------------------------------------------------------\n");
+
+        return t;
+    };
+
+
+    // @todo adapt to pass variadic arguments into aParseFct
+    // template<typename T>
+    void parseFile(const fs::path& aFilePath, const std::function<void()>& aParseFct)
+    {
+        ++mFileCtr;
+        try
+        {
+            openFile(aFilePath);
+            aParseFct();
+            closeFile();
+        }
+        catch(...)
+        {
+            exceptionHandling();
+        }
+
+        spdlog::info("\n----------------------------------------------------------------------------------\n");
+    };
+
+
 private:
+
+    void populateFilePaths(const fs::path& aPathLib, FileStructure& aFileStruct);
 
 
     void checkInterpretedDataLen(const std::string& aFuncName, size_t aStartOffset, size_t aEndOffset, size_t aExpectedLen);

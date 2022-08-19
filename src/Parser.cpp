@@ -134,67 +134,289 @@ bool requiresPreamble(Structure structure)
  */
 Library Parser::parseLibrary()
 {
-    const std::string aLibPath = mExtractedPath;
+    const fs::path libPath{mExtractedPath};
 
-    spdlog::info("Start parsing library {}", aLibPath);
+    spdlog::info("Start parsing library {}", libPath.string());
 
-    fs::path pathLib = fs::path(aLibPath);
+    FileStructure fileStruct;
+    populateFilePaths(libPath, fileStruct);
 
-    if(!fs::exists(pathLib))
+    const auto parseMyDir = [this](){ return parseDirectory(); };
+
+    mLibrary.exportBlocksDir = parseFile<DirectoryStruct>(fileStruct.ExportBlocksDir, parseMyDir);
+    mLibrary.graphicsDir     = parseFile<DirectoryStruct>(fileStruct.GraphicsDir, parseMyDir);
+    mLibrary.packagesDir     = parseFile<DirectoryStruct>(fileStruct.PackagesDir, parseMyDir);
+    mLibrary.partsDir        = parseFile<DirectoryStruct>(fileStruct.PartsDir, parseMyDir);
+    mLibrary.symbolsDir      = parseFile<DirectoryStruct>(fileStruct.SymbolsDir, parseMyDir);
+    mLibrary.cellsDir        = parseFile<DirectoryStruct>(fileStruct.CellsDir.value(), parseMyDir);
+    mLibrary.viewsDir        = parseFile<DirectoryStruct>(fileStruct.ViewsDir, parseMyDir);
+
+    spdlog::info("Lib Path = {}", libPath.string());
+    spdlog::info("mFileFormatVersion = {}", static_cast<int>(mFileFormatVersion));
+
+    spdlog::debug("\n----------------------------------------------------------------------------------\n");
+
+    if(fileStruct.AdminData.has_value())
     {
-        throw std::invalid_argument("Folder could not be found! " + aLibPath);
+        readAdminData(fileStruct.AdminData.value());
     }
 
-    if(!fs::is_directory(pathLib))
+    if(fileStruct.NetBundleMapData.has_value())
     {
-        throw std::invalid_argument("Path does not point to directory! " + aLibPath);
+        readNetBundleMapData(fileStruct.NetBundleMapData.value());
     }
 
-    // All known standard files
+    mLibrary.graphicsTypes  = parseFile<std::vector<Type>>(fileStruct.GraphicsTypes, [this](){ return parseTypes(); });
+    mLibrary.symbolsTypes   = parseFile<std::vector<Type>>(fileStruct.SymbolsTypes, [this](){ return parseTypes(); });
 
-    fs::path pathAdminData        = pathLib / "AdminData.bin";
+    mLibrary.symbolsLibrary = parseFile<SymbolsLibrary>(fileStruct.Library, [this](){ return parseSymbolsLibrary(); });
 
-    fs::path pathCache            = pathLib / "Cache.bin";
+    // /* mLibrary.symbolsERC = */ parseFile(fileStruct.SymbolsERC, [this](){ return parseSymbolsERC(); });
 
-    fs::path pathCells            = pathLib / "Cells";
-    fs::path pathCellsDir         = pathLib / "Cells Directory.bin";
+    for(const auto& package : fileStruct.PackagesPackages)
+    {
+        mLibrary.packages.push_back(parseFile<Package>(package, [this](){ return parsePackage(); }));
+    }
 
-    fs::path pathDsnStream        = pathLib / "DsnStream.bin";
+    for(const auto& symbol : fileStruct.SymbolsSymbols)
+    {
+        // @todo Results are only stored in packages for testing purposes
+        //       Replace with symbols later on.
+        mLibrary.packages.push_back(parseFile<Package>(symbol, [this](){ return parseSymbol(); }));
+    }
 
-    fs::path pathExportBlocks     = pathLib / "ExportBlocks";
-    fs::path pathExportBlocksDir  = pathLib / "ExportBlocks Directory.bin";
+    for(const auto& schematic : fileStruct.ViewsSchematicsSchematic)
+    {
+        /* mLibrary.symbolsERC = */ parseFile(schematic, [this](){ return parseSchematic(); });
+    }
 
-    fs::path pathHSObjects        = pathLib / "HSObjects.bin";
+    for(const auto& hierarchy : fileStruct.ViewsSchematicsHierarchyHierarchy)
+    {
+        if(hierarchy.has_value())
+        {
+            /* mLibrary.Hierarchy = */ parseFile(hierarchy.value(), [this](){ return parseHierarchy(); });
+        }
+    }
 
-    fs::path pathGraphics         = pathLib / "Graphics";
-    fs::path pathGraphicsDir      = pathLib / "Graphics Directory.bin";
-    fs::path pathGraphicsTypes    = pathGraphics / "$Types$.bin";
+    for(const auto& pages : fileStruct.ViewsSchematicsPagesPages)
+    {
+        for(const auto& page : pages)
+        {
+            /* mLibrary.Page = */ parseFile(page, [this](){ return parsePage(); });
+        }
+    }
 
-    fs::path pathLibrary          = pathLib / "Library.bin";
+    std::string errCtrStr = "Errors in " + std::to_string(mFileErrCtr) + "/" + std::to_string(mFileCtr) + " files!";
 
-    fs::path pathNetBundleMapData = pathLib / "NetBundleMapData.bin"; // @todo Only in newer file format versions. Document this somewhere
+    errCtrStr = (mFileErrCtr == 0u) ? fmt::format(fg(fmt::color::green), errCtrStr) : fmt::format(fg(fmt::color::crimson), errCtrStr);
 
-    fs::path pathPackages         = pathLib / "Packages";
-    fs::path pathPackagesDir      = pathLib / "Packages Directory.bin";
+    spdlog::info(errCtrStr);
 
-    fs::path pathParts            = pathLib / "Parts";
-    fs::path pathPartsDir         = pathLib / "Parts Directory.bin";
+    // spdlog::info("Print parsed library");
+    // spdlog::info(to_string(mLibrary));
 
-    fs::path pathSymbols          = pathLib / "Symbols";
-    fs::path pathSymbolsDir       = pathLib / "Symbols Directory.bin";
-    fs::path pathSymbolsTypes     = pathSymbols / "$Types$.bin";
-    fs::path pathSymbolsERC       = pathSymbols / "ERC.bin";
+    return mLibrary;
+}
 
-    fs::path pathViews            = pathLib / "Views";
-    fs::path pathViewsDir         = pathLib / "Views Directory.bin";
 
-    std::vector<fs::path> pathViewsSchematics;
 
-    for(const auto& dir: std::filesystem::directory_iterator{pathViews})
+void sanityFileExists(const fs::path& aPath)
+{
+    if(!fs::exists(aPath))
+    {
+        throw std::invalid_argument("File could not be found! " + aPath.string());
+    }
+
+    if(!fs::is_regular_file(aPath))
+    {
+        throw std::invalid_argument("Path does not point to file! " + aPath.string());
+    }
+}
+
+
+bool fileExists(const fs::path& aPath)
+{
+    bool exists = true;
+
+    try
+    {
+        sanityFileExists(aPath);
+    }
+    catch(...)
+    {
+        exists = false;
+    }
+
+    return exists;
+}
+
+
+void sanityFolderExists(const fs::path& aPath)
+{
+    if(!fs::exists(aPath))
+    {
+        throw std::invalid_argument("Folder could not be found! " + aPath.string());
+    }
+
+    if(!fs::is_directory(aPath))
+    {
+        throw std::invalid_argument("Path does not point to directory! " + aPath.string());
+    }
+}
+
+
+bool folderExists(const fs::path& aPath)
+{
+    bool exists = true;
+
+    try
+    {
+        sanityFolderExists(aPath);
+    }
+    catch(...)
+    {
+        exists = false;
+    }
+
+    return exists;
+}
+
+
+void Parser::populateFilePaths(const fs::path& aPathLib, FileStructure& aFileStruct)
+{
+    sanityFolderExists(aPathLib);
+
+    fs::path currPath;
+
+    currPath = aPathLib / "AdminData.bin";
+    if(fs::exists(currPath))
+    {
+        aFileStruct.AdminData = std::make_optional<fs::path>(currPath);
+    }
+
+    currPath = aPathLib / "Cache.bin";
+    sanityFileExists(currPath);
+    aFileStruct.Cache = currPath;
+
+    currPath = aPathLib / "Cells";
+    sanityFolderExists(currPath);
+    aFileStruct.Cells = currPath;
+
+    currPath = aPathLib / "Cells Directory.bin";
+    if(fs::exists(currPath))
+    {
+        aFileStruct.CellsDir = std::make_optional<fs::path>(currPath);
+    }
+
+    // @todo I think its only present in schematic files
+    // if(mFileFormatVersion >= FileFormatVersion::C)
+    // {
+    //     currPath = aPathLib / "DsnStream.bin";
+    //     sanityFileExists(currPath);
+    //     aFileStruct.DsnStream = currPath;
+    // }
+
+    currPath = aPathLib / "ExportBlocks";
+    sanityFolderExists(currPath);
+    aFileStruct.ExportBlocks = currPath;
+
+    currPath = aPathLib / "ExportBlocks Directory.bin";
+    sanityFileExists(currPath);
+    aFileStruct.ExportBlocksDir = currPath;
+
+    // if(mFileFormatVersion >= FileFormatVersion::C)
+    // {
+    //     currPath = aPathLib / "HSObjects.bin";
+    //     sanityFileExists(currPath);
+    //     aFileStruct.HSObjects = currPath;
+    // }
+
+    currPath = aPathLib / "Graphics";
+    sanityFolderExists(currPath);
+    aFileStruct.Graphics = currPath;
+
+    currPath = aPathLib / "Graphics Directory.bin";
+    sanityFileExists(currPath);
+    aFileStruct.GraphicsDir = currPath;
+
+    currPath = aFileStruct.Graphics / "$Types$.bin";
+    sanityFileExists(currPath);
+    aFileStruct.GraphicsTypes = currPath;
+
+    currPath = aPathLib / "Library.bin";
+    sanityFileExists(currPath);
+    aFileStruct.Library = currPath;
+
+    // @todo Only in newer file format versions. Document this somewhere
+    currPath = aPathLib / "NetBundleMapData.bin";
+    if(fs::exists(currPath))
+    {
+        aFileStruct.NetBundleMapData = std::make_optional<fs::path>(currPath);
+    }
+
+    currPath = aPathLib / "Packages";
+    sanityFolderExists(currPath);
+    aFileStruct.Packages = currPath;
+
+    for(const auto& currPath : fs::directory_iterator(aFileStruct.Packages))
+    {
+        aFileStruct.PackagesPackages.push_back(currPath);
+    }
+
+    currPath = aPathLib / "Packages Directory.bin";
+    sanityFileExists(currPath);
+    aFileStruct.PackagesDir = currPath;
+
+    currPath = aPathLib / "Parts";
+    sanityFolderExists(currPath);
+    aFileStruct.Parts = currPath;
+
+    currPath = aPathLib / "Parts Directory.bin";
+    sanityFileExists(currPath);
+    aFileStruct.PartsDir = currPath;
+
+    currPath = aPathLib / "Symbols";
+    sanityFolderExists(currPath);
+    aFileStruct.Symbols = currPath;
+
+    currPath = aPathLib / "Symbols Directory.bin";
+    sanityFileExists(currPath);
+    aFileStruct.SymbolsDir = currPath;
+
+    currPath = aFileStruct.Symbols / "$Types$.bin";
+    sanityFileExists(currPath);
+    aFileStruct.SymbolsTypes = currPath;
+
+    // currPath = aFileStruct.Symbols / "ERC.bin";
+    // sanityFileExists(currPath);
+    // aFileStruct.SymbolsERC = currPath;
+
+    for(const auto& file : fs::directory_iterator(aFileStruct.Symbols))
+    {
+        const fs::path currPath = file.path();
+
+        // Skip the 'ERC' and '$Types$' stream as they are additional
+        // information but no symbols.
+        if(currPath.filename() != "$Types$.bin" &&
+            currPath.filename() != "ERC.bin")
+        {
+            aFileStruct.SymbolsSymbols.push_back(currPath);
+        }
+    }
+
+    currPath = aPathLib / "Views";
+    sanityFolderExists(currPath);
+    aFileStruct.Views = currPath;
+
+    currPath = aPathLib / "Views Directory.bin";
+    sanityFileExists(currPath);
+    aFileStruct.ViewsDir = currPath;
+
+    for(const auto& dir: fs::directory_iterator{aFileStruct.Views})
     {
         if(dir.is_directory())
         {
-            pathViewsSchematics.push_back(dir);
+            aFileStruct.ViewsSchematics.push_back(dir);
         }
         else
         {
@@ -202,415 +424,53 @@ Library Parser::parseLibrary()
         }
     }
 
-    std::vector<fs::path> pathViewsSchematicsSchematic;
-
-    for(const auto& dir : pathViewsSchematics)
+    for(const auto& dir : aFileStruct.ViewsSchematics)
     {
-        pathViewsSchematicsSchematic.push_back(dir / "Schematic.bin");
+        const fs::path currPath = dir / "Schematic.bin";
+        sanityFileExists(currPath);
+        aFileStruct.ViewsSchematicsSchematic.push_back(currPath);
     }
 
-    std::vector<fs::path> pathViewsSchematicsHierarchyHierarchy;
-
-    for(const auto& dir : pathViewsSchematics)
+    for(const auto& dir : aFileStruct.ViewsSchematics)
     {
-        pathViewsSchematicsHierarchyHierarchy.push_back(dir / "Hierarchy" / "Hierarchy.bin");
-    }
-
-    std::vector<fs::path> pathViewsSchematicsPages;
-
-    for(const auto& dir : pathViewsSchematics)
-    {
-        pathViewsSchematicsPages.push_back(dir / "Pages");
-    }
-
-    std::vector<std::vector<fs::path>> pathViewsSchematicsPagesPages;
-
-    for(const auto& pagesDir: pathViewsSchematicsPages)
-    {
-        if(!std::filesystem::exists(pagesDir))
+        // @todo Add extra variable for Hierarchy
+        const fs::path currPath = dir / "Hierarchy" / "Hierarchy.bin";
+        if(fs::exists(currPath))
         {
-            continue;
+            aFileStruct.ViewsSchematicsHierarchyHierarchy.push_back(std::make_optional<fs::path>(currPath));
         }
+    }
 
+    for(const auto& dir : aFileStruct.ViewsSchematics)
+    {
+        const fs::path currPath = dir / "Pages";
+        if(fs::exists(currPath))
+        {
+            aFileStruct.ViewsSchematicsPages.push_back(std::make_optional<fs::path>(currPath));
+        }
+    }
+
+    for(const auto& pagesDir: aFileStruct.ViewsSchematicsPages)
+    {
         std::vector<fs::path> schematicPages;
 
-        for(const auto& page : std::filesystem::directory_iterator{pagesDir})
+        if(pagesDir)
         {
-            if(page.is_regular_file())
+            for(const auto& page : fs::directory_iterator{pagesDir.value()})
             {
-                schematicPages.push_back(page);
-            }
-            else
-            {
-                throw std::runtime_error("Did not expect to find anything else than files here!");
-            }
-        }
-
-        pathViewsSchematicsPagesPages.push_back(schematicPages);
-    }
-
-    const auto parseDirectoryFile = [this](const fs::path& aFilePath) -> DirectoryStruct
-    {
-        DirectoryStruct directoryStruct;
-
-        ++mFileCtr;
-        try
-        {
-            openFile(aFilePath.string());
-            directoryStruct = parseDirectory();
-            closeFile();
-        }
-        catch(...)
-        {
-            exceptionHandling();
-        }
-
-        spdlog::info("----------------------------------------------------------------------------------\n");
-
-        return directoryStruct;
-    };
-
-    if(fs::exists(pathExportBlocksDir))
-    {
-        mLibrary.exportBlocksDir = parseDirectoryFile(pathExportBlocksDir);
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathExportBlocksDir.string());
-    }
-
-    if(fs::exists(pathGraphicsDir))
-    {
-        mLibrary.graphicsDir     = parseDirectoryFile(pathGraphicsDir);
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathGraphicsDir.string());
-    }
-
-    if(fs::exists(pathPackagesDir))
-    {
-        mLibrary.packagesDir     = parseDirectoryFile(pathPackagesDir);
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathPackagesDir.string());
-    }
-
-    if(fs::exists(pathPartsDir))
-    {
-        mLibrary.partsDir        = parseDirectoryFile(pathPartsDir);
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathPartsDir.string());
-    }
-
-    if(fs::exists(pathSymbolsDir))
-    {
-        mLibrary.symbolsDir      = parseDirectoryFile(pathSymbolsDir);
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathSymbolsDir.string());
-    }
-
-    if(fs::exists(pathCellsDir))
-    {
-        mLibrary.cellsDir        = parseDirectoryFile(pathCellsDir);
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathCellsDir.string());
-    }
-
-    if(fs::exists(pathViewsDir))
-    {
-        mLibrary.viewsDir        = parseDirectoryFile(pathViewsDir);
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathViewsDir.string());
-    }
-
-    spdlog::info("----------------------------------------------------------------------------------\n");
-
-    if(fs::exists(pathAdminData))
-    {
-        readAdminData(pathAdminData);
-    }
-
-    if(fs::exists(pathNetBundleMapData))
-    {
-        readNetBundleMapData(pathNetBundleMapData);
-    }
-
-    if(fs::exists(pathGraphicsTypes))
-    {
-        ++mFileCtr;
-        try
-        {
-            openFile(pathGraphicsTypes.string());
-            mLibrary.graphicsTypes = parseTypes();
-            closeFile();
-        }
-        catch(...)
-        {
-            exceptionHandling();
-        }
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathGraphicsTypes.string());
-    }
-
-
-    spdlog::info("----------------------------------------------------------------------------------\n");
-
-    if(fs::exists(pathSymbolsTypes))
-    {
-        ++mFileCtr;
-        try
-        {
-            openFile(pathSymbolsTypes.string());
-            mLibrary.symbolsTypes = parseTypes();
-            closeFile();
-        }
-        catch(...)
-        {
-            exceptionHandling();
-        }
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathSymbolsTypes.string());
-    }
-
-    spdlog::info("----------------------------------------------------------------------------------\n");
-
-    if(fs::exists(pathLibrary))
-    {
-        ++mFileCtr;
-        try
-        {
-            openFile(pathLibrary.string());
-            mLibrary.symbolsLibrary = parseSymbolsLibrary();
-            closeFile();
-        }
-        catch(...)
-        {
-            exceptionHandling();
-        }
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathLibrary.string());
-    }
-
-    spdlog::info("----------------------------------------------------------------------------------\n");
-
-    if(fs::exists(pathSymbolsERC))
-    {
-        ++mFileCtr;
-        try
-        {
-            openFile(pathSymbolsERC.string());
-            // @todo write results into mLibrary
-            /* mLibrary.symbolsERC = */ parseSymbolsERC();
-            closeFile();
-        }
-        catch(...)
-        {
-            exceptionHandling();
-        }
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathSymbolsERC.string());
-    }
-
-    spdlog::info("----------------------------------------------------------------------------------\n");
-
-    if(fs::exists(pathPackages))
-    {
-        for(const auto& file : fs::directory_iterator(pathPackages))
-        {
-            fs::path pathPackage = file.path();
-
-            bool hasError = false;
-
-            ++mFileCtr;
-            try
-            {
-                openFile(pathPackage.string());
-                mLibrary.packages.push_back(parsePackage());
-                closeFile();
-            }
-            catch(...)
-            {
-                hasError = true;
-                exceptionHandling();
-            }
-
-            if(!hasError)
-            {
-                spdlog::info(fmt::format(fg(fmt::color::green),
-                    "Package {} parsed successfuly.", mCurrOpenFile.string()));
-            }
-
-            spdlog::info("----------------------------------------------------------------------------------\n");
-        }
-    }
-    else
-    {
-        spdlog::debug("Directory does not exist: {}", pathPackages.string());
-    }
-
-    if(fs::exists(pathSymbols))
-    {
-        for(const auto& file : fs::directory_iterator(pathSymbols))
-        {
-            fs::path pathSymbol = file.path();
-
-            // Skip the 'ERC' and '$Types$' stream as they are additional
-            // information but no symbols.
-            if(pathSymbol.filename() == "ERC.bin"     ||
-               pathSymbol.filename() == "$Types$.bin")
-            {
-                continue;
-            }
-
-            bool hasError = false;
-
-            ++mFileCtr;
-            try
-            {
-                openFile(pathSymbol.string());
-                // @todo Results are only stored in packages for testing purposes
-                //       Replace with symbols later on.
-                mLibrary.packages.push_back(parseSymbol()); // @todo implement symbol parsing
-                closeFile();
-            }
-            catch(...)
-            {
-                hasError = true;
-                exceptionHandling();
-            }
-
-            if(!hasError)
-            {
-                spdlog::info(fmt::format(fg(fmt::color::green),
-                    "Symbol {} parsed successfuly.", mCurrOpenFile.string()));
-            }
-
-            spdlog::info("----------------------------------------------------------------------------------\n");
-        }
-    }
-    else
-    {
-        spdlog::warn("Directory does not exist: {}", pathSymbols.string());
-    }
-
-    for(const auto& schematic : pathViewsSchematicsSchematic)
-    {
-        if(fs::exists(schematic))
-        {
-            ++mFileCtr;
-            try
-            {
-                openFile(schematic.string());
-                // @todo write results into mLibrary
-                /* mLibrary.symbolsERC = */ parseSchematic();
-                closeFile();
-            }
-            catch(...)
-            {
-                exceptionHandling();
-            }
-        }
-        else
-        {
-            spdlog::debug("File does not exist: {}", schematic.string());
-        }
-
-        spdlog::info("----------------------------------------------------------------------------------\n");
-    }
-
-    for(const auto& hierarchy : pathViewsSchematicsHierarchyHierarchy)
-    {
-        if(fs::exists(hierarchy))
-        {
-            ++mFileCtr;
-            try
-            {
-                openFile(hierarchy.string());
-                // @todo write results into mLibrary
-                /* mLibrary.symbolsERC = */ parseHierarchy();
-                closeFile();
-            }
-            catch(...)
-            {
-                exceptionHandling();
-            }
-        }
-        else
-        {
-            spdlog::debug("File does not exist: {}", hierarchy.string());
-        }
-
-        spdlog::info("----------------------------------------------------------------------------------\n");
-    }
-
-    for(const auto& pages : pathViewsSchematicsPagesPages)
-    {
-        for(const auto& page : pages)
-        {
-            if(fs::exists(page))
-            {
-                ++mFileCtr;
-                try
+                if(page.is_regular_file())
                 {
-                    openFile(page.string());
-                    // @todo write results into mLibrary
-                    /* mLibrary.symbolsERC = */ parsePage();
-                    closeFile();
+                    schematicPages.push_back(page);
                 }
-                catch(...)
+                else
                 {
-                    exceptionHandling();
+                    throw std::runtime_error("Did not expect to find anything else than files here!");
                 }
             }
-            else
-            {
-                spdlog::warn("File does not exist: {}", page.string());
-            }
-
-            spdlog::info("\n----------------------------------------------------------------------------------\n");
         }
+
+        aFileStruct.ViewsSchematicsPagesPages.push_back(schematicPages);
     }
-
-    std::string errCtrStr = fmt::format("Errors in {}/{} files!", mFileErrCtr, mFileCtr);
-
-    errCtrStr = fmt::format((mFileErrCtr == 0u) ? fg(fmt::color::green) : fg(fmt::color::crimson),
-        errCtrStr);
-
-    spdlog::info(errCtrStr);
-
-    // spdlog::info("Print parsed library");
-
-    // for(const auto& package : mLibrary.packages)
-    // {
-    //     if(package.properties.at(0).name == "VDD")
-    //     {
-    //        spdlog::info(to_string(package));
-    //     }
-    // }
-
-    // spdlog::info(to_string(mLibrary.symbolsLibrary));
-
-    // spdlog::info(to_string(mLibrary));
-
-    return mLibrary;
 }
 
 
