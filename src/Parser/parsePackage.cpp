@@ -358,6 +358,31 @@ Package Parser::parsePackage()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    // File format version that is used for parsing this file
+    uint16_t file_version = -1;
+
+    // Try to find file format version in directory
+    {
+        const std::string stream_name = mCurrOpenFile.filename().replace_extension("");
+        spdlog::info("stream_name = {}", stream_name);
+
+        const auto& dir = mLibrary.packagesDir.items;
+        const auto cmp = [stream_name](const DirItemType& item) -> bool
+            { return item.name == stream_name; };
+
+        const auto found_it = std::find_if(dir.cbegin(), dir.cend(), cmp);
+
+        if(found_it != dir.cend())
+        {
+            file_version = found_it->fileFormatVersion;
+            spdlog::info("Set file format version for `{}` to {}", stream_name, file_version);
+        }
+        else
+        {
+            spdlog::warn("Did not find package `{}` in `{}` file", stream_name, "Packages Directory");
+        }
+    }
+
     Package package;
 
     Structure structure;

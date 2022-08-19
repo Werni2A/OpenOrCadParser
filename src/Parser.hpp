@@ -55,13 +55,9 @@ class Parser
 {
 public:
 
-    static uint16_t storedVersion;
-
     Parser(const fs::path& aFile, FileFormatVersion aFileFormatVersion = FileFormatVersion::C);
 
     ~Parser();
-
-public:
 
     size_t getFileErrCtr() const
     {
