@@ -211,7 +211,7 @@ void Parser::parseSymbolsERC()
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     // @todo Should I introduce something like read_type_prefix_very_long()?
-    mDs.assumeData({0x4b}, std::string(__func__) + " - 0"); // Proably stands for ERC
+    mDs.assumeData({0x4b}, std::string(__func__) + " - 0"); // Proably stands for ERC, see Structure.hpp 0x4b
 
     mDs.printUnknownData(8, std::string(__func__) + " - 1");
 

@@ -10,7 +10,7 @@
 // @todo there are a few consecutive items missing
 enum class Structure
 {
-    SthInPages0            =   2, // @todo Should be name something like Instance as it is used by all .*Inst structures and instiates the actual object
+    SthInPages0            =   2, // @todo Should be name something like Instance as it is used by all .*Inst structures and instiates the actual object. Could also be a Graphic struct, see ComponentType as it occurs in Graphics Directory.
 
     DsnStream              =   4, //!< Used in the 'DsnStream' stream //@todo figure out real name and rename it
 
@@ -63,9 +63,9 @@ enum class Structure
     NetDbIdMapping         =  67,
 
     ERCSymbol              =  75, //!< ERC symbol in the library
-
-    ERC                    =  77, //!< ERC marker in the schematic
-    BookMarkSymbol         =  78, //!< Book mark instance in the schematic
+    BookMarkSymbol         =  76, //!< Book mark symbol in the library
+    ERCSymbolInst          =  77, //!< ERC marker instance in the schematic
+    BookMarkSymbolInst     =  78, //!< Book mark instance in the schematic
 
     GraphicBezierInst      =  88,
     GraphicOleEmbedInst    =  89, //!< Embedds a file into the schematic, see https://en.wikipedia.org/wiki/Object_Linking_and_Embedding

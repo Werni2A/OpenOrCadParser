@@ -16,24 +16,37 @@
 //       types?
 enum class ComponentType
 {
-    Cell             = 0x06,
-    View             = 0x09,
-    Part             = 0x18,
-    Package          = 0x1f,
-    GlobalSymbol     = 0x21,
-    PortSymbol       = 0x22,
-    OffPageSymbol    = 0x23,
-    TitleBlockSymbol = 0x40,
-    ERCSymbol        = 0x4b,
-    PinShapeSymbol   = 0x62,
+    Graphic          =  2,
 
+    Cell             =  6,
+
+    View             =  9,
+
+    Part             = 24,
+
+    Package          = 31,
+    PinIdxMapping    = 32, // @todo verify this
+    GlobalSymbol     = 33,
+    PortSymbol       = 34,
+    OffPageSymbol    = 35,
+
+    TitleBlockSymbol = 64,
+
+    ERCSymbol        = 75,
+    BookMarkSymbol   = 76,
+
+    PinShapeSymbol   = 98,
+
+    CT_3820          =  3820, // @todo completly unknown and strange looking
+    CT_4704          =  4704, // @todo completly unknown and strange looking
+    CT_11904         = 11904, // @todo completly unknown and strange looking
+    CT_17486         = 17486, // @todo completly unknown and strange looking
+    CT_24941         = 24941, // @todo completly unknown and strange looking
+    CT_29795         = 29795, // @todo completly unknown and strange looking
     // @todo when this weird types occur also the timezone in directory files is really strange
     //       but not in the XML....? Is this field corrupted? Or somehow coded? But why code
     //       it only sometimes and not always? I think the same values fo the Type also appears
     //       too often to be a realistic corruption issue but I need to confirm this.
-    CT0x2e80         = 0x2e80, // @todo completly unknown and strange looking
-    CT0x444e         = 0x444e  // @todo completly unknown and strange looking
-    // @todo still missing is 'BookMarkSymbol'
 };
 
 
