@@ -157,7 +157,6 @@ public:
     void padRest(size_t aStartOffset, size_t aBlockSize, bool aPadIsZero = true);
 
     std::string getCurrentOffsetStrMsg();
-    std::ostream& printCurrentOffset(std::ostream& aOs);
 
     void printData(const std::vector<uint8_t>& aData);
 

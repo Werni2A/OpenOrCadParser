@@ -29,7 +29,7 @@ void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& e
     po::store(po::parse_command_line(argc, argv, desc), vm);
     po::notify(vm);
 
-    if(vm.count("help"))
+    if(vm.count("help") > 0U)
     {
         std::cout << desc << std::endl;
         std::exit(1);
@@ -39,7 +39,7 @@ void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& e
     extract   = vm.count("extract") ? vm["extract"].as<bool>() : false;
     verbose   = vm.count("verbose") ? vm["verbose"].as<bool>() : false;
 
-    if(vm.count("input"))
+    if(vm.count("input") > 0U)
     {
         input = fs::path{vm["input"].as<std::string>()};
         if(!fs::exists(input))
@@ -63,7 +63,7 @@ void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& e
         std::exit(1);
     }
 
-    if(vm.count("output"))
+    if(vm.count("output") > 0U)
     {
         output = fs::path{vm["output"].as<std::string>()};
         if(!fs::exists(output))

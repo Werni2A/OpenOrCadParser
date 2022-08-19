@@ -25,10 +25,9 @@ The following two XSD files provide a good overview of the `XML` file structure,
 
 ---
 
-# Current State &mdash; March 2022
+# Current State &mdash; August 2022
 
-- Working on parsing library symbols.
-- Improving test coverage.
+- Working on Parsing Directory Files
 
 ---
 

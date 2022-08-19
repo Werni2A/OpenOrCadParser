@@ -187,18 +187,7 @@ void DataStream::padRest(size_t aStartOffset, size_t aBlockSize, bool aPadIsZero
 
 std::string DataStream::getCurrentOffsetStrMsg()
 {
-    const size_t offset = getCurrentOffset();
-
-    return fmt::format("Offset at 0x{}", ToHex(offset, 8));
-}
-
-
-// @todo Remove and replace with getCurrentOffsetStrMsg in source code
-std::ostream& DataStream::printCurrentOffset(std::ostream& aOs)
-{
-    spdlog::debug(getCurrentOffsetStrMsg());
-
-    return aOs;
+    return fmt::format("Offset at 0x{:08x}", getCurrentOffset());
 }
 
 
