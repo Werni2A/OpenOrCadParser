@@ -2,6 +2,8 @@
 #include <string>
 
 #include <boost/program_options.hpp>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
 #include "Parser.hpp"
@@ -96,6 +98,17 @@ int main(int argc, char* argv[])
     bool     verbose;
 
     parseArgs(argc, argv, inputFile, printTree, extract, outputPath, verbose);
+
+   // Creating console logger
+    auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+
+    // Creating file logger
+    auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>("OpenOrCadParser.log");
+
+    // Creating multi-logger
+    spdlog::logger logger{"console and file", {console_sink, file_sink}};
+
+    spdlog::set_default_logger(std::make_shared<spdlog::logger>(logger));
 
     if(!verbose)
     {
