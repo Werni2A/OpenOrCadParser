@@ -20,7 +20,9 @@ struct DirItemType
 
     ComponentType componentType;
 
-    int16_t timezone; // Refer to http://time.unitarium.com/military/ for more details.
+    uint16_t fileFormatVersion; //!< @todo Verify this. It's likely but I'm not sure
+
+    int16_t timezone; //!< Refer to http://time.unitarium.com/military/ for more details.
 };
 
 

@@ -51,9 +51,6 @@
 namespace fs = std::filesystem;
 
 
-uint16_t Parser::storedVersion;
-
-
 Parser::Parser(const fs::path& aFile, FileFormatVersion aFileFormatVersion) :
     mFileCtr{0u}, mFileErrCtr{0u}, mFileFormatVersion{aFileFormatVersion}
 {
@@ -80,13 +77,6 @@ Parser::Parser(const fs::path& aFile, FileFormatVersion aFileFormatVersion) :
             mRemainingFiles.push_back(dir_entry.path());
         }
     }
-
-    // @todo Figure out the file format version and set it here
-    // mFileFormatVersion = FileFormatVersion::Unknown;
-
-    // @todo Figure out the file format version and set it here instead of an argument in
-    //       the constructor
-    storedVersion = 0;
 }
 
 
