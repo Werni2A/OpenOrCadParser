@@ -22,6 +22,9 @@ In front of each entry is a specifier placed that shows of which type the entry 
 - [S] `ExportBlocks Directory`
 - [D] **`Graphics`**
   - [S] `$Types$`
+  - [S] *Graphic Name 1*
+  - [S] *Graphic Name 2*
+  - [S] *...*
 - [S] `Graphics Directory`
 - [S] `HSObjects` (DSN only)
 - [D] **`LayoutReuse`** (since version...?)

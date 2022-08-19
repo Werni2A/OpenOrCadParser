@@ -45,24 +45,6 @@ enum class FileType
 };
 
 
-template<typename T>
-[[maybe_unused]] static std::string ToHex(T val, size_t digits)
-{
-    // @todo Use fmt lib!
-    char hex[16];
-    std::string format = "%0" + std::to_string(digits) + "x";
-    std::sprintf(hex, format.c_str(), static_cast<unsigned int>(val));
-    return std::string(hex);
-}
-
-
-[[maybe_unused]]
-static std::string newLine()
-{
-    return "\r\n";
-}
-
-
 [[maybe_unused]]
 static std::string getOpeningMsg(const char* aFuncName, size_t aCurrOffset)
 {

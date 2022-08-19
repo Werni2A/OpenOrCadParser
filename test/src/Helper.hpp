@@ -28,7 +28,15 @@ inline void check_error_count(const fs::path& aFilePath, size_t aActualErrCnt, s
 {
     if(aActualErrCnt < aExpectedErrCnt)
     {
-        const std::string msg = fmt::format("{} (actual errors) < {} (expected errors) in {}",
+        const std::string msg = fmt::format("REDUCTION: {} (actual errors) < {} (expected errors) in {}",
+            aActualErrCnt, aExpectedErrCnt, aFilePath.string());
+
+        std::clog << msg << std::endl;
+    }
+
+    if(aActualErrCnt > aExpectedErrCnt)
+    {
+        const std::string msg = fmt::format("INCREASE:  {} (actual errors) > {} (expected errors) in {}",
             aActualErrCnt, aExpectedErrCnt, aFilePath.string());
 
         std::clog << msg << std::endl;
