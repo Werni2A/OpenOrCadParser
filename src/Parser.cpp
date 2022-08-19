@@ -345,6 +345,16 @@ Library Parser::parseLibrary()
 
     spdlog::info("----------------------------------------------------------------------------------\n");
 
+    if(fs::exists(pathAdminData))
+    {
+        readAdminData(pathAdminData);
+    }
+
+    if(fs::exists(pathNetBundleMapData))
+    {
+        readNetBundleMapData(pathNetBundleMapData);
+    }
+
     if(fs::exists(pathGraphicsTypes))
     {
         ++mFileCtr;
