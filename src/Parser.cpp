@@ -538,9 +538,12 @@ void Parser::exceptionHandling()
 }
 
 
-void Parser::parsePage()
+// @todo return real data object
+bool Parser::parsePage()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    bool obj = false;
 
     // readDevHelper();
     // return;
