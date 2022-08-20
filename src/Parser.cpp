@@ -27,9 +27,11 @@
 #include "Enums/PortType.hpp"
 #include "Enums/Rotation.hpp"
 #include "Enums/Structure.hpp"
-#include "Files/AdminData.hpp"
-#include "Files/NetBundleMapData.hpp"
 #include "Exception.hpp"
+#include "Files/AdminData.hpp"
+#include "Files/DsnStream.hpp"
+#include "Files/HSObjects.hpp"
+#include "Files/NetBundleMapData.hpp"
 #include "General.hpp"
 #include "Parser.hpp"
 #include "Parser.hpp"
@@ -159,6 +161,21 @@ Library Parser::parseLibrary()
     fs::path pathCells            = pathLib / "Cells";
     fs::path pathCellsDir         = pathLib / "Cells Directory.bin";
 
+    fs::path pathCIS              = pathLib / "CIS";
+
+    fs::path pathCISSchematicStore = pathCIS / "CISSchematicStore";
+    fs::path pathCISSchematicStoreStream = pathCISSchematicStore / "CISSchematicStream.bin";
+
+    fs::path pathCISVariantStore  = pathCIS / "VariantStore";
+
+    fs::path pathCISVariantStoreBOM = pathCISVariantStore / "BOM";
+    fs::path pathCISVariantStoreBOMDataStream = pathCISVariantStoreBOM / "BOMDataStream.bin";
+
+    fs::path pathCISVariantStoreGroups = pathCISVariantStore / "Groups";
+    fs::path pathCISVariantStoreGroupsDataStream = pathCISVariantStoreGroups / "GroupsDataStream.bin";
+
+    fs::path pathCISVariantStoreVariantNames = pathCISVariantStore / "VariantNames.bin";
+
     fs::path pathDsnStream        = pathLib / "DsnStream.bin";
 
     fs::path pathExportBlocks     = pathLib / "ExportBlocks";
@@ -249,84 +266,77 @@ Library Parser::parseLibrary()
         pathViewsSchematicsPagesPages.push_back(schematicPages);
     }
 
-    const auto parseDirectoryFile = [this](const fs::path& aFilePath) -> DirectoryStruct
-    {
-        DirectoryStruct directoryStruct;
-
-        ++mFileCtr;
-        try
-        {
-            openFile(aFilePath.string());
-            directoryStruct = parseDirectory();
-            closeFile();
-        }
-        catch(...)
-        {
-            exceptionHandling();
-        }
-
-        spdlog::info("----------------------------------------------------------------------------------\n");
-
-        return directoryStruct;
-    };
-
-    if(fs::exists(pathExportBlocksDir))
-    {
-        mLibrary.exportBlocksDir = parseDirectoryFile(pathExportBlocksDir);
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathExportBlocksDir.string());
-    }
-
-    if(fs::exists(pathGraphicsDir))
-    {
-        mLibrary.graphicsDir     = parseDirectoryFile(pathGraphicsDir);
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathGraphicsDir.string());
-    }
-
-    if(fs::exists(pathPackagesDir))
-    {
-        mLibrary.packagesDir     = parseDirectoryFile(pathPackagesDir);
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathPackagesDir.string());
-    }
-
-    if(fs::exists(pathPartsDir))
-    {
-        mLibrary.partsDir        = parseDirectoryFile(pathPartsDir);
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathPartsDir.string());
-    }
-
-    if(fs::exists(pathSymbolsDir))
-    {
-        mLibrary.symbolsDir      = parseDirectoryFile(pathSymbolsDir);
-    }
-    else
-    {
-        spdlog::debug("File does not exist: {}", pathSymbolsDir.string());
-    }
+    spdlog::info("----------------------------------------------------------------------------------\n");
 
     if(fs::exists(pathCellsDir))
     {
-        mLibrary.cellsDir        = parseDirectoryFile(pathCellsDir);
+        mLibrary.cellsDir        = parseFile<DirectoryStruct>(pathCellsDir, [this](){ return readCellsDirectory(); });
     }
     else
     {
         spdlog::debug("File does not exist: {}", pathCellsDir.string());
     }
 
+    spdlog::info("----------------------------------------------------------------------------------\n");
+
+    if(fs::exists(pathExportBlocksDir))
+    {
+        mLibrary.exportBlocksDir = parseFile<DirectoryStruct>(pathExportBlocksDir, [this](){ return readExportBlocksDirectory(); });
+    }
+    else
+    {
+        spdlog::debug("File does not exist: {}", pathExportBlocksDir.string());
+    }
+
+    spdlog::info("----------------------------------------------------------------------------------\n");
+
+    if(fs::exists(pathGraphicsDir))
+    {
+        mLibrary.graphicsDir     = parseFile<DirectoryStruct>(pathGraphicsDir, [this](){ return readGraphicsDirectory(); });
+    }
+    else
+    {
+        spdlog::debug("File does not exist: {}", pathGraphicsDir.string());
+    }
+
+    spdlog::info("----------------------------------------------------------------------------------\n");
+
+    if(fs::exists(pathPackagesDir))
+    {
+        mLibrary.packagesDir     = parseFile<DirectoryStruct>(pathPackagesDir, [this](){ return readPackagesDirectory(); });
+    }
+    else
+    {
+        spdlog::debug("File does not exist: {}", pathPackagesDir.string());
+    }
+
+    spdlog::info("----------------------------------------------------------------------------------\n");
+
+    if(fs::exists(pathPartsDir))
+    {
+        mLibrary.partsDir        = parseFile<DirectoryStruct>(pathPartsDir, [this](){ return readPartsDirectory(); });
+    }
+    else
+    {
+        spdlog::debug("File does not exist: {}", pathPartsDir.string());
+    }
+
+    spdlog::info("----------------------------------------------------------------------------------\n");
+
+    if(fs::exists(pathSymbolsDir))
+    {
+        mLibrary.symbolsDir      = parseFile<DirectoryStruct>(pathSymbolsDir, [this](){ return readSymbolsDirectory(); });
+    }
+    else
+    {
+        spdlog::debug("File does not exist: {}", pathSymbolsDir.string());
+    }
+
+    spdlog::info("----------------------------------------------------------------------------------\n");
+
     if(fs::exists(pathViewsDir))
     {
-        mLibrary.viewsDir        = parseDirectoryFile(pathViewsDir);
+        mLibrary.viewsDir        = parseFile<DirectoryStruct>(pathViewsDir, [this](){ return readViewsDirectory(); });
     }
     else
     {
@@ -337,49 +347,33 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathAdminData))
     {
-        readAdminData(pathAdminData);
+        mLibrary.adminData = parseFile<AdminData>(pathAdminData, [this](){ return readAdminData(); });
+    }
+
+    if(fs::exists(pathHSObjects))
+    {
+        mLibrary.hsObjects = parseFile<HSObjects>(pathHSObjects, [this](){ return readHSObjects(); });
     }
 
     if(fs::exists(pathNetBundleMapData))
     {
-        readNetBundleMapData(pathNetBundleMapData);
+        mLibrary.netBundleMapData = parseFile<NetBundleMapData>(pathNetBundleMapData, [this](){ return readNetBundleMapData(); });
     }
 
     if(fs::exists(pathGraphicsTypes))
     {
-        ++mFileCtr;
-        try
-        {
-            openFile(pathGraphicsTypes.string());
-            mLibrary.graphicsTypes = parseTypes();
-            closeFile();
-        }
-        catch(...)
-        {
-            exceptionHandling();
-        }
+        mLibrary.graphicsTypes = parseFile<std::vector<Type>>(pathGraphicsTypes, [this](){ return parseTypes(); });
     }
     else
     {
         spdlog::debug("File does not exist: {}", pathGraphicsTypes.string());
     }
 
-
     spdlog::info("----------------------------------------------------------------------------------\n");
 
     if(fs::exists(pathSymbolsTypes))
     {
-        ++mFileCtr;
-        try
-        {
-            openFile(pathSymbolsTypes.string());
-            mLibrary.symbolsTypes = parseTypes();
-            closeFile();
-        }
-        catch(...)
-        {
-            exceptionHandling();
-        }
+        mLibrary.symbolsTypes = parseFile<std::vector<Type>>(pathSymbolsTypes, [this](){ return parseTypes(); });
     }
     else
     {
@@ -390,17 +384,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathLibrary))
     {
-        ++mFileCtr;
-        try
-        {
-            openFile(pathLibrary.string());
-            mLibrary.symbolsLibrary = parseSymbolsLibrary();
-            closeFile();
-        }
-        catch(...)
-        {
-            exceptionHandling();
-        }
+        mLibrary.symbolsLibrary = parseFile<SymbolsLibrary>(pathLibrary, [this](){ return parseSymbolsLibrary(); });
     }
     else
     {
@@ -409,20 +393,17 @@ Library Parser::parseLibrary()
 
     spdlog::info("----------------------------------------------------------------------------------\n");
 
+    if(fs::exists(pathDsnStream))
+    {
+        mLibrary.dsnStream = parseFile<DsnStream>(pathDsnStream, [this](){ return readDsnStream(); });
+    }
+
+    spdlog::info("----------------------------------------------------------------------------------\n");
+
     if(fs::exists(pathSymbolsERC))
     {
-        ++mFileCtr;
-        try
-        {
-            openFile(pathSymbolsERC.string());
-            // @todo write results into mLibrary
-            /* mLibrary.symbolsERC = */ parseSymbolsERC();
-            closeFile();
-        }
-        catch(...)
-        {
-            exceptionHandling();
-        }
+        // @todo write results into mLibrary
+        parseFile<bool>(pathSymbolsERC, [this](){ return parseSymbolsERC(); });
     }
     else
     {
@@ -435,28 +416,9 @@ Library Parser::parseLibrary()
     {
         for(const auto& file : fs::directory_iterator(pathPackages))
         {
-            fs::path pathPackage = file.path();
+            const fs::path& pathPackage = file.path();
 
-            bool hasError = false;
-
-            ++mFileCtr;
-            try
-            {
-                openFile(pathPackage.string());
-                mLibrary.packages.push_back(parsePackage());
-                closeFile();
-            }
-            catch(...)
-            {
-                hasError = true;
-                exceptionHandling();
-            }
-
-            if(!hasError)
-            {
-                spdlog::info(fmt::format(fg(fmt::color::green),
-                    "Package {} parsed successfuly.", mCurrOpenFile.string()));
-            }
+            mLibrary.packages.push_back(parseFile<Package>(pathPackage, [this](){ return parsePackage(); }));
 
             spdlog::info("----------------------------------------------------------------------------------\n");
         }
@@ -470,7 +432,7 @@ Library Parser::parseLibrary()
     {
         for(const auto& file : fs::directory_iterator(pathSymbols))
         {
-            fs::path pathSymbol = file.path();
+            const fs::path& pathSymbol = file.path();
 
             // Skip the 'ERC' and '$Types$' stream as they are additional
             // information but no symbols.
@@ -480,28 +442,9 @@ Library Parser::parseLibrary()
                 continue;
             }
 
-            bool hasError = false;
-
-            ++mFileCtr;
-            try
-            {
-                openFile(pathSymbol.string());
-                // @todo Results are only stored in packages for testing purposes
-                //       Replace with symbols later on.
-                mLibrary.packages.push_back(parseSymbol()); // @todo implement symbol parsing
-                closeFile();
-            }
-            catch(...)
-            {
-                hasError = true;
-                exceptionHandling();
-            }
-
-            if(!hasError)
-            {
-                spdlog::info(fmt::format(fg(fmt::color::green),
-                    "Symbol {} parsed successfuly.", mCurrOpenFile.string()));
-            }
+            // @todo Results are only stored in packages for testing purposes
+            //       Replace with symbols later on.
+            mLibrary.packages.push_back(parseFile<Package>(pathSymbol, [this](){ return parseSymbol(); }));
 
             spdlog::info("----------------------------------------------------------------------------------\n");
         }
@@ -515,18 +458,8 @@ Library Parser::parseLibrary()
     {
         if(fs::exists(schematic))
         {
-            ++mFileCtr;
-            try
-            {
-                openFile(schematic.string());
-                // @todo write results into mLibrary
-                /* mLibrary.symbolsERC = */ parseSchematic();
-                closeFile();
-            }
-            catch(...)
-            {
-                exceptionHandling();
-            }
+            // @todo write results into mLibrary
+            parseFile<bool>(schematic, [this](){ return parseSchematic(); });
         }
         else
         {
@@ -540,18 +473,8 @@ Library Parser::parseLibrary()
     {
         if(fs::exists(hierarchy))
         {
-            ++mFileCtr;
-            try
-            {
-                openFile(hierarchy.string());
-                // @todo write results into mLibrary
-                /* mLibrary.symbolsERC = */ parseHierarchy();
-                closeFile();
-            }
-            catch(...)
-            {
-                exceptionHandling();
-            }
+            // @todo write results into mLibrary
+            parseFile<bool>(hierarchy, [this](){ return parseHierarchy(); });
         }
         else
         {
@@ -567,18 +490,8 @@ Library Parser::parseLibrary()
         {
             if(fs::exists(page))
             {
-                ++mFileCtr;
-                try
-                {
-                    openFile(page.string());
-                    // @todo write results into mLibrary
-                    /* mLibrary.symbolsERC = */ parsePage();
-                    closeFile();
-                }
-                catch(...)
-                {
-                    exceptionHandling();
-                }
+                // @todo write results into mLibrary
+                parseFile<bool>(page, [this](){ return parsePage(); });
             }
             else
             {
@@ -595,18 +508,6 @@ Library Parser::parseLibrary()
         errCtrStr);
 
     spdlog::info(errCtrStr);
-
-    // spdlog::info("Print parsed library");
-
-    // for(const auto& package : mLibrary.packages)
-    // {
-    //     if(package.properties.at(0).name == "VDD")
-    //     {
-    //        spdlog::info(to_string(package));
-    //     }
-    // }
-
-    // spdlog::info(to_string(mLibrary.symbolsLibrary));
 
     // spdlog::info(to_string(mLibrary));
 
@@ -637,9 +538,12 @@ void Parser::exceptionHandling()
 }
 
 
-void Parser::parsePage()
+// @todo return real data object
+bool Parser::parsePage()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    bool obj = false;
 
     // readDevHelper();
     // return;
@@ -848,12 +752,17 @@ void Parser::parsePage()
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+
+    return obj;
 }
 
 
-void Parser::readPartInst()
+// @todo return real data object
+bool Parser::readPartInst()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    bool obj = false;
 
     mDs.printUnknownData(8, std::string(__func__) + " - 0");
 
@@ -904,16 +813,23 @@ void Parser::readPartInst()
     readPreamble();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+
+    return obj;
 }
 
 
-void Parser::readT0x10()
+// @todo return real data object
+bool Parser::readT0x10()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    bool obj = false;
 
     mDs.printUnknownData(16, std::string(__func__) + " - 0");
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+
+    return obj;
 }
 
 
@@ -1055,6 +971,8 @@ Structure Parser::read_type_prefix_short()
     // @todo this is probably not a lenght but specifies some attribute e.g. locked/not-locked
     //       0x0b = not-locked
     //       0x1e = locked
+    // @todo In DsnStream its definetly the byteLength, therefore implement some
+    //       sanity check veryfing the size.
     const uint32_t byteLength = mDs.readUint32();
     if(byteLength != 0x0b && byteLength != 0x1e)
     {
@@ -1897,6 +1815,17 @@ std::vector<Type> Parser::parseTypes()
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+
+    // @todo move to separate to_string method
+    std::string str;
+
+    for(size_t i = 0U; i < types.size(); ++i)
+    {
+        str += fmt::format("[{:>3}]:\n", i);
+        str += indent(to_string(types[i]), 2);
+    }
+
+    spdlog::info(str);
 
     return types;
 }

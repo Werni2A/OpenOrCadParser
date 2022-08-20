@@ -1,25 +1,15 @@
-#include <algorithm>
-#include <any>
-#include <cassert>
-#include <cstdio>
-#include <filesystem>
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <memory>
-#include <sstream>
-#include <stdexcept>
+#include <cstdint>
 #include <string>
-#include <vector>
 
-#include <fmt/core.h>
+#include <nameof.hpp>
+#include <spdlog/spdlog.h>
+
+#include "../General.hpp"
 
 #include "../Parser.hpp"
-#include "../Structures/DirectoryStruct.hpp"
 
 
-// @todo check whether this works for all directory files or just a few
-DirectoryStruct Parser::parseDirectory()
+DirectoryStruct Parser::readPackagesDirectory()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
@@ -37,6 +27,11 @@ DirectoryStruct Parser::parseDirectory()
 
         item.componentType = ToComponentType(mDs.readUint16());
 
+        if(item.componentType != ComponentType::Package)
+        {
+            spdlog::warn("{}: Unexpected ComponentType `{}`", __func__, to_string(item.componentType));
+        }
+
         // @todo This changes with the version of the file format, so maybe it contains
         //       more details for the format? Or some hash of the specified stream?
         mDs.printUnknownData(14, fmt::format("item[{:>3}] - 0", i));
@@ -50,7 +45,7 @@ DirectoryStruct Parser::parseDirectory()
         // 471 in 17.4-2019 S012 (3898062) [10/18/202]
         // 472 in 17.4-2019 S019 (3959056) [7/8/2021]
         std::vector<uint16_t> knownFileVersions{
-                                         445, 446, 447, 448, 449,
+                                        445, 446, 447, 448, 449,
                 450, 451, 452, 453, 454, 455, 456, 457, 458, 459,
                 460, 461, 462, 463, 464, 465, 466, 467, 468, 469,
                 470, 471, 472

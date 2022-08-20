@@ -1,5 +1,5 @@
-#ifndef ADMINDATA_H
-#define ADMINDATA_H
+#ifndef DSNSTREAM_H
+#define DSNSTREAM_H
 
 
 #include <ostream>
@@ -11,14 +11,14 @@
 #include "../General.hpp"
 
 
-struct AdminData
+struct DsnStream
 {
 
 };
 
 
 [[maybe_unused]]
-static std::string to_string(const AdminData& aObj)
+static std::string to_string(const DsnStream& aObj)
 {
     std::string str;
 
@@ -29,7 +29,7 @@ static std::string to_string(const AdminData& aObj)
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const AdminData& aVal)
+static std::ostream& operator<<(std::ostream& aOs, const DsnStream& aVal)
 {
     aOs << to_string(aVal);
 
@@ -37,4 +37,4 @@ static std::ostream& operator<<(std::ostream& aOs, const AdminData& aVal)
 }
 
 
-#endif // ADMINDATA_H
+#endif // DSNSTREAM_H

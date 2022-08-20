@@ -6,26 +6,19 @@
 
 #include "../General.hpp"
 
-#include "AdminData.hpp"
+#include "HSObjects.hpp"
 
 #include "../Parser.hpp"
 
 
-AdminData Parser::readAdminData()
+HSObjects Parser::readHSObjects()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    AdminData obj;
+    HSObjects obj;
 
-    uint8_t sth0 = mDs.readUint8();
-
-    // @todo only those two values have been obsereved until now
-    if(sth0 != 0 && sth0 != 1)
-    {
-        spdlog::critical("{}: Found new value. Check it out!", __func__);
-    }
-
-    mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x00}, fmt::format("{}: Found actually useful data!", __func__));
+    mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, fmt::format("{}: - 0", __func__));
+    mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, fmt::format("{}: - 1", __func__));
 
     if(!mDs.isEoF())
     {

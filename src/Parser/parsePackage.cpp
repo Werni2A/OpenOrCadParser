@@ -297,7 +297,7 @@ Package Parser::parseSymbol()
         case Structure::OffPageSymbol:
         case Structure::PinShapeSymbol:
             mDs.printUnknownData(2, std::string(__func__) + " - 0");
-            mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
+            mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
             structure = read_type_prefix_long();
             break;
 
@@ -307,7 +307,7 @@ Package Parser::parseSymbol()
             break;
 
         default:
-            throw std::runtime_error("This was unexpected in " + std::string(__func__));
+            throw std::runtime_error(fmt::format("{}: Unexpected Structure `{}`", __func__, to_string(introId)));
             break;
     }
 

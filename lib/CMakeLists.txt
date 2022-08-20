@@ -16,9 +16,18 @@ find_package(spdlog CONFIG REQUIRED)
 set(SOURCES
    ${LIB_SRC_DIR}/ContainerExtractor.cpp
    ${LIB_SRC_DIR}/DataStream.cpp
-   ${LIB_SRC_DIR}/Parser.cpp
    ${LIB_SRC_DIR}/Files/AdminData.cpp
+   ${LIB_SRC_DIR}/Files/CellsDirectory.cpp
+   ${LIB_SRC_DIR}/Files/DsnStream.cpp
+   ${LIB_SRC_DIR}/Files/ExportBlocksDirectory.cpp
+   ${LIB_SRC_DIR}/Files/GraphicsDirectory.cpp
+   ${LIB_SRC_DIR}/Files/HSObjects.cpp
    ${LIB_SRC_DIR}/Files/NetBundleMapData.cpp
+   ${LIB_SRC_DIR}/Files/PackagesDirectory.cpp
+   ${LIB_SRC_DIR}/Files/PartsDirectory.cpp
+   ${LIB_SRC_DIR}/Files/SymbolsDirectory.cpp
+   ${LIB_SRC_DIR}/Files/ViewsDirectory.cpp
+   ${LIB_SRC_DIR}/Parser.cpp
    ${LIB_SRC_DIR}/Parser/parseDirectory.cpp
    ${LIB_SRC_DIR}/Parser/parsePackage.cpp
    ${LIB_SRC_DIR}/Parser/parseSymbolsLibrary.cpp
@@ -48,6 +57,8 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Enums/PortType.hpp
    ${LIB_INCLUDE_DIR}/Enums/Structure.hpp
    ${LIB_INCLUDE_DIR}/Files/AdminData.hpp
+   ${LIB_INCLUDE_DIR}/Files/DsnStream.hpp
+   ${LIB_INCLUDE_DIR}/Files/HSObjects.hpp
    ${LIB_INCLUDE_DIR}/Files/NetBundleMapData.hpp
    ${LIB_INCLUDE_DIR}/General.hpp
    ${LIB_INCLUDE_DIR}/Parser.hpp
