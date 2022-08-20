@@ -126,9 +126,12 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
 }
 
 
-void Parser::parseSchematic()
+// @todo return real data object
+bool Parser::parseSchematic()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    bool obj = false;
 
     Structure structure = read_type_prefix_short();
 
@@ -174,12 +177,17 @@ void Parser::parseSchematic()
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+
+    return obj;
 }
 
 
-void Parser::parseHierarchy()
+// @todo return real data object
+bool Parser::parseHierarchy()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    bool obj = false;
 
     mDs.printUnknownData(9, std::string(__func__) + " - 0");
 
@@ -203,12 +211,17 @@ void Parser::parseHierarchy()
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+
+    return obj;
 }
 
 
-void Parser::parseSymbolsERC()
+// @todo return real data object
+bool Parser::parseSymbolsERC()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    bool obj = false;
 
     // @todo Should I introduce something like read_type_prefix_very_long()?
     mDs.assumeData({0x4b}, std::string(__func__) + " - 0"); // Proably stands for ERC, see Structure.hpp 0x4b
@@ -225,4 +238,6 @@ void Parser::parseSymbolsERC()
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+
+    return obj;
 }

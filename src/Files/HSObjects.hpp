@@ -1,5 +1,5 @@
-#ifndef ADMINDATA_H
-#define ADMINDATA_H
+#ifndef HSOBJECTS_H
+#define HSOBJECTS_H
 
 
 #include <ostream>
@@ -11,14 +11,14 @@
 #include "../General.hpp"
 
 
-struct AdminData
+struct HSObjects
 {
 
 };
 
 
 [[maybe_unused]]
-static std::string to_string(const AdminData& aObj)
+static std::string to_string(const HSObjects& aObj)
 {
     std::string str;
 
@@ -29,7 +29,7 @@ static std::string to_string(const AdminData& aObj)
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const AdminData& aVal)
+static std::ostream& operator<<(std::ostream& aOs, const HSObjects& aVal)
 {
     aOs << to_string(aVal);
 
@@ -37,4 +37,4 @@ static std::ostream& operator<<(std::ostream& aOs, const AdminData& aVal)
 }
 
 
-#endif // ADMINDATA_H
+#endif // HSOBJECTS_H

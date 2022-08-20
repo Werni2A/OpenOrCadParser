@@ -5,6 +5,7 @@
 #include <any>
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -14,6 +15,10 @@
 #include "DataStream.hpp"
 #include "Enums/GeometryStructure.hpp"
 #include "Enums/Structure.hpp"
+#include "Files/AdminData.hpp"
+#include "Files/DsnStream.hpp"
+#include "Files/NetBundleMapData.hpp"
+#include "Files/HSObjects.hpp"
 #include "General.hpp"
 #include "Structures/Arc.hpp"
 #include "Structures/Bezier.hpp"
@@ -68,8 +73,10 @@ public:
     Library parseLibrary();
 
 
-    void readAdminData(const fs::path& aFilePath);
-    void readNetBundleMapData(const fs::path& aFilePath);
+    AdminData readAdminData();
+    DsnStream readDsnStream();
+    NetBundleMapData readNetBundleMapData();
+    HSObjects readHSObjects();
 
 private:
 
@@ -101,28 +108,58 @@ private:
     SymbolsLibrary parseSymbolsLibrary();
 
 
-    void parseSchematic();
+    bool parseSchematic();
 
 
-    void parseHierarchy();
+    bool parseHierarchy();
 
 
-    void parseSymbolsERC();
+    bool parseSymbolsERC();
 
 
-    void parsePage();
+    bool parsePage();
 
 
-    void readPartInst();
+    bool readPartInst();
 
 
-    void readT0x10();
+    bool readT0x10();
 
 
     TextFont readTextFont();
 
 
+    template<typename T>
+    T parseFile(const fs::path& aFilePath, std::function<T()> aParseFunc)
+    {
+        T parsed_obj;
+
+        ++mFileCtr;
+        try
+        {
+            openFile(aFilePath.string());
+            parsed_obj = aParseFunc();
+            closeFile();
+        }
+        catch(...)
+        {
+            exceptionHandling();
+        }
+
+        spdlog::info("----------------------------------------------------------------------------------\n");
+
+        return parsed_obj;
+    }
+
     DirectoryStruct parseDirectory();
+
+    DirectoryStruct readCellsDirectory();
+    DirectoryStruct readExportBlocksDirectory();
+    DirectoryStruct readGraphicsDirectory();
+    DirectoryStruct readPackagesDirectory();
+    DirectoryStruct readPartsDirectory();
+    DirectoryStruct readSymbolsDirectory();
+    DirectoryStruct readViewsDirectory();
 
 public:
     /**

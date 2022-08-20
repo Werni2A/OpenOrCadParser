@@ -11,6 +11,10 @@
 #include <nameof.hpp>
 
 #include "DirectoryStruct.hpp"
+#include "Files/AdminData.hpp"
+#include "Files/DsnStream.hpp"
+#include "Files/NetBundleMapData.hpp"
+#include "Files/HSObjects.hpp"
 #include "Package.hpp"
 #include "SymbolsLibrary.hpp"
 #include "Type.hpp"
@@ -18,12 +22,17 @@
 
 struct Library
 {
+    AdminData        adminData;
+    DsnStream        dsnStream;
+    NetBundleMapData netBundleMapData;
+    HSObjects        hsObjects;
+
+    DirectoryStruct cellsDir;
     DirectoryStruct exportBlocksDir;
     DirectoryStruct graphicsDir;
     DirectoryStruct packagesDir;
     DirectoryStruct partsDir;
     DirectoryStruct symbolsDir;
-    DirectoryStruct cellsDir;
     DirectoryStruct viewsDir;
 
     SymbolsLibrary symbolsLibrary; // @todo rename just to 'library'?
