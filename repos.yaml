@@ -2551,16 +2551,16 @@ repositories:
   - errors: 0
     options: null
     path: ./Hardware/8Mics/8MICS.DSN
-  - errors: 68
+  - errors: 69
     options: null
     path: ./Hardware/Main_board/STM32F746NGH V1.1_last.DSN
-  - errors: 68
+  - errors: 69
     options: null
     path: ./Hardware/Main_board/allegro/MIC_ARRAY_RELEASE.DSN
-  - errors: 68
+  - errors: 69
     options: null
     path: ./Hardware/Main_board/STM32F746NGH V1.1_LAST_0.DBK
-  - errors: 68
+  - errors: 69
     options: null
     path: ./Hardware/Main_board/allegro/MIC_ARRAY_RELEASE_0.DBK
   project: Mic_Array
@@ -4660,7 +4660,7 @@ repositories:
   - errors: 228
     options: null
     path: ./MOP44.OLB
-  - errors: 12
+  - errors: 13
     options: null
     path: ./Template of sheets/SHEETS.DSN
   project: CadenceLibrary
