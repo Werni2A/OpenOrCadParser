@@ -443,9 +443,7 @@ Library Parser::parseLibrary()
                 continue;
             }
 
-            // @todo Results are only stored in packages for testing purposes
-            //       Replace with symbols later on.
-            mLibrary.packages.push_back(parseFile<Package>(pathSymbol, [this](){ return readSymbol(); }));
+            mLibrary.symbols.push_back(parseFile<Symbol>(pathSymbol, [this](){ return readSymbol(); }));
 
             spdlog::info("----------------------------------------------------------------------------------\n");
         }

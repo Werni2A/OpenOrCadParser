@@ -42,7 +42,7 @@ struct Library
     std::vector<Type> symbolsTypes;
 
     std::vector<Package> packages;
-    // std::vector<Symbol> symbols;
+    std::vector<Symbol>  symbols;
     // std::vector<Cell> cells;
 };
 
