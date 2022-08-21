@@ -15,44 +15,12 @@
 
 #include <spdlog/spdlog.h>
 
-#include "../Enums/GeometryStructure.hpp"
-#include "../Parser.hpp"
-#include "../Structures/CommentText.hpp"
-#include "../Structures/Package.hpp"
-#include "../Structures/TextFont.hpp"
-// #include "Library.hpp"
-
-
-TextFont CommentText::getTextFont() const
-{
-    if(mLibrary == nullptr)
-    {
-        throw std::logic_error(std::string(__func__) + ": mLibrary should be set!");
-    }
-
-    const int64_t idx = static_cast<int64_t>(textFontIdx) - 1;
-
-    TextFont textFont;
-
-    if(idx >= 0)
-    {
-        // Retrieve font from the library.
-        textFont = mLibrary->symbolsLibrary.textFonts.at(idx);
-        // @todo provide try catch block for better exception messages
-    }
-    else if(idx == -1)
-    {
-        // @todo Unknown but it is probably the default font;
-        throw std::runtime_error(std::string(__func__) + ": Check this out!");
-    }
-    else // idx < -1
-    {
-        // This should never happen.
-        throw std::runtime_error(std::string(__func__) + ": Unexpected index " + std::to_string(idx));
-    }
-
-    return textFont;
-}
+#include "Enums/GeometryStructure.hpp"
+#include "Files/Package.hpp"
+#include "Files/Symbol.hpp"
+#include "Parser.hpp"
+#include "Structures/CommentText.hpp"
+#include "Structures/TextFont.hpp"
 
 
 struct SymbolUserProp
@@ -280,67 +248,25 @@ void Parser::pushStructure(const std::pair<Structure, std::any>& structure, Pack
 }
 
 
-Package Parser::parseSymbol()
+// @todo This parses the ERC file, move it to a separate file or combine with parseSymbol
+// @todo return real data object
+bool Parser::parseSymbolsERC()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    Package symbol; // @todo make to symbol
+    bool obj = false;
 
-    Structure structure;
+    // @todo Should I introduce something like read_type_prefix_very_long()?
+    mDs.assumeData({0x4b}, std::string(__func__) + " - 0"); // Proably stands for ERC, see Structure.hpp 0x4b
 
-    Structure introId = ToStructure(mDs.readUint8());
+    mDs.printUnknownData(8, std::string(__func__) + " - 1");
 
-    switch(introId)
-    {
-        case Structure::GlobalSymbol:
-        case Structure::PortSymbol:
-        case Structure::OffPageSymbol:
-        case Structure::PinShapeSymbol:
-            mDs.printUnknownData(2, std::string(__func__) + " - 0");
-            mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
-            structure = read_type_prefix_long();
-            break;
+    Structure structure = read_type_prefix_long();
 
-        case Structure::TitleBlockSymbol:
-            readTitleBlockSymbol();
-            return symbol;
-            break;
+    spdlog::critical("{}", to_string(structure));
 
-        default:
-            throw std::runtime_error(fmt::format("{}: Unexpected Structure `{}`", __func__, to_string(introId)));
-            break;
-    }
-
-    readConditionalPreamble(introId);
-    pushStructure(parseStructure(structure), symbol);
-
-    readPreamble();
-
-    if(introId == Structure::PinShapeSymbol)
-    {
-        readSymbolBBox(); // @todo push structure
-    }
-    else
-    {
-        mDs.printUnknownData(10, std::string(__func__) + " - 1.1");
-    }
-
-    // @todo how often does it repeat? This should be specified somewhere....
-    for(size_t i = 0u; true; ++i)
-    {
-        if(mDs.isEoF())
-        {
-            spdlog::debug("i = {}", i);
-            break;
-        }
-
-        structure = read_type_prefix();
-        readConditionalPreamble(structure);
-        // readPreamble();
-        pushStructure(parseStructure(structure), symbol);
-
-        mDs.printUnknownData(2, std::string(__func__) + " - 2");
-    }
+    readConditionalPreamble(structure);
+    parseStructure(structure); // @todo push structure
 
     if(!mDs.isEoF())
     {
@@ -348,160 +274,32 @@ Package Parser::parseSymbol()
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(symbol));
 
-    return symbol;
+    return obj;
 }
 
 
-Package Parser::parsePackage()
+void Parser::pushStructure(const std::pair<Structure, std::any>& structure, Symbol& container)
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    // File format version that is used for parsing this file
-    uint16_t file_version = -1;
-
-    // Try to find file format version in directory
+    switch(structure.first)
     {
-        const std::string stream_name = mCurrOpenFile.filename().replace_extension("");
-        spdlog::info("stream_name = {}", stream_name);
-
-        const auto& dir = mLibrary.packagesDir.items;
-        const auto cmp = [stream_name](const DirItemType& item) -> bool
-            { return item.name == stream_name; };
-
-        const auto found_it = std::find_if(dir.cbegin(), dir.cend(), cmp);
-
-        if(found_it != dir.cend())
-        {
-            file_version = found_it->fileFormatVersion;
-            spdlog::info("Set file format version for `{}` to {}", stream_name, file_version);
-        }
-        else
-        {
-            spdlog::warn("Did not find package `{}` in `{}` file", stream_name, "Packages Directory");
-        }
-    }
-
-    Package package;
-
-    Structure structure;
-
-    const uint16_t sectionCount = mDs.readUint16();
-
-    for(size_t i = 0u; i < sectionCount; ++i)
-    {
-        spdlog::debug("Marker 0");
-
-        structure = read_type_prefix_long();
-        readConditionalPreamble(structure);
-        pushStructure(parseStructure(structure), package);
-
-        spdlog::debug("Marker 1");
-
-        structure = read_type_prefix();
-        readConditionalPreamble(structure);
-        spdlog::debug("Marker 1.5");
-        pushStructure(parseStructure(structure), package);
-
-        // if(structure == Structure::GeoDefinition && mFileFormatVersion == FileFormatVersion::C)
-        //     mDs.discardBytes(6);
-
-        // structure = read_type_prefix();
-
-        spdlog::debug("Marker 2");
-
-        if(mFileFormatVersion == FileFormatVersion::B)
-        {
-            mDs.assumeData({0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
-            // mDs.printUnknownData(8, std::string(__func__) + " - 1");
-        }
-        else if(mFileFormatVersion >= FileFormatVersion::C)
-        {
-            readPreamble();
-        }
-
-        spdlog::debug("Marker 3");
-
-        mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 2");
-        mDs.printUnknownData(4, std::string(__func__) + " - 2");
-        // mDs.printUnknownData(12, std::string(__func__) + " - 2");
-
-        const uint16_t followingLen1 = mDs.readUint16();
-
-        for(size_t i = 0u; i < followingLen1; ++i)
-        {
-            spdlog::debug("0x{:08x}: followingLen1 Iteration {}/{}",
-                mDs.getCurrentOffset(), i + 1, followingLen1);
-
-            structure = read_type_prefix();
-            readConditionalPreamble(structure);
-            pushStructure(parseStructure(structure), package);
-        }
-
-        spdlog::debug("Marker 4");
-
-        const uint16_t followingLen2 = mDs.readUint16();
-
-        for(size_t i = 0u; i < followingLen2; ++i)
-        {
-            spdlog::debug("0x{:08x}: followingLen2 Iteration {}/{}",
-                mDs.getCurrentOffset(), i + 1, followingLen2);
-
-            structure = read_type_prefix();
-            readConditionalPreamble(structure);
-            pushStructure(parseStructure(structure), package);
-        }
-
-        spdlog::debug("Marker 5");
-
-        /*
-        mDs.printUnknownData(22, std::string(__func__) + " - w");
-        structure = read_type_prefix();
-        readConditionalPreamble(structure);
-        // readPreamble();
-        */
-
-        package.generalProperties = readGeneralProperties();
-
-        spdlog::debug("Section count {} finished", i);
-    }
-
-    spdlog::debug("Marker 6");
-
-    // @todo how often does it repeat? This should be specified somewhere....
-    for(size_t i = 0u; true; ++i)
-    {
-        if(mDs.isEoF())
-        {
-            spdlog::debug("i = {}", i);
-            break;
-        }
-
-        spdlog::debug("Marker 7");
-
-        if(i == 0u)
-        {
-            structure = read_type_prefix_long();
-        }
-        else
-        {
-            structure = read_type_prefix();
-        }
-
-        readConditionalPreamble(structure);
-        pushStructure(parseStructure(structure), package);
-    }
-
-    spdlog::debug("Marker 8");
-
-    if(!mDs.isEoF())
-    {
-        throw std::runtime_error("Expected EoF but did not reach it!");
+        case Structure::Properties:        container.properties.push_back(std::any_cast<Properties>(structure.second));                        break;
+        case Structure::GeoDefinition:     container.geometrySpecifications.push_back(std::any_cast<GeometrySpecification>(structure.second)); break;
+        case Structure::SymbolPinScalar:   container.symbolPinScalars.push_back(std::any_cast<SymbolPinScalar>(structure.second));             break;
+        case Structure::T0x1f:             container.t0x1fs.push_back(std::any_cast<T0x1f>(structure.second));                                 break;
+        case Structure::PinIdxMapping:     container.pinIdxMappings.push_back(std::any_cast<PinIdxMapping>(structure.second));                 break;
+        case Structure::GlobalSymbol:      container.globalSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));          break;
+        case Structure::PortSymbol:        container.portSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));            break;
+        case Structure::OffPageSymbol:     container.offPageSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));         break;
+        case Structure::SymbolDisplayProp: container.symbolDisplayProps.push_back(std::any_cast<SymbolDisplayProp>(structure.second));         break;
+        case Structure::SymbolVector:      container.symbolVectors.push_back(std::any_cast<GeometrySpecification>(structure.second));          break;
+        case Structure::TitleBlockSymbol:  container.titleBlockSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));      break;
+        case Structure::ERCSymbol:         container.ercSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));             break;
+        case Structure::PinShapeSymbol:    container.pinShapeSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));        break;
+        default: throw std::runtime_error("Structure " + to_string(structure.first) + " is not yet handled by " + __func__ + "!"); break;
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::debug(to_string(package));
-
-    return package;
 }

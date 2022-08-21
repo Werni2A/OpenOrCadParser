@@ -12,7 +12,7 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "TextFont.hpp"
+#include "../Structures/TextFont.hpp"
 
 
 struct SymbolsLibrary

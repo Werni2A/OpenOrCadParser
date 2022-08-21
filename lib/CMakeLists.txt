@@ -21,16 +21,21 @@ set(SOURCES
    ${LIB_SRC_DIR}/Files/DsnStream.cpp
    ${LIB_SRC_DIR}/Files/ExportBlocksDirectory.cpp
    ${LIB_SRC_DIR}/Files/GraphicsDirectory.cpp
+   ${LIB_SRC_DIR}/Files/Hierarchy.cpp
    ${LIB_SRC_DIR}/Files/HSObjects.cpp
    ${LIB_SRC_DIR}/Files/NetBundleMapData.cpp
+   ${LIB_SRC_DIR}/Files/Package.cpp
    ${LIB_SRC_DIR}/Files/PackagesDirectory.cpp
+   ${LIB_SRC_DIR}/Files/Page.cpp
    ${LIB_SRC_DIR}/Files/PartsDirectory.cpp
+   ${LIB_SRC_DIR}/Files/Schematic.cpp
+   ${LIB_SRC_DIR}/Files/Symbol.cpp
    ${LIB_SRC_DIR}/Files/SymbolsDirectory.cpp
+   ${LIB_SRC_DIR}/Files/SymbolsLibrary.cpp
+   ${LIB_SRC_DIR}/Files/Type.cpp
    ${LIB_SRC_DIR}/Files/ViewsDirectory.cpp
+   ${LIB_SRC_DIR}/Misc.cpp
    ${LIB_SRC_DIR}/Parser.cpp
-   ${LIB_SRC_DIR}/Parser/parseDirectory.cpp
-   ${LIB_SRC_DIR}/Parser/parsePackage.cpp
-   ${LIB_SRC_DIR}/Parser/parseSymbolsLibrary.cpp
    ${LIB_SRC_DIR}/Structures/Arc.cpp
    ${LIB_SRC_DIR}/Structures/Bezier.cpp
    ${LIB_SRC_DIR}/Structures/Bitmap.cpp
@@ -60,6 +65,10 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Files/DsnStream.hpp
    ${LIB_INCLUDE_DIR}/Files/HSObjects.hpp
    ${LIB_INCLUDE_DIR}/Files/NetBundleMapData.hpp
+   ${LIB_INCLUDE_DIR}/Files/Package.hpp
+   ${LIB_INCLUDE_DIR}/Files/Symbol.hpp
+   ${LIB_INCLUDE_DIR}/Files/SymbolsLibrary.hpp
+   ${LIB_INCLUDE_DIR}/Files/Type.hpp
    ${LIB_INCLUDE_DIR}/General.hpp
    ${LIB_INCLUDE_DIR}/Parser.hpp
    ${LIB_INCLUDE_DIR}/Structures/Arc.hpp
@@ -78,7 +87,6 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/Rect.hpp
    ${LIB_INCLUDE_DIR}/Structures/SymbolPinScalar.hpp
    ${LIB_INCLUDE_DIR}/Structures/TextFont.hpp
-   ${LIB_INCLUDE_DIR}/Structures/Type.hpp
 )
 
 # Create library file from sources
