@@ -16,21 +16,24 @@
 #include "Enums/GeometryStructure.hpp"
 #include "Enums/Structure.hpp"
 #include "Files/AdminData.hpp"
+#include "Files/DirectoryStruct.hpp"
 #include "Files/DsnStream.hpp"
-#include "Files/NetBundleMapData.hpp"
 #include "Files/HSObjects.hpp"
+#include "Files/NetBundleMapData.hpp"
+#include "Files/Package.hpp"
+#include "Files/Symbol.hpp"
+#include "Files/SymbolsLibrary.hpp"
+#include "Files/Type.hpp"
 #include "General.hpp"
+#include "Library.hpp"
 #include "Structures/Arc.hpp"
 #include "Structures/Bezier.hpp"
 #include "Structures/Bitmap.hpp"
 #include "Structures/CommentText.hpp"
-#include "Structures/DirectoryStruct.hpp"
 #include "Structures/Ellipse.hpp"
 #include "Structures/GeneralProperties.hpp"
 #include "Structures/GeometrySpecification.hpp"
-#include "Structures/Library.hpp"
 #include "Structures/Line.hpp"
-#include "Structures/Package.hpp"
 #include "Structures/PinIdxMapping.hpp"
 #include "Structures/Point.hpp"
 #include "Structures/Polygon.hpp"
@@ -42,11 +45,9 @@
 #include "Structures/SymbolDisplayProp.hpp"
 #include "Structures/SymbolPinBus.hpp"
 #include "Structures/SymbolPinScalar.hpp"
-#include "Structures/SymbolsLibrary.hpp"
 #include "Structures/SymbolVector.hpp"
 #include "Structures/T0x1f.hpp"
 #include "Structures/TextFont.hpp"
-#include "Structures/Type.hpp"
 
 
 namespace fs = std::filesystem;
@@ -99,25 +100,7 @@ private:
     GeometrySpecification readPinShapeSymbol();
 
 
-    Package parseSymbol();
-
-
-    Package parsePackage();
-
-
-    SymbolsLibrary parseSymbolsLibrary();
-
-
-    bool parseSchematic();
-
-
-    bool parseHierarchy();
-
-
     bool parseSymbolsERC();
-
-
-    bool parsePage();
 
 
     bool readPartInst();
@@ -151,7 +134,7 @@ private:
         return parsed_obj;
     }
 
-    DirectoryStruct parseDirectory();
+    // File Parsing Methods
 
     DirectoryStruct readCellsDirectory();
     DirectoryStruct readExportBlocksDirectory();
@@ -160,6 +143,19 @@ private:
     DirectoryStruct readPartsDirectory();
     DirectoryStruct readSymbolsDirectory();
     DirectoryStruct readViewsDirectory();
+
+    std::vector<Type> readType();
+
+    SymbolsLibrary readSymbolsLibrary();
+
+    Symbol readSymbol();
+    Package readPackage();
+
+    bool readHierarchy();
+    bool readSchematic();
+    bool readPage();
+
+    // -------------------------------
 
 public:
     /**
@@ -201,6 +197,7 @@ private:
 
 
     void pushStructure(const std::pair<Structure, std::any>& structure, Package& container);
+    void pushStructure(const std::pair<Structure, std::any>& structure, Symbol& container);
 
 
     Structure read_type_prefix_long();
@@ -300,9 +297,6 @@ private:
 
 
     Properties2 readProperties2();
-
-
-    std::vector<Type> parseTypes();
 
 
     GeometrySpecification readSymbolProperties();

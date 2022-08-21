@@ -12,18 +12,18 @@
 #include <vector>
 
 #include "../Parser.hpp"
-#include "../Structures/SymbolsLibrary.hpp"
+#include "SymbolsLibrary.hpp"
 
 
-SymbolsLibrary Parser::parseSymbolsLibrary()
+SymbolsLibrary Parser::readSymbolsLibrary()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     size_t startOffset = mDs.getCurrentOffset();
 
-    SymbolsLibrary symbolsLibrary;
+    SymbolsLibrary obj;
 
-    symbolsLibrary.introduction = mDs.readStringZeroTerm();
+    obj.introduction = mDs.readStringZeroTerm();
     // Looks like OrCAD creates a fixed size buffer where the string
     // is copied into. However, when the string does not requrie the
     // full buffer size it contains still data from the previous
@@ -38,8 +38,8 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
 
     mDs.assumeData({0x03, 0x00, 0x02, 0x00}, std::string(__func__) + " - 0");
 
-    symbolsLibrary.createDate = static_cast<time_t>(mDs.readUint32());
-    symbolsLibrary.modifyDate = static_cast<time_t>(mDs.readUint32());
+    obj.createDate = static_cast<time_t>(mDs.readUint32());
+    obj.modifyDate = static_cast<time_t>(mDs.readUint32());
 
     mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
 
@@ -52,7 +52,7 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
 
     for(int i = 0; i < static_cast<int>(textFontLen) - 1; ++i)
     {
-        symbolsLibrary.textFonts.push_back(readTextFont());
+        obj.textFonts.push_back(readTextFont());
     }
 
     // Even this big chunk of data seems to be constant
@@ -83,7 +83,7 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
     // '7TH PART FIELD' plus 'PCB Footprint'.
     for(size_t i = 0u; i < 8u; ++i)
     {
-        symbolsLibrary.strLstPartField.push_back(mDs.readStringLenZeroTerm());
+        obj.strLstPartField.push_back(mDs.readStringLenZeroTerm());
     }
 
     // Even this big chunk of data seems to be constant
@@ -95,7 +95,7 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
 
     for(size_t i = 0u; i < strLstLen - 1; ++i)
     {
-        symbolsLibrary.strLst.push_back(mDs.readStringLenZeroTerm());
+        obj.strLst.push_back(mDs.readStringLenZeroTerm());
     }
 
     const uint16_t aliasLstLen = mDs.readUint16();
@@ -104,7 +104,7 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
     {
         std::string alias   = mDs.readStringLenZeroTerm();
         std::string package = mDs.readStringLenZeroTerm();
-        symbolsLibrary.partAliases.push_back(std::make_pair(alias, package));
+        obj.partAliases.push_back(std::make_pair(alias, package));
     }
 
     if(mFileType == FileType::Schematic)
@@ -120,124 +120,7 @@ SymbolsLibrary Parser::parseSymbolsLibrary()
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(symbolsLibrary));
-
-    return symbolsLibrary;
-}
-
-
-// @todo return real data object
-bool Parser::parseSchematic()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    bool obj = false;
-
-    Structure structure = read_type_prefix_short();
-
-    if(structure != Structure::SchLib)
-    {
-        // @todo throw some exception
-    }
-    // mDs.printUnknownData(12, std::string(__func__) + " - 0");
-
-    readPreamble();
-
-    std::string schematic_name = mDs.readStringLenZeroTerm();
-
-    mDs.printUnknownData(4, std::string(__func__) + " - 1");
-
-    const uint16_t schematicPages = mDs.readUint16();
-
-    for(size_t i = 0u; i < schematicPages; ++i)
-    {
-        std::string page_name = mDs.readStringLenZeroTerm();
-        spdlog::debug(page_name);
-    }
-
-    const uint16_t len = mDs.readUint16();
-
-    for(size_t i = 0u; i < len; ++i)
-    {
-        mDs.printUnknownData(4, std::string(__func__) + " - 1");
-    }
-
-    const uint16_t len2 = mDs.readUint16();
-
-    for(size_t i = 0u; i < len2; ++i)
-    {
-        mDs.printUnknownData(5, std::string(__func__) + " - 2");
-    }
-
-    mDs.printUnknownData(4, std::string(__func__) + " - 3");
-
-    if(!mDs.isEoF())
-    {
-        throw std::runtime_error("Expected EoF but did not reach it!");
-    }
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-
-    return obj;
-}
-
-
-// @todo return real data object
-bool Parser::parseHierarchy()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    bool obj = false;
-
-    mDs.printUnknownData(9, std::string(__func__) + " - 0");
-
-    std::string schematicName = mDs.readStringLenZeroTerm();
-
-    mDs.printUnknownData(9, std::string(__func__) + " - 1");
-
-    const uint16_t netLen = mDs.readUint16();
-
-    for(size_t i = 0u; i < netLen; ++i)
-    {
-        const Structure structure = read_type_prefix_short();
-
-        readPreamble(); // @tood make conditional preamble
-
-        // @todo Move the following data into a own structore for the specific Structure type
-
-        uint32_t dbId = mDs.readUint32();
-
-        std::string name = mDs.readStringLenZeroTerm(); // net name
-    }
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-
-    return obj;
-}
-
-
-// @todo return real data object
-bool Parser::parseSymbolsERC()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    bool obj = false;
-
-    // @todo Should I introduce something like read_type_prefix_very_long()?
-    mDs.assumeData({0x4b}, std::string(__func__) + " - 0"); // Proably stands for ERC, see Structure.hpp 0x4b
-
-    mDs.printUnknownData(8, std::string(__func__) + " - 1");
-
-    Structure structure = read_type_prefix_long();
-    readConditionalPreamble(structure);
-    parseStructure(structure); // @todo push structure
-
-    if(!mDs.isEoF())
-    {
-        throw std::runtime_error("Expected EoF but did not reach it!");
-    }
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(obj));
 
     return obj;
 }

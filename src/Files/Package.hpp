@@ -10,16 +10,15 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "GeneralProperties.hpp"
-#include "GeometrySpecification.hpp"
-#include "SymbolPinScalar.hpp"
-#include "PinIdxMapping.hpp"
-#include "Properties.hpp"
-#include "T0x1f.hpp"
-#include "SymbolDisplayProp.hpp"
+#include "../Structures/GeneralProperties.hpp"
+#include "../Structures/GeometrySpecification.hpp"
+#include "../Structures/SymbolPinScalar.hpp"
+#include "../Structures/PinIdxMapping.hpp"
+#include "../Structures/Properties.hpp"
+#include "../Structures/T0x1f.hpp"
+#include "../Structures/SymbolDisplayProp.hpp"
 
 
-// @todo split up into 'Package' and 'Symbol'
 struct Package
 {
     GeneralProperties generalProperties;

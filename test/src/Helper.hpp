@@ -28,7 +28,7 @@ inline void check_error_count(const fs::path& aFilePath, size_t aActualErrCnt, s
 {
     if(aActualErrCnt < aExpectedErrCnt)
     {
-        const std::string msg = fmt::format("REDUCTION: {} (actual errors) < {} (expected errors) in {}",
+        const std::string msg = fmt::format("REDUCTION: {:>4} (actual errors) < {:>4} (expected errors) in {}",
             aActualErrCnt, aExpectedErrCnt, aFilePath.string());
 
         std::clog << msg << std::endl;
@@ -36,7 +36,7 @@ inline void check_error_count(const fs::path& aFilePath, size_t aActualErrCnt, s
 
     if(aActualErrCnt > aExpectedErrCnt)
     {
-        const std::string msg = fmt::format("INCREASE:  {} (actual errors) > {} (expected errors) in {}",
+        const std::string msg = fmt::format("INCREASE:  {:>4} (actual errors) > {:>4} (expected errors) in {}",
             aActualErrCnt, aExpectedErrCnt, aFilePath.string());
 
         std::clog << msg << std::endl;
@@ -47,9 +47,12 @@ inline void check_error_count(const fs::path& aFilePath, size_t aActualErrCnt, s
     std::ofstream logFile;
 
     logFile.open(logPath, std::ios_base::app);
-    logFile << "Expected " << std::setw(4) << aExpectedErrCnt
-            << " errors and got " << std::setw(4) << aActualErrCnt
-            << " errors in `" << aFilePath.string() << "`\n";
+
+    const std::string msg = fmt::format(
+        "Expected {:>4} errors and got {:>4} errors in `{}`\n",
+        aExpectedErrCnt, aActualErrCnt, aFilePath.string());
+
+    logFile << msg;
 }
 
 

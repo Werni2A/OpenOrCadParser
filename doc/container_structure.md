@@ -41,6 +41,7 @@ In front of each entry is a specifier placed that shows of which type the entry 
 - [D] **`Symbols`**
   - [S] `$Types$`
   - [S] `ERC` (DSN only)
+  - [S] `ERC_PHYSICAL` (DSN only but optional)
   - [S] *Symbol Name 1*
   - [S] *Symbol Name 2*
   - [S] *...*

@@ -10,14 +10,15 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "DirectoryStruct.hpp"
 #include "Files/AdminData.hpp"
+#include "Files/DirectoryStruct.hpp"
 #include "Files/DsnStream.hpp"
-#include "Files/NetBundleMapData.hpp"
 #include "Files/HSObjects.hpp"
-#include "Package.hpp"
-#include "SymbolsLibrary.hpp"
-#include "Type.hpp"
+#include "Files/NetBundleMapData.hpp"
+#include "Files/Package.hpp"
+#include "Files/Symbol.hpp"
+#include "Files/SymbolsLibrary.hpp"
+#include "Files/Type.hpp"
 
 
 struct Library

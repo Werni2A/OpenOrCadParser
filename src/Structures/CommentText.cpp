@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <ostream>
+#include <stdexcept>
 #include <string>
 
 #include <nameof.hpp>
@@ -60,38 +61,33 @@ CommentText Parser::readCommentText()
 }
 
 
-// #include <cstdint>
-// #include <stdexcept>
-// #include <string>
+TextFont CommentText::getTextFont() const
+{
+    if(mLibrary == nullptr)
+    {
+        throw std::logic_error(std::string(__func__) + ": mLibrary should be set!");
+    }
 
-// #include "CommentText.hpp"
+    const int64_t idx = static_cast<int64_t>(textFontIdx) - 1;
 
-// #include "TextFont.hpp"
-// #include "Library.hpp"
+    TextFont textFont;
 
+    if(idx >= 0)
+    {
+        // Retrieve font from the library.
+        textFont = mLibrary->symbolsLibrary.textFonts.at(idx);
+        // @todo provide try catch block for better exception messages
+    }
+    else if(idx == -1)
+    {
+        // @todo Unknown but it is probably the default font;
+        throw std::runtime_error(std::string(__func__) + ": Check this out!");
+    }
+    else // idx < -1
+    {
+        // This should never happen.
+        throw std::runtime_error(std::string(__func__) + ": Unexpected index " + std::to_string(idx));
+    }
 
-// TextFont CommentText::getFont(const Library& aLibrary) const
-// {
-//     const int64_t idx = static_cast<int64_t>(textFontIdx) - 1;
-
-//     TextFont textFont;
-
-//     if(idx >= 0)
-//     {
-//         // Retrieve font from the library.
-//         textFont = aLibrary.symbolsLibrary.fontProperties.at(idx);
-//         // @todo provide try catch block for better exception messages
-//     }
-//     else if(idx == -1)
-//     {
-//         // @todo Unknown but it is probably the default font;
-//         throw std::runtime_error(std::string(__func__) + ": Check this out!");
-//     }
-//     else // idx < -1
-//     {
-//         // This should never happen.
-//         throw std::runtime_error(std::string(__func__) + ": Unexpected index " + std::to_string(idx));
-//     }
-
-//     return textFont;
-// }
+    return textFont;
+}
