@@ -91,6 +91,12 @@ static std::string to_string(const Library& aObj)
         str += indent(fmt::format("[{}]: {}", i, to_string(aObj.packages[i])), 2);
     }
 
+    str += fmt::format("{}symbols:\n", indent(1));
+    for(size_t i = 0u; i < aObj.symbols.size(); ++i)
+    {
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.symbols[i])), 2);
+    }
+
     return str;
 }
 
