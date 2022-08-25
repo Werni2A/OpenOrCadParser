@@ -29,7 +29,8 @@ Symbol Parser::readSymbol()
         case Structure::PinShapeSymbol:
             mDs.printUnknownData(2, std::string(__func__) + " - 0");
             mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
-            structure = read_type_prefix_long();
+            // structure = read_prefixes(4);
+            structure = auto_read_prefixes();
             break;
 
         case Structure::TitleBlockSymbol:
@@ -65,7 +66,8 @@ Symbol Parser::readSymbol()
             break;
         }
 
-        structure = read_type_prefix();
+        // structure = read_prefixes(3);
+        structure = auto_read_prefixes();
         readConditionalPreamble(structure);
         // readPreamble();
         pushStructure(parseStructure(structure), obj);

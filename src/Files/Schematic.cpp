@@ -16,7 +16,8 @@ bool Parser::readSchematic()
 
     bool obj = false;
 
-    Structure structure = read_type_prefix_short();
+    // Structure structure = read_prefixes(2);
+    Structure structure = auto_read_prefixes();
 
     if(structure != Structure::SchLib)
     {

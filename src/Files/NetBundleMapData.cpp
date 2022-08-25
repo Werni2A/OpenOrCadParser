@@ -30,7 +30,8 @@ NetBundleMapData Parser::readNetBundleMapData()
         std::string group_name = mDs.readStringLenZeroTerm();
         spdlog::debug("group_name = {}:", group_name);
 
-        Structure structure = read_type_prefix();
+        // Structure structure = read_prefixes(3);
+        Structure structure = auto_read_prefixes();
 
         if(static_cast<int>(structure) != 0x67)
         {

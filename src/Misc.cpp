@@ -156,7 +156,8 @@ void Parser::readTitleBlockSymbol()
 
     for(size_t i = 0u; i < followingLen; ++i)
     {
-        const Structure structure = read_type_prefix();
+        // const Structure structure = read_prefixes(3);
+        const Structure structure = auto_read_prefixes();
         readConditionalPreamble(structure);
         parseStructure(structure);
     }
@@ -261,7 +262,8 @@ bool Parser::parseSymbolsERC()
 
     mDs.printUnknownData(8, std::string(__func__) + " - 1");
 
-    Structure structure = read_type_prefix_long();
+    // Structure structure = read_prefixes(4);
+    Structure structure = auto_read_prefixes();
 
     spdlog::critical("{}", to_string(structure));
 

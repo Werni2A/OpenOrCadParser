@@ -29,9 +29,62 @@ size_t Polyline::getExpectedStructSize(FileFormatVersion aVersion, size_t aPoint
 }
 
 
-Polyline Parser::readPolyline()
+static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
+{
+    FileFormatVersion prediction = FileFormatVersion::Unknown;
+
+
+    const std::vector<FileFormatVersion> versions{
+        FileFormatVersion::A,
+        FileFormatVersion::B,
+        FileFormatVersion::C
+    };
+
+    const size_t initial_offset = aDs.getCurrentOffset();
+
+    for(const auto& version : versions)
+    {
+        bool found = true;
+
+        try
+        {
+            aParser.readPolyline(version);
+        }
+        catch(...)
+        {
+            found = false;
+        }
+
+        aDs.setCurrentOffset(initial_offset);
+
+        if(found)
+        {
+            prediction = version;
+            break;
+        }
+    }
+
+    if(prediction == FileFormatVersion::Unknown)
+    {
+        // Set to previous default value
+        // s.t. tests not fail
+        prediction = FileFormatVersion::C;
+    }
+
+    return prediction;
+}
+
+
+Polyline Parser::readPolyline(FileFormatVersion aVersion)
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    // Predict version
+    if(aVersion == FileFormatVersion::Unknown)
+    {
+        aVersion = predictVersion(mDs, *this);
+        // spdlog::info("Predicted version {} in {}", aVersion, __func__);
+    }
 
     const size_t startOffset = mDs.getCurrentOffset();
 
@@ -41,7 +94,7 @@ Polyline Parser::readPolyline()
 
     mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
 
-    if(mFileFormatVersion >= FileFormatVersion::A)
+    if(aVersion >= FileFormatVersion::A)
     {
         obj.setLineStyle(ToLineStyle(mDs.readUint32()));
         obj.setLineWidth(ToLineWidth(mDs.readUint32()));
@@ -65,7 +118,7 @@ Polyline Parser::readPolyline()
         throw MisinterpretedData(__func__, startOffset, byteLength, mDs.getCurrentOffset());
     }
 
-    if(byteLength != obj.getExpectedStructSize(mFileFormatVersion, pointCount))
+    if(byteLength != obj.getExpectedStructSize(aVersion, pointCount))
     {
         throw FileFormatChanged(std::string(nameof::nameof_type<decltype(obj)>()));
     }

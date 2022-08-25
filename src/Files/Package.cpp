@@ -11,9 +11,68 @@
 #include "../Parser.hpp"
 
 
-Package Parser::readPackage()
+static FileFormatVersion predictVersionPackage(DataStream& aDs, Parser& aParser)
+{
+    FileFormatVersion prediction = FileFormatVersion::Unknown;
+
+
+    const std::vector<FileFormatVersion> versions{
+        FileFormatVersion::A,
+        FileFormatVersion::B,
+        FileFormatVersion::C
+    };
+
+    const auto saved_level = spdlog::get_level();
+
+    spdlog::set_level(spdlog::level::off);
+
+    const size_t initial_offset = aDs.getCurrentOffset();
+
+    for(const auto& version : versions)
+    {
+        bool found = true;
+
+        try
+        {
+            aParser.readPackage(version);
+        }
+        catch(...)
+        {
+            found = false;
+        }
+
+        aDs.setCurrentOffset(initial_offset);
+
+        if(found)
+        {
+            prediction = version;
+            break;
+        }
+    }
+
+    if(prediction == FileFormatVersion::Unknown)
+    {
+        // Set to previous default value
+        // s.t. tests not fail
+        prediction = FileFormatVersion::C;
+    }
+
+    spdlog::set_level(saved_level);
+
+    return prediction;
+}
+
+
+Package Parser::readPackage(FileFormatVersion aVersion)
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    // Predict version
+    if(aVersion == FileFormatVersion::Unknown)
+    {
+        aVersion = predictVersionPackage(mDs, *this);
+        // spdlog::info("Predicted version {} in {}", aVersion, __func__);
+    }
 
     Package obj;
 
@@ -21,17 +80,21 @@ Package Parser::readPackage()
 
     const uint16_t sectionCount = mDs.readUint16();
 
+    spdlog::info("sectionCount = {}", sectionCount);
+
     for(size_t i = 0u; i < sectionCount; ++i)
     {
         spdlog::debug("Marker 0");
 
-        structure = read_type_prefix_long();
+        // structure = read_prefixes(4);
+        Structure structure = auto_read_prefixes();
         readConditionalPreamble(structure);
         pushStructure(parseStructure(structure), obj);
 
         spdlog::debug("Marker 1");
 
-        structure = read_type_prefix();
+        // structure = read_prefixes(3);
+        structure = auto_read_prefixes();
         readConditionalPreamble(structure);
         spdlog::debug("Marker 1.5");
         pushStructure(parseStructure(structure), obj);
@@ -66,7 +129,8 @@ Package Parser::readPackage()
             spdlog::debug("0x{:08x}: followingLen1 Iteration {}/{}",
                 mDs.getCurrentOffset(), i + 1, followingLen1);
 
-            structure = read_type_prefix();
+            // structure = read_prefixes(3);
+            structure = auto_read_prefixes();
             readConditionalPreamble(structure);
             pushStructure(parseStructure(structure), obj);
         }
@@ -80,7 +144,8 @@ Package Parser::readPackage()
             spdlog::debug("0x{:08x}: followingLen2 Iteration {}/{}",
                 mDs.getCurrentOffset(), i + 1, followingLen2);
 
-            structure = read_type_prefix();
+            // structure = read_prefixes(3);
+            structure = auto_read_prefixes();
             readConditionalPreamble(structure);
             pushStructure(parseStructure(structure), obj);
         }
@@ -114,11 +179,13 @@ Package Parser::readPackage()
 
         if(i == 0u)
         {
-            structure = read_type_prefix_long();
+            // structure = read_prefixes(4);
+            structure = auto_read_prefixes();
         }
         else
         {
-            structure = read_type_prefix();
+            // structure = read_prefixes(3);
+            structure = auto_read_prefixes();
         }
 
         readConditionalPreamble(structure);

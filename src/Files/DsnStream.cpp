@@ -20,13 +20,14 @@ DsnStream Parser::readDsnStream()
 
     DsnStream obj;
 
-    // @todo return the parsed nameValueMapping from within read_type_prefix_short
+    // @todo return the parsed nameValueMapping from within read_single_short_prefix()
     //       and save it in DsnStream. I.e. `Library guid` and `Time Format Index`
-    const Structure type = read_type_prefix_short();
+    // const Structure structure = read_prefixes(2);
+    const Structure structure = auto_read_prefixes();
 
-    if(type != Structure::DsnStream)
+    if(structure != Structure::DsnStream)
     {
-        throw std::runtime_error(fmt::format("{}: Unexpected Structure `{}`", __func__, to_string(type)));
+        throw std::runtime_error(fmt::format("{}: Unexpected Structure `{}`", __func__, to_string(structure)));
     }
 
     const uint32_t optionalLen = readPreamble();

@@ -79,7 +79,7 @@ public:
     NetBundleMapData readNetBundleMapData();
     HSObjects readHSObjects();
 
-private:
+// private:
 
 
     void checkInterpretedDataLen(const std::string& aFuncName, size_t aStartOffset, size_t aEndOffset, size_t aExpectedLen);
@@ -149,7 +149,7 @@ private:
     SymbolsLibrary readSymbolsLibrary();
 
     Symbol readSymbol();
-    Package readPackage();
+    Package readPackage(FileFormatVersion aVersion = FileFormatVersion::Unknown);
 
     bool readHierarchy();
     bool readSchematic();
@@ -179,7 +179,7 @@ public:
      * @brief Print container tree structure to console.
      */
     void printContainerTree() const;
-private:
+// private:
 
     /**
      * @brief Get the file type from file extension.
@@ -200,13 +200,13 @@ private:
     void pushStructure(const std::pair<Structure, std::any>& structure, Symbol& container);
 
 
-    Structure read_type_prefix_long();
+    Structure auto_read_prefixes();
 
+    Structure read_prefixes(size_t aNumber);
 
-    Structure read_type_prefix();
+    std::pair<Structure, uint32_t> read_single_prefix();
 
-
-    Structure read_type_prefix_short();
+    std::pair<Structure, uint32_t> read_single_prefix_short();
 
 
     uint32_t readPreamble(bool readOptionalLen = true);
@@ -236,25 +236,25 @@ private:
     void readDevHelper();
 
 
-    Line readLine();
+    Line readLine(FileFormatVersion aVersion = FileFormatVersion::Unknown);
 
 
     Point readPoint();
 
 
-    Ellipse readEllipse();
+    Ellipse readEllipse(FileFormatVersion aVersion = FileFormatVersion::Unknown);
 
 
-    Polygon readPolygon();
+    Polygon readPolygon(FileFormatVersion aVersion = FileFormatVersion::Unknown);
 
 
-    Polyline readPolyline();
+    Polyline readPolyline(FileFormatVersion aVersion = FileFormatVersion::Unknown);
 
 
-    Bezier readBezier();
+    Bezier readBezier(FileFormatVersion aVersion = FileFormatVersion::Unknown);
 
 
-    Rect readRect();
+    Rect readRect(FileFormatVersion aVersion = FileFormatVersion::Unknown);
 
 
     SymbolVector readSymbolVector();
@@ -263,13 +263,13 @@ private:
     Bitmap readBitmap();
 
 
-    CommentText readCommentText();
+    CommentText readCommentText(FileFormatVersion aVersion = FileFormatVersion::Unknown);
 
 
     PinIdxMapping readPinIdxMapping();
 
 
-    Arc readArc();
+    Arc readArc(FileFormatVersion aVersion = FileFormatVersion::Unknown);
 
 
     SymbolPinScalar readSymbolPinScalar();
@@ -302,7 +302,7 @@ private:
     GeometrySpecification readSymbolProperties();
 
 
-    GeometrySpecification parseGeometrySpecification();
+    GeometrySpecification parseGeometrySpecification(FileFormatVersion aVersion = FileFormatVersion::Unknown);
 
 public:
 
