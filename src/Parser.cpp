@@ -841,9 +841,9 @@ std::pair<Structure, uint32_t> Parser::read_single_prefix_short()
             }
             catch(const std::exception& e)
             {
-                const std::string msg = fmt::format("Tried to access strLst out of range!\n{}", e.what());
+                const std::string msg = fmt::format("{}: Tried to access strLst out of range!\n{}", __func__, e.what());
                 spdlog::error(msg);
-                throw std::out_of_range(msg);
+                // throw std::out_of_range(msg);
             }
         }
     }
