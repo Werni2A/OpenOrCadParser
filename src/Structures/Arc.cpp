@@ -29,7 +29,7 @@ size_t Arc::getExpectedStructSize(FileFormatVersion aVersion)
 }
 
 
-Arc Parser::readArc()
+Arc Parser::readArc(FileFormatVersion aVersion)
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
@@ -38,6 +38,14 @@ Arc Parser::readArc()
     Arc obj;
 
     const uint32_t byteLength = mDs.readUint32();
+
+    // Predict version
+    switch(byteLength)
+    {
+        case 40: aVersion = FileFormatVersion::A; break;
+        case 48: aVersion = FileFormatVersion::B; break;
+        default:                                  break;
+    }
 
     mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
 
@@ -51,7 +59,7 @@ Arc Parser::readArc()
     obj.endX   = mDs.readInt32();
     obj.endY   = mDs.readInt32();
 
-    if(mFileFormatVersion >= FileFormatVersion::B)
+    if(aVersion >= FileFormatVersion::B)
     {
         obj.setLineStyle(ToLineStyle(mDs.readUint32()));
         obj.setLineWidth(ToLineWidth(mDs.readUint32()));
@@ -62,7 +70,7 @@ Arc Parser::readArc()
         throw MisinterpretedData(__func__, startOffset, byteLength, mDs.getCurrentOffset());
     }
 
-    if(byteLength != obj.getExpectedStructSize(mFileFormatVersion))
+    if(byteLength != obj.getExpectedStructSize(aVersion))
     {
         throw FileFormatChanged(std::string(nameof::nameof_type<decltype(obj)>()));
     }

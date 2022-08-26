@@ -26,11 +26,12 @@ bool Parser::readHierarchy()
 
     for(size_t i = 0u; i < netLen; ++i)
     {
-        const Structure structure = read_type_prefix_short();
+        // const Structure structure = read_prefixes(2);
+        Structure structure = auto_read_prefixes();
 
         readPreamble(); // @tood make conditional preamble
 
-        // @todo Move the following data into a own structore for the specific Structure type
+        // @todo Move the following data into a own structure for the specific Structure type
 
         uint32_t dbId = mDs.readUint32();
 

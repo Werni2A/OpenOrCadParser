@@ -2,6 +2,7 @@
 #include <ostream>
 #include <string>
 
+#include <fmt/core.h>
 #include <nameof.hpp>
 
 #include "../Enums/LineStyle.hpp"
@@ -29,7 +30,7 @@ size_t Line::getExpectedStructSize(FileFormatVersion aVersion)
 }
 
 
-Line Parser::readLine()
+Line Parser::readLine(FileFormatVersion aVersion)
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
@@ -39,6 +40,14 @@ Line Parser::readLine()
 
     const uint32_t byteLength = mDs.readUint32();
 
+    // Predict version
+    switch(byteLength)
+    {
+        case 24: aVersion = FileFormatVersion::A; break;
+        case 32: aVersion = FileFormatVersion::B; break;
+        default:                                  break;
+    }
+
     mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
 
     obj.x1 = mDs.readInt32();
@@ -46,7 +55,7 @@ Line Parser::readLine()
     obj.x2 = mDs.readInt32();
     obj.y2 = mDs.readInt32();
 
-    if(mFileFormatVersion >= FileFormatVersion::B)
+    if(aVersion >= FileFormatVersion::B)
     {
         obj.setLineStyle(ToLineStyle(mDs.readUint32()));
         obj.setLineWidth(ToLineWidth(mDs.readUint32()));
@@ -57,7 +66,7 @@ Line Parser::readLine()
         throw MisinterpretedData(__func__, startOffset, byteLength, mDs.getCurrentOffset());
     }
 
-    if(byteLength != obj.getExpectedStructSize(mFileFormatVersion))
+    if(byteLength != obj.getExpectedStructSize(aVersion))
     {
         throw FileFormatChanged(std::string(nameof::nameof_type<decltype(obj)>()));
     }

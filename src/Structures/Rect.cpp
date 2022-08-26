@@ -2,6 +2,7 @@
 #include <ostream>
 #include <string>
 
+#include <fmt/core.h>
 #include <nameof.hpp>
 
 #include "../Enums/FillStyle.hpp"
@@ -31,9 +32,62 @@ size_t Rect::getExpectedStructSize(FileFormatVersion aVersion)
 }
 
 
-Rect Parser::readRect()
+static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
+{
+    FileFormatVersion prediction = FileFormatVersion::Unknown;
+
+
+    const std::vector<FileFormatVersion> versions{
+        FileFormatVersion::A,
+        FileFormatVersion::B,
+        FileFormatVersion::C
+    };
+
+    const size_t initial_offset = aDs.getCurrentOffset();
+
+    for(const auto& version : versions)
+    {
+        bool found = true;
+
+        try
+        {
+            aParser.readRect(version);
+        }
+        catch(...)
+        {
+            found = false;
+        }
+
+        aDs.setCurrentOffset(initial_offset);
+
+        if(found)
+        {
+            prediction = version;
+            break;
+        }
+    }
+
+    if(prediction == FileFormatVersion::Unknown)
+    {
+        // Set to previous default value
+        // s.t. tests not fail
+        prediction = FileFormatVersion::C;
+    }
+
+    return prediction;
+}
+
+
+Rect Parser::readRect(FileFormatVersion aVersion)
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    // Predict version
+    if(aVersion == FileFormatVersion::Unknown)
+    {
+        aVersion = predictVersion(mDs, *this);
+        // spdlog::info("Predicted version {} in {}", aVersion, __func__);
+    }
 
     const size_t startOffset = mDs.getCurrentOffset();
 
@@ -42,7 +96,7 @@ Rect Parser::readRect()
     const uint32_t byteLength = mDs.readUint32();
 
     // @todo better move this if-statement into Rect::checkByteLength(byteLength, version)
-    if(byteLength != Rect::getExpectedStructSize(mFileFormatVersion))
+    if(byteLength != Rect::getExpectedStructSize(aVersion))
     {
         throw FileFormatChanged("Rect");
     }
@@ -54,13 +108,13 @@ Rect Parser::readRect()
     obj.x2 = mDs.readInt32();
     obj.y2 = mDs.readInt32();
 
-    if(mFileFormatVersion >= FileFormatVersion::A)
+    if(aVersion >= FileFormatVersion::A)
     {
         obj.setLineStyle(ToLineStyle(mDs.readUint32()));
         obj.setLineWidth(ToLineWidth(mDs.readUint32()));
     }
 
-    if(mFileFormatVersion >= FileFormatVersion::C)
+    if(aVersion >= FileFormatVersion::C)
     {
         obj.fillStyle  = ToFillStyle(mDs.readUint32());
         obj.hatchStyle = ToHatchStyle(mDs.readInt32());

@@ -11,7 +11,7 @@
 #include "../Parser.hpp"
 
 
-CommentText Parser::readCommentText()
+CommentText Parser::readCommentText(FileFormatVersion aVersion)
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 

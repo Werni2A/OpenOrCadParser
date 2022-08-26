@@ -158,7 +158,8 @@ bool Parser::readPage()
         //     mDs.printUnknownData(8, std::string(__func__) + " - 11");
         // }
 
-        Structure structure = read_type_prefix();
+        // Structure structure = read_prefixes(3);
+        Structure structure = auto_read_prefixes();
         readPreamble();
         parseStructure(structure); // @todo push structure
 
@@ -189,7 +190,8 @@ bool Parser::readPage()
         }
         else
         {
-            structure = read_type_prefix();
+            // structure = read_prefixes(2);
+            structure = auto_read_prefixes();
         }
 
 
@@ -212,7 +214,8 @@ bool Parser::readPage()
 
     for(size_t i = 0u; i < lenX; ++i)
     {
-        Structure structure = read_type_prefix();
+        // Structure structure = read_prefixes(3);
+        Structure structure = auto_read_prefixes();
         readPreamble();
         parseStructure(structure); // @todo push structure
     }

@@ -563,7 +563,8 @@ bool Parser::readPartInst()
 
     for(size_t i = 0u; i < len; ++i)
     {
-        Structure structure = read_type_prefix();
+        // Structure structure = read_prefixes(3);
+        Structure structure = auto_read_prefixes();
         readPreamble();
         parseStructure(structure); // @todo push struct
     }
@@ -578,7 +579,8 @@ bool Parser::readPartInst()
 
     for(size_t i = 0u; i < len2; ++i)
     {
-        Structure structure = read_type_prefix();
+        // Structure structure = read_prefixes(3);
+        Structure structure = auto_read_prefixes();
         readPreamble();
         parseStructure(structure); // @todo push struct
     }
@@ -589,7 +591,8 @@ bool Parser::readPartInst()
 
     // @todo implement type_prefix_very_long
     mDs.printUnknownData(18, std::string(__func__) + " - 6");
-    Structure structure = read_type_prefix_long();
+    // Structure structure = read_prefixes(4);
+    Structure structure = auto_read_prefixes();
     readPreamble();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
@@ -684,89 +687,132 @@ void Parser::discard_until_preamble()
     }
 }
 
+Structure Parser::auto_read_prefixes()
+{
+    const size_t startOffset = mDs.getCurrentOffset();
 
-Structure Parser::read_type_prefix_long()
+    const auto logLevel = spdlog::level::critical; // spdlog::get_level();
+    spdlog::set_level(spdlog::level::off);
+
+    size_t successCtr = 0U;
+
+    for(size_t i = 1U; i < 10U; ++i)
+    {
+        bool failed = false;
+
+        try
+        {
+            read_prefixes(i);
+        }
+        catch(const std::exception& e)
+        {
+            failed = true;
+        }
+
+        mDs.setCurrentOffset(startOffset);
+
+        if(!failed)
+        {
+            successCtr++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    spdlog::set_level(logLevel);
+
+    if(successCtr == 0U)
+    {
+        throw std::runtime_error("Could not find valid number of prefixes!");
+    }
+
+    std::cout << fmt::format("{}: Found {} prefixes\n", __func__, successCtr);
+    Structure structure = read_prefixes(successCtr);
+    std::cout << "---------------------------------\n";
+
+    return structure;
+}
+
+
+// Read number of prefixes, where the last one is a short prefix
+Structure Parser::read_prefixes(size_t aNumber)
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    const Structure typeId = ToStructure(mDs.readUint8());
-
-    mDs.printUnknownData(2, std::string(__func__) + " - 0");
-
-    mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
-
-    const Structure typeIdRep = read_type_prefix();
-
-    if(typeId != typeIdRep)
+    if(aNumber == 0U)
     {
-        throw std::runtime_error("typeId (" + std::to_string(static_cast<size_t>(typeId))
-                                    + ") should be equal to typeIdRep ("
-                                    + std::to_string(static_cast<size_t>(typeIdRep)) + ")!");
+        throw std::invalid_argument(fmt::format("aNumber = {} but must be > 0!", aNumber));
+    }
+
+    Structure firstStruct;
+
+    for(size_t i = 0U; i < aNumber; ++i)
+    {
+        Structure currStruct;
+
+        if(i == aNumber - 1)
+        {
+            currStruct = read_single_prefix_short().first;
+        }
+        else
+        {
+            currStruct = read_single_prefix().first;
+        }
+
+        if(i == 0U)
+        {
+            firstStruct = currStruct;
+        }
+
+        if(currStruct != firstStruct)
+        {
+            throw std::runtime_error("Structs not equal");
+        }
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 
-    return typeId;
+    return firstStruct;
 }
 
-
-Structure Parser::read_type_prefix()
+std::pair<Structure, uint32_t> Parser::read_single_prefix()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const Structure typeId = ToStructure(mDs.readUint8());
 
-    // @todo In most cases this is the offset from the following typeIdRep to
-    //       the beginning of the next read_type_prefix() where all the previous
-    //       structures belong to this one.
-    mByteOffset = mDs.readUint32();
-    spdlog::debug("{} - 0 | mByteOffset = {}", __func__, mByteOffset);
-    // mDs.printUnknownData(4, std::string(__func__) + " - 0");
+    const uint32_t byteOffset = mDs.readUint32();
 
-    mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
-
-    const Structure typeIdRep = read_type_prefix_short();
-
-    if(typeId != typeIdRep)
+    if(spdlog::get_level() != spdlog::level::off)
     {
-        throw std::runtime_error("typeId (" + std::to_string(static_cast<size_t>(typeId))
-                                    + ") should be equal to typeIdRep ("
-                                    + std::to_string(static_cast<size_t>(typeIdRep)) + ")!");
-    }
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-
-    return typeId;
-}
-
-
-Structure Parser::read_type_prefix_short()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const Structure typeId = ToStructure(mDs.readUint8());
-
-    // const size_t startOffset = mDs.getCurrentOffset();
-
-    // @todo this is probably not a lenght but specifies some attribute e.g. locked/not-locked
-    //       0x0b = not-locked
-    //       0x1e = locked
-    // @todo In DsnStream its definetly the byteLength, therefore implement some
-    //       sanity check veryfing the size.
-    const uint32_t byteLength = mDs.readUint32();
-    if(byteLength != 0x0b && byteLength != 0x1e)
-    {
-        // throw std::runtime_error("Unexpected lock value 0x" + ToHex(byteLength, 2));
+        std::cout << fmt::format("{:>2} = {}: Offset = {}\n", static_cast<int>(typeId), to_string(typeId), byteOffset);
     }
 
     mDs.printUnknownData(4, std::string(__func__) + " - 0");
     // mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
 
-    const Structure typeIdRep = ToStructure(mDs.readUint8());
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+
+    return std::pair<Structure, uint32_t>{typeId, byteOffset};
+}
+
+
+std::pair<Structure, uint32_t> Parser::read_single_prefix_short()
+{
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    const Structure typeId = ToStructure(mDs.readUint8());
 
     const int16_t size = mDs.readInt16();
     spdlog::debug("{} - 1 | typeId = {}", __func__, to_string(typeId));
     spdlog::debug("{} - 2 | size   = {}", __func__, size);
+
+    if(spdlog::get_level() != spdlog::level::off)
+    {
+        std::cout << fmt::format("{:>2} = {}: Size = {}\n", static_cast<int>(typeId), to_string(typeId), size);
+    }
 
     if(size >= 0)
     {
@@ -795,9 +841,9 @@ Structure Parser::read_type_prefix_short()
             }
             catch(const std::exception& e)
             {
-                const std::string msg = fmt::format("Tried to access strLst out of range!\n{}", e.what());
+                const std::string msg = fmt::format("{}: Tried to access strLst out of range!\n{}", __func__, e.what());
                 spdlog::error(msg);
-                throw std::out_of_range(msg);
+                // throw std::out_of_range(msg);
             }
         }
     }
@@ -808,14 +854,9 @@ Structure Parser::read_type_prefix_short()
         spdlog::warn("{}: What does {} mean?", to_string(typeId), size); // @todo Figure out
     }
 
-    // if(mDs.getCurrentOffset() != startOffset + byteLength)
-    // {
-    //     throw MisinterpretedData(__func__, startOffset, byteLength, mDs.getCurrentOffset());
-    // }
-
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 
-    return typeId;
+    return std::pair<Structure, uint32_t>{typeId, size};
 }
 
 
@@ -965,7 +1006,8 @@ void Parser::readWireScalar()
         for(size_t i = 0u; i < len; ++i)
         {
             // @todo len should always be 1 and the read structure should be 'Alias'
-            Structure structure = read_type_prefix();
+            // Structure structure = read_prefixes(3);
+            Structure structure = auto_read_prefixes();
             readPreamble();
             parseStructure(structure); // @todo push
         }
@@ -1036,7 +1078,8 @@ void Parser::readGraphicBoxInst()
     // @todo Only Rect as a shape would make sense here. Maybe this should be passed
     //       as a parameter to readSthInPages0 to check this condition. Further,
     //       parseStructure should always call readSthInPages0.
-    Structure structure = read_type_prefix_long();
+    // Structure structure = read_prefixes(4);
+    Structure structure = auto_read_prefixes();
     readPreamble();
     parseStructure(structure);
 
@@ -1050,7 +1093,8 @@ void Parser::readDevHelper()
 
     mDs.discardBytes(0x2a1);
 
-    read_type_prefix();
+    // Structure structure = read_prefixes(3);
+    Structure structure = auto_read_prefixes();
     readPreamble();
 
     readGraphicBoxInst();
@@ -1585,9 +1629,64 @@ GeometrySpecification Parser::readSymbolProperties()
 }
 
 
-GeometrySpecification Parser::parseGeometrySpecification()
+static FileFormatVersion predictVersionGeoSpec(DataStream& aDs, Parser& aParser)
+{
+    FileFormatVersion prediction = FileFormatVersion::Unknown;
+
+
+    const std::vector<FileFormatVersion> versions{
+        FileFormatVersion::A,
+        FileFormatVersion::B,
+        FileFormatVersion::C
+    };
+
+    const size_t initial_offset = aDs.getCurrentOffset();
+
+    for(const auto& version : versions)
+    {
+        bool found = true;
+
+        GeometrySpecification geo_spec;
+
+        try
+        {
+            aParser.parseGeometrySpecification(version);
+        }
+        catch(...)
+        {
+            found = false;
+        }
+
+        aDs.setCurrentOffset(initial_offset);
+
+        if(found)
+        {
+            prediction = version;
+            break;
+        }
+    }
+
+    if(prediction == FileFormatVersion::Unknown)
+    {
+        // Set to previous default value
+        // s.t. tests not fail
+        prediction = FileFormatVersion::C;
+    }
+
+    return prediction;
+}
+
+
+GeometrySpecification Parser::parseGeometrySpecification(FileFormatVersion aVersion)
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    // Predict version
+    if(aVersion == FileFormatVersion::Unknown)
+    {
+        aVersion = predictVersionGeoSpec(mDs, *this);
+        // spdlog::info("Predicted version {} in {}", aVersion, __func__);
+    }
 
     GeometrySpecification obj;
 
@@ -1608,7 +1707,8 @@ GeometrySpecification Parser::parseGeometrySpecification()
         {
             if(mFileFormatVersion == FileFormatVersion::B)
             {
-                read_type_prefix();
+                // Structure structure = read_prefixes(3);
+                Structure structure = auto_read_prefixes();
             }
 
             if(mFileFormatVersion >= FileFormatVersion::B)

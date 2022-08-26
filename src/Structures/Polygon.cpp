@@ -37,9 +37,62 @@ size_t Polygon::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointC
 }
 
 
-Polygon Parser::readPolygon()
+static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
+{
+    FileFormatVersion prediction = FileFormatVersion::Unknown;
+
+
+    const std::vector<FileFormatVersion> versions{
+        FileFormatVersion::A,
+        FileFormatVersion::B,
+        FileFormatVersion::C
+    };
+
+    const size_t initial_offset = aDs.getCurrentOffset();
+
+    for(const auto& version : versions)
+    {
+        bool found = true;
+
+        try
+        {
+            aParser.readPolygon(version);
+        }
+        catch(...)
+        {
+            found = false;
+        }
+
+        aDs.setCurrentOffset(initial_offset);
+
+        if(found)
+        {
+            prediction = version;
+            break;
+        }
+    }
+
+    if(prediction == FileFormatVersion::Unknown)
+    {
+        // Set to previous default value
+        // s.t. tests not fail
+        prediction = FileFormatVersion::C;
+    }
+
+    return prediction;
+}
+
+
+Polygon Parser::readPolygon(FileFormatVersion aVersion)
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    // Predict version
+    if(aVersion == FileFormatVersion::Unknown)
+    {
+        aVersion = predictVersion(mDs, *this);
+        // spdlog::info("Predicted version {} in {}", static_cast<int>(aVersion), __func__);
+    }
 
     const size_t startOffset = mDs.getCurrentOffset();
 

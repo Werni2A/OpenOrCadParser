@@ -133,5 +133,10 @@ int main(int argc, char* argv[])
         parser.extractContainer(outputPath);
     }
 
+    if(!printTree && !extract)
+    {
+        parser.parseLibrary();
+    }
+
     return 0;
 }
