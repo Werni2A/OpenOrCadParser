@@ -990,60 +990,6 @@ void Parser::readGraphicCommentTextInst()
 }
 
 
-void Parser::readWireScalar()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    uint32_t dbId = mDs.readUint32();
-
-    spdlog::debug("dbId = {}", dbId);
-
-    mDs.printUnknownData(4, std::string(__func__) + " - 0");
-
-    Color wireColor = ToColor(mDs.readUint32());
-
-    int32_t startX = mDs.readInt32();
-    int32_t startY = mDs.readInt32();
-    int32_t endX   = mDs.readInt32();
-    int32_t endY   = mDs.readInt32();
-
-    spdlog::debug("startX = {} | startY = {} | endX = {} | endY = {}", startX, startY, endX, endY);
-
-    mDs.printUnknownData(1, std::string(__func__) + " - 1");
-
-    spdlog::debug("mByteOffset = {}", mByteOffset);
-
-    if(mByteOffset == 0x3d)
-    {
-        mDs.printUnknownData(2, std::string(__func__) + " - 2");
-    }
-    else if(mByteOffset > 0x3d)
-    {
-        const uint16_t len = mDs.readUint16();
-
-        spdlog::debug("len = {}", len);
-
-        for(size_t i = 0u; i < len; ++i)
-        {
-            // @todo len should always be 1 and the read structure should be 'Alias'
-            // Structure structure = read_prefixes(3);
-            Structure structure = auto_read_prefixes();
-            readPreamble();
-            parseStructure(structure); // @todo push
-        }
-    }
-
-    mDs.printUnknownData(2, std::string(__func__) + " - 3");
-
-    LineWidth wireLineWidth = ToLineWidth(mDs.readUint32());
-    LineStyle wireLineStyle = ToLineStyle(mDs.readUint32());
-
-    spdlog::debug("wireLineWidth = {} | wireLineStyle = {}", to_string(wireLineWidth), to_string(wireLineStyle));
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-}
-
-
 void Parser::readAlias()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));

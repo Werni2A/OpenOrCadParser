@@ -48,6 +48,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/Rect.cpp
    ${LIB_SRC_DIR}/Structures/T0x1f.cpp
    ${LIB_SRC_DIR}/Structures/TextFont.cpp
+   ${LIB_SRC_DIR}/Structures/WireScalar.cpp
 )
 
 set(HEADERS
@@ -89,6 +90,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/SymbolPinScalar.hpp
    ${LIB_INCLUDE_DIR}/Structures/T0x1f.hpp
    ${LIB_INCLUDE_DIR}/Structures/TextFont.hpp
+   ${LIB_INCLUDE_DIR}/Structures/WireScalar.hpp
 )
 
 # Create library file from sources

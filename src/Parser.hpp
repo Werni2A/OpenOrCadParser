@@ -49,6 +49,7 @@
 #include "Structures/SymbolVector.hpp"
 #include "Structures/T0x1f.hpp"
 #include "Structures/TextFont.hpp"
+#include "Structures/WireScalar.hpp"
 
 
 namespace fs = std::filesystem;
@@ -233,7 +234,7 @@ public:
     void readGraphicCommentTextInst();
 
 
-    void readWireScalar();
+    WireScalar readWireScalar();
 
 
     void readAlias();
