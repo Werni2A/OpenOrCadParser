@@ -1342,6 +1342,8 @@ PinIdxMapping Parser::readPinIdxMapping()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     PinIdxMapping obj;
 
     obj.unitRef = mDs.readStringLenZeroTerm();
@@ -1368,6 +1370,10 @@ PinIdxMapping Parser::readPinIdxMapping()
                 " 0x{:02x} but got 0x{:02x}!", 0x7f, 0xaa, 0xff, separator));
         }
     }
+
+    sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));
