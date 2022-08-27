@@ -46,6 +46,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/Polygon.cpp
    ${LIB_SRC_DIR}/Structures/Polyline.cpp
    ${LIB_SRC_DIR}/Structures/Rect.cpp
+   ${LIB_SRC_DIR}/Structures/T0x1f.cpp
    ${LIB_SRC_DIR}/Structures/TextFont.cpp
 )
 
@@ -86,6 +87,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/Properties2.hpp
    ${LIB_INCLUDE_DIR}/Structures/Rect.hpp
    ${LIB_INCLUDE_DIR}/Structures/SymbolPinScalar.hpp
+   ${LIB_INCLUDE_DIR}/Structures/T0x1f.hpp
    ${LIB_INCLUDE_DIR}/Structures/TextFont.hpp
 )
 
