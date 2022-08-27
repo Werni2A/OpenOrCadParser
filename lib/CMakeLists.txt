@@ -49,6 +49,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/Polygon.cpp
    ${LIB_SRC_DIR}/Structures/Polyline.cpp
    ${LIB_SRC_DIR}/Structures/Properties.cpp
+   ${LIB_SRC_DIR}/Structures/Properties2.cpp
    ${LIB_SRC_DIR}/Structures/PropertiesTrailing.cpp
    ${LIB_SRC_DIR}/Structures/Rect.cpp
    ${LIB_SRC_DIR}/Structures/T0x1f.cpp
