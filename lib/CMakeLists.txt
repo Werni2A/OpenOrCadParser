@@ -44,9 +44,12 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/GeometrySpecification.cpp
    ${LIB_SRC_DIR}/Structures/Line.cpp
    ${LIB_SRC_DIR}/Structures/PartInst.cpp
+   ${LIB_SRC_DIR}/Structures/PinIdxMapping.cpp
    ${LIB_SRC_DIR}/Structures/Point.cpp
    ${LIB_SRC_DIR}/Structures/Polygon.cpp
    ${LIB_SRC_DIR}/Structures/Polyline.cpp
+   ${LIB_SRC_DIR}/Structures/Properties.cpp
+   ${LIB_SRC_DIR}/Structures/PropertiesTrailing.cpp
    ${LIB_SRC_DIR}/Structures/Rect.cpp
    ${LIB_SRC_DIR}/Structures/T0x1f.cpp
    ${LIB_SRC_DIR}/Structures/TextFont.cpp

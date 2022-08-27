@@ -1239,50 +1239,6 @@ std::optional<FutureData> Parser::checkTrailingFuture()
 }
 
 
-PinIdxMapping Parser::readPinIdxMapping()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const std::optional<FutureData> thisFuture = getFutureData();
-
-    PinIdxMapping obj;
-
-    obj.unitRef = mDs.readStringLenZeroTerm();
-    obj.refDes  = mDs.readStringLenZeroTerm();
-
-    const uint16_t pinCount = mDs.readUint16();
-
-    // @todo Add to kaitai file i = 'Order' of pin
-    // See OrCAD: 'Pin Properties' -> 'Order'
-    for(size_t i = 0u; i < pinCount; ++i)
-    {
-        obj.pinMap.push_back(mDs.readStringLenZeroTerm());
-
-        const uint8_t separator = mDs.readUint8();
-
-        spdlog::debug("Sep = 0x{:02x}", separator);
-
-        // @todo maybe this is not a separator but the additional property of the pin?
-        // As soon as I add a property like NET_SHORT the separator changes from 0x7f to 0xaa
-        // This is probably also affected by units and convert view.
-        if(separator != 0x7f && separator != 0xaa && separator != 0xff)
-        {
-            throw std::runtime_error(fmt::format("Separator should be 0x{:02x}, 0x{:02x} or"
-                " 0x{:02x} but got 0x{:02x}!", 0x7f, 0xaa, 0xff, separator));
-        }
-    }
-
-    sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
-}
-
-
 SymbolPinScalar Parser::readSymbolPinScalar()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
@@ -1499,86 +1455,6 @@ GeneralProperties Parser::readGeneralProperties()
     obj.implementationType = ToImplementationType(implementationType);
 
     mDs.printUnknownData(1, std::string(__func__) + " - 0");
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
-}
-
-
-PropertiesTrailing Parser::readPropertiesTrailing()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const std::optional<FutureData> thisFuture = getFutureData();
-
-    PropertiesTrailing obj;
-
-    // @todo use enum for the view (normal/convert)
-    const uint16_t viewNumber = mDs.readUint16(); // @todo I assume that this is the amount of views
-                                               // the symbol has. Typically 1 (.Normal) or maybe
-                                               // 2 with (.Normal and .Convert)
-                                               // @todo Add to obj
-
-    spdlog::debug("viewNumber = {}", viewNumber);
-
-    switch(viewNumber)
-    {
-        case 1: // ".Normal"
-            obj.name = mDs.readStringLenZeroTerm();
-            break;
-
-        case 2: // ".Convert"
-            // @todo how to handle optional attributes in my structures?
-            obj.name = mDs.readStringLenZeroTerm();
-            obj.convertName = mDs.readStringLenZeroTerm();
-
-            spdlog::debug("convertName = {}", obj.convertName);
-            break;
-
-        default:
-            throw std::runtime_error("viewNumber is " + std::to_string(viewNumber) +
-                " but it was expected that this can only take the value 1 or 2!");
-            break;
-    }
-
-    spdlog::debug("name = {}", obj.name);
-
-    sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
-}
-
-Properties Parser::readProperties()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const std::optional<FutureData> thisFuture = getFutureData();
-
-    Properties obj;
-
-    obj.ref = mDs.readStringLenZeroTerm();
-
-    // @todo Probably a string
-    mDs.assumeData({0x00, 0x00, 0x00}, fmt::format("{}: 0", __func__));
-
-    sanitizeThisFutureSize(thisFuture);
-
-    if(checkTrailingFuture().has_value())
-    {
-        // @todo save returned structure as optional in Properties or in outter structure?
-        readPropertiesTrailing();
-    }
-
-    // @todo this belongs to the outter structure. Move it out of this parser function
-    mDs.printUnknownData( 2, fmt::format("{}: 1", __func__)); // @todo this is probably a length specifying the number of trailing structures
-    mDs.printUnknownData(27, fmt::format("{}: 2", __func__)); // @todo This is 3x read_single_prefix()
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));
