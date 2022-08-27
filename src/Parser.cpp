@@ -540,39 +540,32 @@ void Parser::exceptionHandling()
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // @todo return real data object
 bool Parser::readT0x10()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     bool obj = false;
 
-    mDs.printUnknownData(16, std::string(__func__) + " - 0");
+    spdlog::critical("{}: Not implemented!", __func__);
+
+    if(thisFuture.has_value())
+    {
+        mDs.printUnknownData(thisFuture.value().getByteLen(), fmt::format("{}: 0", __func__));
+    }
+    else
+    {
+        mDs.printUnknownData(16, fmt::format("{}: 0", __func__));
+    }
+
+    sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(std::to_string(obj));
 
     return obj;
 }
