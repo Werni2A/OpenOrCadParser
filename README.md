@@ -19,15 +19,18 @@ The following two XSD files provide a good overview of the `XML` file structure,
 
 # Documentation
 
-1. [File Container](doc/file_container.md)
-   1. [Container Structure](doc/container_structure.md)
-2. [File Format Changes](doc/file_format_changes.md)
+1. [File Container](/doc/file_container.md)
+   1. [Container Structure](/doc/container_structure.md)
+2. [File Format Changes](/doc/file_format_changes.md)
+3. [Tests](/doc/tests.md)
 
 ---
 
 # Current State &mdash; August 2022
 
-- Working on Parsing Directory Files
+- Working on Parsing Package Files
+- It's planned to finish the `Package` parser until the end of the year
+- A PoC KiCad importer should follow in spring 2023
 
 ---
 

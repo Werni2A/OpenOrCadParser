@@ -71,6 +71,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Files/Symbol.hpp
    ${LIB_INCLUDE_DIR}/Files/SymbolsLibrary.hpp
    ${LIB_INCLUDE_DIR}/Files/Type.hpp
+   ${LIB_INCLUDE_DIR}/FutureData.hpp
    ${LIB_INCLUDE_DIR}/General.hpp
    ${LIB_INCLUDE_DIR}/Parser.hpp
    ${LIB_INCLUDE_DIR}/Structures/Arc.hpp

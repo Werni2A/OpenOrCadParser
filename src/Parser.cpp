@@ -527,7 +527,8 @@ void Parser::exceptionHandling()
         ++mFileErrCtr;
 
         spdlog::error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
-        spdlog::error(fmt::format(fg(fmt::color::crimson), "File: {}", mCurrOpenFile.string()));
+        spdlog::error(fmt::format(fg(fmt::color::crimson), "Input Container: {}", mInputFile.string()));
+        spdlog::error(fmt::format(fg(fmt::color::crimson), "Current File:    {}", mCurrOpenFile.string()));
         spdlog::error(fmt::format(fg(fmt::color::crimson), mDs.getCurrentOffsetStrMsg()));
         spdlog::error(fmt::format(fg(fmt::color::crimson), ("\nError Message: {}\n\n", e.what())));
     }
@@ -1234,13 +1235,13 @@ std::optional<FutureData> Parser::getFutureData()
     if(thisFuture.has_value())
     {
         spdlog::info("Found this structure in future data: 0x{:08x} -> 0x{:08x} ({} Byte)",
-            __func__, thisFuture.value().getStartOffset(), thisFuture.value().getStopOffset(),
+            thisFuture.value().getStartOffset(), thisFuture.value().getStopOffset(),
             thisFuture.value().getByteLen());
     }
     else
     {
         spdlog::warn("Did not find this structure in future data with startOffset 0x{:08x}",
-            __func__, startOffset);
+            startOffset);
 
         spdlog::debug("Current FutureDataLst:");
 
