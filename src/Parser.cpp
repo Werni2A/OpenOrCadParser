@@ -1808,6 +1808,8 @@ GeometrySpecification Parser::parseGeometrySpecification(FileFormatVersion aVers
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     // Predict version
     if(aVersion == FileFormatVersion::Unknown)
     {
@@ -1917,6 +1919,10 @@ GeometrySpecification Parser::parseGeometrySpecification(FileFormatVersion aVers
     //         // readGeometryStructure(geoStruct, &obj);
     //     }
     // }
+
+    sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));
