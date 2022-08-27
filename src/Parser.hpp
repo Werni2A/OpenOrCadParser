@@ -24,6 +24,7 @@
 #include "Files/Symbol.hpp"
 #include "Files/SymbolsLibrary.hpp"
 #include "Files/Type.hpp"
+#include "FutureData.hpp"
 #include "General.hpp"
 #include "Library.hpp"
 #include "Structures/Arc.hpp"
@@ -118,6 +119,7 @@ public:
         T parsed_obj;
 
         ++mFileCtr;
+        mFutureDataLst.clear();
         try
         {
             openFile(aFilePath.string());
@@ -202,7 +204,7 @@ public:
 
     Structure auto_read_prefixes();
 
-    Structure read_prefixes(size_t aNumber);
+    Structure read_prefixes(size_t aNumber, bool aPrediction = false);
 
     std::pair<Structure, uint32_t> read_single_prefix();
 
@@ -213,6 +215,13 @@ public:
 
 
     uint32_t readConditionalPreamble(Structure structure, bool readOptionalLen = true);
+
+
+    std::optional<FutureData> getFutureData();
+
+    void sanitizeThisFutureSize(std::optional<FutureData> aThisFuture);
+
+    std::optional<FutureData> checkTrailingFuture();
 
 
     void readGeometryStructure(GeometryStructure geometryStructure, GeometrySpecification* geometrySpecification = nullptr);
@@ -336,6 +345,8 @@ private:
     DataStream mDs;
 
     uint32_t mByteOffset;
+
+    FutureDataLst mFutureDataLst;
 };
 
 

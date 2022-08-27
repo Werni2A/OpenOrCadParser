@@ -702,7 +702,7 @@ Structure Parser::auto_read_prefixes()
 
         try
         {
-            read_prefixes(i);
+            read_prefixes(i, true);
         }
         catch(const std::exception& e)
         {
@@ -737,7 +737,7 @@ Structure Parser::auto_read_prefixes()
 
 
 // Read number of prefixes, where the last one is a short prefix
-Structure Parser::read_prefixes(size_t aNumber)
+Structure Parser::read_prefixes(size_t aNumber, bool aPrediction)
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
@@ -748,17 +748,25 @@ Structure Parser::read_prefixes(size_t aNumber)
 
     Structure firstStruct;
 
+    std::vector<std::pair<size_t, size_t>> offsets; //!< First = Current offset absolute; Second = Offset relative to structure
+
     for(size_t i = 0U; i < aNumber; ++i)
     {
         Structure currStruct;
 
+        const size_t preambleOffset = mDs.getCurrentOffset();
+
         if(i == aNumber - 1)
         {
-            currStruct = read_single_prefix_short().first;
+            const auto currPrefix = read_single_prefix_short();
+            currStruct = currPrefix.first;
         }
         else
         {
-            currStruct = read_single_prefix().first;
+            const auto currPrefix = read_single_prefix();
+            currStruct = currPrefix.first;
+
+            offsets.push_back(std::pair<size_t, size_t>{preambleOffset, static_cast<size_t>(currPrefix.second)});
         }
 
         if(i == 0U)
@@ -769,6 +777,26 @@ Structure Parser::read_prefixes(size_t aNumber)
         if(currStruct != firstStruct)
         {
             throw std::runtime_error("Structs not equal");
+        }
+    }
+
+    if(!aPrediction)
+    {
+        if(offsets.size() >= 2U)
+        {
+            for(size_t i = 0U; i < offsets.size() - 1U; ++i)
+            {
+                const std::pair<size_t, size_t> start_pair = offsets[i + 1U];
+                const std::pair<size_t, size_t> stop_pair  = offsets[i];
+
+                mFutureDataLst.push_back(FutureData{start_pair.first, start_pair.second, stop_pair.first, stop_pair.second});
+
+                spdlog::debug("{}: Found future data: {}", __func__, (mFutureDataLst.end() - 1)->string());
+            }
+        }
+        else if(offsets.size() == 1U)
+        {
+            spdlog::debug("Found single structure beginning at 0x{:08x}", offsets[0].second);
         }
     }
 
@@ -1254,6 +1282,67 @@ void Parser::closeFile()
 
     mCurrOpenFile.clear();
     mCurrOpenFileSize = 0u;
+}
+
+
+std::optional<FutureData> Parser::getFutureData()
+{
+    const size_t startOffset = mDs.getCurrentOffset();
+
+    const std::optional<FutureData> thisFuture = mFutureDataLst.getByStartOffset(startOffset);
+
+    if(thisFuture.has_value())
+    {
+        spdlog::info("Found this structure in future data: 0x{:08x} -> 0x{:08x} ({} Byte)",
+            __func__, thisFuture.value().getStartOffset(), thisFuture.value().getStopOffset(),
+            thisFuture.value().getByteLen());
+    }
+    else
+    {
+        spdlog::warn("Did not find this structure in future data with startOffset 0x{:08x}",
+            __func__, startOffset);
+
+        spdlog::debug("Current FutureDataLst:");
+
+        for(const auto& futureData : mFutureDataLst)
+        {
+            spdlog::debug(futureData.string());
+        }
+    }
+
+    return thisFuture;
+}
+
+
+void Parser::sanitizeThisFutureSize(std::optional<FutureData> aThisFuture)
+{
+    const size_t stopOffset = mDs.getCurrentOffset();
+
+    if(aThisFuture.has_value())
+    {
+        if(aThisFuture.value().getStopOffset() != stopOffset)
+        {
+            const std::string msg = fmt::format("{}: StopOffsets differ! 0x{:08x} (expected) vs. 0x{:08x} (actual)",
+                __func__, aThisFuture.value().getStopOffset(), stopOffset);
+            spdlog::error(msg);
+            throw std::runtime_error(msg);
+        }
+    }
+}
+
+
+std::optional<FutureData> Parser::checkTrailingFuture()
+{
+    const size_t stopOffset = mDs.getCurrentOffset();
+
+    const std::optional<FutureData> nextFuture = mFutureDataLst.getByStartOffset(stopOffset);
+
+    if(nextFuture.has_value())
+    {
+        spdlog::warn("Detected trailing future data at 0x{:08x}", nextFuture.value().getStartOffset());
+    }
+
+    return nextFuture;
 }
 
 
