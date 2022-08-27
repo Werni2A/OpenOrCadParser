@@ -43,6 +43,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/Ellipse.cpp
    ${LIB_SRC_DIR}/Structures/GeometrySpecification.cpp
    ${LIB_SRC_DIR}/Structures/Line.cpp
+   ${LIB_SRC_DIR}/Structures/PartInst.cpp
    ${LIB_SRC_DIR}/Structures/Point.cpp
    ${LIB_SRC_DIR}/Structures/Polygon.cpp
    ${LIB_SRC_DIR}/Structures/Polyline.cpp
