@@ -41,6 +41,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/Bitmap.cpp
    ${LIB_SRC_DIR}/Structures/CommentText.cpp
    ${LIB_SRC_DIR}/Structures/Ellipse.cpp
+   ${LIB_SRC_DIR}/Structures/GeometrySpecification.cpp
    ${LIB_SRC_DIR}/Structures/Line.cpp
    ${LIB_SRC_DIR}/Structures/Point.cpp
    ${LIB_SRC_DIR}/Structures/Polygon.cpp
@@ -80,6 +81,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/CommentText.hpp
    ${LIB_INCLUDE_DIR}/Structures/Ellipse.hpp
    ${LIB_INCLUDE_DIR}/Structures/GeneralProperties.hpp
+   ${LIB_INCLUDE_DIR}/Structures/GeometrySpecification.hpp
    ${LIB_INCLUDE_DIR}/Structures/Line.hpp
    ${LIB_INCLUDE_DIR}/Structures/PinIdxMapping.hpp
    ${LIB_INCLUDE_DIR}/Structures/Point.hpp
