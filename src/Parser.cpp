@@ -691,7 +691,7 @@ Structure Parser::auto_read_prefixes()
 {
     const size_t startOffset = mDs.getCurrentOffset();
 
-    const auto logLevel = spdlog::level::critical; // spdlog::get_level();
+    const auto logLevel = spdlog::get_level();
     spdlog::set_level(spdlog::level::off);
 
     size_t successCtr = 0U;
@@ -813,10 +813,7 @@ std::pair<Structure, uint32_t> Parser::read_single_prefix()
 
     const uint32_t byteOffset = mDs.readUint32();
 
-    if(spdlog::get_level() != spdlog::level::off)
-    {
-        std::cout << fmt::format("{:>2} = {}: Offset = {}\n", static_cast<int>(typeId), to_string(typeId), byteOffset);
-    }
+    spdlog::debug("{:>2} = {}: Offset = {}\n", static_cast<int>(typeId), to_string(typeId), byteOffset);
 
     mDs.printUnknownData(4, std::string(__func__) + " - 0");
     // mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
@@ -834,13 +831,8 @@ std::pair<Structure, uint32_t> Parser::read_single_prefix_short()
     const Structure typeId = ToStructure(mDs.readUint8());
 
     const int16_t size = mDs.readInt16();
-    spdlog::debug("{} - 1 | typeId = {}", __func__, to_string(typeId));
-    spdlog::debug("{} - 2 | size   = {}", __func__, size);
 
-    if(spdlog::get_level() != spdlog::level::off)
-    {
-        std::cout << fmt::format("{:>2} = {}: Size = {}\n", static_cast<int>(typeId), to_string(typeId), size);
-    }
+    spdlog::debug("{:>2} = {}: Size = {}\n", static_cast<int>(typeId), to_string(typeId), size);
 
     if(size >= 0)
     {
@@ -1779,7 +1771,7 @@ GeometrySpecification Parser::parseGeometrySpecification(FileFormatVersion aVers
 
     GeometrySpecification obj;
 
-    obj.name = mDs.readStringLenZeroTerm(); // @todo add to struct and Kaitai file
+    obj.name = mDs.readStringLenZeroTerm();
 
     mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 0"); // Unknown but probably a string
     mDs.assumeData({0x30}, std::string(__func__) + " - 1");

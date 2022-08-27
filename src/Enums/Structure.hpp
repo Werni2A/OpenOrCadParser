@@ -14,6 +14,7 @@ enum class Structure
 
     DsnStream              =   4, //!< Used in the 'DsnStream' stream //@todo figure out real name and rename it
 
+    // @todo Probably `PackageBegin` or more a generic `ItemBegin`
     Properties             =   6, // @todo Probably PackageProperties or 'Cell' but already the one before should be the properties. Maybe a bit more generic such that this one works for all, packages, symbols,...
 
     SchLib                 =   9, //!< Used in the 'Schematic' stream //@todo figure out real name and rename it
@@ -35,6 +36,7 @@ enum class Structure
 
     BusEntry               =  29,
 
+    // @todo Probably `PackageEnd` or a more generic `ItemEnd`
     T0x1f                  =  31, // @todo rename
     PinIdxMapping          =  32,
     GlobalSymbol           =  33, //!< Power symbol in library
