@@ -176,7 +176,8 @@ GeometrySpecification Parser::parseGeometrySpecification(FileFormatVersion aVers
     //     }
     // }
 
-    sanitizeThisFutureSize(thisFuture);
+    // @todo reactivate
+    // sanitizeThisFutureSize(thisFuture);
 
     checkTrailingFuture();
 

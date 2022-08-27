@@ -70,7 +70,8 @@ WireScalar Parser::readWireScalar()
     spdlog::debug("wireLineWidth = {} | wireLineStyle = {}",
         to_string(obj.wireLineWidth), to_string(obj.wireLineStyle));
 
-    sanitizeThisFutureSize(thisFuture);
+    // @todo reactivate
+    // sanitizeThisFutureSize(thisFuture);
 
     checkTrailingFuture();
 
