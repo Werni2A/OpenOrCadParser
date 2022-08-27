@@ -86,6 +86,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/Polyline.hpp
    ${LIB_INCLUDE_DIR}/Structures/Properties.hpp
    ${LIB_INCLUDE_DIR}/Structures/Properties2.hpp
+   ${LIB_INCLUDE_DIR}/Structures/PropertiesTrailing.hpp
    ${LIB_INCLUDE_DIR}/Structures/Rect.hpp
    ${LIB_INCLUDE_DIR}/Structures/SymbolPinScalar.hpp
    ${LIB_INCLUDE_DIR}/Structures/T0x1f.hpp

@@ -41,6 +41,7 @@
 #include "Structures/Polyline.hpp"
 #include "Structures/Properties.hpp"
 #include "Structures/Properties2.hpp"
+#include "Structures/PropertiesTrailing.hpp"
 #include "Structures/Rect.hpp"
 #include "Structures/SymbolBBox.hpp"
 #include "Structures/SymbolDisplayProp.hpp"
@@ -305,6 +306,7 @@ public:
 
     Properties readProperties();
 
+    PropertiesTrailing readPropertiesTrailing();
 
     Properties2 readProperties2();
 

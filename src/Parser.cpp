@@ -43,6 +43,8 @@
 #include "Structures/Line.hpp"
 #include "Structures/Point.hpp"
 #include "Structures/Polygon.hpp"
+#include "Structures/Properties.hpp"
+#include "Structures/PropertiesTrailing.hpp"
 #include "Structures/Rect.hpp"
 #include "Structures/SymbolDisplayProp.hpp"
 #include "Structures/SymbolPinBus.hpp"
@@ -1552,39 +1554,13 @@ GeneralProperties Parser::readGeneralProperties()
 }
 
 
-Properties Parser::readProperties()
+PropertiesTrailing Parser::readPropertiesTrailing()
 {
-    // @todo this structure contains somehow .Normal and .Convert variants
-
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    Properties obj;
-
-    obj.ref = mDs.readStringLenZeroTerm();
-
-    mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 0"); // Unknown but probably string
-
-
-    sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
-
-
-    // @todo Probably split this structure here
-
-
-    // From here on it is outter structure
-    // -----------------------------
-
-    const std::optional<FutureData> thisFuture2 = getFutureData();
-
-    spdlog::info("Parsing independent data with size {} at 0x{:08x}", thisFuture2.value().getByteLen(), mDs.getCurrentOffset());
-
-
-    // @todo try discarding the data to check if getByteLen() works correctly
-    // mDs.discardData(thisFuture2.getByteLen());
+    PropertiesTrailing obj;
 
     // @todo use enum for the view (normal/convert)
     const uint16_t viewNumber = mDs.readUint16(); // @todo I assume that this is the amount of views
@@ -1616,21 +1592,40 @@ Properties Parser::readProperties()
 
     spdlog::debug("name = {}", obj.name);
 
-
-    spdlog::info("End of parsing independent data with size {} at 0x{:08x}", thisFuture2.value().getByteLen(), mDs.getCurrentOffset());
-
-    sanitizeThisFutureSize(thisFuture2);
+    sanitizeThisFutureSize(thisFuture);
 
     checkTrailingFuture();
 
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(obj));
+
+    return obj;
+}
+
+Properties Parser::readProperties()
+{
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    const std::optional<FutureData> thisFuture = getFutureData();
+
+    Properties obj;
+
+    obj.ref = mDs.readStringLenZeroTerm();
+
+    // @todo Probably a string
+    mDs.assumeData({0x00, 0x00, 0x00}, fmt::format("{}: 0", __func__));
+
+    sanitizeThisFutureSize(thisFuture);
+
+    if(checkTrailingFuture().has_value())
+    {
+        // @todo save returned structure as optional in Properties or in outter structure?
+        readPropertiesTrailing();
+    }
+
     // @todo this belongs to the outter structure. Move it out of this parser function
-    mDs.printUnknownData(2, std::string(__func__) + " - 0"); // @todo this is probably a length specifying the number of trailing structures
-    mDs.printUnknownData(27, std::string(__func__) + " - 1"); // @todo This is 3x read_single_prefix()
-
-
-    // -----------------------------
-    // Until here it is outter structure
-
+    mDs.printUnknownData( 2, fmt::format("{}: 1", __func__)); // @todo this is probably a length specifying the number of trailing structures
+    mDs.printUnknownData(27, fmt::format("{}: 2", __func__)); // @todo This is 3x read_single_prefix()
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));
