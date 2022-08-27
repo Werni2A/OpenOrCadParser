@@ -1642,27 +1642,54 @@ Properties Parser::readProperties()
 
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     Properties obj;
 
     obj.ref = mDs.readStringLenZeroTerm();
 
     mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 0"); // Unknown but probably string
 
+
+    sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
+
+
+    // @todo Probably split this structure here
+
+
+    // From here on it is outter structure
+    // -----------------------------
+
+    const std::optional<FutureData> thisFuture2 = getFutureData();
+
+    spdlog::info("Parsing independent data with size {} at 0x{:08x}", thisFuture2.value().getByteLen(), mDs.getCurrentOffset());
+
+
+    // @todo try discarding the data to check if getByteLen() works correctly
+    // mDs.discardData(thisFuture2.getByteLen());
+
     // @todo use enum for the view (normal/convert)
     const uint16_t viewNumber = mDs.readUint16(); // @todo I assume that this is the amount of views
                                                // the symbol has. Typically 1 (.Normal) or maybe
                                                // 2 with (.Normal and .Convert)
-                                               // Add to obj
+                                               // @todo Add to obj
+
+    spdlog::debug("viewNumber = {}", viewNumber);
 
     switch(viewNumber)
     {
         case 1: // ".Normal"
-            // Nothing to do
+            obj.name = mDs.readStringLenZeroTerm();
             break;
 
         case 2: // ".Convert"
             // @todo how to handle optional attributes in my structures?
-            obj.convertName = mDs.readStringLenZeroTerm(); // @todo include into Kaitai file
+            obj.name = mDs.readStringLenZeroTerm();
+            obj.convertName = mDs.readStringLenZeroTerm();
+
+            spdlog::debug("convertName = {}", obj.convertName);
             break;
 
         default:
@@ -1671,10 +1698,23 @@ Properties Parser::readProperties()
             break;
     }
 
-    obj.name = mDs.readStringLenZeroTerm();
+    spdlog::debug("name = {}", obj.name);
 
-    // This really looks like an TypePrefix! Maybe this property can be split up?
-    mDs.printUnknownData(29, std::string(__func__) + " - 1");
+
+    spdlog::info("End of parsing independent data with size {} at 0x{:08x}", thisFuture2.value().getByteLen(), mDs.getCurrentOffset());
+
+    sanitizeThisFutureSize(thisFuture2);
+
+    checkTrailingFuture();
+
+    // @todo this belongs to the outter structure. Move it out of this parser function
+    mDs.printUnknownData(2, std::string(__func__) + " - 0"); // @todo this is probably a length specifying the number of trailing structures
+    mDs.printUnknownData(27, std::string(__func__) + " - 1"); // @todo This is 3x read_single_prefix()
+
+
+    // -----------------------------
+    // Until here it is outter structure
+
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));
