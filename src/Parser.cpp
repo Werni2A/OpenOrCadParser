@@ -913,6 +913,8 @@ void Parser::readSthInPages0()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     mDs.printUnknownData(6, std::string(__func__) + " - 0");
     mDs.printUnknownData(4, std::string(__func__) + " - 1");
 
@@ -931,6 +933,10 @@ void Parser::readSthInPages0()
         readGeometryStructure(geometryStructure1, nullptr); // @todo write output to structure
     }
 
+    // sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
+
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
@@ -939,7 +945,13 @@ void Parser::readGraphicCommentTextInst()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     mDs.printUnknownData(34, std::string(__func__) + " - 0");
+
+    // sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
@@ -948,6 +960,8 @@ void Parser::readGraphicCommentTextInst()
 void Parser::readAlias()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    const std::optional<FutureData> thisFuture = getFutureData();
 
     int32_t locX = mDs.readInt32();
     int32_t locY = mDs.readInt32();
@@ -970,6 +984,10 @@ void Parser::readAlias()
 
     std::string name = mDs.readStringLenZeroTerm();
 
+    // sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
+
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
@@ -978,6 +996,8 @@ void Parser::readAlias()
 void Parser::readGraphicBoxInst()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    const std::optional<FutureData> thisFuture = getFutureData();
 
     mDs.printUnknownData(11, std::string(__func__) + " - 0");
 
@@ -1003,6 +1023,10 @@ void Parser::readGraphicBoxInst()
     Structure structure = auto_read_prefixes();
     readPreamble();
     parseStructure(structure);
+
+    // sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
