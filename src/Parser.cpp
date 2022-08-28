@@ -1064,55 +1064,6 @@ void Parser::checkInterpretedDataLen(const std::string& aFuncName, size_t aStart
 }
 
 
-SymbolVector Parser::readSymbolVector()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    SymbolVector obj;
-
-    const auto readSmallTypePrefix = [&, this]() -> GeometryStructure
-        {
-            GeometryStructure structure = ToGeometryStructure(mDs.readUint8());
-            mDs.assumeData({0x00}, std::string(__func__) + " - 0");
-            mDs.assumeData({static_cast<uint8_t>(structure)}, std::string(__func__) + " - 1");
-
-            return structure;
-        };
-
-    // mDs.printUnknownData(20, std::string(__func__) + " - x");
-    // read_type_prefix();
-
-    discard_until_preamble();
-    readPreamble();
-
-    obj.locX = mDs.readInt16();
-    obj.locY = mDs.readInt16();
-
-    uint16_t repetition = mDs.readUint16();
-
-    for(size_t i = 0u; i < repetition; ++i)
-    {
-        if(i > 0u)
-        {
-            readPreamble();
-        }
-
-        readGeometryStructure(readSmallTypePrefix());
-    }
-
-    readPreamble();
-    obj.name = mDs.readStringLenZeroTerm();
-
-    mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x32, 0x00, 0x32, 0x00, 0x00, 0x00, 0x02, 0x00}, std::string(__func__) + " - 2");
-    // mDs.printUnknownData(12, std::string(__func__) + " - 2");
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
-}
-
-
 fs::path Parser::extractContainer(const fs::path& aFile, const fs::path& aOutDir) const
 {
     ContainerExtractor extractor{aFile};
@@ -1263,121 +1214,13 @@ std::optional<FutureData> Parser::checkTrailingFuture()
 }
 
 
-SymbolPinScalar Parser::readSymbolPinScalar()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    SymbolPinScalar symbolPinScalar;
-
-    symbolPinScalar.name = mDs.readStringLenZeroTerm();
-
-    symbolPinScalar.startX = mDs.readInt32();
-    symbolPinScalar.startY = mDs.readInt32();
-    symbolPinScalar.hotptX = mDs.readInt32();
-    symbolPinScalar.hotptY = mDs.readInt32();
-
-    symbolPinScalar.pinShape = ToPinShape(mDs.readUint16());
-
-    mDs.printUnknownData(2, std::string(__func__) + " - 0");
-
-    symbolPinScalar.portType = ToPortType(mDs.readUint32());
-
-    mDs.printUnknownData(6, std::string(__func__) + " - 1");
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(symbolPinScalar));
-
-    return symbolPinScalar;
-}
-
-
-SymbolPinBus Parser::readSymbolPinBus()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    SymbolPinBus symbolPinBus;
-
-    symbolPinBus.name = mDs.readStringLenZeroTerm();
-
-    symbolPinBus.startX = mDs.readInt32();
-    symbolPinBus.startY = mDs.readInt32();
-    symbolPinBus.hotptX = mDs.readInt32();
-    symbolPinBus.hotptY = mDs.readInt32();
-
-    symbolPinBus.pinShape = ToPinShape(mDs.readUint16());
-
-    mDs.printUnknownData(2, std::string(__func__) + " - 0");
-
-    symbolPinBus.portType = ToPortType(mDs.readUint32());
-
-    mDs.printUnknownData(6, std::string(__func__) + " - 1");
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(symbolPinBus));
-
-    return symbolPinBus;
-}
-
-
-SymbolDisplayProp Parser::readSymbolDisplayProp()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    SymbolDisplayProp symbolDisplayProp;
-
-    symbolDisplayProp.nameIdx = mDs.readUint32();
-
-    // @todo move to left shift operator
-    // @bug The required string is not this one but the value of the associated property!!!! This is just the name of the property!!
-    spdlog::debug("strLst Item = {}", mLibrary.symbolsLibrary.strLst.at(symbolDisplayProp.nameIdx - 1));
-
-    symbolDisplayProp.x = mDs.readInt16();
-    symbolDisplayProp.y = mDs.readInt16();
-
-    // @todo maybe using a bitmap is a cleaner solution than shifting bits
-    const uint16_t packedStruct = mDs.readUint16();
-
-    symbolDisplayProp.textFontIdx = packedStruct & 0xff; // Bit  7 downto  0
-
-    if(symbolDisplayProp.textFontIdx > mLibrary.symbolsLibrary.textFonts.size())
-    {
-        throw std::out_of_range(std::string(__func__) + ": textFontIdx is out of range! Expected " +
-            std::to_string(symbolDisplayProp.textFontIdx) + " <= " +
-            std::to_string(mLibrary.symbolsLibrary.textFonts.size()) + "!");
-    }
-
-    // @todo The meaning of the bits in between is unknown
-    spdlog::debug("Unknown bits in bitmap: {}", (packedStruct >> 8u) & 0x3f); // Bit 13 downto  8
-    if(((packedStruct >> 8u) & 0x3f) != 0x00)
-    {
-        throw std::runtime_error("Some bits in the bitmap are used but what is the meaning of them?");
-    }
-
-    symbolDisplayProp.rotation = ToRotation(packedStruct >> 14u); // Bit 15 downto 14
-
-    symbolDisplayProp.propColor = ToColor(mDs.readUint8());
-
-    // Somehow relates to the visiblity of text. See show "Value if Value exist" and the other options
-    //        Do not display
-    // cc 01  Value only
-    // 00 02  Name and value
-    // 00 03  Name only
-    // 00 04  Both if value exist
-    //        Value if value exist
-    mDs.printUnknownData(2, std::string(__func__) + " - 0");
-
-    mDs.assumeData({0x00}, std::string(__func__) + " - 1");
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(symbolDisplayProp));
-
-    return symbolDisplayProp;
-}
-
-
 // @todo implement return type and return it
 void Parser::readERCSymbol()
 {
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     std::string name = mDs.readStringLenZeroTerm();
 
     // @todo Probably 'sourceLibName' which is a string but I'm not sure. Could also be the
@@ -1403,87 +1246,16 @@ void Parser::readERCSymbol()
 
     // @todo not sure if this belongs into this structure and how do we know whether it
     //       is used or not? (BBox should be optional according to XSD)
+    //       Probably defined by prefix?
     readPreamble();
     readSymbolBBox(); // @todo push structure
-}
 
+    // sanitizeThisFutureSize(thisFuture);
 
-SymbolBBox Parser::readSymbolBBox()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    SymbolBBox obj;
-
-    obj.x1 = mDs.readInt16();
-    obj.y1 = mDs.readInt16();
-    obj.x2 = mDs.readInt16();
-    obj.y2 = mDs.readInt16();
-
-    // @todo not sure weather this belongs to the structure or should be outside of it
-    mDs.printUnknownData(4, fmt::format("{} - 0", __func__));
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
-}
-
-
-// @todo create/update Kaitai file
-GeneralProperties Parser::readGeneralProperties()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    GeneralProperties obj;
-
-    // @todo move to kaitai file
-    // doc: |
-    //   Implementation path of the symbol.
-    //   See OrCAD: 'Part Properties' -> 'Implementation Path'
-    obj.implementationPath = mDs.readStringLenZeroTerm();
-
-    // @todo move to kaitai file
-    // doc: |
-    //   Implementation of the symbol.
-    //   See OrCAD: 'Part Properties' -> 'Implementation'
-    obj.implementation = mDs.readStringLenZeroTerm();
-
-    // @todo move to kaitai file
-    // doc: |
-    //   Reference descriptor for the symbol. E.g. 'R' for resistor.
-    //   See OrCAD: 'Package Properties' -> 'Part Reference Prefix'
-    obj.refDes = mDs.readStringLenZeroTerm();
-
-    // @todo move to kaitai file
-    // doc: |
-    //   Value of the symbol. E.g. '10k' for a resistor.
-    //   See OrCAD: 'Part Properties' -> 'Value'
-    obj.partValue = mDs.readStringLenZeroTerm();
-
-    const uint8_t properties = mDs.readUint8();
-
-    // Expect that upper bits are unused => 00xx xxxxb
-    if((properties & 0xc0) != 0x00)
-    {
-        throw std::runtime_error(fmt::format("Expected 00xx xxxxb but got 0x{:02x}",
-            properties & 0xc0));
-    }
-
-    const uint8_t pinProperties      =  properties       & 0x07; // Get bits 2 down to 0
-    const uint8_t implementationType = (properties >> 3) & 0x07; // Get bits 5 down to 3
-
-    obj.pinNameVisible   =  static_cast<bool>((pinProperties & 0x01) >> 0); // Bit 0
-    obj.pinNameRotate    =  static_cast<bool>((pinProperties & 0x02) >> 1); // Bit 1
-    obj.pinNumberVisible = !static_cast<bool>((pinProperties & 0x04) >> 2); // Bit 2 - Note that this bit is inverted
-
-    obj.implementationType = ToImplementationType(implementationType);
-
-    mDs.printUnknownData(1, std::string(__func__) + " - 0");
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    // spdlog::info(to_string(obj));
 }
 
 
