@@ -43,6 +43,8 @@
 #include "Structures/Line.hpp"
 #include "Structures/Point.hpp"
 #include "Structures/Polygon.hpp"
+#include "Structures/Properties.hpp"
+#include "Structures/PropertiesTrailing.hpp"
 #include "Structures/Rect.hpp"
 #include "Structures/SymbolDisplayProp.hpp"
 #include "Structures/SymbolPinBus.hpp"
@@ -525,7 +527,8 @@ void Parser::exceptionHandling()
         ++mFileErrCtr;
 
         spdlog::error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
-        spdlog::error(fmt::format(fg(fmt::color::crimson), "File: {}", mCurrOpenFile.string()));
+        spdlog::error(fmt::format(fg(fmt::color::crimson), "Input Container: {}", mInputFile.string()));
+        spdlog::error(fmt::format(fg(fmt::color::crimson), "Current File:    {}", mCurrOpenFile.string()));
         spdlog::error(fmt::format(fg(fmt::color::crimson), mDs.getCurrentOffsetStrMsg()));
         spdlog::error(fmt::format(fg(fmt::color::crimson), ("\nError Message: {}\n\n", e.what())));
     }
@@ -538,79 +541,31 @@ void Parser::exceptionHandling()
 
 
 // @todo return real data object
-bool Parser::readPartInst()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    bool obj = false;
-
-    mDs.printUnknownData(8, std::string(__func__) + " - 0");
-
-    std::string pkgName = mDs.readStringLenZeroTerm();
-
-    uint32_t dbId = mDs.readUint32();
-
-    mDs.printUnknownData(8, std::string(__func__) + " - 1");
-
-    int16_t locX = mDs.readInt16();
-    int16_t locY = mDs.readInt16();
-
-    Color color = ToColor(mDs.readUint16()); // @todo educated guess
-
-    mDs.printUnknownData(2, std::string(__func__) + " - 2");
-
-    uint16_t len = mDs.readUint16();
-
-    for(size_t i = 0u; i < len; ++i)
-    {
-        // Structure structure = read_prefixes(3);
-        Structure structure = auto_read_prefixes();
-        readPreamble();
-        parseStructure(structure); // @todo push struct
-    }
-
-    mDs.printUnknownData(1, std::string(__func__) + " - 3");
-
-    std::string reference = mDs.readStringLenZeroTerm();
-
-    mDs.printUnknownData(14, std::string(__func__) + " - 4");
-
-    uint16_t len2 = mDs.readUint16();
-
-    for(size_t i = 0u; i < len2; ++i)
-    {
-        // Structure structure = read_prefixes(3);
-        Structure structure = auto_read_prefixes();
-        readPreamble();
-        parseStructure(structure); // @todo push struct
-    }
-
-    std::string sth1 = mDs.readStringLenZeroTerm(); // @todo needs verification
-
-    mDs.printUnknownData(2, std::string(__func__) + " - 5");
-
-    // @todo implement type_prefix_very_long
-    mDs.printUnknownData(18, std::string(__func__) + " - 6");
-    // Structure structure = read_prefixes(4);
-    Structure structure = auto_read_prefixes();
-    readPreamble();
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-
-    return obj;
-}
-
-
-// @todo return real data object
 bool Parser::readT0x10()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     bool obj = false;
 
-    mDs.printUnknownData(16, std::string(__func__) + " - 0");
+    spdlog::critical("{}: Not implemented!", __func__);
+
+    if(thisFuture.has_value())
+    {
+        mDs.printUnknownData(thisFuture.value().getByteLen(), fmt::format("{}: 0", __func__));
+    }
+    else
+    {
+        mDs.printUnknownData(16, fmt::format("{}: 0", __func__));
+    }
+
+    sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(std::to_string(obj));
 
     return obj;
 }
@@ -691,7 +646,7 @@ Structure Parser::auto_read_prefixes()
 {
     const size_t startOffset = mDs.getCurrentOffset();
 
-    const auto logLevel = spdlog::level::critical; // spdlog::get_level();
+    const auto logLevel = spdlog::get_level();
     spdlog::set_level(spdlog::level::off);
 
     size_t successCtr = 0U;
@@ -702,7 +657,7 @@ Structure Parser::auto_read_prefixes()
 
         try
         {
-            read_prefixes(i);
+            read_prefixes(i, true);
         }
         catch(const std::exception& e)
         {
@@ -737,7 +692,7 @@ Structure Parser::auto_read_prefixes()
 
 
 // Read number of prefixes, where the last one is a short prefix
-Structure Parser::read_prefixes(size_t aNumber)
+Structure Parser::read_prefixes(size_t aNumber, bool aPrediction)
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
@@ -748,17 +703,25 @@ Structure Parser::read_prefixes(size_t aNumber)
 
     Structure firstStruct;
 
+    std::vector<std::pair<size_t, size_t>> offsets; //!< First = Current offset absolute; Second = Offset relative to structure
+
     for(size_t i = 0U; i < aNumber; ++i)
     {
         Structure currStruct;
 
+        const size_t preambleOffset = mDs.getCurrentOffset();
+
         if(i == aNumber - 1)
         {
-            currStruct = read_single_prefix_short().first;
+            const auto currPrefix = read_single_prefix_short();
+            currStruct = currPrefix.first;
         }
         else
         {
-            currStruct = read_single_prefix().first;
+            const auto currPrefix = read_single_prefix();
+            currStruct = currPrefix.first;
+
+            offsets.push_back(std::pair<size_t, size_t>{preambleOffset, static_cast<size_t>(currPrefix.second)});
         }
 
         if(i == 0U)
@@ -769,6 +732,26 @@ Structure Parser::read_prefixes(size_t aNumber)
         if(currStruct != firstStruct)
         {
             throw std::runtime_error("Structs not equal");
+        }
+    }
+
+    if(!aPrediction)
+    {
+        if(offsets.size() >= 2U)
+        {
+            for(size_t i = 0U; i < offsets.size() - 1U; ++i)
+            {
+                const std::pair<size_t, size_t> start_pair = offsets[i + 1U];
+                const std::pair<size_t, size_t> stop_pair  = offsets[i];
+
+                mFutureDataLst.push_back(FutureData{start_pair.first, start_pair.second, stop_pair.first, stop_pair.second});
+
+                spdlog::debug("{}: Found future data: {}", __func__, (mFutureDataLst.end() - 1)->string());
+            }
+        }
+        else if(offsets.size() == 1U)
+        {
+            spdlog::debug("Found single structure beginning at 0x{:08x}", offsets[0].second);
         }
     }
 
@@ -785,10 +768,7 @@ std::pair<Structure, uint32_t> Parser::read_single_prefix()
 
     const uint32_t byteOffset = mDs.readUint32();
 
-    if(spdlog::get_level() != spdlog::level::off)
-    {
-        std::cout << fmt::format("{:>2} = {}: Offset = {}\n", static_cast<int>(typeId), to_string(typeId), byteOffset);
-    }
+    spdlog::debug("{:>2} = {}: Offset = {}\n", static_cast<int>(typeId), to_string(typeId), byteOffset);
 
     mDs.printUnknownData(4, std::string(__func__) + " - 0");
     // mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
@@ -806,13 +786,8 @@ std::pair<Structure, uint32_t> Parser::read_single_prefix_short()
     const Structure typeId = ToStructure(mDs.readUint8());
 
     const int16_t size = mDs.readInt16();
-    spdlog::debug("{} - 1 | typeId = {}", __func__, to_string(typeId));
-    spdlog::debug("{} - 2 | size   = {}", __func__, size);
 
-    if(spdlog::get_level() != spdlog::level::off)
-    {
-        std::cout << fmt::format("{:>2} = {}: Size = {}\n", static_cast<int>(typeId), to_string(typeId), size);
-    }
+    spdlog::debug("{:>2} = {}: Size = {}\n", static_cast<int>(typeId), to_string(typeId), size);
 
     if(size >= 0)
     {
@@ -965,60 +940,6 @@ void Parser::readGraphicCommentTextInst()
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     mDs.printUnknownData(34, std::string(__func__) + " - 0");
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-}
-
-
-void Parser::readWireScalar()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    uint32_t dbId = mDs.readUint32();
-
-    spdlog::debug("dbId = {}", dbId);
-
-    mDs.printUnknownData(4, std::string(__func__) + " - 0");
-
-    Color wireColor = ToColor(mDs.readUint32());
-
-    int32_t startX = mDs.readInt32();
-    int32_t startY = mDs.readInt32();
-    int32_t endX   = mDs.readInt32();
-    int32_t endY   = mDs.readInt32();
-
-    spdlog::debug("startX = {} | startY = {} | endX = {} | endY = {}", startX, startY, endX, endY);
-
-    mDs.printUnknownData(1, std::string(__func__) + " - 1");
-
-    spdlog::debug("mByteOffset = {}", mByteOffset);
-
-    if(mByteOffset == 0x3d)
-    {
-        mDs.printUnknownData(2, std::string(__func__) + " - 2");
-    }
-    else if(mByteOffset > 0x3d)
-    {
-        const uint16_t len = mDs.readUint16();
-
-        spdlog::debug("len = {}", len);
-
-        for(size_t i = 0u; i < len; ++i)
-        {
-            // @todo len should always be 1 and the read structure should be 'Alias'
-            // Structure structure = read_prefixes(3);
-            Structure structure = auto_read_prefixes();
-            readPreamble();
-            parseStructure(structure); // @todo push
-        }
-    }
-
-    mDs.printUnknownData(2, std::string(__func__) + " - 3");
-
-    LineWidth wireLineWidth = ToLineWidth(mDs.readUint32());
-    LineStyle wireLineStyle = ToLineStyle(mDs.readUint32());
-
-    spdlog::debug("wireLineWidth = {} | wireLineStyle = {}", to_string(wireLineWidth), to_string(wireLineStyle));
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
@@ -1257,41 +1178,64 @@ void Parser::closeFile()
 }
 
 
-PinIdxMapping Parser::readPinIdxMapping()
+std::optional<FutureData> Parser::getFutureData()
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    const size_t startOffset = mDs.getCurrentOffset();
 
-    PinIdxMapping obj;
+    const std::optional<FutureData> thisFuture = mFutureDataLst.getByStartOffset(startOffset);
 
-    obj.unitRef = mDs.readStringLenZeroTerm();
-    obj.refDes  = mDs.readStringLenZeroTerm();
-
-    const uint16_t pinCount = mDs.readUint16();
-
-    // @todo Add to kaitai file i = 'Order' of pin
-    // See OrCAD: 'Pin Properties' -> 'Order'
-    for(size_t i = 0u; i < pinCount; ++i)
+    if(thisFuture.has_value())
     {
-        obj.pinMap.push_back(mDs.readStringLenZeroTerm());
+        spdlog::info("Found this structure in future data: 0x{:08x} -> 0x{:08x} ({} Byte)",
+            thisFuture.value().getStartOffset(), thisFuture.value().getStopOffset(),
+            thisFuture.value().getByteLen());
+    }
+    else
+    {
+        spdlog::warn("Did not find this structure in future data with startOffset 0x{:08x}",
+            startOffset);
 
-        const uint8_t separator = mDs.readUint8();
+        spdlog::debug("Current FutureDataLst:");
 
-        spdlog::debug("Sep = 0x{:02x}", separator);
-
-        // @todo maybe this is not a separator but the additional property of the pin?
-        // As soon as I add a property like NET_SHORT the separator changes from 0x7f to 0xaa
-        // This is probably also affected by units and convert view.
-        if(separator != 0x7f && separator != 0xaa && separator != 0xff)
+        for(const auto& futureData : mFutureDataLst)
         {
-            throw std::runtime_error(fmt::format("Separator should be 0x{:02x}, 0x{:02x} or"
-                " 0x{:02x} but got 0x{:02x}!", 0x7f, 0xaa, 0xff, separator));
+            spdlog::debug(futureData.string());
         }
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
+    return thisFuture;
+}
 
-    return obj;
+
+void Parser::sanitizeThisFutureSize(std::optional<FutureData> aThisFuture)
+{
+    const size_t stopOffset = mDs.getCurrentOffset();
+
+    if(aThisFuture.has_value())
+    {
+        if(aThisFuture.value().getStopOffset() != stopOffset)
+        {
+            const std::string msg = fmt::format("{}: StopOffsets differ! 0x{:08x} (expected) vs. 0x{:08x} (actual)",
+                __func__, aThisFuture.value().getStopOffset(), stopOffset);
+            spdlog::error(msg);
+            throw std::runtime_error(msg);
+        }
+    }
+}
+
+
+std::optional<FutureData> Parser::checkTrailingFuture()
+{
+    const size_t stopOffset = mDs.getCurrentOffset();
+
+    const std::optional<FutureData> nextFuture = mFutureDataLst.getByStartOffset(stopOffset);
+
+    if(nextFuture.has_value())
+    {
+        spdlog::warn("Detected trailing future data at 0x{:08x}", nextFuture.value().getStartOffset());
+    }
+
+    return nextFuture;
 }
 
 
@@ -1461,36 +1405,6 @@ SymbolBBox Parser::readSymbolBBox()
 }
 
 
-// @todo Probably specifies the 'Package Properties'
-T0x1f Parser::readT0x1f()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    T0x1f obj;
-
-    obj.name = mDs.readStringLenZeroTerm();
-
-    std::string unknownStr0 = mDs.readStringLenZeroTerm(); // @todo figure out
-    spdlog::debug("{} unknownStr0 = {}", __func__, unknownStr0);
-
-    obj.refDes = mDs.readStringLenZeroTerm();
-
-    std::string unknownStr1 = mDs.readStringLenZeroTerm(); // @todo figure out
-    spdlog::debug("{} unknownStr1 = {}", __func__, unknownStr1);
-
-    obj.pcbFootprint = mDs.readStringLenZeroTerm();
-
-    // Maybe the last two bytes specify the amount of units the symbols has?
-    // Also called "Section Count"
-    mDs.printUnknownData(2, std::string(__func__) + " - 0 - Prob. Unit Count");
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
-}
-
-
 // @todo create/update Kaitai file
 GeneralProperties Parser::readGeneralProperties()
 {
@@ -1549,250 +1463,9 @@ GeneralProperties Parser::readGeneralProperties()
 }
 
 
-Properties Parser::readProperties()
-{
-    // @todo this structure contains somehow .Normal and .Convert variants
-
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    Properties obj;
-
-    obj.ref = mDs.readStringLenZeroTerm();
-
-    mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 0"); // Unknown but probably string
-
-    // @todo use enum for the view (normal/convert)
-    const uint16_t viewNumber = mDs.readUint16(); // @todo I assume that this is the amount of views
-                                               // the symbol has. Typically 1 (.Normal) or maybe
-                                               // 2 with (.Normal and .Convert)
-                                               // Add to obj
-
-    switch(viewNumber)
-    {
-        case 1: // ".Normal"
-            // Nothing to do
-            break;
-
-        case 2: // ".Convert"
-            // @todo how to handle optional attributes in my structures?
-            obj.convertName = mDs.readStringLenZeroTerm(); // @todo include into Kaitai file
-            break;
-
-        default:
-            throw std::runtime_error("viewNumber is " + std::to_string(viewNumber) +
-                " but it was expected that this can only take the value 1 or 2!");
-            break;
-    }
-
-    obj.name = mDs.readStringLenZeroTerm();
-
-    // This really looks like an TypePrefix! Maybe this property can be split up?
-    mDs.printUnknownData(29, std::string(__func__) + " - 1");
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
-}
-
-
-Properties2 Parser::readProperties2()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    Properties2 obj;
-
-    obj.name = mDs.readStringLenZeroTerm();
-
-    mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 0"); // Unknown but probably string
-
-    obj.refDes = mDs.readStringLenZeroTerm();
-
-    mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 1"); // Unknown but probably string
-
-    obj.footprint = mDs.readStringLenZeroTerm();
-
-    obj.sectionCount = mDs.readUint16(); // @todo has this something to do with units? Or was this just bad naming from myself?
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
-}
-
-
 GeometrySpecification Parser::readSymbolProperties()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     return parseGeometrySpecification();
-}
-
-
-static FileFormatVersion predictVersionGeoSpec(DataStream& aDs, Parser& aParser)
-{
-    FileFormatVersion prediction = FileFormatVersion::Unknown;
-
-
-    const std::vector<FileFormatVersion> versions{
-        FileFormatVersion::A,
-        FileFormatVersion::B,
-        FileFormatVersion::C
-    };
-
-    const size_t initial_offset = aDs.getCurrentOffset();
-
-    for(const auto& version : versions)
-    {
-        bool found = true;
-
-        GeometrySpecification geo_spec;
-
-        try
-        {
-            aParser.parseGeometrySpecification(version);
-        }
-        catch(...)
-        {
-            found = false;
-        }
-
-        aDs.setCurrentOffset(initial_offset);
-
-        if(found)
-        {
-            prediction = version;
-            break;
-        }
-    }
-
-    if(prediction == FileFormatVersion::Unknown)
-    {
-        // Set to previous default value
-        // s.t. tests not fail
-        prediction = FileFormatVersion::C;
-    }
-
-    return prediction;
-}
-
-
-GeometrySpecification Parser::parseGeometrySpecification(FileFormatVersion aVersion)
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    // Predict version
-    if(aVersion == FileFormatVersion::Unknown)
-    {
-        aVersion = predictVersionGeoSpec(mDs, *this);
-        // spdlog::info("Predicted version {} in {}", aVersion, __func__);
-    }
-
-    GeometrySpecification obj;
-
-    obj.name = mDs.readStringLenZeroTerm(); // @todo add to struct and Kaitai file
-
-    mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 0"); // Unknown but probably a string
-    mDs.assumeData({0x30}, std::string(__func__) + " - 1");
-    mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 2"); // Unknown but probably a string
-
-    const uint16_t geometryCount = mDs.readUint16();
-    spdlog::debug("geometryCount = {}", geometryCount);
-
-    for(size_t i = 0u; i < geometryCount; ++i)
-    {
-        spdlog::debug("i of geometryCount = {}", i);
-
-        if(i > 0u)
-        {
-            if(mFileFormatVersion == FileFormatVersion::B)
-            {
-                // Structure structure = read_prefixes(3);
-                Structure structure = auto_read_prefixes();
-            }
-
-            if(mFileFormatVersion >= FileFormatVersion::B)
-            {
-                readPreamble();
-            }
-        }
-
-        GeometryStructure geometryStructure1 = ToGeometryStructure(mDs.readUint8());
-        GeometryStructure geometryStructure2 = ToGeometryStructure(mDs.readUint8());
-
-        if(geometryStructure1 != geometryStructure2)
-        {
-            throw std::runtime_error("Geometry structures should be equal!");
-        }
-
-        auto geoStruct = geometryStructure1;
-
-        readGeometryStructure(geoStruct, &obj);
-
-        // uint16_t foo = mDs.readUint8();
-        // foo = (foo << 8) | foo;
-        // geoStruct = ToGeometryStructure(foo);
-
-        // mDs.printUnknownData(40, std::string(__func__) + " - 1");
-        // readPreamble();
-
-        if(mFileFormatVersion == FileFormatVersion::A)
-        {
-            mDs.printUnknownData(8, std::string(__func__) + " - 3.5");
-        }
-    }
-
-    if(geometryCount == 0u)
-    {
-        // throw std::runtime_error("CatchMeIfYouCan");
-        // mDs.printUnknownData(6, std::string(__func__) + " - 4");
-    }
-
-    // if(geometryCount == 0u)
-    // {
-    //     mDs.printUnknownData(10, std::string(__func__) + " - 3");
-
-    //     {
-    //         GeometryStructure geoStruct;
-
-    //         Structure structure = read_type_prefix();
-    //         readConditionalPreamble(structure);
-    //         parseStructure(structure);
-
-    //         const uint16_t followingLen1 = mDs.readUint16();
-
-    //         for(size_t i = 0u; i < followingLen1; ++i)
-    //         {
-    //             std::clog << "0x" << ToHex(mDs.getCurrentOffset(), 8) << ": followingLen1 Iteration "
-    //                     << std::to_string(i + 1) << "/" << std::to_string(followingLen1) << std::endl;
-
-    //             structure = read_type_prefix();
-    //             readConditionalPreamble(structure);
-    //             // readPreamble();
-    //             parseStructure(structure);
-    //         }
-
-    //         mDs.printUnknownData(24, "foo");
-
-    //         structure = read_type_prefix();
-    //         readConditionalPreamble(structure);
-    //         parseStructure(structure);
-
-    //         structure = read_type_prefix();
-    //         readConditionalPreamble(structure);
-    //         parseStructure(structure);
-
-    //         // geoStruct = ToGeometryStructure(mDs.readUint16());
-
-    //         // uint16_t foo = mDs.readUint8();
-    //         // foo = (foo << 8) | foo;
-    //         // geoStruct = ToGeometryStructure(foo);
-    //         // readGeometryStructure(geoStruct, &obj);
-    //     }
-    // }
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
 }

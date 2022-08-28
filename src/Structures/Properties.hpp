@@ -12,10 +12,7 @@
 
 struct Properties
 {
-    std::string name;
     std::string ref;
-
-    std::string convertName;
 };
 
 
@@ -25,9 +22,7 @@ static std::string to_string(const Properties& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-    str += fmt::format("{}name = {}\n", indent(1), aObj.name);
     str += fmt::format("{}ref  = {}\n", indent(1), aObj.ref);
-    str += fmt::format("{}convertName = {}\n", indent(1), aObj.convertName);
 
     return str;
 }

@@ -41,12 +41,20 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/Bitmap.cpp
    ${LIB_SRC_DIR}/Structures/CommentText.cpp
    ${LIB_SRC_DIR}/Structures/Ellipse.cpp
+   ${LIB_SRC_DIR}/Structures/GeometrySpecification.cpp
    ${LIB_SRC_DIR}/Structures/Line.cpp
+   ${LIB_SRC_DIR}/Structures/PartInst.cpp
+   ${LIB_SRC_DIR}/Structures/PinIdxMapping.cpp
    ${LIB_SRC_DIR}/Structures/Point.cpp
    ${LIB_SRC_DIR}/Structures/Polygon.cpp
    ${LIB_SRC_DIR}/Structures/Polyline.cpp
+   ${LIB_SRC_DIR}/Structures/Properties.cpp
+   ${LIB_SRC_DIR}/Structures/Properties2.cpp
+   ${LIB_SRC_DIR}/Structures/PropertiesTrailing.cpp
    ${LIB_SRC_DIR}/Structures/Rect.cpp
+   ${LIB_SRC_DIR}/Structures/T0x1f.cpp
    ${LIB_SRC_DIR}/Structures/TextFont.cpp
+   ${LIB_SRC_DIR}/Structures/WireScalar.cpp
 )
 
 set(HEADERS
@@ -69,6 +77,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Files/Symbol.hpp
    ${LIB_INCLUDE_DIR}/Files/SymbolsLibrary.hpp
    ${LIB_INCLUDE_DIR}/Files/Type.hpp
+   ${LIB_INCLUDE_DIR}/FutureData.hpp
    ${LIB_INCLUDE_DIR}/General.hpp
    ${LIB_INCLUDE_DIR}/Parser.hpp
    ${LIB_INCLUDE_DIR}/Structures/Arc.hpp
@@ -77,6 +86,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/CommentText.hpp
    ${LIB_INCLUDE_DIR}/Structures/Ellipse.hpp
    ${LIB_INCLUDE_DIR}/Structures/GeneralProperties.hpp
+   ${LIB_INCLUDE_DIR}/Structures/GeometrySpecification.hpp
    ${LIB_INCLUDE_DIR}/Structures/Line.hpp
    ${LIB_INCLUDE_DIR}/Structures/PinIdxMapping.hpp
    ${LIB_INCLUDE_DIR}/Structures/Point.hpp
@@ -84,9 +94,12 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/Polyline.hpp
    ${LIB_INCLUDE_DIR}/Structures/Properties.hpp
    ${LIB_INCLUDE_DIR}/Structures/Properties2.hpp
+   ${LIB_INCLUDE_DIR}/Structures/PropertiesTrailing.hpp
    ${LIB_INCLUDE_DIR}/Structures/Rect.hpp
    ${LIB_INCLUDE_DIR}/Structures/SymbolPinScalar.hpp
+   ${LIB_INCLUDE_DIR}/Structures/T0x1f.hpp
    ${LIB_INCLUDE_DIR}/Structures/TextFont.hpp
+   ${LIB_INCLUDE_DIR}/Structures/WireScalar.hpp
 )
 
 # Create library file from sources

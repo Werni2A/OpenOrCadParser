@@ -24,6 +24,7 @@
 #include "Files/Symbol.hpp"
 #include "Files/SymbolsLibrary.hpp"
 #include "Files/Type.hpp"
+#include "FutureData.hpp"
 #include "General.hpp"
 #include "Library.hpp"
 #include "Structures/Arc.hpp"
@@ -40,6 +41,7 @@
 #include "Structures/Polyline.hpp"
 #include "Structures/Properties.hpp"
 #include "Structures/Properties2.hpp"
+#include "Structures/PropertiesTrailing.hpp"
 #include "Structures/Rect.hpp"
 #include "Structures/SymbolBBox.hpp"
 #include "Structures/SymbolDisplayProp.hpp"
@@ -48,6 +50,7 @@
 #include "Structures/SymbolVector.hpp"
 #include "Structures/T0x1f.hpp"
 #include "Structures/TextFont.hpp"
+#include "Structures/WireScalar.hpp"
 
 
 namespace fs = std::filesystem;
@@ -118,6 +121,7 @@ public:
         T parsed_obj;
 
         ++mFileCtr;
+        mFutureDataLst.clear();
         try
         {
             openFile(aFilePath.string());
@@ -202,7 +206,7 @@ public:
 
     Structure auto_read_prefixes();
 
-    Structure read_prefixes(size_t aNumber);
+    Structure read_prefixes(size_t aNumber, bool aPrediction = false);
 
     std::pair<Structure, uint32_t> read_single_prefix();
 
@@ -215,6 +219,13 @@ public:
     uint32_t readConditionalPreamble(Structure structure, bool readOptionalLen = true);
 
 
+    std::optional<FutureData> getFutureData();
+
+    void sanitizeThisFutureSize(std::optional<FutureData> aThisFuture);
+
+    std::optional<FutureData> checkTrailingFuture();
+
+
     void readGeometryStructure(GeometryStructure geometryStructure, GeometrySpecification* geometrySpecification = nullptr);
 
 
@@ -224,7 +235,7 @@ public:
     void readGraphicCommentTextInst();
 
 
-    void readWireScalar();
+    WireScalar readWireScalar();
 
 
     void readAlias();
@@ -295,6 +306,7 @@ public:
 
     Properties readProperties();
 
+    PropertiesTrailing readPropertiesTrailing();
 
     Properties2 readProperties2();
 
@@ -336,6 +348,8 @@ private:
     DataStream mDs;
 
     uint32_t mByteOffset;
+
+    FutureDataLst mFutureDataLst;
 };
 
 
