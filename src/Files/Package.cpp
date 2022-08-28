@@ -265,6 +265,7 @@ Package Parser::readPackageV2(FileFormatVersion aVersion)
     }
 
     // I guess its always a PinIdxMapping (or multiple)
+    // @todo should be the unit of the package
     const uint16_t len5 = mDs.readUint16();
 
     spdlog::info("len5 = {}", len5);

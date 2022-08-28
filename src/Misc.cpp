@@ -175,7 +175,13 @@ GeometrySpecification Parser::parseGlobalSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     GeometrySpecification obj = parseGeometrySpecification();
+
+    // sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     // spdlog::info(to_string(obj));
@@ -188,7 +194,13 @@ GeometrySpecification Parser::parseSymbolHierarchic()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     GeometrySpecification obj = parseGeometrySpecification();
+
+    // sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     // spdlog::info(to_string(obj));
@@ -201,7 +213,13 @@ GeometrySpecification Parser::parseOffPageSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     GeometrySpecification obj = parseGeometrySpecification();
+
+    // sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     // spdlog::info(to_string(obj));
@@ -214,7 +232,13 @@ GeometrySpecification Parser::readPinShapeSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     GeometrySpecification obj = parseGeometrySpecification();
+
+    // sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     // spdlog::info(to_string(obj));

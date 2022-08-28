@@ -24,6 +24,8 @@ PinIdxMapping Parser::readPinIdxMapping()
 
     const uint16_t pinCount = mDs.readUint16();
 
+    spdlog::debug("pinCount = {}", pinCount);
+
     // @todo Add to kaitai file i = 'Order' of pin
     // See OrCAD: 'Pin Properties' -> 'Order'
     for(size_t i = 0u; i < pinCount; ++i)
