@@ -581,25 +581,25 @@ std::pair<Structure, std::any> Parser::parseStructure(Structure structure)
 
     switch(structure)
     {
-        case Structure::SthInPages0:                            /*parseStruct =*/ readSthInPages0();            break;
-        case Structure::Properties:                             parseStruct = readProperties();                 break;
-        case Structure::PartInst:                               /*parseStruct =*/ readPartInst();               break;
-        case Structure::T0x10:                                  /*parseStruct =*/ readT0x10();                  break;
-        case Structure::WireScalar:                             /*parseStruct =*/ readWireScalar();             break;
-        case Structure::GeoDefinition:                          parseStruct = parseGeometrySpecification();     break;
-        case Structure::SymbolPinScalar:                        parseStruct = readSymbolPinScalar();            break;
-        case Structure::SymbolPinBus:                           parseStruct = readSymbolPinBus();               break;
-        case Structure::T0x1f:                                  parseStruct = readT0x1f();                      break;
-        case Structure::PinIdxMapping:                          parseStruct = readPinIdxMapping();              break;
-        case Structure::GlobalSymbol:           readPreamble(); parseStruct = parseGlobalSymbol();              break;
-        case Structure::PortSymbol:             readPreamble(); parseStruct = parseSymbolHierarchic();          break;
-        case Structure::OffPageSymbol:                          parseStruct = parseOffPageSymbol();             break;
-        case Structure::SymbolDisplayProp:                      parseStruct = readSymbolDisplayProp();          break;
-        case Structure::Alias:                                  /*parseStruct =*/ readAlias();                  break;
-        case Structure::GraphicBoxInst:                         /*parseStruct =*/ readGraphicBoxInst();         break;
-        case Structure::GraphicCommentTextInst:                 /*parseStruct =*/ readGraphicCommentTextInst(); break;
-        case Structure::ERCSymbol:              readPreamble(); /*parseStruct =*/ readERCSymbol();              break;
-        case Structure::PinShapeSymbol:         readPreamble(); parseStruct = readPinShapeSymbol();             break;
+        case Structure::SthInPages0:            /*parseStruct =*/ readSthInPages0();            break;
+        case Structure::Properties:             parseStruct = readProperties();                 break;
+        case Structure::PartInst:               /*parseStruct =*/ readPartInst();               break;
+        case Structure::T0x10:                  /*parseStruct =*/ readT0x10();                  break;
+        case Structure::WireScalar:             /*parseStruct =*/ readWireScalar();             break;
+        case Structure::GeoDefinition:          parseStruct = parseGeometrySpecification();     break;
+        case Structure::SymbolPinScalar:        parseStruct = readSymbolPinScalar();            break;
+        case Structure::SymbolPinBus:           parseStruct = readSymbolPinBus();               break;
+        case Structure::T0x1f:                  parseStruct = readT0x1f();                      break;
+        case Structure::PinIdxMapping:          parseStruct = readPinIdxMapping();              break;
+        case Structure::GlobalSymbol:           parseStruct = parseGlobalSymbol();              break;
+        case Structure::PortSymbol:             parseStruct = parseSymbolHierarchic();          break;
+        case Structure::OffPageSymbol:          parseStruct = parseOffPageSymbol();             break;
+        case Structure::SymbolDisplayProp:      parseStruct = readSymbolDisplayProp();          break;
+        case Structure::Alias:                  /*parseStruct =*/ readAlias();                  break;
+        case Structure::GraphicBoxInst:         /*parseStruct =*/ readGraphicBoxInst();         break;
+        case Structure::GraphicCommentTextInst: /*parseStruct =*/ readGraphicCommentTextInst(); break;
+        case Structure::ERCSymbol:              /*parseStruct =*/ readERCSymbol();              break;
+        case Structure::PinShapeSymbol:         parseStruct = readPinShapeSymbol();             break;
         default:
 
             const std::optional<FutureData> futureData = getFutureData();
