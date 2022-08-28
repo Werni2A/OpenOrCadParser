@@ -575,7 +575,7 @@ std::pair<Structure, std::any> Parser::parseStructure(Structure structure)
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    spdlog::debug("Parsing ", to_string(structure));
+    spdlog::debug("{}: Parsing ", __func__, to_string(structure));
 
     std::any parseStruct;
 
@@ -601,9 +601,23 @@ std::pair<Structure, std::any> Parser::parseStructure(Structure structure)
         case Structure::ERCSymbol:              readPreamble(); /*parseStruct =*/ readERCSymbol();              break;
         case Structure::PinShapeSymbol:         readPreamble(); parseStruct = readPinShapeSymbol();             break;
         default:
-            const std::string errorMsg = fmt::format("Structure with value 0x{:02x} is not implemented!",
+
+            const std::optional<FutureData> futureData = getFutureData();
+
+            const std::string msg = fmt::format("Structure with value 0x{:02} is not implemented!",
                 to_string(structure));
-            throw std::invalid_argument(errorMsg);
+
+            if(futureData.has_value())
+            {
+                spdlog::error(msg);
+                mDs.printUnknownData(futureData.value().getByteLen(),
+                    fmt::format("{}: {} is not implemented",__func__, to_string(structure)));
+            }
+            else
+            {
+                throw std::runtime_error(msg);
+            }
+
             break;
     }
 
@@ -859,6 +873,7 @@ uint32_t Parser::readPreamble(bool readOptionalLen)
 
 
 // Looks like some structures require a preceeding preamble but not all.
+// @todo Could be resolved by the trailing data structures defined in the prefix
 uint32_t Parser::readConditionalPreamble(Structure structure, bool readOptionalLen)
 {
     uint32_t optionalLen = 0u;
@@ -879,6 +894,7 @@ void Parser::readGeometryStructure(GeometryStructure geometryStructure, Geometry
 
     GeometrySpecification container;
 
+    // @todo probably create a base class GeometryStructure and derive all of them from it
     switch(geometryStructure)
     {
         case GeometryStructure::Rect:         container.rects.push_back(readRect());                 break;
@@ -892,8 +908,11 @@ void Parser::readGeometryStructure(GeometryStructure geometryStructure, Geometry
         case GeometryStructure::SymbolVector: container.symbolVectors.push_back(readSymbolVector()); break;
         case GeometryStructure::Bezier:       container.beziers.push_back(readBezier());             break;
         default:
-            throw std::runtime_error(fmt::format("GeometryStructure has not yet implemented value 0x{:04x}",
-                to_string(geometryStructure)));
+            const std::string msg = fmt::format("{}: Structure {} is not yet handled",
+                __func__, to_string(geometryStructure));
+
+            spdlog::error(msg);
+            throw std::runtime_error(msg);
             break;
     }
 
@@ -1193,6 +1212,7 @@ void Parser::sanitizeThisFutureSize(std::optional<FutureData> aThisFuture)
             const std::string msg = fmt::format("{}: StopOffsets differ! 0x{:08x} (expected) vs. 0x{:08x} (actual)",
                 __func__, aThisFuture.value().getStopOffset(), stopOffset);
             spdlog::error(msg);
+            spdlog::critical("The structure may changed due to version differences, check this!");
             throw std::runtime_error(msg);
         }
     }
