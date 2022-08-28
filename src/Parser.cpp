@@ -421,7 +421,7 @@ Library Parser::parseLibrary()
         {
             const fs::path& pathPackage = file.path();
 
-            mLibrary.packages.push_back(parseFile<Package>(pathPackage, [this](){ return readPackage(); }));
+            mLibrary.packages.push_back(parseFile<Package>(pathPackage, [this](){ return readPackageV2(); }));
 
             spdlog::info("----------------------------------------------------------------------------------\n");
         }
@@ -586,7 +586,7 @@ std::pair<Structure, std::any> Parser::parseStructure(Structure structure)
         case Structure::PartInst:                               /*parseStruct =*/ readPartInst();               break;
         case Structure::T0x10:                                  /*parseStruct =*/ readT0x10();                  break;
         case Structure::WireScalar:                             /*parseStruct =*/ readWireScalar();             break;
-        case Structure::GeoDefinition:          readPreamble(); parseStruct = parseGeometrySpecification();     break;
+        case Structure::GeoDefinition:                          parseStruct = parseGeometrySpecification();     break;
         case Structure::SymbolPinScalar:                        parseStruct = readSymbolPinScalar();            break;
         case Structure::SymbolPinBus:                           parseStruct = readSymbolPinBus();               break;
         case Structure::T0x1f:                                  parseStruct = readT0x1f();                      break;
@@ -751,9 +751,14 @@ Structure Parser::read_prefixes(size_t aNumber, bool aPrediction)
 
     if(!aPrediction)
     {
-        if(offsets.size() >= 2U)
+        if(offsets.size() > 2U)
         {
-            for(size_t i = 0U; i < offsets.size() - 1U; ++i)
+            if(offsets.size() % 2U == 0U)
+            {
+                spdlog::critical("{}: Expected that only odd sizes occur but got {}", __func__, offsets.size());
+            }
+
+            for(size_t i = 0U; i < offsets.size() - 1U; i += 2)
             {
                 const std::pair<size_t, size_t> start_pair = offsets[i + 1U];
                 const std::pair<size_t, size_t> stop_pair  = offsets[i];
@@ -762,6 +767,10 @@ Structure Parser::read_prefixes(size_t aNumber, bool aPrediction)
 
                 spdlog::debug("{}: Found future data: {}", __func__, (mFutureDataLst.end() - 1)->string());
             }
+        }
+        else if(offsets.size() == 2U)
+        {
+            spdlog::info("Found beginning of struct but not its length");
         }
         else if(offsets.size() == 1U)
         {

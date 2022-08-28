@@ -33,12 +33,7 @@ T0x1f Parser::readT0x1f()
 
     obj.pcbFootprint = mDs.readStringLenZeroTerm();
 
-    // Maybe the last two bytes specify the amount of units the symbols has?
-    // Also called "Section Count"
-    // Is Len of outter structure, comment out
-    mDs.printUnknownData(2, std::string(__func__) + " - 0 - Prob. Unit Count");
-
-    // sanitizeThisFutureSize(thisFuture);
+    sanitizeThisFutureSize(thisFuture);
 
     checkTrailingFuture();
 

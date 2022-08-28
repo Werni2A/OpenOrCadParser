@@ -63,9 +63,17 @@ SymbolDisplayProp Parser::readSymbolDisplayProp()
 
     mDs.assumeData({0x00}, std::string(__func__) + " - 1");
 
-    // sanitizeThisFutureSize(thisFuture);
+    sanitizeThisFutureSize(thisFuture);
 
-    checkTrailingFuture();
+    const std::optional<FutureData> nextFuture = checkTrailingFuture();
+
+    if(nextFuture.has_value())
+    {
+        spdlog::warn("Detected trailing future data at 0x{:08x}", nextFuture.value().getStartOffset());
+        mDs.printUnknownData(nextFuture.value().getByteLen(), fmt::format("{}: Trailing Data", __func__));
+    }
+
+    sanitizeThisFutureSize(nextFuture);
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

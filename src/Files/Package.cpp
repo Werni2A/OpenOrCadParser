@@ -204,3 +204,85 @@ Package Parser::readPackage(FileFormatVersion aVersion)
 
     return obj;
 }
+
+
+Package Parser::readPackageV2(FileFormatVersion aVersion)
+{
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    Package obj;
+
+    Structure structure;
+
+    const uint16_t sectionCount = mDs.readUint16();
+
+    spdlog::info("sectionCount = {}", sectionCount);
+
+    for(size_t i = 0u; i < sectionCount; ++i)
+    {
+        Structure structure = auto_read_prefixes();
+        readPreamble();
+        pushStructure(parseStructure(structure), obj);
+    }
+
+    const uint16_t len2 = mDs.readUint16();
+
+    spdlog::info("len2 = {}", len2);
+
+    for(size_t i = 0u; i < len2; ++i)
+    {
+        Structure structure = auto_read_prefixes();
+        readPreamble();
+        pushStructure(parseStructure(structure), obj);
+    }
+
+    const uint16_t len3 = mDs.readUint16();
+
+    spdlog::info("len3 = {}", len3);
+
+    for(size_t i = 0u; i < len3; ++i)
+    {
+        Structure structure = auto_read_prefixes();
+        readPreamble();
+        pushStructure(parseStructure(structure), obj);
+    }
+
+    const uint16_t len4 = mDs.readUint16();
+
+    spdlog::info("len4 = {}", len4);
+
+    for(size_t i = 0u; i < len4; ++i)
+    {
+        Structure structure = auto_read_prefixes();
+        readPreamble();
+        pushStructure(parseStructure(structure), obj);
+    }
+
+    {
+        Structure structure = auto_read_prefixes();
+        readPreamble();
+        pushStructure(parseStructure(structure), obj);
+    }
+
+    // I guess its always a PinIdxMapping (or multiple)
+    const uint16_t len5 = mDs.readUint16();
+
+    spdlog::info("len5 = {}", len5);
+
+    for(size_t i = 0u; i < len5; ++i)
+    {
+        Structure structure = auto_read_prefixes();
+        readPreamble();
+        pushStructure(parseStructure(structure), obj);
+    }
+
+    if(!mDs.isEoF())
+    {
+        throw std::runtime_error("Expected EoF but did not reach it!");
+    }
+
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(to_string(obj));
+
+    return obj;
+}

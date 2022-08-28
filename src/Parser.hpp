@@ -154,6 +154,7 @@ public:
 
     Symbol readSymbol();
     Package readPackage(FileFormatVersion aVersion = FileFormatVersion::Unknown);
+    Package readPackageV2(FileFormatVersion aVersion = FileFormatVersion::Unknown);
 
     bool readHierarchy();
     bool readSchematic();
