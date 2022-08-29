@@ -604,7 +604,7 @@ std::pair<Structure, std::any> Parser::parseStructure(Structure structure)
 
             const std::optional<FutureData> futureData = getFutureData();
 
-            const std::string msg = fmt::format("Structure with value 0x{:02} is not implemented!",
+            const std::string msg = fmt::format("Structure {} is not implemented!",
                 to_string(structure));
 
             if(futureData.has_value())
