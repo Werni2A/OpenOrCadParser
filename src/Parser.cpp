@@ -1256,6 +1256,9 @@ void Parser::readERCSymbol()
     //       last part of the next unknown block
     mDs.printUnknownData(3, std::string(__func__) + " - 0");
 
+    sanitizeThisFutureSize(thisFuture);
+
+    // @todo move the following part out of this method?
     mDs.printUnknownData(4, std::string(__func__) + " - 1");
 
     uint16_t len = mDs.readUint16();
@@ -1279,9 +1282,14 @@ void Parser::readERCSymbol()
     readPreamble();
     readSymbolBBox(); // @todo push structure
 
-    // sanitizeThisFutureSize(thisFuture);
+    std::optional<FutureData> nextFuture = checkTrailingFuture();
 
-    checkTrailingFuture();
+    if(nextFuture.has_value())
+    {
+        mDs.printUnknownData(nextFuture.value().getByteLen(), fmt::format("{}: Trailing Data", __func__));
+    }
+
+    sanitizeThisFutureSize(nextFuture);
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     // spdlog::info(to_string(obj));

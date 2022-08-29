@@ -281,17 +281,11 @@ bool Parser::parseSymbolsERC()
 
     bool obj = false;
 
-    // @todo Should I introduce something like read_type_prefix_very_long()?
-    mDs.assumeData({0x4b}, std::string(__func__) + " - 0"); // Proably stands for ERC, see Structure.hpp 0x4b
-
-    mDs.printUnknownData(8, std::string(__func__) + " - 1");
-
-    // Structure structure = read_prefixes(4);
+    // Structure structure = read_prefixes(5);
     Structure structure = auto_read_prefixes();
 
-    spdlog::critical("{}", to_string(structure));
+    readPreamble();
 
-    readConditionalPreamble(structure);
     parseStructure(structure); // @todo push structure
 
     if(!mDs.isEoF())
