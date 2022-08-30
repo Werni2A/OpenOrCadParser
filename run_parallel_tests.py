@@ -1,9 +1,7 @@
-
-
+import multiprocessing
 import os
 import sys
 from asyncio.subprocess import Process
-from io import TextIOWrapper
 from pathlib import Path
 from subprocess import Popen
 from typing import List
@@ -12,8 +10,8 @@ from typing import List
 if __name__ == "__main__":
 
     test_bin = Path(os.path.join(".", "build", "test", "test")).resolve()
-    print(f"test_bin = {test_bin}")
 
+    shard_cnt = multiprocessing.cpu_count()
 
     print()
     print("---------------------------------------------------------")
@@ -24,23 +22,17 @@ if __name__ == "__main__":
     print()
 
     success = True
-    shard_cnt = 8
     procs: List[Process] = []
-    log_files: List[TextIOWrapper] = []
+
+    print(f"Using {shard_cnt} Catch2 shards\n")
 
     for i in range(shard_cnt):
-
-        f = open(f"test{i}.log", "w+")
-        log_files += [f]
         cmd = [str(test_bin), "--shard-count", str(shard_cnt), "--shard-index", str(i)]
-        procs += [Popen(cmd, stdout=f, stderr=f)]
+        procs += [Popen(cmd, shell=True)]
 
     for proc in procs:
         proc.wait()
         success &= (proc.returncode == 0)
-
-    for f in log_files:
-        f.close()
 
     if success:
         print()
