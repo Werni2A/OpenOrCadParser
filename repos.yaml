@@ -544,7 +544,7 @@ repositories:
 - author: beagleboard
   commit: 6db2f5203c7a172aa6ce9c49b3ef5745ba78c91c
   files:
-  - errors: 18
+  - errors: 6
     options: null
     path: ./BEAGLE1.OLB
   project: beagle-cadence-libraries
@@ -2278,10 +2278,10 @@ repositories:
 - author: bjut-MrZhang
   commit: ce2de2670079332796f44dfcb2ae6ddb0caabc23
   files:
-  - errors: 11
+  - errors: 8
     options: null
     path: ./SchLib/ZX_0.OBK
-  - errors: 11
+  - errors: 8
     options: null
     path: ./SchLib/ZX.OLB
   project: CadenceLib
@@ -4129,7 +4129,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/VLSITEC.OLB
-  - errors: 5
+  - errors: 1
     options: null
     path: ./oldlibs/DEVICE.OLB
   - errors: 19
@@ -4150,7 +4150,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/HYUNDAI.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./oldlibs/SPICE.OLB
   - errors: 0
@@ -4222,7 +4222,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/MPS.OLB
-  - errors: 26
+  - errors: 25
     options: null
     path: ./oldlibs/INTEL_P.OLB
   - errors: 0
@@ -4276,7 +4276,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/BIT.OLB
-  - errors: 34
+  - errors: 33
     options: null
     path: ./oldlibs/RF.OLB
   - errors: 60
@@ -4288,7 +4288,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/EXEL.OLB
-  - errors: 6
+  - errors: 2
     options: null
     path: ./oldlibs/PCBDEV.OLB
   - errors: 0
@@ -4303,7 +4303,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/TILSI.OLB
-  - errors: 3
+  - errors: 2
     options: null
     path: ./oldlibs/PSPICE.OLB
   - errors: 0
@@ -4657,7 +4657,7 @@ repositories:
 - author: vpodlesnyi
   commit: 652cacb9e7bc99ee88f78536388b965f4822c5b0
   files:
-  - errors: 200
+  - errors: 194
     options: null
     path: ./MOP44.OLB
   - errors: 12
