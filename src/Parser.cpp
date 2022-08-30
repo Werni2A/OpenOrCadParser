@@ -697,9 +697,8 @@ Structure Parser::auto_read_prefixes()
         throw std::runtime_error("Could not find valid number of prefixes!");
     }
 
-    std::cout << fmt::format("{}: Found {} prefixes\n", __func__, successCtr);
+    spdlog::info("{}: Found {} prefixes\n", __func__, successCtr);
     Structure structure = read_prefixes(successCtr);
-    std::cout << "---------------------------------\n";
 
     return structure;
 }
