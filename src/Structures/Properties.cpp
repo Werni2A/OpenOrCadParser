@@ -32,10 +32,6 @@ Properties Parser::readProperties()
         readPropertiesTrailing();
     }
 
-    // @todo this belongs to the outter structure. Move it out of this parser function
-    mDs.printUnknownData( 2, fmt::format("{}: 1", __func__)); // @todo this is probably a length specifying the number of trailing structures
-    mDs.printUnknownData(27, fmt::format("{}: 2", __func__)); // @todo This is 3x read_single_prefix()
-
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));
 

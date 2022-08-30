@@ -16,6 +16,8 @@ bool Parser::readPartInst()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     bool obj = false;
 
     mDs.printUnknownData(8, std::string(__func__) + " - 0");
@@ -68,6 +70,10 @@ bool Parser::readPartInst()
     // Structure structure = read_prefixes(4);
     Structure structure = auto_read_prefixes();
     readPreamble();
+
+    // sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 

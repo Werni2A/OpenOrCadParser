@@ -17,6 +17,8 @@ T0x1f Parser::readT0x1f()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     T0x1f obj;
 
     obj.name = mDs.readStringLenZeroTerm();
@@ -31,10 +33,9 @@ T0x1f Parser::readT0x1f()
 
     obj.pcbFootprint = mDs.readStringLenZeroTerm();
 
-    // Maybe the last two bytes specify the amount of units the symbols has?
-    // Also called "Section Count"
-    // Is Len of outter structure, comment out
-    mDs.printUnknownData(2, std::string(__func__) + " - 0 - Prob. Unit Count");
+    sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

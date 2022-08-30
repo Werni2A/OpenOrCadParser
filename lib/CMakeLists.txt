@@ -41,6 +41,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/Bitmap.cpp
    ${LIB_SRC_DIR}/Structures/CommentText.cpp
    ${LIB_SRC_DIR}/Structures/Ellipse.cpp
+   ${LIB_SRC_DIR}/Structures/GeneralProperties.cpp
    ${LIB_SRC_DIR}/Structures/GeometrySpecification.cpp
    ${LIB_SRC_DIR}/Structures/Line.cpp
    ${LIB_SRC_DIR}/Structures/PartInst.cpp
@@ -52,6 +53,11 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/Properties2.cpp
    ${LIB_SRC_DIR}/Structures/PropertiesTrailing.cpp
    ${LIB_SRC_DIR}/Structures/Rect.cpp
+   ${LIB_SRC_DIR}/Structures/SymbolBBox.cpp
+   ${LIB_SRC_DIR}/Structures/SymbolDisplayProp.cpp
+   ${LIB_SRC_DIR}/Structures/SymbolPinBus.cpp
+   ${LIB_SRC_DIR}/Structures/SymbolPinScalar.cpp
+   ${LIB_SRC_DIR}/Structures/SymbolVector.cpp
    ${LIB_SRC_DIR}/Structures/T0x1f.cpp
    ${LIB_SRC_DIR}/Structures/TextFont.cpp
    ${LIB_SRC_DIR}/Structures/WireScalar.cpp
