@@ -29,10 +29,10 @@ repositories:
   - errors: 1380
     options: null
     path: ./library/SRAM.OLB
-  - errors: 21
+  - errors: 8
     options: null
     path: ./library/TRANSISTOR.OLB
-  - errors: 156
+  - errors: 143
     options: null
     path: ./library/GATE.OLB
   - errors: 37
@@ -50,7 +50,7 @@ repositories:
   - errors: 0
     options: null
     path: ./library/ARITHMETIC.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./library/COUNTER.OLB
   - errors: 236
@@ -672,7 +672,7 @@ repositories:
 - author: jmerdich
   commit: e137d22401d5fa747485357f92b2b745a31cbac7
   files:
-  - errors: 5
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/Amplifier.olb
   - errors: 0
@@ -681,13 +681,13 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/ATOD.OLB
-  - errors: 13
+  - errors: 8
     options: null
     path: ./orcad capture/unsorted/_archive/BusDriverTransceiver.olb
   - errors: 38
     options: null
     path: ./orcad capture/unsorted/_archive/capsym.olb
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/Counter.olb
   - errors: 0
@@ -723,10 +723,10 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/actel/ACT_SEQ.OLB
-  - errors: 16
+  - errors: 15
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/actel/ACT_SOFT.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/altera/ALTERA_M.OLB
   - errors: 3
@@ -741,7 +741,7 @@ repositories:
   - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/altera/PCI_A.OLB
-  - errors: 52
+  - errors: 32
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/amd/AMD_LS.OLB
   - errors: 34
@@ -765,7 +765,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/IOPINS.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/latticefpga.olb
   - errors: 0
@@ -780,10 +780,10 @@ repositories:
   - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/REG.OLB
-  - errors: 30
+  - errors: 6
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lucent/L4000E.OLB
-  - errors: 5
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lucent/LUCENT.OLB
   - errors: 0
@@ -822,7 +822,7 @@ repositories:
   - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/XUnified.olb
-  - errors: 156
+  - errors: 143
     options: null
     path: ./orcad capture/unsorted/_archive/Gate.olb
   - errors: 5
@@ -915,10 +915,10 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/ieeelibs/IEEESRAM.OLB
-  - errors: 6
+  - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/Latch.olb
-  - errors: 5
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/LineDriverReceiver.olb
   - errors: 2
@@ -930,13 +930,13 @@ repositories:
   - errors: 34
     options: null
     path: ./orcad capture/unsorted/_archive/MicroProcessor.olb
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/Misc.olb
-  - errors: 5
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/Misc2.olb
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/Misc3.olb
   - errors: 0
@@ -945,10 +945,10 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/MiscMemory.olb
-  - errors: 9
+  - errors: 4
     options: null
     path: ./orcad capture/unsorted/_archive/MiscPower.olb
-  - errors: 5
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/MuxDecoder.olb
   - errors: 46
@@ -1260,7 +1260,7 @@ repositories:
   - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/On Semi/ON_MOS.OLB
-  - errors: 19
+  - errors: 10
     options: null
     path: ./orcad capture/unsorted/_archive/OPAMP.OLB
   - errors: 0
@@ -1269,7 +1269,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/PLD.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/PROM.OLB
   - errors: 10
@@ -1854,7 +1854,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/TRANSFORMERS.OLB
-  - errors: 22
+  - errors: 9
     options: null
     path: ./orcad capture/unsorted/_archive/TRANSISTOR.OLB
   - errors: 112
@@ -1866,13 +1866,13 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/ATMEL.OLB
-  - errors: 357
+  - errors: 192
     options: null
     path: ./orcad capture/unsorted/CONNECTOR.OLB
-  - errors: 12
+  - errors: 10
     options: null
     path: ./orcad capture/unsorted/DIODES.OLB
-  - errors: 58
+  - errors: 28
     options: null
     path: ./orcad capture/unsorted/DISCRETE.OLB
   - errors: 0
@@ -1908,7 +1908,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/ON Semiconductor/NCP109X - POE PD.OLB
-  - errors: 3
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/ON Semiconductor/OPAMP.OLB
   - errors: 0
@@ -1944,16 +1944,16 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/Vishay/TRANSISTORS.OBK
-  - errors: 357
+  - errors: 192
     options: null
     path: ./orcad capture/unsorted/_archive/CONNECTOR.OBK
-  - errors: 22
+  - errors: 9
     options: null
     path: ./orcad capture/unsorted/_archive/TRANSISTOR.OBK
-  - errors: 19
+  - errors: 10
     options: null
     path: ./orcad capture/unsorted/_archive/OPAMP.OBK
-  - errors: 71
+  - errors: 39
     options: null
     path: ./orcad capture/unsorted/_archive/DISCRETE.OBK
   - errors: 0
@@ -3156,7 +3156,7 @@ repositories:
   - errors: 8
     options: null
     path: ./OrcadLib/schlib4/IC.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrcadLib/schlib4/COMPONENT_LIB.OLB
   - errors: 0
@@ -3640,7 +3640,7 @@ repositories:
   - errors: 0
     options: null
     path: ./FPGA.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./PROM.OLB
   - errors: 0
@@ -3652,7 +3652,7 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/actel/ACT_SEQ.OLB
-  - errors: 16
+  - errors: 15
     options: null
     path: ./fpga/actel/ACT_SOFT.OLB
   - errors: 0
@@ -3685,13 +3685,13 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/lucent/SPECFUNC.OLB
-  - errors: 5
+  - errors: 0
     options: null
     path: ./fpga/lucent/LUCENT.OLB
-  - errors: 30
+  - errors: 6
     options: null
     path: ./fpga/lucent/L4000E.OLB
-  - errors: 52
+  - errors: 32
     options: null
     path: ./fpga/amd/AMD_LS.OLB
   - errors: 34
@@ -3703,7 +3703,7 @@ repositories:
   - errors: 3
     options: null
     path: ./fpga/altera/MEGA.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./fpga/altera/ALTERA_M.OLB
   - errors: 1
@@ -4261,7 +4261,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/GOLDSTAR.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./oldlibs/ELNT_AMP.OLB
   - errors: 1
@@ -4381,7 +4381,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/MCHP_UC.OLB
-  - errors: 17
+  - errors: 14
     options: null
     path: ./oldlibs/LAYOUT.OLB
   - errors: 0
@@ -4405,7 +4405,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/HUGHES.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./oldlibs/DATL_ADC.OLB
   - errors: 0
@@ -4657,7 +4657,7 @@ repositories:
 - author: vpodlesnyi
   commit: 652cacb9e7bc99ee88f78536388b965f4822c5b0
   files:
-  - errors: 200
+  - errors: 187
     options: null
     path: ./MOP44.OLB
   - errors: 12
