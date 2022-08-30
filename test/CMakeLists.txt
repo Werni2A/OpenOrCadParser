@@ -17,7 +17,7 @@ find_package(spdlog CONFIG REQUIRED)
 file(GLOB TEST_MISC_SRC ${TEST_SRC_DIR}/generated_tests/Test_*.cpp)
 
 set(SOURCES
-   ${TEST_SRC_DIR}/test.cpp
+   # ${TEST_SRC_DIR}/test.cpp
    ${TEST_MISC_SRC}
 )
 
