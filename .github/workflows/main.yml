@@ -33,5 +33,6 @@ jobs:
       run: |
         sudo apt update
         sudo apt install -y parallel
-        ./run_parallel_tests.sh
+        python run_parallel_tests.py
+        # ./run_parallel_tests.sh
         # ./build/test/test
