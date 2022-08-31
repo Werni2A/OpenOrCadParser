@@ -30,6 +30,23 @@ PinIdxMapping Parser::readPinIdxMapping()
     // See OrCAD: 'Pin Properties' -> 'Order'
     for(size_t i = 0u; i < pinCount; ++i)
     {
+        const auto currOffset = mDs.getCurrentOffset();
+        const int16_t strLen = mDs.readInt16();
+        mDs.setCurrentOffset(currOffset);
+
+        // @todo What means a string length of -1?
+        //       Maybe I should return from the read string
+        //       function directly and return an empty optional?
+        //       Probably the meaning is that the string is not valid at all
+        //       strLen =  1 ->   0x01 0x00 0x41 0x00 = 'A'
+        //       strLen =  0 ->   0x00 0x00 0x00      = ''
+        //       strLen = -1 ->   0xff 0xff           = ?
+        if(strLen == -1)
+        {
+            const int16_t strLen = mDs.readInt16();
+            continue;
+        }
+
         obj.pinMap.push_back(mDs.readStringLenZeroTerm());
 
         const uint8_t separator = mDs.readUint8();
@@ -39,6 +56,8 @@ PinIdxMapping Parser::readPinIdxMapping()
         // @todo maybe this is not a separator but the additional property of the pin?
         // As soon as I add a property like NET_SHORT the separator changes from 0x7f to 0xaa
         // This is probably also affected by units and convert view.
+        // @todo Probably 0xff belongs to the strLen from above, then only 0x7f and 0xaa are valid values
+        //        Verify this by removing it from the if-statement
         if(separator != 0x7f && separator != 0xaa && separator != 0xff)
         {
             throw std::runtime_error(fmt::format("Separator should be 0x{:02x}, 0x{:02x} or"
@@ -48,6 +67,7 @@ PinIdxMapping Parser::readPinIdxMapping()
 
     sanitizeThisFutureSize(thisFuture);
 
+    // @todo discard trailing data if present. This should fix a few errors
     checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
