@@ -13,12 +13,8 @@ find_package(nameof CONFIG REQUIRED)
 # Add spdlog dependency
 find_package(spdlog CONFIG REQUIRED)
 
-# Add automatically generated test files
-file(GLOB TEST_MISC_SRC ${TEST_SRC_DIR}/generated_tests/Test_*.cpp)
-
 set(SOURCES
    # ${TEST_SRC_DIR}/test.cpp
-   ${TEST_MISC_SRC}
 )
 
 set(HEADERS
@@ -40,4 +36,15 @@ target_link_libraries(${NAME_TEST} PRIVATE
                       spdlog::spdlog
                       spdlog::spdlog_header_only
                       ${NAME_LIB}
+)
+
+include(CTest)
+include(Catch)
+catch_discover_tests(${NAME_TEST}
+                     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/src/generated_tests)
+
+include(CatchShardTests)
+
+catch_add_sharded_tests(${NAME_TEST}
+  SHARD_COUNT 8
 )
