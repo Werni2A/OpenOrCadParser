@@ -1,5 +1,5 @@
-#ifndef DATASTREAM_H
-#define DATASTREAM_H
+#ifndef DATASTREAM_HPP
+#define DATASTREAM_HPP
 
 
 #include <filesystem>
@@ -166,4 +166,4 @@ public:
 };
 
 
-#endif // DATASTREAM_H
+#endif // DATASTREAM_HPP

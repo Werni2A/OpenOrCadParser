@@ -1,5 +1,5 @@
-#ifndef LINESTYLE_H
-#define LINESTYLE_H
+#ifndef LINESTYLE_HPP
+#define LINESTYLE_HPP
 
 
 #include <cstdint>
@@ -8,7 +8,7 @@
 
 #include <magic_enum.hpp>
 
-#include "../General.hpp"
+#include "General.hpp"
 
 
 enum class LineStyle
@@ -44,4 +44,4 @@ static std::ostream& operator<<(std::ostream& aOs, const LineStyle& aVal)
 }
 
 
-#endif // LINESTYLE_H
+#endif // LINESTYLE_HPP

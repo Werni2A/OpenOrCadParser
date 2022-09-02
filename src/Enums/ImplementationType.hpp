@@ -1,5 +1,5 @@
-#ifndef IMPLEMENTATIONTYPE_H
-#define IMPLEMENTATIONTYPE_H
+#ifndef IMPLEMENTATIONTYPE_HPP
+#define IMPLEMENTATIONTYPE_HPP
 
 
 #include <cstdint>
@@ -8,7 +8,7 @@
 
 #include <magic_enum.hpp>
 
-#include "../General.hpp"
+#include "General.hpp"
 
 
 enum class ImplementationType
@@ -46,4 +46,4 @@ static std::ostream& operator<<(std::ostream& aOs, const ImplementationType& aVa
 }
 
 
-#endif // IMPLEMENTATIONTYPE_H
+#endif // IMPLEMENTATIONTYPE_HPP

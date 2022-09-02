@@ -1,5 +1,5 @@
-#ifndef EXCEPTION_H
-#define EXCEPTION_H
+#ifndef EXCEPTION_HPP
+#define EXCEPTION_HPP
 
 
 #include <stdexcept>
@@ -52,4 +52,4 @@ struct MissingFileFormatCheck : public std::runtime_error
 };
 
 
-#endif // EXCEPTION_H
+#endif // EXCEPTION_HPP

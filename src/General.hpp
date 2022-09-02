@@ -1,5 +1,5 @@
-#ifndef GENERAL_H
-#define GENERAL_H
+#ifndef GENERAL_HPP
+#define GENERAL_HPP
 
 
 #include <cstdint>
@@ -21,7 +21,6 @@
 
 
 namespace fs = std::filesystem;
-
 
 /**
  * @brief Version of the file format.
@@ -165,4 +164,4 @@ static constexpr TEnum ToEnum(TVal aVal)
 }
 
 
-#endif // GENERAL_H
+#endif // GENERAL_HPP

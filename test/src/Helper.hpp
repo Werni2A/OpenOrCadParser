@@ -1,5 +1,5 @@
-#ifndef HELPER_H
-#define HELPER_H
+#ifndef HELPER_HPP
+#define HELPER_HPP
 
 
 #include <filesystem>
@@ -56,4 +56,4 @@ inline void check_error_count(const fs::path& aFilePath, size_t aActualErrCnt, s
 }
 
 
-#endif // HELPER_H
+#endif // HELPER_HPP

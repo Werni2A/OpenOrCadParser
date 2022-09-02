@@ -1,5 +1,5 @@
-#ifndef FUTUREDATA_H
-#define FUTUREDATA_H
+#ifndef FUTUREDATA_HPP
+#define FUTUREDATA_HPP
 
 #include <algorithm>
 #include <stdexcept>
@@ -112,4 +112,4 @@ public:
 
 };
 
-#endif // FUTUREDATA_H
+#endif // FUTUREDATA_HPP

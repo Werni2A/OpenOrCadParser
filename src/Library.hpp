@@ -1,5 +1,5 @@
-#ifndef LIBRARY_H
-#define LIBRARY_H
+#ifndef LIBRARY_HPP
+#define LIBRARY_HPP
 
 
 #include <cstdint>
@@ -10,40 +10,40 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "Files/AdminData.hpp"
-#include "Files/DirectoryStruct.hpp"
-#include "Files/DsnStream.hpp"
-#include "Files/HSObjects.hpp"
-#include "Files/NetBundleMapData.hpp"
-#include "Files/Package.hpp"
-#include "Files/Symbol.hpp"
-#include "Files/SymbolsLibrary.hpp"
-#include "Files/Type.hpp"
+#include "Streams/StreamAdminData.hpp"
+#include "Streams/StreamDirectoryStruct.hpp"
+#include "Streams/StreamDsnStream.hpp"
+#include "Streams/StreamHSObjects.hpp"
+#include "Streams/StreamLibrary.hpp"
+#include "Streams/StreamNetBundleMapData.hpp"
+#include "Streams/StreamPackage.hpp"
+#include "Streams/StreamSymbol.hpp"
+#include "Streams/StreamType.hpp"
 
 
 struct Library
 {
-    AdminData        adminData;
-    DsnStream        dsnStream;
-    NetBundleMapData netBundleMapData;
-    HSObjects        hsObjects;
+    StreamAdminData        adminData;
+    StreamDsnStream        dsnStream;
+    StreamNetBundleMapData netBundleMapData;
+    StreamHSObjects        hsObjects;
 
-    DirectoryStruct cellsDir;
-    DirectoryStruct exportBlocksDir;
-    DirectoryStruct graphicsDir;
-    DirectoryStruct packagesDir;
-    DirectoryStruct partsDir;
-    DirectoryStruct symbolsDir;
-    DirectoryStruct viewsDir;
+    StreamDirectoryStruct  cellsDir;
+    StreamDirectoryStruct  exportBlocksDir;
+    StreamDirectoryStruct  graphicsDir;
+    StreamDirectoryStruct  packagesDir;
+    StreamDirectoryStruct  partsDir;
+    StreamDirectoryStruct  symbolsDir;
+    StreamDirectoryStruct  viewsDir;
 
-    SymbolsLibrary symbolsLibrary; // @todo rename just to 'library'?
+    StreamLibrary          library;
 
-    std::vector<Type> graphicsTypes;
-    std::vector<Type> symbolsTypes;
+    std::vector<Type>      graphicsTypes;
+    std::vector<Type>      symbolsTypes;
 
-    std::vector<Package> packages;
-    std::vector<Symbol>  symbols;
-    // std::vector<Cell> cells;
+    std::vector<StreamPackage> packages;
+    std::vector<StreamSymbol>  symbols;
+    // std::vector<StreamCell> cells;
 };
 
 
@@ -76,8 +76,14 @@ static std::string to_string(const Library& aObj)
     str += fmt::format("{}viewsDir:\n", indent(1));
     str += indent(to_string(aObj.viewsDir), 2);
 
-    str += fmt::format("{}symbolsLibrary:\n", indent(1));
-    str += indent(to_string(aObj.symbolsLibrary), 2);
+    str += fmt::format("{}library:\n", indent(1));
+    str += indent(to_string(aObj.library), 2);
+
+    str += fmt::format("{}graphicsTypes:\n", indent(1));
+    for(size_t i = 0u; i < aObj.graphicsTypes.size(); ++i)
+    {
+        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.graphicsTypes[i])), 2);
+    }
 
     str += fmt::format("{}symbolsTypes:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbolsTypes.size(); ++i)
@@ -110,4 +116,4 @@ static std::ostream& operator<<(std::ostream& aOs, const Library& aVal)
 }
 
 
-#endif // LIBRARY_H
+#endif // LIBRARY_HPP

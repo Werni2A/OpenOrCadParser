@@ -1,5 +1,5 @@
-#ifndef CONTAINEREXTRACTOR_H
-#define CONTAINEREXTRACTOR_H
+#ifndef CONTAINEREXTRACTOR_HPP
+#define CONTAINEREXTRACTOR_HPP
 
 
 #include <filesystem>
@@ -105,4 +105,4 @@ private:
 };
 
 
-#endif // CONTAINEREXTRACTOR_H
+#endif // CONTAINEREXTRACTOR_HPP

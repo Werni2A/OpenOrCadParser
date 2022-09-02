@@ -20,43 +20,43 @@
 #include "ContainerExtractor.hpp"
 #include "DataStream.hpp"
 #include "Enums/FillStyle.hpp"
-#include "Enums/GeometryStructure.hpp"
 #include "Enums/HatchStyle.hpp"
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "Enums/PortType.hpp"
+#include "Enums/Primitive.hpp"
 #include "Enums/Rotation.hpp"
 #include "Enums/Structure.hpp"
 #include "Exception.hpp"
-#include "Files/AdminData.hpp"
-#include "Files/DsnStream.hpp"
-#include "Files/HSObjects.hpp"
-#include "Files/NetBundleMapData.hpp"
-#include "Files/SymbolsLibrary.hpp"
-#include "Files/Type.hpp"
 #include "General.hpp"
 #include "Parser.hpp"
 #include "Parser.hpp"
 #include "PinShape.hpp"
-#include "Structures/Arc.hpp"
-#include "Structures/Ellipse.hpp"
-#include "Structures/Line.hpp"
-#include "Structures/Point.hpp"
-#include "Structures/Polygon.hpp"
-#include "Structures/Properties.hpp"
-#include "Structures/PropertiesTrailing.hpp"
-#include "Structures/Rect.hpp"
-#include "Structures/SymbolDisplayProp.hpp"
-#include "Structures/SymbolPinBus.hpp"
-#include "Structures/SymbolPinScalar.hpp"
-#include "Structures/T0x1f.hpp"
+#include "Primitives/Point.hpp"
+#include "Primitives/PrimArc.hpp"
+#include "Primitives/PrimEllipse.hpp"
+#include "Primitives/PrimLine.hpp"
+#include "Primitives/PrimPolygon.hpp"
+#include "Primitives/PrimRect.hpp"
+#include "Streams/StreamAdminData.hpp"
+#include "Streams/StreamDsnStream.hpp"
+#include "Streams/StreamHSObjects.hpp"
+#include "Streams/StreamLibrary.hpp"
+#include "Streams/StreamNetBundleMapData.hpp"
+#include "Streams/StreamType.hpp"
+#include "Structures/StructProperties.hpp"
+#include "Structures/StructSymbolDisplayProp.hpp"
+#include "Structures/StructSymbolPinBus.hpp"
+#include "Structures/StructSymbolPinScalar.hpp"
+#include "Structures/StructT0x1f.hpp"
+#include "Structures/TrailingProperties.hpp"
 
 
 namespace fs = std::filesystem;
 
 
 Parser::Parser(const fs::path& aFile, FileFormatVersion aFileFormatVersion) :
-    mFileCtr{0u}, mFileErrCtr{0u}, mFileFormatVersion{aFileFormatVersion}
+    mFileFormatVersion{aFileFormatVersion}, mFileCtr{0u}, mFileErrCtr{0u}
 {
     mFileType      = getFileTypeByExtension(aFile);
     mInputFile     = aFile;
@@ -273,7 +273,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathCellsDir))
     {
-        mLibrary.cellsDir        = parseFile<DirectoryStruct>(pathCellsDir, [this](){ return readCellsDirectory(); });
+        mLibrary.cellsDir        = parseFile<StreamDirectoryStruct>(pathCellsDir, [this](){ return readStreamCellsDirectory(); });
     }
     else
     {
@@ -284,7 +284,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathExportBlocksDir))
     {
-        mLibrary.exportBlocksDir = parseFile<DirectoryStruct>(pathExportBlocksDir, [this](){ return readExportBlocksDirectory(); });
+        mLibrary.exportBlocksDir = parseFile<StreamDirectoryStruct>(pathExportBlocksDir, [this](){ return readStreamExportBlocksDirectory(); });
     }
     else
     {
@@ -295,7 +295,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathGraphicsDir))
     {
-        mLibrary.graphicsDir     = parseFile<DirectoryStruct>(pathGraphicsDir, [this](){ return readGraphicsDirectory(); });
+        mLibrary.graphicsDir     = parseFile<StreamDirectoryStruct>(pathGraphicsDir, [this](){ return readStreamGraphicsDirectory(); });
     }
     else
     {
@@ -306,7 +306,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathPackagesDir))
     {
-        mLibrary.packagesDir     = parseFile<DirectoryStruct>(pathPackagesDir, [this](){ return readPackagesDirectory(); });
+        mLibrary.packagesDir     = parseFile<StreamDirectoryStruct>(pathPackagesDir, [this](){ return readStreamPackagesDirectory(); });
     }
     else
     {
@@ -317,7 +317,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathPartsDir))
     {
-        mLibrary.partsDir        = parseFile<DirectoryStruct>(pathPartsDir, [this](){ return readPartsDirectory(); });
+        mLibrary.partsDir        = parseFile<StreamDirectoryStruct>(pathPartsDir, [this](){ return readStreamPartsDirectory(); });
     }
     else
     {
@@ -328,7 +328,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathSymbolsDir))
     {
-        mLibrary.symbolsDir      = parseFile<DirectoryStruct>(pathSymbolsDir, [this](){ return readSymbolsDirectory(); });
+        mLibrary.symbolsDir      = parseFile<StreamDirectoryStruct>(pathSymbolsDir, [this](){ return readStreamSymbolsDirectory(); });
     }
     else
     {
@@ -339,7 +339,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathViewsDir))
     {
-        mLibrary.viewsDir        = parseFile<DirectoryStruct>(pathViewsDir, [this](){ return readViewsDirectory(); });
+        mLibrary.viewsDir        = parseFile<StreamDirectoryStruct>(pathViewsDir, [this](){ return readStreamViewsDirectory(); });
     }
     else
     {
@@ -350,22 +350,22 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathAdminData))
     {
-        mLibrary.adminData = parseFile<AdminData>(pathAdminData, [this](){ return readAdminData(); });
+        mLibrary.adminData = parseFile<StreamAdminData>(pathAdminData, [this](){ return readStreamAdminData(); });
     }
 
     if(fs::exists(pathHSObjects))
     {
-        mLibrary.hsObjects = parseFile<HSObjects>(pathHSObjects, [this](){ return readHSObjects(); });
+        mLibrary.hsObjects = parseFile<StreamHSObjects>(pathHSObjects, [this](){ return readStreamHSObjects(); });
     }
 
     if(fs::exists(pathNetBundleMapData))
     {
-        mLibrary.netBundleMapData = parseFile<NetBundleMapData>(pathNetBundleMapData, [this](){ return readNetBundleMapData(); });
+        mLibrary.netBundleMapData = parseFile<StreamNetBundleMapData>(pathNetBundleMapData, [this](){ return readStreamNetBundleMapData(); });
     }
 
     if(fs::exists(pathGraphicsTypes))
     {
-        mLibrary.graphicsTypes = parseFile<std::vector<Type>>(pathGraphicsTypes, [this](){ return readType(); });
+        mLibrary.graphicsTypes = parseFile<std::vector<Type>>(pathGraphicsTypes, [this](){ return readStreamType(); });
     }
     else
     {
@@ -376,7 +376,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathSymbolsTypes))
     {
-        mLibrary.symbolsTypes = parseFile<std::vector<Type>>(pathSymbolsTypes, [this](){ return readType(); });
+        mLibrary.symbolsTypes = parseFile<std::vector<Type>>(pathSymbolsTypes, [this](){ return readStreamType(); });
     }
     else
     {
@@ -387,7 +387,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathLibrary))
     {
-        mLibrary.symbolsLibrary = parseFile<SymbolsLibrary>(pathLibrary, [this](){ return readSymbolsLibrary(); });
+        mLibrary.library = parseFile<StreamLibrary>(pathLibrary, [this](){ return readStreamLibrary(); });
     }
     else
     {
@@ -398,7 +398,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathDsnStream))
     {
-        mLibrary.dsnStream = parseFile<DsnStream>(pathDsnStream, [this](){ return readDsnStream(); });
+        mLibrary.dsnStream = parseFile<StreamDsnStream>(pathDsnStream, [this](){ return readStreamDsnStream(); });
     }
 
     spdlog::info("----------------------------------------------------------------------------------\n");
@@ -406,7 +406,7 @@ Library Parser::parseLibrary()
     if(fs::exists(pathSymbolsERC))
     {
         // @todo write results into mLibrary
-        parseFile<bool>(pathSymbolsERC, [this](){ return parseSymbolsERC(); });
+        parseFile<bool>(pathSymbolsERC, [this](){ return readStreamERC(); });
     }
     else
     {
@@ -421,7 +421,7 @@ Library Parser::parseLibrary()
         {
             const fs::path& pathPackage = file.path();
 
-            mLibrary.packages.push_back(parseFile<Package>(pathPackage, [this](){ return readPackageV2(); }));
+            mLibrary.packages.push_back(parseFile<StreamPackage>(pathPackage, [this](){ return readStreamPackage(); }));
 
             spdlog::info("----------------------------------------------------------------------------------\n");
         }
@@ -445,7 +445,7 @@ Library Parser::parseLibrary()
                 continue;
             }
 
-            mLibrary.symbols.push_back(parseFile<Symbol>(pathSymbol, [this](){ return readSymbol(); }));
+            mLibrary.symbols.push_back(parseFile<StreamSymbol>(pathSymbol, [this](){ return readStreamSymbol(); }));
 
             spdlog::info("----------------------------------------------------------------------------------\n");
         }
@@ -460,7 +460,7 @@ Library Parser::parseLibrary()
         if(fs::exists(schematic))
         {
             // @todo write results into mLibrary
-            parseFile<bool>(schematic, [this](){ return readSchematic(); });
+            parseFile<bool>(schematic, [this](){ return readStreamSchematic(); });
         }
         else
         {
@@ -475,7 +475,7 @@ Library Parser::parseLibrary()
         if(fs::exists(hierarchy))
         {
             // @todo write results into mLibrary
-            parseFile<bool>(hierarchy, [this](){ return readHierarchy(); });
+            parseFile<bool>(hierarchy, [this](){ return readStreamHierarchy(); });
         }
         else
         {
@@ -492,7 +492,7 @@ Library Parser::parseLibrary()
             if(fs::exists(page))
             {
                 // @todo write results into mLibrary
-                parseFile<bool>(page, [this](){ return readPage(); });
+                parseFile<bool>(page, [this](){ return readStreamPage(); });
             }
             else
             {
@@ -541,7 +541,7 @@ void Parser::exceptionHandling()
 
 
 // @todo return real data object
-bool Parser::readT0x10()
+bool Parser::readStructT0x10()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
@@ -568,62 +568,6 @@ bool Parser::readT0x10()
     spdlog::info(std::to_string(obj));
 
     return obj;
-}
-
-
-std::pair<Structure, std::any> Parser::parseStructure(Structure structure)
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    spdlog::debug("{}: Parsing ", __func__, to_string(structure));
-
-    std::any parseStruct;
-
-    switch(structure)
-    {
-        case Structure::SthInPages0:            /*parseStruct =*/ readSthInPages0();            break;
-        case Structure::Properties:             parseStruct = readProperties();                 break;
-        case Structure::PartInst:               /*parseStruct =*/ readPartInst();               break;
-        case Structure::T0x10:                  /*parseStruct =*/ readT0x10();                  break;
-        case Structure::WireScalar:             /*parseStruct =*/ readWireScalar();             break;
-        case Structure::GeoDefinition:          parseStruct = parseGeometrySpecification();     break;
-        case Structure::SymbolPinScalar:        parseStruct = readSymbolPinScalar();            break;
-        case Structure::SymbolPinBus:           parseStruct = readSymbolPinBus();               break;
-        case Structure::T0x1f:                  parseStruct = readT0x1f();                      break;
-        case Structure::PinIdxMapping:          parseStruct = readPinIdxMapping();              break;
-        case Structure::GlobalSymbol:           parseStruct = parseGlobalSymbol();              break;
-        case Structure::PortSymbol:             parseStruct = parseSymbolHierarchic();          break;
-        case Structure::OffPageSymbol:          parseStruct = parseOffPageSymbol();             break;
-        case Structure::SymbolDisplayProp:      parseStruct = readSymbolDisplayProp();          break;
-        case Structure::Alias:                  /*parseStruct =*/ readAlias();                  break;
-        case Structure::GraphicBoxInst:         /*parseStruct =*/ readGraphicBoxInst();         break;
-        case Structure::GraphicCommentTextInst: /*parseStruct =*/ readGraphicCommentTextInst(); break;
-        case Structure::ERCSymbol:              /*parseStruct =*/ readERCSymbol();              break;
-        case Structure::PinShapeSymbol:         parseStruct = readPinShapeSymbol();             break;
-        default:
-
-            const std::optional<FutureData> futureData = getFutureData();
-
-            const std::string msg = fmt::format("Structure {} is not implemented!",
-                to_string(structure));
-
-            if(futureData.has_value())
-            {
-                spdlog::error(msg);
-                mDs.printUnknownData(futureData.value().getByteLen(),
-                    fmt::format("{}: {} is not implemented",__func__, to_string(structure)));
-            }
-            else
-            {
-                throw std::runtime_error(msg);
-            }
-
-            break;
-    }
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-
-    return std::make_pair(structure, parseStruct);
 }
 
 
@@ -831,7 +775,7 @@ std::pair<Structure, uint32_t> Parser::read_single_prefix_short()
                 const auto getStr = [&, this](uint32_t idx) -> std::string
                     {
                         int64_t newIdx = static_cast<int64_t>(idx) - 1;
-                        return newIdx >= 0 ? mLibrary.symbolsLibrary.strLst.at(newIdx) : "";
+                        return newIdx >= 0 ? mLibrary.library.strLst.at(newIdx) : "";
                     };
 
                 spdlog::debug("  {}: {} <- {}", i, getStr(nameValueMapping.at(i).first), getStr(nameValueMapping.at(i).second));
@@ -895,48 +839,95 @@ uint32_t Parser::readConditionalPreamble(Structure structure, bool readOptionalL
 }
 
 
-// @todo needs some way to push the results into the final object
-void Parser::readGeometryStructure(GeometryStructure geometryStructure, GeometrySpecification* geometrySpecification)
+VariantPrimitive Parser::readPrimitive(Primitive aPrimitive)
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    GeometrySpecification container;
+    VariantPrimitive retPrim;
 
-    // @todo probably create a base class GeometryStructure and derive all of them from it
-    switch(geometryStructure)
+    switch(aPrimitive)
     {
-        case GeometryStructure::Rect:         container.rects.push_back(readRect());                 break;
-        case GeometryStructure::Line:         container.lines.push_back(readLine());                 break;
-        case GeometryStructure::Arc:          container.arcs.push_back(readArc());                   break;
-        case GeometryStructure::Ellipse:      container.ellipses.push_back(readEllipse());           break;
-        case GeometryStructure::Polygon:      container.polygons.push_back(readPolygon());           break;
-        case GeometryStructure::Polyline:     container.polylines.push_back(readPolyline());         break;
-        case GeometryStructure::CommentText:  container.commentTexts.push_back(readCommentText());   break;
-        case GeometryStructure::Bitmap:       container.bitmaps.push_back(readBitmap());             break;
-        case GeometryStructure::SymbolVector: container.symbolVectors.push_back(readSymbolVector()); break;
-        case GeometryStructure::Bezier:       container.beziers.push_back(readBezier());             break;
+        case Primitive::Rect:         retPrim = readPrimRect();         break;
+        case Primitive::Line:         retPrim = readPrimLine();         break;
+        case Primitive::Arc:          retPrim = readPrimArc();          break;
+        case Primitive::Ellipse:      retPrim = readPrimEllipse();      break;
+        case Primitive::Polygon:      retPrim = readPrimPolygon();      break;
+        case Primitive::Polyline:     retPrim = readPrimPolyline();     break;
+        case Primitive::CommentText:  retPrim = readPrimCommentText();  break;
+        case Primitive::Bitmap:       retPrim = readPrimBitmap();       break;
+        case Primitive::SymbolVector: retPrim = readPrimSymbolVector(); break;
+        case Primitive::Bezier:       retPrim = readPrimBezier();       break;
         default:
-            const std::string msg = fmt::format("{}: Structure {} is not yet handled",
-                __func__, to_string(geometryStructure));
+            const std::string msg = fmt::format("{}: Primitive {} is not yet handled",
+                __func__, to_string(aPrimitive));
 
             spdlog::error(msg);
             throw std::runtime_error(msg);
             break;
     }
 
-    if(geometrySpecification != nullptr)
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+
+    return retPrim;
+}
+
+
+VariantStructure Parser::readStructure(Structure aStructure)
+{
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    VariantStructure retStruct;
+
+    switch(aStructure)
     {
-        // @todo do not overwrite geometrySpecification but only push_back
-        //       the entries from container
-        *geometrySpecification = container;
+        case Structure::SthInPages0:            /*retStruct =*/ readStructSthInPages0();            break;
+        case Structure::Properties:             retStruct = readStructProperties();                 break;
+        case Structure::PartInst:               /*retStruct =*/ readStructPartInst();               break;
+        case Structure::T0x10:                  /*retStruct =*/ readStructT0x10();                  break;
+        case Structure::WireScalar:             retStruct = readStructWireScalar();                 break;
+        case Structure::GeoDefinition:          retStruct = readStructPrimitives();                 break;
+        case Structure::SymbolPinScalar:        retStruct = readStructSymbolPinScalar();            break;
+        case Structure::SymbolPinBus:           retStruct = readStructSymbolPinBus();               break;
+        case Structure::T0x1f:                  retStruct = readStructT0x1f();                      break;
+        case Structure::PinIdxMapping:          retStruct = readStructPinIdxMapping();              break;
+        case Structure::GlobalSymbol:           retStruct = readStructGlobalSymbol();               break;
+        case Structure::PortSymbol:             retStruct = readStructHierarchicSymbol();           break;
+        case Structure::OffPageSymbol:          retStruct = readStructOffPageSymbol();              break;
+        case Structure::SymbolDisplayProp:      retStruct = readStructSymbolDisplayProp();          break;
+        case Structure::Alias:                  /*retStruct =*/ readStructAlias();                  break;
+        case Structure::GraphicBoxInst:         /*retStruct =*/ readStructGraphicBoxInst();         break;
+        case Structure::GraphicCommentTextInst: /*retStruct =*/ readStructGraphicCommentTextInst(); break;
+        case Structure::ERCSymbol:              /*retStruct =*/ readStructERCSymbol();              break;
+        case Structure::PinShapeSymbol:         retStruct = readStructPinShapeSymbol();             break;
+        default:
+
+            const std::optional<FutureData> futureData = getFutureData();
+
+            const std::string msg = fmt::format("{}: Structure {} is not implemented!",
+                __func__, to_string(aStructure));
+
+            if(futureData.has_value())
+            {
+                spdlog::error(msg);
+                mDs.printUnknownData(futureData.value().getByteLen(),
+                    fmt::format("{}: {} is not implemented",__func__, to_string(aStructure)));
+            }
+            else
+            {
+                throw std::runtime_error(msg);
+            }
+
+            break;
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+
+    return retStruct;
 }
 
 
 // @todo Probably a wrapper for Inst (Instances)
-void Parser::readSthInPages0()
+void Parser::readStructSthInPages0()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
@@ -949,15 +940,15 @@ void Parser::readSthInPages0()
 
     for(size_t i = 0u; i < len; ++i)
     {
-        GeometryStructure geometryStructure1 = ToGeometryStructure(mDs.readUint8());
-        GeometryStructure geometryStructure2 = ToGeometryStructure(mDs.readUint8());
+        Primitive geometryStructure1 = ToPrimitive(mDs.readUint8());
+        Primitive geometryStructure2 = ToPrimitive(mDs.readUint8());
 
         if(geometryStructure1 != geometryStructure2)
         {
             throw std::runtime_error("Geometry structures should be equal!");
         }
 
-        readGeometryStructure(geometryStructure1, nullptr); // @todo write output to structure
+        readPrimitive(geometryStructure1); // @todo add to obj
     }
 
     // sanitizeThisFutureSize(thisFuture);
@@ -968,7 +959,7 @@ void Parser::readSthInPages0()
 }
 
 
-void Parser::readGraphicCommentTextInst()
+void Parser::readStructGraphicCommentTextInst()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
@@ -984,7 +975,7 @@ void Parser::readGraphicCommentTextInst()
 }
 
 
-void Parser::readAlias()
+void Parser::readStructAlias()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
@@ -1020,7 +1011,7 @@ void Parser::readAlias()
 
 
 // @todo is this a specialized instance for Rects or general for all types?
-void Parser::readGraphicBoxInst()
+void Parser::readStructGraphicBoxInst()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
@@ -1049,27 +1040,11 @@ void Parser::readGraphicBoxInst()
     // Structure structure = read_prefixes(4);
     Structure structure = auto_read_prefixes();
     readPreamble();
-    parseStructure(structure);
+    readStructure(structure);
 
     // sanitizeThisFutureSize(thisFuture);
 
     checkTrailingFuture();
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-}
-
-
-void Parser::readDevHelper()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    mDs.discardBytes(0x2a1);
-
-    // Structure structure = read_prefixes(3);
-    Structure structure = auto_read_prefixes();
-    readPreamble();
-
-    readGraphicBoxInst();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
@@ -1243,7 +1218,7 @@ std::optional<FutureData> Parser::checkTrailingFuture()
 
 
 // @todo implement return type and return it
-void Parser::readERCSymbol()
+void Parser::readStructERCSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
@@ -1264,22 +1239,22 @@ void Parser::readERCSymbol()
 
     for(size_t i = 0u; i < len; ++i)
     {
-        GeometryStructure geometryStructure1 = ToGeometryStructure(mDs.readUint8());
-        GeometryStructure geometryStructure2 = ToGeometryStructure(mDs.readUint8());
+        Primitive geometryStructure1 = ToPrimitive(mDs.readUint8());
+        Primitive geometryStructure2 = ToPrimitive(mDs.readUint8());
 
         if(geometryStructure1 != geometryStructure2)
         {
             throw std::runtime_error("Geometry structures should be equal!");
         }
 
-        readGeometryStructure(geometryStructure1, nullptr); // @todo push structure
+        readPrimitive(geometryStructure1); // @todo add to obj
     }
 
     // @todo not sure if this belongs into this structure and how do we know whether it
     //       is used or not? (BBox should be optional according to XSD)
     //       Probably defined by prefix?
     readPreamble();
-    readSymbolBBox(); // @todo push structure
+    readStructSymbolBBox(); // @todo push structure
 
     std::optional<FutureData> nextFuture = checkTrailingFuture();
 
@@ -1292,12 +1267,4 @@ void Parser::readERCSymbol()
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     // spdlog::info(to_string(obj));
-}
-
-
-GeometrySpecification Parser::readSymbolProperties()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    return parseGeometrySpecification();
 }
