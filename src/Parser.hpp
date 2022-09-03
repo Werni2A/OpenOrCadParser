@@ -1,5 +1,5 @@
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef PARSER_HPP
+#define PARSER_HPP
 
 
 #include <any>
@@ -13,44 +13,45 @@
 #include <spdlog/spdlog.h>
 
 #include "DataStream.hpp"
-#include "Enums/GeometryStructure.hpp"
+#include "DataVariants.hpp"
+#include "Enums/Primitive.hpp"
 #include "Enums/Structure.hpp"
-#include "Files/AdminData.hpp"
-#include "Files/DirectoryStruct.hpp"
-#include "Files/DsnStream.hpp"
-#include "Files/HSObjects.hpp"
-#include "Files/NetBundleMapData.hpp"
-#include "Files/Package.hpp"
-#include "Files/Symbol.hpp"
-#include "Files/SymbolsLibrary.hpp"
-#include "Files/Type.hpp"
 #include "FutureData.hpp"
 #include "General.hpp"
 #include "Library.hpp"
-#include "Structures/Arc.hpp"
-#include "Structures/Bezier.hpp"
-#include "Structures/Bitmap.hpp"
-#include "Structures/CommentText.hpp"
-#include "Structures/Ellipse.hpp"
-#include "Structures/GeneralProperties.hpp"
-#include "Structures/GeometrySpecification.hpp"
-#include "Structures/Line.hpp"
-#include "Structures/PinIdxMapping.hpp"
-#include "Structures/Point.hpp"
-#include "Structures/Polygon.hpp"
-#include "Structures/Polyline.hpp"
-#include "Structures/Properties.hpp"
-#include "Structures/Properties2.hpp"
-#include "Structures/PropertiesTrailing.hpp"
-#include "Structures/Rect.hpp"
-#include "Structures/SymbolBBox.hpp"
-#include "Structures/SymbolDisplayProp.hpp"
-#include "Structures/SymbolPinBus.hpp"
-#include "Structures/SymbolPinScalar.hpp"
-#include "Structures/SymbolVector.hpp"
-#include "Structures/T0x1f.hpp"
+#include "Primitives/Point.hpp"
+#include "Primitives/PrimArc.hpp"
+#include "Primitives/PrimBezier.hpp"
+#include "Primitives/PrimBitmap.hpp"
+#include "Primitives/PrimCommentText.hpp"
+#include "Primitives/PrimEllipse.hpp"
+#include "Primitives/PrimLine.hpp"
+#include "Primitives/PrimPolygon.hpp"
+#include "Primitives/PrimPolyline.hpp"
+#include "Primitives/PrimRect.hpp"
+#include "Primitives/PrimSymbolVector.hpp"
+#include "Streams/StreamAdminData.hpp"
+#include "Streams/StreamDirectoryStruct.hpp"
+#include "Streams/StreamDsnStream.hpp"
+#include "Streams/StreamHSObjects.hpp"
+#include "Streams/StreamLibrary.hpp"
+#include "Streams/StreamNetBundleMapData.hpp"
+#include "Streams/StreamPackage.hpp"
+#include "Streams/StreamSymbol.hpp"
+#include "Streams/StreamType.hpp"
+#include "Structures/StructGeneralProperties.hpp"
+#include "Structures/StructPinIdxMapping.hpp"
+#include "Structures/StructPrimitives.hpp"
+#include "Structures/StructProperties.hpp"
+#include "Structures/StructProperties2.hpp"
+#include "Structures/StructSymbolBBox.hpp"
+#include "Structures/StructSymbolDisplayProp.hpp"
+#include "Structures/StructSymbolPinBus.hpp"
+#include "Structures/StructSymbolPinScalar.hpp"
+#include "Structures/StructT0x1f.hpp"
+#include "Structures/StructWireScalar.hpp"
 #include "Structures/TextFont.hpp"
-#include "Structures/WireScalar.hpp"
+#include "Structures/TrailingProperties.hpp"
 
 
 namespace fs = std::filesystem;
@@ -73,50 +74,12 @@ public:
         return mFileErrCtr;
     }
 
+    // private:
 
-    Library parseLibrary();
+    void checkInterpretedDataLen(const std::string &aFuncName, size_t aStartOffset, size_t aEndOffset, size_t aExpectedLen);
 
-
-    AdminData readAdminData();
-    DsnStream readDsnStream();
-    NetBundleMapData readNetBundleMapData();
-    HSObjects readHSObjects();
-
-// private:
-
-
-    void checkInterpretedDataLen(const std::string& aFuncName, size_t aStartOffset, size_t aEndOffset, size_t aExpectedLen);
-
-
-    void readTitleBlockSymbol();
-
-
-    GeometrySpecification parseGlobalSymbol();
-
-
-    GeometrySpecification parseSymbolHierarchic();
-
-
-    GeometrySpecification parseOffPageSymbol();
-
-
-    GeometrySpecification readPinShapeSymbol();
-
-
-    bool parseSymbolsERC();
-
-
-    bool readPartInst();
-
-
-    bool readT0x10();
-
-
-    TextFont readTextFont();
-
-
-    template<typename T>
-    T parseFile(const fs::path& aFilePath, std::function<T()> aParseFunc)
+    template <typename T>
+    T parseFile(const fs::path &aFilePath, std::function<T()> aParseFunc)
     {
         T parsed_obj;
 
@@ -137,30 +100,6 @@ public:
 
         return parsed_obj;
     }
-
-    // File Parsing Methods
-
-    DirectoryStruct readCellsDirectory();
-    DirectoryStruct readExportBlocksDirectory();
-    DirectoryStruct readGraphicsDirectory();
-    DirectoryStruct readPackagesDirectory();
-    DirectoryStruct readPartsDirectory();
-    DirectoryStruct readSymbolsDirectory();
-    DirectoryStruct readViewsDirectory();
-
-    std::vector<Type> readType();
-
-    SymbolsLibrary readSymbolsLibrary();
-
-    Symbol readSymbol();
-    Package readPackage(FileFormatVersion aVersion = FileFormatVersion::Unknown);
-    Package readPackageV2(FileFormatVersion aVersion = FileFormatVersion::Unknown);
-
-    bool readHierarchy();
-    bool readSchematic();
-    bool readPage();
-
-    // -------------------------------
 
 public:
     /**
@@ -194,16 +133,7 @@ public:
      */
     FileType getFileTypeByExtension(const fs::path& aFile) const;
 
-
     void discard_until_preamble();
-
-
-    std::pair<Structure, std::any> parseStructure(Structure structure);
-
-
-    void pushStructure(const std::pair<Structure, std::any>& structure, Package& container);
-    void pushStructure(const std::pair<Structure, std::any>& structure, Symbol& container);
-
 
     Structure auto_read_prefixes();
 
@@ -213,12 +143,9 @@ public:
 
     std::pair<Structure, uint32_t> read_single_prefix_short();
 
-
     uint32_t readPreamble(bool readOptionalLen = true);
 
-
     uint32_t readConditionalPreamble(Structure structure, bool readOptionalLen = true);
-
 
     std::optional<FutureData> getFutureData();
 
@@ -226,106 +153,97 @@ public:
 
     std::optional<FutureData> checkTrailingFuture();
 
+    // ---------------------------------------------
+    // -------------- Read Container ---------------
+    // ---------------------------------------------
 
-    void readGeometryStructure(GeometryStructure geometryStructure, GeometrySpecification* geometrySpecification = nullptr);
+    Library parseLibrary();
 
+    // ---------------------------------------------
+    // --------------- Read Stream -----------------
+    // ---------------------------------------------
 
-    void readSthInPages0();
+    bool readStreamERC();
+    bool readStreamHierarchy();
+    bool readStreamPage();
+    bool readStreamSchematic();
+    std::vector<Type> readStreamType();
+    StreamAdminData readStreamAdminData();
+    StreamDirectoryStruct readStreamCellsDirectory();
+    StreamDirectoryStruct readStreamExportBlocksDirectory();
+    StreamDirectoryStruct readStreamGraphicsDirectory();
+    StreamDirectoryStruct readStreamPackagesDirectory();
+    StreamDirectoryStruct readStreamPartsDirectory();
+    StreamDirectoryStruct readStreamSymbolsDirectory();
+    StreamDirectoryStruct readStreamViewsDirectory();
+    StreamDsnStream readStreamDsnStream();
+    StreamHSObjects readStreamHSObjects();
+    StreamLibrary readStreamLibrary();
+    StreamNetBundleMapData readStreamNetBundleMapData();
+    StreamPackage readStreamPackage(FileFormatVersion aVersion = FileFormatVersion::Unknown);
+    StreamSymbol readStreamSymbol();
 
+    // ---------------------------------------------
+    // -------------- Read Structure ---------------
+    // ---------------------------------------------
 
-    void readGraphicCommentTextInst();
+    bool readStructPartInst();
+    bool readStructT0x10();
+    StructGeneralProperties readStructGeneralProperties();
+    StructPinIdxMapping readStructPinIdxMapping();
+    StructPrimitives readStructPrimitives(FileFormatVersion aVersion = FileFormatVersion::Unknown);
+    StructProperties readStructProperties();
+    StructProperties2 readStructProperties2();
+    StructSymbolDisplayProp readStructSymbolDisplayProp();
+    StructSymbolPinBus readStructSymbolPinBus();
+    StructSymbolPinScalar readStructSymbolPinScalar();
+    StructT0x1f readStructT0x1f();
+    StructPrimitives readStructGlobalSymbol();
+    StructPrimitives readStructHierarchicSymbol();
+    StructPrimitives readStructOffPageSymbol();
+    StructPrimitives readStructPinShapeSymbol();
+    StructSymbolBBox readStructSymbolBBox();
+    TextFont readStructTextFont();
+    StructWireScalar readStructWireScalar();
+    void readStructAlias();
+    void readStructERCSymbol();
+    void readStructGraphicBoxInst();
+    void readStructGraphicCommentTextInst();
+    void readStructSthInPages0();
+    void readStructTitleBlockSymbol();
 
+    // ---------------------------------------------
+    // -------------- Read Primitive ---------------
+    // ---------------------------------------------
 
-    WireScalar readWireScalar();
+    PrimArc readPrimArc(FileFormatVersion aVersion = FileFormatVersion::Unknown);
+    PrimBezier readPrimBezier(FileFormatVersion aVersion = FileFormatVersion::Unknown);
+    PrimBitmap readPrimBitmap();
+    PrimCommentText readPrimCommentText(FileFormatVersion aVersion = FileFormatVersion::Unknown);
+    PrimEllipse readPrimEllipse(FileFormatVersion aVersion = FileFormatVersion::Unknown);
+    PrimLine readPrimLine(FileFormatVersion aVersion = FileFormatVersion::Unknown);
+    PrimPolygon readPrimPolygon(FileFormatVersion aVersion = FileFormatVersion::Unknown);
+    PrimPolyline readPrimPolyline(FileFormatVersion aVersion = FileFormatVersion::Unknown);
+    PrimRect readPrimRect(FileFormatVersion aVersion = FileFormatVersion::Unknown);
+    PrimSymbolVector readPrimSymbolVector();
 
-
-    void readAlias();
-
-
-    void readGraphicBoxInst();
-
-
-    void readDevHelper();
-
-
-    Line readLine(FileFormatVersion aVersion = FileFormatVersion::Unknown);
-
+    // ---------------------------------------------
+    // ---------------- Read Misc ------------------
+    // ---------------------------------------------
 
     Point readPoint();
+    TextFont readTextFont();
 
-
-    Ellipse readEllipse(FileFormatVersion aVersion = FileFormatVersion::Unknown);
-
-
-    Polygon readPolygon(FileFormatVersion aVersion = FileFormatVersion::Unknown);
-
-
-    Polyline readPolyline(FileFormatVersion aVersion = FileFormatVersion::Unknown);
-
-
-    Bezier readBezier(FileFormatVersion aVersion = FileFormatVersion::Unknown);
-
-
-    Rect readRect(FileFormatVersion aVersion = FileFormatVersion::Unknown);
-
-
-    SymbolVector readSymbolVector();
-
-
-    Bitmap readBitmap();
-
-
-    CommentText readCommentText(FileFormatVersion aVersion = FileFormatVersion::Unknown);
-
-
-    PinIdxMapping readPinIdxMapping();
-
-
-    Arc readArc(FileFormatVersion aVersion = FileFormatVersion::Unknown);
-
-
-    SymbolPinScalar readSymbolPinScalar();
-
-
-    SymbolPinBus readSymbolPinBus();
-
-
-    SymbolDisplayProp readSymbolDisplayProp();
-
-
-    void readERCSymbol();
-
-
-    SymbolBBox readSymbolBBox();
-
-
-    T0x1f readT0x1f();
-
-
-    GeneralProperties readGeneralProperties();
-
-
-    Properties readProperties();
-
-    PropertiesTrailing readPropertiesTrailing();
-
-    Properties2 readProperties2();
-
-
-    GeometrySpecification readSymbolProperties();
-
-
-    GeometrySpecification parseGeometrySpecification(FileFormatVersion aVersion = FileFormatVersion::Unknown);
+    VariantPrimitive readPrimitive(Primitive aPrimitive);
+    VariantStructure readStructure(Structure aStructure);
+    TrailingProperties readTrailingProperties();
 
 public:
-
     // Public data
-
 
     Library mLibrary; //!< This stores the content of the parsed library file
 
 private:
-
     void openFile(const fs::path& aFile);
     void closeFile();
     void exceptionHandling();
@@ -333,7 +251,7 @@ private:
     FileType mFileType;
     FileFormatVersion mFileFormatVersion;
 
-    std::vector<fs::path> mRemainingFiles; //!< Files that have not yet been parsed
+    std::vector<fs::path> mRemainingFiles; //!< Streams that have not yet been parsed
 
     fs::path mInputFile;
     size_t   mInputFileSize;
@@ -354,4 +272,4 @@ private:
 };
 
 
-#endif // PARSER_H
+#endif // PARSER_HPP

@@ -1,5 +1,5 @@
-#ifndef COLOR_H
-#define COLOR_H
+#ifndef COLOR_HPP
+#define COLOR_HPP
 
 
 #include <cstdint>
@@ -8,7 +8,7 @@
 
 #include <magic_enum.hpp>
 
-#include "../General.hpp"
+#include "General.hpp"
 
 
 enum class Color
@@ -87,4 +87,4 @@ static std::ostream& operator<<(std::ostream& aOs, const Color& aVal)
 }
 
 
-#endif // COLOR_H
+#endif // COLOR_HPP

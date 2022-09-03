@@ -4,11 +4,13 @@
 
 #include <nameof.hpp>
 
-#include "../General.hpp"
-#include "../Parser.hpp"
-#include "TextFont.hpp"
+#include "General.hpp"
+#include "Parser.hpp"
+#include "Structures/TextFont.hpp"
 
 
+// @todo this is not a Structure in this kind of context
+//       Move it to somewhere else
 TextFont Parser::readTextFont()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));

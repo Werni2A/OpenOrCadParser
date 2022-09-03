@@ -1,5 +1,5 @@
-#ifndef FILLSTYLE_H
-#define FILLSTYLE_H
+#ifndef FILLSTYLE_HPP
+#define FILLSTYLE_HPP
 
 
 #include <cstdint>
@@ -8,7 +8,7 @@
 
 #include <magic_enum.hpp>
 
-#include "../General.hpp"
+#include "General.hpp"
 
 
 // This configuration dominates the hatch_style.
@@ -44,4 +44,4 @@ static std::ostream& operator<<(std::ostream& aOs, const FillStyle& aVal)
 }
 
 
-#endif // FILLSTYLE_H
+#endif // FILLSTYLE_HPP

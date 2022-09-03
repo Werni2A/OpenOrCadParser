@@ -1,5 +1,5 @@
-#ifndef PINSHAPE_H
-#define PINSHAPE_H
+#ifndef PINSHAPE_HPP
+#define PINSHAPE_HPP
 
 
 #include <cstdint>
@@ -190,4 +190,4 @@ static std::ostream& operator<<(std::ostream& aOs, const PinShape& aVal)
 }
 
 
-#endif // PINSHAPE_H
+#endif // PINSHAPE_HPP

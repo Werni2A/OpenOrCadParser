@@ -15,11 +15,12 @@
 
 #include <spdlog/spdlog.h>
 
-#include "Enums/GeometryStructure.hpp"
-#include "Files/Package.hpp"
-#include "Files/Symbol.hpp"
+#include "DataVariants.hpp"
+#include "Enums/Primitive.hpp"
 #include "Parser.hpp"
-#include "Structures/CommentText.hpp"
+#include "Primitives/PrimCommentText.hpp"
+#include "Streams/StreamPackage.hpp"
+#include "Streams/StreamSymbol.hpp"
 #include "Structures/TextFont.hpp"
 
 
@@ -52,7 +53,7 @@ std::string SymbolUserProp::getName() const
     if(idx >= 0)
     {
         // Retrieve string from the library.
-        name = mLibrary->symbolsLibrary.strLst.at(idx);
+        name = mLibrary->library.strLst.at(idx);
         // @todo provide try catch block for better exception messages
     }
     else if(idx == -1)
@@ -84,7 +85,7 @@ std::string SymbolUserProp::getVal() const
     if(idx >= 0)
     {
         // Retrieve string from the library.
-        val = mLibrary->symbolsLibrary.strLst.at(idx);
+        val = mLibrary->library.strLst.at(idx);
         // @todo provide try catch block for better exception messages
     }
     else if(idx == -1)
@@ -102,7 +103,7 @@ std::string SymbolUserProp::getVal() const
 }
 
 
-void Parser::readTitleBlockSymbol()
+void Parser::readStructTitleBlockSymbol()
 {
     mDs.printUnknownData(36, std::string(__func__) + " - 0");
 
@@ -143,8 +144,8 @@ void Parser::readTitleBlockSymbol()
             readPreamble();
         }
 
-        GeometryStructure geoStruct = ToGeometryStructure(mDs.readUint16());
-        readGeometryStructure(geoStruct);
+        Primitive geoStruct = ToPrimitive(mDs.readUint16());
+        readPrimitive(geoStruct);
     }
 
     readPreamble();
@@ -159,7 +160,7 @@ void Parser::readTitleBlockSymbol()
         // const Structure structure = read_prefixes(3);
         const Structure structure = auto_read_prefixes();
         readConditionalPreamble(structure);
-        parseStructure(structure);
+        readStructure(structure);
     }
 
     if(!mDs.isEoF())
@@ -171,111 +172,85 @@ void Parser::readTitleBlockSymbol()
 }
 
 
-GeometrySpecification Parser::parseGlobalSymbol()
+StructPrimitives Parser::readStructGlobalSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    GeometrySpecification obj = parseGeometrySpecification();
+    StructPrimitives obj = readStructPrimitives();
 
     // sanitizeThisFutureSize(thisFuture);
 
     checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    // spdlog::info(to_string(obj));
+    spdlog::info(to_string(obj));
 
     return obj;
 }
 
 
-GeometrySpecification Parser::parseSymbolHierarchic()
+StructPrimitives Parser::readStructHierarchicSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    GeometrySpecification obj = parseGeometrySpecification();
+    StructPrimitives obj = readStructPrimitives();
 
     // sanitizeThisFutureSize(thisFuture);
 
     checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    // spdlog::info(to_string(obj));
+    spdlog::info(to_string(obj));
 
     return obj;
 }
 
 
-GeometrySpecification Parser::parseOffPageSymbol()
+StructPrimitives Parser::readStructOffPageSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    GeometrySpecification obj = parseGeometrySpecification();
+    StructPrimitives obj = readStructPrimitives();
 
     // sanitizeThisFutureSize(thisFuture);
 
     checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    // spdlog::info(to_string(obj));
+    spdlog::info(to_string(obj));
 
     return obj;
 }
 
 
-GeometrySpecification Parser::readPinShapeSymbol()
+StructPrimitives Parser::readStructPinShapeSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    GeometrySpecification obj = parseGeometrySpecification();
+    StructPrimitives obj = readStructPrimitives();
 
     // sanitizeThisFutureSize(thisFuture);
 
     checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    // spdlog::info(to_string(obj));
+    spdlog::info(to_string(obj));
 
     return obj;
-}
-
-
-void Parser::pushStructure(const std::pair<Structure, std::any>& structure, Package& container)
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    switch(structure.first)
-    {
-        case Structure::Properties:        container.properties.push_back(std::any_cast<Properties>(structure.second));                        break;
-        case Structure::GeoDefinition:     container.geometrySpecifications.push_back(std::any_cast<GeometrySpecification>(structure.second)); break;
-        case Structure::SymbolPinScalar:   container.symbolPinScalars.push_back(std::any_cast<SymbolPinScalar>(structure.second));             break;
-        case Structure::T0x1f:             container.t0x1fs.push_back(std::any_cast<T0x1f>(structure.second));                                 break;
-        case Structure::PinIdxMapping:     container.pinIdxMappings.push_back(std::any_cast<PinIdxMapping>(structure.second));                 break;
-        case Structure::GlobalSymbol:      container.globalSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));          break;
-        case Structure::PortSymbol:        container.portSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));            break;
-        case Structure::OffPageSymbol:     container.offPageSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));         break;
-        case Structure::SymbolDisplayProp: container.symbolDisplayProps.push_back(std::any_cast<SymbolDisplayProp>(structure.second));         break;
-        case Structure::SymbolVector:      container.symbolVectors.push_back(std::any_cast<GeometrySpecification>(structure.second));          break;
-        case Structure::TitleBlockSymbol:  container.titleBlockSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));      break;
-        case Structure::ERCSymbol:         container.ercSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));             break;
-        case Structure::PinShapeSymbol:    container.pinShapeSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));        break;
-        default: throw std::runtime_error("Structure " + to_string(structure.first) + " is not yet handled by " + __func__ + "!"); break;
-    }
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
 // @todo This parses the ERC file, move it to a separate file or combine with parseSymbol
 // @todo return real data object
-bool Parser::parseSymbolsERC()
+bool Parser::readStreamERC()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
@@ -286,7 +261,7 @@ bool Parser::parseSymbolsERC()
 
     readPreamble();
 
-    parseStructure(structure); // @todo push structure
+    readStructure(structure); // @todo push structure
 
     if(!mDs.isEoF())
     {
@@ -296,30 +271,4 @@ bool Parser::parseSymbolsERC()
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 
     return obj;
-}
-
-
-void Parser::pushStructure(const std::pair<Structure, std::any>& structure, Symbol& container)
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    switch(structure.first)
-    {
-        case Structure::Properties:        container.properties.push_back(std::any_cast<Properties>(structure.second));                        break;
-        case Structure::GeoDefinition:     container.geometrySpecifications.push_back(std::any_cast<GeometrySpecification>(structure.second)); break;
-        case Structure::SymbolPinScalar:   container.symbolPinScalars.push_back(std::any_cast<SymbolPinScalar>(structure.second));             break;
-        case Structure::T0x1f:             container.t0x1fs.push_back(std::any_cast<T0x1f>(structure.second));                                 break;
-        case Structure::PinIdxMapping:     container.pinIdxMappings.push_back(std::any_cast<PinIdxMapping>(structure.second));                 break;
-        case Structure::GlobalSymbol:      container.globalSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));          break;
-        case Structure::PortSymbol:        container.portSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));            break;
-        case Structure::OffPageSymbol:     container.offPageSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));         break;
-        case Structure::SymbolDisplayProp: container.symbolDisplayProps.push_back(std::any_cast<SymbolDisplayProp>(structure.second));         break;
-        case Structure::SymbolVector:      container.symbolVectors.push_back(std::any_cast<GeometrySpecification>(structure.second));          break;
-        case Structure::TitleBlockSymbol:  /*container.titleBlockSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second)); */ break;
-        case Structure::ERCSymbol:         container.ercSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));             break;
-        case Structure::PinShapeSymbol:    container.pinShapeSymbols.push_back(std::any_cast<GeometrySpecification>(structure.second));        break;
-        default: throw std::runtime_error("Structure " + to_string(structure.first) + " is not yet handled by " + __func__ + "!"); break;
-    }
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }

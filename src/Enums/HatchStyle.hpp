@@ -1,5 +1,5 @@
-#ifndef HATCHSTYLE_H
-#define HATCHSTYLE_H
+#ifndef HATCHSTYLE_HPP
+#define HATCHSTYLE_HPP
 
 
 #include <cstdint>
@@ -8,7 +8,7 @@
 
 #include <magic_enum.hpp>
 
-#include "../General.hpp"
+#include "General.hpp"
 
 
 enum class HatchStyle
@@ -47,4 +47,4 @@ static std::ostream& operator<<(std::ostream& aOs, const HatchStyle& aVal)
 }
 
 
-#endif // HATCHSTYLE_H
+#endif // HATCHSTYLE_HPP

@@ -70,12 +70,12 @@ def write_back_err_count(db: FileErrorDatabase, path_err_cnt_log: str, path_thir
         log = f.readlines()
 
     for line in log:
-        regex = "^Expected \s*(\d+)\s* errors and got \s*(\d+)\s* errors in `(.*)`$"
+        regex = r"^.*\s+(\d+)\s+.*\s+(\d+)\s+.*in (.*)$"
 
         matches = re.findall(regex, line)[0]
 
-        expect_err = int(matches[0])
-        actual_err = int(matches[1])
+        actual_err = int(matches[0])
+        expect_err = int(matches[1])
         file_path  = str(matches[2])
 
         author  = file_path[len(path_thirdparty_designs):].split(os.path.sep)[1]

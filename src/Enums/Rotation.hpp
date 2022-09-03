@@ -1,5 +1,5 @@
-#ifndef ROTATION_H
-#define ROTATION_H
+#ifndef ROTATION_HPP
+#define ROTATION_HPP
 
 
 #include <cstdint>
@@ -8,7 +8,7 @@
 
 #include <magic_enum.hpp>
 
-#include "../General.hpp"
+#include "General.hpp"
 
 
 enum class Rotation
@@ -42,4 +42,4 @@ static std::ostream& operator<<(std::ostream& aOs, const Rotation& aVal)
 }
 
 
-#endif // ROTATION_H
+#endif // ROTATION_HPP

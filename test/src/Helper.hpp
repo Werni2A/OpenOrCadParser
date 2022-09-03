@@ -1,5 +1,5 @@
-#ifndef HELPER_H
-#define HELPER_H
+#ifndef HELPER_HPP
+#define HELPER_HPP
 
 
 #include <filesystem>
@@ -26,9 +26,11 @@ inline void configure_spdlog()
 [[maybe_unused]]
 inline void check_error_count(const fs::path& aFilePath, size_t aActualErrCnt, size_t aExpectedErrCnt)
 {
+    std::string msg;
+
     if(aActualErrCnt < aExpectedErrCnt)
     {
-        const std::string msg = fmt::format("REDUCTION: {:>4} (actual errors) < {:>4} (expected errors) in {}",
+        msg = fmt::format("REDUCTION: {:>4} (actual errors) < {:>4} (expected errors) in {}",
             aActualErrCnt, aExpectedErrCnt, aFilePath.string());
 
         std::clog << msg << std::endl;
@@ -36,7 +38,7 @@ inline void check_error_count(const fs::path& aFilePath, size_t aActualErrCnt, s
 
     if(aActualErrCnt > aExpectedErrCnt)
     {
-        const std::string msg = fmt::format("INCREASE:  {:>4} (actual errors) > {:>4} (expected errors) in {}",
+        msg = fmt::format("INCREASE:  {:>4} (actual errors) > {:>4} (expected errors) in {}",
             aActualErrCnt, aExpectedErrCnt, aFilePath.string());
 
         std::clog << msg << std::endl;
@@ -48,12 +50,8 @@ inline void check_error_count(const fs::path& aFilePath, size_t aActualErrCnt, s
 
     logFile.open(logPath, std::ios_base::app);
 
-    const std::string msg = fmt::format(
-        "Expected {:>4} errors and got {:>4} errors in `{}`\n",
-        aExpectedErrCnt, aActualErrCnt, aFilePath.string());
-
     logFile << msg;
 }
 
 
-#endif // HELPER_H
+#endif // HELPER_HPP

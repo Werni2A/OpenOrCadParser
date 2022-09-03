@@ -1,10 +1,14 @@
-#ifndef STRUCTURE_H
-#define STRUCTURE_H
+#ifndef STRUCTURE_HPP
+#define STRUCTURE_HPP
 
 
 #include <cstdint>
 #include <ostream>
 #include <string>
+
+#include <magic_enum.hpp>
+
+#include "General.hpp"
 
 
 // @todo there are a few consecutive items missing
@@ -100,4 +104,4 @@ static std::ostream& operator<<(std::ostream& aOs, const Structure& aVal)
 }
 
 
-#endif // STRUCTURE_H
+#endif // STRUCTURE_HPP

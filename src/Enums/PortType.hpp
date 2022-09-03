@@ -1,5 +1,5 @@
-#ifndef PORTTYPE_H
-#define PORTTYPE_H
+#ifndef PORTTYPE_HPP
+#define PORTTYPE_HPP
 
 
 #include <cstdint>
@@ -8,7 +8,7 @@
 
 #include <magic_enum.hpp>
 
-#include "../General.hpp"
+#include "General.hpp"
 
 
 enum class PortType
@@ -46,4 +46,4 @@ static std::ostream& operator<<(std::ostream& aOs, const PortType& aVal)
 }
 
 
-#endif // PORTTYPE_H
+#endif // PORTTYPE_HPP

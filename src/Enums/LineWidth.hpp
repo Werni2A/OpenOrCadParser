@@ -1,5 +1,5 @@
-#ifndef LINEWIDTH_H
-#define LINEWIDTH_H
+#ifndef LINEWIDTH_HPP
+#define LINEWIDTH_HPP
 
 
 #include <cstdint>
@@ -8,7 +8,7 @@
 
 #include <magic_enum.hpp>
 
-#include "../General.hpp"
+#include "General.hpp"
 
 
 enum class LineWidth
@@ -43,4 +43,4 @@ static std::ostream& operator<<(std::ostream& aOs, const LineWidth& aVal)
 }
 
 
-#endif // LINEWIDTH_H
+#endif // LINEWIDTH_HPP

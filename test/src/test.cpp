@@ -20,7 +20,7 @@ TEST_CASE("0000: Check Line - Complex", "[Line]")
     Parser parser{inputFile};
     Library lib = parser.parseLibrary();
 
-    const Line& line = lib.packages.at(0).geometrySpecifications.at(0).lines.at(0);
+    const Line& line = lib.packages.at(0).primitives.at(0).lines.at(0);
 
     REQUIRE(line.getLineStyle() == LineStyle::DashDot);
     REQUIRE(line.getLineWidth() == LineWidth::Wide);
@@ -42,7 +42,7 @@ TEST_CASE("0000: Check CommentText - Complex", "[CommentText]")
     Parser parser{inputFile};
     Library lib = parser.parseLibrary();
 
-    const CommentText& text = lib.packages.at(0).geometrySpecifications.at(0).commentTexts.at(0);
+    const CommentText& text = lib.packages.at(0).primitives.at(0).commentTexts.at(0);
 
     REQUIRE(text.locX == 28);
     REQUIRE(text.locY == 20);
@@ -75,7 +75,7 @@ TEST_CASE("0002: Check Rect - Complex", "[Rect]")
     Parser parser{inputFile};
     Library lib = parser.parseLibrary();
 
-    const Rect& rect = lib.packages.at(0).geometrySpecifications.at(0).rects.at(0);
+    const Rect& rect = lib.packages.at(0).primitives.at(0).rects.at(0);
 
     REQUIRE(rect.fillStyle  == FillStyle::HatchPattern);
     REQUIRE(rect.hatchStyle == HatchStyle::Mesh);
@@ -100,7 +100,7 @@ TEST_CASE("0003: Check Ellipse - Complex", "[Ellipse]")
     Parser parser{inputFile};
     Library lib = parser.parseLibrary();
 
-    const Ellipse& ellipse = lib.packages.at(0).geometrySpecifications.at(0).ellipses.at(0);
+    const Ellipse& ellipse = lib.packages.at(0).primitives.at(0).ellipses.at(0);
 
     REQUIRE(ellipse.getFillStyle()  == FillStyle::Solid);
     REQUIRE(ellipse.getHatchStyle() == HatchStyle::NotValid);
@@ -125,7 +125,7 @@ TEST_CASE("0004: Check Arc - Complex", "[Arc]")
     Parser parser{inputFile};
     Library lib = parser.parseLibrary();
 
-    const Arc& arc = lib.packages.at(0).geometrySpecifications.at(0).arcs.at(0);
+    const Arc& arc = lib.packages.at(0).primitives.at(0).arcs.at(0);
 
     REQUIRE(arc.getLineStyle() == LineStyle::Dash);
     REQUIRE(arc.getLineWidth() == LineWidth::Medium);
@@ -153,7 +153,7 @@ TEST_CASE("0005: Check Bezier - Complex", "[Bezier]")
     Parser parser{inputFile};
     Library lib = parser.parseLibrary();
 
-    const Bezier& bezier = lib.packages.at(0).geometrySpecifications.at(0).beziers.at(0);
+    const Bezier& bezier = lib.packages.at(0).primitives.at(0).beziers.at(0);
 
     REQUIRE(bezier.getLineStyle() == LineStyle::Solid);
     REQUIRE(bezier.getLineWidth() == LineWidth::Thin);
@@ -208,7 +208,7 @@ TEST_CASE("0006: Check Polyline - Complex", "[Polyline]")
     Parser parser{inputFile};
     Library lib = parser.parseLibrary();
 
-    const Polyline& polyline = lib.packages.at(0).geometrySpecifications.at(0).polylines.at(0);
+    const Polyline& polyline = lib.packages.at(0).primitives.at(0).polylines.at(0);
 
     REQUIRE(polyline.getLineStyle() == LineStyle::Solid);
     REQUIRE(polyline.getLineWidth() == LineWidth::Thin);
@@ -236,7 +236,7 @@ TEST_CASE("0007: Check Bitmap - Complex", "[Bitmap]")
     Parser parser{inputFile};
     Library lib = parser.parseLibrary();
 
-    const Bitmap& bitmap = lib.packages.at(0).geometrySpecifications.at(0).bitmaps.at(0);
+    const Bitmap& bitmap = lib.packages.at(0).primitives.at(0).bitmaps.at(0);
 
     REQUIRE(bitmap.locX == 20);
     REQUIRE(bitmap.locY == 10);

@@ -1,5 +1,5 @@
-#ifndef TEXTFONT_H
-#define TEXTFONT_H
+#ifndef TEXTFONT_HPP
+#define TEXTFONT_HPP
 
 
 #include <cstdint>
@@ -10,7 +10,7 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "../General.hpp"
+#include "General.hpp"
 
 
 struct TextFont
@@ -54,4 +54,4 @@ static std::ostream& operator<<(std::ostream& aOs, const TextFont& aVal)
 }
 
 
-#endif // TEXTFONT_H
+#endif // TEXTFONT_HPP

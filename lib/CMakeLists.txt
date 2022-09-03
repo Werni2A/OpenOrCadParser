@@ -16,96 +16,98 @@ find_package(spdlog CONFIG REQUIRED)
 set(SOURCES
    ${LIB_SRC_DIR}/ContainerExtractor.cpp
    ${LIB_SRC_DIR}/DataStream.cpp
-   ${LIB_SRC_DIR}/Files/AdminData.cpp
-   ${LIB_SRC_DIR}/Files/CellsDirectory.cpp
-   ${LIB_SRC_DIR}/Files/DsnStream.cpp
-   ${LIB_SRC_DIR}/Files/ExportBlocksDirectory.cpp
-   ${LIB_SRC_DIR}/Files/GraphicsDirectory.cpp
-   ${LIB_SRC_DIR}/Files/Hierarchy.cpp
-   ${LIB_SRC_DIR}/Files/HSObjects.cpp
-   ${LIB_SRC_DIR}/Files/NetBundleMapData.cpp
-   ${LIB_SRC_DIR}/Files/Package.cpp
-   ${LIB_SRC_DIR}/Files/PackagesDirectory.cpp
-   ${LIB_SRC_DIR}/Files/Page.cpp
-   ${LIB_SRC_DIR}/Files/PartsDirectory.cpp
-   ${LIB_SRC_DIR}/Files/Schematic.cpp
-   ${LIB_SRC_DIR}/Files/Symbol.cpp
-   ${LIB_SRC_DIR}/Files/SymbolsDirectory.cpp
-   ${LIB_SRC_DIR}/Files/SymbolsLibrary.cpp
-   ${LIB_SRC_DIR}/Files/Type.cpp
-   ${LIB_SRC_DIR}/Files/ViewsDirectory.cpp
    ${LIB_SRC_DIR}/Misc.cpp
    ${LIB_SRC_DIR}/Parser.cpp
-   ${LIB_SRC_DIR}/Structures/Arc.cpp
-   ${LIB_SRC_DIR}/Structures/Bezier.cpp
-   ${LIB_SRC_DIR}/Structures/Bitmap.cpp
-   ${LIB_SRC_DIR}/Structures/CommentText.cpp
-   ${LIB_SRC_DIR}/Structures/Ellipse.cpp
-   ${LIB_SRC_DIR}/Structures/GeneralProperties.cpp
-   ${LIB_SRC_DIR}/Structures/GeometrySpecification.cpp
-   ${LIB_SRC_DIR}/Structures/Line.cpp
-   ${LIB_SRC_DIR}/Structures/PartInst.cpp
-   ${LIB_SRC_DIR}/Structures/PinIdxMapping.cpp
-   ${LIB_SRC_DIR}/Structures/Point.cpp
-   ${LIB_SRC_DIR}/Structures/Polygon.cpp
-   ${LIB_SRC_DIR}/Structures/Polyline.cpp
-   ${LIB_SRC_DIR}/Structures/Properties.cpp
-   ${LIB_SRC_DIR}/Structures/Properties2.cpp
-   ${LIB_SRC_DIR}/Structures/PropertiesTrailing.cpp
-   ${LIB_SRC_DIR}/Structures/Rect.cpp
-   ${LIB_SRC_DIR}/Structures/SymbolBBox.cpp
-   ${LIB_SRC_DIR}/Structures/SymbolDisplayProp.cpp
-   ${LIB_SRC_DIR}/Structures/SymbolPinBus.cpp
-   ${LIB_SRC_DIR}/Structures/SymbolPinScalar.cpp
-   ${LIB_SRC_DIR}/Structures/SymbolVector.cpp
-   ${LIB_SRC_DIR}/Structures/T0x1f.cpp
+   ${LIB_SRC_DIR}/Primitives/Point.cpp
+   ${LIB_SRC_DIR}/Primitives/PrimArc.cpp
+   ${LIB_SRC_DIR}/Primitives/PrimBezier.cpp
+   ${LIB_SRC_DIR}/Primitives/PrimBitmap.cpp
+   ${LIB_SRC_DIR}/Primitives/PrimCommentText.cpp
+   ${LIB_SRC_DIR}/Primitives/PrimEllipse.cpp
+   ${LIB_SRC_DIR}/Primitives/PrimLine.cpp
+   ${LIB_SRC_DIR}/Primitives/PrimPolygon.cpp
+   ${LIB_SRC_DIR}/Primitives/PrimPolyline.cpp
+   ${LIB_SRC_DIR}/Primitives/PrimRect.cpp
+   ${LIB_SRC_DIR}/Primitives/PrimSymbolVector.cpp
+   ${LIB_SRC_DIR}/Streams/StreamAdminData.cpp
+   ${LIB_SRC_DIR}/Streams/StreamCellsDirectory.cpp
+   ${LIB_SRC_DIR}/Streams/StreamDsnStream.cpp
+   ${LIB_SRC_DIR}/Streams/StreamExportBlocksDirectory.cpp
+   ${LIB_SRC_DIR}/Streams/StreamGraphicsDirectory.cpp
+   ${LIB_SRC_DIR}/Streams/StreamHierarchy.cpp
+   ${LIB_SRC_DIR}/Streams/StreamHSObjects.cpp
+   ${LIB_SRC_DIR}/Streams/StreamLibrary.cpp
+   ${LIB_SRC_DIR}/Streams/StreamNetBundleMapData.cpp
+   ${LIB_SRC_DIR}/Streams/StreamPackage.cpp
+   ${LIB_SRC_DIR}/Streams/StreamPackagesDirectory.cpp
+   ${LIB_SRC_DIR}/Streams/StreamPage.cpp
+   ${LIB_SRC_DIR}/Streams/StreamPartsDirectory.cpp
+   ${LIB_SRC_DIR}/Streams/StreamSchematic.cpp
+   ${LIB_SRC_DIR}/Streams/StreamSymbol.cpp
+   ${LIB_SRC_DIR}/Streams/StreamSymbolsDirectory.cpp
+   ${LIB_SRC_DIR}/Streams/StreamType.cpp
+   ${LIB_SRC_DIR}/Streams/StreamViewsDirectory.cpp
+   ${LIB_SRC_DIR}/Structures/StructGeneralProperties.cpp
+   ${LIB_SRC_DIR}/Structures/StructPartInst.cpp
+   ${LIB_SRC_DIR}/Structures/StructPinIdxMapping.cpp
+   ${LIB_SRC_DIR}/Structures/StructPrimitives.cpp
+   ${LIB_SRC_DIR}/Structures/StructProperties.cpp
+   ${LIB_SRC_DIR}/Structures/StructProperties2.cpp
+   ${LIB_SRC_DIR}/Structures/StructSymbolBBox.cpp
+   ${LIB_SRC_DIR}/Structures/StructSymbolDisplayProp.cpp
+   ${LIB_SRC_DIR}/Structures/StructSymbolPinBus.cpp
+   ${LIB_SRC_DIR}/Structures/StructSymbolPinScalar.cpp
+   ${LIB_SRC_DIR}/Structures/StructT0x1f.cpp
+   ${LIB_SRC_DIR}/Structures/StructWireScalar.cpp
    ${LIB_SRC_DIR}/Structures/TextFont.cpp
-   ${LIB_SRC_DIR}/Structures/WireScalar.cpp
+   ${LIB_SRC_DIR}/Structures/TrailingProperties.cpp
 )
 
 set(HEADERS
    ${LIB_INCLUDE_DIR}/ContainerExtractor.hpp
    ${LIB_INCLUDE_DIR}/DataStream.hpp
+   ${LIB_INCLUDE_DIR}/DataVariants.hpp
    ${LIB_INCLUDE_DIR}/Enums/Color.hpp
    ${LIB_INCLUDE_DIR}/Enums/FillStyle.hpp
-   ${LIB_INCLUDE_DIR}/Enums/GeometryStructure.hpp
    ${LIB_INCLUDE_DIR}/Enums/HatchStyle.hpp
    ${LIB_INCLUDE_DIR}/Enums/ImplementationType.hpp
    ${LIB_INCLUDE_DIR}/Enums/LineStyle.hpp
    ${LIB_INCLUDE_DIR}/Enums/LineWidth.hpp
    ${LIB_INCLUDE_DIR}/Enums/PortType.hpp
+   ${LIB_INCLUDE_DIR}/Enums/Primitive.hpp
    ${LIB_INCLUDE_DIR}/Enums/Structure.hpp
-   ${LIB_INCLUDE_DIR}/Files/AdminData.hpp
-   ${LIB_INCLUDE_DIR}/Files/DsnStream.hpp
-   ${LIB_INCLUDE_DIR}/Files/HSObjects.hpp
-   ${LIB_INCLUDE_DIR}/Files/NetBundleMapData.hpp
-   ${LIB_INCLUDE_DIR}/Files/Package.hpp
-   ${LIB_INCLUDE_DIR}/Files/Symbol.hpp
-   ${LIB_INCLUDE_DIR}/Files/SymbolsLibrary.hpp
-   ${LIB_INCLUDE_DIR}/Files/Type.hpp
    ${LIB_INCLUDE_DIR}/FutureData.hpp
    ${LIB_INCLUDE_DIR}/General.hpp
    ${LIB_INCLUDE_DIR}/Parser.hpp
-   ${LIB_INCLUDE_DIR}/Structures/Arc.hpp
-   ${LIB_INCLUDE_DIR}/Structures/Bezier.hpp
-   ${LIB_INCLUDE_DIR}/Structures/Bitmap.hpp
-   ${LIB_INCLUDE_DIR}/Structures/CommentText.hpp
-   ${LIB_INCLUDE_DIR}/Structures/Ellipse.hpp
-   ${LIB_INCLUDE_DIR}/Structures/GeneralProperties.hpp
-   ${LIB_INCLUDE_DIR}/Structures/GeometrySpecification.hpp
-   ${LIB_INCLUDE_DIR}/Structures/Line.hpp
-   ${LIB_INCLUDE_DIR}/Structures/PinIdxMapping.hpp
-   ${LIB_INCLUDE_DIR}/Structures/Point.hpp
-   ${LIB_INCLUDE_DIR}/Structures/Polygon.hpp
-   ${LIB_INCLUDE_DIR}/Structures/Polyline.hpp
-   ${LIB_INCLUDE_DIR}/Structures/Properties.hpp
-   ${LIB_INCLUDE_DIR}/Structures/Properties2.hpp
-   ${LIB_INCLUDE_DIR}/Structures/PropertiesTrailing.hpp
-   ${LIB_INCLUDE_DIR}/Structures/Rect.hpp
-   ${LIB_INCLUDE_DIR}/Structures/SymbolPinScalar.hpp
-   ${LIB_INCLUDE_DIR}/Structures/T0x1f.hpp
+   ${LIB_INCLUDE_DIR}/Primitives/Point.hpp
+   ${LIB_INCLUDE_DIR}/Primitives/PrimArc.hpp
+   ${LIB_INCLUDE_DIR}/Primitives/PrimBezier.hpp
+   ${LIB_INCLUDE_DIR}/Primitives/PrimBitmap.hpp
+   ${LIB_INCLUDE_DIR}/Primitives/PrimCommentText.hpp
+   ${LIB_INCLUDE_DIR}/Primitives/PrimEllipse.hpp
+   ${LIB_INCLUDE_DIR}/Primitives/PrimLine.hpp
+   ${LIB_INCLUDE_DIR}/Primitives/PrimPolygon.hpp
+   ${LIB_INCLUDE_DIR}/Primitives/PrimPolyline.hpp
+   ${LIB_INCLUDE_DIR}/Primitives/PrimRect.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamAdminData.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamDirectoryStruct.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamDsnStream.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamHSObjects.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamLibrary.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamNetBundleMapData.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamPackage.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamSymbol.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamType.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructGeneralProperties.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructPinIdxMapping.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructPrimitives.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructProperties.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructProperties2.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructSymbolPinScalar.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructT0x1f.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructWireScalar.hpp
    ${LIB_INCLUDE_DIR}/Structures/TextFont.hpp
-   ${LIB_INCLUDE_DIR}/Structures/WireScalar.hpp
+   ${LIB_INCLUDE_DIR}/Structures/TrailingProperties.hpp
 )
 
 # Create library file from sources

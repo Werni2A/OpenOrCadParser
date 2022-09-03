@@ -1,5 +1,5 @@
-#ifndef COMPONENTTYPE_H
-#define COMPONENTTYPE_H
+#ifndef COMPONENTTYPE_HPP
+#define COMPONENTTYPE_HPP
 
 
 #include <cstdint>
@@ -8,7 +8,7 @@
 
 #include <magic_enum.hpp>
 
-#include "../General.hpp"
+#include "General.hpp"
 
 
 // @todo compare to Structure type. Some of the elements are exactly the same. But it
@@ -72,4 +72,4 @@ static std::ostream& operator<<(std::ostream& aOs, const ComponentType& aVal)
 }
 
 
-#endif // COMPONENTTYPE_H
+#endif // COMPONENTTYPE_HPP
