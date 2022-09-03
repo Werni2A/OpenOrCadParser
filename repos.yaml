@@ -738,7 +738,7 @@ repositories:
   - errors: 6
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/altera/MICROLIB.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/altera/PCI_A.OLB
   - errors: 32
@@ -789,7 +789,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lucent/SPECFUNC.OLB
-  - errors: 195
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/LOGIBLOX.OLB
   - errors: 839
@@ -1575,7 +1575,7 @@ repositories:
   - errors: 277
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/fairchild.olb
-  - errors: 78
+  - errors: 74
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/filtsub.olb
   - errors: 30
@@ -3667,7 +3667,7 @@ repositories:
   - errors: 1
     options: null
     path: ./fpga/xilinx/X5K_MISC.OLB
-  - errors: 195
+  - errors: 0
     options: null
     path: ./fpga/xilinx/LOGIBLOX.OLB
   - errors: 0
@@ -3706,7 +3706,7 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/altera/ALTERA_M.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./fpga/altera/PCI_A.OLB
   - errors: 3
