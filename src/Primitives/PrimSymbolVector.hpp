@@ -30,6 +30,9 @@ struct PrimSymbolVector
     // @note The positions of the primitives are
     //       relative to the offset provided by
     //       locX and locY.
+    // @todo Replace with VariantPrimitive
+    // @todo Add PrimBitmap
+    // @todo Probably add PrimSymbolVector
     std::vector<PrimRect>        rects;
     std::vector<PrimLine>        lines;
     std::vector<PrimArc>         arcs;

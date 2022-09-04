@@ -30,7 +30,6 @@
 #include "Exception.hpp"
 #include "General.hpp"
 #include "Parser.hpp"
-#include "Parser.hpp"
 #include "PinShape.hpp"
 #include "Primitives/Point.hpp"
 #include "Primitives/PrimArc.hpp"
@@ -44,11 +43,17 @@
 #include "Streams/StreamLibrary.hpp"
 #include "Streams/StreamNetBundleMapData.hpp"
 #include "Streams/StreamType.hpp"
+#include "Structures/StructAlias.hpp"
+#include "Structures/StructGraphicBoxInst.hpp"
+#include "Structures/StructGraphicCommentTextInst.hpp"
+#include "Structures/StructPartInst.hpp"
 #include "Structures/StructProperties.hpp"
+#include "Structures/StructSthInPages0.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructSymbolPinBus.hpp"
 #include "Structures/StructSymbolPinScalar.hpp"
 #include "Structures/StructT0x1f.hpp"
+#include "Structures/StructT0x10.hpp"
 #include "Structures/TrailingProperties.hpp"
 
 
@@ -110,7 +115,7 @@ bool requiresPreamble(Structure structure)
     switch(structure)
     {
         case Structure::Properties:        required = true;  break;
-        case Structure::GeoDefinition:     required = false; break;
+        case Structure::Primitives:        required = false; break;
         case Structure::SymbolPinScalar:   required = true;  break;
         case Structure::SymbolPinBus:      required = false; break;
         case Structure::T0x1f:             required = true;  break;
@@ -530,44 +535,13 @@ void Parser::exceptionHandling()
         spdlog::error(fmt::format(fg(fmt::color::crimson), "Input Container: {}", mInputFile.string()));
         spdlog::error(fmt::format(fg(fmt::color::crimson), "Current File:    {}", mCurrOpenFile.string()));
         spdlog::error(fmt::format(fg(fmt::color::crimson), mDs.getCurrentOffsetStrMsg()));
-        spdlog::error(fmt::format(fg(fmt::color::crimson), ("\nError Message: {}\n\n", e.what())));
+        spdlog::error(fmt::format(fg(fmt::color::crimson), "\nError Message: {}\n\n", e.what()));
     }
     catch(...)
     {
         spdlog::error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
         spdlog::error(fmt::format(fg(fmt::color::crimson), "Unknown exception caught!\n"));
     }
-}
-
-
-// @todo return real data object
-bool Parser::readStructT0x10()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const std::optional<FutureData> thisFuture = getFutureData();
-
-    bool obj = false;
-
-    spdlog::critical("{}: Not implemented!", __func__);
-
-    if(thisFuture.has_value())
-    {
-        mDs.printUnknownData(thisFuture.value().getByteLen(), fmt::format("{}: 0", __func__));
-    }
-    else
-    {
-        mDs.printUnknownData(16, fmt::format("{}: 0", __func__));
-    }
-
-    sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(std::to_string(obj));
-
-    return obj;
 }
 
 
@@ -880,25 +854,25 @@ VariantStructure Parser::readStructure(Structure aStructure)
 
     switch(aStructure)
     {
-        case Structure::SthInPages0:            /*retStruct =*/ readStructSthInPages0();            break;
-        case Structure::Properties:             retStruct = readStructProperties();                 break;
-        case Structure::PartInst:               /*retStruct =*/ readStructPartInst();               break;
-        case Structure::T0x10:                  /*retStruct =*/ readStructT0x10();                  break;
-        case Structure::WireScalar:             retStruct = readStructWireScalar();                 break;
-        case Structure::GeoDefinition:          retStruct = readStructPrimitives();                 break;
-        case Structure::SymbolPinScalar:        retStruct = readStructSymbolPinScalar();            break;
-        case Structure::SymbolPinBus:           retStruct = readStructSymbolPinBus();               break;
-        case Structure::T0x1f:                  retStruct = readStructT0x1f();                      break;
-        case Structure::PinIdxMapping:          retStruct = readStructPinIdxMapping();              break;
-        case Structure::GlobalSymbol:           retStruct = readStructGlobalSymbol();               break;
-        case Structure::PortSymbol:             retStruct = readStructHierarchicSymbol();           break;
-        case Structure::OffPageSymbol:          retStruct = readStructOffPageSymbol();              break;
-        case Structure::SymbolDisplayProp:      retStruct = readStructSymbolDisplayProp();          break;
-        case Structure::Alias:                  /*retStruct =*/ readStructAlias();                  break;
-        case Structure::GraphicBoxInst:         /*retStruct =*/ readStructGraphicBoxInst();         break;
-        case Structure::GraphicCommentTextInst: /*retStruct =*/ readStructGraphicCommentTextInst(); break;
-        case Structure::ERCSymbol:              /*retStruct =*/ readStructERCSymbol();              break;
-        case Structure::PinShapeSymbol:         retStruct = readStructPinShapeSymbol();             break;
+        case Structure::Alias:                  retStruct = readStructAlias();                  break;
+        case Structure::ERCSymbol:              retStruct = readStructERCSymbol();              break;
+        case Structure::GlobalSymbol:           retStruct = readStructGlobalSymbol();           break;
+        case Structure::GraphicBoxInst:         retStruct = readStructGraphicBoxInst();         break;
+        case Structure::GraphicCommentTextInst: retStruct = readStructGraphicCommentTextInst(); break;
+        case Structure::OffPageSymbol:          retStruct = readStructOffPageSymbol();          break;
+        case Structure::PartInst:               retStruct = readStructPartInst();               break;
+        case Structure::PinIdxMapping:          retStruct = readStructPinIdxMapping();          break;
+        case Structure::PinShapeSymbol:         retStruct = readStructPinShapeSymbol();         break;
+        case Structure::PortSymbol:             retStruct = readStructHierarchicSymbol();       break;
+        case Structure::Primitives:             retStruct = readStructPrimitives();             break;
+        case Structure::Properties:             retStruct = readStructProperties();             break;
+        case Structure::SthInPages0:            retStruct = readStructSthInPages0();            break;
+        case Structure::SymbolDisplayProp:      retStruct = readStructSymbolDisplayProp();      break;
+        case Structure::SymbolPinBus:           retStruct = readStructSymbolPinBus();           break;
+        case Structure::SymbolPinScalar:        retStruct = readStructSymbolPinScalar();        break;
+        case Structure::T0x1f:                  retStruct = readStructT0x1f();                  break;
+        case Structure::T0x10:                  retStruct = readStructT0x10();                  break;
+        case Structure::WireScalar:             retStruct = readStructWireScalar();             break;
         default:
 
             const std::optional<FutureData> futureData = getFutureData();
@@ -923,130 +897,6 @@ VariantStructure Parser::readStructure(Structure aStructure)
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 
     return retStruct;
-}
-
-
-// @todo Probably a wrapper for Inst (Instances)
-void Parser::readStructSthInPages0()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const std::optional<FutureData> thisFuture = getFutureData();
-
-    mDs.printUnknownData(6, std::string(__func__) + " - 0");
-    mDs.printUnknownData(4, std::string(__func__) + " - 1");
-
-    const uint16_t len = mDs.readUint16();
-
-    for(size_t i = 0u; i < len; ++i)
-    {
-        Primitive geometryStructure1 = ToPrimitive(mDs.readUint8());
-        Primitive geometryStructure2 = ToPrimitive(mDs.readUint8());
-
-        if(geometryStructure1 != geometryStructure2)
-        {
-            throw std::runtime_error("Geometry structures should be equal!");
-        }
-
-        readPrimitive(geometryStructure1); // @todo add to obj
-    }
-
-    // sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-}
-
-
-void Parser::readStructGraphicCommentTextInst()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const std::optional<FutureData> thisFuture = getFutureData();
-
-    mDs.printUnknownData(34, std::string(__func__) + " - 0");
-
-    // sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-}
-
-
-void Parser::readStructAlias()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const std::optional<FutureData> thisFuture = getFutureData();
-
-    int32_t locX = mDs.readInt32();
-    int32_t locY = mDs.readInt32();
-
-    spdlog::debug("locX = {} | locY = {}", locX, locY);
-
-    Color color = ToColor(mDs.readUint32());
-
-    spdlog::debug("color = {}", to_string(color));
-
-    Rotation rotation = ToRotation(mDs.readUint32()); // @todo Why is it 4 byte? Probably increase Rotation size
-
-    spdlog::debug("rotation = {}", to_string(rotation));
-
-    uint16_t textFontIdx = mDs.readUint16(); // @todo educated guess
-
-    spdlog::debug("Alias fontIdx = {}", textFontIdx);
-
-    mDs.printUnknownData(2, std::string(__func__) + " - 0");
-
-    std::string name = mDs.readStringLenZeroTerm();
-
-    // sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-}
-
-
-// @todo is this a specialized instance for Rects or general for all types?
-void Parser::readStructGraphicBoxInst()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const std::optional<FutureData> thisFuture = getFutureData();
-
-    mDs.printUnknownData(11, std::string(__func__) + " - 0");
-
-    uint32_t dbId = mDs.readUint32();
-
-    int16_t locY = mDs.readInt16();
-    int16_t locX = mDs.readInt16();
-
-    int16_t y2 = mDs.readInt16();
-    int16_t x2 = mDs.readInt16();
-
-    int16_t x1 = mDs.readInt16();
-    int16_t y1 = mDs.readInt16();
-
-    Color color = ToColor(mDs.readUint16()); // @todo is it really not a 4 byte value?
-
-    mDs.printUnknownData(5, std::string(__func__) + " - 1");
-
-    // @todo Only Rect as a shape would make sense here. Maybe this should be passed
-    //       as a parameter to readSthInPages0 to check this condition. Further,
-    //       parseStructure should always call readSthInPages0.
-    // Structure structure = read_prefixes(4);
-    Structure structure = auto_read_prefixes();
-    readPreamble();
-    readStructure(structure);
-
-    // sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 }
 
 
@@ -1214,57 +1064,4 @@ std::optional<FutureData> Parser::checkTrailingFuture()
     }
 
     return nextFuture;
-}
-
-
-// @todo implement return type and return it
-void Parser::readStructERCSymbol()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const std::optional<FutureData> thisFuture = getFutureData();
-
-    std::string name = mDs.readStringLenZeroTerm();
-
-    // @todo Probably 'sourceLibName' which is a string but I'm not sure. Could also be the
-    //       last part of the next unknown block
-    mDs.printUnknownData(3, std::string(__func__) + " - 0");
-
-    sanitizeThisFutureSize(thisFuture);
-
-    // @todo move the following part out of this method?
-    mDs.printUnknownData(4, std::string(__func__) + " - 1");
-
-    uint16_t len = mDs.readUint16();
-
-    for(size_t i = 0u; i < len; ++i)
-    {
-        Primitive geometryStructure1 = ToPrimitive(mDs.readUint8());
-        Primitive geometryStructure2 = ToPrimitive(mDs.readUint8());
-
-        if(geometryStructure1 != geometryStructure2)
-        {
-            throw std::runtime_error("Geometry structures should be equal!");
-        }
-
-        readPrimitive(geometryStructure1); // @todo add to obj
-    }
-
-    // @todo not sure if this belongs into this structure and how do we know whether it
-    //       is used or not? (BBox should be optional according to XSD)
-    //       Probably defined by prefix?
-    readPreamble();
-    readStructSymbolBBox(); // @todo push structure
-
-    std::optional<FutureData> nextFuture = checkTrailingFuture();
-
-    if(nextFuture.has_value())
-    {
-        mDs.printUnknownData(nextFuture.value().getByteLen(), fmt::format("{}: Trailing Data", __func__));
-    }
-
-    sanitizeThisFutureSize(nextFuture);
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    // spdlog::info(to_string(obj));
 }

@@ -4,6 +4,8 @@
 
 #include <variant>
 
+#include <spdlog/spdlog.h>
+
 #include "Primitives/PrimArc.hpp"
 #include "Primitives/PrimBezier.hpp"
 #include "Primitives/PrimBitmap.hpp"
@@ -14,16 +16,27 @@
 #include "Primitives/PrimPolyline.hpp"
 #include "Primitives/PrimRect.hpp"
 #include "Primitives/PrimSymbolVector.hpp"
-#include "Structures/StructSymbolDisplayProp.hpp"
+#include "Structures/StructAlias.hpp"
+#include "Structures/StructERCSymbol.hpp"
 #include "Structures/StructGeneralProperties.hpp"
+#include "Structures/StructGraphicBoxInst.hpp"
+#include "Structures/StructGraphicCommentTextInst.hpp"
+#include "Structures/StructPartInst.hpp"
 #include "Structures/StructPinIdxMapping.hpp"
 #include "Structures/StructPrimitives.hpp"
 #include "Structures/StructProperties.hpp"
 #include "Structures/StructProperties2.hpp"
+#include "Structures/StructSthInHierarchy1.hpp"
+#include "Structures/StructSthInHierarchy2.hpp"
+#include "Structures/StructSthInHierarchy3.hpp"
+#include "Structures/StructSthInPages0.hpp"
 #include "Structures/StructSymbolBBox.hpp"
+#include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructSymbolPinBus.hpp"
 #include "Structures/StructSymbolPinScalar.hpp"
 #include "Structures/StructT0x1f.hpp"
+#include "Structures/StructT0x10.hpp"
+#include "Structures/StructTitleBlockSymbol.hpp"
 #include "Structures/StructWireScalar.hpp"
 
 
@@ -41,16 +54,27 @@ using VariantPrimitive = std::variant<
 >;
 
 using VariantStructure = std::variant<
+    StructAlias,
+    StructERCSymbol,
     StructGeneralProperties,
+    StructGraphicBoxInst,
+    StructGraphicCommentTextInst,
+    StructPartInst,
     StructPinIdxMapping,
     StructPrimitives,
     StructProperties,
     StructProperties2,
+    StructSthInHierarchy1,
+    StructSthInHierarchy2,
+    StructSthInHierarchy3,
+    StructSthInPages0,
     StructSymbolBBox,
     StructSymbolDisplayProp,
     StructSymbolPinBus,
     StructSymbolPinScalar,
     StructT0x1f,
+    StructT0x10,
+    StructTitleBlockSymbol,
     StructWireScalar
 >;
 
@@ -86,16 +110,27 @@ inline std::string to_string(const VariantStructure& aObj)
 {
     std::string str;
 
-    if(std::holds_alternative<StructGeneralProperties>(aObj)) { str = to_string(std::get<StructGeneralProperties>(aObj)); }
+    if(std::holds_alternative<StructAlias>(aObj)) { str = to_string(std::get<StructAlias>(aObj)); }
+    else if(std::holds_alternative<StructERCSymbol>(aObj)) { str = to_string(std::get<StructERCSymbol>(aObj)); }
+    else if(std::holds_alternative<StructGeneralProperties>(aObj)) { str = to_string(std::get<StructGeneralProperties>(aObj)); }
+    else if(std::holds_alternative<StructGraphicBoxInst>(aObj)) { str = to_string(std::get<StructGraphicBoxInst>(aObj)); }
+    else if(std::holds_alternative<StructGraphicCommentTextInst>(aObj)) { str = to_string(std::get<StructGraphicCommentTextInst>(aObj)); }
+    else if(std::holds_alternative<StructPartInst>(aObj)) { str = to_string(std::get<StructPartInst>(aObj)); }
     else if(std::holds_alternative<StructPinIdxMapping>(aObj)) { str = to_string(std::get<StructPinIdxMapping>(aObj)); }
     else if(std::holds_alternative<StructPrimitives>(aObj)) { str = to_string(std::get<StructPrimitives>(aObj)); }
     else if(std::holds_alternative<StructProperties>(aObj)) { str = to_string(std::get<StructProperties>(aObj)); }
     else if(std::holds_alternative<StructProperties2>(aObj)) { str = to_string(std::get<StructProperties2>(aObj)); }
+    else if(std::holds_alternative<StructSthInHierarchy1>(aObj)) { str = to_string(std::get<StructSthInHierarchy1>(aObj)); }
+    else if(std::holds_alternative<StructSthInHierarchy2>(aObj)) { str = to_string(std::get<StructSthInHierarchy2>(aObj)); }
+    else if(std::holds_alternative<StructSthInHierarchy3>(aObj)) { str = to_string(std::get<StructSthInHierarchy3>(aObj)); }
+    else if(std::holds_alternative<StructSthInPages0>(aObj)) { str = to_string(std::get<StructSthInPages0>(aObj)); }
     else if(std::holds_alternative<StructSymbolBBox>(aObj)) { str = to_string(std::get<StructSymbolBBox>(aObj)); }
     else if(std::holds_alternative<StructSymbolDisplayProp>(aObj)) { str = to_string(std::get<StructSymbolDisplayProp>(aObj)); }
     else if(std::holds_alternative<StructSymbolPinBus>(aObj)) { str = to_string(std::get<StructSymbolPinBus>(aObj)); }
     else if(std::holds_alternative<StructSymbolPinScalar>(aObj)) { str = to_string(std::get<StructSymbolPinScalar>(aObj)); }
     else if(std::holds_alternative<StructT0x1f>(aObj)) { str = to_string(std::get<StructT0x1f>(aObj)); }
+    else if(std::holds_alternative<StructT0x10>(aObj)) { str = to_string(std::get<StructT0x10>(aObj)); }
+    else if(std::holds_alternative<StructTitleBlockSymbol>(aObj)) { str = to_string(std::get<StructTitleBlockSymbol>(aObj)); }
     else if(std::holds_alternative<StructWireScalar>(aObj)) { str = to_string(std::get<StructWireScalar>(aObj)); }
     else
     {
