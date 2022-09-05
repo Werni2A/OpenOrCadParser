@@ -11,6 +11,7 @@ jobs:
     - name: Set up vcpkg
       run: |
         sudo apt update
+        sudo apt upgrade -y
         sudo apt install -y cmake
         git clone https://github.com/microsoft/vcpkg.git
         ./vcpkg/bootstrap-vcpkg.sh
@@ -31,7 +32,5 @@ jobs:
 
     - name: Run Tests
       run: |
-        sudo apt update
-        sudo apt install -y parallel
         ./run_parallel_tests.sh
         # ./build/test/test

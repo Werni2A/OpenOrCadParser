@@ -31,9 +31,14 @@ StreamNetBundleMapData Parser::readStreamNetBundleMapData()
         // Structure structure = read_prefixes(3);
         Structure structure = auto_read_prefixes();
 
-        if(static_cast<int>(structure) != 0x67)
+        // @todo extract the following into a separate readStructNetGroup method
+        if(structure != Structure::NetGroup)
         {
-            throw std::runtime_error(fmt::format("Expected 0x67 but got {}", static_cast<int>(structure)));
+            const std::string msg = fmt::format("{}: Expected {} but got {}",
+                __func__, to_string(Structure::NetGroup), to_string(structure));
+
+            spdlog::error(msg);
+            throw std::runtime_error(msg);
         }
 
         readPreamble();
@@ -58,7 +63,7 @@ StreamNetBundleMapData Parser::readStreamNetBundleMapData()
         }
     }
 
-    // @todo use functino
+    // @todo use function
     if(!mDs.isEoF())
     {
         throw std::runtime_error("Exptected EoF in NetBundleMapData");
