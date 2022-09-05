@@ -17,9 +17,6 @@
 #include "Exception.hpp"
 
 
-#define TURN_MSG_STYLE_ON (false)
-
-
 namespace fs = std::filesystem;
 
 /**

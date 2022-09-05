@@ -103,7 +103,8 @@ std::string SymbolUserProp::getVal() const
 }
 
 
-void Parser::readStructTitleBlockSymbol()
+// @todo this is a whole file parser. Split it up into the title block structure and move the rest to the symbol parser?
+void Parser::readTitleBlockSymbol()
 {
     mDs.printUnknownData(36, std::string(__func__) + " - 0");
 

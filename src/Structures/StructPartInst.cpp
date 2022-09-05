@@ -9,16 +9,16 @@
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
 #include "Parser.hpp"
+#include "Structures/StructPartInst.hpp"
 
 
-// @todo return real data object
-bool Parser::readStructPartInst()
+StructPartInst Parser::readStructPartInst()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    bool obj = false;
+    StructPartInst obj;
 
     mDs.printUnknownData(8, std::string(__func__) + " - 0");
 
@@ -76,6 +76,7 @@ bool Parser::readStructPartInst()
     checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::info(to_string(obj));
 
     return obj;
 }

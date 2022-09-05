@@ -33,7 +33,7 @@ enum class Structure
     WireBus                =  21,
 
     Port                   =  23, //!< Hierarchical port in schematic
-    GeoDefinition          =  24, // @todo renaming it to Graphics or something similar would make sense
+    Primitives             =  24,
 
     SymbolPinScalar        =  26,
     SymbolPinBus           =  27,
@@ -66,12 +66,16 @@ enum class Structure
     TitleBlockSymbol       =  64, //!< Title block symbol in the library
     TitleBlock             =  65, //!< Title block instance in the schematic // @todo Not sure at all. This definetly needs verification. Then probably suffix with `Inst`?
 
+    SthInHierarchy1        =  66, // @todo
     NetDbIdMapping         =  67,
+    SthInHierarchy2        =  68, // @todo
 
     ERCSymbol              =  75, //!< ERC symbol in the library
     BookMarkSymbol         =  76, //!< Book mark symbol in the library
     ERCSymbolInst          =  77, //!< ERC marker instance in the schematic
     BookMarkSymbolInst     =  78, //!< Book mark instance in the schematic
+
+    SthInHierarchy3        =  82, // @todo
 
     GraphicBezierInst      =  88,
     GraphicOleEmbedInst    =  89, //!< Embedds a file into the schematic, see https://en.wikipedia.org/wiki/Object_Linking_and_Embedding

@@ -47,17 +47,27 @@ set(SOURCES
    ${LIB_SRC_DIR}/Streams/StreamSymbolsDirectory.cpp
    ${LIB_SRC_DIR}/Streams/StreamType.cpp
    ${LIB_SRC_DIR}/Streams/StreamViewsDirectory.cpp
+   ${LIB_SRC_DIR}/Structures/StructAlias.cpp
+   ${LIB_SRC_DIR}/Structures/StructERCSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructGeneralProperties.cpp
+   ${LIB_SRC_DIR}/Structures/StructGraphicBoxInst.cpp
+   ${LIB_SRC_DIR}/Structures/StructGraphicCommentTextInst.cpp
    ${LIB_SRC_DIR}/Structures/StructPartInst.cpp
    ${LIB_SRC_DIR}/Structures/StructPinIdxMapping.cpp
    ${LIB_SRC_DIR}/Structures/StructPrimitives.cpp
    ${LIB_SRC_DIR}/Structures/StructProperties.cpp
    ${LIB_SRC_DIR}/Structures/StructProperties2.cpp
+   ${LIB_SRC_DIR}/Structures/StructSthInHierarchy1.cpp
+   ${LIB_SRC_DIR}/Structures/StructSthInHierarchy2.cpp
+   ${LIB_SRC_DIR}/Structures/StructSthInHierarchy3.cpp
+   ${LIB_SRC_DIR}/Structures/StructSthInPages0.cpp
    ${LIB_SRC_DIR}/Structures/StructSymbolBBox.cpp
    ${LIB_SRC_DIR}/Structures/StructSymbolDisplayProp.cpp
    ${LIB_SRC_DIR}/Structures/StructSymbolPinBus.cpp
    ${LIB_SRC_DIR}/Structures/StructSymbolPinScalar.cpp
    ${LIB_SRC_DIR}/Structures/StructT0x1f.cpp
+   ${LIB_SRC_DIR}/Structures/StructT0x10.cpp
+   ${LIB_SRC_DIR}/Structures/StructTitleBlockSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructWireScalar.cpp
    ${LIB_SRC_DIR}/Structures/TextFont.cpp
    ${LIB_SRC_DIR}/Structures/TrailingProperties.cpp
@@ -98,13 +108,24 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Streams/StreamPackage.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamSymbol.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamType.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructAlias.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructERCSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGeneralProperties.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructGraphicBoxInst.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructGraphicCommentTextInst.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructPartInst.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructPinIdxMapping.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructPrimitives.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructProperties.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructProperties2.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructSthInHierarchy1.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructSthInHierarchy2.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructSthInHierarchy3.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructSthInPages0.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructSymbolPinScalar.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructT0x1f.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructT0x10.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructTitleBlockSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructWireScalar.hpp
    ${LIB_INCLUDE_DIR}/Structures/TextFont.hpp
    ${LIB_INCLUDE_DIR}/Structures/TrailingProperties.hpp

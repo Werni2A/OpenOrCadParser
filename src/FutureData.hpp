@@ -7,6 +7,7 @@
 #include <vector>
 
 #include <fmt/core.h>
+#include <spdlog/spdlog.h>
 
 
 class FutureData

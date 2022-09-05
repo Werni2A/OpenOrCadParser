@@ -39,16 +39,27 @@
 #include "Streams/StreamPackage.hpp"
 #include "Streams/StreamSymbol.hpp"
 #include "Streams/StreamType.hpp"
+#include "Structures/StructAlias.hpp"
+#include "Structures/StructERCSymbol.hpp"
 #include "Structures/StructGeneralProperties.hpp"
+#include "Structures/StructGraphicBoxInst.hpp"
+#include "Structures/StructGraphicCommentTextInst.hpp"
+#include "Structures/StructPartInst.hpp"
 #include "Structures/StructPinIdxMapping.hpp"
 #include "Structures/StructPrimitives.hpp"
 #include "Structures/StructProperties.hpp"
 #include "Structures/StructProperties2.hpp"
+#include "Structures/StructSthInHierarchy1.hpp"
+#include "Structures/StructSthInHierarchy2.hpp"
+#include "Structures/StructSthInHierarchy3.hpp"
+#include "Structures/StructSthInPages0.hpp"
 #include "Structures/StructSymbolBBox.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructSymbolPinBus.hpp"
 #include "Structures/StructSymbolPinScalar.hpp"
 #include "Structures/StructT0x1f.hpp"
+#include "Structures/StructT0x10.hpp"
+#include "Structures/StructTitleBlockSymbol.hpp"
 #include "Structures/StructWireScalar.hpp"
 #include "Structures/TextFont.hpp"
 #include "Structures/TrailingProperties.hpp"
@@ -187,30 +198,32 @@ public:
     // -------------- Read Structure ---------------
     // ---------------------------------------------
 
-    bool readStructPartInst();
-    bool readStructT0x10();
+    StructAlias readStructAlias();
+    StructERCSymbol readStructERCSymbol();
     StructGeneralProperties readStructGeneralProperties();
+    StructGraphicBoxInst readStructGraphicBoxInst();
+    StructGraphicCommentTextInst readStructGraphicCommentTextInst();
+    StructPartInst readStructPartInst();
     StructPinIdxMapping readStructPinIdxMapping();
-    StructPrimitives readStructPrimitives(FileFormatVersion aVersion = FileFormatVersion::Unknown);
-    StructProperties readStructProperties();
-    StructProperties2 readStructProperties2();
-    StructSymbolDisplayProp readStructSymbolDisplayProp();
-    StructSymbolPinBus readStructSymbolPinBus();
-    StructSymbolPinScalar readStructSymbolPinScalar();
-    StructT0x1f readStructT0x1f();
     StructPrimitives readStructGlobalSymbol();
     StructPrimitives readStructHierarchicSymbol();
     StructPrimitives readStructOffPageSymbol();
     StructPrimitives readStructPinShapeSymbol();
+    StructPrimitives readStructPrimitives(FileFormatVersion aVersion = FileFormatVersion::Unknown);
+    StructProperties readStructProperties();
+    StructProperties2 readStructProperties2();
+    StructSthInHierarchy1 readStructSthInHierarchy1();
+    StructSthInHierarchy2 readStructSthInHierarchy2();
+    StructSthInHierarchy3 readStructSthInHierarchy3();
+    StructSthInPages0 readStructSthInPages0();
     StructSymbolBBox readStructSymbolBBox();
-    TextFont readStructTextFont();
+    StructSymbolDisplayProp readStructSymbolDisplayProp();
+    StructSymbolPinBus readStructSymbolPinBus();
+    StructSymbolPinScalar readStructSymbolPinScalar();
+    StructT0x1f readStructT0x1f();
+    StructT0x10 readStructT0x10();
+    StructTitleBlockSymbol readStructTitleBlockSymbol();
     StructWireScalar readStructWireScalar();
-    void readStructAlias();
-    void readStructERCSymbol();
-    void readStructGraphicBoxInst();
-    void readStructGraphicCommentTextInst();
-    void readStructSthInPages0();
-    void readStructTitleBlockSymbol();
 
     // ---------------------------------------------
     // -------------- Read Primitive ---------------
@@ -237,6 +250,8 @@ public:
     VariantPrimitive readPrimitive(Primitive aPrimitive);
     VariantStructure readStructure(Structure aStructure);
     TrailingProperties readTrailingProperties();
+
+    void readTitleBlockSymbol();
 
 public:
     // Public data
