@@ -668,7 +668,7 @@ Structure Parser::read_prefixes(size_t aNumber, bool aPrediction)
 
     if(!aPrediction)
     {
-        if(offsets.size() > 2U)
+        if(offsets.size() >= 2U)
         {
             if(offsets.size() % 2U == 0U)
             {
@@ -680,18 +680,35 @@ Structure Parser::read_prefixes(size_t aNumber, bool aPrediction)
                 const std::pair<size_t, size_t> start_pair = offsets[i + 1U];
                 const std::pair<size_t, size_t> stop_pair  = offsets[i];
 
-                mFutureDataLst.push_back(FutureData{start_pair.first, start_pair.second, stop_pair.first, stop_pair.second});
+                const FutureData futureData = FutureData{start_pair.first, start_pair.second, stop_pair.first, stop_pair.second};
+
+                std::optional<FutureData> existing = mFutureDataLst.getByStartOffset(futureData.getStartOffset());
+
+                if(existing.has_value())
+                {
+                    if(existing.value().getStopOffset() != futureData.getStopOffset())
+                    {
+                        const std::string msg = fmt::format("{}: Future data at 0x{:08x} is either {} or {} Byte long,"
+                            " having both lengths does not make any sense.",
+                            __func__, existing.value().getByteLen(), futureData.getByteLen());
+
+                        spdlog::error(msg);
+                        throw std::runtime_error(msg);
+                    }
+                    else
+                    {
+                        spdlog::debug("{}: Future data exists already in list", __func__);
+                    }
+                }
+
+                mFutureDataLst.push_back(futureData);
 
                 spdlog::debug("{}: Found future data: {}", __func__, (mFutureDataLst.end() - 1)->string());
             }
         }
-        else if(offsets.size() == 2U)
-        {
-            spdlog::info("Found beginning of struct but not its length");
-        }
         else if(offsets.size() == 1U)
         {
-            spdlog::debug("Found single structure beginning at 0x{:08x}", offsets[0].second);
+            spdlog::debug("{}: Found single structure beginning at 0x{:08x}", __func__, offsets[0].second);
         }
     }
 
