@@ -35,9 +35,9 @@ StructSymbolPinBus Parser::readStructSymbolPinBus()
 
     mDs.printUnknownData(6, std::string(__func__) + " - 1");
 
-    // sanitizeThisFutureSize(thisFuture);
+    sanitizeThisFutureSize(thisFuture);
 
-    checkTrailingFuture();
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

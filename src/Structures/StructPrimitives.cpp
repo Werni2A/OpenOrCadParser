@@ -75,17 +75,11 @@ StructPrimitives Parser::readStructPrimitives(FileFormatVersion aVersion)
 
     sanitizeThisFutureSize(thisFuture);
 
-    const std::optional<FutureData> nextFuture = checkTrailingFuture();
-
-    if(nextFuture.has_value())
-    {
-        spdlog::warn("Detected trailing future data at 0x{:08x}", nextFuture.value().getStartOffset());
-        mDs.printUnknownData(nextFuture.value().getByteLen(), fmt::format("{}: Trailing Data", __func__));
-    }
+    readOptionalTrailingFuture();
 
     // -------------------------------------------------------------------
 
-    const std::optional<FutureData> thisFuture2 = getFutureData();
+    readOptionalTrailingFuture();
 
     // const uint16_t geometryCount = mDs.readUint16();
     // spdlog::debug("geometryCount = {}", geometryCount);
@@ -126,15 +120,7 @@ StructPrimitives Parser::readStructPrimitives(FileFormatVersion aVersion)
     //     // }
     // }
 
-    const std::optional<FutureData> nextFuture2 = checkTrailingFuture();
-
-    if(nextFuture2.has_value())
-    {
-        spdlog::warn("Detected trailing future data at 0x{:08x}", nextFuture2.value().getStartOffset());
-        mDs.printUnknownData(nextFuture2.value().getByteLen(), fmt::format("{}: Trailing Data", __func__));
-    }
-
-    sanitizeThisFutureSize(thisFuture2);
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

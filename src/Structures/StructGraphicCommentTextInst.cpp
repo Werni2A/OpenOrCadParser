@@ -19,9 +19,9 @@ StructGraphicCommentTextInst Parser::readStructGraphicCommentTextInst()
 
     mDs.printUnknownData(34, std::string(__func__) + " - 0");
 
-    // sanitizeThisFutureSize(thisFuture);
+    sanitizeThisFutureSize(thisFuture);
 
-    checkTrailingFuture();
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

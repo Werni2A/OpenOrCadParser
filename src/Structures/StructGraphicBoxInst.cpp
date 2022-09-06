@@ -43,9 +43,9 @@ StructGraphicBoxInst Parser::readStructGraphicBoxInst()
     readPreamble();
     readStructure(structure);
 
-    // sanitizeThisFutureSize(thisFuture);
+    sanitizeThisFutureSize(thisFuture);
 
-    checkTrailingFuture();
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

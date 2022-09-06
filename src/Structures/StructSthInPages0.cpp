@@ -39,9 +39,9 @@ StructSthInPages0 Parser::readStructSthInPages0()
         readPrimitive(geometryStructure1); // @todo add to obj
     }
 
-    // sanitizeThisFutureSize(thisFuture);
+    sanitizeThisFutureSize(thisFuture);
 
-    checkTrailingFuture();
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

@@ -42,14 +42,7 @@ StructAlias Parser::readStructAlias()
 
     sanitizeThisFutureSize(thisFuture);
 
-    const std::optional<FutureData> nextFuture = getFutureData();
-
-    if(nextFuture.has_value())
-    {
-        mDs.printUnknownData(nextFuture.value().getByteLen(), "Trailing data");
-    }
-
-    sanitizeThisFutureSize(nextFuture);
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

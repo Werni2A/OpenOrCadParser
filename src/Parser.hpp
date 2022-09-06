@@ -164,6 +164,8 @@ public:
 
     std::optional<FutureData> checkTrailingFuture();
 
+    void readOptionalTrailingFuture();
+
     // ---------------------------------------------
     // -------------- Read Container ---------------
     // ---------------------------------------------

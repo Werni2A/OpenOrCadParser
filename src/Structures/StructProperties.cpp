@@ -27,11 +27,7 @@ StructProperties Parser::readStructProperties()
 
     sanitizeThisFutureSize(thisFuture);
 
-    if(checkTrailingFuture().has_value())
-    {
-        // @todo save returned structure as optional in Properties or in outter structure?
-        readTrailingProperties();
-    }
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));
