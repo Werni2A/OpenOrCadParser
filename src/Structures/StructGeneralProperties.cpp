@@ -7,6 +7,7 @@
 
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
+#include "FutureData.hpp"
 #include "General.hpp"
 #include "Parser.hpp"
 #include "Structures/StructGeneralProperties.hpp"
@@ -15,6 +16,8 @@
 StructGeneralProperties Parser::readStructGeneralProperties()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    const std::optional<FutureData> thisFuture = getFutureData();
 
     StructGeneralProperties obj;
 
@@ -61,6 +64,10 @@ StructGeneralProperties Parser::readStructGeneralProperties()
     obj.implementationType = ToImplementationType(implementationType);
 
     mDs.printUnknownData(1, std::string(__func__) + " - 0");
+
+    sanitizeThisFutureSize(thisFuture);
+
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

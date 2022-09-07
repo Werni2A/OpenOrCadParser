@@ -69,10 +69,9 @@ StructWireScalar Parser::readStructWireScalar()
     spdlog::debug("wireLineWidth = {} | wireLineStyle = {}",
         to_string(obj.wireLineWidth), to_string(obj.wireLineStyle));
 
-    // @todo reactivate
-    // sanitizeThisFutureSize(thisFuture);
+    sanitizeThisFutureSize(thisFuture);
 
-    checkTrailingFuture();
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

@@ -4,6 +4,7 @@
 
 #include <nameof.hpp>
 
+#include "FutureData.hpp"
 #include "General.hpp"
 #include "Parser.hpp"
 #include "Structures/StructERCSymbol.hpp"
@@ -49,14 +50,7 @@ StructERCSymbol Parser::readStructERCSymbol()
     readPreamble();
     readStructSymbolBBox(); // @todo push structure
 
-    std::optional<FutureData> nextFuture = checkTrailingFuture();
-
-    if(nextFuture.has_value())
-    {
-        mDs.printUnknownData(nextFuture.value().getByteLen(), fmt::format("{}: Trailing Data", __func__));
-    }
-
-    sanitizeThisFutureSize(nextFuture);
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

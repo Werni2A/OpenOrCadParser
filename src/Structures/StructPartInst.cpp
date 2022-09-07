@@ -71,9 +71,9 @@ StructPartInst Parser::readStructPartInst()
     Structure structure = auto_read_prefixes();
     readPreamble();
 
-    // sanitizeThisFutureSize(thisFuture);
+    sanitizeThisFutureSize(thisFuture);
 
-    checkTrailingFuture();
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

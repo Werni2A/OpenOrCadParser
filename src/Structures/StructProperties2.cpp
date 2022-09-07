@@ -15,6 +15,8 @@ StructProperties2 Parser::readStructProperties2()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     StructProperties2 obj;
 
     obj.name = mDs.readStringLenZeroTerm();
@@ -28,6 +30,10 @@ StructProperties2 Parser::readStructProperties2()
     obj.footprint = mDs.readStringLenZeroTerm();
 
     obj.sectionCount = mDs.readUint16(); // @todo has this something to do with units? Or was this just bad naming from myself?
+
+    sanitizeThisFutureSize(thisFuture);
+
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

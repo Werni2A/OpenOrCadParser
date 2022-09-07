@@ -13,6 +13,8 @@ StructSthInHierarchy2 Parser::readStructSthInHierarchy2()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     StructSthInHierarchy2 obj;
 
     mDs.printUnknownData(4, fmt::format("{}: 0", __func__));
@@ -68,6 +70,10 @@ StructSthInHierarchy2 Parser::readStructSthInHierarchy2()
             throw std::runtime_error("Unfortunate...");
         }
     }
+
+    sanitizeThisFutureSize(thisFuture);
+
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

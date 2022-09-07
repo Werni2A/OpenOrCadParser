@@ -67,8 +67,7 @@ StructPinIdxMapping Parser::readStructPinIdxMapping()
 
     sanitizeThisFutureSize(thisFuture);
 
-    // @todo discard trailing data if present. This should fix a few errors
-    checkTrailingFuture();
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

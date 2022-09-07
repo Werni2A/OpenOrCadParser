@@ -15,6 +15,8 @@ StructSymbolBBox Parser::readStructSymbolBBox()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    const std::optional<FutureData> thisFuture = getFutureData();
+
     StructSymbolBBox obj;
 
     obj.x1 = mDs.readInt16();
@@ -24,6 +26,10 @@ StructSymbolBBox Parser::readStructSymbolBBox()
 
     // @todo not sure weather this belongs to the structure or should be outside of it
     mDs.printUnknownData(4, fmt::format("{}: 0", __func__));
+
+    sanitizeThisFutureSize(thisFuture);
+
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

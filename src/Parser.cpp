@@ -1062,7 +1062,7 @@ void Parser::sanitizeThisFutureSize(std::optional<FutureData> aThisFuture)
             const std::string msg = fmt::format("{}: StopOffsets differ! 0x{:08x} (expected) vs. 0x{:08x} (actual)",
                 __func__, aThisFuture.value().getStopOffset(), stopOffset);
             spdlog::error(msg);
-            spdlog::critical("The structure may changed due to version differences, check this!");
+            spdlog::critical("The structure may have changed due to version differences!");
             throw std::runtime_error(msg);
         }
     }
@@ -1081,4 +1081,17 @@ std::optional<FutureData> Parser::checkTrailingFuture()
     }
 
     return nextFuture;
+}
+
+
+void Parser::readOptionalTrailingFuture()
+{
+    std::optional<FutureData> future = checkTrailingFuture();
+
+    if(future.has_value())
+    {
+        mDs.printUnknownData(future.value().getByteLen(), fmt::format("{}: Trailing Future Data", __func__));
+    }
+
+    sanitizeThisFutureSize(future);
 }

@@ -51,7 +51,7 @@ TrailingProperties Parser::readTrailingProperties()
 
     sanitizeThisFutureSize(thisFuture);
 
-    checkTrailingFuture();
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

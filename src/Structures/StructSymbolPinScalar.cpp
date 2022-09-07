@@ -33,19 +33,27 @@ StructSymbolPinScalar Parser::readStructSymbolPinScalar()
 
     obj.portType = ToPortType(mDs.readUint32());
 
-    mDs.printUnknownData(6, std::string(__func__) + " - 1");
+    mDs.printUnknownData(4, std::string(__func__) + " - 1");
 
-    sanitizeThisFutureSize(thisFuture);
+    const uint16_t struct_len = mDs.readUint16();
 
-    const std::optional<FutureData> nextFuture = checkTrailingFuture();
-
-    if(nextFuture.has_value())
+    for(size_t i = 0U; i < struct_len; ++i)
     {
-        spdlog::warn("Detected trailing future data at 0x{:08x}", nextFuture.value().getStartOffset());
-        mDs.printUnknownData(nextFuture.value().getByteLen(), fmt::format("{}: Trailing Data", __func__));
+        const Structure structure = auto_read_prefixes();
+
+        if(structure != Structure::SymbolDisplayProp)
+        {
+            const std::string msg = fmt::format("{}: Expected {} but got {}",
+                __func__, to_string(Structure::SymbolDisplayProp), to_string(structure));
+
+            spdlog::error(msg);
+        }
+
+        readPreamble();
+        readStructure(structure);
     }
 
-    sanitizeThisFutureSize(nextFuture);
+    sanitizeThisFutureSize(thisFuture);
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));

@@ -65,15 +65,7 @@ StructSymbolDisplayProp Parser::readStructSymbolDisplayProp()
 
     sanitizeThisFutureSize(thisFuture);
 
-    const std::optional<FutureData> nextFuture = checkTrailingFuture();
-
-    if(nextFuture.has_value())
-    {
-        spdlog::warn("Detected trailing future data at 0x{:08x}", nextFuture.value().getStartOffset());
-        mDs.printUnknownData(nextFuture.value().getByteLen(), fmt::format("{}: Trailing Data", __func__));
-    }
-
-    sanitizeThisFutureSize(nextFuture);
+    readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));
