@@ -544,7 +544,7 @@ repositories:
 - author: beagleboard
   commit: 6db2f5203c7a172aa6ce9c49b3ef5745ba78c91c
   files:
-  - errors: 4
+  - errors: 3
     options: null
     path: ./BEAGLE1.OLB
   project: beagle-cadence-libraries
@@ -623,7 +623,7 @@ repositories:
   - errors: 7
     options: null
     path: ./SYMBOLS_GOST.OLB
-  - errors: 2
+  - errors: 1
     options: null
     path: ./MY_TITLE.OLB
   - errors: 0
@@ -732,10 +732,10 @@ repositories:
   - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/altera/ALTERA_P.OLB
-  - errors: 3
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/altera/MEGA.OLB
-  - errors: 6
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/altera/MICROLIB.OLB
   - errors: 0
@@ -927,7 +927,7 @@ repositories:
   - errors: 5
     options: null
     path: ./orcad capture/unsorted/_archive/MicroController.olb
-  - errors: 34
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/MicroProcessor.olb
   - errors: 0
@@ -1257,7 +1257,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/On Semi/ON_DIODE.OLB
-  - errors: 3
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/On Semi/ON_MOS.OLB
   - errors: 10
@@ -1272,43 +1272,43 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/PROM.OLB
-  - errors: 10
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/1_shot.olb
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/74ac.olb
-  - errors: 74
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/74act.olb
-  - errors: 183
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/74als.olb
-  - errors: 118
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/74as.olb
-  - errors: 117
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/74f.olb
-  - errors: 34
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/74h.olb
-  - errors: 153
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/74hc.olb
-  - errors: 65
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/74hct.olb
-  - errors: 32
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/74l.olb
-  - errors: 224
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/74ls.olb
-  - errors: 74
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/74s.olb
-  - errors: 150
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/7400.olb
   - errors: 5
@@ -1317,13 +1317,13 @@ repositories:
   - errors: 196
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/ad_reg.olb
-  - errors: 34
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/adv_lin.olb
   - errors: 10
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/aa_igbt.olb
-  - errors: 7
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/aa_misc.olb
   - errors: 0
@@ -1347,10 +1347,10 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/CONTROLLER.OLB
-  - errors: 616
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/Cores.olb
-  - errors: 696
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/di.olb
   - errors: 30
@@ -1359,10 +1359,10 @@ repositories:
   - errors: 88
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/dih.olb
-  - errors: 23
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/div.olb
-  - errors: 434
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/diz.olb
   - errors: 0
@@ -1389,7 +1389,7 @@ repositories:
   - errors: 20
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/opt.olb
-  - errors: 8
+  - errors: 7
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/pspice_elem.olb
   - errors: 48
@@ -1398,7 +1398,7 @@ repositories:
   - errors: 6
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/rfbjp.olb
-  - errors: 19
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/rfdio.olb
   - errors: 0
@@ -1413,19 +1413,19 @@ repositories:
   - errors: 33
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/spice_elem.olb
-  - errors: 154
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/thy1.olb
-  - errors: 8
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/tzb.olb
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/vd.olb
-  - errors: 149
+  - errors: 148
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/vr.olb
-  - errors: 3
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/ana_swit.olb
   - errors: 5
@@ -1437,40 +1437,40 @@ repositories:
   - errors: 12
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/anl_misc.olb
-  - errors: 41
+  - errors: 40
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/anlg_dev.olb
-  - errors: 27
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/apex_pwm.olb
-  - errors: 29
+  - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/apex.olb
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/bipolar.olb
-  - errors: 18
+  - errors: 17
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/breakout.olb
-  - errors: 13
+  - errors: 6
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/burr_brn.olb
-  - errors: 74
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/bzt55.olb
-  - errors: 107
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/cd4000.olb
-  - errors: 52
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/cel.olb
-  - errors: 484
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/coilcraft.olb
-  - errors: 39
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/comlinr.olb
-  - errors: 73
+  - errors: 60
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/darlngtn.olb
   - errors: 174
@@ -1482,31 +1482,31 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/dig_abm.olb
-  - errors: 4
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/dig_ecl.olb
-  - errors: 18
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/dig_gal.olb
   - errors: 53
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/dig_misc.olb
-  - errors: 87
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/dig_pal.olb
-  - errors: 116
+  - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/dig_prim.olb
-  - errors: 1171
+  - errors: 46
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/diode.olb
-  - errors: 160
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/ebipolar.olb
-  - errors: 8
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/ediode.olb
-  - errors: 6
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/elantec.olb
   - errors: 32
@@ -1557,7 +1557,7 @@ repositories:
   - errors: 1112
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/epcos.olb
-  - errors: 36
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/epwrbjt.olb
   - errors: 16
@@ -1566,25 +1566,25 @@ repositories:
   - errors: 9
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/EVALAA.OLB
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/evalp.olb
-  - errors: 37
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/fagor_zy_gp.olb
-  - errors: 277
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/fairchild.olb
-  - errors: 74
+  - errors: 41
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/filtsub.olb
   - errors: 30
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/fwbell.olb
-  - errors: 153
+  - errors: 39
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/harris.olb
-  - errors: 173
+  - errors: 170
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/igbt.olb
   - errors: 89
@@ -1602,7 +1602,7 @@ repositories:
   - errors: 56
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/infineon_coolmos_800.olb
-  - errors: 4
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/infineon_ikw_t120_l2.olb
   - errors: 254
@@ -1617,10 +1617,10 @@ repositories:
   - errors: 44
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/infineon_pfet_60.olb
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/infineon_s_afbjt.olb
-  - errors: 72
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/infineon_s_ditr.olb
   - errors: 0
@@ -1629,7 +1629,7 @@ repositories:
   - errors: 52
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/infineon_sfet_100.olb
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/infineon_sic_diodes.olb
   - errors: 9
@@ -1644,25 +1644,25 @@ repositories:
   - errors: 9
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/ixys.olb
-  - errors: 552
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/jbipolar.olb
-  - errors: 1160
+  - errors: 129
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/jdiode.olb
-  - errors: 8
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/jfet.olb
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/jjfet.olb
-  - errors: 78
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/jopamp.olb
-  - errors: 114
+  - errors: 112
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/jpwrbjt.olb
-  - errors: 298
+  - errors: 111
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/jpwrmos.olb
   - errors: 3
@@ -1671,55 +1671,55 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/linedriv.olb
-  - errors: 1153
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/magnetic.olb
-  - errors: 12
+  - errors: 8
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/maxim.olb
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/mfet_drvr.olb
   - errors: 10
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/mix_misc.olb
-  - errors: 2
-    options: null
-    path: ./orcad capture/unsorted/_archive/pspice/motor_rf.olb
   - errors: 1
     options: null
+    path: ./orcad capture/unsorted/_archive/pspice/motor_rf.olb
+  - errors: 0
+    options: null
     path: ./orcad capture/unsorted/_archive/pspice/motorsen.olb
-  - errors: 37
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/msemi_supressor.olb
-  - errors: 11
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/nat_semi.olb
-  - errors: 98
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/nec_mos.olb
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/nxp_mosfets.olb
-  - errors: 31
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/on_amp.olb
-  - errors: 95
+  - errors: 5
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/on_bjt.olb
-  - errors: 79
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/on_diode.olb
-  - errors: 69
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/on_mos.olb
-  - errors: 7
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/on_pwm.olb
-  - errors: 101
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/on_up_sup.olb
-  - errors: 17
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/on_zener.olb
   - errors: 198
@@ -1728,70 +1728,70 @@ repositories:
   - errors: 86
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/opto.olb
-  - errors: 17
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/osram_3mmradial.olb
-  - errors: 15
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/osram_5mmradial.olb
-  - errors: 8
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/osram_advpow_topled.olb
-  - errors: 4
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/osram_argus.olb
-  - errors: 19
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/osram_chipled.olb
-  - errors: 14
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/osram_firefly.olb
-  - errors: 18
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/osram_golden_dragon.olb
-  - errors: 23
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/osram_minitopled.olb
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/osram_ovalled.olb
-  - errors: 13
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/osram_pointled.olb
-  - errors: 44
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/osram_power_topled.olb
-  - errors: 32
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/osram_sideled.olb
-  - errors: 20
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/osram_smartled.olb
-  - errors: 48
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/osram_topled.olb
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/osram_u_sideled.olb
-  - errors: 349
+  - errors: 189
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/phil_bjt.olb
-  - errors: 123
+  - errors: 39
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/phil_diode.olb
-  - errors: 91
+  - errors: 90
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/phil_fet.olb
-  - errors: 131
+  - errors: 103
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/phil_rf.olb
-  - errors: 11
+  - errors: 10
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/polyfet.olb
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/pwrbjt.olb
-  - errors: 3
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/pwrmos.olb
   - errors: 32
@@ -1809,16 +1809,16 @@ repositories:
   - errors: 21
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/special.olb
-  - errors: 23
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/st_opamp.olb
-  - errors: 7
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/swit_rav.olb
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/swit_reg.olb
-  - errors: 8
+  - errors: 7
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/tex_inst.olb
   - errors: 481
@@ -1833,7 +1833,7 @@ repositories:
   - errors: 8
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/xtal.olb
-  - errors: 20
+  - errors: 19
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/zetex.olb
   - errors: 0
@@ -1845,7 +1845,7 @@ repositories:
   - errors: 33
     options: null
     path: ./orcad capture/unsorted/_archive/shindengen.olb
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/Silicon Labs/CP21xx.OLB
   - errors: 0
@@ -1860,7 +1860,7 @@ repositories:
   - errors: 112
     options: null
     path: ./orcad capture/unsorted/_archive/zetex.olb
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/ANALOGDEVICES.OLB
   - errors: 0
@@ -1887,22 +1887,22 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/NEC.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/NXP.OLB
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/ON Semiconductor/DIODES.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/ON Semiconductor/LOGIC.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/ON Semiconductor/NCN515X - MBUS MODEMS.OLB
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/ON Semiconductor/NCN519x - HART Modems.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/ON Semiconductor/NCP108X - POE PD + DCDC.OLB
   - errors: 0
@@ -1920,10 +1920,10 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/ON Semiconductor/TRANSISTORS.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/SILABS.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/TRANSISTORS.OLB
   - errors: 0
@@ -1932,7 +1932,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/Wuerth Elektronik/CONNECTORS.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/Wuerth Elektronik/TRANSFORMERS.OLB
   - errors: 4
@@ -1953,7 +1953,7 @@ repositories:
   - errors: 10
     options: null
     path: ./orcad capture/unsorted/_archive/OPAMP.OBK
-  - errors: 39
+  - errors: 38
     options: null
     path: ./orcad capture/unsorted/_archive/DISCRETE.OBK
   - errors: 0
@@ -1971,7 +1971,7 @@ repositories:
   - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/On Semi/ON_AMP.OBK
-  - errors: 3
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/On Semi/ON_MOS.OBK
   - errors: 32
@@ -2016,13 +2016,13 @@ repositories:
   - errors: 0
     options: null
     path: ./LIBRARY3.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Pspice/MAT02.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Pspice/NE5532.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Pspice/NE5534.OLB
   project: ORCAD_Lib
@@ -2030,7 +2030,7 @@ repositories:
 - author: ottoragam
   commit: 52cdfb2a14df84b6dd9187f980e49174054c12d3
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./motor drivers/AP1010AEN/AP1010AEN.OLB
   - errors: 1
@@ -2039,43 +2039,43 @@ repositories:
   - errors: 2
     options: null
     path: ./connectors/jst-sh/SH-TOP.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./connectors/usb/MICRO-USB.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./connectors/screwless-terminals/combicon/COMBICON.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./opamps/lm324/LM324.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./microcontrollers/psoc/psoc5/PSOC5200.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./sensors/vcnt2020/VCNT2020.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./led/0603/LED0603.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./capacitors/0603/C0603.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./capacitors/1206/C1206.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./vregs/ldl117/LDL1117.OLB
   - errors: 1
     options: null
     path: ./switches/pts810/PTS810.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./resistors/0603/R0603.OLB
   - errors: 1
     options: null
     path: ./resistors/array/0804/ARRAY.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./motor drivers/AP1010AEN/AP1010AEN_0.OBK
   - errors: 1
@@ -2084,40 +2084,40 @@ repositories:
   - errors: 2
     options: null
     path: ./connectors/jst-sh/SH-TOP_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./connectors/usb/MICRO-USB_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./connectors/screwless-terminals/combicon/COMBICON_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./opamps/lm324/LM324_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./microcontrollers/psoc/psoc5/PSOC5200_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./sensors/vcnt2020/VCNT2020_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./led/0603/LED0603_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./capacitors/0603/C0603_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./capacitors/1206/C1206_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./vregs/ldl117/LDL1117_0.OBK
   - errors: 1
     options: null
     path: ./switches/pts810/PTS810_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./resistors/0603/R0603_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./resistors/array/0804/ARRAY_0.OBK
   project: Orcad-libraries
@@ -2213,16 +2213,16 @@ repositories:
 - author: wwng2333
   commit: c2718b9d74f6bb07b1a13634ed3b4fcd504490c1
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./LIB1_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: "./ORCAD/\u5171\u4EAB\u5E93/LIB1_0.OBK"
-  - errors: 1
+  - errors: 0
     options: null
     path: ./lib1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: "./ORCAD/\u5171\u4EAB\u5E93/lib1.OLB"
   - errors: 1
@@ -2329,7 +2329,7 @@ repositories:
   - errors: 0
     options: null
     path: ./src/Hardware/Encoder Board/LIBRARY1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./src/Hardware/Encoder Board/MOTOR_ENCODER_BRD.DSN
   project: Open_Breath
@@ -2390,7 +2390,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/ATMEGA.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/SPICE_MULTIVIBRATOR.DSN
   - errors: 0
@@ -2426,7 +2426,7 @@ repositories:
   - errors: 2
     options: null
     path: ./orcadData/start1/LED.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/start1/EXAMPLE1_CHOPPONG_WAVE_GENERATOR.DSN
   - errors: 0
@@ -2471,7 +2471,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/SPICE_RESONANCECIRCUIT_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/SPICE_MULTIVIBRATOR_0.DBK
   - errors: 0
@@ -2513,7 +2513,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/start1/BRIDGEDIODE_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/start1/EXAMPLE1_CHOPPONG_WAVE_GENERATOR_0.DBK
   - errors: 0
@@ -3123,10 +3123,10 @@ repositories:
   - errors: 0
     options: null
     path: ./OrcadLib/schlib1/Connector/3_PIN.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrcadLib/schlib1/Resistor/RESISTOR.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrcadLib/schlib1/inductor/INDUCTOR.OBK
   - errors: 0
@@ -3147,7 +3147,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrcadLib/schlib1/TPS7A16/TPS7A16_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrcadLib/schlib1/Schotty Diode/SCHOTTY_0.OBK
   - errors: 3
@@ -3168,7 +3168,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrcadLib/schlib1/MOSFET-P/MOSFET-P.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrcadLib/schlib1/Ferrite Bit/FERRITE BIT.OLB
   - errors: 0
@@ -3198,10 +3198,10 @@ repositories:
   - errors: 0
     options: null
     path: ./OrcadLib/schlib1/Connector/2_PIN.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrcadLib/schlib1/Resistor/RESISTOR.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrcadLib/schlib1/inductor/INDUCTOR.OLB
   - errors: 0
@@ -3225,7 +3225,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrcadLib/schlib1/TPS7A16/TPS7A16.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrcadLib/schlib1/Schotty Diode/SCHOTTY.OLB
   - errors: 0
@@ -3271,16 +3271,16 @@ repositories:
 - author: rifaasyari
   commit: 5316812a7f701bc9aec36a8e75d7528a98e09efb
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./1-16_POWER_SPLITTER_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./1-16_POWER_SPLITTER.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./1-16_POWER_SPLITTER.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./1-16_POWER_SPLITTER_0.DBK
   project: 1-16_RF_PWR_DIV
@@ -3299,7 +3299,7 @@ repositories:
 - author: ucuncu
   commit: f3e19e68521b7d5f78695c7c7019f89e9b61dfa5
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./PJ-051AH.OLB
   - errors: 1
@@ -3697,10 +3697,10 @@ repositories:
   - errors: 34
     options: null
     path: ./fpga/amd/PLDPRIMS.OLB
-  - errors: 6
+  - errors: 0
     options: null
     path: ./fpga/altera/MICROLIB.OLB
-  - errors: 3
+  - errors: 0
     options: null
     path: ./fpga/altera/MEGA.OLB
   - errors: 0
@@ -3736,37 +3736,37 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/lattice/ARITH.OLB
-  - errors: 8
+  - errors: 0
     options: null
     path: ./pspice/OSRAM_ADVPOW_TOPLED.OLB
-  - errors: 79
+  - errors: 0
     options: null
     path: ./pspice/ON_DIODE.OLB
-  - errors: 27
+  - errors: 0
     options: null
     path: ./pspice/APEX_PWM.OLB
-  - errors: 484
+  - errors: 0
     options: null
     path: ./pspice/COILCRAFT.OLB
-  - errors: 17
+  - errors: 0
     options: null
     path: ./pspice/OSRAM_3MMRADIAL.OLB
   - errors: 1111
     options: null
     path: ./pspice/EPCOS.OLB
-  - errors: 14
+  - errors: 0
     options: null
     path: ./pspice/OSRAM_FIREFLY.OLB
   - errors: 9
     options: null
     path: ./pspice/IXYS.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./pspice/OSRAM_u_SIDELED.OLB
-  - errors: 98
+  - errors: 0
     options: null
     path: ./pspice/nec_mos.OLB
-  - errors: 123
+  - errors: 39
     options: null
     path: ./pspice/PHIL_DIODE.OLB
   - errors: 184
@@ -3775,61 +3775,61 @@ repositories:
   - errors: 0
     options: null
     path: ./pspice/SILICONIX.OLB
-  - errors: 95
+  - errors: 5
     options: null
     path: ./pspice/ON_BJT.OLB
-  - errors: 7
+  - errors: 2
     options: null
     path: ./pspice/ON_PWM.OLB
-  - errors: 31
+  - errors: 0
     options: null
     path: ./pspice/ON_AMP.OLB
   - errors: 0
     options: null
     path: ./pspice/IRF.OLB
-  - errors: 2
+  - errors: 1
     options: null
     path: ./pspice/evalp.OLB
-  - errors: 15
+  - errors: 0
     options: null
     path: ./pspice/OSRAM_5MMRADIAL.OLB
   - errors: 769
     options: null
     path: ./pspice/INFINEON.OLB
-  - errors: 13
+  - errors: 0
     options: null
     path: ./pspice/OSRAM_POINTLED.OLB
-  - errors: 69
+  - errors: 2
     options: null
     path: ./pspice/ON_MOS.OLB
-  - errors: 32
+  - errors: 0
     options: null
     path: ./pspice/OSRAM_SIDELED.OLB
-  - errors: 44
+  - errors: 0
     options: null
     path: ./pspice/OSRAM_POWER_TOPLED.OLB
-  - errors: 23
+  - errors: 0
     options: null
     path: ./pspice/OSRAM_MINITOPLED.OLB
-  - errors: 20
+  - errors: 0
     options: null
     path: ./pspice/OSRAM_SMARTLED.OLB
-  - errors: 48
+  - errors: 0
     options: null
     path: ./pspice/OSRAM_TOPLED.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./pspice/OSRAM_OVALLED.OLB
-  - errors: 277
+  - errors: 0
     options: null
     path: ./pspice/FAIRCHILD.OLB
-  - errors: 19
+  - errors: 0
     options: null
     path: ./pspice/OSRAM_CHIPLED.OLB
-  - errors: 4
+  - errors: 0
     options: null
     path: ./pspice/OSRAM_ARGUS.OLB
-  - errors: 18
+  - errors: 0
     options: null
     path: ./pspice/OSRAM_GOLDEN_DRAGON.OLB
   - errors: 0
@@ -3838,10 +3838,10 @@ repositories:
   - errors: 0
     options: null
     path: ./my_personal_library/TITLE_BLOCK_EPTS.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/A4988_STEPPER_MOTOR/A4988_STEPPER_MOTOR_DRIVER_CARRIER.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/B2B-XH-A_LF__SN/B2B-XH-ALFSN.OLB
   - errors: 1
@@ -3853,208 +3853,208 @@ repositories:
   - errors: 0
     options: null
     path: ./my_personal_library/KTD2061EUAC/KTD2061EUAC/Capture/KTD2061EUAC.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/ul_S558-5500-25-F/OrcadCaptureEDF/2021-12-11_11-39-47.OLB
   - errors: 0
     options: null
     path: ./my_personal_library/PEC11H-4015F-S0016/PEC11H-4015F-S0016/Capture/PEC11H-4015F-S0016.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/LIB_FH-2x20SG/FH-2x20SG/OrCAD_Allegro16/FH_2X20SG.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/TACT_SW_TL3315NF100Q/TL3315NF100Q.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/EXB-2HV470JV/OrcadCaptureEDF/2021-12-09_10-09-31.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/L86-M33/L86-M33.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/1909763-1/1909763-1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/MOLEX-SIM-503182-1852/503182-1852.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/292303-1/292303-1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/CCG-1206/CCG-1206.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/BAV99/BAV99.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/BAV99/BAV99#0.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/282811-4/282811-4.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/MCP1702T-3302E/MCP1702T-3302EMB.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/BNO055_IMU/BNO055.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/10118194-0001LF/10118194-0001LF.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/1-406541-5/1-406541-5.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/XC9103/XC9103D093MR-G/OrCAD_Allegro16/XC9103D093MR_G.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/XB3-24Z8C/XB3-24Z8CM-J.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/USB4085-GF-A_REVA4/USB4085-GF-A_REVA4.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/282811-3/282811-3.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/BRC523/OrcadCaptureEDF/2021-12-15_15-21-53.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/5787956/5787956-1.OLB
   - errors: 0
     options: null
     path: ./my_personal_library/5GTH965/5GTH965/Capture/5GTH965.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/SKSCLDE010/SKSCLDE010.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/LMX3410XSD/OrcadCaptureEDF/2021-12-08_12-53-52.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/MP1482/MP1482.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/N9H30F61IEC/OrCAD_Allegro16/N9H30F61IEC.OLB
   - errors: 1
     options: null
     path: ./my_personal_library/CHS-01TA/CHS-01TA.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/0512965094/0512965094/OrCAD_Allegro16/0512965094.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/NRF9160-SICA-R/NRF9160-SICA-R.OLB
   - errors: 0
     options: null
     path: ./my_personal_library/AP7165-SPG-13/AP7165-SPG-13.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/MDBT50Q-1MV2/MDBT50Q-1MV2.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/TLV70218DBVR/TLV70218DBVR.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/WS2812B-B/WS2812B-B.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/MAX485ESA/MAX485ESA+.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/header5/SAMTEC-TSW-105-07-X-S.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/USB-2108877-1/2108877-1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/EASV3015RGBA0/EASV3015RGBA0.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/MAX736CWE-T/MAX736CWE-T.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/MDBT42Q-512K/MDBT42Q-512KV2.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/0ZCK0100FF2E/0ZCK0100FF2E.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/MX25R6435F/MX25R6435FZAIH0.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/ACM1211/ACM1211-102-2PL-TL01.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/USB3150-30-130-A/USB3150-30-130-A.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/FH12-6S-1SH-55/OrcadCaptureEDF/2021-12-10_10-36-50.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/AMS1117/AMS1117.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/MAX1848ETA/MAX1848ETA+T.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/ATMEGA32U4-AU/ATMEGA32U4-AU.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/SI2329/SI2329DS-T1-GE3/OrCAD_Allegro16/SI2329DS_T1_GE3.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/SS34/SS34.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/KMR421GULCLFS/KMR421GULCLFS.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/ICM-20948/ICM-20948.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/DX07VN24WA2C1568/DX07VN24WA2C1568.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/ArduinoNano/ARDUINO_NANO.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/SZMMSZ4703T1G/OrcadCaptureEDF/2021-12-07_15-12-15.OLB
   - errors: 0
     options: null
     path: ./my_personal_library/43841-003/43841-0003/Capture/43841-0003.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/LAN8740A-EN-TR/LAN8740A-EN-TR.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/STM32L053C8T6/STM32L053C8T6.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/PAM2423AECADJR/OrcadCaptureEDF/2021-12-08_09-08-39.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/TS5USBC410IYFFR/TS5USBC410IYFFR.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/SRV05-4_TCT/OrcadCaptureEDF/2021-12-09_13-46-34.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/FSUSB42MUX/FSUSB42MUX.OLB
   - errors: 0
     options: null
     path: ./my_personal_library/ADP1173AR-12/OrcadCaptureXML/2021-12-07_10-51-05.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/TUSB2036/TUSB2036VFR.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/74HC164D/74HC164D,653.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/MT29F1G08ABAEAWP/MT29F1G08ABAEAWP-IT_E_TR/OrCAD_Allegro16/MT29F1G08ABAEAWP_IT_E_TR.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/MT29F1G08ABAEAWP/MT29F1G08ABAEAWP-IT_E_TR/OrCAD_Allegro16/MT29F1G08ABAEAWP_IT_E_TR#0.OLB
   - errors: 0
@@ -4066,61 +4066,61 @@ repositories:
   - errors: 0
     options: null
     path: ./my_personal_library/PCF85134/PC85134.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/CMI-1295-1285T/CMI-1295-1285T.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/RasperyPi3/RASPBERRY_PI_3_MODEL_B+.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/ICP-20100/ICP-20100.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/BC817/BC817.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/CP2132/INTERFACE-CP2102-GMRQFN28.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/2-1825027-0/2-1825027-0.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/CAM-M8Q/CAM-M8Q.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/ESP8266-01_ESP-01/ESP8266-01ESP-01.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/USB_MICRO_B_AMP10118194/10118194-0001LF.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/PDZVTR5-1B/OrcadCaptureXML/2021-12-07_13-02-15.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/PJ-051AH/PJ-051AH.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/LM22673TJ-ADJ/LM22673TJ-ADJ.OLB
   - errors: 0
     options: null
     path: ./my_personal_library/MCP1702T-3302E-ulralib/2020-01-23_01-41-40.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/796980-8/796980-8.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/6TPB33M/6TPB33M.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/84952-4/84952-4.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/RAC20-05SK/RAC20-05SK.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/FT232RL/FT232RL.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/ADS1232IPW/ADS1232IPW.OLB
   - errors: 0
@@ -4171,7 +4171,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/SONY.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./oldlibs/TXN_DSP.OLB
   - errors: 7
@@ -4578,7 +4578,7 @@ repositories:
   - errors: 1
     options: null
     path: ./ringcounter/RINGCOUNTER.DSN
-  - errors: 5
+  - errors: 1
     options: null
     path: ./wave_generator/WAVE_GENERATOR.DSN
   - errors: 1
@@ -4620,7 +4620,7 @@ repositories:
   - errors: 1
     options: null
     path: ./ringcounter/RINGCOUNTER_0.DBK
-  - errors: 5
+  - errors: 1
     options: null
     path: ./wave_generator/WAVE_GENERATOR_0.DBK
   - errors: 1
@@ -4710,7 +4710,7 @@ repositories:
 - author: ROHMUSDC
   commit: 47c251366e4f2838857438bd1300f2fd5812672d
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BD9B300MUV-E2EVK-101_SCH_REV00_2014-07-08.dsn
   project: BD9B300MUV-EVK-101
@@ -4718,7 +4718,7 @@ repositories:
 - author: ROHMUSDC
   commit: 359c1ce12a6d31622e4fe9640f8283ba9582e496
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BD9B301MUV-EVK-101_SCH_REV00_2017-06-05.dsn
   project: BD9B301MUV-EVK-101
@@ -4734,7 +4734,7 @@ repositories:
 - author: ROHMUSDC
   commit: 0b8a83d256560a7b431be542bfedafea8c6f930a
   files:
-  - errors: 2
+  - errors: 1
     options: null
     path: ./Design Files/Schematic_BOM/BD9D321EFJ-E2EVK-101_SCH_REV00_2014-09-26.DSN
   project: BD9D321EFJ-EVK-101
@@ -4742,7 +4742,7 @@ repositories:
 - author: ROHMUSDC
   commit: 53ea6e66930d55ff018aa9e6414b789502c07523
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BD9E151NUX-E2EVK-101_SCH_REV00_2014-08-19_1800.DSN
   project: BD9E151NUX-EVK-101
@@ -4758,7 +4758,7 @@ repositories:
 - author: ROHMUSDC
   commit: 4523ea64e1a491da37cf8a7083b56ba247a18225
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BD9G341EFJ-E2EVK-101_SCH_REV01_2014-10-17.DSN
   project: BD9G341AEFJ-EVK-101
@@ -4801,7 +4801,7 @@ repositories:
 - author: ROHMUSDC
   commit: cd3b1749a528f8ca8a75e09cbea0792261a7ba1d
   files:
-  - errors: 8
+  - errors: 6
     options: null
     path: ./Design Files/Schematic_BOM/BD71815GW_REFERENCE_REV1P30.DSN
   project: BD71815AGW-EVK-101
