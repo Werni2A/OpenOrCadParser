@@ -32,13 +32,18 @@ StructSymbolDisplayProp Parser::readStructSymbolDisplayProp()
 
     obj.textFontIdx = packedStruct & 0xff; // Bit  7 downto  0
 
+    // @todo Sometimes values = textFonts.size() are observed that seem valid.
+    //       Maybe they have a special meaning? I remember that somewhere in the
+    //       code we had a similar issue. The solution was that the actual vector
+    //       index is textFontIdx - 1 and index = 0 is a special case that represents
+    //       an empty string i.e. does not need to be loaded from the vector.
     if(obj.textFontIdx >= mLibrary.library.textFonts.size())
     {
         const std::string msg = fmt::format("{}: textFontIdx is out of range! Expected {} < {}!",
             __func__, obj.textFontIdx, mLibrary.library.textFonts.size());
 
         spdlog::error(msg);
-        throw std::out_of_range(msg);
+        // throw std::out_of_range(msg);
     }
 
     // @todo The meaning of the bits in between is unknown
