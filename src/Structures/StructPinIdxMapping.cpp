@@ -49,20 +49,20 @@ StructPinIdxMapping Parser::readStructPinIdxMapping()
 
         obj.pinMap.push_back(mDs.readStringLenZeroTerm());
 
-        const uint8_t separator = mDs.readUint8();
+        // Bit 7         : Pin Group Ignore
+        // Bit 6 downto 0: Pin Group
+        const uint8_t bitMapPinGrpCfg = mDs.readUint8();
 
-        spdlog::debug("Sep = 0x{:02x}", separator);
+        // 0 = No
+        // 1 = Yes
+        const bool pinGroupIgnore = GetBit(7, bitMapPinGrpCfg);
 
-        // @todo maybe this is not a separator but the additional property of the pin?
-        // As soon as I add a property like NET_SHORT the separator changes from 0x7f to 0xaa
-        // This is probably also affected by units and convert view.
-        // @todo Probably 0xff belongs to the strLen from above, then only 0x7f and 0xaa are valid values
-        //        Verify this by removing it from the if-statement
-        if(separator != 0x7f && separator != 0xaa && separator != 0xff)
-        {
-            throw std::runtime_error(fmt::format("Separator should be 0x{:02x}, 0x{:02x} or"
-                " 0x{:02x} but got 0x{:02x}!", 0x7f, 0xaa, 0xff, separator));
-        }
+        // @note The special case of value 127 that represents an empty group
+        const uint8_t pinGroup = bitMapPinGrpCfg & 0x7f;
+
+        spdlog::debug("pinGroupIgnore = {}", pinGroupIgnore);
+        const std::string strPinGroup = (pinGroup != 127U) ? std::to_string(pinGroup) : "";
+        spdlog::debug("pinGroup       = {:>3}", strPinGroup);
     }
 
     sanitizeThisFutureSize(thisFuture);
