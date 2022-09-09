@@ -662,7 +662,11 @@ Structure Parser::read_prefixes(size_t aNumber, bool aPrediction)
 
         if(currStruct != firstStruct)
         {
-            throw std::runtime_error("Structs not equal");
+            const std::string msg = fmt::format("{}: {} != {}",
+                __func__, to_string(currStruct), to_string(firstStruct));
+
+            spdlog::error(msg);
+            throw std::runtime_error(msg);
         }
     }
 
@@ -670,11 +674,6 @@ Structure Parser::read_prefixes(size_t aNumber, bool aPrediction)
     {
         if(offsets.size() >= 2U)
         {
-            if(offsets.size() % 2U == 0U)
-            {
-                spdlog::critical("{}: Expected that only odd sizes occur but got {}", __func__, offsets.size());
-            }
-
             for(size_t i = 0U; i < offsets.size() - 1U; i += 2)
             {
                 const std::pair<size_t, size_t> start_pair = offsets[i + 1U];
