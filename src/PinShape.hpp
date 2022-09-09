@@ -9,6 +9,7 @@
 #include <string>
 
 #include <fmt/core.h>
+#include <spdlog/spdlog.h>
 
 #include "General.hpp"
 
@@ -137,21 +138,27 @@ static PinShape ToPinShape(uint16_t val)
     pinShape.isGlobal        = static_cast<bool>(GetBit(5, val)); // @todo needs verification
     pinShape.isNetStyle      = static_cast<bool>(GetBit(6, val)); // @todo needs verification
     pinShape.isNoConnect     = static_cast<bool>(GetBit(7, val)); // @todo needs verification
-    // pinShape.Unknown         = static_cast<bool>(GetBit(10, val)); // @todo needs verification
-
     // pinShape.isNumberVisible = static_cast<bool>(GetBit(8, val)); // @todo is covered by generalPropertie
+    // pinShape.Unknown         = static_cast<bool>(GetBit(10, val)); // @todo needs verification
 
     for(size_t i = 8u; i < sizeof(val) * 8u; ++i)
     {
-        // @todo What does bit 10 represent?
-        if(i == 10u)
-        {
-            continue;
-        }
-
         if(GetBit(i, val) == 1u)
         {
-            throw std::runtime_error("PinShape bit " + std::to_string(i) + " is set but not known!");
+            if(i == 8u || i == 9u || i == 10u)
+            {
+                const std::string msg = fmt::format("{}: PinShape bit {} is set but not known!", __func__, i);
+
+                spdlog::warn(msg);
+                continue;
+            }
+            else
+            {
+                const std::string msg = fmt::format("{}: PinShape bit {} is set but 0 was expected!", __func__, i);
+
+                spdlog::error(msg);
+                throw std::runtime_error(msg);
+            }
         }
     }
 
