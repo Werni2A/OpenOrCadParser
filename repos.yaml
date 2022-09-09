@@ -562,7 +562,7 @@ repositories:
 - author: beagleboard
   commit: a14c542f0de8507e001a6d652daaf85bc654e422
   files:
-  - errors: 44
+  - errors: 42
     options: null
     path: ./SCH/BeagleBoard-xM_ORCAD.DSN
   project: beagleboard-xm
@@ -924,7 +924,7 @@ repositories:
   - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/Mechanical.olb
-  - errors: 5
+  - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/MicroController.olb
   - errors: 0
@@ -933,7 +933,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/Misc.olb
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/Misc2.olb
   - errors: 0
@@ -2033,10 +2033,10 @@ repositories:
   - errors: 0
     options: null
     path: ./motor drivers/AP1010AEN/AP1010AEN.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./connectors/header100/HEADER-100.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./connectors/jst-sh/SH-TOP.OLB
   - errors: 0
@@ -2066,22 +2066,22 @@ repositories:
   - errors: 0
     options: null
     path: ./vregs/ldl117/LDL1117.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./switches/pts810/PTS810.OLB
   - errors: 0
     options: null
     path: ./resistors/0603/R0603.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./resistors/array/0804/ARRAY.OLB
   - errors: 0
     options: null
     path: ./motor drivers/AP1010AEN/AP1010AEN_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./connectors/header100/HEADER-100_0.OBK
-  - errors: 2
+  - errors: 0
     options: null
     path: ./connectors/jst-sh/SH-TOP_0.OBK
   - errors: 0
@@ -2111,7 +2111,7 @@ repositories:
   - errors: 0
     options: null
     path: ./vregs/ldl117/LDL1117_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./switches/pts810/PTS810_0.OBK
   - errors: 0
@@ -4657,7 +4657,7 @@ repositories:
 - author: vpodlesnyi
   commit: 652cacb9e7bc99ee88f78536388b965f4822c5b0
   files:
-  - errors: 165
+  - errors: 164
     options: null
     path: ./MOP44.OLB
   - errors: 12
