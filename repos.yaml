@@ -173,7 +173,7 @@ repositories:
   - errors: 97
     options: null
     path: ./library/oldlibs/ANALOG.OLB
-  - errors: 18
+  - errors: 17
     options: null
     path: ./library/oldlibs/ASSEMBLY.OLB
   - errors: 12
@@ -245,7 +245,7 @@ repositories:
   - errors: 8
     options: null
     path: ./library/oldlibs/ANALOG5.OLB
-  - errors: 34
+  - errors: 33
     options: null
     path: ./library/oldlibs/SHAPES.OLB
   - errors: 54
@@ -981,7 +981,7 @@ repositories:
   - errors: 15
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/ANLG_DEV.OLB
-  - errors: 18
+  - errors: 17
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/ASSEMBLY.OLB
   - errors: 82
@@ -1197,7 +1197,7 @@ repositories:
   - errors: 50
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/SGSTHOM.OLB
-  - errors: 34
+  - errors: 33
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/SHAPES.OLB
   - errors: 66
@@ -2551,16 +2551,16 @@ repositories:
   - errors: 0
     options: null
     path: ./Hardware/8Mics/8MICS.DSN
-  - errors: 68
+  - errors: 18
     options: null
     path: ./Hardware/Main_board/STM32F746NGH V1.1_last.DSN
-  - errors: 68
+  - errors: 18
     options: null
     path: ./Hardware/Main_board/allegro/MIC_ARRAY_RELEASE.DSN
-  - errors: 68
+  - errors: 18
     options: null
     path: ./Hardware/Main_board/STM32F746NGH V1.1_LAST_0.DBK
-  - errors: 68
+  - errors: 18
     options: null
     path: ./Hardware/Main_board/allegro/MIC_ARRAY_RELEASE_0.DBK
   project: Mic_Array
@@ -3433,7 +3433,7 @@ repositories:
   - errors: 126
     options: null
     path: ./oldlibs/ANALOG1_9_0_0.OBK
-  - errors: 34
+  - errors: 33
     options: null
     path: ./oldlibs/SHAPES_9_0_0.OBK
   - errors: 2
@@ -3478,7 +3478,7 @@ repositories:
   - errors: 22
     options: null
     path: ./oldlibs/ELNT_FET_9_0_0.OBK
-  - errors: 18
+  - errors: 17
     options: null
     path: ./oldlibs/ASSEMBLY_9_0_0.OBK
   - errors: 3
@@ -4660,7 +4660,7 @@ repositories:
   - errors: 164
     options: null
     path: ./MOP44.OLB
-  - errors: 12
+  - errors: 6
     options: null
     path: ./Template of sheets/SHEETS.DSN
   project: CadenceLibrary
