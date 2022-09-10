@@ -37,7 +37,12 @@ StreamLibrary Parser::readStreamLibrary()
     // write_data_to_file(buffer, sizeof(buffer));
     mDs.padRest(startOffset, 32, false);
 
-    mDs.assumeData({0x03, 0x00, 0x02, 0x00}, std::string(__func__) + " - 0");
+    // @todo Probably file version? E.g. {0x03, 0x00, 0x02, 0x00} = 3.2
+    //       I saw: 2.0
+    //              3.2
+    //              3.3
+    // mDs.assumeData({0x03, 0x00, 0x02, 0x00}, std::string(__func__) + " - 0");
+    mDs.printUnknownData(4, std::string(__func__) + " - 0 - Probably file/library version");
 
     obj.createDate = static_cast<time_t>(mDs.readUint32());
     obj.modifyDate = static_cast<time_t>(mDs.readUint32());
