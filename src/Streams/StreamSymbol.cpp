@@ -32,7 +32,6 @@ StreamSymbol Parser::readStreamSymbol()
         {
             if(mFileFormatVersion == FileFormatVersion::B)
             {
-                // Structure structure = read_prefixes(3);
                 Structure structure = auto_read_prefixes();
             }
 
@@ -42,17 +41,9 @@ StreamSymbol Parser::readStreamSymbol()
             }
         }
 
-        Primitive geometryStructure1 = ToPrimitive(mDs.readUint8());
-        Primitive geometryStructure2 = ToPrimitive(mDs.readUint8());
+        const Primitive primitive = readPrefixPrimitive();
 
-        if(geometryStructure1 != geometryStructure2)
-        {
-            throw std::runtime_error("Geometry structures should be equal!");
-        }
-
-        auto geoStruct = geometryStructure1;
-
-        readPrimitive(geoStruct); // @todo add to obj
+        readPrimitive(primitive); // @todo add to obj
     }
 
     readPreamble();

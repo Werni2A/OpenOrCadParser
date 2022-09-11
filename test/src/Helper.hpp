@@ -30,18 +30,18 @@ inline void check_error_count(const fs::path& aFilePath, size_t aActualErrCnt, s
 
     if(aActualErrCnt < aExpectedErrCnt)
     {
-        msg = fmt::format("REDUCTION: {:>4} (actual errors) < {:>4} (expected errors) in {}",
+        msg = fmt::format("REDUCTION: {:>4} (actual errors) < {:>4} (expected errors) in {}\n",
             aActualErrCnt, aExpectedErrCnt, aFilePath.string());
 
-        std::clog << msg << std::endl;
+        std::clog << msg;
     }
 
     if(aActualErrCnt > aExpectedErrCnt)
     {
-        msg = fmt::format("INCREASE:  {:>4} (actual errors) > {:>4} (expected errors) in {}",
+        msg = fmt::format("INCREASE:  {:>4} (actual errors) > {:>4} (expected errors) in {}\n",
             aActualErrCnt, aExpectedErrCnt, aFilePath.string());
 
-        std::clog << msg << std::endl;
+        std::clog << msg;
     }
 
     const fs::path logPath = fs::current_path() / "test_err_cnt.log";
@@ -51,6 +51,8 @@ inline void check_error_count(const fs::path& aFilePath, size_t aActualErrCnt, s
     logFile.open(logPath, std::ios_base::app);
 
     logFile << msg;
+
+    logFile.close();
 }
 
 

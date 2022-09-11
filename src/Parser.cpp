@@ -1094,3 +1094,21 @@ void Parser::readOptionalTrailingFuture()
 
     sanitizeThisFutureSize(future);
 }
+
+
+Primitive Parser::readPrefixPrimitive()
+{
+    Primitive primitive1 = ToPrimitive(mDs.readUint8());
+    Primitive primitive2 = ToPrimitive(mDs.readUint8());
+
+    if(primitive1 != primitive2)
+    {
+        const std::string msg = fmt::format("{}: Primitives {} != {}",
+            __func__, to_string(primitive1), to_string(primitive2));
+
+        spdlog::error(msg);
+        throw std::runtime_error(msg);
+    }
+
+    return primitive1;
+}

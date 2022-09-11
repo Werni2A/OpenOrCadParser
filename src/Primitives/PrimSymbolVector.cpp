@@ -20,13 +20,13 @@ PrimSymbolVector Parser::readPrimSymbolVector()
 
     PrimSymbolVector obj;
 
-    const auto readSmallTypePrefix = [&, this]() -> Primitive
+    const auto readSmallPrefixPrimitive = [&, this]() -> Primitive
         {
-            Primitive structure = ToPrimitive(mDs.readUint8());
+            Primitive primitive = ToPrimitive(mDs.readUint8());
             mDs.assumeData({0x00}, std::string(__func__) + " - 0");
-            mDs.assumeData({static_cast<uint8_t>(structure)}, std::string(__func__) + " - 1");
+            mDs.assumeData({static_cast<uint8_t>(primitive)}, std::string(__func__) + " - 1");
 
-            return structure;
+            return primitive;
         };
 
     // mDs.printUnknownData(20, std::string(__func__) + " - x");
@@ -47,7 +47,9 @@ PrimSymbolVector Parser::readPrimSymbolVector()
             readPreamble();
         }
 
-        readPrimitive(readSmallTypePrefix());
+        const Primitive primitive = readSmallPrefixPrimitive();
+
+        readPrimitive(primitive);
     }
 
     readPreamble();

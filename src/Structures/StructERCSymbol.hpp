@@ -11,11 +11,14 @@
 #include <nameof.hpp>
 
 #include "General.hpp"
+#include "Structures/StructSymbolBBox.hpp"
 
 
 struct StructERCSymbol
 {
+    std::string name;
 
+    StructSymbolBBox symbolBBox;
 };
 
 
@@ -25,8 +28,8 @@ static std::string to_string(const StructERCSymbol& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-    // str += fmt::format("x1     = {}\n", aObj.x1);
-    // str += fmt::format("y1     = {}\n", aObj.y1);
+    str += fmt::format("name = {}\n", aObj.name);
+    str += fmt::format("symbolBBox = {}", to_string(aObj.symbolBBox));
 
     return str;
 }

@@ -102,17 +102,9 @@ StructPrimitives Parser::readStructPrimitives(FileFormatVersion aVersion)
     //         }
     //     }
 
-    //     Primitive geometryStructure1 = ToPrimitive(mDs.readUint8());
-    //     Primitive geometryStructure2 = ToPrimitive(mDs.readUint8());
+    //     const Primitive primitive = readPrefixPrimitive();
 
-    //     if(geometryStructure1 != geometryStructure2)
-    //     {
-    //         throw std::runtime_error("Geometry structures should be equal!");
-    //     }
-
-    //     auto geoStruct = geometryStructure1;
-
-    //     readGeometryStructure(geoStruct, &obj);
+    //     readPrimitive(primitive);
 
     //     // if(mFileFormatVersion == FileFormatVersion::A)
     //     // {

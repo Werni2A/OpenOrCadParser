@@ -15,7 +15,7 @@ StreamNetBundleMapData Parser::readStreamNetBundleMapData()
 
     StreamNetBundleMapData obj;
 
-    mDs.discardBytes(2);
+    mDs.printUnknownData(2, fmt::format("{}: 0", __func__));
 
     uint16_t number_groups = mDs.readUint16();
 
@@ -28,7 +28,6 @@ StreamNetBundleMapData Parser::readStreamNetBundleMapData()
         std::string group_name = mDs.readStringLenZeroTerm();
         spdlog::debug("group_name = {}:", group_name);
 
-        // Structure structure = read_prefixes(3);
         Structure structure = auto_read_prefixes();
 
         // @todo extract the following into a separate readStructNetGroup method

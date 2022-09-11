@@ -145,8 +145,8 @@ void Parser::readTitleBlockSymbol()
             readPreamble();
         }
 
-        Primitive geoStruct = ToPrimitive(mDs.readUint16());
-        readPrimitive(geoStruct);
+        const Primitive primitive = readPrefixPrimitive();
+        readPrimitive(primitive);
     }
 
     readPreamble();

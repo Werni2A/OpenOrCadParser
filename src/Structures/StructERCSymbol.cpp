@@ -18,7 +18,7 @@ StructERCSymbol Parser::readStructERCSymbol()
 
     StructERCSymbol obj;
 
-    std::string name = mDs.readStringLenZeroTerm();
+    obj.name = mDs.readStringLenZeroTerm();
 
     // @todo Probably 'sourceLibName' which is a string but I'm not sure. Could also be the
     //       last part of the next unknown block
@@ -33,22 +33,16 @@ StructERCSymbol Parser::readStructERCSymbol()
 
     for(size_t i = 0u; i < len; ++i)
     {
-        Primitive geometryStructure1 = ToPrimitive(mDs.readUint8());
-        Primitive geometryStructure2 = ToPrimitive(mDs.readUint8());
+        const Primitive primitive = readPrefixPrimitive();
 
-        if(geometryStructure1 != geometryStructure2)
-        {
-            throw std::runtime_error("Geometry structures should be equal!");
-        }
-
-        readPrimitive(geometryStructure1); // @todo add to obj
+        readPrimitive(primitive);
     }
 
     // @todo not sure if this belongs into this structure and how do we know whether it
     //       is used or not? (BBox should be optional according to XSD)
     //       Probably defined by prefix?
     readPreamble();
-    readStructSymbolBBox(); // @todo push structure
+    obj.symbolBBox = readStructSymbolBBox();
 
     readOptionalTrailingFuture();
 
