@@ -25,16 +25,59 @@ bool Parser::readStreamHierarchy()
 
     for(size_t i = 0u; i < netLen; ++i)
     {
-        // const Structure structure = read_prefixes(2);
         Structure structure = auto_read_prefixes();
 
         readPreamble();
 
-        // @todo Move the following data into a own structure for the specific Structure type
+        readStructure(structure);
+    }
 
-        uint32_t dbId = mDs.readUint32();
+    const uint16_t len1 = mDs.readUint16();
 
-        std::string name = mDs.readStringLenZeroTerm(); // net name
+    spdlog::debug("len1 = {}", len1);
+
+    for(size_t i = 0u; i < len1; ++i)
+    {
+        Structure structure = auto_read_prefixes();
+
+        readPreamble();
+
+        readStructure(structure);
+    }
+
+    readPreamble();
+
+    const uint16_t len2 = mDs.readUint16();
+
+    spdlog::debug("len2 = {}", len2);
+
+    for(size_t i = 0u; i < len2; ++i)
+    {
+        Structure structure = auto_read_prefixes();
+
+        readPreamble();
+
+        readStructure(structure);
+
+        const uint16_t len3 = mDs.readUint16();
+
+        spdlog::debug("len3 = {}", len3);
+
+        for(size_t i = 0u; i < len3; ++i)
+        {
+            Structure structure = auto_read_prefixes();
+
+            readPreamble();
+
+            readStructure(structure);
+        }
+    }
+
+    mDs.printUnknownData(10, std::string(__func__) + " - 3");
+
+    if(!mDs.isEoF())
+    {
+        throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
