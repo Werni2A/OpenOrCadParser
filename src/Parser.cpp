@@ -764,7 +764,7 @@ std::pair<Structure, uint32_t> Parser::read_single_prefix_short()
             {
                 const auto getStr = [&, this](uint32_t idx) -> std::string
                     {
-                        int64_t newIdx = static_cast<int64_t>(idx) - 1;
+                        int64_t newIdx = static_cast<int64_t>(idx);
                         return newIdx >= 0 ? mLibrary.library.strLst.at(newIdx) : "";
                     };
 

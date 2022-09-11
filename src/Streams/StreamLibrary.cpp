@@ -97,9 +97,7 @@ StreamLibrary Parser::readStreamLibrary()
 
     const uint32_t strLstLen = mDs.readUint32();
 
-    mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 4");
-
-    for(size_t i = 0u; i < strLstLen - 1; ++i)
+    for(size_t i = 0u; i < strLstLen; ++i)
     {
         obj.strLst.push_back(mDs.readStringLenZeroTerm());
     }
