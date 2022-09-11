@@ -37,41 +37,31 @@ StructWireScalar Parser::readStructWireScalar()
     spdlog::debug("startX = {} | startY = {} | endX = {} | endY = {}",
         obj.startX, obj.startY, obj.endX, obj.endY);
 
-    mDs.printUnknownData(1, std::string(__func__) + " - 1");
-
-    spdlog::debug("mByteOffset = {}", mByteOffset);
-
-    if(mByteOffset == 0x3d)
+    if(thisFuture.has_value())
     {
-        mDs.printUnknownData(2, std::string(__func__) + " - 2");
+        mDs.printUnknownData(thisFuture.value().getStopOffset() - mDs.getCurrentOffset(), "Some Data...");
     }
-    else if(mByteOffset > 0x3d)
+    else
     {
-        const uint16_t len = mDs.readUint16();
-
-        spdlog::debug("len = {}", len);
-
-        for(size_t i = 0u; i < len; ++i)
-        {
-            // @todo len should always be 1 and the read structure should be 'Alias'
-            // Structure structure = read_prefixes(3);
-            Structure structure = auto_read_prefixes();
-            readPreamble();
-            readStructure(structure); // @todo push
-        }
+        mDs.printUnknownData(3, std::string(__func__) + " - 1");
     }
 
-    mDs.printUnknownData(2, std::string(__func__) + " - 3");
+    // obj.wireLineWidth = ToLineWidth(mDs.readUint32());
+    // obj.wireLineStyle = ToLineStyle(mDs.readUint32());
 
-    obj.wireLineWidth = ToLineWidth(mDs.readUint32());
-    obj.wireLineStyle = ToLineStyle(mDs.readUint32());
+    // spdlog::debug("wireLineWidth = {} | wireLineStyle = {}",
+    //     to_string(obj.wireLineWidth), to_string(obj.wireLineStyle));
 
-    spdlog::debug("wireLineWidth = {} | wireLineStyle = {}",
-        to_string(obj.wireLineWidth), to_string(obj.wireLineStyle));
+    Structure structure = auto_read_prefixes();
+    readPreamble();
+
+    readStructure(structure);
+
+    mDs.printUnknownData(10, std::string(__func__) + " - 2");
 
     sanitizeThisFutureSize(thisFuture);
 
-    readOptionalTrailingFuture();
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));
