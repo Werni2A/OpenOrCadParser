@@ -179,7 +179,7 @@ public:
 
     bool readStreamERC();
     bool readStreamHierarchy();
-    bool readStreamPage();
+    bool readStreamPage(FileFormatVersion aVersion = FileFormatVersion::Unknown);
     bool readStreamSchematic();
     std::vector<Type> readStreamType();
     StreamAdminData readStreamAdminData();
