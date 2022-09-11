@@ -26,6 +26,10 @@ struct StructPinIdxMapping
     //       the index in the vector equals the position and
     //       numer equals the string value in the vector.
     std::vector<std::string> pinMap;
+
+    // @todo add to a separate pin struct
+    std::vector<bool>        pinIgnore;
+    std::vector<uint8_t>     pinGroup; // @todo Probably convert to std::optional<uint8_t>
 };
 
 
@@ -42,6 +46,18 @@ static std::string to_string(const StructPinIdxMapping& aObj)
     for(size_t i = 0u; i < aObj.pinMap.size(); ++i)
     {
         str += indent(fmt::format("[{}]: {}\n", i, aObj.pinMap[i]), 2);
+    }
+
+    str += fmt::format("{}pinIgnore:\n", indent(1));
+    for(size_t i = 0u; i < aObj.pinIgnore.size(); ++i)
+    {
+        str += indent(fmt::format("[{}]: {}\n", i, aObj.pinIgnore[i]), 2);
+    }
+
+    str += fmt::format("{}pinGroup:\n", indent(1));
+    for(size_t i = 0u; i < aObj.pinGroup.size(); ++i)
+    {
+        str += indent(fmt::format("[{}]: {}\n", i, aObj.pinGroup[i]), 2);
     }
 
     return str;

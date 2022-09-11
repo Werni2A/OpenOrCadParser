@@ -49,20 +49,20 @@ StructPinIdxMapping Parser::readStructPinIdxMapping()
 
         obj.pinMap.push_back(mDs.readStringLenZeroTerm());
 
-        // Bit 7         : Pin Group Ignore
+        // Bit 7         : Pin Ignore
         // Bit 6 downto 0: Pin Group
         const uint8_t bitMapPinGrpCfg = mDs.readUint8();
 
         // 0 = No
         // 1 = Yes
-        const bool pinGroupIgnore = GetBit(7, bitMapPinGrpCfg);
+        obj.pinIgnore.push_back(GetBit(7, bitMapPinGrpCfg));
 
         // @note The special case of value 127 that represents an empty group
-        const uint8_t pinGroup = bitMapPinGrpCfg & 0x7f;
+        obj.pinGroup.push_back(bitMapPinGrpCfg & 0x7f);
 
-        spdlog::debug("pinGroupIgnore = {}", pinGroupIgnore);
-        const std::string strPinGroup = (pinGroup != 127U) ? std::to_string(pinGroup) : "";
-        spdlog::debug("pinGroup       = {:>3}", strPinGroup);
+        spdlog::debug("pinIgnore = {}", obj.pinIgnore[i]);
+        const std::string strPinGroup = (obj.pinGroup[i] != 127U) ? std::to_string(obj.pinGroup[i]) : "";
+        spdlog::debug("pinGroup  = {:>3}", strPinGroup);
     }
 
     sanitizeThisFutureSize(thisFuture);
