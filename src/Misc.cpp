@@ -46,25 +46,23 @@ std::string SymbolUserProp::getName() const
         return "";
     }
 
-    const int64_t idx = static_cast<int64_t>(nameIdx) - 1;
-
     std::string name;
 
-    if(idx >= 0)
+    if(nameIdx >= 0)
     {
         // Retrieve string from the library.
-        name = mLibrary->library.strLst.at(idx);
+        name = mLibrary->library.strLst.at(nameIdx);
         // @todo provide try catch block for better exception messages
     }
-    else if(idx == -1)
+    else if(nameIdx == -1U)
     {
         // Special case that is treated as an empty string.
         name = "";
     }
-    else // idx < -1
+    else // nameIdx < -1
     {
         // This should never happen.
-        throw std::runtime_error(std::string(__func__) + ": Unexpected index " + std::to_string(idx));
+        throw std::runtime_error(std::string(__func__) + ": Unexpected index " + std::to_string(nameIdx));
     }
 
     return name;
@@ -78,25 +76,23 @@ std::string SymbolUserProp::getVal() const
         return "";
     }
 
-    const int64_t idx = static_cast<int64_t>(valIdx) - 1;
-
     std::string val;
 
-    if(idx >= 0)
+    if(valIdx >= 0)
     {
         // Retrieve string from the library.
-        val = mLibrary->library.strLst.at(idx);
+        val = mLibrary->library.strLst.at(valIdx);
         // @todo provide try catch block for better exception messages
     }
-    else if(idx == -1)
+    else if(valIdx == -1U)
     {
         // Special case that is treated as an empty string.
         val = "";
     }
-    else // idx < -1
+    else // valIdx < -1
     {
         // This should never happen.
-        throw std::runtime_error(std::string(__func__) + ": Unexpected index " + std::to_string(idx));
+        throw std::runtime_error(std::string(__func__) + ": Unexpected index " + std::to_string(valIdx));
     }
 
     return val;
@@ -145,8 +141,8 @@ void Parser::readTitleBlockSymbol()
             readPreamble();
         }
 
-        Primitive geoStruct = ToPrimitive(mDs.readUint16());
-        readPrimitive(geoStruct);
+        const Primitive primitive = readPrefixPrimitive();
+        readPrimitive(primitive);
     }
 
     readPreamble();

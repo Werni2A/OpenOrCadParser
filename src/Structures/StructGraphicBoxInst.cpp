@@ -20,18 +20,18 @@ StructGraphicBoxInst Parser::readStructGraphicBoxInst()
 
     mDs.printUnknownData(11, std::string(__func__) + " - 0");
 
-    uint32_t dbId = mDs.readUint32();
+    obj.dbId = mDs.readUint32();
 
-    int16_t locY = mDs.readInt16();
-    int16_t locX = mDs.readInt16();
+    obj.locY = mDs.readInt16();
+    obj.locX = mDs.readInt16();
 
-    int16_t y2 = mDs.readInt16();
-    int16_t x2 = mDs.readInt16();
+    obj.y2 = mDs.readInt16();
+    obj.x2 = mDs.readInt16();
 
-    int16_t x1 = mDs.readInt16();
-    int16_t y1 = mDs.readInt16();
+    obj.x1 = mDs.readInt16();
+    obj.y1 = mDs.readInt16();
 
-    Color color = ToColor(mDs.readUint16()); // @todo is it really not a 4 byte value?
+    obj.color = ToColor(mDs.readUint16()); // @todo is it really not a 4 byte value?
 
     mDs.printUnknownData(5, std::string(__func__) + " - 1");
 

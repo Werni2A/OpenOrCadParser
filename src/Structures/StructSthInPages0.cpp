@@ -28,15 +28,9 @@ StructSthInPages0 Parser::readStructSthInPages0()
 
     for(size_t i = 0u; i < len; ++i)
     {
-        Primitive geometryStructure1 = ToPrimitive(mDs.readUint8());
-        Primitive geometryStructure2 = ToPrimitive(mDs.readUint8());
+        const Primitive primitive = readPrefixPrimitive();
 
-        if(geometryStructure1 != geometryStructure2)
-        {
-            throw std::runtime_error("Geometry structures should be equal!");
-        }
-
-        readPrimitive(geometryStructure1); // @todo add to obj
+        readPrimitive(primitive);
     }
 
     sanitizeThisFutureSize(thisFuture);

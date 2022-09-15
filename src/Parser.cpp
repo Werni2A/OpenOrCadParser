@@ -764,7 +764,7 @@ std::pair<Structure, uint32_t> Parser::read_single_prefix_short()
             {
                 const auto getStr = [&, this](uint32_t idx) -> std::string
                     {
-                        int64_t newIdx = static_cast<int64_t>(idx) - 1;
+                        int64_t newIdx = static_cast<int64_t>(idx);
                         return newIdx >= 0 ? mLibrary.library.strLst.at(newIdx) : "";
                     };
 
@@ -1093,4 +1093,22 @@ void Parser::readOptionalTrailingFuture()
     }
 
     sanitizeThisFutureSize(future);
+}
+
+
+Primitive Parser::readPrefixPrimitive()
+{
+    Primitive primitive1 = ToPrimitive(mDs.readUint8());
+    Primitive primitive2 = ToPrimitive(mDs.readUint8());
+
+    if(primitive1 != primitive2)
+    {
+        const std::string msg = fmt::format("{}: Primitives {} != {}",
+            __func__, to_string(primitive1), to_string(primitive2));
+
+        spdlog::error(msg);
+        throw std::runtime_error(msg);
+    }
+
+    return primitive1;
 }

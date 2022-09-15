@@ -22,7 +22,7 @@ StructSymbolDisplayProp Parser::readStructSymbolDisplayProp()
     // @todo move to left shift operator
     // @bug The required string is not this one but the value of the associated property!!!!
     //      This is just the name of the property!!
-    spdlog::debug("strLst Item = {}", mLibrary.library.strLst.at(obj.nameIdx - 1));
+    spdlog::debug("strLst Item = {}", mLibrary.library.strLst.at(obj.nameIdx));
 
     obj.x = mDs.readInt16();
     obj.y = mDs.readInt16();

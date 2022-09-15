@@ -10,12 +10,20 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "Enums/Color.hpp"
+#include "Enums/Rotation.hpp"
 #include "General.hpp"
 
 
 struct StructAlias
 {
+    int32_t  locX;
+    int32_t  locY;
 
+    Color    color;
+    Rotation rotation;
+
+    std::string name;
 };
 
 
@@ -25,8 +33,11 @@ static std::string to_string(const StructAlias& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-    // str += fmt::format("x1     = {}\n", aObj.x1);
-    // str += fmt::format("y1     = {}\n", aObj.y1);
+    str += fmt::format("locX     = {}\n", aObj.locX);
+    str += fmt::format("locY     = {}\n", aObj.locY);
+    str += fmt::format("color    = {}\n", to_string(aObj.color));
+    str += fmt::format("rotation = {}\n", to_string(aObj.rotation));
+    str += fmt::format("name     = {}\n", aObj.name);
 
     return str;
 }
