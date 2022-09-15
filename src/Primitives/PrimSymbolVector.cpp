@@ -32,6 +32,8 @@ PrimSymbolVector Parser::readPrimSymbolVector()
     // mDs.printUnknownData(20, std::string(__func__) + " - x");
     // read_type_prefix();
 
+    // @todo Figure out the size
+    //       Probably it's always 20 Byte, try this first
     discard_until_preamble();
     readPreamble();
 
@@ -55,6 +57,7 @@ PrimSymbolVector Parser::readPrimSymbolVector()
     readPreamble();
     obj.name = mDs.readStringLenZeroTerm();
 
+    // @todo contains smallPrefixPrimitive
     mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x32, 0x00, 0x32, 0x00, 0x00, 0x00, 0x02, 0x00}, std::string(__func__) + " - 2");
     // mDs.printUnknownData(12, std::string(__func__) + " - 2");
 

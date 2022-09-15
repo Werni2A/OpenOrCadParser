@@ -36,7 +36,7 @@ TextFont Parser::readTextFont()
 
     obj.fontName = mDs.readStringZeroTerm();
     // Looks like OrCAD creates a fixed size buffer where the string
-    // is copied into. However, when the string does not requrie the
+    // is copied into. However, when the string does not require the
     // full buffer size it contains still data from the previous
     // application. When the buffer is written into the file this
     // probably causes some privacy issues as the data at the end

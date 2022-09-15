@@ -81,6 +81,7 @@ StreamPackage Parser::readStreamPackage(FileFormatVersion aVersion)
         obj.structures.push_back(readStructure(structure));
     }
 
+    // @todo maybe number of views (Convert, Normal) or number of units in the current view
     const uint16_t len2 = mDs.readUint16();
 
     spdlog::info("len2 = {}", len2);
@@ -92,6 +93,7 @@ StreamPackage Parser::readStreamPackage(FileFormatVersion aVersion)
         obj.structures.push_back(readStructure(structure));
     }
 
+    // @todo Probably only StructSymbolPinScalar
     const uint16_t len3 = mDs.readUint16();
 
     spdlog::info("len3 = {}", len3);
