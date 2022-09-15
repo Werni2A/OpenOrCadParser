@@ -729,7 +729,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/altera/ALTERA_M.OLB
-  - errors: 3
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/altera/ALTERA_P.OLB
   - errors: 0
@@ -837,7 +837,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/iec/CMOS3.OLB
-  - errors: 3
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/iec/CMOS4.OLB
   - errors: 2
@@ -855,10 +855,10 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/iec/TTL3.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/iec/TTL4.OLB
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/iec/TTL5.OLB
   - errors: 0
@@ -888,7 +888,7 @@ repositories:
   - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/iec/TTL14.OLB
-  - errors: 4
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/iec/TTL15.OLB
   - errors: 0
@@ -3709,7 +3709,7 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/altera/PCI_A.OLB
-  - errors: 3
+  - errors: 2
     options: null
     path: ./fpga/altera/ALTERA_P.OLB
   - errors: 0
@@ -4465,7 +4465,7 @@ repositories:
   - errors: 7
     options: null
     path: ./iec/TTL10.OLB
-  - errors: 4
+  - errors: 1
     options: null
     path: ./iec/TTL15.OLB
   - errors: 0
@@ -4495,10 +4495,10 @@ repositories:
   - errors: 8
     options: null
     path: ./iec/CMOS2.OLB
-  - errors: 3
+  - errors: 2
     options: null
     path: ./iec/CMOS4.OLB
-  - errors: 2
+  - errors: 1
     options: null
     path: ./iec/TTL5.OLB
   - errors: 0
@@ -4507,7 +4507,7 @@ repositories:
   - errors: 33
     options: null
     path: ./iec/TTL1.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./iec/TTL4.OLB
   project: Capture_Libraries
