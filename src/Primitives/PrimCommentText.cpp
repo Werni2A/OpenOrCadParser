@@ -26,12 +26,22 @@ PrimCommentText Parser::readPrimCommentText(FileFormatVersion aVersion)
     obj.locX = mDs.readInt32();
     obj.locY = mDs.readInt32();
 
+    spdlog::debug("locX = {}", obj.locX);
+    spdlog::debug("locY = {}", obj.locY);
+
     obj.x2 = mDs.readInt32();
     obj.y2 = mDs.readInt32();
     obj.x1 = mDs.readInt32();
     obj.y1 = mDs.readInt32();
 
+    spdlog::debug("x2 = {}", obj.x2);
+    spdlog::debug("y2 = {}", obj.y2);
+    spdlog::debug("x1 = {}", obj.x1);
+    spdlog::debug("y1 = {}", obj.y1);
+
     obj.textFontIdx = mDs.readUint16();
+
+    spdlog::debug("textFontIdx = {}", obj.textFontIdx);
 
     if(obj.textFontIdx > mLibrary.library.textFonts.size())
     {
@@ -40,7 +50,7 @@ PrimCommentText Parser::readPrimCommentText(FileFormatVersion aVersion)
             std::to_string(mLibrary.library.textFonts.size()) + "!");
     }
 
-    mDs.printUnknownData(2, std::string(__func__) + " - 0");
+    mDs.printUnknownData(2, std::string(__func__) + " - 1");
 
     obj.name = mDs.readStringLenZeroTerm();
 

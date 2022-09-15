@@ -71,6 +71,8 @@ StructPrimitives Parser::readStructPrimitives(FileFormatVersion aVersion)
 
     obj.name = mDs.readStringLenZeroTerm();
 
+    spdlog::debug("name = {}", obj.name);
+
     mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 0"); // Unknown but probably a string
 
     sanitizeThisFutureSize(thisFuture);
