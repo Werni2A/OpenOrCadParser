@@ -27,7 +27,10 @@ StructProperties Parser::readStructProperties()
 
     sanitizeThisFutureSize(thisFuture);
 
-    readOptionalTrailingFuture();
+    if(checkTrailingFuture().has_value())
+    {
+        readTrailingProperties();
+    }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));
