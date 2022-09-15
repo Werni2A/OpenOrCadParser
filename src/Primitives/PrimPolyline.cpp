@@ -94,7 +94,7 @@ PrimPolyline Parser::readPrimPolyline(FileFormatVersion aVersion)
 
     mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
 
-    if(aVersion >= FileFormatVersion::A)
+    if(aVersion >= FileFormatVersion::B)
     {
         obj.setLineStyle(ToLineStyle(mDs.readUint32()));
         obj.setLineWidth(ToLineWidth(mDs.readUint32()));
