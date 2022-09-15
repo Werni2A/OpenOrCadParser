@@ -12,7 +12,7 @@
 
 struct TrailingProperties
 {
-    std::string name;
+    std::string normalName;
     std::string convertName;
 };
 
@@ -23,7 +23,7 @@ static std::string to_string(const TrailingProperties& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-    str += fmt::format("{}name = {}\n", indent(1), aObj.name);
+    str += fmt::format("{}normalName  = {}\n", indent(1), aObj.normalName);
     str += fmt::format("{}convertName = {}\n", indent(1), aObj.convertName);
 
     return str;

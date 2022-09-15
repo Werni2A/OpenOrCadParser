@@ -102,6 +102,8 @@ PrimPolyline Parser::readPrimPolyline(FileFormatVersion aVersion)
 
     const uint16_t pointCount = mDs.readUint16();
 
+    spdlog::debug("pointCount = {}", pointCount);
+
     if(pointCount < 2)
     {
         throw std::runtime_error("At minimum 2 'PolylinePoint's must occur but got " + std::to_string(pointCount)

@@ -37,7 +37,7 @@ struct FileFormatChanged : public std::runtime_error
 struct MisinterpretedData : public std::runtime_error
 {
     MisinterpretedData(const std::string& aStructName, size_t aStartOffset, size_t aExpectedByteLen, size_t aCurrOffset) :
-        std::runtime_error(fmt::format("{} data size check failed. 0x{:08x} + 0x{:08x} != 0x{:08x}",
+        std::runtime_error(fmt::format("{} data size check failed. 0x{:08x} (start offset) + 0x{:08x} (expected Byte length) != 0x{:08x} (current offset)",
             aStructName, aStartOffset, aExpectedByteLen, aCurrOffset))
     { }
 };

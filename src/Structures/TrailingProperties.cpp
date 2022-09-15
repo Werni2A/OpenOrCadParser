@@ -27,27 +27,28 @@ TrailingProperties Parser::readTrailingProperties()
 
     spdlog::debug("viewNumber = {}", viewNumber);
 
-    switch(viewNumber)
+    if(viewNumber == 1U) // Contains ".Normal"
     {
-        case 1: // ".Normal"
-            obj.name = mDs.readStringLenZeroTerm();
-            break;
-
-        case 2: // ".Convert"
-            // @todo how to handle optional attributes in my structures?
-            obj.name = mDs.readStringLenZeroTerm();
-            obj.convertName = mDs.readStringLenZeroTerm();
-
-            spdlog::debug("convertName = {}", obj.convertName);
-            break;
-
-        default:
-            throw std::runtime_error("viewNumber is " + std::to_string(viewNumber) +
-                " but it was expected that this can only take the value 1 or 2!");
-            break;
+        obj.normalName = mDs.readStringLenZeroTerm();
     }
 
-    spdlog::debug("name = {}", obj.name);
+    if(viewNumber == 2U) // Contains ".Normal" and ".Convert"
+    {
+        obj.normalName = mDs.readStringLenZeroTerm();
+        obj.convertName = mDs.readStringLenZeroTerm();
+    }
+
+    spdlog::debug("normalName  = {}", obj.normalName);
+    spdlog::debug("convertName = {}", obj.convertName);
+
+    if(viewNumber != 1U && viewNumber != 2U)
+    {
+        const std::string msg = fmt::format("viewNumber = {} but expected it to be 1 or 2!",
+            viewNumber);
+
+        spdlog::error(msg);
+        throw std::runtime_error(msg);
+    }
 
     sanitizeThisFutureSize(thisFuture);
 
