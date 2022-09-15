@@ -55,6 +55,8 @@ StructSymbolPinScalar Parser::readStructSymbolPinScalar()
 
     sanitizeThisFutureSize(thisFuture);
 
+    readOptionalTrailingFuture();
+
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));
 
