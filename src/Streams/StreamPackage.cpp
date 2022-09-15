@@ -101,6 +101,16 @@ StreamPackage Parser::readStreamPackage(FileFormatVersion aVersion)
         Structure structure = auto_read_prefixes();
         readPreamble();
         obj.structures.push_back(readStructure(structure));
+
+        const uint8_t early_out = mDs.peek(1)[0];
+        spdlog::critical("early_out = {}", early_out);
+
+        if(early_out == 0U)
+        {
+            // @todo does not always occur, even in the same file. Maybe its some byte alignment?
+            mDs.printUnknownData(1, "Early Out Indicator");
+            break;
+        }
     }
 
     const uint16_t len4 = mDs.readUint16();
