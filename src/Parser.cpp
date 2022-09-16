@@ -576,20 +576,32 @@ void Parser::discard_until_preamble()
 
 Structure Parser::auto_read_prefixes()
 {
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
     const size_t startOffset = mDs.getCurrentOffset();
 
     const auto logLevel = spdlog::get_level();
     spdlog::set_level(spdlog::level::off);
 
-    size_t successCtr = 0U;
+    bool failed = true;
+    size_t prefixCtr = 0U;
 
-    for(size_t i = 1U; i < 10U; ++i)
+    // Count from back to make it easier catching long preambles
+    // that could succeed by mistake if the the algorithm detects
+    // no errors in a shorter version.
+    const size_t maxPrefixes = 10U;
+    for(prefixCtr = maxPrefixes; prefixCtr >= 1U; --prefixCtr)
     {
-        bool failed = false;
+        // Reading the prefixes might read beyond EoF in some cases,
+        // because its just a prediction, we do not care. Therefore
+        // reset the EoF flag.
+        mDs.clear();
+
+        failed = false;
 
         try
         {
-            read_prefixes(i, true);
+            read_prefixes(prefixCtr, true);
         }
         catch(const std::exception& e)
         {
@@ -598,25 +610,37 @@ Structure Parser::auto_read_prefixes()
 
         mDs.setCurrentOffset(startOffset);
 
+        // Reading the prefixes might read beyond EoF in some cases,
+        // because its just a prediction, we do not care. Therefore
+        // reset the EoF flag.
+        mDs.clear();
+
         if(!failed)
-        {
-            successCtr++;
-        }
-        else
         {
             break;
         }
     }
 
+    // Reading the prefixes might read beyond EoF in some cases,
+    // because its just a prediction, we do not care. Therefore
+    // reset the EoF flag.
+    mDs.clear();
+
     spdlog::set_level(logLevel);
 
-    if(successCtr == 0U)
+    if(failed)
     {
-        throw std::runtime_error("Could not find valid number of prefixes!");
+        const std::string msg = fmt::format("{}: Could not find valid number of prefixes! (maximum is set to {} but could be higher)",
+            __func__, maxPrefixes);
+
+        spdlog::error(msg);
+        throw std::runtime_error(msg);
     }
 
-    spdlog::info("{}: Found {} prefixes\n", __func__, successCtr);
-    Structure structure = read_prefixes(successCtr);
+    spdlog::info("{}: Found {} prefixes\n", __func__, prefixCtr);
+    Structure structure = read_prefixes(prefixCtr);
+
+    mDs.sanitizeNoEoF();
 
     return structure;
 }
@@ -773,7 +797,7 @@ std::pair<Structure, uint32_t> Parser::read_single_prefix_short()
             catch(const std::exception& e)
             {
                 const std::string msg = fmt::format("{}: Tried to access strLst out of range!\n{}", __func__, e.what());
-                spdlog::error(msg);
+                // spdlog::error(msg);
                 // throw std::out_of_range(msg);
             }
         }

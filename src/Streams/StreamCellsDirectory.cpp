@@ -24,7 +24,11 @@ StreamDirectoryStruct Parser::readStreamCellsDirectory()
 
         item.name = mDs.readStringLenZeroTerm();
 
+        spdlog::debug("name = {}", item.name);
+
         item.componentType = ToComponentType(mDs.readUint16());
+
+        spdlog::debug("componentType = {}", to_string(item.componentType));
 
         if(item.componentType != ComponentType::Cell)
         {
@@ -56,6 +60,8 @@ StreamDirectoryStruct Parser::readStreamCellsDirectory()
         }
 
         item.timezone = mDs.readInt16();
+
+        spdlog::debug("timezone = {}", item.timezone);
 
         mDs.printUnknownData(2, fmt::format("item[{:>3}] - 1", i));
 
