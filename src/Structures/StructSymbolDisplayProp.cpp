@@ -27,10 +27,17 @@ StructSymbolDisplayProp Parser::readStructSymbolDisplayProp()
     obj.x = mDs.readInt16();
     obj.y = mDs.readInt16();
 
-    // @todo maybe using a bitmap is a cleaner solution than shifting bits
-    const uint16_t packedStruct = mDs.readUint16();
+    // @todo better move textFontIdx out of the bit field
+    struct TmpBitField
+    {
+        uint16_t textFontIdx : 8; //  7 downto  0 (8 Bit)
+        uint16_t unknown     : 6; // 13 downto  8 (6 Bit)
+        uint16_t rotation    : 2; // 15 downto 14 (2 Bit)
+    };
 
-    obj.textFontIdx = packedStruct & 0xff; // Bit  7 downto  0
+    const TmpBitField tmpBitField{mDs.readUint16()};
+
+    obj.textFontIdx = tmpBitField.textFontIdx;
 
     // @todo Sometimes values = textFonts.size() are observed that seem valid.
     //       Maybe they have a special meaning? I remember that somewhere in the
@@ -46,14 +53,17 @@ StructSymbolDisplayProp Parser::readStructSymbolDisplayProp()
         // throw std::out_of_range(msg);
     }
 
-    // @todo The meaning of the bits in between is unknown
-    spdlog::debug("Unknown bits in bitmap: {}", (packedStruct >> 8u) & 0x3f); // Bit 13 downto  8
-    if(((packedStruct >> 8u) & 0x3f) != 0x00)
+    // @todo The meaning of the bits is unknown
+    if(tmpBitField.unknown != 0x00)
     {
-        throw std::runtime_error("Some bits in the bitmap are used but what is the meaning of them?");
+        const std::string msg = fmt::format("{}: What is the meaning of {}",
+            __func__, tmpBitField.unknown);
+
+        spdlog::warn(msg);
+        throw std::runtime_error(msg);
     }
 
-    obj.rotation = ToRotation(packedStruct >> 14u); // Bit 15 downto 14
+    obj.rotation = ToRotation(tmpBitField.rotation);
 
     obj.propColor = ToColor(mDs.readUint8());
 

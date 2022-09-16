@@ -26,7 +26,7 @@ StreamLibrary Parser::readStreamLibrary()
 
     obj.introduction = mDs.readStringZeroTerm();
     // Looks like OrCAD creates a fixed size buffer where the string
-    // is copied into. However, when the string does not requrie the
+    // is copied into. However, when the string does not require the
     // full buffer size it contains still data from the previous
     // application. When the buffer is written into the file this
     // probably causes some privacy issues as the data at the end
@@ -49,7 +49,12 @@ StreamLibrary Parser::readStreamLibrary()
 
     mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
 
+    // @todo the GUI specifies 15 fonts under
+    //       `Options` -> `Design Templates...` -> `Fonts`
+    //       is there some correlation?
     const uint16_t textFontLen = mDs.readUint16();
+
+    spdlog::debug("textFontLen = {}", textFontLen);
 
     if(textFontLen == 0u)
     {
@@ -84,10 +89,11 @@ StreamLibrary Parser::readStreamLibrary()
     // 0x864: 00 00 00 00 00 00 01 00 00 00                   | ..........
     mDs.printUnknownData(58, std::string(__func__) + " - 2");
 
-    // Looks like this has always the same size as it consists of
-    // the mandatory package fields '1ST PART FIELD' up to the
-    // '7TH PART FIELD' plus 'PCB Footprint'.
-    for(size_t i = 0u; i < 8u; ++i)
+    // Property to Part Field Mapping
+    // See OrCAD: `Options` -> `Design Template...` -> `SDT Compatibility`
+    //            -> `Property to Part Field Mapping`
+    const size_t partFields = 8U; // `Part Field 1` up to `Part Field 8`
+    for(size_t i = 0u; i < partFields; ++i)
     {
         obj.strLstPartField.push_back(mDs.readStringLenZeroTerm());
     }

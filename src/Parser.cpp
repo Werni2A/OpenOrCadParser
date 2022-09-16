@@ -550,6 +550,8 @@ void Parser::discard_until_preamble()
     const int patternSize = 4;
     std::array<uint8_t, patternSize> buffer = {0};
 
+    const size_t startOffset = mDs.getCurrentOffset();
+
     // Magic number specifying the beginning of a struct
     const std::array<uint8_t, patternSize> preamble = {0xff, 0xe4, 0x5c, 0x39};
 
@@ -565,6 +567,14 @@ void Parser::discard_until_preamble()
     {
         shift_left(buffer);
         mDs.read(reinterpret_cast<char*>(buffer.data()) + buffer.size() - 1, 1);
+
+        if(mDs.isEoF())
+        {
+            const std::string msg = fmt::format("{}: Unexpectedly reached end-of-file!", __func__);
+
+            spdlog::error(msg);
+            throw std::runtime_error(msg);
+        }
     }
 
     // Put back the preamble such that it can be parsed in the next step
@@ -572,6 +582,10 @@ void Parser::discard_until_preamble()
     {
         mDs.putback(preamble[preamble.size() - 1 - i]);
     }
+
+    const size_t endOffset = mDs.getCurrentOffset();
+
+    spdlog::critical("{}: Discarded {} Byte until next preamble", __func__, endOffset - startOffset);
 }
 
 Structure Parser::auto_read_prefixes()
@@ -823,6 +837,11 @@ uint32_t Parser::readPreamble(bool readOptionalLen)
     mDs.assumeData({0xff, 0xe4, 0x5c, 0x39}, std::string(__func__) + " - 0");
 
     const uint32_t optionalLen = readOptionalLen ? mDs.readUint32() : 0u;
+
+    if(optionalLen != 0U)
+    {
+        spdlog::warn("{}: Detected optionalLen = {}", __func__, optionalLen);
+    }
 
     mDs.printUnknownData(optionalLen, std::string(__func__) + " - 1 | Correlates to locks");
 

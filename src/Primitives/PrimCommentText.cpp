@@ -54,6 +54,8 @@ PrimCommentText Parser::readPrimCommentText(FileFormatVersion aVersion)
 
     obj.name = mDs.readStringLenZeroTerm();
 
+    spdlog::debug("name = {}", obj.name);
+
     if(mDs.getCurrentOffset() != startOffset + byteLength)
     {
         throw MisinterpretedData(__func__, startOffset, byteLength, mDs.getCurrentOffset());

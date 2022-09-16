@@ -18,7 +18,11 @@ size_t PrimRect::getExpectedStructSize(FileFormatVersion aVersion)
 {
     size_t expectedByteLength;
 
-    if(aVersion <= FileFormatVersion::B)
+    if(aVersion <= FileFormatVersion::A)
+    {
+        expectedByteLength = 24U;
+    }
+    else if(aVersion <= FileFormatVersion::B)
     {
         expectedByteLength = 32u;
     }
@@ -108,7 +112,7 @@ PrimRect Parser::readPrimRect(FileFormatVersion aVersion)
     obj.x2 = mDs.readInt32();
     obj.y2 = mDs.readInt32();
 
-    if(aVersion >= FileFormatVersion::A)
+    if(aVersion >= FileFormatVersion::B)
     {
         obj.setLineStyle(ToLineStyle(mDs.readUint32()));
         obj.setLineWidth(ToLineWidth(mDs.readUint32()));

@@ -15,13 +15,23 @@ size_t PrimEllipse::getExpectedStructSize(FileFormatVersion aVersion)
 {
     size_t expectedByteLength;
 
-    if(aVersion <= FileFormatVersion::B)
+    switch(aVersion)
     {
-        expectedByteLength = 32u;
-    }
-    else
-    {
-        expectedByteLength = 40u;
+        case FileFormatVersion::A:
+            expectedByteLength = 24U;
+            break;
+
+        case FileFormatVersion::B:
+            expectedByteLength = 32U;
+            break;
+
+        case FileFormatVersion::C:
+            expectedByteLength = 40U;
+            break;
+
+        default:
+            expectedByteLength = 0U;
+            break;
     }
 
     return expectedByteLength;
@@ -41,7 +51,8 @@ PrimEllipse Parser::readPrimEllipse(FileFormatVersion aVersion)
     // Predict version
     switch(byteLength)
     {
-        case 32: aVersion = FileFormatVersion::A; break;
+        case 24: aVersion = FileFormatVersion::A; break;
+        case 32: aVersion = FileFormatVersion::B; break;
         case 40: aVersion = FileFormatVersion::C; break;
         default:                                  break;
     }
@@ -53,7 +64,7 @@ PrimEllipse Parser::readPrimEllipse(FileFormatVersion aVersion)
     obj.x2 = mDs.readInt32();
     obj.y2 = mDs.readInt32();
 
-    if(aVersion >= FileFormatVersion::A)
+    if(aVersion >= FileFormatVersion::B)
     {
         obj.setLineStyle(ToLineStyle(mDs.readUint32()));
         obj.setLineWidth(ToLineWidth(mDs.readUint32()));
