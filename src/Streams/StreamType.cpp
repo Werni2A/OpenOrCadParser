@@ -15,7 +15,7 @@ std::vector<Type> Parser::readStreamType()
 
     std::vector<Type> types;
 
-    // File can be completely empty (size of 0 byte)
+    // File can be completely empty (size of 0 Byte)
     while(!mDs.isEoF())
     {
         Type type;
@@ -24,6 +24,11 @@ std::vector<Type> Parser::readStreamType()
         type.componentType = ToComponentType(mDs.readUint16());
 
         types.push_back(type);
+    }
+
+    if(!mDs.isEoF())
+    {
+        throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));

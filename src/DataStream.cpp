@@ -63,6 +63,8 @@ std::string DataStream::readStringZeroTerm()
         throw std::runtime_error(msg);
     }
 
+    sanitizeNoEoF();
+
     return str;
 }
 
@@ -106,6 +108,8 @@ std::string DataStream::readStringLenTerm()
         throw std::runtime_error(msg);
     }
 
+    sanitizeNoEoF();
+
     return str;
 }
 
@@ -118,14 +122,16 @@ std::string DataStream::readStringLenZeroTerm()
 
     if(str.length() != len)
     {
-        const std::string msg = "Zero terminated string lenght (" + std::to_string(str.length())
-                                 + ") does not match the preceeding length ("
+        const std::string msg = "Zero terminated string length (" + std::to_string(str.length())
+                                 + ") does not match the preceding length ("
                                  + std::to_string(len) + ") definition!";
 
         spdlog::error(msg);
 
         throw std::runtime_error(msg);
     }
+
+    sanitizeNoEoF();
 
     return str;
 }

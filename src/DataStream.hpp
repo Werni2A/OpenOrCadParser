@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -22,9 +23,20 @@ public:
     DataStream(const fs::path& aFile) : std::ifstream{aFile, std::ifstream::binary}
     { }
 
+    // Checks whether the stream has reached the end of the file.
+    // I.e. reading another Byte would result in an error.
     bool isEoF()
     {
         return std::ifstream::peek() == EOF;
+    }
+
+    // Throws if data beyond end of file was read.
+    void sanitizeNoEoF()
+    {
+        if(eof())
+        {
+            throw std::runtime_error("Read beyond EoF!");
+        }
     }
 
     std::vector<uint8_t> peek(size_t aLen)
@@ -75,6 +87,9 @@ public:
     {
         int8_t val;
         read(reinterpret_cast<char*>(&val), 1);
+
+        sanitizeNoEoF();
+
         return val;
     }
 
@@ -82,6 +97,9 @@ public:
     {
         int16_t val;
         read(reinterpret_cast<char*>(&val), 2);
+
+        sanitizeNoEoF();
+
         return val;
     }
 
@@ -89,6 +107,9 @@ public:
     {
         int32_t val;
         read(reinterpret_cast<char*>(&val), 4);
+
+        sanitizeNoEoF();
+
         return val;
     }
 
@@ -96,6 +117,9 @@ public:
     {
         uint8_t val;
         read(reinterpret_cast<char*>(&val), 1);
+
+        sanitizeNoEoF();
+
         return val;
     }
 
@@ -103,6 +127,9 @@ public:
     {
         uint16_t val;
         read(reinterpret_cast<char*>(&val), 2);
+
+        sanitizeNoEoF();
+
         return val;
     }
 
@@ -110,6 +137,9 @@ public:
     {
         uint32_t val;
         read(reinterpret_cast<char*>(&val), 4);
+
+        sanitizeNoEoF();
+
         return val;
     }
 
@@ -125,7 +155,7 @@ public:
     std::string readStringZeroTerm();
 
     /**
-     * @brief Read string that has preceeding length specification
+     * @brief Read string that has preceding length specification
      *        but no terminating null byte.
      *
      * @note Length specification uses a uint16_t.
@@ -135,7 +165,7 @@ public:
     std::string readStringLenTerm();
 
     /**
-     * @brief Read string that has preceeding length definition and
+     * @brief Read string that has preceding length definition and
      *        is additionally zero terminated.
      *
      * @note Length specification uses a uint16_t.
