@@ -4951,3 +4951,119 @@ repositories:
     path: ./Design Files for Rev 1.0/STEPPER.DSN
   project: StepperDriverCTRL
   url: https://github.com/Werni2A/ROHMUSDC_StepperDriverCTRL
+- author: XiaoSenLuo
+  commit: dc3c2caac3ea6ee8727365a3b5f16b059a99ca48
+  files:
+  - errors: 0
+    options: null
+    path: ./Symbol/ADC/ADS131A04.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/ADC/ADS131A02.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/ADC/ADS127L01.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/ADC/ti_adc.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Connectors/CONNECTOR_RJ45.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Connectors/CONNECTOR_SFP.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Passives/resistors.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Passives/inductors.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Power-Switchmode/voltage_regulator_dc_dc.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/BJT/BJT_NPN.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/BJT/bjt.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Crystals/oscillators.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Fuse/fuses.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Logic/ti_logic.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Power-LinearVReg/voltage_regulator_liner.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/RF-IC/espressif.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/FET/mosfet.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Opamp/TI_OPA862.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Opamp/TI_THS4551.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Opamp/TI_OPAX350.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Opamp/TI_THS4531.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Opamp/amplifiers.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Opamp/ti_amplifiers.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Diodes/LED.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Diodes/diodes.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Interface-Specialized/Realtek.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/ARMCortex/WCH.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Driver-Motor/TRINAMIC_TMC2209.OLB
+  - errors: 0
+    options: null
+    path: ./Symbol/Connectors/Connector_PinHeader_200.olb
+  - errors: 0
+    options: null
+    path: ./Symbol/Connectors/connectors.olb
+  - errors: 0
+    options: null
+    path: ./Symbol/Connectors/Connector_PinSocket_127.olb
+  - errors: 0
+    options: null
+    path: ./Symbol/Connectors/Connector_PinSocket_254.olb
+  - errors: 0
+    options: null
+    path: ./Symbol/Connectors/Connector_PinHeader_127.olb
+  - errors: 0
+    options: null
+    path: ./Symbol/Connectors/Connector_PinHeader_254.olb
+  - errors: 0
+    options: null
+    path: ./Symbol/Connectors/Connector_USB.olb
+  - errors: 0
+    options: null
+    path: ./Symbol/Passives/capacitors.olb
+  - errors: 0
+    options: null
+    path: ./Symbol/Power-VoltageReferences/ti_voltager_reference.olb
+  project: CadenceLibrary
+  url: https://github.com/Werni2A/XiaoSenLuo_CadenceLibrary
