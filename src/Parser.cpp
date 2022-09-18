@@ -1105,10 +1105,15 @@ void Parser::sanitizeThisFutureSize(std::optional<FutureData> aThisFuture)
         {
             const std::string msg = fmt::format("{}: StopOffsets differ! 0x{:08x} (expected) vs. 0x{:08x} (actual)",
                 __func__, aThisFuture.value().getStopOffset(), stopOffset);
+
             spdlog::error(msg);
             spdlog::critical("The structure may have changed due to version differences!");
             throw std::runtime_error(msg);
         }
+    }
+    else
+    {
+        spdlog::debug("{}: Could not verify structure size as future is not available.", __func__);
     }
 }
 
