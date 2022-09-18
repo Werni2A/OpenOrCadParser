@@ -61,7 +61,7 @@ namespace fs = std::filesystem;
 
 
 Parser::Parser(const fs::path& aFile, FileFormatVersion aFileFormatVersion) :
-    mFileFormatVersion{aFileFormatVersion}, mFileCtr{0u}, mFileErrCtr{0u}
+    mFileFormatVersion{aFileFormatVersion}, mFileCtr{0U}, mFileErrCtr{0U}, mImgCtr{0U}
 {
     mFileType      = getFileTypeByExtension(aFile);
     mInputFile     = aFile;
@@ -1039,6 +1039,8 @@ void Parser::openFile(const fs::path& aFile)
     }
 
     mRemainingFiles.erase(it);
+
+    mImgCtr = 0U;
 
     mDs = DataStream{aFile};
     if(!mDs)
