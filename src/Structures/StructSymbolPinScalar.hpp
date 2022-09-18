@@ -36,9 +36,6 @@ static std::string to_string(const StructSymbolPinScalar& aObj)
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
     str += fmt::format("{}name     = {}\n", indent(1), aObj.name);
-
-    str += fmt::format("{}startX   = {}\n", indent(1), aObj.startX);
-
     str += fmt::format("{}startX   = {}\n", indent(1), aObj.startX);
     str += fmt::format("{}startY   = {}\n", indent(1), aObj.startY);
     str += fmt::format("{}hotptX   = {}\n", indent(1), aObj.hotptX);
