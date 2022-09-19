@@ -1,6 +1,9 @@
+#include <array>
 #include <cstdint>
+#include <cstring>
 #include <filesystem>
 #include <iostream>
+#include <optional>
 #include <ostream>
 #include <stdexcept>
 #include <string>
@@ -56,19 +59,6 @@ PrimBitmap Parser::readPrimBitmap()
 
     spdlog::debug("dataSize = {}", dataSize);
 
-    // Offset from the beginning of the image header to the actual image data
-    const uint32_t offset = 40U;
-
-    const uint32_t colorChannels = 3U; // Red, Green and Blue are always used
-
-    if(dataSize != offset + obj.bmpWidth * obj.bmpHeight * colorChannels)
-    {
-        const std::string msg = fmt::format("{}: Unexpected bitmap data size of {} Byte!", __func__, dataSize);
-
-        spdlog::error(msg);
-        throw std::runtime_error(msg);
-    }
-
     obj.rawImgData.clear();
     obj.rawImgData.reserve(dataSize);
 
@@ -77,12 +67,12 @@ PrimBitmap Parser::readPrimBitmap()
         obj.rawImgData.push_back(mDs.readUint8());
     }
 
-    const fs::path filename = mCurrOpenFile.parent_path() / fmt::format("{}_img_{}.bmp",
+    fs::path filename = mCurrOpenFile.parent_path() / fmt::format("{}_img_{}.bmp",
         mCurrOpenFile.stem().string(), mImgCtr);
 
-    spdlog::info("{}: Writing bitmap file to {}", __func__, filename.string());
+    filename = obj.writeImgToFile(filename);
 
-    obj.writeBmpToFile(filename);
+    spdlog::info("{}: Wrote bitmap file to {}", __func__, filename.string());
 
     ++mImgCtr;
 
@@ -103,11 +93,14 @@ PrimBitmap Parser::readPrimBitmap()
 }
 
 
-void PrimBitmap::writeBmpToFile(const fs::path& aFilePath) const
+// Returns path to the written image file
+static fs::path writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData)
 {
-    std::ofstream bmp{aFilePath, std::ios::out | std::ios::binary};
+    aFilePath.replace_extension(".bmp");
 
-    if(!bmp)
+    std::ofstream img{aFilePath, std::ios::out | std::ios::binary};
+
+    if(!img)
     {
         const std::string msg = fmt::format("{}: Can not open file for writing: {}",
             __func__, aFilePath.string());
@@ -131,18 +124,148 @@ void PrimBitmap::writeBmpToFile(const fs::path& aFilePath) const
     //       inserts additional space into the structure for better alignment
     const uint32_t headerSize = 14U; // Size in Byte
 
-    header.bmpSize = rawImgData.size() + headerSize;
+    header.bmpSize = aRawImgData.size() + headerSize;
 
     // Start writing the file
-    bmp.write(reinterpret_cast<const char*>(&header.magicBytes), sizeof(header.magicBytes));
-    bmp.write(reinterpret_cast<const char*>(&header.bmpSize), sizeof(header.bmpSize));
-    bmp.write(reinterpret_cast<const char*>(&header.reserved), sizeof(header.reserved));
-    bmp.write(reinterpret_cast<const char*>(&header.offset), sizeof(header.offset));
+    img.write(reinterpret_cast<const char*>(&header.magicBytes), sizeof(header.magicBytes));
+    img.write(reinterpret_cast<const char*>(&header.bmpSize), sizeof(header.bmpSize));
+    img.write(reinterpret_cast<const char*>(&header.reserved), sizeof(header.reserved));
+    img.write(reinterpret_cast<const char*>(&header.offset), sizeof(header.offset));
 
-    for(const auto& data : rawImgData)
+    spdlog::debug("Writing header is done");
+
+    for(const auto& data : aRawImgData)
     {
-        bmp.write(reinterpret_cast<const char*>(&data), sizeof(data));
+        img.write(reinterpret_cast<const char*>(&data), sizeof(data));
     }
 
-    bmp.close();
+    img.close();
+
+    return aFilePath;
+}
+
+
+// aFilePath is the requested path to the image file, but the function will change the file
+// extension, depending on the corresponding file type that was found.
+// Returns path to the actually written image file
+static fs::path writeNoBmpFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData)
+{
+    // Discard the header for non BMP images. After that, they start
+    // with a complete image, e.g. PNG or JPG
+    const size_t startOffset = 0xbb;
+
+    if(startOffset >= aRawImgData.size())
+    {
+        throw std::runtime_error("Invalid function usage");
+    }
+
+    struct ImageFileType
+    {
+        std::string name;
+        std::string extension;
+        std::vector<uint8_t> magicBytes;
+    };
+
+    // Extension will be evaluated in this order. This is relevant
+    // for magic bytes like e.g. {0xaa, 0xbb} vs {0xaa}. There we
+    // want to evaluate for {0xaa, 0xbb} first.
+    const std::vector<ImageFileType> fileTypes = {
+        { "JPG", ".jpg", {0xff, 0xd8}             },
+        { "PNG", ".png", {0x89, 0x50, 0x4e, 0x47} }
+    };
+
+    std::optional<ImageFileType> foundFileType;
+
+    for(const auto& fileType : fileTypes)
+    {
+        size_t minCmpLen = std::min(fileType.magicBytes.size(), aRawImgData.size() - startOffset);
+
+        if(minCmpLen < fileType.magicBytes.size())
+        {
+            continue;
+        }
+
+        bool isType = 0 == std::memcmp(fileType.magicBytes.data(), aRawImgData.data() + startOffset,
+            minCmpLen);
+
+        if(isType)
+        {
+            foundFileType = fileType;
+            break;
+        }
+    }
+
+    if(foundFileType.has_value())
+    {
+        aFilePath.replace_extension(foundFileType.value().extension);
+    }
+    else
+    {
+        aFilePath.replace_extension(".unknown");
+        spdlog::error("Unknown image file format");
+    }
+
+    std::ofstream img{aFilePath, std::ios::out | std::ios::binary};
+
+    if(!img)
+    {
+        const std::string msg = fmt::format("{}: Can not open file for writing: {}",
+            __func__, aFilePath.string());
+
+        spdlog::error(msg);
+        throw std::runtime_error(msg);
+    }
+
+    img.write(reinterpret_cast<const char*>(aRawImgData.data() + startOffset), aRawImgData.size() - startOffset);
+
+    img.close();
+
+    return aFilePath;
+}
+
+// The images are not always bitmaps where we need to prepend its header
+// but its also possible that they are PNG, JPG and probably other formats
+// that have some header that needs to be trimmed away.
+static bool isBmpImage(const std::vector<uint8_t>& aRawImgData)
+{
+    bool hasMagicId = false;
+
+    // Non BMP images contain a header that seems to be the same everywhere
+    // one characteristic section contains the string `CI_IMAGE` that is
+    // used for recognizing this kind of headers.
+    const size_t MAGIC_ID_OFFSET = 0xaa;
+    const std::array<uint8_t, 8> MAGIC_ID = {'C', 'I', '_', 'I', 'M', 'A', 'G', 'E'};
+
+    if(aRawImgData.size() >= 0xbb)
+    {
+        hasMagicId = 0 == std::memcmp(MAGIC_ID.data(), aRawImgData.data() + MAGIC_ID_OFFSET,
+            std::min(MAGIC_ID.size(), aRawImgData.size() - MAGIC_ID_OFFSET));
+    }
+
+    return !hasMagicId;
+}
+
+
+fs::path PrimBitmap::writeImgToFile(fs::path aFilePath) const
+{
+    // @todo Probably its file format version dependent if it supports
+    //       only bitmaps where we need to prepend its header or supports
+    //       various formats where a longer header is present that we need
+    //       to discard. It would be nice seeing a bitmap image that is
+    //       provided with the long header to support this theory. Then
+    //       we can simplify this logic by just checking the file format version.
+    if(isBmpImage(rawImgData))
+    {
+        spdlog::info("{}: Detected BMP file", __func__);
+
+        aFilePath = writeBmpFile(aFilePath, rawImgData);
+    }
+    else
+    {
+        spdlog::info("{}: Detected some non BMP file", __func__);
+
+        aFilePath = writeNoBmpFile(aFilePath, rawImgData);
+    }
+
+    return aFilePath;
 }

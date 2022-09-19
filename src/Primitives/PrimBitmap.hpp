@@ -18,7 +18,7 @@ namespace fs = std::filesystem;
 
 struct PrimBitmap
 {
-    void writeBmpToFile(const fs::path& aFilePath) const;
+    fs::path writeImgToFile(fs::path aFilePath) const;
 
     int32_t locX;
     int32_t locY;
