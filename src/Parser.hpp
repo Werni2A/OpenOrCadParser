@@ -279,7 +279,7 @@ private:
 
     fs::path mExtractedPath;
 
-    size_t mFileCtr;    //!< Counts all files that were opend for parsing
+    size_t mFileCtr;    //!< Counts all files that were opened for parsing
     size_t mFileErrCtr; //!< Counts all files that failed somewhere
 
     DataStream mDs;
@@ -287,6 +287,8 @@ private:
     uint32_t mByteOffset;
 
     FutureDataLst mFutureDataLst;
+
+    size_t mImgCtr; //!< Counts images per stream
 };
 
 

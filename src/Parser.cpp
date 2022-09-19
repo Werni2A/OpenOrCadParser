@@ -61,7 +61,7 @@ namespace fs = std::filesystem;
 
 
 Parser::Parser(const fs::path& aFile, FileFormatVersion aFileFormatVersion) :
-    mFileFormatVersion{aFileFormatVersion}, mFileCtr{0u}, mFileErrCtr{0u}
+    mFileFormatVersion{aFileFormatVersion}, mFileCtr{0U}, mFileErrCtr{0U}, mImgCtr{0U}
 {
     mFileType      = getFileTypeByExtension(aFile);
     mInputFile     = aFile;
@@ -1040,6 +1040,8 @@ void Parser::openFile(const fs::path& aFile)
 
     mRemainingFiles.erase(it);
 
+    mImgCtr = 0U;
+
     mDs = DataStream{aFile};
     if(!mDs)
     {
@@ -1103,10 +1105,15 @@ void Parser::sanitizeThisFutureSize(std::optional<FutureData> aThisFuture)
         {
             const std::string msg = fmt::format("{}: StopOffsets differ! 0x{:08x} (expected) vs. 0x{:08x} (actual)",
                 __func__, aThisFuture.value().getStopOffset(), stopOffset);
+
             spdlog::error(msg);
             spdlog::critical("The structure may have changed due to version differences!");
             throw std::runtime_error(msg);
         }
+    }
+    else
+    {
+        spdlog::debug("{}: Could not verify structure size as future is not available.", __func__);
     }
 }
 
