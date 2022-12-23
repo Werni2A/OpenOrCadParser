@@ -39,6 +39,7 @@ PrimCommentText Parser::readPrimCommentText(FileFormatVersion aVersion)
     spdlog::debug("x1 = {}", obj.x1);
     spdlog::debug("y1 = {}", obj.y1);
 
+    // @todo Check if fontIdx with 4 byte fits. I.e. are the following 2 Byte all 0?
     obj.textFontIdx = mDs.readUint16();
 
     spdlog::debug("textFontIdx = {}", obj.textFontIdx);

@@ -442,9 +442,10 @@ Library Parser::parseLibrary()
         {
             const fs::path& pathSymbol = file.path();
 
-            // Skip the 'ERC' and '$Types$' stream as they are additional
+            // Skip the 'ERC', 'ERC_PHYSICAL' and '$Types$' stream as they are additional
             // information but no symbols.
-            if(pathSymbol.filename() == "ERC.bin"     ||
+            if(pathSymbol.filename() == "ERC.bin"          ||
+               pathSymbol.filename() == "ERC_PHYSICAL.bin" ||
                pathSymbol.filename() == "$Types$.bin")
             {
                 continue;
@@ -978,6 +979,8 @@ void Parser::checkInterpretedDataLen(const std::string& aFuncName, size_t aStart
 fs::path Parser::extractContainer(const fs::path& aFile, const fs::path& aOutDir) const
 {
     ContainerExtractor extractor{aFile};
+
+    extractor.outputFileInfo();
 
     return extractor.extract(aOutDir);
 }
