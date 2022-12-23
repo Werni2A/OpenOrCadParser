@@ -964,7 +964,7 @@ void Parser::checkInterpretedDataLen(const std::string& aFuncName, size_t aStart
 {
     if(aStartOffset > aEndOffset)
     {
-        throw std::invalid_argument("Start offset musst be smaller or equal to end offset!");
+        throw std::invalid_argument("Start offset must be smaller or equal to end offset!");
     }
 
     const size_t actuallLen = aEndOffset - aStartOffset;
@@ -980,7 +980,7 @@ fs::path Parser::extractContainer(const fs::path& aFile, const fs::path& aOutDir
 {
     ContainerExtractor extractor{aFile};
 
-    extractor.outputFileInfo();
+    // extractor.outputFileInfo();
 
     return extractor.extract(aOutDir);
 }
