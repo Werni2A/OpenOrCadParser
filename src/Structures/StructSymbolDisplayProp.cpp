@@ -27,17 +27,16 @@ StructSymbolDisplayProp Parser::readStructSymbolDisplayProp()
     obj.x = mDs.readInt16();
     obj.y = mDs.readInt16();
 
-    // @todo better move textFontIdx out of the bit field
-    struct TmpBitField
+    // Rotation and Font ID bit field
+    struct RotFontIdBitField
     {
-        uint16_t textFontIdx : 8; //  7 downto  0 (8 Bit)
-        uint16_t unknown     : 6; // 13 downto  8 (6 Bit)
-        uint16_t rotation    : 2; // 15 downto 14 (2 Bit)
+        uint16_t textFontIdx : 14; // 13 downto  0
+        uint16_t rotation    :  2; // 15 downto 14
     };
 
-    const TmpBitField tmpBitField{mDs.readUint16()};
+    const RotFontIdBitField rotFontIdBitField{mDs.readUint16()};
 
-    obj.textFontIdx = tmpBitField.textFontIdx;
+    obj.textFontIdx = rotFontIdBitField.textFontIdx;
 
     // @todo Sometimes values = textFonts.size() are observed that seem valid.
     //       Maybe they have a special meaning? I remember that somewhere in the
@@ -53,17 +52,7 @@ StructSymbolDisplayProp Parser::readStructSymbolDisplayProp()
         // throw std::out_of_range(msg);
     }
 
-    // @todo The meaning of the bits is unknown
-    if(tmpBitField.unknown != 0x00)
-    {
-        const std::string msg = fmt::format("{}: What is the meaning of {}",
-            __func__, tmpBitField.unknown);
-
-        spdlog::warn(msg);
-        throw std::runtime_error(msg);
-    }
-
-    obj.rotation = ToRotation(tmpBitField.rotation);
+    obj.rotation = ToRotation(rotFontIdBitField.rotation);
 
     obj.propColor = ToColor(mDs.readUint8());
 
