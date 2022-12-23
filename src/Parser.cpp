@@ -857,7 +857,7 @@ uint32_t Parser::readPreamble(bool readOptionalLen)
 }
 
 
-// Looks like some structures require a preceeding preamble but not all.
+// Looks like some structures require a preceding preamble but not all.
 // @todo Could be resolved by the trailing data structures defined in the prefix
 uint32_t Parser::readConditionalPreamble(Structure structure, bool readOptionalLen)
 {
