@@ -261,6 +261,14 @@ Library Parser::parseLibrary()
 
         for(const auto& page : std::filesystem::directory_iterator{pagesDir})
         {
+            // We extract embedded files into the same directory but do
+            // not want to parse them as stream. Therefore skip them.
+            // @todo This is just a workaround; needs some refactoring
+            if(page.path().extension() != ".bin")
+            {
+                continue;
+            }
+
             if(page.is_regular_file())
             {
                 schematicPages.push_back(page);
@@ -426,6 +434,14 @@ Library Parser::parseLibrary()
         {
             const fs::path& pathPackage = file.path();
 
+            // We extract embedded files into the same directory but do
+            // not want to parse them as stream. Therefore skip them.
+            // @todo This is just a workaround; needs some refactoring
+            if(pathPackage.extension() != ".bin")
+            {
+                continue;
+            }
+
             mLibrary.packages.push_back(parseFile<StreamPackage>(pathPackage, [this](){ return readStreamPackage(); }));
 
             spdlog::info("----------------------------------------------------------------------------------\n");
@@ -441,6 +457,14 @@ Library Parser::parseLibrary()
         for(const auto& file : fs::directory_iterator(pathSymbols))
         {
             const fs::path& pathSymbol = file.path();
+
+            // We extract embedded files into the same directory but do
+            // not want to parse them as stream. Therefore skip them.
+            // @todo This is just a workaround; needs some refactoring
+            if(pathSymbol.extension() != ".bin")
+            {
+                continue;
+            }
 
             // Skip the 'ERC', 'ERC_PHYSICAL' and '$Types$' stream as they are additional
             // information but no symbols.
