@@ -31,12 +31,9 @@ StructAlias Parser::readStructAlias()
 
     spdlog::debug("rotation = {}", to_string(obj.rotation));
 
-    // @todo Check if fontIdx with 4 byte fits. I.e. are the following 2 Byte all 0?
-    uint16_t textFontIdx = mDs.readUint16();
+    uint32_t textFontIdx = mDs.readUint32();
 
     spdlog::debug("Alias fontIdx = {}", textFontIdx);
-
-    mDs.printUnknownData(2, std::string(__func__) + " - 0");
 
     obj.name = mDs.readStringLenZeroTerm();
 
