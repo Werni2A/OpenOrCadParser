@@ -71,7 +71,7 @@ public:
     /**
      * @brief Extract CFBF container.
      *
-     * @param aOutputDir Directory where the container should be extacted to.
+     * @param aOutputDir Directory where the container should be extracted to.
      * @return fs::path Path to extracted container.
      */
     fs::path extract(const fs::path& aOutputDir);

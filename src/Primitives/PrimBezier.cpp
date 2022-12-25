@@ -125,13 +125,18 @@ PrimBezier Parser::readPrimBezier(FileFormatVersion aVersion)
         //     3 * n_b + 1 = n_p
         // <=> n_b = (n_p - 1) / 3
 
-        const auto isInteger = [](float k) -> bool
+        // Quotient = Dividend / Divisor
+        const auto isDivisible = [](int aDividend, int aDivisor) -> bool
         {
-            // @todo FP comparisons are a bad idea. Check for e.g. 10 maschine epsilon difference
-            return std::floor(k) == k;
+            aDividend = std::abs(aDividend);
+            aDivisor  = std::abs(aDivisor);
+
+            const auto rest = aDividend % aDivisor;
+
+            return rest == 0;
         };
 
-        if(!isInteger((pointCount - 1.0) / 3.0))
+        if(!isDivisible(pointCount - 1, 3))
         {
             throw std::runtime_error("Number of 'BezierPoint's is incorrect. Got " + std::to_string(pointCount)
                                     + " points!");

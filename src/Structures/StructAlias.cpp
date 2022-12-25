@@ -31,11 +31,9 @@ StructAlias Parser::readStructAlias()
 
     spdlog::debug("rotation = {}", to_string(obj.rotation));
 
-    uint16_t textFontIdx = mDs.readUint16(); // @todo educated guess
+    uint32_t textFontIdx = mDs.readUint32();
 
     spdlog::debug("Alias fontIdx = {}", textFontIdx);
-
-    mDs.printUnknownData(2, std::string(__func__) + " - 0");
 
     obj.name = mDs.readStringLenZeroTerm();
 

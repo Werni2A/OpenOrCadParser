@@ -17,7 +17,7 @@ StreamAdminData Parser::readStreamAdminData()
 
     uint8_t sth0 = mDs.readUint8();
 
-    // @todo only those two values have been obsereved until now
+    // @todo only those two values have been observed until now
     if(sth0 != 0 && sth0 != 1)
     {
         spdlog::critical("{}: Found new value. Check it out!", __func__);

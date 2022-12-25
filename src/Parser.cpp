@@ -261,6 +261,14 @@ Library Parser::parseLibrary()
 
         for(const auto& page : std::filesystem::directory_iterator{pagesDir})
         {
+            // We extract embedded files into the same directory but do
+            // not want to parse them as stream. Therefore skip them.
+            // @todo This is just a workaround; needs some refactoring
+            if(page.path().extension() != ".bin")
+            {
+                continue;
+            }
+
             if(page.is_regular_file())
             {
                 schematicPages.push_back(page);
@@ -426,6 +434,14 @@ Library Parser::parseLibrary()
         {
             const fs::path& pathPackage = file.path();
 
+            // We extract embedded files into the same directory but do
+            // not want to parse them as stream. Therefore skip them.
+            // @todo This is just a workaround; needs some refactoring
+            if(pathPackage.extension() != ".bin")
+            {
+                continue;
+            }
+
             mLibrary.packages.push_back(parseFile<StreamPackage>(pathPackage, [this](){ return readStreamPackage(); }));
 
             spdlog::info("----------------------------------------------------------------------------------\n");
@@ -442,9 +458,18 @@ Library Parser::parseLibrary()
         {
             const fs::path& pathSymbol = file.path();
 
-            // Skip the 'ERC' and '$Types$' stream as they are additional
+            // We extract embedded files into the same directory but do
+            // not want to parse them as stream. Therefore skip them.
+            // @todo This is just a workaround; needs some refactoring
+            if(pathSymbol.extension() != ".bin")
+            {
+                continue;
+            }
+
+            // Skip the 'ERC', 'ERC_PHYSICAL' and '$Types$' stream as they are additional
             // information but no symbols.
-            if(pathSymbol.filename() == "ERC.bin"     ||
+            if(pathSymbol.filename() == "ERC.bin"          ||
+               pathSymbol.filename() == "ERC_PHYSICAL.bin" ||
                pathSymbol.filename() == "$Types$.bin")
             {
                 continue;
@@ -857,7 +882,7 @@ uint32_t Parser::readPreamble(bool readOptionalLen)
 }
 
 
-// Looks like some structures require a preceeding preamble but not all.
+// Looks like some structures require a preceding preamble but not all.
 // @todo Could be resolved by the trailing data structures defined in the prefix
 uint32_t Parser::readConditionalPreamble(Structure structure, bool readOptionalLen)
 {
@@ -963,7 +988,7 @@ void Parser::checkInterpretedDataLen(const std::string& aFuncName, size_t aStart
 {
     if(aStartOffset > aEndOffset)
     {
-        throw std::invalid_argument("Start offset musst be smaller or equal to end offset!");
+        throw std::invalid_argument("Start offset must be smaller or equal to end offset!");
     }
 
     const size_t actuallLen = aEndOffset - aStartOffset;
@@ -978,6 +1003,8 @@ void Parser::checkInterpretedDataLen(const std::string& aFuncName, size_t aStart
 fs::path Parser::extractContainer(const fs::path& aFile, const fs::path& aOutDir) const
 {
     ContainerExtractor extractor{aFile};
+
+    // extractor.outputFileInfo();
 
     return extractor.extract(aOutDir);
 }

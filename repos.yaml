@@ -798,7 +798,7 @@ repositories:
   - errors: 309
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/SpartanXL/SPARTANXL.OLB
-  - errors: 843
+  - errors: 258
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/Virtex/Virtex.olb
   - errors: 260
@@ -2265,7 +2265,7 @@ repositories:
   - errors: 0
     options: null
     path: ./Orcad Project/PROIECT_TIE.OLB
-  - errors: 3
+  - errors: 2
     options: null
     path: ./Orcad Project/CALEIDOSCOP.DSN
   project: Proiect-TIE
@@ -2343,10 +2343,10 @@ repositories:
   - errors: 0
     options: null
     path: ./LED_SCHLIB.OLB
-  - errors: 2
+  - errors: 1
     options: null
     path: ./LED_YOUTUBE.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./LED_YOUTUBE_0.DBK
   project: youtube-cadence-quick-tutorial
@@ -2420,7 +2420,7 @@ repositories:
   - errors: 2
     options: null
     path: ./orcadData/LedWave/LED.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcadData/hearingDevice/HEARINGDEVICE.DSN
   - errors: 2
@@ -2504,7 +2504,7 @@ repositories:
   - errors: 2
     options: null
     path: ./orcadData/LedWave/LED_0.DBK
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcadData/hearingDevice/HEARINGDEVICE_0.DBK
   - errors: 2
@@ -2551,16 +2551,16 @@ repositories:
   - errors: 1
     options: null
     path: ./Hardware/8Mics/8MICS.DSN
-  - errors: 22
+  - errors: 21
     options: null
     path: ./Hardware/Main_board/STM32F746NGH V1.1_last.DSN
-  - errors: 22
+  - errors: 21
     options: null
     path: ./Hardware/Main_board/allegro/MIC_ARRAY_RELEASE.DSN
-  - errors: 22
+  - errors: 21
     options: null
     path: ./Hardware/Main_board/STM32F746NGH V1.1_LAST_0.DBK
-  - errors: 22
+  - errors: 21
     options: null
     path: ./Hardware/Main_board/allegro/MIC_ARRAY_RELEASE_0.DBK
   project: Mic_Array
@@ -4581,7 +4581,7 @@ repositories:
   - errors: 2
     options: null
     path: ./wave_generator/WAVE_GENERATOR.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./74123/20210121.DSN
   - errors: 2
@@ -4623,7 +4623,7 @@ repositories:
   - errors: 2
     options: null
     path: ./wave_generator/WAVE_GENERATOR_0.DBK
-  - errors: 2
+  - errors: 1
     options: null
     path: ./74123/20210121_0.DBK
   - errors: 2
@@ -4726,7 +4726,7 @@ repositories:
 - author: ROHMUSDC
   commit: 54d5bdc15c57f750e991068113968c2e5c565c8f
   files:
-  - errors: 41
+  - errors: 40
     options: null
     path: ./Design Files/Schematic_BOM/BD9C601EFJEVK-101_SCH_REV00_2014-04-23.DSN
   project: BD9C601EFJEVK-101
@@ -4774,7 +4774,7 @@ repositories:
 - author: ROHMUSDC
   commit: b1106120fd4126b1a7d263930183c0390a753ffe
   files:
-  - errors: 41
+  - errors: 40
     options: null
     path: ./Design Files/Schematic_BOM/BD9109FVMEVK-101_SCH_REV00_2013-11-22.DSN
   project: BD9109FVM-EVK-101
@@ -4793,7 +4793,7 @@ repositories:
 - author: ROHMUSDC
   commit: f84a9667dfdd8ae0db2929726875530c964adf35
   files:
-  - errors: 42
+  - errors: 41
     options: null
     path: ./Design Files - Schematics/BD9328EFJ_EVK-BD9329AEFJ_EVK_Schematic_07-15-2012.DSN
   project: BD9328EFJ_EVK-and-BD9329AEFJ_EVK
@@ -4817,7 +4817,7 @@ repositories:
 - author: ROHMUSDC
   commit: 451a219bfb7530231c642f9b2100b0dc08c0a28f
   files:
-  - errors: 41
+  - errors: 40
     options: null
     path: ./Design Files/Schematic_BOM/BD95861MUVEVK-101_SCH_REV01_2014-01-22.DSN
   project: BD95861MUV-EVK-101
@@ -4943,10 +4943,10 @@ repositories:
 - author: ROHMUSDC
   commit: 7c7ea69d9f7491705b615af4b8f221540b1c0910
   files:
-  - errors: 8
+  - errors: 7
     options: null
     path: ./Design Files for Rev 1.0/STEPPER EVAL BRD - DESIGN File - Rev 1.0.DSN
-  - errors: 8
+  - errors: 7
     options: null
     path: ./Design Files for Rev 1.0/STEPPER.DSN
   project: StepperDriverCTRL

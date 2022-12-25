@@ -37,6 +37,8 @@ StreamLibrary Parser::readStreamLibrary()
     // write_data_to_file(buffer, sizeof(buffer));
     mDs.padRest(startOffset, 32, false);
 
+    spdlog::debug("introduction = {}", obj.introduction);
+
     // @todo Probably file version? E.g. {0x03, 0x00, 0x02, 0x00} = 3.2
     //       I saw: 2.0
     //              3.2
