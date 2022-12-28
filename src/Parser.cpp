@@ -107,37 +107,6 @@ Parser::~Parser()
     }
 }
 
-
-bool requiresPreamble(Structure structure)
-{
-    bool required;
-
-    switch(structure)
-    {
-        case Structure::Properties:        required = true;  break;
-        case Structure::Primitives:        required = false; break;
-        case Structure::SymbolPinScalar:   required = true;  break;
-        case Structure::SymbolPinBus:      required = false; break;
-        case Structure::T0x1f:             required = true;  break;
-        case Structure::PinIdxMapping:     required = true;  break;
-        case Structure::GlobalSymbol:      required = false; break;
-        case Structure::PortSymbol:        required = false; break;
-        case Structure::OffPageSymbol:     required = true;  break;
-        case Structure::SymbolDisplayProp: required = true;  break;
-        case Structure::SymbolVector:      required = false; break;
-        case Structure::TitleBlockSymbol:  required = false; break;
-        case Structure::ERCSymbol:         required = false; break;
-        case Structure::PinShapeSymbol:    required = false; break;
-            break;
-        default:
-            throw std::runtime_error(std::string(__func__) + " does not implement structure " + to_string(structure));
-            break;
-    }
-
-    return required;
-}
-
-
 /**
  * @brief Parse the whole library.
  */
@@ -854,46 +823,28 @@ std::pair<Structure, uint32_t> Parser::read_single_prefix_short()
 }
 
 
-uint32_t Parser::readPreamble(bool readOptionalLen)
+void Parser::readPreamble()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    // Magic number specifying the beginning of a struct
-    mDs.assumeData({0xff, 0xe4, 0x5c, 0x39}, std::string(__func__) + " - 0");
+    const std::size_t startOffset = mDs.getCurrentOffset();
 
-    const uint32_t optionalLen = readOptionalLen ? mDs.readUint32() : 0u;
-
-    if(optionalLen != 0U)
+    // Try to find prefix and read trailing data. If
+    // the prefix is not there, just skip it.
+    try
     {
-        spdlog::warn("{}: Detected optionalLen = {}", __func__, optionalLen);
+        // Magic number indicating some data
+        mDs.assumeData({0xff, 0xe4, 0x5c, 0x39}, std::string(__func__) + " Preamble Check Failed");
+
+        const uint32_t dataLen = mDs.readUint32();
+        mDs.printUnknownData(dataLen);
     }
-
-    mDs.printUnknownData(optionalLen, std::string(__func__) + " - 1 | Correlates to locks");
-
-    if(optionalLen > 0u)
+    catch(const std::runtime_error& err)
     {
-        // @todo Looks like this correlates to setting a lock for an object.
-        spdlog::debug("{}: Figure out when optionalLen is used! Currently it's 0x{:04x}", __func__, optionalLen);
+        mDs.setCurrentOffset(startOffset);
     }
 
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-
-    return optionalLen;
-}
-
-
-// Looks like some structures require a preceding preamble but not all.
-// @todo Could be resolved by the trailing data structures defined in the prefix
-uint32_t Parser::readConditionalPreamble(Structure structure, bool readOptionalLen)
-{
-    uint32_t optionalLen = 0u;
-
-    if(requiresPreamble(structure))
-    {
-        optionalLen = readPreamble(readOptionalLen);
-    }
-
-    return optionalLen;
 }
 
 

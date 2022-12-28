@@ -74,7 +74,7 @@ repositories:
   - errors: 151
     options: null
     path: ./library/fpga/actel/ACT_SEQ.OLB
-  - errors: 85
+  - errors: 43
     options: null
     path: ./library/fpga/actel/ACT_SOFT.OLB
   - errors: 13
@@ -95,13 +95,13 @@ repositories:
   - errors: 6
     options: null
     path: ./library/fpga/xilinx/X3K_MISC.OLB
-  - errors: 1111
+  - errors: 802
     options: null
     path: ./library/fpga/xilinx/SpartanXL/SPARTANXL.OLB
-  - errors: 1105
+  - errors: 796
     options: null
     path: ./library/fpga/xilinx/XC4000E/XC4000E.OLB
-  - errors: 1104
+  - errors: 846
     options: null
     path: ./library/fpga/xilinx/Spartan2/SPARTAN2.OLB
   - errors: 24
@@ -110,7 +110,7 @@ repositories:
   - errors: 138
     options: null
     path: ./library/fpga/lucent/LUCENT.OLB
-  - errors: 93
+  - errors: 47
     options: null
     path: ./library/fpga/lucent/L4000E.OLB
   - errors: 106
@@ -137,16 +137,16 @@ repositories:
   - errors: 3
     options: null
     path: ./library/fpga/lattice/PWRGND.OLB
-  - errors: 51
+  - errors: 49
     options: null
     path: ./library/fpga/lattice/LOGIC.OLB
-  - errors: 58
+  - errors: 31
     options: null
     path: ./library/fpga/lattice/REG.OLB
-  - errors: 38
+  - errors: 26
     options: null
     path: ./library/fpga/lattice/CODERS.OLB
-  - errors: 48
+  - errors: 29
     options: null
     path: ./library/fpga/lattice/ARITH.OLB
   - errors: 49
@@ -1935,7 +1935,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/Wuerth Elektronik/TRANSFORMERS.OLB
-  - errors: 4
+  - errors: 3
     options: null
     path: ./Orcad PCB/_archive/EVK NCV70501.DSN
   - errors: 0
@@ -2295,7 +2295,7 @@ repositories:
   - errors: 11
     options: null
     path: ./AVRUSB500_0.DBK
-  - errors: 27
+  - errors: 26
     options: null
     path: ./AVRUSB500_9_0_0.DBK
   project: AVRUSB500_2

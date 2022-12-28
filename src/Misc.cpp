@@ -154,9 +154,8 @@ void Parser::readTitleBlockSymbol()
 
     for(size_t i = 0u; i < followingLen; ++i)
     {
-        // const Structure structure = read_prefixes(3);
         const Structure structure = auto_read_prefixes();
-        readConditionalPreamble(structure);
+        readPreamble();
         readStructure(structure);
     }
 
