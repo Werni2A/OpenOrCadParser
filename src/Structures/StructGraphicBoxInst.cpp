@@ -14,6 +14,8 @@ StructGraphicBoxInst Parser::readStructGraphicBoxInst()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    readPreamble();
+
     const std::optional<FutureData> thisFuture = getFutureData();
 
     StructGraphicBoxInst obj;
@@ -40,7 +42,6 @@ StructGraphicBoxInst Parser::readStructGraphicBoxInst()
     //       parseStructure should always call readSthInPages0.
     // Structure structure = read_prefixes(4);
     Structure structure = auto_read_prefixes();
-    readPreamble();
     readStructure(structure);
 
     sanitizeThisFutureSize(thisFuture);

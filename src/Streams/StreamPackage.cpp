@@ -77,7 +77,6 @@ StreamPackage Parser::readStreamPackage(FileFormatVersion aVersion)
     for(size_t i = 0u; i < sectionCount; ++i)
     {
         Structure structure = auto_read_prefixes();
-        readPreamble();
         obj.structures.push_back(readStructure(structure));
     }
 
@@ -89,7 +88,6 @@ StreamPackage Parser::readStreamPackage(FileFormatVersion aVersion)
     for(size_t i = 0u; i < len2; ++i)
     {
         Structure structure = auto_read_prefixes();
-        readPreamble();
         obj.structures.push_back(readStructure(structure));
     }
 
@@ -101,7 +99,6 @@ StreamPackage Parser::readStreamPackage(FileFormatVersion aVersion)
     for(size_t i = 0u; i < len3; ++i)
     {
         Structure structure = auto_read_prefixes();
-        readPreamble();
         obj.structures.push_back(readStructure(structure));
 
         const uint8_t early_out = mDs.peek(1)[0];
@@ -122,13 +119,11 @@ StreamPackage Parser::readStreamPackage(FileFormatVersion aVersion)
     for(size_t i = 0u; i < len4; ++i)
     {
         Structure structure = auto_read_prefixes();
-        readPreamble();
         obj.structures.push_back(readStructure(structure));
     }
 
     {
         Structure structure = auto_read_prefixes();
-        readPreamble();
         obj.structures.push_back(readStructure(structure));
     }
 
@@ -141,7 +136,6 @@ StreamPackage Parser::readStreamPackage(FileFormatVersion aVersion)
     for(size_t i = 0u; i < len5; ++i)
     {
         Structure structure = auto_read_prefixes();
-        readPreamble();
         obj.structures.push_back(readStructure(structure));
     }
 
