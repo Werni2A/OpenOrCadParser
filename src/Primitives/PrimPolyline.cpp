@@ -125,6 +125,8 @@ PrimPolyline Parser::readPrimPolyline(FileFormatVersion aVersion)
         throw FileFormatChanged(std::string(nameof::nameof_type<decltype(obj)>()));
     }
 
+    readPreamble();
+
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));
 

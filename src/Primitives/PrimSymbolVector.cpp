@@ -49,8 +49,6 @@ PrimSymbolVector Parser::readPrimSymbolVector()
         const Primitive primitive = readSmallPrefixPrimitive();
 
         readPrimitive(primitive);
-
-        readPreamble();
     }
 
     obj.name = mDs.readStringLenZeroTerm();

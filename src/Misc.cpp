@@ -138,7 +138,6 @@ void Parser::readTitleBlockSymbol()
     {
         const Primitive primitive = readPrefixPrimitive();
         readPrimitive(primitive);
-        readPreamble();
     }
 
     mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 2");

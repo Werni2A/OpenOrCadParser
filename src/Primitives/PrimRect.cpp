@@ -133,6 +133,8 @@ PrimRect Parser::readPrimRect(FileFormatVersion aVersion)
     // @todo use for all read methods.
     checkInterpretedDataLen(__func__, startOffset, mDs.getCurrentOffset(), byteLength);
 
+    readPreamble();
+
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));
 
