@@ -136,16 +136,10 @@ void Parser::readTitleBlockSymbol()
 
     for(size_t i = 0u; i < someLen; ++i)
     {
-        if(i > 0u)
-        {
-            readPreamble();
-        }
-
         const Primitive primitive = readPrefixPrimitive();
         readPrimitive(primitive);
+        readPreamble();
     }
-
-    readPreamble();
 
     mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 2");
     mDs.printUnknownData(6, std::string(__func__) + " - 3");

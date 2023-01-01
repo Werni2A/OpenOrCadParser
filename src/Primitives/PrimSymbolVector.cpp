@@ -40,21 +40,19 @@ PrimSymbolVector Parser::readPrimSymbolVector()
     obj.locX = mDs.readInt16();
     obj.locY = mDs.readInt16();
 
-    uint16_t repetition = mDs.readUint16();
+    const uint16_t repetition = mDs.readUint16();
 
+    // Only primitives are expected here
     for(size_t i = 0u; i < repetition; ++i)
     {
-        if(i > 0u)
-        {
-            readPreamble();
-        }
 
         const Primitive primitive = readSmallPrefixPrimitive();
 
         readPrimitive(primitive);
+
+        readPreamble();
     }
 
-    readPreamble();
     obj.name = mDs.readStringLenZeroTerm();
 
     // @todo contains smallPrefixPrimitive
