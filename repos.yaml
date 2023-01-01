@@ -544,7 +544,7 @@ repositories:
 - author: beagleboard
   commit: 6db2f5203c7a172aa6ce9c49b3ef5745ba78c91c
   files:
-  - errors: 3
+  - errors: 6
     options: null
     path: ./BEAGLE1.OLB
   project: beagle-cadence-libraries
@@ -596,7 +596,7 @@ repositories:
   - errors: 4
     options: null
     path: ./GOST.OLB
-  - errors: 2
+  - errors: 4
     options: null
     path: ./TITLE.OLB
   - errors: 9
@@ -608,7 +608,7 @@ repositories:
   - errors: 0
     options: null
     path: ./SOCKET.OLB
-  - errors: 3
+  - errors: 4
     options: null
     path: ./TITLE_GOST.OLB
   - errors: 8
@@ -661,10 +661,10 @@ repositories:
 - author: hypeer
   commit: 907d2a8d3e631860ace9666b726bfbde489a8f1e
   files:
-  - errors: 3
+  - errors: 4
     options: null
     path: ./orcad/XXXLZJXXX_0.OBK
-  - errors: 3
+  - errors: 4
     options: null
     path: ./orcad/XXXLZJXXX.OLB
   project: allegrolib
@@ -2586,7 +2586,7 @@ repositories:
   - errors: 3
     options: null
     path: ./OrCAD/CAP_JERRY_0.OBK
-  - errors: 0
+  - errors: 2
     options: null
     path: ./OrCAD/JERRY_TITLE_0.OBK
   - errors: 0
@@ -2601,7 +2601,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/IC_AUDIO_0.OBK
-  - errors: 0
+  - errors: 2
     options: null
     path: ./OrCAD/MIKE_SCH_MIX_0.OBK
   - errors: 0
@@ -2616,7 +2616,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/IC_AUDIO.OLB
-  - errors: 0
+  - errors: 2
     options: null
     path: ./OrCAD/JERRY_TITLE.OLB
   - errors: 0
@@ -2640,7 +2640,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/CAP_JERRY.OLB
-  - errors: 0
+  - errors: 2
     options: null
     path: ./OrCAD/MIKE_SCH_MIX.OLB
   - errors: 0
@@ -3310,7 +3310,7 @@ repositories:
 - author: ucuncu
   commit: 6f6568e344337c5e78b8e16e27db13ae3e209d37
   files:
-  - errors: 0
+  - errors: 1
     options: null
     path: ./my_personal_library/TITLE_BLOCK_EPTS_0.OBK
   - errors: 0
@@ -3835,7 +3835,7 @@ repositories:
   - errors: 0
     options: null
     path: ./pspice/advanls/CONTROLLER.OLB
-  - errors: 0
+  - errors: 1
     options: null
     path: ./my_personal_library/TITLE_BLOCK_EPTS.OLB
   - errors: 0
@@ -4381,7 +4381,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/MCHP_UC.OLB
-  - errors: 14
+  - errors: 16
     options: null
     path: ./oldlibs/LAYOUT.OLB
   - errors: 0
@@ -4657,7 +4657,7 @@ repositories:
 - author: vpodlesnyi
   commit: 652cacb9e7bc99ee88f78536388b965f4822c5b0
   files:
-  - errors: 164
+  - errors: 167
     options: null
     path: ./MOP44.OLB
   - errors: 6
