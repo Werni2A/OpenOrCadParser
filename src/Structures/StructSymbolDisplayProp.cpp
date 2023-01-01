@@ -13,6 +13,8 @@ StructSymbolDisplayProp Parser::readStructSymbolDisplayProp()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    readPreamble();
+
     const std::optional<FutureData> thisFuture = getFutureData();
 
     StructSymbolDisplayProp obj;

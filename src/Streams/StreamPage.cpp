@@ -152,20 +152,8 @@ bool Parser::readStreamPage()
 
     for(size_t i = 0u; i < len2; ++i)
     {
-        // if(i > 0u)
-        // {
-        //     readPreamble();
-        //     mDs.printUnknownData(8, std::string(__func__) + " - 11");
-        // }
-
-        // Structure structure = read_prefixes(3);
         Structure structure = auto_read_prefixes();
-        readPreamble();
         readStructure(structure); // @todo push structure
-
-        // structure = read_type_prefix();
-        // readPreamble();
-        // parseStructure(structure); // @todo push structure
     }
 
     const uint16_t len3 = mDs.readUint16();
@@ -174,12 +162,6 @@ bool Parser::readStreamPage()
 
     for(size_t i = 0u; i < len3; ++i)
     {
-        // if(i > 0u)
-        // {
-        //     readPreamble();
-        //     mDs.printUnknownData(8, std::string(__func__) + " - 11");
-        // }
-
         Structure structure;
 
         if(i == 0u)
@@ -190,21 +172,11 @@ bool Parser::readStreamPage()
         }
         else
         {
-            // structure = read_prefixes(2);
             structure = auto_read_prefixes();
         }
 
-
-        readPreamble();
         readStructure(structure); // @todo push structure
-
-        // structure = read_type_prefix();
-        // readPreamble();
-        // parseStructure(structure); // @todo push structure
     }
-
-    // readPreamble();
-    // mDs.printUnknownData(12, std::string(__func__) + " - 12");
 
     mDs.printUnknownData(10, std::string(__func__) + " - 10");
 
@@ -214,9 +186,7 @@ bool Parser::readStreamPage()
 
     for(size_t i = 0u; i < lenX; ++i)
     {
-        // Structure structure = read_prefixes(3);
         Structure structure = auto_read_prefixes();
-        readPreamble();
         readStructure(structure); // @todo push structure
     }
 

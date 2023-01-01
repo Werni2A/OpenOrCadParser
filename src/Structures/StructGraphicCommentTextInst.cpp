@@ -13,6 +13,8 @@ StructGraphicCommentTextInst Parser::readStructGraphicCommentTextInst()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    readPreamble();
+
     const std::optional<FutureData> thisFuture = getFutureData();
 
     StructGraphicCommentTextInst obj;

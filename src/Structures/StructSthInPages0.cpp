@@ -17,6 +17,8 @@ StructSthInPages0 Parser::readStructSthInPages0()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    readPreamble();
+
     const std::optional<FutureData> thisFuture = getFutureData();
 
     StructSthInPages0 obj;

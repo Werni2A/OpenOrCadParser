@@ -70,6 +70,8 @@ PrimCommentText Parser::readPrimCommentText(FileFormatVersion aVersion)
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
     spdlog::info(to_string(obj));
 
+    readPreamble();
+
     return obj;
 }
 

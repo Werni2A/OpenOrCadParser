@@ -29,12 +29,7 @@ StreamDsnStream Parser::readStreamDsnStream()
         throw std::runtime_error(fmt::format("{}: Unexpected Structure `{}`", __func__, to_string(structure)));
     }
 
-    const uint32_t optionalLen = readPreamble();
-
-    if(optionalLen != 0U)
-    {
-        spdlog::warn("{}: Expected optionalLen to be 0 but it's {}", __func__, optionalLen);
-    }
+    readPreamble();
 
     if(!mDs.isEoF())
     {

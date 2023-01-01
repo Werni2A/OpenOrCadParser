@@ -16,7 +16,6 @@ StreamSymbol Parser::readStreamSymbol()
     StreamSymbol obj;
 
     Structure structure = auto_read_prefixes();
-    readPreamble();
     obj.structures.push_back(readStructure(structure));
 
     mDs.printUnknownData(4, fmt::format("{}: 0", __func__));
@@ -60,7 +59,6 @@ StreamSymbol Parser::readStreamSymbol()
     for(size_t i = 0u; i < len; ++i)
     {
         Structure structure = auto_read_prefixes();
-        readPreamble();
         obj.structures.push_back(readStructure(structure));
     }
 
@@ -71,7 +69,6 @@ StreamSymbol Parser::readStreamSymbol()
     for(size_t i = 0u; i < len2; ++i)
     {
         Structure structure = auto_read_prefixes();
-        readPreamble();
         obj.structures.push_back(readStructure(structure));
     }
 

@@ -15,6 +15,8 @@ StructWireScalar Parser::readStructWireScalar()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    readPreamble();
+
     const std::optional<FutureData> thisFuture = getFutureData();
 
     StructWireScalar obj;
@@ -54,9 +56,7 @@ StructWireScalar Parser::readStructWireScalar()
         for(size_t i = 0u; i < len; ++i)
         {
             // @todo len should always be 1 and the read structure should be 'Alias'
-            // Structure structure = read_prefixes(3);
             Structure structure = auto_read_prefixes();
-            readPreamble();
             readStructure(structure); // @todo push
         }
     }

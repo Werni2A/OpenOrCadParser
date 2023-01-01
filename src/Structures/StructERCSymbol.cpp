@@ -14,6 +14,8 @@ StructERCSymbol Parser::readStructERCSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    readPreamble();
+
     const std::optional<FutureData> thisFuture = getFutureData();
 
     StructERCSymbol obj;

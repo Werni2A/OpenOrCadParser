@@ -136,16 +136,9 @@ void Parser::readTitleBlockSymbol()
 
     for(size_t i = 0u; i < someLen; ++i)
     {
-        if(i > 0u)
-        {
-            readPreamble();
-        }
-
         const Primitive primitive = readPrefixPrimitive();
         readPrimitive(primitive);
     }
-
-    readPreamble();
 
     mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 2");
     mDs.printUnknownData(6, std::string(__func__) + " - 3");
@@ -154,9 +147,7 @@ void Parser::readTitleBlockSymbol()
 
     for(size_t i = 0u; i < followingLen; ++i)
     {
-        // const Structure structure = read_prefixes(3);
         const Structure structure = auto_read_prefixes();
-        readConditionalPreamble(structure);
         readStructure(structure);
     }
 
@@ -172,6 +163,8 @@ void Parser::readTitleBlockSymbol()
 StructPrimitives Parser::readStructGlobalSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    readPreamble();
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
@@ -192,6 +185,8 @@ StructPrimitives Parser::readStructHierarchicSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    readPreamble();
+
     const std::optional<FutureData> thisFuture = getFutureData();
 
     StructPrimitives obj = readStructPrimitives();
@@ -211,6 +206,8 @@ StructPrimitives Parser::readStructOffPageSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    readPreamble();
+
     const std::optional<FutureData> thisFuture = getFutureData();
 
     StructPrimitives obj = readStructPrimitives();
@@ -229,6 +226,8 @@ StructPrimitives Parser::readStructOffPageSymbol()
 StructPrimitives Parser::readStructPinShapeSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    readPreamble();
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
@@ -253,10 +252,7 @@ bool Parser::readStreamERC()
 
     bool obj = false;
 
-    // Structure structure = read_prefixes(5);
     Structure structure = auto_read_prefixes();
-
-    readPreamble();
 
     readStructure(structure); // @todo push structure
 

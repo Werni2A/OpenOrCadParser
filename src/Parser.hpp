@@ -154,10 +154,8 @@ public:
 
     std::pair<Structure, uint32_t> read_single_prefix_short();
 
-    uint32_t readPreamble(bool readOptionalLen = true);
+    void readPreamble();
     Primitive readPrefixPrimitive();
-
-    uint32_t readConditionalPreamble(Structure structure, bool readOptionalLen = true);
 
     std::optional<FutureData> getFutureData();
 

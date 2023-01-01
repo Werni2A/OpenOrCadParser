@@ -13,6 +13,8 @@ StructT0x10 Parser::readStructT0x10()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    readPreamble();
+
     const std::optional<FutureData> thisFuture = getFutureData();
 
     StructT0x10 obj;
