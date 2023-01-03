@@ -39,12 +39,12 @@ StreamLibrary Parser::readStreamLibrary()
 
     spdlog::debug("introduction = {}", obj.introduction);
 
-    // @todo Probably file version? E.g. {0x03, 0x00, 0x02, 0x00} = 3.2
-    //       I saw: 2.0
-    //              3.2
-    //              3.3
-    // mDs.assumeData({0x03, 0x00, 0x02, 0x00}, std::string(__func__) + " - 0");
-    mDs.printUnknownData(4, std::string(__func__) + " - 0 - Probably file/library version");
+    // I saw versions:
+    // 2.0; 3.2; 3.3
+    const uint16_t versionMajor = mDs.readUint16();
+    const uint16_t versionMinor = mDs.readUint16();
+
+    spdlog::debug("version = {}.{}", versionMajor, versionMinor);
 
     obj.createDate = static_cast<time_t>(mDs.readUint32());
     obj.modifyDate = static_cast<time_t>(mDs.readUint32());
@@ -68,28 +68,14 @@ StreamLibrary Parser::readStreamLibrary()
         obj.textFonts.push_back(readTextFont());
     }
 
-    // Even this big chunk of data seems to be constant
-    // mDs.assumeData(
-    //     { 0x18, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00,
-    //       0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00,
-    //       0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00,
-    //       0x01, 0x00, 0x01, 0x00, 0x02, 0x00, 0x01, 0x00,
-    //       0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00,
-    //       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    //       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    //       0x00, 0x00 },
-    //     "parseSymbolsLibrary2");
-    // I've seen:
-    // 0x864: 18 00 01 00 01 00 01 00 00 00 00 00 01 00 01 00 | ................
-    // 0x864: 01 00 01 00 01 00 01 00 01 00 01 00 02 00 01 00 | ................
-    // 0x864: 01 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 | ................
-    // 0x864: 00 00 00 00 00 00 00 00 00 00                   | ..........
-    // as well as:
-    // 0x864: 18 00 01 00 01 00 01 00 00 00 00 00 01 00 01 00 | ................
-    // 0x864: 01 00 01 00 01 00 01 00 01 00 01 00 02 00 01 00 | ................
-    // 0x864: 01 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 | ................
-    // 0x864: 00 00 00 00 00 00 01 00 00 00                   | ..........
-    mDs.printUnknownData(58, std::string(__func__) + " - 2");
+    const uint16_t someLen = mDs.readUint16();
+    for(int i = 0; i < someLen; ++i)
+    {
+        const uint16_t someData = mDs.readUint16();
+    }
+
+    mDs.printUnknownData(4, std::string(__func__) + " - 2.0");
+    mDs.printUnknownData(4, std::string(__func__) + " - 2.1");
 
     // Property to Part Field Mapping
     // See OrCAD: `Options` -> `Design Template...` -> `SDT Compatibility`
@@ -103,6 +89,8 @@ StreamLibrary Parser::readStreamLibrary()
     // Even this big chunk of data seems to be constant
     mDs.printUnknownData(156, std::string(__func__) + " - 3");
 
+    // @todo sometimes it's 2 and sometimes 4 byte... Looks like a data format change
+    // const uint32_t strLstLen = mDs.readUint16();
     const uint32_t strLstLen = mDs.readUint32();
 
     for(size_t i = 0u; i < strLstLen; ++i)
