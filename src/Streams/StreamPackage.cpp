@@ -68,16 +68,13 @@ StreamPackage Parser::readStreamPackage(FileFormatVersion aVersion)
 
     StreamPackage obj;
 
-    Structure structure;
-
     const uint16_t sectionCount = mDs.readUint16();
 
     spdlog::info("sectionCount = {}", sectionCount);
 
     for(size_t i = 0u; i < sectionCount; ++i)
     {
-        Structure structure = auto_read_prefixes();
-        obj.structures.push_back(readStructure(structure));
+        obj.structures.push_back(readStructure());
     }
 
     // @todo maybe number of views (Convert, Normal) or number of units in the current view
@@ -87,8 +84,7 @@ StreamPackage Parser::readStreamPackage(FileFormatVersion aVersion)
 
     for(size_t i = 0u; i < len2; ++i)
     {
-        Structure structure = auto_read_prefixes();
-        obj.structures.push_back(readStructure(structure));
+        obj.structures.push_back(readStructure());
     }
 
     // @todo Probably only StructSymbolPinScalar
@@ -98,8 +94,7 @@ StreamPackage Parser::readStreamPackage(FileFormatVersion aVersion)
 
     for(size_t i = 0u; i < len3; ++i)
     {
-        Structure structure = auto_read_prefixes();
-        obj.structures.push_back(readStructure(structure));
+        obj.structures.push_back(readStructure());
 
         const uint8_t early_out = mDs.peek(1)[0];
         spdlog::critical("early_out = {}", early_out);
@@ -118,13 +113,11 @@ StreamPackage Parser::readStreamPackage(FileFormatVersion aVersion)
 
     for(size_t i = 0u; i < len4; ++i)
     {
-        Structure structure = auto_read_prefixes();
-        obj.structures.push_back(readStructure(structure));
+        obj.structures.push_back(readStructure());
     }
 
     {
-        Structure structure = auto_read_prefixes();
-        obj.structures.push_back(readStructure(structure));
+        obj.structures.push_back(readStructure());
     }
 
     // I guess its always a PinIdxMapping (or multiple)
@@ -135,8 +128,7 @@ StreamPackage Parser::readStreamPackage(FileFormatVersion aVersion)
 
     for(size_t i = 0u; i < len5; ++i)
     {
-        Structure structure = auto_read_prefixes();
-        obj.structures.push_back(readStructure(structure));
+        obj.structures.push_back(readStructure());
     }
 
     if(!mDs.isEoF())

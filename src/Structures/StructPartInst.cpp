@@ -16,6 +16,8 @@ StructPartInst Parser::readStructPartInst()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    auto_read_prefixes();
+
     readPreamble();
 
     const std::optional<FutureData> thisFuture = getFutureData();
@@ -41,8 +43,7 @@ StructPartInst Parser::readStructPartInst()
 
     for(size_t i = 0u; i < len; ++i)
     {
-        Structure structure = auto_read_prefixes();
-        readStructure(structure); // @todo push struct
+        readStructure(); // @todo push struct
     }
 
     mDs.printUnknownData(1, std::string(__func__) + " - 3");
@@ -55,8 +56,7 @@ StructPartInst Parser::readStructPartInst()
 
     for(size_t i = 0u; i < len2; ++i)
     {
-        Structure structure = auto_read_prefixes();
-        readStructure(structure); // @todo push struct
+        readStructure(); // @todo push struct
     }
 
     std::string sth1 = mDs.readStringLenZeroTerm(); // @todo needs verification

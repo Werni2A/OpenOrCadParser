@@ -248,8 +248,12 @@ public:
     Point readPoint();
     TextFont readTextFont();
 
+    VariantPrimitive readPrimitive();
     VariantPrimitive readPrimitive(Primitive aPrimitive);
+
+    VariantStructure readStructure();
     VariantStructure readStructure(Structure aStructure);
+
     TrailingProperties readTrailingProperties();
 
     void readTitleBlockSymbol();

@@ -14,6 +14,8 @@ StructGraphicBoxInst Parser::readStructGraphicBoxInst()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    auto_read_prefixes();
+
     readPreamble();
 
     const std::optional<FutureData> thisFuture = getFutureData();
@@ -40,9 +42,7 @@ StructGraphicBoxInst Parser::readStructGraphicBoxInst()
     // @todo Only Rect as a shape would make sense here. Maybe this should be passed
     //       as a parameter to readSthInPages0 to check this condition. Further,
     //       parseStructure should always call readSthInPages0.
-    // Structure structure = read_prefixes(4);
-    Structure structure = auto_read_prefixes();
-    readStructure(structure);
+    readStructure();
 
     sanitizeThisFutureSize(thisFuture);
 
