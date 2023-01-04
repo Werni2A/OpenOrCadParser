@@ -220,10 +220,6 @@ StructPrimitives Parser::readStructPinShapeSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    readPreamble();
-
-    auto_read_prefixes();
-
     const std::optional<FutureData> thisFuture = getFutureData();
 
     StructPrimitives obj = readStructPrimitives();
