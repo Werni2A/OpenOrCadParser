@@ -16,6 +16,8 @@ PrimSymbolVector Parser::readPrimSymbolVector()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    auto_read_prefixes();
+
     const std::optional<FutureData> thisFuture = getFutureData();
 
     PrimSymbolVector obj;
@@ -34,7 +36,8 @@ PrimSymbolVector Parser::readPrimSymbolVector()
 
     // @todo Figure out the size
     //       Probably it's always 20 Byte, try this first
-    discard_until_preamble();
+    // discard_until_preamble();
+
     readPreamble();
 
     obj.locX = mDs.readInt16();

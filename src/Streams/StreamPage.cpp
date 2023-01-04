@@ -152,8 +152,7 @@ bool Parser::readStreamPage()
 
     for(size_t i = 0u; i < len2; ++i)
     {
-        Structure structure = auto_read_prefixes();
-        readStructure(structure); // @todo push structure
+        readStructure(); // @todo push structure
     }
 
     const uint16_t len3 = mDs.readUint16();
@@ -162,20 +161,7 @@ bool Parser::readStreamPage()
 
     for(size_t i = 0u; i < len3; ++i)
     {
-        Structure structure;
-
-        if(i == 0u)
-        {
-            // @todo this is type_prefix_very_long()
-            mDs.printUnknownData(47, std::string(__func__) + " - 11");
-            structure = ToStructure(0x0d); // Parse package instance for now until type_prefix_very_long is implemented
-        }
-        else
-        {
-            structure = auto_read_prefixes();
-        }
-
-        readStructure(structure); // @todo push structure
+        readStructure(); // @todo push structure
     }
 
     mDs.printUnknownData(10, std::string(__func__) + " - 10");
@@ -186,8 +172,7 @@ bool Parser::readStreamPage()
 
     for(size_t i = 0u; i < lenX; ++i)
     {
-        Structure structure = auto_read_prefixes();
-        readStructure(structure); // @todo push structure
+        readStructure(); // @todo push structure
     }
 
     if(!mDs.isEoF())

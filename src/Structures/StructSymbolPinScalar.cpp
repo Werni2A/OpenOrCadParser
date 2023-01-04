@@ -16,6 +16,8 @@ StructSymbolPinScalar Parser::readStructSymbolPinScalar()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
+    auto_read_prefixes();
+
     readPreamble();
 
     const std::optional<FutureData> thisFuture = getFutureData();
@@ -41,17 +43,7 @@ StructSymbolPinScalar Parser::readStructSymbolPinScalar()
 
     for(size_t i = 0U; i < struct_len; ++i)
     {
-        const Structure structure = auto_read_prefixes();
-
-        if(structure != Structure::SymbolDisplayProp)
-        {
-            const std::string msg = fmt::format("{}: Expected {} but got {}",
-                __func__, to_string(Structure::SymbolDisplayProp), to_string(structure));
-
-            spdlog::error(msg);
-        }
-
-        readStructure(structure);
+        readStructure();
     }
 
     sanitizeThisFutureSize(thisFuture);

@@ -147,8 +147,7 @@ void Parser::readTitleBlockSymbol()
 
     for(size_t i = 0u; i < followingLen; ++i)
     {
-        const Structure structure = auto_read_prefixes();
-        readStructure(structure);
+        readStructure();
     }
 
     if(!mDs.isEoF())
@@ -163,8 +162,6 @@ void Parser::readTitleBlockSymbol()
 StructPrimitives Parser::readStructGlobalSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    readPreamble();
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
@@ -185,8 +182,6 @@ StructPrimitives Parser::readStructHierarchicSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    readPreamble();
-
     const std::optional<FutureData> thisFuture = getFutureData();
 
     StructPrimitives obj = readStructPrimitives();
@@ -206,8 +201,6 @@ StructPrimitives Parser::readStructOffPageSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
 
-    readPreamble();
-
     const std::optional<FutureData> thisFuture = getFutureData();
 
     StructPrimitives obj = readStructPrimitives();
@@ -226,8 +219,6 @@ StructPrimitives Parser::readStructOffPageSymbol()
 StructPrimitives Parser::readStructPinShapeSymbol()
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    readPreamble();
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
@@ -252,9 +243,7 @@ bool Parser::readStreamERC()
 
     bool obj = false;
 
-    Structure structure = auto_read_prefixes();
-
-    readStructure(structure); // @todo push structure
+    readStructure(); // @todo push structure
 
     if(!mDs.isEoF())
     {

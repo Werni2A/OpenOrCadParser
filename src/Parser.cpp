@@ -648,6 +648,12 @@ Structure Parser::auto_read_prefixes()
     spdlog::info("{}: Found {} prefixes\n", __func__, prefixCtr);
     Structure structure = read_prefixes(prefixCtr);
 
+    // @todo Looks like each structure type has a fixed number of prefixes
+    //       I.e. figure out the numbers for each structure and move the
+    //       parsing code into the structure specific parser. This should
+    //       get rid of auto_read_prefixes.
+    spdlog::info("Prefixes: {} = {}", to_string(structure), prefixCtr);
+
     mDs.sanitizeNoEoF();
 
     return structure;
@@ -848,6 +854,20 @@ void Parser::readPreamble()
 }
 
 
+VariantPrimitive Parser::readPrimitive()
+{
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    Primitive typeId = ToPrimitive(mDs.peek(1)[0]);
+
+    VariantPrimitive retStruct = readPrimitive(typeId);
+
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+
+    return retStruct;
+}
+
+
 VariantPrimitive Parser::readPrimitive(Primitive aPrimitive)
 {
     spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
@@ -878,6 +898,20 @@ VariantPrimitive Parser::readPrimitive(Primitive aPrimitive)
     spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
 
     return retPrim;
+}
+
+
+VariantStructure Parser::readStructure()
+{
+    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+
+    Structure typeId = ToStructure(mDs.peek(1)[0]);
+
+    VariantStructure retStruct = readStructure(typeId);
+
+    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
+
+    return retStruct;
 }
 
 
