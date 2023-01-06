@@ -15,11 +15,22 @@
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
 #include "Primitives/Point.hpp"
+#include "Primitives/PrimBase.hpp"
 
 
-struct PrimBezier
+class PrimBezier : public PrimBase
 {
+public:
+    PrimBezier(DataStream& aDs) : PrimBase{aDs}, mLineStyle{}, mLineWidth{}, points{}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     static size_t getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount);
+
+    FileFormatVersion predictVersion();
 
     void setLineStyle(const LineStyle& aVal)
     {
@@ -68,6 +79,12 @@ static std::string to_string(const PrimBezier& aObj)
     }
 
     return str;
+}
+
+
+inline std::string PrimBezier::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

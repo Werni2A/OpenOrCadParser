@@ -10,7 +10,6 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Primitives/PrimRect.hpp"
 
 
@@ -35,8 +34,7 @@ size_t PrimRect::getExpectedStructSize(FileFormatVersion aVersion)
 }
 
 
-[[maybe_unused]]
-static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
+FileFormatVersion PrimRect::predictVersion()
 {
     FileFormatVersion prediction = FileFormatVersion::Unknown;
 
@@ -47,7 +45,7 @@ static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
         FileFormatVersion::C
     };
 
-    const size_t initial_offset = aDs.getCurrentOffset();
+    const size_t initial_offset = mDs.get().getCurrentOffset();
 
     for(const auto& version : versions)
     {
@@ -55,14 +53,14 @@ static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
 
         try
         {
-            aParser.readPrimRect(version);
+            read(version);
         }
         catch(...)
         {
             found = false;
         }
 
-        aDs.setCurrentOffset(initial_offset);
+        mDs.get().setCurrentOffset(initial_offset);
 
         if(found)
         {
@@ -82,22 +80,20 @@ static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
 }
 
 
-PrimRect Parser::readPrimRect(FileFormatVersion aVersion)
+void PrimRect::read(FileFormatVersion aVersion)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
     // Predict version
     if(aVersion == FileFormatVersion::Unknown)
     {
-        aVersion = predictVersion(mDs, *this);
+        aVersion = predictVersion();
         // spdlog::info("Predicted version {} in {}", aVersion, __func__);
     }
 
-    const size_t startOffset = mDs.getCurrentOffset();
+    const size_t startOffset = mDs.get().getCurrentOffset();
 
-    PrimRect obj;
-
-    const uint32_t byteLength = mDs.readUint32();
+    const uint32_t byteLength = mDs.get().readUint32();
 
     // @todo better move this if-statement into Rect::checkByteLength(byteLength, version)
     if(byteLength != PrimRect::getExpectedStructSize(aVersion))
@@ -105,38 +101,36 @@ PrimRect Parser::readPrimRect(FileFormatVersion aVersion)
         throw FileFormatChanged("Rect");
     }
 
-    mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
+    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
 
-    obj.x1 = mDs.readInt32();
-    obj.y1 = mDs.readInt32();
-    obj.x2 = mDs.readInt32();
-    obj.y2 = mDs.readInt32();
+    x1 = mDs.get().readInt32();
+    y1 = mDs.get().readInt32();
+    x2 = mDs.get().readInt32();
+    y2 = mDs.get().readInt32();
 
     if(aVersion >= FileFormatVersion::B)
     {
-        obj.setLineStyle(ToLineStyle(mDs.readUint32()));
-        obj.setLineWidth(ToLineWidth(mDs.readUint32()));
+        setLineStyle(ToLineStyle(mDs.get().readUint32()));
+        setLineWidth(ToLineWidth(mDs.get().readUint32()));
     }
 
     if(aVersion >= FileFormatVersion::C)
     {
-        obj.fillStyle  = ToFillStyle(mDs.readUint32());
-        obj.hatchStyle = ToHatchStyle(mDs.readInt32());
+        fillStyle  = ToFillStyle(mDs.get().readUint32());
+        hatchStyle = ToHatchStyle(mDs.get().readInt32());
     }
     else
     {
         // Set default values
-        obj.fillStyle  = FillStyle::None;
-        obj.hatchStyle = HatchStyle::LinesHorizontal;
+        fillStyle  = FillStyle::None;
+        hatchStyle = HatchStyle::LinesHorizontal;
     }
 
     // @todo use for all read methods.
-    checkInterpretedDataLen(__func__, startOffset, mDs.getCurrentOffset(), byteLength);
+    checkInterpretedDataLen(__func__, startOffset, mDs.get().getCurrentOffset(), byteLength);
 
     readPreamble();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

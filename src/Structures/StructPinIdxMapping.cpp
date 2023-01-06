@@ -7,13 +7,12 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Structures/StructPinIdxMapping.hpp"
 
 
-StructPinIdxMapping Parser::readStructPinIdxMapping()
+void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
     auto_read_prefixes();
 
@@ -21,12 +20,10 @@ StructPinIdxMapping Parser::readStructPinIdxMapping()
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    StructPinIdxMapping obj;
+    unitRef = mDs.get().readStringLenZeroTerm();
+    refDes  = mDs.get().readStringLenZeroTerm();
 
-    obj.unitRef = mDs.readStringLenZeroTerm();
-    obj.refDes  = mDs.readStringLenZeroTerm();
-
-    const uint16_t pinCount = mDs.readUint16();
+    const uint16_t pinCount = mDs.get().readUint16();
 
     spdlog::debug("pinCount = {}", pinCount);
 
@@ -34,9 +31,9 @@ StructPinIdxMapping Parser::readStructPinIdxMapping()
     // See OrCAD: 'Pin Properties' -> 'Order'
     for(size_t i = 0u; i < pinCount; ++i)
     {
-        const auto currOffset = mDs.getCurrentOffset();
-        const int16_t strLen = mDs.readInt16();
-        mDs.setCurrentOffset(currOffset);
+        const auto currOffset = mDs.get().getCurrentOffset();
+        const int16_t strLen = mDs.get().readInt16();
+        mDs.get().setCurrentOffset(currOffset);
 
         // @todo What means a string length of -1?
         //       Maybe I should return from the read string
@@ -47,25 +44,25 @@ StructPinIdxMapping Parser::readStructPinIdxMapping()
         //       strLen = -1 ->   0xff 0xff           = ?
         if(strLen == -1)
         {
-            const int16_t strLen = mDs.readInt16();
+            const int16_t strLen = mDs.get().readInt16();
             continue;
         }
 
-        obj.pinMap.push_back(mDs.readStringLenZeroTerm());
+        pinMap.push_back(mDs.get().readStringLenZeroTerm());
 
         // Bit 7         : Pin Ignore
         // Bit 6 downto 0: Pin Group
-        const uint8_t bitMapPinGrpCfg = mDs.readUint8();
+        const uint8_t bitMapPinGrpCfg = mDs.get().readUint8();
 
         // 0 = No
         // 1 = Yes
-        obj.pinIgnore.push_back(GetBit(7, bitMapPinGrpCfg));
+        pinIgnore.push_back(GetBit(7, bitMapPinGrpCfg));
 
         // @note The special case of value 127 that represents an empty group
-        obj.pinGroup.push_back(bitMapPinGrpCfg & 0x7f);
+        pinGroup.push_back(bitMapPinGrpCfg & 0x7f);
 
-        spdlog::debug("pinIgnore = {}", obj.pinIgnore[i]);
-        const std::string strPinGroup = (obj.pinGroup[i] != 127U) ? std::to_string(obj.pinGroup[i]) : "";
+        spdlog::debug("pinIgnore = {}", pinIgnore[i]);
+        const std::string strPinGroup = (pinGroup[i] != 127U) ? std::to_string(pinGroup[i]) : "";
         spdlog::debug("pinGroup  = {:>3}", strPinGroup);
     }
 
@@ -73,8 +70,6 @@ StructPinIdxMapping Parser::readStructPinIdxMapping()
 
     readOptionalTrailingFuture();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

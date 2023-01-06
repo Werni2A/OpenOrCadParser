@@ -8,15 +8,12 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Structures/StructPrimitives.hpp"
 
 
-[[maybe_unused]]
-static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
+FileFormatVersion StructPrimitives::predictVersion()
 {
     FileFormatVersion prediction = FileFormatVersion::Unknown;
-
 
     const std::vector<FileFormatVersion> versions{
         FileFormatVersion::A,
@@ -24,24 +21,22 @@ static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
         FileFormatVersion::C
     };
 
-    const size_t initial_offset = aDs.getCurrentOffset();
+    const size_t initial_offset = mDs.get().getCurrentOffset();
 
     for(const auto& version : versions)
     {
         bool found = true;
 
-        StructPrimitives geo_spec;
-
         try
         {
-            aParser.readStructPrimitives(version);
+            read(version);
         }
         catch(...)
         {
             found = false;
         }
 
-        aDs.setCurrentOffset(initial_offset);
+        mDs.get().setCurrentOffset(initial_offset);
 
         if(found)
         {
@@ -61,9 +56,9 @@ static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
 }
 
 
-StructPrimitives Parser::readStructPrimitives(FileFormatVersion aVersion)
+void StructPrimitives::read(FileFormatVersion aVersion)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
     auto_read_prefixes();
 
@@ -71,13 +66,11 @@ StructPrimitives Parser::readStructPrimitives(FileFormatVersion aVersion)
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    StructPrimitives obj;
+    name = mDs.get().readStringLenZeroTerm();
 
-    obj.name = mDs.readStringLenZeroTerm();
+    spdlog::debug("name = {}", name);
 
-    spdlog::debug("name = {}", obj.name);
-
-    mDs.assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 0"); // Unknown but probably a string
+    mDs.get().assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 0"); // Unknown but probably a string
 
     sanitizeThisFutureSize(thisFuture);
 
@@ -87,7 +80,7 @@ StructPrimitives Parser::readStructPrimitives(FileFormatVersion aVersion)
 
     readOptionalTrailingFuture();
 
-    // const uint16_t geometryCount = mDs.readUint16();
+    // const uint16_t geometryCount = mDs.get().readUint16();
     // spdlog::debug("geometryCount = {}", geometryCount);
 
     // for(size_t i = 0u; i < geometryCount; ++i)
@@ -96,13 +89,13 @@ StructPrimitives Parser::readStructPrimitives(FileFormatVersion aVersion)
 
     //     if(i > 0u)
     //     {
-    //         if(mFileFormatVersion == FileFormatVersion::B)
+    //         if(gFileFormatVersion == FileFormatVersion::B)
     //         {
     //             // Structure structure = read_prefixes(3);
     //             Structure structure = auto_read_prefixes();
     //         }
 
-    //         if(mFileFormatVersion >= FileFormatVersion::B)
+    //         if(gFileFormatVersion >= FileFormatVersion::B)
     //         {
     //             readPreamble();
     //         }
@@ -112,16 +105,14 @@ StructPrimitives Parser::readStructPrimitives(FileFormatVersion aVersion)
 
     //     readPrimitive(primitive);
 
-    //     // if(mFileFormatVersion == FileFormatVersion::A)
+    //     // if(gFileFormatVersion == FileFormatVersion::A)
     //     // {
-    //     //     mDs.printUnknownData(8, std::string(__func__) + " - 3.5");
+    //     //     mDs.get().printUnknownData(8, std::string(__func__) + " - 3.5");
     //     // }
     // }
 
     readOptionalTrailingFuture();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

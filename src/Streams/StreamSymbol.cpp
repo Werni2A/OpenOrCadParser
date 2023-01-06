@@ -5,21 +5,18 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Streams/StreamSymbol.hpp"
 
 
-StreamSymbol Parser::readStreamSymbol()
+void StreamSymbol::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
-    StreamSymbol obj;
+    structures.push_back(readStructure());
 
-    obj.structures.push_back(readStructure());
+    mDs.get().printUnknownData(4, fmt::format("{}: 0", __func__));
 
-    mDs.printUnknownData(4, fmt::format("{}: 0", __func__));
-
-    const uint16_t geometryCount = mDs.readUint16();
+    const uint16_t geometryCount = mDs.get().readUint16();
     spdlog::debug("geometryCount = {}", geometryCount);
 
     for(size_t i = 0u; i < geometryCount; ++i)
@@ -28,12 +25,12 @@ StreamSymbol Parser::readStreamSymbol()
 
         if(i > 0u)
         {
-            if(mFileFormatVersion == FileFormatVersion::B)
+            if(gFileFormatVersion == FileFormatVersion::B)
             {
-                Structure structure = auto_read_prefixes();
+                auto_read_prefixes();
             }
 
-            if(mFileFormatVersion >= FileFormatVersion::B)
+            if(gFileFormatVersion >= FileFormatVersion::B)
             {
                 readPreamble();
             }
@@ -46,36 +43,34 @@ StreamSymbol Parser::readStreamSymbol()
 
     readPreamble();
 
-    mDs.printUnknownData(8);
+    mDs.get().printUnknownData(8);
 
     // @todo Trailing data could be SymbolBBox
     // readSymbolBBox(); // @todo push structure
 
-    const uint16_t len = mDs.readUint16();
+    const uint16_t len = mDs.get().readUint16();
 
     spdlog::info("len = {}", len);
 
     for(size_t i = 0u; i < len; ++i)
     {
-        obj.structures.push_back(readStructure());
+        structures.push_back(readStructure());
     }
 
-    const uint16_t len2 = mDs.readUint16();
+    const uint16_t len2 = mDs.get().readUint16();
 
     spdlog::info("len2 = {}", len2);
 
     for(size_t i = 0u; i < len2; ++i)
     {
-        obj.structures.push_back(readStructure());
+        structures.push_back(readStructure());
     }
 
-    if(!mDs.isEoF())
+    if(!mDs.get().isEoF())
     {
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

@@ -6,13 +6,13 @@
 
 #include "FutureData.hpp"
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Structures/StructERCSymbol.hpp"
+#include "Structures/StructSymbolBBox.hpp"
 
 
-StructERCSymbol Parser::readStructERCSymbol()
+void StructERCSymbol::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
     auto_read_prefixes();
 
@@ -20,20 +20,18 @@ StructERCSymbol Parser::readStructERCSymbol()
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    StructERCSymbol obj;
-
-    obj.name = mDs.readStringLenZeroTerm();
+    name = mDs.get().readStringLenZeroTerm();
 
     // @todo Probably 'sourceLibName' which is a string but I'm not sure. Could also be the
     //       last part of the next unknown block
-    mDs.printUnknownData(3, std::string(__func__) + " - 0");
+    mDs.get().printUnknownData(3, std::string(__func__) + " - 0");
 
     sanitizeThisFutureSize(thisFuture);
 
     // @todo move the following part out of this method?
-    mDs.printUnknownData(4, std::string(__func__) + " - 1");
+    mDs.get().printUnknownData(4, std::string(__func__) + " - 1");
 
-    uint16_t len = mDs.readUint16();
+    uint16_t len = mDs.get().readUint16();
 
     for(size_t i = 0u; i < len; ++i)
     {
@@ -46,12 +44,13 @@ StructERCSymbol Parser::readStructERCSymbol()
     //       is used or not? (BBox should be optional according to XSD)
     //       Probably defined by prefix?
     readPreamble();
-    obj.symbolBBox = readStructSymbolBBox();
+
+    StructSymbolBBox bbox{mDs};
+    bbox.read();
+    this->symbolBBox = bbox;
 
     readOptionalTrailingFuture();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

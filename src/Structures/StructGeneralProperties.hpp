@@ -9,11 +9,23 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "Enums/ImplementationType.hpp"
 
 
-struct StructGeneralProperties
+class StructGeneralProperties : public CommonBase
 {
+public:
+
+    StructGeneralProperties(DataStream& aDs) : CommonBase{aDs}, implementationPath{},
+        implementation{}, refDes{}, partValue{}, implementationType{ImplementationType::None},
+        pinNameVisible{true}, pinNameRotate{false}, pinNumberVisible{true}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     std::string implementationPath;
     std::string implementation;
     std::string refDes;
@@ -43,6 +55,12 @@ static std::string to_string(const StructGeneralProperties& aObj)
     str += fmt::format("{}pinNumberVisible   = {}\n", indent(1), aObj.pinNumberVisible);
 
     return str;
+}
+
+
+inline std::string StructGeneralProperties::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

@@ -19,6 +19,14 @@
 
 namespace fs = std::filesystem;
 
+
+enum class FileType;
+enum class FileFormatVersion;
+
+extern FileType gFileType;
+extern FileFormatVersion gFileFormatVersion;
+
+
 /**
  * @brief Version of the file format.
  * @warning This is not an official version but was introduced

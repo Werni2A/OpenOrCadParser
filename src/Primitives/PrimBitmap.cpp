@@ -14,71 +14,70 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Primitives/PrimBitmap.hpp"
 
 
 namespace fs = std::filesystem;
 
 
-PrimBitmap Parser::readPrimBitmap()
+void PrimBitmap::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
-    const size_t startOffset = mDs.getCurrentOffset();
+    const size_t startOffset = mDs.get().getCurrentOffset();
 
-    PrimBitmap obj;
+    const uint32_t byteLength = mDs.get().readUint32();
 
-    const uint32_t byteLength = mDs.readUint32();
+    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
 
-    mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
+    locX = mDs.get().readInt32();
+    locY = mDs.get().readInt32();
 
-    obj.locX = mDs.readInt32();
-    obj.locY = mDs.readInt32();
+    spdlog::debug("locX = {}", locX);
+    spdlog::debug("locY = {}", locY);
 
-    spdlog::debug("locX = {}", obj.locX);
-    spdlog::debug("locY = {}", obj.locY);
+    x2 = mDs.get().readInt32();
+    y2 = mDs.get().readInt32();
+    x1 = mDs.get().readInt32();
+    y1 = mDs.get().readInt32();
 
-    obj.x2 = mDs.readInt32();
-    obj.y2 = mDs.readInt32();
-    obj.x1 = mDs.readInt32();
-    obj.y1 = mDs.readInt32();
+    spdlog::debug("x2 = {}", x2);
+    spdlog::debug("y2 = {}", y2);
+    spdlog::debug("x1 = {}", x1);
+    spdlog::debug("y1 = {}", y1);
 
-    spdlog::debug("x2 = {}", obj.x2);
-    spdlog::debug("y2 = {}", obj.y2);
-    spdlog::debug("x1 = {}", obj.x1);
-    spdlog::debug("y1 = {}", obj.y1);
+    bmpWidth  = mDs.get().readUint32();
+    bmpHeight = mDs.get().readUint32();
 
-    obj.bmpWidth  = mDs.readUint32();
-    obj.bmpHeight = mDs.readUint32();
+    spdlog::debug("bmpWidth  = {}", bmpWidth);
+    spdlog::debug("bmpHeight = {}", bmpHeight);
 
-    spdlog::debug("bmpWidth  = {}", obj.bmpWidth);
-    spdlog::debug("bmpHeight = {}", obj.bmpHeight);
-
-    const uint32_t dataSize = mDs.readUint32();
+    const uint32_t dataSize = mDs.get().readUint32();
 
     spdlog::debug("dataSize = {}", dataSize);
 
-    obj.rawImgData.clear();
-    obj.rawImgData.reserve(dataSize);
+    rawImgData.clear();
+    rawImgData.reserve(dataSize);
 
     for(size_t i = 0U; i < dataSize; ++i)
     {
-        obj.rawImgData.push_back(mDs.readUint8());
+        rawImgData.push_back(mDs.get().readUint8());
     }
 
-    fs::path filename = mCurrOpenFile.parent_path() / fmt::format("{}_img_{}.bmp",
-        mCurrOpenFile.stem().string(), mImgCtr);
+    // fs::path filename = mCurrOpenFile.parent_path() / fmt::format("{}_img_{}.bmp", // @todo fixme
+    //    mCurrOpenFile.stem().string(), mImgCtr);
+    fs::path filename = fs::temp_directory_path() / fmt::format("{}_img_{}.bmp", 0, 0);
 
-    filename = obj.writeImgToFile(filename);
+    filename = writeImgToFile(filename);
 
     spdlog::info("{}: Wrote bitmap file to {}", __func__, filename.string());
 
-    ++mImgCtr;
+    // @todo fixme
+    // ++mImgCtr;
 
-    if(mDs.getCurrentOffset() != startOffset + byteLength)
+    if(mDs.get().getCurrentOffset() != startOffset + byteLength)
     {
-        throw MisinterpretedData(__func__, startOffset, byteLength, mDs.getCurrentOffset());
+        throw MisinterpretedData(__func__, startOffset, byteLength, mDs.get().getCurrentOffset());
     }
 
     if(byteLength != 44U + dataSize)
@@ -88,10 +87,8 @@ PrimBitmap Parser::readPrimBitmap()
 
     readPreamble();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }
 
 

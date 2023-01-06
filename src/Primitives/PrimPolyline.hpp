@@ -14,10 +14,22 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "Primitives/Point.hpp"
+#include "Primitives/PrimBase.hpp"
 
 
-struct PrimPolyline
+class PrimPolyline : public PrimBase
 {
+public:
+
+    PrimPolyline(DataStream& aDs) : PrimBase{aDs}, mLineStyle{}, mLineWidth{}, points{}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
+    FileFormatVersion predictVersion();
+
     static size_t getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount);
 
     void setLineStyle(const LineStyle& aVal)
@@ -67,6 +79,12 @@ static std::string to_string(const PrimPolyline& aObj)
     }
 
     return str;
+}
+
+
+inline std::string PrimPolyline::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

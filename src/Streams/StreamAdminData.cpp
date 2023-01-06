@@ -5,17 +5,14 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Streams/StreamAdminData.hpp"
 
 
-StreamAdminData Parser::readStreamAdminData()
+void StreamAdminData::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
-    StreamAdminData obj;
-
-    uint8_t sth0 = mDs.readUint8();
+    uint8_t sth0 = mDs.get().readUint8();
 
     // @todo only those two values have been observed until now
     if(sth0 != 0 && sth0 != 1)
@@ -23,15 +20,13 @@ StreamAdminData Parser::readStreamAdminData()
         spdlog::critical("{}: Found new value. Check it out!", __func__);
     }
 
-    mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x00}, fmt::format("{}: Found actually useful data!", __func__));
+    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00, 0x00}, fmt::format("{}: Found actually useful data!", __func__));
 
-    if(!mDs.isEoF())
+    if(!mDs.get().isEoF())
     {
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

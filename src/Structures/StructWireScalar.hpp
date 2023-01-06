@@ -10,14 +10,26 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "Enums/Color.hpp"
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
 
 
-struct StructWireScalar
+class StructWireScalar : public CommonBase
 {
+public:
+
+    StructWireScalar(DataStream& aDs) : CommonBase{aDs}, dbId{0}, wireColor{Color::Default},
+        startX{0}, startY{0}, endX{0}, endY{0}, wireLineWidth{LineWidth::Default},
+        wireLineStyle{LineStyle::Default}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     uint32_t dbId;
 
     Color wireColor;
@@ -48,6 +60,12 @@ static std::string to_string(const StructWireScalar& aObj)
     str += fmt::format("wireLineStyle = {}\n", to_string(aObj.wireLineStyle));
 
     return str;
+}
+
+
+inline std::string StructWireScalar::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

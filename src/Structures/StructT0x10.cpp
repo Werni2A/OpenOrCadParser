@@ -9,9 +9,9 @@
 #include "Structures/StructT0x10.hpp"
 
 
-StructT0x10 Parser::readStructT0x10()
+void StructT0x10::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
     auto_read_prefixes();
 
@@ -19,25 +19,21 @@ StructT0x10 Parser::readStructT0x10()
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    StructT0x10 obj;
-
     spdlog::critical("{}: Not implemented!", __func__);
 
     if(thisFuture.has_value())
     {
-        mDs.printUnknownData(thisFuture.value().getByteLen(), fmt::format("{}: 0", __func__));
+        mDs.get().printUnknownData(thisFuture.value().getByteLen(), fmt::format("{}: 0", __func__));
     }
     else
     {
-        mDs.printUnknownData(16, fmt::format("{}: 0", __func__));
+        mDs.get().printUnknownData(16, fmt::format("{}: 0", __func__));
     }
 
     sanitizeThisFutureSize(thisFuture);
 
     readOptionalTrailingFuture();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

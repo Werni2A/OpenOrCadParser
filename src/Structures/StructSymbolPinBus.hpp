@@ -9,14 +9,24 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "Enums/PortType.hpp"
 #include "PinShape.hpp"
 
 
 // @todo this looks exactly the same as SymbolPinScalar. Why is that?
-
-struct StructSymbolPinBus
+class StructSymbolPinBus : public CommonBase
 {
+public:
+
+    StructSymbolPinBus(DataStream& aDs) : CommonBase{aDs}, name{}, startX{0}, startY{0},
+        hotptX{0}, hotptY{0}, pinShape{}, portType{PortType::Input}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     std::string name;
     int32_t startX;
     int32_t startY;
@@ -47,6 +57,12 @@ static std::string to_string(const StructSymbolPinBus& aObj)
     str += fmt::format("{}portType = {}\n", indent(1), to_string(aObj.portType));
 
     return str;
+}
+
+
+inline std::string StructSymbolPinBus::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

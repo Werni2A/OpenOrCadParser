@@ -12,10 +12,20 @@
 
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
+#include "Primitives/PrimBase.hpp"
+#include "Primitives/PrimLine.hpp"
 
 
-struct PrimLine
+class PrimLine : public PrimBase
 {
+public:
+    PrimLine(DataStream& aDs) : PrimBase{aDs}, x1{0}, y1{0}, x2{0}, y2{0}, mLineStyle{}, mLineWidth{}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     static size_t getExpectedStructSize(FileFormatVersion aVersion);
 
     void setLineStyle(const LineStyle& aVal)
@@ -65,6 +75,12 @@ static std::string to_string(const PrimLine& aObj)
     str += fmt::format("{}lineWidth  = {}\n", indent(1), to_string(aObj.getLineWidth()));
 
     return str;
+}
+
+
+inline std::string PrimLine::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

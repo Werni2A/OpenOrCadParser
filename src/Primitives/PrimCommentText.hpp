@@ -10,14 +10,25 @@
 #include <nameof.hpp>
 
 #include "Structures/TextFont.hpp"
+#include "Primitives/PrimBase.hpp"
 
 
 // Forward declaration
 struct Library;
 
 
-struct PrimCommentText
+class PrimCommentText : public PrimBase
 {
+public:
+    PrimCommentText(DataStream& aDs) : PrimBase{aDs}, locX{0}, locY{0}, name{}, x1{0}, y1{0}, x2{0}, y2{0}, textFontIdx{0}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
+    TextFont getTextFont() const;
+
     int32_t locX;
     int32_t locY;
 
@@ -33,15 +44,6 @@ struct PrimCommentText
     int32_t y2;
 
     uint16_t textFontIdx;
-
-    const Library* mLibrary;
-
-    PrimCommentText(const Library* aLibrary) : mLibrary(aLibrary) {}
-    // @todo Passing a nullptr should be possible but then we need
-    //       std::optional<CommentText> as return type
-    // CommentText() : CommentText{nullptr} {}
-
-    TextFont getTextFont() const;
 };
 
 
@@ -62,6 +64,12 @@ static std::string to_string(const PrimCommentText& aObj)
     str += indent(to_string(aObj.getTextFont()), 2);
 
     return str;
+}
+
+
+inline std::string PrimCommentText::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

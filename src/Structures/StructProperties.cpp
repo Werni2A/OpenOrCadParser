@@ -8,13 +8,13 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Structures/StructProperties.hpp"
+#include "Structures/TrailingProperties.hpp"
 
 
-StructProperties Parser::readStructProperties()
+void StructProperties::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
     auto_read_prefixes();
 
@@ -22,22 +22,19 @@ StructProperties Parser::readStructProperties()
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    StructProperties obj;
-
-    obj.ref = mDs.readStringLenZeroTerm();
+    ref = mDs.get().readStringLenZeroTerm();
 
     // @todo Probably a string
-    mDs.assumeData({0x00, 0x00, 0x00}, fmt::format("{}: 0", __func__));
+    mDs.get().assumeData({0x00, 0x00, 0x00}, fmt::format("{}: 0", __func__));
 
     sanitizeThisFutureSize(thisFuture);
 
     if(checkTrailingFuture().has_value())
     {
-        readTrailingProperties();
+        TrailingProperties trailing{mDs};
+        trailing.read();
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

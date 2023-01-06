@@ -9,11 +9,21 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "General.hpp"
 
 
-struct StructSymbolBBox
+class StructSymbolBBox : public CommonBase
 {
+public:
+
+    StructSymbolBBox(DataStream& aDs) : CommonBase{aDs}, x1{0}, y1{0}, x2{0}, y2{0}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     // @todo they are probably int16_t, see where those values are read.
     int32_t x1;
     int32_t y1;
@@ -35,6 +45,12 @@ static std::string to_string(const StructSymbolBBox& aObj)
     str += fmt::format("{}y2 = {}\n", indent(1), aObj.y2);
 
     return str;
+}
+
+
+inline std::string StructSymbolBBox::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

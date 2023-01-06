@@ -9,12 +9,23 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "Enums/Color.hpp"
 #include "Enums/Rotation.hpp"
 
 
-struct StructSymbolDisplayProp
+class StructSymbolDisplayProp : public CommonBase
 {
+public:
+
+    StructSymbolDisplayProp(DataStream& aDs) : CommonBase{aDs}, nameIdx{0}, textFontIdx{0},
+        rotation{Rotation::Deg_0}, x{0}, y{0}, propColor{Color::Default}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     uint32_t nameIdx;
     uint16_t textFontIdx;
 
@@ -42,6 +53,12 @@ static std::string to_string(const StructSymbolDisplayProp& aObj)
     str += fmt::format("{}propColor   = {}\n", indent(1), to_string(aObj.propColor));
 
     return str;
+}
+
+
+inline std::string StructSymbolDisplayProp::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

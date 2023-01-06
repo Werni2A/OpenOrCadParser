@@ -5,14 +5,13 @@
 #include <nameof.hpp>
 
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Structures/StructGraphicBoxInst.hpp"
 
 
 // @todo is this a specialized instance for Rects or general for all types?
-StructGraphicBoxInst Parser::readStructGraphicBoxInst()
+void StructGraphicBoxInst::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
     auto_read_prefixes();
 
@@ -20,24 +19,22 @@ StructGraphicBoxInst Parser::readStructGraphicBoxInst()
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    StructGraphicBoxInst obj;
+    mDs.get().printUnknownData(11, std::string(__func__) + " - 0");
 
-    mDs.printUnknownData(11, std::string(__func__) + " - 0");
+    dbId = mDs.get().readUint32();
 
-    obj.dbId = mDs.readUint32();
+    locY = mDs.get().readInt16();
+    locX = mDs.get().readInt16();
 
-    obj.locY = mDs.readInt16();
-    obj.locX = mDs.readInt16();
+    y2 = mDs.get().readInt16();
+    x2 = mDs.get().readInt16();
 
-    obj.y2 = mDs.readInt16();
-    obj.x2 = mDs.readInt16();
+    x1 = mDs.get().readInt16();
+    y1 = mDs.get().readInt16();
 
-    obj.x1 = mDs.readInt16();
-    obj.y1 = mDs.readInt16();
+    color = ToColor(mDs.get().readUint16()); // @todo is it really not a 4 byte value?
 
-    obj.color = ToColor(mDs.readUint16()); // @todo is it really not a 4 byte value?
-
-    mDs.printUnknownData(5, std::string(__func__) + " - 1");
+    mDs.get().printUnknownData(5, std::string(__func__) + " - 1");
 
     // @todo Only Rect as a shape would make sense here. Maybe this should be passed
     //       as a parameter to readSthInPages0 to check this condition. Further,
@@ -48,8 +45,6 @@ StructGraphicBoxInst Parser::readStructGraphicBoxInst()
 
     readOptionalTrailingFuture();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

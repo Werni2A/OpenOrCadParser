@@ -9,7 +9,6 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Primitives/PrimPolygon.hpp"
 
 
@@ -34,8 +33,7 @@ size_t PrimPolygon::getExpectedStructSize(FileFormatVersion aVersion, size_t aPo
 }
 
 
-[[maybe_unused]]
-static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
+FileFormatVersion PrimPolygon::predictVersion()
 {
     FileFormatVersion prediction = FileFormatVersion::Unknown;
 
@@ -46,7 +44,7 @@ static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
         FileFormatVersion::C
     };
 
-    const size_t initial_offset = aDs.getCurrentOffset();
+    const size_t initial_offset = mDs.get().getCurrentOffset();
 
     for(const auto& version : versions)
     {
@@ -54,14 +52,14 @@ static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
 
         try
         {
-            aParser.readPrimPolygon(version);
+            read(version);
         }
         catch(...)
         {
             found = false;
         }
 
-        aDs.setCurrentOffset(initial_offset);
+        mDs.get().setCurrentOffset(initial_offset);
 
         if(found)
         {
@@ -81,44 +79,42 @@ static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
 }
 
 
-PrimPolygon Parser::readPrimPolygon(FileFormatVersion aVersion)
+void PrimPolygon::read(FileFormatVersion aVersion)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
     // Predict version
     if(aVersion == FileFormatVersion::Unknown)
     {
-        aVersion = predictVersion(mDs, *this);
+        aVersion = predictVersion();
         // spdlog::info("Predicted version {} in {}", static_cast<int>(aVersion), __func__);
     }
 
-    const size_t startOffset = mDs.getCurrentOffset();
+    const size_t startOffset = mDs.get().getCurrentOffset();
 
-    PrimPolygon obj;
+    const uint32_t byteLength = mDs.get().readUint32();
 
-    const uint32_t byteLength = mDs.readUint32();
+    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
 
-    mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
-
-    if(mFileFormatVersion >= FileFormatVersion::B)
+    if(gFileFormatVersion >= FileFormatVersion::B)
     {
-        obj.setLineStyle(ToLineStyle(mDs.readUint32()));
-        obj.setLineWidth(ToLineWidth(mDs.readUint32()));
+        setLineStyle(ToLineStyle(mDs.get().readUint32()));
+        setLineWidth(ToLineWidth(mDs.get().readUint32()));
     }
 
-    if(mFileFormatVersion >= FileFormatVersion::C)
+    if(gFileFormatVersion >= FileFormatVersion::C)
     {
-        obj.fillStyle  = ToFillStyle(mDs.readUint32());
-        obj.hatchStyle = ToHatchStyle(mDs.readInt32());
+        fillStyle  = ToFillStyle(mDs.get().readUint32());
+        hatchStyle = ToHatchStyle(mDs.get().readInt32());
     }
     else
     {
         // Default values
-        obj.fillStyle  = FillStyle::None;
-        obj.hatchStyle = HatchStyle::LinesHorizontal;
+        fillStyle  = FillStyle::None;
+        hatchStyle = HatchStyle::LinesHorizontal;
     }
 
-    const uint16_t pointCount = mDs.readUint16();
+    const uint16_t pointCount = mDs.get().readUint16();
 
     if(pointCount < 3u)
     {
@@ -128,23 +124,23 @@ PrimPolygon Parser::readPrimPolygon(FileFormatVersion aVersion)
 
     for(size_t i = 0u; i < pointCount; ++i)
     {
-        obj.points.push_back(readPoint());
+        Point point{mDs};
+        point.read();
+        points.push_back(point);
     }
 
-    if(mDs.getCurrentOffset() != startOffset + byteLength)
+    if(mDs.get().getCurrentOffset() != startOffset + byteLength)
     {
-        throw MisinterpretedData(__func__, startOffset, byteLength, mDs.getCurrentOffset());
+        throw MisinterpretedData(__func__, startOffset, byteLength, mDs.get().getCurrentOffset());
     }
 
-    if(byteLength != obj.getExpectedStructSize(mFileFormatVersion, pointCount))
+    if(byteLength != getExpectedStructSize(gFileFormatVersion, pointCount))
     {
-        throw FileFormatChanged(std::string(nameof::nameof_type<decltype(obj)>()));
+        throw FileFormatChanged(std::string(nameof::nameof_type<decltype(*this)>()));
     }
 
     readPreamble();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

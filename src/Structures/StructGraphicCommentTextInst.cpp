@@ -5,13 +5,12 @@
 #include <nameof.hpp>
 
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Structures/StructGraphicCommentTextInst.hpp"
 
 
-StructGraphicCommentTextInst Parser::readStructGraphicCommentTextInst()
+void StructGraphicCommentTextInst::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
     auto_read_prefixes();
 
@@ -19,16 +18,12 @@ StructGraphicCommentTextInst Parser::readStructGraphicCommentTextInst()
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    StructGraphicCommentTextInst obj;
-
-    mDs.printUnknownData(34, std::string(__func__) + " - 0");
+    mDs.get().printUnknownData(34, std::string(__func__) + " - 0");
 
     sanitizeThisFutureSize(thisFuture);
 
     readOptionalTrailingFuture();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

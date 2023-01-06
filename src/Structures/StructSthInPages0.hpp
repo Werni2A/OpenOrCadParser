@@ -10,11 +10,20 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "General.hpp"
 
 
-struct StructSthInPages0
+class StructSthInPages0 : public CommonBase
 {
+public:
+
+    StructSthInPages0(DataStream& aDs) : CommonBase{aDs}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
 };
 
@@ -29,6 +38,12 @@ static std::string to_string(const StructSthInPages0& aObj)
     // str += fmt::format("y1     = {}\n", aObj.y1);
 
     return str;
+}
+
+
+inline std::string StructSthInPages0::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

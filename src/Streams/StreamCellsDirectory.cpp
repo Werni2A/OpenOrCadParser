@@ -5,42 +5,41 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
-#include "Parser.hpp"
+#include "Streams/StreamCellsDirectory.hpp"
+#include "Streams/StreamDirectoryStruct.hpp"
 
 
-StreamDirectoryStruct Parser::readStreamCellsDirectory()
+void StreamCellsDirectory::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
-    StreamDirectoryStruct obj;
+    lastModifiedDate = static_cast<time_t>(mDs.get().readUint32());
 
-    obj.lastModifiedDate = static_cast<time_t>(mDs.readUint32());
-
-    const uint16_t size = mDs.readUint16();
+    const uint16_t size = mDs.get().readUint16();
 
     for(size_t i = 0u; i < size; ++i)
     {
         DirItemType item;
 
-        item.name = mDs.readStringLenZeroTerm();
+        item.name = mDs.get().readStringLenZeroTerm();
 
         spdlog::debug("name = {}", item.name);
 
-        item.componentType = ToComponentType(mDs.readUint16());
+        item.componentType = ToComponentType(mDs.get().readUint16());
 
-        spdlog::debug("componentType = {}", to_string(item.componentType));
+        spdlog::debug("componentType = {}", ::to_string(item.componentType));
 
         if(item.componentType != ComponentType::Cell)
         {
-            spdlog::warn("{}: Unexpected ComponentType `{}`", __func__, to_string(item.componentType));
+            spdlog::warn("{}: Unexpected ComponentType `{}`", __func__, ::to_string(item.componentType));
         }
 
         // @todo This changes with the version of the file format, so maybe it contains
         //       more details for the format? Or some hash of the specified stream?
-        mDs.printUnknownData(14, fmt::format("item[{:>3}] - 0", i));
+        mDs.get().printUnknownData(14, fmt::format("item[{:>3}] - 0", i));
 
         // @todo Just a guess that this is the version but's highly likely
-        item.fileFormatVersion = mDs.readUint16();
+        item.fileFormatVersion = mDs.get().readUint16();
 
         spdlog::debug("fileFormatVersion = {}", item.fileFormatVersion);
 
@@ -59,22 +58,20 @@ StreamDirectoryStruct Parser::readStreamCellsDirectory()
             spdlog::critical("Unexpected File Version {}", item.fileFormatVersion);
         }
 
-        item.timezone = mDs.readInt16();
+        item.timezone = mDs.get().readInt16();
 
         spdlog::debug("timezone = {}", item.timezone);
 
-        mDs.printUnknownData(2, fmt::format("item[{:>3}] - 1", i));
+        mDs.get().printUnknownData(2, fmt::format("item[{:>3}] - 1", i));
 
-        obj.items.push_back(item);
+        items.push_back(item);
     }
 
-    if(!mDs.isEoF())
+    if(!mDs.get().isEoF())
     {
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

@@ -5,26 +5,21 @@
 #include <nameof.hpp>
 
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Structures/StructSthInHierarchy3.hpp"
 
 
-StructSthInHierarchy3 Parser::readStructSthInHierarchy3()
+void StructSthInHierarchy3::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    StructSthInHierarchy3 obj;
-
-    mDs.printUnknownData(12, fmt::format("{}: 2", __func__));
+    mDs.get().printUnknownData(12, fmt::format("{}: 2", __func__));
 
     sanitizeThisFutureSize(thisFuture);
 
     readOptionalTrailingFuture();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

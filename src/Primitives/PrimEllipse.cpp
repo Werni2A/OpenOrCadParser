@@ -7,7 +7,6 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Primitives/PrimEllipse.hpp"
 
 
@@ -38,15 +37,13 @@ size_t PrimEllipse::getExpectedStructSize(FileFormatVersion aVersion)
 }
 
 
-PrimEllipse Parser::readPrimEllipse(FileFormatVersion aVersion)
+void PrimEllipse::read(FileFormatVersion aVersion)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
-    const size_t startOffset = mDs.getCurrentOffset();
+    const size_t startOffset = mDs.get().getCurrentOffset();
 
-    PrimEllipse obj;
-
-    uint32_t byteLength = mDs.readUint32();
+    uint32_t byteLength = mDs.get().readUint32();
 
     // Predict version
     switch(byteLength)
@@ -57,39 +54,37 @@ PrimEllipse Parser::readPrimEllipse(FileFormatVersion aVersion)
         default:                                  break;
     }
 
-    mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
+    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
 
-    obj.x1 = mDs.readInt32();
-    obj.y1 = mDs.readInt32();
-    obj.x2 = mDs.readInt32();
-    obj.y2 = mDs.readInt32();
+    x1 = mDs.get().readInt32();
+    y1 = mDs.get().readInt32();
+    x2 = mDs.get().readInt32();
+    y2 = mDs.get().readInt32();
 
     if(aVersion >= FileFormatVersion::B)
     {
-        obj.setLineStyle(ToLineStyle(mDs.readUint32()));
-        obj.setLineWidth(ToLineWidth(mDs.readUint32()));
+        setLineStyle(ToLineStyle(mDs.get().readUint32()));
+        setLineWidth(ToLineWidth(mDs.get().readUint32()));
     }
 
     if(aVersion >= FileFormatVersion::C)
     {
-        obj.setFillStyle(ToFillStyle(mDs.readUint32()));
-        obj.setHatchStyle(ToHatchStyle(mDs.readInt32()));
+        setFillStyle(ToFillStyle(mDs.get().readUint32()));
+        setHatchStyle(ToHatchStyle(mDs.get().readInt32()));
     }
 
-    if(mDs.getCurrentOffset() != startOffset + byteLength)
+    if(mDs.get().getCurrentOffset() != startOffset + byteLength)
     {
-        throw MisinterpretedData(__func__, startOffset, byteLength, mDs.getCurrentOffset());
+        throw MisinterpretedData(__func__, startOffset, byteLength, mDs.get().getCurrentOffset());
     }
 
-    if(byteLength != obj.getExpectedStructSize(aVersion))
+    if(byteLength != getExpectedStructSize(aVersion))
     {
-        throw FileFormatChanged(std::string(nameof::nameof_type<decltype(obj)>()));
+        throw FileFormatChanged(std::string(nameof::nameof_type<decltype(*this)>()));
     }
 
     readPreamble();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

@@ -5,13 +5,12 @@
 #include <nameof.hpp>
 
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Structures/StructAlias.hpp"
 
 
-StructAlias Parser::readStructAlias()
+void StructAlias::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
     auto_read_prefixes();
 
@@ -19,36 +18,32 @@ StructAlias Parser::readStructAlias()
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    StructAlias obj;
+    locX = mDs.get().readInt32();
+    locY = mDs.get().readInt32();
 
-    obj.locX = mDs.readInt32();
-    obj.locY = mDs.readInt32();
+    spdlog::debug("locX = {}", locX);
+    spdlog::debug("locY = {}", locY);
 
-    spdlog::debug("locX = {}", obj.locX);
-    spdlog::debug("locY = {}", obj.locY);
+    color = ToColor(mDs.get().readUint32());
 
-    obj.color = ToColor(mDs.readUint32());
+    spdlog::debug("color = {}", ::to_string(color));
 
-    spdlog::debug("color = {}", to_string(obj.color));
+    rotation = ToRotation(mDs.get().readUint32()); // @todo Why is it 4 byte? Probably increase Rotation size
 
-    obj.rotation = ToRotation(mDs.readUint32()); // @todo Why is it 4 byte? Probably increase Rotation size
+    spdlog::debug("rotation = {}", ::to_string(rotation));
 
-    spdlog::debug("rotation = {}", to_string(obj.rotation));
-
-    uint32_t textFontIdx = mDs.readUint32();
+    uint32_t textFontIdx = mDs.get().readUint32();
 
     spdlog::debug("Alias fontIdx = {}", textFontIdx);
 
-    obj.name = mDs.readStringLenZeroTerm();
+    name = mDs.get().readStringLenZeroTerm();
 
-    spdlog::debug("name = {}", obj.name);
+    spdlog::debug("name = {}", name);
 
     sanitizeThisFutureSize(thisFuture);
 
     readOptionalTrailingFuture();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

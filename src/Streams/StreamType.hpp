@@ -5,16 +5,25 @@
 #include <cstdint>
 #include <ostream>
 #include <string>
+#include <vector>
 
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "Enums/ComponentType.hpp"
 
 
 // @note This is used in `$Type$` files
-struct Type
+class Type
 {
+public:
+
+    Type() : name{}, componentType{ComponentType::Graphic}
+    { }
+
+    std::string to_string() const;
+
     std::string name;
     ComponentType componentType;
 };
@@ -33,10 +42,64 @@ static std::string to_string(const Type& aObj)
 }
 
 
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const Type& aVal)
+inline std::string Type::to_string() const
 {
-    aOs << to_string(aVal);
+    return ::to_string(*this);
+}
+
+
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const Type& aObj)
+{
+    aOs << to_string(aObj);
+
+    return aOs;
+}
+
+
+class StreamType : public CommonBase
+{
+public:
+
+    StreamType(DataStream& aDs) : CommonBase{aDs}, types{}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
+    std::vector<Type> types;
+};
+
+
+[[maybe_unused]]
+static std::string to_string(const StreamType& aObj)
+{
+    std::string str;
+
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+
+    str += fmt::format("{}types:\n", indent(1));
+    for(size_t i = 0u; i < aObj.types.size(); ++i)
+    {
+        str += fmt::format("[{:>3}]:\n", i);
+        str += indent(aObj.types[i].to_string(), 2);
+    }
+
+    return str;
+}
+
+
+inline std::string StreamType::to_string() const
+{
+    return ::to_string(*this);
+}
+
+
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StreamType& aObj)
+{
+    aOs << to_string(aObj);
 
     return aOs;
 }

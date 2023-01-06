@@ -15,9 +15,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "DataVariants.hpp"
 #include "Enums/Primitive.hpp"
-#include "Parser.hpp"
 #include "Primitives/PrimCommentText.hpp"
 #include "Streams/StreamPackage.hpp"
 #include "Streams/StreamSymbol.hpp"
@@ -29,10 +27,8 @@ struct SymbolUserProp
     uint32_t nameIdx;
     uint32_t valIdx;
 
-    const Library* mLibrary;
-
-    SymbolUserProp(const Library* aLibrary) : mLibrary(aLibrary) {}
-    SymbolUserProp() : SymbolUserProp{nullptr} {}
+    SymbolUserProp()
+    { }
 
     std::string getName() const;
     std::string getVal() const;
@@ -41,17 +37,12 @@ struct SymbolUserProp
 
 std::string SymbolUserProp::getName() const
 {
-    if(mLibrary == nullptr)
-    {
-        return "";
-    }
-
     std::string name;
 
     if(nameIdx >= 0)
     {
         // Retrieve string from the library.
-        name = mLibrary->library.strLst.at(nameIdx);
+        name = gLibrary->library->strLst.at(nameIdx);
         // @todo provide try catch block for better exception messages
     }
     else if(nameIdx == -1U)
@@ -71,17 +62,12 @@ std::string SymbolUserProp::getName() const
 
 std::string SymbolUserProp::getVal() const
 {
-    if(mLibrary == nullptr)
-    {
-        return "";
-    }
-
     std::string val;
 
     if(valIdx >= 0)
     {
         // Retrieve string from the library.
-        val = mLibrary->library.strLst.at(valIdx);
+        val = gLibrary->library->strLst.at(valIdx);
         // @todo provide try catch block for better exception messages
     }
     else if(valIdx == -1U)
@@ -102,18 +88,20 @@ std::string SymbolUserProp::getVal() const
 // @todo this is a whole file parser. Split it up into the title block structure and move the rest to the symbol parser?
 void Parser::readTitleBlockSymbol()
 {
-    mDs.printUnknownData(36, std::string(__func__) + " - 0");
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
+
+    mDs.get().printUnknownData(36, std::string(__func__) + " - 0");
 
     std::vector<SymbolUserProp> symbolUserProps; // @todo store in symbol
 
-    const uint16_t propertyLen = mDs.readUint16();
+    const uint16_t propertyLen = mDs.get().readUint16();
 
     for(size_t i = 0u; i < propertyLen; ++i)
     {
-        SymbolUserProp symbolUserProp{&mLibrary};
+        SymbolUserProp symbolUserProp{};
 
-        symbolUserProp.nameIdx = mDs.readUint32(); // @todo move to Kaitai OrCAD: 'Symbol Properties' (Fixed value on the left)
-        symbolUserProp.valIdx  = mDs.readUint32(); // @todo move to Kaitai OrCAD: 'Symbol Properties' (Adjustable value on the right)
+        symbolUserProp.nameIdx = mDs.get().readUint32(); // @todo move to Kaitai OrCAD: 'Symbol Properties' (Fixed value on the left)
+        symbolUserProp.valIdx  = mDs.get().readUint32(); // @todo move to Kaitai OrCAD: 'Symbol Properties' (Adjustable value on the right)
 
         symbolUserProps.push_back(symbolUserProp);
     }
@@ -128,11 +116,11 @@ void Parser::readTitleBlockSymbol()
 
     // The following should be its own structure
     readPreamble();
-    std::string str0 = mDs.readStringLenZeroTerm();
+    std::string str0 = mDs.get().readStringLenZeroTerm();
 
-    mDs.printUnknownData(7, std::string(__func__) + " - 1");
+    mDs.get().printUnknownData(7, std::string(__func__) + " - 1");
 
-    const uint16_t someLen = mDs.readUint16();
+    const uint16_t someLen = mDs.get().readUint16();
 
     for(size_t i = 0u; i < someLen; ++i)
     {
@@ -140,117 +128,20 @@ void Parser::readTitleBlockSymbol()
         readPrimitive(primitive);
     }
 
-    mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 2");
-    mDs.printUnknownData(6, std::string(__func__) + " - 3");
+    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 2");
+    mDs.get().printUnknownData(6, std::string(__func__) + " - 3");
 
-    const uint16_t followingLen = mDs.readUint16();
+    const uint16_t followingLen = mDs.get().readUint16();
 
     for(size_t i = 0u; i < followingLen; ++i)
     {
         readStructure();
     }
 
-    if(!mDs.isEoF())
+    if(!mDs.get().isEoF())
     {
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-}
-
-
-StructPrimitives Parser::readStructGlobalSymbol()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const std::optional<FutureData> thisFuture = getFutureData();
-
-    StructPrimitives obj = readStructPrimitives();
-
-    // sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
-}
-
-
-StructPrimitives Parser::readStructHierarchicSymbol()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const std::optional<FutureData> thisFuture = getFutureData();
-
-    StructPrimitives obj = readStructPrimitives();
-
-    // sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
-}
-
-
-StructPrimitives Parser::readStructOffPageSymbol()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const std::optional<FutureData> thisFuture = getFutureData();
-
-    StructPrimitives obj = readStructPrimitives();
-
-    // sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
-}
-
-
-StructPrimitives Parser::readStructPinShapeSymbol()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const std::optional<FutureData> thisFuture = getFutureData();
-
-    StructPrimitives obj = readStructPrimitives();
-
-    // sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
-}
-
-
-// @todo This parses the ERC file, move it to a separate file or combine with parseSymbol
-// @todo return real data object
-bool Parser::readStreamERC()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    bool obj = false;
-
-    readStructure(); // @todo push structure
-
-    if(!mDs.isEoF())
-    {
-        throw std::runtime_error("Expected EoF but did not reach it!");
-    }
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
 }

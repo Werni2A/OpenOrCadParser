@@ -7,20 +7,17 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Structures/TrailingProperties.hpp"
 
 
-TrailingProperties Parser::readTrailingProperties()
+void TrailingProperties::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    TrailingProperties obj;
-
     // @todo use enum for the view (normal/convert)
-    const uint16_t viewNumber = mDs.readUint16(); // @todo I assume that this is the amount of views
+    const uint16_t viewNumber = mDs.get().readUint16(); // @todo I assume that this is the amount of views
                                                // the symbol has. Typically 1 (.Normal) or maybe
                                                // 2 with (.Normal and .Convert)
                                                // @todo Add to obj
@@ -29,17 +26,17 @@ TrailingProperties Parser::readTrailingProperties()
 
     if(viewNumber == 1U) // Contains ".Normal"
     {
-        obj.normalName = mDs.readStringLenZeroTerm();
+        normalName = mDs.get().readStringLenZeroTerm();
     }
 
     if(viewNumber == 2U) // Contains ".Normal" and ".Convert"
     {
-        obj.normalName = mDs.readStringLenZeroTerm();
-        obj.convertName = mDs.readStringLenZeroTerm();
+        normalName = mDs.get().readStringLenZeroTerm();
+        convertName = mDs.get().readStringLenZeroTerm();
     }
 
-    spdlog::debug("normalName  = {}", obj.normalName);
-    spdlog::debug("convertName = {}", obj.convertName);
+    spdlog::debug("normalName  = {}", normalName);
+    spdlog::debug("convertName = {}", convertName);
 
     if(viewNumber != 1U && viewNumber != 2U)
     {
@@ -54,8 +51,6 @@ TrailingProperties Parser::readTrailingProperties()
 
     readOptionalTrailingFuture();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

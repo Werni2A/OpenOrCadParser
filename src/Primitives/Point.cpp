@@ -5,21 +5,16 @@
 #include <nameof.hpp>
 
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Primitives/Point.hpp"
 
 
-Point Parser::readPoint()
+void Point::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
-    Point obj;
+    y = mDs.get().readUint16();
+    x = mDs.get().readUint16();
 
-    obj.y = mDs.readUint16();
-    obj.x = mDs.readUint16();
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }
