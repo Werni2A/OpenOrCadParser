@@ -5,23 +5,20 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
-#include "Parser.hpp"
+#include "Streams/StreamHierarchy.hpp"
 
 
-// @todo return real data object
-bool Parser::readStreamHierarchy()
+void StreamHierarchy::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
-    bool obj = false;
+    mDs.get().printUnknownData(9, std::string(__func__) + " - 0");
 
-    mDs.printUnknownData(9, std::string(__func__) + " - 0");
+    std::string schematicName = mDs.get().readStringLenZeroTerm();
 
-    std::string schematicName = mDs.readStringLenZeroTerm();
+    mDs.get().printUnknownData(9, std::string(__func__) + " - 1");
 
-    mDs.printUnknownData(9, std::string(__func__) + " - 1");
-
-    const uint16_t netLen = mDs.readUint16();
+    const uint16_t netLen = mDs.get().readUint16();
 
     for(size_t i = 0u; i < netLen; ++i)
     {
@@ -32,12 +29,11 @@ bool Parser::readStreamHierarchy()
 
         // @todo Move the following data into a own structure for the specific Structure type
 
-        uint32_t dbId = mDs.readUint32();
+        uint32_t dbId = mDs.get().readUint32();
 
-        std::string name = mDs.readStringLenZeroTerm(); // net name
+        std::string name = mDs.get().readStringLenZeroTerm(); // net name
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(to_string());
 }

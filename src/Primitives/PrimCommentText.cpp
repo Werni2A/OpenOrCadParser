@@ -6,91 +6,82 @@
 #include <nameof.hpp>
 
 #include "General.hpp"
-#include "Parser.hpp"
+#include "Library.hpp"
 #include "Primitives/PrimCommentText.hpp"
 #include "Structures/TextFont.hpp"
 
 
-PrimCommentText Parser::readPrimCommentText(FileFormatVersion aVersion)
+void PrimCommentText::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
-    const size_t startOffset = mDs.getCurrentOffset();
+    const size_t startOffset = mDs.get().getCurrentOffset();
 
-    PrimCommentText obj{&mLibrary};
+    const uint32_t byteLength = mDs.get().readUint32();
 
-    const uint32_t byteLength = mDs.readUint32();
+    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
 
-    mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
+    locX = mDs.get().readInt32();
+    locY = mDs.get().readInt32();
 
-    obj.locX = mDs.readInt32();
-    obj.locY = mDs.readInt32();
+    spdlog::debug("locX = {}", locX);
+    spdlog::debug("locY = {}", locY);
 
-    spdlog::debug("locX = {}", obj.locX);
-    spdlog::debug("locY = {}", obj.locY);
+    x2 = mDs.get().readInt32();
+    y2 = mDs.get().readInt32();
+    x1 = mDs.get().readInt32();
+    y1 = mDs.get().readInt32();
 
-    obj.x2 = mDs.readInt32();
-    obj.y2 = mDs.readInt32();
-    obj.x1 = mDs.readInt32();
-    obj.y1 = mDs.readInt32();
-
-    spdlog::debug("x2 = {}", obj.x2);
-    spdlog::debug("y2 = {}", obj.y2);
-    spdlog::debug("x1 = {}", obj.x1);
-    spdlog::debug("y1 = {}", obj.y1);
+    spdlog::debug("x2 = {}", x2);
+    spdlog::debug("y2 = {}", y2);
+    spdlog::debug("x1 = {}", x1);
+    spdlog::debug("y1 = {}", y1);
 
     // @todo Check if fontIdx with 4 byte fits. I.e. are the following 2 Byte all 0?
-    obj.textFontIdx = mDs.readUint16();
+    textFontIdx = mDs.get().readUint16();
 
-    spdlog::debug("textFontIdx = {}", obj.textFontIdx);
+    spdlog::debug("textFontIdx = {}", textFontIdx);
 
-    if(obj.textFontIdx > mLibrary.library.textFonts.size())
+    if(textFontIdx > gLibrary->library->textFonts.size())
     {
         throw std::out_of_range(std::string(__func__) + ": textFontIdx is out of range! Expected " +
-            std::to_string(obj.textFontIdx) + " <= " +
-            std::to_string(mLibrary.library.textFonts.size()) + "!");
+            std::to_string(textFontIdx) + " <= " +
+            std::to_string(gLibrary->library->textFonts.size()) + "!");
     }
 
-    mDs.printUnknownData(2, std::string(__func__) + " - 1");
+    mDs.get().printUnknownData(2, std::string(__func__) + " - 1");
 
-    obj.name = mDs.readStringLenZeroTerm();
+    name = mDs.get().readStringLenZeroTerm();
 
-    spdlog::debug("name = {}", obj.name);
+    spdlog::debug("name = {}", name);
 
-    if(mDs.getCurrentOffset() != startOffset + byteLength)
+    if(mDs.get().getCurrentOffset() != startOffset + byteLength)
     {
-        throw MisinterpretedData(__func__, startOffset, byteLength, mDs.getCurrentOffset());
+        throw MisinterpretedData(__func__, startOffset, byteLength, mDs.get().getCurrentOffset());
     }
 
-    if(byteLength != 39u + obj.name.size())
+    if(byteLength != 39u + name.size())
     {
         throw FileFormatChanged("CommentText");
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 
     readPreamble();
-
-    return obj;
 }
 
 
 TextFont PrimCommentText::getTextFont() const
 {
-    if(mLibrary == nullptr)
-    {
-        throw std::logic_error(std::string(__func__) + ": mLibrary should be set!");
-    }
-
     const int64_t idx = static_cast<int64_t>(textFontIdx) - 1;
 
-    TextFont textFont;
+    TextFont textFont{mDs};
 
     if(idx >= 0)
     {
         // Retrieve font from the library.
-        textFont = mLibrary->library.textFonts.at(idx);
+        textFont = gLibrary->library->textFonts.at(idx);
         // @todo provide try catch block for better exception messages
     }
     else if(idx == -1)

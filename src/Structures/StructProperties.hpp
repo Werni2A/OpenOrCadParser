@@ -9,9 +9,20 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 
-struct StructProperties
+
+class StructProperties : public CommonBase
 {
+public:
+
+    StructProperties(DataStream& aDs) : CommonBase{aDs}, ref{}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     std::string ref;
 };
 
@@ -25,6 +36,12 @@ static std::string to_string(const StructProperties& aObj)
     str += fmt::format("{}ref  = {}\n", indent(1), aObj.ref);
 
     return str;
+}
+
+
+inline std::string StructProperties::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

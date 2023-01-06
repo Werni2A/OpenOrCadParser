@@ -14,9 +14,10 @@ find_package(nameof CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 
 set(SOURCES
+   ${LIB_SRC_DIR}/CommonBase.cpp
    ${LIB_SRC_DIR}/ContainerExtractor.cpp
    ${LIB_SRC_DIR}/DataStream.cpp
-   ${LIB_SRC_DIR}/Misc.cpp
+   # ${LIB_SRC_DIR}/Misc.cpp
    ${LIB_SRC_DIR}/Parser.cpp
    ${LIB_SRC_DIR}/Primitives/Point.cpp
    ${LIB_SRC_DIR}/Primitives/PrimArc.cpp
@@ -31,8 +32,11 @@ set(SOURCES
    ${LIB_SRC_DIR}/Primitives/PrimSymbolVector.cpp
    ${LIB_SRC_DIR}/Streams/StreamAdminData.cpp
    ${LIB_SRC_DIR}/Streams/StreamCellsDirectory.cpp
+   ${LIB_SRC_DIR}/Streams/StreamCellsDirectory.hpp
    ${LIB_SRC_DIR}/Streams/StreamDsnStream.cpp
+   ${LIB_SRC_DIR}/Streams/StreamERC.cpp
    ${LIB_SRC_DIR}/Streams/StreamExportBlocksDirectory.cpp
+   ${LIB_SRC_DIR}/Streams/StreamExportBlocksDirectory.hpp
    ${LIB_SRC_DIR}/Streams/StreamGraphicsDirectory.cpp
    ${LIB_SRC_DIR}/Streams/StreamHierarchy.cpp
    ${LIB_SRC_DIR}/Streams/StreamHSObjects.cpp
@@ -50,10 +54,14 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructAlias.cpp
    ${LIB_SRC_DIR}/Structures/StructERCSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructGeneralProperties.cpp
+   ${LIB_SRC_DIR}/Structures/StructGlobalSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructGraphicBoxInst.cpp
    ${LIB_SRC_DIR}/Structures/StructGraphicCommentTextInst.cpp
+   ${LIB_SRC_DIR}/Structures/StructHierarchicSymbol.cpp
+   ${LIB_SRC_DIR}/Structures/StructOffPageSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructPartInst.cpp
    ${LIB_SRC_DIR}/Structures/StructPinIdxMapping.cpp
+   ${LIB_SRC_DIR}/Structures/StructPinShapeSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructPrimitives.cpp
    ${LIB_SRC_DIR}/Structures/StructProperties.cpp
    ${LIB_SRC_DIR}/Structures/StructProperties2.cpp
@@ -65,8 +73,8 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructSymbolDisplayProp.cpp
    ${LIB_SRC_DIR}/Structures/StructSymbolPinBus.cpp
    ${LIB_SRC_DIR}/Structures/StructSymbolPinScalar.cpp
-   ${LIB_SRC_DIR}/Structures/StructT0x1f.cpp
    ${LIB_SRC_DIR}/Structures/StructT0x10.cpp
+   ${LIB_SRC_DIR}/Structures/StructT0x1f.cpp
    ${LIB_SRC_DIR}/Structures/StructTitleBlockSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructWireScalar.cpp
    ${LIB_SRC_DIR}/Structures/TextFont.cpp
@@ -76,7 +84,6 @@ set(SOURCES
 set(HEADERS
    ${LIB_INCLUDE_DIR}/ContainerExtractor.hpp
    ${LIB_INCLUDE_DIR}/DataStream.hpp
-   ${LIB_INCLUDE_DIR}/DataVariants.hpp
    ${LIB_INCLUDE_DIR}/Enums/Color.hpp
    ${LIB_INCLUDE_DIR}/Enums/FillStyle.hpp
    ${LIB_INCLUDE_DIR}/Enums/HatchStyle.hpp
@@ -102,19 +109,32 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Streams/StreamAdminData.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamDirectoryStruct.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamDsnStream.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamERC.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamGraphicsDirectory.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamHierarchy.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamHSObjects.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamLibrary.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamNetBundleMapData.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamPackage.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamPackagesDirectory.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamPage.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamPartsDirectory.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamSchematic.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamSymbol.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamSymbolsDirectory.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamType.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamViewsDirectory.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructAlias.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructERCSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGeneralProperties.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructGlobalSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGraphicBoxInst.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGraphicCommentTextInst.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructHierarchicSymbol.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructOffPageSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructPartInst.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructPinIdxMapping.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructPinShapeSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructPrimitives.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructProperties.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructProperties2.hpp
@@ -123,8 +143,8 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/StructSthInHierarchy3.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructSthInPages0.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructSymbolPinScalar.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructT0x1f.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructT0x10.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructT0x1f.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructTitleBlockSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructWireScalar.hpp
    ${LIB_INCLUDE_DIR}/Structures/TextFont.hpp

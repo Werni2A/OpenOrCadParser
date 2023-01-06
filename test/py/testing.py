@@ -124,7 +124,7 @@ TEST_CASE("{repo.author} - {repo.project} - {file_name} : Check File {full_path}
     const fs::path inputFile{{"{full_path}"}};
 
     Parser parser{{inputFile}};
-    Library lib = parser.parseLibrary();
+    parser.parseLibrary();
     check_error_count(inputFile, parser.getFileErrCtr(), {file.errors});
     REQUIRE(parser.getFileErrCtr() <= {file.errors});
 }}"""

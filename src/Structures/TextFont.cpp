@@ -5,36 +5,33 @@
 #include <nameof.hpp>
 
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Structures/TextFont.hpp"
 
 
 // @todo this is not a Structure in this kind of context
 //       Move it to somewhere else
-TextFont Parser::readTextFont()
+void TextFont::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
-    const size_t startOffset = mDs.getCurrentOffset();
+    const size_t startOffset = mDs.get().getCurrentOffset();
 
-    TextFont obj;
+    height = mDs.get().readInt32();
+    width  = mDs.get().readInt32();
 
-    obj.height = mDs.readInt32();
-    obj.width  = mDs.readInt32();
+    escapement = mDs.get().readUint16(); // @todo not sure
 
-    obj.escapement = mDs.readUint16(); // @todo not sure
+    mDs.get().printUnknownData(6, std::string(__func__) + " - 0");
 
-    mDs.printUnknownData(6, std::string(__func__) + " - 0");
+    weight = mDs.get().readUint16();
 
-    obj.weight = mDs.readUint16();
+    mDs.get().printUnknownData(2, std::string(__func__) + " - 1");
 
-    mDs.printUnknownData(2, std::string(__func__) + " - 1");
+    italic = mDs.get().readUint16(); // @todo not sure
 
-    obj.italic = mDs.readUint16(); // @todo not sure
+    mDs.get().printUnknownData(6, std::string(__func__) + " - 2");
 
-    mDs.printUnknownData(6, std::string(__func__) + " - 2");
-
-    obj.fontName = mDs.readStringZeroTerm();
+    fontName = mDs.get().readStringZeroTerm();
     // Looks like OrCAD creates a fixed size buffer where the string
     // is copied into. However, when the string does not require the
     // full buffer size it contains still data from the previous
@@ -45,14 +42,12 @@ TextFont Parser::readTextFont()
     // char buffer[60];
     // strcpy(buffer, srcStr);
     // write_data_to_file(buffer, sizeof(buffer));
-    mDs.padRest(startOffset, 60, false);
+    mDs.get().padRest(startOffset, 60, false);
 
     static size_t ctr = 0u;
     spdlog::debug("Index = {}", ctr);
     ctr++;
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

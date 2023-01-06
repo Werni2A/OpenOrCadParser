@@ -10,12 +10,21 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "Enums/ComponentType.hpp"
 #include "General.hpp"
 
 
-struct DirItemType
+class DirItemType
 {
+public:
+
+    DirItemType() : name{}, componentType{ComponentType::Graphic},
+        fileFormatVersion{0}, timezone{0}
+    { }
+
+    std::string to_string() const;
+
     std::string name;
 
     ComponentType componentType;
@@ -40,6 +49,12 @@ static std::string to_string(const DirItemType& aObj)
 }
 
 
+inline std::string DirItemType::to_string() const
+{
+    return ::to_string(*this);
+}
+
+
 [[maybe_unused]]
 static std::ostream& operator<<(std::ostream& aOs, const DirItemType& aVal)
 {
@@ -49,8 +64,19 @@ static std::ostream& operator<<(std::ostream& aOs, const DirItemType& aVal)
 }
 
 
-struct StreamDirectoryStruct
+class StreamDirectoryStruct : public CommonBase
 {
+public:
+
+    StreamDirectoryStruct(DataStream& aDs) : CommonBase{aDs}, lastModifiedDate{0}, items{}
+    { }
+
+    std::string to_string() const;
+
+    // @todo This is more a workaround to get inheritance working for e.g. StreamExportBlocksDirectory
+    void read(FileFormatVersion /* aVersion */ = FileFormatVersion::Unknown) override
+    { }
+
     time_t lastModifiedDate;
 
     std::vector<DirItemType> items;
@@ -72,6 +98,12 @@ static std::string to_string(const StreamDirectoryStruct& aObj)
     }
 
     return str;
+}
+
+
+inline std::string StreamDirectoryStruct::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

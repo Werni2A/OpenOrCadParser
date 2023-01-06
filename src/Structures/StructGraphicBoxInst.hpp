@@ -10,12 +10,23 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "Enums/Color.hpp"
 #include "General.hpp"
 
 
-struct StructGraphicBoxInst
+class StructGraphicBoxInst : public CommonBase
 {
+public:
+
+    StructGraphicBoxInst(DataStream& aDs) : CommonBase{aDs}, dbId{0}, locX{0}, locY{0},
+        x1{0}, y1{0}, x2{0}, y2{0}, color{Color::Default}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     uint32_t dbId;
 
     int16_t locX;
@@ -46,6 +57,12 @@ static std::string to_string(const StructGraphicBoxInst& aObj)
     str += fmt::format("y2    = {}\n", aObj.y2);
     str += fmt::format("color = {}\n", to_string(aObj.color));
     return str;
+}
+
+
+inline std::string StructGraphicBoxInst::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

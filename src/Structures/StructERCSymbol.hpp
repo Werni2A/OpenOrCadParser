@@ -10,12 +10,22 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "General.hpp"
 #include "Structures/StructSymbolBBox.hpp"
 
 
-struct StructERCSymbol
+class StructERCSymbol : public CommonBase
 {
+public:
+
+    StructERCSymbol(DataStream& aDs) : CommonBase{aDs}, name{}, symbolBBox{aDs}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     std::string name;
 
     StructSymbolBBox symbolBBox;
@@ -32,6 +42,12 @@ static std::string to_string(const StructERCSymbol& aObj)
     str += fmt::format("symbolBBox = {}", to_string(aObj.symbolBBox));
 
     return str;
+}
+
+
+inline std::string StructERCSymbol::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

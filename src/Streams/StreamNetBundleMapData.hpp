@@ -7,11 +7,20 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "General.hpp"
 
 
-struct StreamNetBundleMapData
+class StreamNetBundleMapData : public CommonBase
 {
+public:
+
+    StreamNetBundleMapData(DataStream& aDs) : CommonBase{aDs}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
 };
 
@@ -24,6 +33,12 @@ static std::string to_string(const StreamNetBundleMapData& aObj)
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
 
     return str;
+}
+
+
+inline std::string StreamNetBundleMapData::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

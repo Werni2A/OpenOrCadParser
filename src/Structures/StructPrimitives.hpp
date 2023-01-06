@@ -10,6 +10,7 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "Primitives/PrimArc.hpp"
 #include "Primitives/PrimBezier.hpp"
 #include "Primitives/PrimBitmap.hpp"
@@ -22,11 +23,22 @@
 #include "Primitives/PrimSymbolVector.hpp"
 
 
-struct StructPrimitives
+class StructPrimitives : public CommonBase
 {
+public:
+
+    StructPrimitives(DataStream& aDs) : CommonBase{aDs}, name{}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
+    FileFormatVersion predictVersion();
+
     std::string name;
 
-    // @todo replace all this stuff with VariantPrimitive
+    // @todo replace all this stuff with PrimBase vector
     std::vector<PrimRect>         rects;
     std::vector<PrimLine>         lines;
     std::vector<PrimArc>          arcs;
@@ -109,6 +121,12 @@ static std::string to_string(const StructPrimitives& aObj)
     }
 
     return str;
+}
+
+
+inline std::string StructPrimitives::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

@@ -8,13 +8,12 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Structures/StructSymbolPinScalar.hpp"
 
 
-StructSymbolPinScalar Parser::readStructSymbolPinScalar()
+void StructSymbolPinScalar::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
     auto_read_prefixes();
 
@@ -22,24 +21,22 @@ StructSymbolPinScalar Parser::readStructSymbolPinScalar()
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    StructSymbolPinScalar obj;
+    name = mDs.get().readStringLenZeroTerm();
 
-    obj.name = mDs.readStringLenZeroTerm();
+    startX = mDs.get().readInt32();
+    startY = mDs.get().readInt32();
+    hotptX = mDs.get().readInt32();
+    hotptY = mDs.get().readInt32();
 
-    obj.startX = mDs.readInt32();
-    obj.startY = mDs.readInt32();
-    obj.hotptX = mDs.readInt32();
-    obj.hotptY = mDs.readInt32();
+    pinShape = ToPinShape(mDs.get().readUint16());
 
-    obj.pinShape = ToPinShape(mDs.readUint16());
+    mDs.get().printUnknownData(2, std::string(__func__) + " - 0");
 
-    mDs.printUnknownData(2, std::string(__func__) + " - 0");
+    portType = ToPortType(mDs.get().readUint32());
 
-    obj.portType = ToPortType(mDs.readUint32());
+    mDs.get().printUnknownData(4, std::string(__func__) + " - 1");
 
-    mDs.printUnknownData(4, std::string(__func__) + " - 1");
-
-    const uint16_t struct_len = mDs.readUint16();
+    const uint16_t struct_len = mDs.get().readUint16();
 
     for(size_t i = 0U; i < struct_len; ++i)
     {
@@ -50,8 +47,6 @@ StructSymbolPinScalar Parser::readStructSymbolPinScalar()
 
     readOptionalTrailingFuture();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

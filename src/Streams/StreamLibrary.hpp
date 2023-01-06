@@ -12,11 +12,22 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "Structures/TextFont.hpp"
 
 
-struct StreamLibrary
+class StreamLibrary : public CommonBase
 {
+public:
+
+    StreamLibrary(DataStream& aDs) : CommonBase{aDs}, introduction{}, createDate{0}, modifyDate{0},
+        textFonts{}, strLstPartField{}, strLst{}, partAliases{}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     std::string introduction;
 
     time_t createDate;
@@ -67,6 +78,12 @@ static std::string to_string(const StreamLibrary& aObj)
     }
 
     return str;
+}
+
+
+inline std::string StreamLibrary::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

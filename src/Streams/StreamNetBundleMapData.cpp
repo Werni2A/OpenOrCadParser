@@ -4,20 +4,18 @@
 #include <nameof.hpp>
 #include <spdlog/spdlog.h>
 
+#include "Enums/Structure.hpp"
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Streams/StreamNetBundleMapData.hpp"
 
 
-StreamNetBundleMapData Parser::readStreamNetBundleMapData()
+void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
-    StreamNetBundleMapData obj;
+    mDs.get().printUnknownData(2, fmt::format("{}: 0", __func__));
 
-    mDs.printUnknownData(2, fmt::format("{}: 0", __func__));
-
-    uint16_t number_groups = mDs.readUint16();
+    uint16_t number_groups = mDs.get().readUint16();
 
     spdlog::debug("number_groups = {}", number_groups);
 
@@ -25,7 +23,7 @@ StreamNetBundleMapData Parser::readStreamNetBundleMapData()
     {
         spdlog::debug("[{}]:", i);
 
-        std::string group_name = mDs.readStringLenZeroTerm();
+        std::string group_name = mDs.get().readStringLenZeroTerm();
         spdlog::debug("group_name = {}:", group_name);
 
         Structure structure = auto_read_prefixes();
@@ -34,7 +32,7 @@ StreamNetBundleMapData Parser::readStreamNetBundleMapData()
         if(structure != Structure::NetGroup)
         {
             const std::string msg = fmt::format("{}: Expected {} but got {}",
-                __func__, to_string(Structure::NetGroup), to_string(structure));
+                __func__, ::to_string(Structure::NetGroup), ::to_string(structure));
 
             spdlog::error(msg);
             throw std::runtime_error(msg);
@@ -42,34 +40,32 @@ StreamNetBundleMapData Parser::readStreamNetBundleMapData()
 
         readPreamble();
 
-        mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
+        mDs.get().assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
 
         // The following contains the information of a net group but
         // the name of this group is stated outside. How should this
         // be handled?
 
-        uint16_t number_group_elements = mDs.readUint16();
+        uint16_t number_group_elements = mDs.get().readUint16();
 
         for(size_t j = 0U; j < number_group_elements; ++j)
         {
-            std::string element_name = mDs.readStringLenZeroTerm();
+            std::string element_name = mDs.get().readStringLenZeroTerm();
             spdlog::debug("  [{}]: element_name = {}", j, element_name);
 
             // @todo 0x01 is probably a scalar wire
             //       0x02 is probably a bus
-            uint16_t wire_type = mDs.readUint16();
+            uint16_t wire_type = mDs.get().readUint16();
             spdlog::debug("       wire_type = {}", wire_type == 0x01 ? "Scalar" : wire_type == 0x02 ? "Bus" : "Unknown");
         }
     }
 
     // @todo use function
-    if(!mDs.isEoF())
+    if(!mDs.get().isEoF())
     {
         throw std::runtime_error("Exptected EoF in NetBundleMapData");
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

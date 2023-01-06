@@ -10,11 +10,22 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "General.hpp"
 
 
-struct TextFont
+class TextFont : public CommonBase
 {
+public:
+
+    TextFont(DataStream& aDs) : CommonBase{aDs}, height{0}, width{0}, escapement{0},
+        weight{0}, italic{0}, fontName{}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     int32_t height;
     int32_t width;
 
@@ -42,6 +53,12 @@ static std::string to_string(const TextFont& aObj)
     str += fmt::format("{}fontName = {}\n", indent(1), aObj.fontName);
 
     return str;
+}
+
+
+inline std::string TextFont::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

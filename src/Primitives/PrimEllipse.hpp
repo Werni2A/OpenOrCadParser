@@ -18,10 +18,21 @@
 #include "Enums/FillStyle.hpp"
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
+#include "Primitives/PrimBase.hpp"
 
 
-struct PrimEllipse
+class PrimEllipse : public PrimBase
 {
+public:
+
+    PrimEllipse(DataStream& aDs) : PrimBase{aDs}, x1{0}, y1{0}, x2{0}, y2{0},
+        mLineStyle{}, mLineWidth{}, mFillStyle{}, mHatchStyle{}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     static size_t getExpectedStructSize(FileFormatVersion aVersion);
 
     void setLineStyle(const LineStyle& aVal)
@@ -96,6 +107,12 @@ static std::string to_string(const PrimEllipse& aObj)
     str += fmt::format("{}hatchStyle = {}\n", indent(1), to_string(aObj.getHatchStyle()));
 
     return str;
+}
+
+
+inline std::string PrimEllipse::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

@@ -9,9 +9,20 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 
-struct StructProperties2
+
+class StructProperties2 : public CommonBase
 {
+public:
+    StructProperties2(DataStream& aDs) : CommonBase{aDs}, name{}, refDes{},
+        footprint{}, sectionCount{0}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     std::string name;
     std::string refDes;
     std::string footprint;
@@ -32,6 +43,12 @@ static std::string to_string(const StructProperties2& aObj)
     str += fmt::format("{}sectionCount = {}\n", indent(1), aObj.sectionCount);
 
     return str;
+}
+
+
+inline std::string StructProperties2::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

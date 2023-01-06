@@ -8,12 +8,20 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "General.hpp"
 
 
-struct StreamHSObjects
+class StreamHSObjects : public CommonBase
 {
+public:
 
+    StreamHSObjects(DataStream& aDs) : CommonBase{aDs}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 };
 
 
@@ -25,6 +33,12 @@ static std::string to_string(const StreamHSObjects& aObj)
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
 
     return str;
+}
+
+
+inline std::string StreamHSObjects::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

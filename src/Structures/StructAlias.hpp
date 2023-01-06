@@ -10,13 +10,24 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "Enums/Color.hpp"
 #include "Enums/Rotation.hpp"
 #include "General.hpp"
 
 
-struct StructAlias
+class StructAlias : public CommonBase
 {
+public:
+
+    StructAlias(DataStream& aDs) : CommonBase{aDs}, locX{0}, locY{0},
+        color{Color::Default}, rotation{Rotation::Deg_0}, name{}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     int32_t  locX;
     int32_t  locY;
 
@@ -40,6 +51,12 @@ static std::string to_string(const StructAlias& aObj)
     str += fmt::format("name     = {}\n", aObj.name);
 
     return str;
+}
+
+
+inline std::string StructAlias::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

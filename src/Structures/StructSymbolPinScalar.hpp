@@ -9,12 +9,23 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "Enums/PortType.hpp"
 #include "PinShape.hpp"
 
 
-struct StructSymbolPinScalar
+class StructSymbolPinScalar : public CommonBase
 {
+public:
+
+    StructSymbolPinScalar(DataStream& aDs) : CommonBase{aDs}, name{},
+        startX{0}, startY{0}, hotptX{0}, hotptY{0}, pinShape{}, portType{PortType::Input}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     std::string name;
 
     int32_t startX;
@@ -47,6 +58,12 @@ static std::string to_string(const StructSymbolPinScalar& aObj)
     str += fmt::format("{}portType = {}\n", indent(1), to_string(aObj.portType));
 
     return str;
+}
+
+
+inline std::string StructSymbolPinScalar::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

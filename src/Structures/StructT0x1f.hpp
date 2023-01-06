@@ -9,9 +9,20 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 
-struct StructT0x1f
+class StructT0x1f : public CommonBase
 {
+public:
+
+    StructT0x1f(DataStream& aDs) : CommonBase{aDs}, name{},
+        refDes{}, pcbFootprint{}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     std::string name;
     std::string refDes;
     std::string pcbFootprint;
@@ -29,6 +40,12 @@ static std::string to_string(const StructT0x1f& aObj)
     str += fmt::format("{}pcbFootprint = {}\n", indent(1), aObj.pcbFootprint);
 
     return str;
+}
+
+
+inline std::string StructT0x1f::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

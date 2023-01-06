@@ -16,11 +16,23 @@
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
 #include "Primitives/Point.hpp"
+#include "Primitives/PrimBase.hpp"
 
 
-struct PrimRect
+class PrimRect : public PrimBase
 {
+public:
+    PrimRect(DataStream& aDs) : PrimBase{aDs}, x1{0}, y1{0}, x2{0}, y2{0},
+        mLineStyle{}, mLineWidth{}, fillStyle{}, hatchStyle{}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     static size_t getExpectedStructSize(FileFormatVersion aVersion);
+
+    FileFormatVersion predictVersion();
 
     void setLineStyle(const LineStyle& aVal)
     {
@@ -76,6 +88,12 @@ static std::string to_string(const PrimRect& aObj)
     str += fmt::format("{}hatchStyle = {}\n", indent(1), to_string(aObj.hatchStyle));
 
     return str;
+}
+
+
+inline std::string PrimRect::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

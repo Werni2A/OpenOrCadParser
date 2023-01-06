@@ -11,13 +11,24 @@
 #include <nameof.hpp>
 
 #include "General.hpp"
+#include "Primitives/PrimBase.hpp"
 
 
 namespace fs = std::filesystem;
 
 
-struct PrimBitmap
+class PrimBitmap : public PrimBase
 {
+public:
+
+    PrimBitmap(DataStream& aDs) : PrimBase{aDs}, locX{0}, locY{0},
+        x1{0}, y1{0}, x2{0}, y2{0}, bmpWidth{0}, bmpHeight{0}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     fs::path writeImgToFile(fs::path aFilePath) const;
 
     int32_t locX;
@@ -56,6 +67,12 @@ static std::string to_string(const PrimBitmap& aObj)
     // @todo Should we print rawImgData somehow? As ASCII image?
 
     return str;
+}
+
+
+inline std::string PrimBitmap::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

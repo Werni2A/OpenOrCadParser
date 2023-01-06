@@ -8,9 +8,10 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <memory>
+#include <random>
 #include <stdexcept>
 #include <string>
-#include <random>
 #include <vector>
 
 #include <fmt/color.h>
@@ -29,41 +30,42 @@
 #include "Enums/Structure.hpp"
 #include "Exception.hpp"
 #include "General.hpp"
+#include "Library.hpp"
 #include "Parser.hpp"
 #include "PinShape.hpp"
-#include "Primitives/Point.hpp"
-#include "Primitives/PrimArc.hpp"
-#include "Primitives/PrimEllipse.hpp"
-#include "Primitives/PrimLine.hpp"
-#include "Primitives/PrimPolygon.hpp"
-#include "Primitives/PrimRect.hpp"
 #include "Streams/StreamAdminData.hpp"
+#include "Streams/StreamCellsDirectory.hpp"
 #include "Streams/StreamDsnStream.hpp"
+#include "Streams/StreamERC.hpp"
+#include "Streams/StreamExportBlocksDirectory.hpp"
+#include "Streams/StreamGraphicsDirectory.hpp"
+#include "Streams/StreamHierarchy.hpp"
 #include "Streams/StreamHSObjects.hpp"
 #include "Streams/StreamLibrary.hpp"
 #include "Streams/StreamNetBundleMapData.hpp"
+#include "Streams/StreamPackage.hpp"
+#include "Streams/StreamPackagesDirectory.hpp"
+#include "Streams/StreamPage.hpp"
+#include "Streams/StreamPartsDirectory.hpp"
+#include "Streams/StreamSchematic.hpp"
+#include "Streams/StreamSymbol.hpp"
+#include "Streams/StreamSymbolsDirectory.hpp"
 #include "Streams/StreamType.hpp"
-#include "Structures/StructAlias.hpp"
-#include "Structures/StructGraphicBoxInst.hpp"
-#include "Structures/StructGraphicCommentTextInst.hpp"
-#include "Structures/StructPartInst.hpp"
-#include "Structures/StructProperties.hpp"
-#include "Structures/StructSthInPages0.hpp"
-#include "Structures/StructSymbolDisplayProp.hpp"
-#include "Structures/StructSymbolPinBus.hpp"
-#include "Structures/StructSymbolPinScalar.hpp"
-#include "Structures/StructT0x1f.hpp"
-#include "Structures/StructT0x10.hpp"
-#include "Structures/TrailingProperties.hpp"
+#include "Streams/StreamViewsDirectory.hpp"
 
 
 namespace fs = std::filesystem;
 
 
-Parser::Parser(const fs::path& aFile, FileFormatVersion aFileFormatVersion) :
-    mFileFormatVersion{aFileFormatVersion}, mFileCtr{0U}, mFileErrCtr{0U}, mImgCtr{0U}
+Library* gLibrary = new Library{};
+FileType gFileType = FileType::Library;
+FileFormatVersion gFileFormatVersion = FileFormatVersion::C;
+
+
+Parser::Parser(const fs::path& aFile) :
+    mFileCtr{0U}, mFileErrCtr{0U}, mImgCtr{0U}
 {
-    mFileType      = getFileTypeByExtension(aFile);
+    gFileType      = getFileTypeByExtension(aFile);
     mInputFile     = aFile;
     mInputFileSize = fs::file_size(aFile);
 
@@ -110,7 +112,7 @@ Parser::~Parser()
 /**
  * @brief Parse the whole library.
  */
-Library Parser::parseLibrary()
+void Parser::parseLibrary()
 {
     const std::string aLibPath = mExtractedPath;
 
@@ -255,7 +257,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathCellsDir))
     {
-        mLibrary.cellsDir        = parseFile<StreamDirectoryStruct>(pathCellsDir, [this](){ return readStreamCellsDirectory(); });
+        gLibrary->cellsDir = parseFile<StreamCellsDirectory>(pathCellsDir, mDs);
     }
     else
     {
@@ -266,7 +268,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathExportBlocksDir))
     {
-        mLibrary.exportBlocksDir = parseFile<StreamDirectoryStruct>(pathExportBlocksDir, [this](){ return readStreamExportBlocksDirectory(); });
+        gLibrary->exportBlocksDir = parseFile<StreamExportBlocksDirectory>(pathExportBlocksDir, mDs);
     }
     else
     {
@@ -277,7 +279,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathGraphicsDir))
     {
-        mLibrary.graphicsDir     = parseFile<StreamDirectoryStruct>(pathGraphicsDir, [this](){ return readStreamGraphicsDirectory(); });
+        gLibrary->graphicsDir = parseFile<StreamGraphicsDirectory>(pathGraphicsDir, mDs);
     }
     else
     {
@@ -288,7 +290,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathPackagesDir))
     {
-        mLibrary.packagesDir     = parseFile<StreamDirectoryStruct>(pathPackagesDir, [this](){ return readStreamPackagesDirectory(); });
+        gLibrary->packagesDir = parseFile<StreamPackagesDirectory>(pathPackagesDir, mDs);
     }
     else
     {
@@ -299,7 +301,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathPartsDir))
     {
-        mLibrary.partsDir        = parseFile<StreamDirectoryStruct>(pathPartsDir, [this](){ return readStreamPartsDirectory(); });
+        gLibrary->partsDir = parseFile<StreamPartsDirectory>(pathPartsDir, mDs);
     }
     else
     {
@@ -310,7 +312,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathSymbolsDir))
     {
-        mLibrary.symbolsDir      = parseFile<StreamDirectoryStruct>(pathSymbolsDir, [this](){ return readStreamSymbolsDirectory(); });
+        gLibrary->symbolsDir = parseFile<StreamSymbolsDirectory>(pathSymbolsDir, mDs);
     }
     else
     {
@@ -321,7 +323,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathViewsDir))
     {
-        mLibrary.viewsDir        = parseFile<StreamDirectoryStruct>(pathViewsDir, [this](){ return readStreamViewsDirectory(); });
+        gLibrary->viewsDir = parseFile<StreamViewsDirectory>(pathViewsDir, mDs);
     }
     else
     {
@@ -332,22 +334,22 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathAdminData))
     {
-        mLibrary.adminData = parseFile<StreamAdminData>(pathAdminData, [this](){ return readStreamAdminData(); });
+        gLibrary->adminData = parseFile<StreamAdminData>(pathAdminData, mDs);
     }
 
     if(fs::exists(pathHSObjects))
     {
-        mLibrary.hsObjects = parseFile<StreamHSObjects>(pathHSObjects, [this](){ return readStreamHSObjects(); });
+        gLibrary->hsObjects = parseFile<StreamHSObjects>(pathHSObjects, mDs);
     }
 
     if(fs::exists(pathNetBundleMapData))
     {
-        mLibrary.netBundleMapData = parseFile<StreamNetBundleMapData>(pathNetBundleMapData, [this](){ return readStreamNetBundleMapData(); });
+        gLibrary->netBundleMapData = parseFile<StreamNetBundleMapData>(pathNetBundleMapData, mDs);
     }
 
     if(fs::exists(pathGraphicsTypes))
     {
-        mLibrary.graphicsTypes = parseFile<std::vector<Type>>(pathGraphicsTypes, [this](){ return readStreamType(); });
+        gLibrary->graphicsTypes = parseFile<StreamType>(pathGraphicsTypes, mDs);
     }
     else
     {
@@ -358,7 +360,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathSymbolsTypes))
     {
-        mLibrary.symbolsTypes = parseFile<std::vector<Type>>(pathSymbolsTypes, [this](){ return readStreamType(); });
+        gLibrary->symbolsTypes = parseFile<StreamType>(pathSymbolsTypes, mDs);
     }
     else
     {
@@ -369,7 +371,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathLibrary))
     {
-        mLibrary.library = parseFile<StreamLibrary>(pathLibrary, [this](){ return readStreamLibrary(); });
+        gLibrary->library = parseFile<StreamLibrary>(pathLibrary, mDs);
     }
     else
     {
@@ -380,7 +382,7 @@ Library Parser::parseLibrary()
 
     if(fs::exists(pathDsnStream))
     {
-        mLibrary.dsnStream = parseFile<StreamDsnStream>(pathDsnStream, [this](){ return readStreamDsnStream(); });
+        gLibrary->dsnStream = parseFile<StreamDsnStream>(pathDsnStream, mDs);
     }
 
     spdlog::info("----------------------------------------------------------------------------------\n");
@@ -388,7 +390,7 @@ Library Parser::parseLibrary()
     if(fs::exists(pathSymbolsERC))
     {
         // @todo write results into mLibrary
-        parseFile<bool>(pathSymbolsERC, [this](){ return readStreamERC(); });
+        parseFile<StreamERC>(pathSymbolsERC, mDs);
     }
     else
     {
@@ -411,7 +413,7 @@ Library Parser::parseLibrary()
                 continue;
             }
 
-            mLibrary.packages.push_back(parseFile<StreamPackage>(pathPackage, [this](){ return readStreamPackage(); }));
+            gLibrary->packages.push_back(parseFile<StreamPackage>(pathPackage, mDs));
 
             spdlog::info("----------------------------------------------------------------------------------\n");
         }
@@ -444,7 +446,7 @@ Library Parser::parseLibrary()
                 continue;
             }
 
-            mLibrary.symbols.push_back(parseFile<StreamSymbol>(pathSymbol, [this](){ return readStreamSymbol(); }));
+            gLibrary->symbols.push_back(parseFile<StreamSymbol>(pathSymbol, mDs));
 
             spdlog::info("----------------------------------------------------------------------------------\n");
         }
@@ -459,7 +461,7 @@ Library Parser::parseLibrary()
         if(fs::exists(schematic))
         {
             // @todo write results into mLibrary
-            parseFile<bool>(schematic, [this](){ return readStreamSchematic(); });
+            parseFile<StreamSchematic>(schematic, mDs);
         }
         else
         {
@@ -474,7 +476,7 @@ Library Parser::parseLibrary()
         if(fs::exists(hierarchy))
         {
             // @todo write results into mLibrary
-            parseFile<bool>(hierarchy, [this](){ return readStreamHierarchy(); });
+            parseFile<StreamHierarchy>(hierarchy, mDs);
         }
         else
         {
@@ -491,7 +493,7 @@ Library Parser::parseLibrary()
             if(fs::exists(page))
             {
                 // @todo write results into mLibrary
-                parseFile<bool>(page, [this](){ return readStreamPage(); });
+                parseFile<StreamPage>(page, mDs);
             }
             else
             {
@@ -510,8 +512,6 @@ Library Parser::parseLibrary()
     spdlog::info(errCtrStr);
 
     // spdlog::info(to_string(mLibrary));
-
-    return mLibrary;
 }
 
 
@@ -535,452 +535,6 @@ void Parser::exceptionHandling()
     {
         spdlog::error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
         spdlog::error(fmt::format(fg(fmt::color::crimson), "Unknown exception caught!\n"));
-    }
-}
-
-
-void Parser::discard_until_preamble()
-{
-    const int patternSize = 4;
-    std::array<uint8_t, patternSize> buffer = {0};
-
-    const size_t startOffset = mDs.getCurrentOffset();
-
-    // Magic number specifying the beginning of a struct
-    const std::array<uint8_t, patternSize> preamble = {0xff, 0xe4, 0x5c, 0x39};
-
-    auto shift_left = [](std::array<uint8_t, patternSize>& buffer)
-    {
-        for(size_t i = 0u; i < buffer.size() - 1; ++i)
-        {
-            buffer[i] = buffer[i + 1];
-        }
-    };
-
-    while(buffer != preamble)
-    {
-        shift_left(buffer);
-        mDs.read(reinterpret_cast<char*>(buffer.data()) + buffer.size() - 1, 1);
-
-        if(mDs.isEoF())
-        {
-            const std::string msg = fmt::format("{}: Unexpectedly reached end-of-file!", __func__);
-
-            spdlog::error(msg);
-            throw std::runtime_error(msg);
-        }
-    }
-
-    // Put back the preamble such that it can be parsed in the next step
-    for(size_t i = 0u; i < preamble.size(); ++i)
-    {
-        mDs.putback(preamble[preamble.size() - 1 - i]);
-    }
-
-    const size_t endOffset = mDs.getCurrentOffset();
-
-    spdlog::critical("{}: Discarded {} Byte until next preamble", __func__, endOffset - startOffset);
-}
-
-Structure Parser::auto_read_prefixes()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const size_t startOffset = mDs.getCurrentOffset();
-
-    const auto logLevel = spdlog::get_level();
-    spdlog::set_level(spdlog::level::off);
-
-    bool failed = true;
-    size_t prefixCtr = 0U;
-
-    // Count from back to make it easier catching long preambles
-    // that could succeed by mistake if the the algorithm detects
-    // no errors in a shorter version.
-    const size_t maxPrefixes = 10U;
-    for(prefixCtr = maxPrefixes; prefixCtr >= 1U; --prefixCtr)
-    {
-        // Reading the prefixes might read beyond EoF in some cases,
-        // because its just a prediction, we do not care. Therefore
-        // reset the EoF flag.
-        mDs.clear();
-
-        failed = false;
-
-        try
-        {
-            read_prefixes(prefixCtr, true);
-        }
-        catch(const std::exception& e)
-        {
-            failed = true;
-        }
-
-        mDs.setCurrentOffset(startOffset);
-
-        // Reading the prefixes might read beyond EoF in some cases,
-        // because its just a prediction, we do not care. Therefore
-        // reset the EoF flag.
-        mDs.clear();
-
-        if(!failed)
-        {
-            break;
-        }
-    }
-
-    // Reading the prefixes might read beyond EoF in some cases,
-    // because its just a prediction, we do not care. Therefore
-    // reset the EoF flag.
-    mDs.clear();
-
-    spdlog::set_level(logLevel);
-
-    if(failed)
-    {
-        const std::string msg = fmt::format("{}: Could not find valid number of prefixes! (maximum is set to {} but could be higher)",
-            __func__, maxPrefixes);
-
-        spdlog::error(msg);
-        throw std::runtime_error(msg);
-    }
-
-    spdlog::info("{}: Found {} prefixes\n", __func__, prefixCtr);
-    Structure structure = read_prefixes(prefixCtr);
-
-    // @todo Looks like each structure type has a fixed number of prefixes
-    //       I.e. figure out the numbers for each structure and move the
-    //       parsing code into the structure specific parser. This should
-    //       get rid of auto_read_prefixes.
-    spdlog::info("Prefixes: {} = {}", to_string(structure), prefixCtr);
-
-    mDs.sanitizeNoEoF();
-
-    return structure;
-}
-
-
-// Read number of prefixes, where the last one is a short prefix
-Structure Parser::read_prefixes(size_t aNumber, bool aPrediction)
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    if(aNumber == 0U)
-    {
-        throw std::invalid_argument(fmt::format("aNumber = {} but must be > 0!", aNumber));
-    }
-
-    Structure firstStruct;
-
-    std::vector<std::pair<size_t, size_t>> offsets; //!< First = Current offset absolute; Second = Offset relative to structure
-
-    for(size_t i = 0U; i < aNumber; ++i)
-    {
-        Structure currStruct;
-
-        const size_t preambleOffset = mDs.getCurrentOffset();
-
-        if(i == aNumber - 1)
-        {
-            const auto currPrefix = read_single_prefix_short();
-            currStruct = currPrefix.first;
-        }
-        else
-        {
-            const auto currPrefix = read_single_prefix();
-            currStruct = currPrefix.first;
-
-            offsets.push_back(std::pair<size_t, size_t>{preambleOffset, static_cast<size_t>(currPrefix.second)});
-        }
-
-        if(i == 0U)
-        {
-            firstStruct = currStruct;
-        }
-
-        if(currStruct != firstStruct)
-        {
-            const std::string msg = fmt::format("{}: {} != {}",
-                __func__, to_string(currStruct), to_string(firstStruct));
-
-            spdlog::error(msg);
-            throw std::runtime_error(msg);
-        }
-    }
-
-    if(!aPrediction)
-    {
-        if(offsets.size() >= 2U)
-        {
-            for(size_t i = 0U; i < offsets.size() - 1U; i += 2)
-            {
-                const std::pair<size_t, size_t> start_pair = offsets[i + 1U];
-                const std::pair<size_t, size_t> stop_pair  = offsets[i];
-
-                const FutureData futureData = FutureData{start_pair.first, start_pair.second, stop_pair.first, stop_pair.second};
-
-                std::optional<FutureData> existing = mFutureDataLst.getByStartOffset(futureData.getStartOffset());
-
-                if(existing.has_value())
-                {
-                    if(existing.value().getStopOffset() != futureData.getStopOffset())
-                    {
-                        const std::string msg = fmt::format("{}: Future data at 0x{:08x} is either {} or {} Byte long,"
-                            " having both lengths does not make any sense.",
-                            __func__, existing.value().getByteLen(), futureData.getByteLen());
-
-                        spdlog::error(msg);
-                        throw std::runtime_error(msg);
-                    }
-                    else
-                    {
-                        spdlog::debug("{}: Future data exists already in list", __func__);
-                    }
-                }
-
-                mFutureDataLst.push_back(futureData);
-
-                spdlog::debug("{}: Found future data: {}", __func__, (mFutureDataLst.end() - 1)->string());
-            }
-        }
-        else if(offsets.size() == 1U)
-        {
-            spdlog::debug("{}: Found single structure beginning at 0x{:08x}", __func__, offsets[0].second);
-        }
-    }
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-
-    return firstStruct;
-}
-
-std::pair<Structure, uint32_t> Parser::read_single_prefix()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const Structure typeId = ToStructure(mDs.readUint8());
-
-    const uint32_t byteOffset = mDs.readUint32();
-
-    spdlog::debug("{:>2} = {}: Offset = {}\n", static_cast<int>(typeId), to_string(typeId), byteOffset);
-
-    mDs.printUnknownData(4, std::string(__func__) + " - 0");
-    // mDs.assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-
-    return std::pair<Structure, uint32_t>{typeId, byteOffset};
-}
-
-
-std::pair<Structure, uint32_t> Parser::read_single_prefix_short()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const Structure typeId = ToStructure(mDs.readUint8());
-
-    const int16_t size = mDs.readInt16();
-
-    spdlog::debug("{:>2} = {}: Size = {}\n", static_cast<int>(typeId), to_string(typeId), size);
-
-    if(size >= 0)
-    {
-        // @todo This vector needs to be stored in the package, therefore return it to caller
-        std::vector<std::pair<uint32_t, uint32_t> > nameValueMapping; //!< .first = Name Index, .second = Value Index
-
-        for(int i = 0; i < size; ++i)
-        {
-            uint32_t strLstIdxName  = mDs.readUint32();
-            uint32_t strLstIdxValue = mDs.readUint32();
-
-            nameValueMapping.push_back(std::make_pair(strLstIdxName, strLstIdxValue));
-        }
-
-        for(size_t i = 0u; i < nameValueMapping.size(); ++i)
-        {
-            try
-            {
-                const auto getStr = [&, this](uint32_t idx) -> std::string
-                    {
-                        int64_t newIdx = static_cast<int64_t>(idx);
-                        return newIdx >= 0 ? mLibrary.library.strLst.at(newIdx) : "";
-                    };
-
-                spdlog::debug("  {}: {} <- {}", i, getStr(nameValueMapping.at(i).first), getStr(nameValueMapping.at(i).second));
-            }
-            catch(const std::exception& e)
-            {
-                const std::string msg = fmt::format("{}: Tried to access strLst out of range!\n{}", __func__, e.what());
-                // spdlog::error(msg);
-                // throw std::out_of_range(msg);
-            }
-        }
-    }
-    else // size < 0
-    {
-        // @todo Why is -1 used? The value 0 would also suffice...
-        // Until now I only saw it for PinIdxMapping, Properties and SymbolDisplayProp
-        spdlog::warn("{}: What does {} mean?", to_string(typeId), size); // @todo Figure out
-    }
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-
-    return std::pair<Structure, uint32_t>{typeId, size};
-}
-
-
-void Parser::readPreamble()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    const std::size_t startOffset = mDs.getCurrentOffset();
-
-    // Try to find prefix and read trailing data. If
-    // the prefix is not there, just skip it.
-    try
-    {
-        // Magic number indicating some data
-        mDs.assumeData({0xff, 0xe4, 0x5c, 0x39}, std::string(__func__) + " Preamble Check Failed");
-
-        const uint32_t dataLen = mDs.readUint32();
-        mDs.printUnknownData(dataLen);
-    }
-    catch(const std::runtime_error& err)
-    {
-        mDs.setCurrentOffset(startOffset);
-    }
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-}
-
-
-VariantPrimitive Parser::readPrimitive()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    Primitive typeId = ToPrimitive(mDs.peek(1)[0]);
-
-    VariantPrimitive retStruct = readPrimitive(typeId);
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-
-    return retStruct;
-}
-
-
-VariantPrimitive Parser::readPrimitive(Primitive aPrimitive)
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    VariantPrimitive retPrim;
-
-    switch(aPrimitive)
-    {
-        case Primitive::Rect:         retPrim = readPrimRect();         break;
-        case Primitive::Line:         retPrim = readPrimLine();         break;
-        case Primitive::Arc:          retPrim = readPrimArc();          break;
-        case Primitive::Ellipse:      retPrim = readPrimEllipse();      break;
-        case Primitive::Polygon:      retPrim = readPrimPolygon();      break;
-        case Primitive::Polyline:     retPrim = readPrimPolyline();     break;
-        case Primitive::CommentText:  retPrim = readPrimCommentText();  break;
-        case Primitive::Bitmap:       retPrim = readPrimBitmap();       break;
-        case Primitive::SymbolVector: retPrim = readPrimSymbolVector(); break;
-        case Primitive::Bezier:       retPrim = readPrimBezier();       break;
-        default:
-            const std::string msg = fmt::format("{}: Primitive {} is not yet handled",
-                __func__, to_string(aPrimitive));
-
-            spdlog::error(msg);
-            throw std::runtime_error(msg);
-            break;
-    }
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-
-    return retPrim;
-}
-
-
-VariantStructure Parser::readStructure()
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    Structure typeId = ToStructure(mDs.peek(1)[0]);
-
-    VariantStructure retStruct = readStructure(typeId);
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-
-    return retStruct;
-}
-
-
-VariantStructure Parser::readStructure(Structure aStructure)
-{
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
-
-    VariantStructure retStruct;
-
-    switch(aStructure)
-    {
-        case Structure::Alias:                  retStruct = readStructAlias();                  break;
-        case Structure::ERCSymbol:              retStruct = readStructERCSymbol();              break;
-        case Structure::GlobalSymbol:           retStruct = readStructGlobalSymbol();           break;
-        case Structure::GraphicBoxInst:         retStruct = readStructGraphicBoxInst();         break;
-        case Structure::GraphicCommentTextInst: retStruct = readStructGraphicCommentTextInst(); break;
-        case Structure::OffPageSymbol:          retStruct = readStructOffPageSymbol();          break;
-        case Structure::PartInst:               retStruct = readStructPartInst();               break;
-        case Structure::PinIdxMapping:          retStruct = readStructPinIdxMapping();          break;
-        case Structure::PinShapeSymbol:         retStruct = readStructPinShapeSymbol();         break;
-        case Structure::PortSymbol:             retStruct = readStructHierarchicSymbol();       break;
-        case Structure::Primitives:             retStruct = readStructPrimitives();             break;
-        case Structure::Properties:             retStruct = readStructProperties();             break;
-        case Structure::SthInPages0:            retStruct = readStructSthInPages0();            break;
-        case Structure::SymbolDisplayProp:      retStruct = readStructSymbolDisplayProp();      break;
-        case Structure::SymbolPinBus:           retStruct = readStructSymbolPinBus();           break;
-        case Structure::SymbolPinScalar:        retStruct = readStructSymbolPinScalar();        break;
-        case Structure::T0x1f:                  retStruct = readStructT0x1f();                  break;
-        case Structure::T0x10:                  retStruct = readStructT0x10();                  break;
-        case Structure::WireScalar:             retStruct = readStructWireScalar();             break;
-        default:
-
-            const std::optional<FutureData> futureData = getFutureData();
-
-            const std::string msg = fmt::format("{}: Structure {} is not implemented!",
-                __func__, to_string(aStructure));
-
-            if(futureData.has_value())
-            {
-                spdlog::error(msg);
-                mDs.printUnknownData(futureData.value().getByteLen(),
-                    fmt::format("{}: {} is not implemented",__func__, to_string(aStructure)));
-            }
-            else
-            {
-                throw std::runtime_error(msg);
-            }
-
-            break;
-    }
-
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-
-    return retStruct;
-}
-
-
-void Parser::checkInterpretedDataLen(const std::string& aFuncName, size_t aStartOffset, size_t aEndOffset, size_t aExpectedLen)
-{
-    if(aStartOffset > aEndOffset)
-    {
-        throw std::invalid_argument("Start offset must be smaller or equal to end offset!");
-    }
-
-    const size_t actuallLen = aEndOffset - aStartOffset;
-
-    if(actuallLen != aExpectedLen)
-    {
-        throw MisinterpretedData(aFuncName.c_str(), aStartOffset, aExpectedLen, aEndOffset);
     }
 }
 
@@ -1075,102 +629,4 @@ void Parser::closeFile()
 
     mCurrOpenFile.clear();
     mCurrOpenFileSize = 0u;
-}
-
-
-std::optional<FutureData> Parser::getFutureData()
-{
-    const size_t startOffset = mDs.getCurrentOffset();
-
-    const std::optional<FutureData> thisFuture = mFutureDataLst.getByStartOffset(startOffset);
-
-    if(thisFuture.has_value())
-    {
-        spdlog::info("Found this structure in future data: 0x{:08x} -> 0x{:08x} ({} Byte)",
-            thisFuture.value().getStartOffset(), thisFuture.value().getStopOffset(),
-            thisFuture.value().getByteLen());
-    }
-    else
-    {
-        spdlog::warn("Did not find this structure in future data with startOffset 0x{:08x}",
-            startOffset);
-
-        spdlog::debug("Current FutureDataLst:");
-
-        for(const auto& futureData : mFutureDataLst)
-        {
-            spdlog::debug(futureData.string());
-        }
-    }
-
-    return thisFuture;
-}
-
-
-void Parser::sanitizeThisFutureSize(std::optional<FutureData> aThisFuture)
-{
-    const size_t stopOffset = mDs.getCurrentOffset();
-
-    if(aThisFuture.has_value())
-    {
-        if(aThisFuture.value().getStopOffset() != stopOffset)
-        {
-            const std::string msg = fmt::format("{}: StopOffsets differ! 0x{:08x} (expected) vs. 0x{:08x} (actual)",
-                __func__, aThisFuture.value().getStopOffset(), stopOffset);
-
-            spdlog::error(msg);
-            spdlog::critical("The structure may have changed due to version differences!");
-            throw std::runtime_error(msg);
-        }
-    }
-    else
-    {
-        spdlog::debug("{}: Could not verify structure size as future is not available.", __func__);
-    }
-}
-
-
-std::optional<FutureData> Parser::checkTrailingFuture()
-{
-    const size_t stopOffset = mDs.getCurrentOffset();
-
-    const std::optional<FutureData> nextFuture = mFutureDataLst.getByStartOffset(stopOffset);
-
-    if(nextFuture.has_value())
-    {
-        spdlog::warn("Detected trailing future data at 0x{:08x}", nextFuture.value().getStartOffset());
-    }
-
-    return nextFuture;
-}
-
-
-void Parser::readOptionalTrailingFuture()
-{
-    std::optional<FutureData> future = checkTrailingFuture();
-
-    if(future.has_value())
-    {
-        mDs.printUnknownData(future.value().getByteLen(), fmt::format("{}: Trailing Future Data", __func__));
-    }
-
-    sanitizeThisFutureSize(future);
-}
-
-
-Primitive Parser::readPrefixPrimitive()
-{
-    Primitive primitive1 = ToPrimitive(mDs.readUint8());
-    Primitive primitive2 = ToPrimitive(mDs.readUint8());
-
-    if(primitive1 != primitive2)
-    {
-        const std::string msg = fmt::format("{}: Primitives {} != {}",
-            __func__, to_string(primitive1), to_string(primitive2));
-
-        spdlog::error(msg);
-        throw std::runtime_error(msg);
-    }
-
-    return primitive1;
 }

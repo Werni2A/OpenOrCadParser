@@ -9,13 +9,23 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
 #include "General.hpp"
 
 
 /// @note Represents 'BezierPoint', 'PolygonPoint' and 'PolylinePoint' because
 ///       all of them use the same point structure.
-struct Point
+class Point : public CommonBase
 {
+public:
+
+    Point(DataStream& aDs) : CommonBase{aDs}, x{0}, y{0}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     uint16_t x;
     uint16_t y;
 };
@@ -30,6 +40,12 @@ static std::string to_string(const Point& aObj)
     str += fmt::format("{}x = {}\n", indent(1), aObj.x);
     str += fmt::format("{}y = {}\n", indent(1), aObj.y);
     return str;
+}
+
+
+inline std::string Point::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

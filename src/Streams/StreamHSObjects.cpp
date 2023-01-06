@@ -5,26 +5,21 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Streams/StreamHSObjects.hpp"
 
 
-StreamHSObjects Parser::readStreamHSObjects()
+void StreamHSObjects::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
-    StreamHSObjects obj;
+    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, fmt::format("{}: - 0", __func__));
+    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, fmt::format("{}: - 1", __func__));
 
-    mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, fmt::format("{}: - 0", __func__));
-    mDs.assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, fmt::format("{}: - 1", __func__));
-
-    if(!mDs.isEoF())
+    if(!mDs.get().isEoF())
     {
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::info(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

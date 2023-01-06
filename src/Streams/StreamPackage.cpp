@@ -5,12 +5,10 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
-#include "Parser.hpp"
 #include "Streams/StreamPackage.hpp"
 
 
-[[maybe_unused]]
-static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
+FileFormatVersion StreamPackage::predictVersion()
 {
     FileFormatVersion prediction = FileFormatVersion::Unknown;
 
@@ -25,7 +23,7 @@ static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
 
     spdlog::set_level(spdlog::level::off);
 
-    const size_t initial_offset = aDs.getCurrentOffset();
+    const size_t initial_offset = mDs.get().getCurrentOffset();
 
     for(const auto& version : versions)
     {
@@ -33,14 +31,14 @@ static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
 
         try
         {
-            aParser.readStreamPackage(version);
+            read(version);
         }
         catch(...)
         {
             found = false;
         }
 
-        aDs.setCurrentOffset(initial_offset);
+        mDs.get().setCurrentOffset(initial_offset);
 
         if(found)
         {
@@ -62,82 +60,78 @@ static FileFormatVersion predictVersion(DataStream& aDs, Parser& aParser)
 }
 
 
-StreamPackage Parser::readStreamPackage(FileFormatVersion aVersion)
+void StreamPackage::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
 
-    StreamPackage obj;
-
-    const uint16_t sectionCount = mDs.readUint16();
+    const uint16_t sectionCount = mDs.get().readUint16();
 
     spdlog::info("sectionCount = {}", sectionCount);
 
     for(size_t i = 0u; i < sectionCount; ++i)
     {
-        obj.structures.push_back(readStructure());
+        structures.push_back(readStructure());
     }
 
     // @todo maybe number of views (Convert, Normal) or number of units in the current view
-    const uint16_t len2 = mDs.readUint16();
+    const uint16_t len2 = mDs.get().readUint16();
 
     spdlog::info("len2 = {}", len2);
 
     for(size_t i = 0u; i < len2; ++i)
     {
-        obj.structures.push_back(readStructure());
+        structures.push_back(readStructure());
     }
 
     // @todo Probably only StructSymbolPinScalar
-    const uint16_t len3 = mDs.readUint16();
+    const uint16_t len3 = mDs.get().readUint16();
 
     spdlog::info("len3 = {}", len3);
 
     for(size_t i = 0u; i < len3; ++i)
     {
-        obj.structures.push_back(readStructure());
+        structures.push_back(readStructure());
 
-        const uint8_t early_out = mDs.peek(1)[0];
+        const uint8_t early_out = mDs.get().peek(1)[0];
         spdlog::critical("early_out = {}", early_out);
 
         if(early_out == 0U)
         {
             // @todo does not always occur, even in the same file. Maybe its some byte alignment?
-            mDs.printUnknownData(1, "Early Out Indicator");
+            mDs.get().printUnknownData(1, "Early Out Indicator");
             break;
         }
     }
 
-    const uint16_t len4 = mDs.readUint16();
+    const uint16_t len4 = mDs.get().readUint16();
 
     spdlog::info("len4 = {}", len4);
 
     for(size_t i = 0u; i < len4; ++i)
     {
-        obj.structures.push_back(readStructure());
+        structures.push_back(readStructure());
     }
 
     {
-        obj.structures.push_back(readStructure());
+        structures.push_back(readStructure());
     }
 
     // I guess its always a PinIdxMapping (or multiple)
     // @todo should be the unit of the package
-    const uint16_t len5 = mDs.readUint16();
+    const uint16_t len5 = mDs.get().readUint16();
 
     spdlog::info("len5 = {}", len5);
 
     for(size_t i = 0u; i < len5; ++i)
     {
-        obj.structures.push_back(readStructure());
+        structures.push_back(readStructure());
     }
 
-    if(!mDs.isEoF())
+    if(!mDs.get().isEoF())
     {
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.getCurrentOffset()));
-    spdlog::debug(to_string(obj));
-
-    return obj;
+    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(to_string());
 }

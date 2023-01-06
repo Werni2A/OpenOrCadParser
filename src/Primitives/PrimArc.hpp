@@ -13,11 +13,22 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
+#include "Primitives/PrimBase.hpp"
 
 
 // @note This is additionally defines an elliptic arc.
-struct PrimArc
+class PrimArc : public PrimBase
 {
+public:
+
+    PrimArc(DataStream& aDs) : PrimBase{aDs}, x1{0}, y1{0}, x2{0}, y2{0},
+        startX{0}, startY{0}, endX{0}, endY{0}, mLineStyle{}, mLineWidth{}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     static size_t getExpectedStructSize(FileFormatVersion aVersion);
 
     void setLineStyle(const LineStyle& aVal)
@@ -77,6 +88,12 @@ static std::string to_string(const PrimArc& aObj)
     str += fmt::format("lineWidth = {}\n", to_string(aObj.getLineWidth()));
 
     return str;
+}
+
+
+inline std::string PrimArc::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

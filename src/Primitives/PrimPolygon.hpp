@@ -16,10 +16,23 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "Primitives/Point.hpp"
+#include "Primitives/PrimBase.hpp"
 
 
-struct PrimPolygon
+class PrimPolygon : public PrimBase
 {
+public:
+
+    PrimPolygon(DataStream& aDs) : PrimBase{aDs}, mLineStyle{}, mLineWidth{},
+        fillStyle{}, hatchStyle{}, points{}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
+    FileFormatVersion predictVersion();
+
     static size_t getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount);
 
     void setLineStyle(const LineStyle& aVal)
@@ -53,35 +66,7 @@ public:
     HatchStyle hatchStyle;
 
     std::vector<Point> points;
-
-    std::string to_string() const;
 };
-
-
-// @todo this looks like a better solution for to_string. Implement for all other
-//       structures and remove operator<<.
-// std::string Polygon::to_string() const
-// {
-//     std::string str;
-
-//     str += "Polygon:" + newLine();
-//     str += indent(1) + "lineStyle  = " + ::to_string(lineStyle) + newLine();
-//     str += indent(1) + "lineWidth  = " + ::to_string(lineWidth) + newLine();
-//     str += indent(1) + "fillStyle  = " + ::to_string(fillStyle) + newLine();
-
-//     if(fillStyle == FillStyle::HatchPattern)
-//     {
-//         str += indent(1) + "hatchStyle = " + ::to_string(hatchStyle) + newLine();
-//     }
-
-//     str += fmt::format("{}points:\n", indent(1));
-//     for(size_t i = 0u; i < points.size(); ++i)
-//     {
-//         str += indent(fmt::format("{}: {}", i, to_string(points[i])), 2);
-//     }
-
-//     return str;
-// }
 
 
 [[maybe_unused]]
@@ -102,6 +87,12 @@ static std::string to_string(const PrimPolygon& aObj)
     }
 
     return str;
+}
+
+
+inline std::string PrimPolygon::to_string() const
+{
+    return ::to_string(*this);
 }
 
 

@@ -14,11 +14,23 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "CommonBase.hpp"
+
 
 // @todo Probably called 'PhysicalPart' in the XSD
 //       Structure should also contain 'PinShared' and 'PinSwap'
-struct StructPinIdxMapping
+class StructPinIdxMapping : public CommonBase
 {
+public:
+
+    StructPinIdxMapping(DataStream& aDs) : CommonBase{aDs}, unitRef{}, refDes{},
+        pinMap{}, pinIgnore{}, pinGroup{}
+    { }
+
+    std::string to_string() const override;
+
+    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+
     std::string unitRef;
     std::string refDes;
 
@@ -61,6 +73,12 @@ static std::string to_string(const StructPinIdxMapping& aObj)
     }
 
     return str;
+}
+
+
+inline std::string StructPinIdxMapping::to_string() const
+{
+    return ::to_string(*this);
 }
 
 
