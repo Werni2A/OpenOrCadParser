@@ -1314,7 +1314,7 @@ repositories:
   - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/abm.olb
-  - errors: 196
+  - errors: 34
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/ad_reg.olb
   - errors: 0
@@ -1824,7 +1824,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/thyristr.olb
-  - errors: 73
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/tline.olb
   - errors: 0
