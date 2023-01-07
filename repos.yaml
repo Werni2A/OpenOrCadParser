@@ -1410,7 +1410,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/spe.olb
-  - errors: 33
+  - errors: 8
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/advanls/spice_elem.olb
   - errors: 0
@@ -1473,7 +1473,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/darlngtn.olb
-  - errors: 234
+  - errors: 72
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/dataconv.olb
   - errors: 1
@@ -1488,7 +1488,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/dig_gal.olb
-  - errors: 53
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/dig_misc.olb
   - errors: 0
@@ -1680,7 +1680,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/mfet_drvr.olb
-  - errors: 10
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/mix_misc.olb
   - errors: 0
@@ -1722,7 +1722,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/on_zener.olb
-  - errors: 198
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/opamp.olb
   - errors: 0
@@ -1800,7 +1800,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/siliconix.olb
-  - errors: 44
+  - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/source.olb
   - errors: 0
