@@ -34,7 +34,7 @@ std::string DataStream::readStringZeroTerm()
 {
     std::string str;
 
-    const size_t max_chars = 400u;
+    const size_t max_chars = 800u;
 
     for(size_t i = 0u; i < max_chars; ++i)
     {
@@ -55,8 +55,8 @@ std::string DataStream::readStringZeroTerm()
     //       stable because strings can actually be very long.
     if(str.length() == max_chars)
     {
-        const std::string msg = "Loop cancled because the string is unexpectedly large. More than "
-                                 + std::to_string(max_chars) + " characters!";
+        const std::string msg = fmt::format("Loop canceled because the string is unexpectedly large.\n"
+            "More than {} characters! The following string was read until now:\n{}", max_chars, str);
 
         spdlog::error(msg);
 
