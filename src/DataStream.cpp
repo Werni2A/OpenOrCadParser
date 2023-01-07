@@ -34,7 +34,7 @@ std::string DataStream::readStringZeroTerm()
 {
     std::string str;
 
-    const size_t max_chars = 800u;
+    const size_t max_chars = 2500u;
 
     for(size_t i = 0u; i < max_chars; ++i)
     {
