@@ -88,7 +88,7 @@ std::string SymbolUserProp::getVal() const
 // @todo this is a whole file parser. Split it up into the title block structure and move the rest to the symbol parser?
 void Parser::readTitleBlockSymbol()
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     mDs.get().printUnknownData(36, std::string(__func__) + " - 0");
 
@@ -143,5 +143,5 @@ void Parser::readTitleBlockSymbol()
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 }

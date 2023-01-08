@@ -102,7 +102,7 @@ void CommonBase::discard_until_preamble()
 
 Structure CommonBase::auto_read_prefixes()
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     const size_t startOffset = mDs.get().getCurrentOffset();
 
@@ -173,6 +173,8 @@ Structure CommonBase::auto_read_prefixes()
 
     mDs.get().sanitizeNoEoF();
 
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+
     return structure;
 }
 
@@ -180,7 +182,7 @@ Structure CommonBase::auto_read_prefixes()
 // Read number of prefixes, where the last one is a short prefix
 Structure CommonBase::read_prefixes(size_t aNumber, bool aPrediction)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     if(aNumber == 0U)
     {
@@ -266,14 +268,14 @@ Structure CommonBase::read_prefixes(size_t aNumber, bool aPrediction)
         }
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     return firstStruct;
 }
 
 std::pair<Structure, uint32_t> CommonBase::read_single_prefix()
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     const Structure typeId = ToStructure(mDs.get().readUint8());
 
@@ -284,7 +286,7 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix()
     mDs.get().printUnknownData(4, std::string(__func__) + " - 0");
     // mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
 
-    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     return std::pair<Structure, uint32_t>{typeId, byteOffset};
 }
@@ -292,7 +294,7 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix()
 
 std::pair<Structure, uint32_t> CommonBase::read_single_prefix_short()
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     const Structure typeId = ToStructure(mDs.get().readUint8());
 
@@ -340,7 +342,7 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix_short()
         spdlog::warn("{}: What does {} mean?", ::to_string(typeId), size); // @todo Figure out
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     return std::pair<Structure, uint32_t>{typeId, size};
 }
@@ -348,7 +350,7 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix_short()
 
 void CommonBase::readPreamble()
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     const std::size_t startOffset = mDs.get().getCurrentOffset();
 
@@ -367,7 +369,7 @@ void CommonBase::readPreamble()
         mDs.get().setCurrentOffset(startOffset);
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 }
 
 
@@ -472,13 +474,13 @@ Primitive CommonBase::readPrefixPrimitive()
 
 std::unique_ptr<PrimBase> CommonBase::readPrimitive()
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     Primitive typeId = ToPrimitive(mDs.get().peek(1)[0]);
 
     std::unique_ptr<PrimBase> obj = readPrimitive(typeId);
 
-    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     return obj;
 }
@@ -486,7 +488,7 @@ std::unique_ptr<PrimBase> CommonBase::readPrimitive()
 
 std::unique_ptr<PrimBase> CommonBase::readPrimitive(Primitive aPrimitive)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     std::unique_ptr<PrimBase> obj;
 
@@ -513,7 +515,7 @@ std::unique_ptr<PrimBase> CommonBase::readPrimitive(Primitive aPrimitive)
 
     obj->read();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     return obj;
 }
@@ -521,13 +523,13 @@ std::unique_ptr<PrimBase> CommonBase::readPrimitive(Primitive aPrimitive)
 
 std::unique_ptr<CommonBase> CommonBase::readStructure()
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     Structure typeId = ToStructure(mDs.get().peek(1)[0]);
 
     std::unique_ptr<CommonBase> obj = readStructure(typeId);
 
-    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     return obj;
 }
@@ -535,7 +537,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure()
 
 std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     std::unique_ptr<CommonBase> obj;
 
@@ -583,7 +585,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
 
     obj->read();
 
-    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     return obj;
 }

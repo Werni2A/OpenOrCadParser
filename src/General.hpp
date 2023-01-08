@@ -49,17 +49,24 @@ enum class FileType
 };
 
 
-[[maybe_unused]]
-static std::string getOpeningMsg(const char* aFuncName, size_t aCurrOffset)
+template<typename T>
+static std::string getMethodName(const T* aClass, const char* aFuncName)
 {
-    return fmt::format("0x{:08x}: Beginning {}", aCurrOffset, aFuncName);
+    return fmt::format("{}::{}", NAMEOF_TYPE_RTTI(*aClass), aFuncName);
 }
 
 
 [[maybe_unused]]
-static std::string getClosingMsg(const char* aFuncName, size_t aCurrOffset)
+static std::string getOpeningMsg(const std::string& aClassFuncName, size_t aCurrOffset)
 {
-    return fmt::format("0x{:08x}: Ending {}", aCurrOffset, aFuncName);
+    return fmt::format("0x{:08x}: Beginning {}", aCurrOffset, aClassFuncName);
+}
+
+
+[[maybe_unused]]
+static std::string getClosingMsg(const std::string& aClassFuncName, size_t aCurrOffset)
+{
+    return fmt::format("0x{:08x}: Ending {}", aCurrOffset, aClassFuncName);
 }
 
 

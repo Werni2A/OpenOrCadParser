@@ -11,7 +11,7 @@
 
 void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     mDs.get().printUnknownData(2, fmt::format("{}: 0", __func__));
 
@@ -66,6 +66,6 @@ void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
         throw std::runtime_error("Exptected EoF in NetBundleMapData");
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::info(to_string());
 }
