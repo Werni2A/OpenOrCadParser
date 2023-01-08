@@ -10,7 +10,7 @@
 
 void StreamHierarchy::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     mDs.get().printUnknownData(9, std::string(__func__) + " - 0");
 
@@ -34,6 +34,6 @@ void StreamHierarchy::read(FileFormatVersion /* aVersion */)
         std::string name = mDs.get().readStringLenZeroTerm(); // net name
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::debug(to_string());
 }

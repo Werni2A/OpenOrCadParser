@@ -13,7 +13,7 @@
 
 void PrimCommentText::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     const size_t startOffset = mDs.get().getCurrentOffset();
 
@@ -65,7 +65,7 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
         throw FileFormatChanged("CommentText");
     }
 
-    spdlog::debug(getClosingMsg(__func__, mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::info(to_string());
 
     readPreamble();
