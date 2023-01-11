@@ -489,7 +489,7 @@ std::unique_ptr<PrimBase> CommonBase::readPrimitive(Primitive aPrimitive)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    std::unique_ptr<PrimBase> obj;
+    std::unique_ptr<PrimBase> obj{};
 
     switch(aPrimitive)
     {
@@ -504,7 +504,7 @@ std::unique_ptr<PrimBase> CommonBase::readPrimitive(Primitive aPrimitive)
         case Primitive::SymbolVector: obj = std::make_unique<PrimSymbolVector>(mDs); break;
         case Primitive::Bezier:       obj = std::make_unique<PrimBezier>(mDs);       break;
         default:
-            const std::string msg = fmt::format("{}: Primitive {} is not yet handled",
+            const std::string msg = fmt::format("{}: Primitive {} is not implemented!",
                 __func__, ::to_string(aPrimitive));
 
             spdlog::error(msg);
@@ -512,7 +512,10 @@ std::unique_ptr<PrimBase> CommonBase::readPrimitive(Primitive aPrimitive)
             break;
     }
 
-    obj->read();
+    if(obj.get() != nullptr)
+    {
+        obj->read();
+    }
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
@@ -538,7 +541,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    std::unique_ptr<CommonBase> obj;
+    std::unique_ptr<CommonBase> obj{};
 
     switch(aStructure)
     {
@@ -570,19 +573,21 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
 
             if(futureData.has_value())
             {
-                spdlog::error(msg);
-                mDs.get().printUnknownData(futureData.value().getByteLen(),
-                    fmt::format("{}: {} is not implemented",__func__, ::to_string(aStructure)));
+                mDs.get().printUnknownData(futureData.value().getByteLen(), msg);
             }
             else
             {
+                spdlog::error(msg);
                 throw std::runtime_error(msg);
             }
 
             break;
     }
 
-    obj->read();
+    if(obj.get() != nullptr)
+    {
+        obj->read();
+    }
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
