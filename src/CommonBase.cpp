@@ -49,7 +49,6 @@
 #include "Structures/StructT0x1f.hpp"
 #include "Structures/StructTitleBlockSymbol.hpp"
 #include "Structures/StructWireScalar.hpp"
-#include "Structures/TextFont.hpp"
 #include "Structures/TrailingProperties.hpp"
 
 

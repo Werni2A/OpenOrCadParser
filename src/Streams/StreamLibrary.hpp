@@ -13,7 +13,7 @@
 #include <nameof.hpp>
 
 #include "CommonBase.hpp"
-#include "Structures/TextFont.hpp"
+#include "Win32/LOGFONTA.hpp"
 
 
 class StreamLibrary : public CommonBase
@@ -33,7 +33,7 @@ public:
     time_t createDate;
     time_t modifyDate;
 
-    std::vector<TextFont> textFonts;
+    std::vector<LOGFONTA> textFonts;
 
     std::vector<std::string> strLstPartField;
     std::vector<std::string> strLst;
@@ -56,7 +56,7 @@ static std::string to_string(const StreamLibrary& aObj)
     str += fmt::format("{}textFonts:\n", indent(1));
     for(size_t i = 0u; i < aObj.textFonts.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}", i, to_string(aObj.textFonts[i])), 2);
+        str += indent(fmt::format("[{}]: {}", i, aObj.textFonts[i].to_string()), 2);
     }
 
     str += fmt::format("{}strLstPartField:\n", indent(1));

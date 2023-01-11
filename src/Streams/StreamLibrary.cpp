@@ -12,7 +12,7 @@
 #include <vector>
 
 #include "Streams/StreamLibrary.hpp"
-#include "Structures/TextFont.hpp"
+#include "Win32/LOGFONTA.hpp"
 
 
 void StreamLibrary::read(FileFormatVersion /* aVersion */)
@@ -62,8 +62,8 @@ void StreamLibrary::read(FileFormatVersion /* aVersion */)
 
     for(int i = 0; i < static_cast<int>(textFontLen) - 1; ++i)
     {
-        TextFont font{mDs};
-        font.read();
+        LOGFONTA font{};
+        font.read(mDs);
         textFonts.push_back(font);
     }
 

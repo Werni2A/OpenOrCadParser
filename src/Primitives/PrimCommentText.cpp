@@ -8,7 +8,7 @@
 #include "General.hpp"
 #include "Library.hpp"
 #include "Primitives/PrimCommentText.hpp"
-#include "Structures/TextFont.hpp"
+#include "Win32/LOGFONTA.hpp"
 
 
 void PrimCommentText::read(FileFormatVersion /* aVersion */)
@@ -72,11 +72,11 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
 }
 
 
-TextFont PrimCommentText::getTextFont() const
+LOGFONTA PrimCommentText::getTextFont() const
 {
     const int64_t idx = static_cast<int64_t>(textFontIdx) - 1;
 
-    TextFont textFont{mDs};
+    LOGFONTA textFont{};
 
     if(idx >= 0)
     {

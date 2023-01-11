@@ -6,6 +6,7 @@
 #include <Parser.hpp>
 
 #include "Helper.hpp"
+#include "Win32/LOGFONTA.hpp"
 
 
 namespace fs = std::filesystem;
@@ -57,14 +58,14 @@ TEST_CASE("0000: Check CommentText - Complex", "[CommentText]")
 
     REQUIRE(text.name == "Example text\nwith line break!");
 
-    const TextFont& font = text.getTextFont();
+    const LOGFONTA font = text.getTextFont();
 
-    REQUIRE(font.fontName == "Courier New");
-    REQUIRE(font.width  ==  0);
-    REQUIRE(font.height == -9);
-    REQUIRE(font.escapement == 0);
-    REQUIRE(font.italic == 0);
-    REQUIRE(font.weight == 400);
+    REQUIRE(font.lfHeight == -9);
+    REQUIRE(font.lfWidth  ==  0);
+    REQUIRE(font.lfEscapement == 0);
+    REQUIRE(font.lfWeight == 400);
+    REQUIRE(font.lfItalic == 0);
+    REQUIRE(font.lfFaceName == std::string{"Courier New"});
 }
 
 
