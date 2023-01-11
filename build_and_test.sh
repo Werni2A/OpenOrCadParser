@@ -13,7 +13,7 @@ python3 test/py/testing.py -g 1 -d repos.yaml -u test/src/generated_tests -t tes
 echo Building Applications...
 
 # Build applications
-cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake -B build -DCMAKE_BUILD_TYPE=Release -S . -DCMAKE_TOOLCHAIN_FILE=../../../vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build build -j $(nproc)
 
 echo Running Unit Tests...
