@@ -9,8 +9,8 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "Structures/TextFont.hpp"
 #include "Primitives/PrimBase.hpp"
+#include "Win32/LOGFONTA.hpp"
 
 
 // Forward declaration
@@ -27,7 +27,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    TextFont getTextFont() const;
+    LOGFONTA getTextFont() const;
 
     int32_t locX;
     int32_t locY;
@@ -61,7 +61,7 @@ static std::string to_string(const PrimCommentText& aObj)
     str += fmt::format("{}x2   = {}\n", indent(1), aObj.x2);
     str += fmt::format("{}y2   = {}\n", indent(1), aObj.y2);
     str += fmt::format("{}textFontIdx = {}\n", indent(1), aObj.textFontIdx);
-    str += indent(to_string(aObj.getTextFont()), 2);
+    str += indent(aObj.getTextFont().to_string(), 2);
 
     return str;
 }

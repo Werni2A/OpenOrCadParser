@@ -19,7 +19,6 @@
 #include "Primitives/PrimCommentText.hpp"
 #include "Streams/StreamPackage.hpp"
 #include "Streams/StreamSymbol.hpp"
-#include "Structures/TextFont.hpp"
 
 
 struct SymbolUserProp
