@@ -41,7 +41,7 @@ The following two XSD files provide a good overview of the `XML` file structure,
 VCPKG_DIR=../vcpkg
 
 # Build
-cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=$VCPKG_DIR/scripts/buildsystems/vcpkg.cmake
+cmake -B build -DCMAKE_BUILD_TYPE=Release -S . -DCMAKE_TOOLCHAIN_FILE=$VCPKG_DIR/scripts/buildsystems/vcpkg.cmake
 cmake --build build
 ```
 
