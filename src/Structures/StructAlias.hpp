@@ -44,11 +44,11 @@ static std::string to_string(const StructAlias& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-    str += fmt::format("locX     = {}\n", aObj.locX);
-    str += fmt::format("locY     = {}\n", aObj.locY);
-    str += fmt::format("color    = {}\n", to_string(aObj.color));
-    str += fmt::format("rotation = {}\n", to_string(aObj.rotation));
-    str += fmt::format("name     = {}\n", aObj.name);
+    str += fmt::format("{}locX     = {}\n", indent(1), aObj.locX);
+    str += fmt::format("{}locY     = {}\n", indent(1), aObj.locY);
+    str += fmt::format("{}color    = {}\n", indent(1), to_string(aObj.color));
+    str += fmt::format("{}rotation = {}\n", indent(1), to_string(aObj.rotation));
+    str += fmt::format("{}name     = {}\n", indent(1), aObj.name);
 
     return str;
 }

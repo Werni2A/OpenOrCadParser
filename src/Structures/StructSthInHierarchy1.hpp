@@ -34,8 +34,6 @@ static std::string to_string(const StructSthInHierarchy1& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-    // str += fmt::format("x1     = {}\n", aObj.x1);
-    // str += fmt::format("y1     = {}\n", aObj.y1);
 
     return str;
 }

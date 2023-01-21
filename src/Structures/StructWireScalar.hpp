@@ -50,14 +50,14 @@ static std::string to_string(const StructWireScalar& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-    str += fmt::format("dbId      = {}\n", aObj.dbId);
-    str += fmt::format("wireColor = {}\n", to_string(aObj.wireColor));
-    str += fmt::format("startX    = {}\n", aObj.startX);
-    str += fmt::format("startY    = {}\n", aObj.startY);
-    str += fmt::format("endX      = {}\n", aObj.endX);
-    str += fmt::format("endY      = {}\n", aObj.endY);
-    str += fmt::format("wireLineWidth = {}\n", to_string(aObj.wireLineWidth));
-    str += fmt::format("wireLineStyle = {}\n", to_string(aObj.wireLineStyle));
+    str += fmt::format("{}dbId      = {}\n", indent(1), aObj.dbId);
+    str += fmt::format("{}wireColor = {}\n", indent(1), to_string(aObj.wireColor));
+    str += fmt::format("{}startX    = {}\n", indent(1), aObj.startX);
+    str += fmt::format("{}startY    = {}\n", indent(1), aObj.startY);
+    str += fmt::format("{}endX      = {}\n", indent(1), aObj.endX);
+    str += fmt::format("{}endY      = {}\n", indent(1), aObj.endY);
+    str += fmt::format("{}wireLineWidth = {}\n", indent(1), to_string(aObj.wireLineWidth));
+    str += fmt::format("{}wireLineStyle = {}\n", indent(1), to_string(aObj.wireLineStyle));
 
     return str;
 }
