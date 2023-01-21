@@ -5,6 +5,7 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
+#include "PageSettings.hpp"
 #include "Streams/StreamPage.hpp"
 
 
@@ -16,90 +17,15 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
-    std::string name = mDs.get().readStringLenZeroTerm();
+    name = mDs.get().readStringLenZeroTerm();
 
-    std::string pageSize = mDs.get().readStringLenZeroTerm();
+    spdlog::debug("name = {}", name);
 
-    time_t createDateTime = static_cast<time_t>(mDs.get().readUint32());
-    time_t modifyDateTime = static_cast<time_t>(mDs.get().readUint32());
+    pageSize = mDs.get().readStringLenZeroTerm();
 
-    spdlog::debug("createDateTime = {} | modifyDateTime = {}", DateTimeToStr(createDateTime), DateTimeToStr(modifyDateTime));
+    spdlog::debug("pageSize = {}", pageSize);
 
-    mDs.get().printUnknownData(16, std::string(__func__) + " - 1");
-
-    uint32_t width  = mDs.get().readUint32();
-    uint32_t height = mDs.get().readUint32();
-
-    spdlog::debug("width = {} | height = {}", width, height);
-
-    uint32_t pinToPin = mDs.get().readUint32(); //!< Pin-to-pin spacing
-
-    spdlog::debug("pinToPin = {}", pinToPin);
-
-    mDs.get().printUnknownData(2, std::string(__func__) + " - 2");
-
-    uint16_t horizontalCount = mDs.get().readUint16(); //!< See 'Schematic Page Properties' -> 'Grid Reference'
-    uint16_t verticalCount   = mDs.get().readUint16(); //!< See 'Schematic Page Properties' -> 'Grid Reference'
-
-    spdlog::debug("horizontalCount = {} | verticalCount = {}", horizontalCount, verticalCount);
-
-    mDs.get().printUnknownData(2, std::string(__func__) + " - 3");
-
-    uint32_t horizontalWidth = mDs.get().readUint32(); //!< See 'Schematic Page Properties' -> 'Grid Reference'
-    uint32_t verticalWidth   = mDs.get().readUint32(); //!< See 'Schematic Page Properties' -> 'Grid Reference'
-
-    spdlog::debug("horizontalWidth = {} | verticalWidth = {}", horizontalWidth, verticalWidth);
-
-    mDs.get().printUnknownData(48, std::string(__func__) + " - 4");
-
-    uint32_t horizontalChar = mDs.get().readUint32(); //!<       See 'Schematic Page Properties' -> 'Grid Reference' ->
-                                             //             'Horizontal' -> 'Alphabetic' = 1
-                                             //                             'Numeric'    = 0
-
-    spdlog::debug("horizontalChar = {}", horizontalChar);
-
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 5");
-
-    uint32_t horizontalAscending = mDs.get().readUint32(); //!<       See 'Schematic Page Properties' -> 'Grid Reference' ->
-                                                  //         'Horizontal'
-                                                  //         Select 'ascending' (1) or 'decending' (0).
-
-    spdlog::debug("horizontalAscending = {}", horizontalAscending);
-
-    uint32_t verticalChar   = mDs.get().readUint32(); //!< See 'Schematic Page Properties' -> 'Grid Reference' ->
-                                             //       'Vertical' -> 'Alphabetic' = 1
-                                             //                     'Numeric'    = 0
-
-    spdlog::debug("verticalChar = {}", verticalChar);
-
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 6");
-
-
-    uint32_t verticalAscending = mDs.get().readUint32(); //!<       See 'Schematic Page Properties' -> 'Grid Reference' ->
-                                                  //         'Vertical'
-                                                  //         Select 'ascending' (1) or 'decending' (0).
-
-    spdlog::debug("verticalAscending = {}", verticalAscending);
-
-    uint32_t isMetric            = mDs.get().readUint32();
-    uint32_t borderDisplayed     = mDs.get().readUint32();
-    uint32_t borderPrinted       = mDs.get().readUint32();
-    uint32_t gridRefDisplayed    = mDs.get().readUint32();
-    uint32_t gridRefPrinted      = mDs.get().readUint32();
-    uint32_t titleblockDisplayed = mDs.get().readUint32();
-    uint32_t titleblockPrinted   = mDs.get().readUint32();
-    // @todo XML is always 1, maybe a bug in OrCad?
-    uint32_t ansiGridRefs = mDs.get().readUint32(); //!< Use ANSI grid references.
-                                              //   See 'Schematic Page Properties' -> 'Grid Reference'
-
-    spdlog::debug("isMetric            = {}", isMetric);
-    spdlog::debug("borderDisplayed     = {}", borderDisplayed);
-    spdlog::debug("borderPrinted       = {}", borderPrinted);
-    spdlog::debug("gridRefDisplayed    = {}", gridRefDisplayed);
-    spdlog::debug("gridRefPrinted      = {}", gridRefPrinted);
-    spdlog::debug("titleblockDisplayed = {}", titleblockDisplayed);
-    spdlog::debug("titleblockPrinted   = {}", titleblockPrinted);
-    spdlog::debug("ansiGridRefs        = {}", ansiGridRefs);
+    pageSettings.read();
 
     // Probably Title Blocks
     const uint16_t lenA = mDs.get().readUint16();

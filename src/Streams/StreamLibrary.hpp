@@ -13,6 +13,7 @@
 #include <nameof.hpp>
 
 #include "CommonBase.hpp"
+#include "PageSettings.hpp"
 #include "Win32/LOGFONTA.hpp"
 
 
@@ -21,7 +22,7 @@ class StreamLibrary : public CommonBase
 public:
 
     StreamLibrary(DataStream& aDs) : CommonBase{aDs}, introduction{}, createDate{0}, modifyDate{0},
-        textFonts{}, strLstPartField{}, strLst{}, partAliases{}
+        textFonts{}, strLstPartField{}, pageSettings{aDs}, strLst{}, partAliases{}
     { }
 
     std::string to_string() const override;
@@ -36,6 +37,9 @@ public:
     std::vector<LOGFONTA> textFonts;
 
     std::vector<std::string> strLstPartField;
+
+    PageSettings pageSettings;
+
     std::vector<std::string> strLst;
 
     // See OrCAD: 'Package Properties' -> 'Part Aliases'
@@ -64,6 +68,9 @@ static std::string to_string(const StreamLibrary& aObj)
     {
         str += indent(fmt::format("[{}]: {}\n", i, aObj.strLstPartField[i]), 2);
     }
+
+    str += fmt::format("{}pageSettings:\n", indent(1));
+    str += indent(aObj.pageSettings.to_string(), 2);
 
     str += fmt::format("{}strLst:\n", indent(1));
     for(size_t i = 0u; i < aObj.strLst.size(); ++i)
