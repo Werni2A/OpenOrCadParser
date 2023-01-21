@@ -52,6 +52,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Streams/StreamType.cpp
    ${LIB_SRC_DIR}/Streams/StreamViewsDirectory.cpp
    ${LIB_SRC_DIR}/Structures/StructAlias.cpp
+   ${LIB_SRC_DIR}/Structures/StructBusEntry.cpp
    ${LIB_SRC_DIR}/Structures/StructERCSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructGeneralProperties.cpp
    ${LIB_SRC_DIR}/Structures/StructGlobalSymbol.cpp
@@ -126,6 +127,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Streams/StreamType.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamViewsDirectory.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructAlias.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructBusEntry.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructERCSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGeneralProperties.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGlobalSymbol.hpp

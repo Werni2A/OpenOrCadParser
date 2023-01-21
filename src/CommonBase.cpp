@@ -24,6 +24,7 @@
 #include "Primitives/PrimRect.hpp"
 #include "Primitives/PrimSymbolVector.hpp"
 #include "Structures/StructAlias.hpp"
+#include "Structures/StructBusEntry.hpp"
 #include "Structures/StructERCSymbol.hpp"
 #include "Structures/StructGeneralProperties.hpp"
 #include "Structures/StructGlobalSymbol.hpp"
@@ -552,6 +553,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
     switch(aStructure)
     {
         case Structure::Alias:                  obj = std::make_unique<StructAlias>(mDs);                  break;
+        case Structure::BusEntry:               obj = std::make_unique<StructBusEntry>(mDs);               break;
         case Structure::ERCSymbol:              obj = std::make_unique<StructERCSymbol>(mDs);              break;
         case Structure::GlobalSymbol:           obj = std::make_unique<StructGlobalSymbol>(mDs);           break;
         case Structure::GraphicBoxInst:         obj = std::make_unique<StructGraphicBoxInst>(mDs);         break;
