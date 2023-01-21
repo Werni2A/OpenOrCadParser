@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+#include "PageSettings.hpp"
 #include "Streams/StreamLibrary.hpp"
 #include "Win32/LOGFONTA.hpp"
 
@@ -85,8 +86,7 @@ void StreamLibrary::read(FileFormatVersion /* aVersion */)
         strLstPartField.push_back(mDs.get().readStringLenZeroTerm());
     }
 
-    // Even this big chunk of data seems to be constant
-    mDs.get().printUnknownData(156, std::string(__func__) + " - 3");
+    pageSettings.read();
 
     // @todo sometimes it's 2 and sometimes 4 byte... Looks like a data format change
     // const uint32_t strLstLen = mDs.readUint16();
