@@ -26,6 +26,8 @@ void StructSthInPages0::read(FileFormatVersion /* aVersion */)
 
     const uint16_t len = mDs.get().readUint16();
 
+    spdlog::debug("len = {}", len);
+
     for(size_t i = 0u; i < len; ++i)
     {
         const Primitive primitive = readPrefixPrimitive();
