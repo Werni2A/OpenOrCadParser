@@ -49,7 +49,7 @@ void StructT0x10::read(FileFormatVersion /* aVersion */)
 
     sanitizeThisFutureSize(thisFuture);
 
-    readOptionalTrailingFuture();
+    // readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::info(to_string());

@@ -17,7 +17,15 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
 
     const size_t startOffset = mDs.get().getCurrentOffset();
 
-    const uint32_t byteLength = mDs.get().readUint32();
+     // @todo Adding 8 Byte does not make any sense, why did it
+     //       work previously and why does it work in other
+     //       primitives that use similar data structures?
+     //       Maybe the byte length does not count itself and
+     //       the following 4 zero bytes.
+     //       This issue is somehow related to the disabled
+     //       readOptionalTrailingFuture check in StructPartInst
+     //       and readOptionalTrailingFuture in StructT0x10
+    const uint32_t byteLength = mDs.get().readUint32() + 8U;
 
     mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
 
