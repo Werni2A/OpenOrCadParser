@@ -19,15 +19,32 @@ void StructT0x10::read(FileFormatVersion /* aVersion */)
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    spdlog::critical("{}: Not implemented!", __func__);
+    const uint16_t sth = mDs.get().readUint16();
 
-    if(thisFuture.has_value())
+    spdlog::debug("sth = {}", sth);
+
+    const int16_t pointX = mDs.get().readInt16();
+    const int16_t pointY = mDs.get().readInt16();
+
+    spdlog::debug("pointX = {}", pointX);
+    spdlog::debug("pointY = {}", pointY);
+
+    const uint32_t maybeId = mDs.get().readUint32();
+
+    spdlog::debug("maybeId = {}", maybeId);
+
+    const uint32_t unkownInt = mDs.get().readUint32();
+
+    spdlog::debug("unkownInt = {}", unkownInt);
+
+    // Should be Display Properties
+    uint16_t len = mDs.get().readUint16();
+
+    spdlog::debug("len = {}", len);
+
+    for(size_t i = 0; i < len; ++i)
     {
-        mDs.get().printUnknownData(thisFuture.value().getByteLen(), fmt::format("{}: 0", __func__));
-    }
-    else
-    {
-        mDs.get().printUnknownData(16, fmt::format("{}: 0", __func__));
+        readStructure();
     }
 
     sanitizeThisFutureSize(thisFuture);
