@@ -35,6 +35,7 @@
 #include "Structures/StructPartInst.hpp"
 #include "Structures/StructPinIdxMapping.hpp"
 #include "Structures/StructPinShapeSymbol.hpp"
+#include "Structures/StructPort.hpp"
 #include "Structures/StructPrimitives.hpp"
 #include "Structures/StructProperties.hpp"
 #include "Structures/StructProperties2.hpp"
@@ -560,6 +561,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         case Structure::PartInst:               obj = std::make_unique<StructPartInst>(mDs);               break;
         case Structure::PinIdxMapping:          obj = std::make_unique<StructPinIdxMapping>(mDs);          break;
         case Structure::PinShapeSymbol:         obj = std::make_unique<StructPinShapeSymbol>(mDs);         break;
+        case Structure::Port:                   obj = std::make_unique<StructPort>(mDs);                   break;
         case Structure::PortSymbol:             obj = std::make_unique<StructHierarchicSymbol>(mDs);       break;
         case Structure::Primitives:             obj = std::make_unique<StructPrimitives>(mDs);             break;
         case Structure::Properties:             obj = std::make_unique<StructProperties>(mDs);             break;
