@@ -24,20 +24,31 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     mDs.get().printUnknownData(8, std::string(__func__) + " - 0");
 
-    std::string pkgName = mDs.get().readStringLenZeroTerm();
+    const std::string pkgName = mDs.get().readStringLenZeroTerm();
 
-    uint32_t dbId = mDs.get().readUint32();
+    spdlog::debug("pkgName = {}", pkgName);
+
+    const uint32_t dbId = mDs.get().readUint32();
+
+    spdlog::debug("dbId = {}", dbId);
 
     mDs.get().printUnknownData(8, std::string(__func__) + " - 1");
 
-    int16_t locX = mDs.get().readInt16();
-    int16_t locY = mDs.get().readInt16();
+    const int16_t locX = mDs.get().readInt16();
+    const int16_t locY = mDs.get().readInt16();
 
-    Color color = ToColor(mDs.get().readUint16()); // @todo educated guess
+    spdlog::debug("locX = {}", locX);
+    spdlog::debug("locY = {}", locY);
+
+    const Color color = ToColor(mDs.get().readUint16()); // @todo educated guess
+
+    spdlog::debug("color = {}", ::to_string(color));
 
     mDs.get().printUnknownData(2, std::string(__func__) + " - 2");
 
-    uint16_t len = mDs.get().readUint16();
+    const uint16_t len = mDs.get().readUint16();
+
+    spdlog::debug("len = {}", len);
 
     for(size_t i = 0u; i < len; ++i)
     {
@@ -46,18 +57,24 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     mDs.get().printUnknownData(1, std::string(__func__) + " - 3");
 
-    std::string reference = mDs.get().readStringLenZeroTerm();
+    const std::string reference = mDs.get().readStringLenZeroTerm();
+
+    spdlog::debug("reference = {}", reference);
 
     mDs.get().printUnknownData(14, std::string(__func__) + " - 4");
 
-    uint16_t len2 = mDs.get().readUint16();
+    const uint16_t len2 = mDs.get().readUint16();
+
+    spdlog::debug("len2 = {}", len2);
 
     for(size_t i = 0u; i < len2; ++i)
     {
         readStructure(); // @todo push struct
     }
 
-    std::string sth1 = mDs.get().readStringLenZeroTerm(); // @todo needs verification
+    const std::string sth1 = mDs.get().readStringLenZeroTerm(); // @todo needs verification
+
+    spdlog::debug("sth1 = {}", sth1);
 
     mDs.get().printUnknownData(2, std::string(__func__) + " - 5");
 
