@@ -52,6 +52,7 @@
 #include "Structures/StructT0x1f.hpp"
 #include "Structures/StructT0x34.hpp"
 #include "Structures/StructT0x35.hpp"
+#include "Structures/StructTitleBlock.hpp"
 #include "Structures/StructTitleBlockSymbol.hpp"
 #include "Structures/StructWireBus.hpp"
 #include "Structures/StructWireScalar.hpp"
@@ -578,6 +579,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         case Structure::T0x1f:                  obj = std::make_unique<StructT0x1f>(mDs);                  break;
         case Structure::T0x34:                  obj = std::make_unique<StructT0x34>(mDs);                  break;
         case Structure::T0x35:                  obj = std::make_unique<StructT0x35>(mDs);                  break;
+        case Structure::TitleBlock:             obj = std::make_unique<StructTitleBlock>(mDs);             break;
         case Structure::WireBus:                obj = std::make_unique<StructWireBus>(mDs);                break;
         case Structure::WireScalar:             obj = std::make_unique<StructWireScalar>(mDs);             break;
         default:
