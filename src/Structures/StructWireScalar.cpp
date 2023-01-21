@@ -40,27 +40,25 @@ void StructWireScalar::read(FileFormatVersion /* aVersion */)
 
     mDs.get().printUnknownData(1, std::string(__func__) + " - 1");
 
-    // @todo mByteOffset is uninitialized....!
-    spdlog::debug("mByteOffset = {}", mByteOffset);
+    const uint16_t len0 = mDs.get().readUint16();
 
-    if(mByteOffset == 0x3d)
+    spdlog::debug("len0 = {}", len0);
+
+    for(size_t i = 0u; i < len0; ++i)
     {
-        mDs.get().printUnknownData(2, std::string(__func__) + " - 2");
-    }
-    else if(mByteOffset > 0x3d)
-    {
-        const uint16_t len = mDs.get().readUint16();
-
-        spdlog::debug("len = {}", len);
-
-        for(size_t i = 0u; i < len; ++i)
-        {
-            // @todo len should always be 1 and the read structure should be 'Alias'
-            readStructure(); // @todo push
-        }
+        // @todo Read structure should be 'Alias'
+        readStructure(); // @todo push
     }
 
-    mDs.get().printUnknownData(2, std::string(__func__) + " - 3");
+    const uint16_t len1 = mDs.get().readUint16();
+
+    spdlog::debug("len1 = {}", len1);
+
+    for(size_t i = 0u; i < len1; ++i)
+    {
+        // @todo Read structure should be Display Property
+        readStructure(); // @todo push
+    }
 
     wireLineWidth = ToLineWidth(mDs.get().readUint32());
     wireLineStyle = ToLineStyle(mDs.get().readUint32());

@@ -20,7 +20,7 @@ class PrimBase;
 class CommonBase
 {
 public:
-    CommonBase(DataStream& aDs) : mDs{aDs}, mByteOffset{0}, mFileFormatVersion{FileFormatVersion::C}
+    CommonBase(DataStream& aDs) : mDs{aDs}, mFileFormatVersion{FileFormatVersion::C}
     { }
 
     virtual std::string to_string() const = 0;
@@ -59,8 +59,6 @@ public:
 
 protected:
     std::reference_wrapper<DataStream> mDs;
-
-    uint32_t mByteOffset;
 
     FileFormatVersion mFileFormatVersion;
 };
