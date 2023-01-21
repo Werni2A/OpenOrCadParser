@@ -12,11 +12,8 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    // readDevHelper();
-    // return;
+    auto_read_prefixes();
 
-    // @todo Probably prefixes? The size would fit perfectly
-    mDs.get().printUnknownData(21, std::string(__func__) + " - 0");
     readPreamble();
 
     std::string name = mDs.get().readStringLenZeroTerm();
