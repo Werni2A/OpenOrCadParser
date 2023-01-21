@@ -57,6 +57,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructGlobalSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructGraphicBoxInst.cpp
    ${LIB_SRC_DIR}/Structures/StructGraphicCommentTextInst.cpp
+   ${LIB_SRC_DIR}/Structures/StructGraphicLineInst.cpp
    ${LIB_SRC_DIR}/Structures/StructHierarchicSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructOffPageSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructPartInst.cpp
@@ -129,6 +130,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/StructGlobalSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGraphicBoxInst.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGraphicCommentTextInst.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructGraphicLineInst.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructHierarchicSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructOffPageSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructPartInst.hpp
