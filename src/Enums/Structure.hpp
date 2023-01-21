@@ -55,6 +55,7 @@ enum class Structure
     Alias                  =  49, //!< Net alias
 
     T0x34                  =  52, // @todo rename
+    T0x35                  =  53, // @todo rename
 
     GraphicBoxInst         =  55,
     GraphicLineInst        =  56,
