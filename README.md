@@ -26,11 +26,11 @@ The following two XSD files provide a good overview of the `XML` file structure,
 
 ---
 
-# Current State &mdash; August 2022
+# Current State &mdash; January 2023
 
-- Working on Parsing Package Files
-- It's planned to finish the `Package` parser until the end of the year
-- A PoC KiCad importer should follow in spring 2023
+- Working on parsing `Page` streams
+- It's planned to finish the `Package` parser around spring 2023
+- A PoC KiCad importer should follow in summer 2023
 
 ---
 
