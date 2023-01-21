@@ -101,34 +101,25 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
     spdlog::debug("titleblockPrinted   = {}", titleblockPrinted);
     spdlog::debug("ansiGridRefs        = {}", ansiGridRefs);
 
+    // Probably Title Blocks
     const uint16_t lenA = mDs.get().readUint16();
 
     spdlog::debug("lenA = {}", lenA);
 
     for(size_t i = 0u; i < lenA; ++i)
     {
-        mDs.get().printUnknownData(8, std::string(__func__) + " - a");
+        readStructure(); // @todo push structure
     }
 
+    // Probably Bus
     const uint16_t len0 = mDs.get().readUint16();
 
     spdlog::debug("len0 = {}", len0);
 
     for(size_t i = 0u; i < len0; ++i)
     {
-        mDs.get().printUnknownData(32, std::string(__func__) + " - 8");
+        readStructure(); // @todo push structure
     }
-
-    // mDs.get().printUnknownData(30, std::string(__func__) + " - 7");
-
-
-    // mDs.get().printUnknownData(38, std::string(__func__) + " - 1.5");
-
-    // @todo required for CONTENT page but not for the others? This offset must be somehow
-    //       dynamic
-    // mDs.get().printUnknownData(14, std::string(__func__) + " - 1.6");
-
-    mDs.get().printUnknownData(2, std::string(__func__) + " - 9");
 
     const uint16_t len1 = mDs.get().readUint16();
 
@@ -136,8 +127,20 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len1; ++i)
     {
-        std::string name = mDs.get().readStringLenZeroTerm();
-        mDs.get().printUnknownData(4, std::string(__func__) + " - 10");
+        readStructure(); // @todo push structure
+    }
+
+    const uint16_t lenB = mDs.get().readUint16();
+
+    spdlog::debug("lenB = {}", lenB);
+
+    for(size_t i = 0; i < lenB; ++i)
+    {
+        const std::string net = mDs.get().readStringLenZeroTerm();
+        const uint32_t id = mDs.get().readUint32();
+
+        spdlog::debug("net = {}", net);
+        spdlog::debug("id  = {}", id);
     }
 
     const uint16_t len2 = mDs.get().readUint16();
@@ -158,13 +161,74 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         readStructure(); // @todo push structure
     }
 
-    mDs.get().printUnknownData(10, std::string(__func__) + " - 10");
+    const uint16_t len4 = mDs.get().readUint16();
 
-    const uint16_t lenX = mDs.get().readUint16();
+    spdlog::debug("len4 = {}", len4);
 
-    spdlog::debug("lenX = {}", lenX);
+    for(size_t i = 0u; i < len4; ++i)
+    {
+        readStructure(); // @todo push structure
+    }
 
-    for(size_t i = 0u; i < lenX; ++i)
+    const uint16_t len5 = mDs.get().readUint16();
+
+    spdlog::debug("len5 = {}", len5);
+
+    for(size_t i = 0u; i < len5; ++i)
+    {
+        readStructure(); // @todo push structure
+    }
+
+    const uint16_t len6 = mDs.get().readUint16();
+
+    spdlog::debug("len6 = {}", len6);
+
+    for(size_t i = 0u; i < len6; ++i)
+    {
+        readStructure(); // @todo push structure
+    }
+
+    const uint16_t len7 = mDs.get().readUint16();
+
+    spdlog::debug("len7 = {}", len7);
+
+    for(size_t i = 0u; i < len7; ++i)
+    {
+        readStructure(); // @todo push structure
+    }
+
+    const uint16_t len8 = mDs.get().readUint16();
+
+    spdlog::debug("len8 = {}", len8);
+
+    for(size_t i = 0u; i < len8; ++i)
+    {
+        readStructure(); // @todo push structure
+    }
+
+    const uint16_t len9 = mDs.get().readUint16();
+
+    spdlog::debug("len9 = {}", len9);
+
+    for(size_t i = 0u; i < len9; ++i)
+    {
+        readStructure(); // @todo push structure
+    }
+
+    const uint16_t len10 = mDs.get().readUint16();
+
+    spdlog::debug("len10 = {}", len10);
+
+    for(size_t i = 0u; i < len10; ++i)
+    {
+        readStructure(); // @todo push structure
+    }
+
+    const uint16_t len11 = mDs.get().readUint16();
+
+    spdlog::debug("len11 = {}", len11);
+
+    for(size_t i = 0u; i < len11; ++i)
     {
         readStructure(); // @todo push structure
     }
