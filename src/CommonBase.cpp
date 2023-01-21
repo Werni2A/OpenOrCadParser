@@ -50,6 +50,7 @@
 #include "Structures/StructSymbolPinScalar.hpp"
 #include "Structures/StructT0x10.hpp"
 #include "Structures/StructT0x1f.hpp"
+#include "Structures/StructT0x34.hpp"
 #include "Structures/StructTitleBlockSymbol.hpp"
 #include "Structures/StructWireScalar.hpp"
 #include "Structures/TrailingProperties.hpp"
@@ -571,8 +572,9 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         case Structure::SymbolDisplayProp:      obj = std::make_unique<StructSymbolDisplayProp>(mDs);      break;
         case Structure::SymbolPinBus:           obj = std::make_unique<StructSymbolPinBus>(mDs);           break;
         case Structure::SymbolPinScalar:        obj = std::make_unique<StructSymbolPinScalar>(mDs);        break;
-        case Structure::T0x1f:                  obj = std::make_unique<StructT0x1f>(mDs);                  break;
         case Structure::T0x10:                  obj = std::make_unique<StructT0x10>(mDs);                  break;
+        case Structure::T0x1f:                  obj = std::make_unique<StructT0x1f>(mDs);                  break;
+        case Structure::T0x34:                  obj = std::make_unique<StructT0x34>(mDs);                  break;
         case Structure::WireScalar:             obj = std::make_unique<StructWireScalar>(mDs);             break;
         default:
 
