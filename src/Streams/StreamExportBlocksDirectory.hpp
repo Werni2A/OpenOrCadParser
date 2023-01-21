@@ -27,7 +27,7 @@ public:
 
 
 [[maybe_unused]]
-static std::string to_string(const StreamExportBlocksDirectory& aObj)
+static std::string to_string(const StreamExportBlocksDirectory& /* aObj */)
 {
     // return dynamic_cast<const StreamDirectoryStruct*>(&aObj)->to_string();
     return "";
