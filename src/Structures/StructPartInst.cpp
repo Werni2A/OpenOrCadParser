@@ -62,12 +62,13 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
     mDs.get().printUnknownData(2, std::string(__func__) + " - 5");
 
     // @todo implement type_prefix_very_long
-    mDs.get().printUnknownData(18, std::string(__func__) + " - 6");
+    // mDs.get().printUnknownData(18, std::string(__func__) + " - 6");
 
-    Structure structure = auto_read_prefixes();
-    sanitizeThisFutureSize(thisFuture);
+    // auto_read_prefixes();
 
-    readOptionalTrailingFuture();
+    // sanitizeThisFutureSize(thisFuture);
+
+    // readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::info(to_string());
