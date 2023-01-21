@@ -48,14 +48,14 @@ static std::string to_string(const StructGraphicBoxInst& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-    str += fmt::format("dbId  = {}\n", aObj.dbId);
-    str += fmt::format("locX  = {}\n", aObj.locX);
-    str += fmt::format("locY  = {}\n", aObj.locY);
-    str += fmt::format("x1    = {}\n", aObj.x1);
-    str += fmt::format("y1    = {}\n", aObj.y1);
-    str += fmt::format("x2    = {}\n", aObj.x2);
-    str += fmt::format("y2    = {}\n", aObj.y2);
-    str += fmt::format("color = {}\n", to_string(aObj.color));
+    str += fmt::format("{}dbId  = {}\n", indent(1), aObj.dbId);
+    str += fmt::format("{}locX  = {}\n", indent(1), aObj.locX);
+    str += fmt::format("{}locY  = {}\n", indent(1), aObj.locY);
+    str += fmt::format("{}x1    = {}\n", indent(1), aObj.x1);
+    str += fmt::format("{}y1    = {}\n", indent(1), aObj.y1);
+    str += fmt::format("{}x2    = {}\n", indent(1), aObj.x2);
+    str += fmt::format("{}y2    = {}\n", indent(1), aObj.y2);
+    str += fmt::format("{}color = {}\n", indent(1), to_string(aObj.color));
     return str;
 }
 

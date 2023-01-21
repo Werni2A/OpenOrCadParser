@@ -38,8 +38,8 @@ static std::string to_string(const StructERCSymbol& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-    str += fmt::format("name = {}\n", aObj.name);
-    str += fmt::format("symbolBBox = {}", to_string(aObj.symbolBBox));
+    str += fmt::format("{}name = {}\n", indent(1), aObj.name);
+    str += fmt::format("{}symbolBBox = {}", indent(1), to_string(aObj.symbolBBox));
 
     return str;
 }

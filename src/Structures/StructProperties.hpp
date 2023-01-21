@@ -33,7 +33,7 @@ static std::string to_string(const StructProperties& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-    str += fmt::format("{}ref  = {}\n", indent(1), aObj.ref);
+    str += fmt::format("{}ref = {}\n", indent(1), aObj.ref);
 
     return str;
 }
