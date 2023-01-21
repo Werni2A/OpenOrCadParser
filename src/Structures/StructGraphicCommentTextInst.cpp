@@ -20,6 +20,10 @@ void StructGraphicCommentTextInst::read(FileFormatVersion /* aVersion */)
 
     mDs.get().printUnknownData(34, std::string(__func__) + " - 0");
 
+    readStructure();
+
+    mDs.get().printUnknownData(8, std::string(__func__) + " - 1");
+
     sanitizeThisFutureSize(thisFuture);
 
     readOptionalTrailingFuture();
