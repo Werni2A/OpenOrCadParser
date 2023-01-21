@@ -22,8 +22,7 @@ void StreamHierarchy::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < netLen; ++i)
     {
-        // const Structure structure = read_prefixes(2);
-        Structure structure = auto_read_prefixes();
+        auto_read_prefixes();
 
         readPreamble();
 

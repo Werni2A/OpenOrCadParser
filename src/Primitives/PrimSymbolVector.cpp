@@ -45,7 +45,6 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
     // Only primitives are expected here
     for(size_t i = 0u; i < repetition; ++i)
     {
-
         const Primitive primitive = readSmallPrefixPrimitive();
 
         readPrimitive(primitive);
