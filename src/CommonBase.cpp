@@ -390,11 +390,15 @@ std::optional<FutureData> CommonBase::getFutureData()
         spdlog::warn("Did not find this structure in future data with startOffset 0x{:08x}",
             startOffset);
 
-        spdlog::debug("Current FutureDataLst:");
+        constexpr std::size_t showElemCnt = 10U;
+        spdlog::debug("Last {} FutureDataLst Elements:", showElemCnt);
 
-        for(const auto& futureData : mFutureDataLst)
+        for(auto it = (mFutureDataLst.size() <= showElemCnt) ?
+                mFutureDataLst.cbegin() :
+                (mFutureDataLst.cbegin() + mFutureDataLst.size() - showElemCnt);
+            it != mFutureDataLst.cend(); ++it)
         {
-            spdlog::debug(futureData.string());
+            spdlog::debug(it->string());
         }
     }
 
