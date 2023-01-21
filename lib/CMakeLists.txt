@@ -79,6 +79,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructT0x10.cpp
    ${LIB_SRC_DIR}/Structures/StructT0x1f.cpp
    ${LIB_SRC_DIR}/Structures/StructT0x34.cpp
+   ${LIB_SRC_DIR}/Structures/StructT0x35.cpp
    ${LIB_SRC_DIR}/Structures/StructTitleBlockSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructWireScalar.cpp
    ${LIB_SRC_DIR}/Structures/TrailingProperties.cpp
@@ -152,6 +153,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/StructT0x10.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructT0x1f.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructT0x34.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructT0x35.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructTitleBlockSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructWireScalar.hpp
    ${LIB_INCLUDE_DIR}/Structures/TrailingProperties.hpp
