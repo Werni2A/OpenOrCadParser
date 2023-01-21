@@ -54,6 +54,8 @@ enum class Structure
     SymbolVector           =  48,
     Alias                  =  49, //!< Net alias
 
+    T0x34                  =  52, // @todo rename
+
     GraphicBoxInst         =  55,
     GraphicLineInst        =  56,
     GraphicArcInst         =  57,
