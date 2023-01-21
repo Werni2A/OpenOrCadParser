@@ -723,7 +723,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/actel/ACT_SEQ.OLB
-  - errors: 138
+  - errors: 135
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/actel/ACT_SOFT.OLB
   - errors: 0
@@ -792,16 +792,16 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/LOGIBLOX.OLB
-  - errors: 258
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/Spartan2/SPARTAN2.OLB
-  - errors: 309
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/SpartanXL/SPARTANXL.OLB
-  - errors: 258
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/Virtex/Virtex.olb
-  - errors: 260
+  - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/Virtex2/Virtex2.olb
   - errors: 0
@@ -813,7 +813,7 @@ repositories:
   - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/X5K_MISC.OLB
-  - errors: 309
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/XC4000E/XC4000E.OLB
   - errors: 35
@@ -1434,7 +1434,7 @@ repositories:
   - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/analog.olb
-  - errors: 6
+  - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/anl_misc.olb
   - errors: 0
@@ -1575,7 +1575,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/fairchild.olb
-  - errors: 37
+  - errors: 30
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/filtsub.olb
   - errors: 0
@@ -3652,7 +3652,7 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/actel/ACT_SEQ.OLB
-  - errors: 138
+  - errors: 135
     options: null
     path: ./fpga/actel/ACT_SOFT.OLB
   - errors: 0
@@ -3673,13 +3673,13 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/xilinx/X3K_MISC.OLB
-  - errors: 309
+  - errors: 2
     options: null
     path: ./fpga/xilinx/SpartanXL/SPARTANXL.OLB
-  - errors: 309
+  - errors: 2
     options: null
     path: ./fpga/xilinx/XC4000E/XC4000E.OLB
-  - errors: 258
+  - errors: 2
     options: null
     path: ./fpga/xilinx/Spartan2/SPARTAN2.OLB
   - errors: 0
