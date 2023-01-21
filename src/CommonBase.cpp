@@ -29,6 +29,7 @@
 #include "Structures/StructGlobalSymbol.hpp"
 #include "Structures/StructGraphicBoxInst.hpp"
 #include "Structures/StructGraphicCommentTextInst.hpp"
+#include "Structures/StructGraphicLineInst.hpp"
 #include "Structures/StructHierarchicSymbol.hpp"
 #include "Structures/StructOffPageSymbol.hpp"
 #include "Structures/StructPartInst.hpp"
@@ -554,6 +555,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         case Structure::GlobalSymbol:           obj = std::make_unique<StructGlobalSymbol>(mDs);           break;
         case Structure::GraphicBoxInst:         obj = std::make_unique<StructGraphicBoxInst>(mDs);         break;
         case Structure::GraphicCommentTextInst: obj = std::make_unique<StructGraphicCommentTextInst>(mDs); break;
+        case Structure::GraphicLineInst:        obj = std::make_unique<StructGraphicLineInst>(mDs);        break;
         case Structure::OffPageSymbol:          obj = std::make_unique<StructOffPageSymbol>(mDs);          break;
         case Structure::PartInst:               obj = std::make_unique<StructPartInst>(mDs);               break;
         case Structure::PinIdxMapping:          obj = std::make_unique<StructPinIdxMapping>(mDs);          break;
