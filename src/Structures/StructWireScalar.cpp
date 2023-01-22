@@ -10,66 +10,71 @@
 #include "Structures/StructWireScalar.hpp"
 
 
-void StructWireScalar::read(FileFormatVersion /* aVersion */)
-{
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+// @note Moved to StructWire::read
+// void StructWireScalar::read(FileFormatVersion /* aVersion */)
+// {
+//     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes();
+//     auto_read_prefixes();
 
-    readPreamble();
+//     readPreamble();
 
-    const std::optional<FutureData> thisFuture = getFutureData();
+//     const std::optional<FutureData> thisFuture = getFutureData();
 
-    dbId = mDs.get().readUint32();
+//     dbId = mDs.get().readUint32();
 
-    spdlog::debug("dbId = {}", dbId);
+//     spdlog::debug("dbId = {}", dbId);
 
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 0");
+//     mDs.get().printUnknownData(4, std::string(__func__) + " - 0");
 
-    wireColor = ToColor(mDs.get().readUint32());
+//     wireColor = ToColor(mDs.get().readUint32());
 
-    spdlog::debug("wireColor = {}", ::to_string(wireColor));
+//     spdlog::debug("wireColor = {}", ::to_string(wireColor));
 
-    startX = mDs.get().readInt32();
-    startY = mDs.get().readInt32();
-    endX   = mDs.get().readInt32();
-    endY   = mDs.get().readInt32();
+//     startX = mDs.get().readInt32();
+//     startY = mDs.get().readInt32();
 
-    spdlog::debug("startX = {} | startY = {} | endX = {} | endY = {}",
-        startX, startY, endX, endY);
+//     spdlog::debug("startX = {}", startX);
+//     spdlog::debug("startY = {}", startY);
 
-    mDs.get().printUnknownData(1, std::string(__func__) + " - 1");
+//     endX = mDs.get().readInt32();
+//     endY = mDs.get().readInt32();
 
-    const uint16_t len0 = mDs.get().readUint16();
+//     spdlog::debug("endX = {}", endX);
+//     spdlog::debug("endY = {}", endY);
 
-    spdlog::debug("len0 = {}", len0);
+//     mDs.get().printUnknownData(1, std::string(__func__) + " - 1");
 
-    for(size_t i = 0u; i < len0; ++i)
-    {
-        // @todo Read structure should be 'Alias'
-        readStructure(); // @todo push
-    }
+//     const uint16_t len0 = mDs.get().readUint16();
 
-    const uint16_t len1 = mDs.get().readUint16();
+//     spdlog::debug("len0 = {}", len0);
 
-    spdlog::debug("len1 = {}", len1);
+//     for(size_t i = 0u; i < len0; ++i)
+//     {
+//         // @todo Read structure should be 'Alias'
+//         readStructure(); // @todo push
+//     }
 
-    for(size_t i = 0u; i < len1; ++i)
-    {
-        // @todo Read structure should be Display Property
-        readStructure(); // @todo push
-    }
+//     const uint16_t len1 = mDs.get().readUint16();
 
-    wireLineWidth = ToLineWidth(mDs.get().readUint32());
-    wireLineStyle = ToLineStyle(mDs.get().readUint32());
+//     spdlog::debug("len1 = {}", len1);
 
-    spdlog::debug("wireLineWidth = {} | wireLineStyle = {}",
-        ::to_string(wireLineWidth), ::to_string(wireLineStyle));
+//     for(size_t i = 0u; i < len1; ++i)
+//     {
+//         // @todo Read structure should be Display Property
+//         readStructure(); // @todo push
+//     }
 
-    sanitizeThisFutureSize(thisFuture);
+//     wireLineWidth = ToLineWidth(mDs.get().readUint32());
+//     wireLineStyle = ToLineStyle(mDs.get().readUint32());
 
-    readOptionalTrailingFuture();
+//     spdlog::debug("wireLineWidth = {} | wireLineStyle = {}",
+//         ::to_string(wireLineWidth), ::to_string(wireLineStyle));
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
-}
+//     sanitizeThisFutureSize(thisFuture);
+
+//     readOptionalTrailingFuture();
+
+//     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+//     spdlog::info(to_string());
+// }
