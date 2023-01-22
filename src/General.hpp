@@ -6,6 +6,7 @@
 #include <ctime>
 #include <filesystem>
 #include <iostream>
+#include <memory>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -47,6 +48,24 @@ enum class FileType
     Library,
     Schematic
 };
+
+
+// Copied from StackExchange [1] and slightly modified
+// to throw on invalid cast
+// [1] https://codereview.stackexchange.com/a/280784
+template<typename T, typename S>
+static std::unique_ptr<T> dynamic_pointer_cast(std::unique_ptr<S>&& p)
+{
+    if (T* const converted = dynamic_cast<T*>(p.get())) {
+        // cast succeeded; clear input
+        p.release();
+        return std::unique_ptr<T>{converted};
+    }
+
+    throw std::runtime_error{fmt::format("{} is not of type {}",
+        NAMEOF_FULL_TYPE_RTTI(*p.get()),
+        nameof::nameof_type<T>())};
+}
 
 
 template<typename T>
