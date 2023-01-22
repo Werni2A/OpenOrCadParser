@@ -121,6 +121,8 @@ void Parser::readTitleBlockSymbol()
 
     const uint16_t someLen = mDs.get().readUint16();
 
+    spdlog::trace("someLen = {}", someLen);
+
     for(size_t i = 0u; i < someLen; ++i)
     {
         const Primitive primitive = readPrefixPrimitive();
@@ -131,6 +133,8 @@ void Parser::readTitleBlockSymbol()
     mDs.get().printUnknownData(6, std::string(__func__) + " - 3");
 
     const uint16_t followingLen = mDs.get().readUint16();
+
+    spdlog::trace("followingLen = {}", followingLen);
 
     for(size_t i = 0u; i < followingLen; ++i)
     {

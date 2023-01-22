@@ -45,6 +45,9 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
         if(strLen == -1)
         {
             const int16_t strLen = mDs.get().readInt16();
+
+            spdlog::trace("strLen = {}", strLen);
+
             continue;
         }
 
