@@ -11,21 +11,44 @@
 #include "Structures/StructSymbolPin.hpp"
 
 
-// void StructSymbolPin::read(FileFormatVersion /* aVersion */)
-// {
-//     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+void StructSymbolPin::read(FileFormatVersion /* aVersion */)
+{
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-//     auto_read_prefixes();
+    auto_read_prefixes();
 
-//     readPreamble();
+    readPreamble();
 
-//     const std::optional<FutureData> thisFuture = getFutureData();
+    const std::optional<FutureData> thisFuture = getFutureData();
 
+    name = mDs.get().readStringLenZeroTerm();
 
-//     sanitizeThisFutureSize(thisFuture);
+    startX = mDs.get().readInt32();
+    startY = mDs.get().readInt32();
+    hotptX = mDs.get().readInt32();
+    hotptY = mDs.get().readInt32();
 
-//     readOptionalTrailingFuture();
+    pinShape = ToPinShape(mDs.get().readUint16());
 
-//     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-//     spdlog::trace(to_string());
-// }
+    mDs.get().printUnknownData(2, std::string(__func__) + " - 0");
+
+    portType = ToPortType(mDs.get().readUint32());
+
+    mDs.get().printUnknownData(4, std::string(__func__) + " - 1");
+
+    const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
+
+    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
+
+    for(size_t i = 0; i < lenSymbolDisplayProps; ++i)
+    {
+        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
+    }
+
+    sanitizeThisFutureSize(thisFuture);
+
+    readOptionalTrailingFuture();
+
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::trace(to_string());
+}

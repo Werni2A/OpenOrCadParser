@@ -11,37 +11,38 @@
 #include "Structures/StructSymbolPinBus.hpp"
 
 
-void StructSymbolPinBus::read(FileFormatVersion /* aVersion */)
-{
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+// @note Moved to StructSymbolPin::read
+// void StructSymbolPinBus::read(FileFormatVersion /* aVersion */)
+// {
+//     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes();
+//     auto_read_prefixes();
 
-    readPreamble();
+//     readPreamble();
 
-    const std::optional<FutureData> thisFuture = getFutureData();
+//     const std::optional<FutureData> thisFuture = getFutureData();
 
-    name = mDs.get().readStringLenZeroTerm();
+//     name = mDs.get().readStringLenZeroTerm();
 
-    startX = mDs.get().readInt32();
-    startY = mDs.get().readInt32();
-    hotptX = mDs.get().readInt32();
-    hotptY = mDs.get().readInt32();
+//     startX = mDs.get().readInt32();
+//     startY = mDs.get().readInt32();
+//     hotptX = mDs.get().readInt32();
+//     hotptY = mDs.get().readInt32();
 
-    pinShape = ToPinShape(mDs.get().readUint16());
+//     pinShape = ToPinShape(mDs.get().readUint16());
 
-    mDs.get().printUnknownData(2, std::string(__func__) + " - 0");
+//     mDs.get().printUnknownData(2, std::string(__func__) + " - 0");
 
-    portType = ToPortType(mDs.get().readUint32());
+//     portType = ToPortType(mDs.get().readUint32());
 
-    mDs.get().printUnknownData(6, std::string(__func__) + " - 1");
+//     mDs.get().printUnknownData(6, std::string(__func__) + " - 1");
 
-    // @todo compare against SymbolPinScalar, maybe they have the same content
+//     // @todo compare against SymbolPinScalar, maybe they have the same content
 
-    sanitizeThisFutureSize(thisFuture);
+//     sanitizeThisFutureSize(thisFuture);
 
-    readOptionalTrailingFuture();
+//     readOptionalTrailingFuture();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::trace(to_string());
-}
+//     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+//     spdlog::trace(to_string());
+// }
