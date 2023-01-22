@@ -138,7 +138,7 @@ void Parser::readTitleBlockSymbol()
 
     for(size_t i = 0u; i < followingLen; ++i)
     {
-        readStructure();
+        spdlog::critical("VERIFYING Misc Structure0 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
     }
 
     if(!mDs.get().isEoF())

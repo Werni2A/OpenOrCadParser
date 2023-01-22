@@ -3,9 +3,11 @@
 
 
 #include <cstdint>
+#include <memory>
 #include <optional>
 #include <ostream>
 #include <string>
+#include <vector>
 
 #include <fmt/core.h>
 #include <nameof.hpp>
@@ -15,13 +17,14 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
+#include "Structures/StructSymbolDisplayProp.hpp"
 
 
 class StructPort : public CommonBase
 {
 public:
 
-    StructPort(DataStream& aDs) : CommonBase{aDs}, name{}
+    StructPort(DataStream& aDs) : CommonBase{aDs}, name{}, symbolDisplayProps{}
     { }
 
     std::string to_string() const override;
@@ -29,6 +32,8 @@ public:
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
     std::string name;
+
+    std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };
 
 
@@ -39,6 +44,12 @@ static std::string to_string(const StructPort& aObj)
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
     str += fmt::format("{}name = {}\n", indent(1), aObj.name);
+
+    str += fmt::format("{}symbolDisplayProps:\n", indent(1));
+    for(size_t i = 0u; i < aObj.symbolDisplayProps.size(); ++i)
+    {
+        str += indent(fmt::format("[{}]: {}", i, aObj.symbolDisplayProps[i]->to_string()), 2);
+    }
 
     return str;
 }

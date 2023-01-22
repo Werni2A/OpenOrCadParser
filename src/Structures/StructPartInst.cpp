@@ -52,7 +52,8 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len; ++i)
     {
-        readStructure(); // @todo push struct
+        spdlog::critical("VERIFYING StructPartInst Structure42 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
+        // readStructure(); // @todo push struct
     }
 
     mDs.get().printUnknownData(1, std::string(__func__) + " - 3");
@@ -69,7 +70,8 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len2; ++i)
     {
-        readStructure(); // @todo push struct
+        spdlog::critical("VERIFYING StructPartInst Structure2 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
+        // readStructure(); // @todo push struct
     }
 
     const std::string sth1 = mDs.get().readStringLenZeroTerm(); // @todo needs verification

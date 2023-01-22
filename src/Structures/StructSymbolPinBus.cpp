@@ -36,6 +36,8 @@ void StructSymbolPinBus::read(FileFormatVersion /* aVersion */)
 
     mDs.get().printUnknownData(6, std::string(__func__) + " - 1");
 
+    // @todo compare against SymbolPinScalar, maybe they have the same content
+
     sanitizeThisFutureSize(thisFuture);
 
     readOptionalTrailingFuture();

@@ -39,7 +39,8 @@ void StructGraphicBoxInst::read(FileFormatVersion /* aVersion */)
     // @todo Only Rect as a shape would make sense here. Maybe this should be passed
     //       as a parameter to readSthInPages0 to check this condition. Further,
     //       parseStructure should always call readSthInPages0.
-    readStructure();
+    // readStructure();
+    spdlog::critical("VERIFYING StructGraphicBoxInst Structure0 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
 
     sanitizeThisFutureSize(thisFuture);
 

@@ -12,7 +12,7 @@ void StreamSymbol::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    structures.push_back(readStructure());
+    spdlog::critical("VERIFYING StreamSymbol Structure10 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
 
     mDs.get().printUnknownData(4, fmt::format("{}: 0", __func__));
 
@@ -24,13 +24,21 @@ void StreamSymbol::read(FileFormatVersion /* aVersion */)
     {
         spdlog::trace("i of geometryCount = {}", i);
 
+        // @todo This whole code sequence does not make much sense
+        //       Try if readStructure() works out of the box
         if(i > 0u)
         {
+            // @todo Check if the `if` statement is really necessary
+            //       auto_read_prefixes should be able to handle
+            //       a value of 0
             if(gFileFormatVersion == FileFormatVersion::B)
             {
-                auto_read_prefixes();
+                spdlog::critical("VERIFYING StreamSymbol Structure11 is {}", NAMEOF_TYPE_RTTI(auto_read_prefixes()));
             }
 
+            // @todo check if if works without the `if` statement
+            //       readPreamble should be able to skip it if it's
+            //       not present
             if(gFileFormatVersion >= FileFormatVersion::B)
             {
                 readPreamble();
@@ -49,22 +57,22 @@ void StreamSymbol::read(FileFormatVersion /* aVersion */)
     // @todo Trailing data could be SymbolBBox
     // readSymbolBBox(); // @todo push structure
 
-    const uint16_t len = mDs.get().readUint16();
+    const uint16_t lenSymbolPins = mDs.get().readUint16();
 
-    spdlog::trace("len = {}", len);
+    spdlog::trace("lenSymbolPins = {}", lenSymbolPins);
 
-    for(size_t i = 0u; i < len; ++i)
+    for(size_t i = 0u; i < lenSymbolPins; ++i)
     {
-        structures.push_back(readStructure());
+        symbolPins.push_back(dynamic_pointer_cast<StructSymbolPin>(readStructure()));
     }
 
-    const uint16_t len2 = mDs.get().readUint16();
+    const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
 
-    spdlog::trace("len2 = {}", len2);
+    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
-    for(size_t i = 0u; i < len2; ++i)
+    for(size_t i = 0u; i < lenSymbolDisplayProps; ++i)
     {
-        structures.push_back(readStructure());
+        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
     if(!mDs.get().isEoF())
