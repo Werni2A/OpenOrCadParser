@@ -32,11 +32,16 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
     // Rotation and Font ID bit field
     struct RotFontIdBitField
     {
+        RotFontIdBitField(uint16_t aInit)
+        {
+            textFontIdx = (aInit & 0x3fff) >>  0U;
+            rotation    = (aInit & 0xc000) >> 14U;
+        }
+
         uint16_t textFontIdx : 14; // 13 downto  0
         uint16_t rotation    :  2; // 15 downto 14
     };
 
-    // @todo not sure if the constructor call really works
     const RotFontIdBitField rotFontIdBitField{mDs.get().readUint16()};
 
     textFontIdx = rotFontIdBitField.textFontIdx;

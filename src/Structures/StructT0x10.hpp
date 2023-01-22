@@ -46,9 +46,9 @@ inline std::string StructT0x10::to_string() const
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructT0x10& aVal)
+static std::ostream& operator<<(std::ostream& aOs, const StructT0x10& aObj)
 {
-    aOs << to_string(aVal);
+    aOs << to_string(aObj);
 
     return aOs;
 }
