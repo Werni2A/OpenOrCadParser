@@ -35,14 +35,14 @@ void StreamLibrary::read(FileFormatVersion /* aVersion */)
     // write_data_to_file(buffer, sizeof(buffer));
     mDs.get().padRest(startOffset, 32, false);
 
-    spdlog::debug("introduction = {}", introduction);
+    spdlog::trace("introduction = {}", introduction);
 
     // I saw versions:
     // 2.0; 3.2; 3.3
     const uint16_t versionMajor = mDs.get().readUint16();
     const uint16_t versionMinor = mDs.get().readUint16();
 
-    spdlog::debug("version = {}.{}", versionMajor, versionMinor);
+    spdlog::trace("version = {}.{}", versionMajor, versionMinor);
 
     createDate = static_cast<time_t>(mDs.get().readUint32());
     modifyDate = static_cast<time_t>(mDs.get().readUint32());
@@ -54,7 +54,7 @@ void StreamLibrary::read(FileFormatVersion /* aVersion */)
     //       is there some correlation?
     const uint16_t textFontLen = mDs.get().readUint16();
 
-    spdlog::debug("textFontLen = {}", textFontLen);
+    spdlog::trace("textFontLen = {}", textFontLen);
 
     if(textFontLen == 0u)
     {
@@ -110,7 +110,7 @@ void StreamLibrary::read(FileFormatVersion /* aVersion */)
     {
         mDs.get().printUnknownData(8, std::string(__func__) + " - 5");
         std::string schematicName = mDs.get().readStringLenZeroTerm();
-        spdlog::debug("schematicName = {}", schematicName);
+        spdlog::trace("schematicName = {}", schematicName);
     }
 
     if(!mDs.get().isEoF())

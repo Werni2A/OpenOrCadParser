@@ -24,7 +24,7 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
     // @todo move to left shift operator
     // @bug The required string is not this one but the value of the associated property!!!!
     //      This is just the name of the property!!
-    spdlog::debug("strLst Item = {}", gLibrary->library->strLst.at(nameIdx));
+    spdlog::trace("strLst Item = {}", gLibrary->library->strLst.at(nameIdx));
 
     x = mDs.get().readInt16();
     y = mDs.get().readInt16();
@@ -80,5 +80,5 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
     readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

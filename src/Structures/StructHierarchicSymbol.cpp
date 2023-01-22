@@ -23,5 +23,5 @@ void StructHierarchicSymbol::read(FileFormatVersion /* aVersion */)
     checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

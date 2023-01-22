@@ -102,7 +102,7 @@ void CommonBase::discard_until_preamble()
 
     const size_t endOffset = mDs.get().getCurrentOffset();
 
-    spdlog::critical("{}: Discarded {} Byte until next preamble", __func__, endOffset - startOffset);
+    spdlog::debug("{}: Discarded {} Byte until next preamble", __func__, endOffset - startOffset);
 }
 
 
@@ -175,7 +175,7 @@ Structure CommonBase::auto_read_prefixes()
     //       I.e. figure out the numbers for each structure and move the
     //       parsing code into the structure specific parser. This should
     //       get rid of auto_read_prefixes.
-    spdlog::info("{}: Found {} prefixes for {}\n", __func__, prefixCtr, ::to_string(structure));
+    spdlog::debug("{}: Found {} prefixes for {}\n", __func__, prefixCtr, ::to_string(structure));
 
     mDs.get().sanitizeNoEoF();
 
@@ -259,7 +259,7 @@ Structure CommonBase::read_prefixes(size_t aNumber, bool aPrediction)
                     }
                     else
                     {
-                        spdlog::debug("{}: Future data exists already in list", __func__);
+                        spdlog::trace("{}: Future data exists already in list", __func__);
                     }
                 }
 

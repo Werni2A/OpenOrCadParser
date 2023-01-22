@@ -26,32 +26,32 @@ void StructT0x34::read(FileFormatVersion /* aVersion */)
 
     id = mDs.get().readUint32();
 
-    spdlog::debug("id = {}", id);
+    spdlog::trace("id = {}", id);
 
     const std::string unknownStr = mDs.get().readStringLenZeroTerm();
 
-    spdlog::debug("unknownStr = {}", unknownStr);
+    spdlog::trace("unknownStr = {}", unknownStr);
 
     const uint32_t unknownInt = mDs.get().readUint32();
 
-    spdlog::debug("unknownInt = {}", unknownInt);
+    spdlog::trace("unknownInt = {}", unknownInt);
 
     color = ToColor(mDs.get().readUint32());
 
-    spdlog::debug("color = {}", ::to_string(color));
+    spdlog::trace("color = {}", ::to_string(color));
 
     lineStyle = ToLineStyle(mDs.get().readUint32());
 
-    spdlog::debug("lineStyle = {}", ::to_string(lineStyle));
+    spdlog::trace("lineStyle = {}", ::to_string(lineStyle));
 
     lineWidth = ToLineWidth(mDs.get().readUint32());
 
-    spdlog::debug("lineWidth = {}", ::to_string(lineWidth));
+    spdlog::trace("lineWidth = {}", ::to_string(lineWidth));
 
     sanitizeThisFutureSize(thisFuture);
 
     readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

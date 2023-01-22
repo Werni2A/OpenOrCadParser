@@ -34,5 +34,5 @@ void StreamHierarchy::read(FileFormatVersion /* aVersion */)
     }
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::debug(to_string());
+    spdlog::info(to_string());
 }

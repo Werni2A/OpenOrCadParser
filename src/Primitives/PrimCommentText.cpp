@@ -32,23 +32,23 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
     locX = mDs.get().readInt32();
     locY = mDs.get().readInt32();
 
-    spdlog::debug("locX = {}", locX);
-    spdlog::debug("locY = {}", locY);
+    spdlog::trace("locX = {}", locX);
+    spdlog::trace("locY = {}", locY);
 
     x2 = mDs.get().readInt32();
     y2 = mDs.get().readInt32();
     x1 = mDs.get().readInt32();
     y1 = mDs.get().readInt32();
 
-    spdlog::debug("x2 = {}", x2);
-    spdlog::debug("y2 = {}", y2);
-    spdlog::debug("x1 = {}", x1);
-    spdlog::debug("y1 = {}", y1);
+    spdlog::trace("x2 = {}", x2);
+    spdlog::trace("y2 = {}", y2);
+    spdlog::trace("x1 = {}", x1);
+    spdlog::trace("y1 = {}", y1);
 
     // @todo Check if fontIdx with 4 byte fits. I.e. are the following 2 Byte all 0?
     textFontIdx = mDs.get().readUint16();
 
-    spdlog::debug("textFontIdx = {}", textFontIdx);
+    spdlog::trace("textFontIdx = {}", textFontIdx);
 
     if(textFontIdx > gLibrary->library->textFonts.size())
     {
@@ -61,7 +61,7 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
 
     name = mDs.get().readStringLenZeroTerm();
 
-    spdlog::debug("name = {}", name);
+    spdlog::trace("name = {}", name);
 
     if(mDs.get().getCurrentOffset() != startOffset + byteLength)
     {
@@ -74,7 +74,7 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
     }
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 
     readPreamble();
 }

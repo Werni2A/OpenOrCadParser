@@ -17,11 +17,12 @@ void StreamSymbol::read(FileFormatVersion /* aVersion */)
     mDs.get().printUnknownData(4, fmt::format("{}: 0", __func__));
 
     const uint16_t geometryCount = mDs.get().readUint16();
-    spdlog::debug("geometryCount = {}", geometryCount);
+
+    spdlog::trace("geometryCount = {}", geometryCount);
 
     for(size_t i = 0u; i < geometryCount; ++i)
     {
-        spdlog::debug("i of geometryCount = {}", i);
+        spdlog::trace("i of geometryCount = {}", i);
 
         if(i > 0u)
         {
@@ -50,7 +51,7 @@ void StreamSymbol::read(FileFormatVersion /* aVersion */)
 
     const uint16_t len = mDs.get().readUint16();
 
-    spdlog::info("len = {}", len);
+    spdlog::trace("len = {}", len);
 
     for(size_t i = 0u; i < len; ++i)
     {
@@ -59,7 +60,7 @@ void StreamSymbol::read(FileFormatVersion /* aVersion */)
 
     const uint16_t len2 = mDs.get().readUint16();
 
-    spdlog::info("len2 = {}", len2);
+    spdlog::trace("len2 = {}", len2);
 
     for(size_t i = 0u; i < len2; ++i)
     {

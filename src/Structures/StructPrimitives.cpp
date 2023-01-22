@@ -68,7 +68,7 @@ void StructPrimitives::read(FileFormatVersion aVersion)
 
     name = mDs.get().readStringLenZeroTerm();
 
-    spdlog::debug("name = {}", name);
+    spdlog::trace("name = {}", name);
 
     mDs.get().assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 0"); // Unknown but probably a string
 
@@ -81,11 +81,11 @@ void StructPrimitives::read(FileFormatVersion aVersion)
     readOptionalTrailingFuture();
 
     // const uint16_t geometryCount = mDs.get().readUint16();
-    // spdlog::debug("geometryCount = {}", geometryCount);
+    // spdlog::trace("geometryCount = {}", geometryCount);
 
     // for(size_t i = 0u; i < geometryCount; ++i)
     // {
-    //     spdlog::debug("i of geometryCount = {}", i);
+    //     spdlog::trace("i of geometryCount = {}", i);
 
     //     if(i > 0u)
     //     {
@@ -114,5 +114,5 @@ void StructPrimitives::read(FileFormatVersion aVersion)
     readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

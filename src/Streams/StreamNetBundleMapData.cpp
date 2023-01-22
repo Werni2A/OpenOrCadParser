@@ -17,14 +17,14 @@ void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
 
     uint16_t number_groups = mDs.get().readUint16();
 
-    spdlog::debug("number_groups = {}", number_groups);
+    spdlog::trace("number_groups = {}", number_groups);
 
     for(size_t i = 0U; i < number_groups; ++i)
     {
-        spdlog::debug("[{}]:", i);
+        spdlog::trace("[{}]:", i);
 
         std::string group_name = mDs.get().readStringLenZeroTerm();
-        spdlog::debug("group_name = {}:", group_name);
+        spdlog::trace("group_name = {}:", group_name);
 
         Structure structure = auto_read_prefixes();
 
@@ -51,12 +51,12 @@ void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
         for(size_t j = 0U; j < number_group_elements; ++j)
         {
             std::string element_name = mDs.get().readStringLenZeroTerm();
-            spdlog::debug("  [{}]: element_name = {}", j, element_name);
+            spdlog::trace("  [{}]: element_name = {}", j, element_name);
 
             // @todo 0x01 is probably a scalar wire
             //       0x02 is probably a bus
             uint16_t wire_type = mDs.get().readUint16();
-            spdlog::debug("       wire_type = {}", wire_type == 0x01 ? "Scalar" : wire_type == 0x02 ? "Bus" : "Unknown");
+            spdlog::trace("       wire_type = {}", wire_type == 0x01 ? "Scalar" : wire_type == 0x02 ? "Bus" : "Unknown");
         }
     }
 

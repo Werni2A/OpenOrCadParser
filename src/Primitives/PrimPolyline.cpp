@@ -80,7 +80,7 @@ void PrimPolyline::read(FileFormatVersion aVersion)
     if(aVersion == FileFormatVersion::Unknown)
     {
         aVersion = predictVersion();
-        // spdlog::info("Predicted version {} in {}", aVersion, __func__);
+        // spdlog::debug("Predicted version {} in {}", aVersion, __func__);
     }
 
     const size_t startOffset = mDs.get().getCurrentOffset();
@@ -97,7 +97,7 @@ void PrimPolyline::read(FileFormatVersion aVersion)
 
     const uint16_t pointCount = mDs.get().readUint16();
 
-    spdlog::debug("pointCount = {}", pointCount);
+    spdlog::trace("pointCount = {}", pointCount);
 
     if(pointCount < 2)
     {
@@ -125,5 +125,5 @@ void PrimPolyline::read(FileFormatVersion aVersion)
     readPreamble();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

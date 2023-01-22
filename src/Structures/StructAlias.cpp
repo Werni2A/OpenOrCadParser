@@ -21,29 +21,29 @@ void StructAlias::read(FileFormatVersion /* aVersion */)
     locX = mDs.get().readInt32();
     locY = mDs.get().readInt32();
 
-    spdlog::debug("locX = {}", locX);
-    spdlog::debug("locY = {}", locY);
+    spdlog::trace("locX = {}", locX);
+    spdlog::trace("locY = {}", locY);
 
     color = ToColor(mDs.get().readUint32());
 
-    spdlog::debug("color = {}", ::to_string(color));
+    spdlog::trace("color = {}", ::to_string(color));
 
     rotation = ToRotation(mDs.get().readUint32()); // @todo Why is it 4 byte? Probably increase Rotation size
 
-    spdlog::debug("rotation = {}", ::to_string(rotation));
+    spdlog::trace("rotation = {}", ::to_string(rotation));
 
     uint32_t textFontIdx = mDs.get().readUint32();
 
-    spdlog::debug("Alias fontIdx = {}", textFontIdx);
+    spdlog::trace("Alias fontIdx = {}", textFontIdx);
 
     name = mDs.get().readStringLenZeroTerm();
 
-    spdlog::debug("name = {}", name);
+    spdlog::trace("name = {}", name);
 
     sanitizeThisFutureSize(thisFuture);
 
     readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

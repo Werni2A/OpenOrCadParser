@@ -26,29 +26,29 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     const std::string pkgName = mDs.get().readStringLenZeroTerm();
 
-    spdlog::debug("pkgName = {}", pkgName);
+    spdlog::trace("pkgName = {}", pkgName);
 
     const uint32_t dbId = mDs.get().readUint32();
 
-    spdlog::debug("dbId = {}", dbId);
+    spdlog::trace("dbId = {}", dbId);
 
     mDs.get().printUnknownData(8, std::string(__func__) + " - 1");
 
     const int16_t locX = mDs.get().readInt16();
     const int16_t locY = mDs.get().readInt16();
 
-    spdlog::debug("locX = {}", locX);
-    spdlog::debug("locY = {}", locY);
+    spdlog::trace("locX = {}", locX);
+    spdlog::trace("locY = {}", locY);
 
     const Color color = ToColor(mDs.get().readUint16()); // @todo educated guess
 
-    spdlog::debug("color = {}", ::to_string(color));
+    spdlog::trace("color = {}", ::to_string(color));
 
     mDs.get().printUnknownData(2, std::string(__func__) + " - 2");
 
     const uint16_t len = mDs.get().readUint16();
 
-    spdlog::debug("len = {}", len);
+    spdlog::trace("len = {}", len);
 
     for(size_t i = 0u; i < len; ++i)
     {
@@ -59,13 +59,13 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     const std::string reference = mDs.get().readStringLenZeroTerm();
 
-    spdlog::debug("reference = {}", reference);
+    spdlog::trace("reference = {}", reference);
 
     mDs.get().printUnknownData(14, std::string(__func__) + " - 4");
 
     const uint16_t len2 = mDs.get().readUint16();
 
-    spdlog::debug("len2 = {}", len2);
+    spdlog::trace("len2 = {}", len2);
 
     for(size_t i = 0u; i < len2; ++i)
     {
@@ -74,7 +74,7 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     const std::string sth1 = mDs.get().readStringLenZeroTerm(); // @todo needs verification
 
-    spdlog::debug("sth1 = {}", sth1);
+    spdlog::trace("sth1 = {}", sth1);
 
     mDs.get().printUnknownData(2, std::string(__func__) + " - 5");
 
@@ -88,5 +88,5 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
     // readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

@@ -87,7 +87,7 @@ void PrimPolygon::read(FileFormatVersion aVersion)
     if(aVersion == FileFormatVersion::Unknown)
     {
         aVersion = predictVersion();
-        // spdlog::info("Predicted version {} in {}", static_cast<int>(aVersion), __func__);
+        // spdlog::debug("Predicted version {} in {}", static_cast<int>(aVersion), __func__);
     }
 
     const size_t startOffset = mDs.get().getCurrentOffset();
@@ -142,5 +142,5 @@ void PrimPolygon::read(FileFormatVersion aVersion)
     readPreamble();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

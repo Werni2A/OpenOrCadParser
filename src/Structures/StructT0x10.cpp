@@ -21,26 +21,26 @@ void StructT0x10::read(FileFormatVersion /* aVersion */)
 
     const uint16_t sth = mDs.get().readUint16();
 
-    spdlog::debug("sth = {}", sth);
+    spdlog::trace("sth = {}", sth);
 
     const int16_t pointX = mDs.get().readInt16();
     const int16_t pointY = mDs.get().readInt16();
 
-    spdlog::debug("pointX = {}", pointX);
-    spdlog::debug("pointY = {}", pointY);
+    spdlog::trace("pointX = {}", pointX);
+    spdlog::trace("pointY = {}", pointY);
 
     const uint32_t maybeId = mDs.get().readUint32();
 
-    spdlog::debug("maybeId = {}", maybeId);
+    spdlog::trace("maybeId = {}", maybeId);
 
     const uint32_t unkownInt = mDs.get().readUint32();
 
-    spdlog::debug("unkownInt = {}", unkownInt);
+    spdlog::trace("unkownInt = {}", unkownInt);
 
     // Should be Display Properties
     uint16_t len = mDs.get().readUint16();
 
-    spdlog::debug("len = {}", len);
+    spdlog::trace("len = {}", len);
 
     for(size_t i = 0; i < len; ++i)
     {
@@ -52,5 +52,5 @@ void StructT0x10::read(FileFormatVersion /* aVersion */)
     // readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

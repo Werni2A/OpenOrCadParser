@@ -24,12 +24,12 @@ void StructT0x1f::read(FileFormatVersion /* aVersion */)
     name = mDs.get().readStringLenZeroTerm();
 
     std::string unknownStr0 = mDs.get().readStringLenZeroTerm(); // @todo figure out
-    spdlog::debug("{}: unknownStr0 = {}", __func__, unknownStr0);
+    spdlog::trace("{}: unknownStr0 = {}", __func__, unknownStr0);
 
     refDes = mDs.get().readStringLenZeroTerm();
 
     std::string unknownStr1 = mDs.get().readStringLenZeroTerm(); // @todo figure out
-    spdlog::debug("{}: unknownStr1 = {}", __func__, unknownStr1);
+    spdlog::trace("{}: unknownStr1 = {}", __func__, unknownStr1);
 
     pcbFootprint = mDs.get().readStringLenZeroTerm();
 
@@ -38,5 +38,5 @@ void StructT0x1f::read(FileFormatVersion /* aVersion */)
     readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }
