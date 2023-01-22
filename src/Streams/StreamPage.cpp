@@ -27,33 +27,31 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     pageSettings.read();
 
-    // Probably Title Blocks
     const uint16_t lenA = mDs.get().readUint16();
 
     spdlog::debug("lenA = {}", lenA);
 
     for(size_t i = 0u; i < lenA; ++i)
     {
-        readStructure(); // @todo push structure
+        spdlog::critical("VERIFYING Page StructureA is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
     }
 
-    // Probably Bus
-    const uint16_t len0 = mDs.get().readUint16();
+    const uint16_t lenT0x34s = mDs.get().readUint16();
 
-    spdlog::debug("len0 = {}", len0);
+    spdlog::debug("lenT0x34s = {}", lenT0x34s);
 
-    for(size_t i = 0u; i < len0; ++i)
+    for(size_t i = 0u; i < lenT0x34s; ++i)
     {
-        readStructure(); // @todo push structure
+        t0x34s.push_back(dynamic_pointer_cast<StructT0x34>(readStructure()));
     }
 
-    const uint16_t len1 = mDs.get().readUint16();
+    const uint16_t lenT0x35s = mDs.get().readUint16();
 
-    spdlog::debug("len1 = {}", len1);
+    spdlog::debug("lenT0x35s = {}", lenT0x35s);
 
-    for(size_t i = 0u; i < len1; ++i)
+    for(size_t i = 0u; i < lenT0x35s; ++i)
     {
-        readStructure(); // @todo push structure
+        t0x35s.push_back(dynamic_pointer_cast<StructT0x35>(readStructure()));
     }
 
     const uint16_t lenB = mDs.get().readUint16();
@@ -69,31 +67,31 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         spdlog::debug("id  = {}", id);
     }
 
-    const uint16_t len2 = mDs.get().readUint16();
+    const uint16_t lenWires = mDs.get().readUint16();
 
-    spdlog::debug("len2 = {}", len2);
+    spdlog::debug("lenWires = {}", lenWires);
 
-    for(size_t i = 0u; i < len2; ++i)
+    for(size_t i = 0u; i < lenWires; ++i)
     {
-        readStructure(); // @todo push structure
+        wires.push_back(dynamic_pointer_cast<StructWire>(readStructure()));
     }
 
-    const uint16_t len3 = mDs.get().readUint16();
+    const uint16_t lenPartInsts = mDs.get().readUint16();
 
-    spdlog::debug("len3 = {}", len3);
+    spdlog::debug("lenPartInsts = {}", lenPartInsts);
 
-    for(size_t i = 0u; i < len3; ++i)
+    for(size_t i = 0u; i < lenPartInsts; ++i)
     {
-        readStructure(); // @todo push structure
+        partInsts.push_back(dynamic_pointer_cast<StructPartInst>(readStructure()));
     }
 
-    const uint16_t len4 = mDs.get().readUint16();
+    const uint16_t lenPorts = mDs.get().readUint16();
 
-    spdlog::debug("len4 = {}", len4);
+    spdlog::debug("lenPorts = {}", lenPorts);
 
-    for(size_t i = 0u; i < len4; ++i)
+    for(size_t i = 0u; i < lenPorts; ++i)
     {
-        readStructure(); // @todo push structure
+        ports.push_back(dynamic_pointer_cast<StructPort>(readStructure()));
     }
 
     const uint16_t len5 = mDs.get().readUint16();
@@ -102,7 +100,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len5; ++i)
     {
-        readStructure(); // @todo push structure
+        spdlog::critical("VERIFYING Page Structure5 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
     }
 
     const uint16_t len6 = mDs.get().readUint16();
@@ -111,7 +109,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len6; ++i)
     {
-        readStructure(); // @todo push structure
+        spdlog::critical("VERIFYING Page Structure6 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
     }
 
     const uint16_t len7 = mDs.get().readUint16();
@@ -120,7 +118,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len7; ++i)
     {
-        readStructure(); // @todo push structure
+        spdlog::critical("VERIFYING Page Structure7 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
     }
 
     const uint16_t len8 = mDs.get().readUint16();
@@ -129,16 +127,18 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len8; ++i)
     {
-        readStructure(); // @todo push structure
+        spdlog::critical("VERIFYING Page Structure8 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
     }
 
-    const uint16_t len9 = mDs.get().readUint16();
+    const uint16_t lenGraphicInsts = mDs.get().readUint16();
 
-    spdlog::debug("len9 = {}", len9);
+    spdlog::debug("lenGraphicInsts = {}", lenGraphicInsts);
 
-    for(size_t i = 0u; i < len9; ++i)
+    // @todo Create class GraphicInst and derive all the Graphic*Inst
+    //       classes from it
+    for(size_t i = 0u; i < lenGraphicInsts; ++i)
     {
-        readStructure(); // @todo push structure
+        spdlog::critical("VERIFYING Page Structure9 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
     }
 
     const uint16_t len10 = mDs.get().readUint16();
@@ -147,7 +147,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len10; ++i)
     {
-        readStructure(); // @todo push structure
+        spdlog::critical("VERIFYING Page Structure10 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
     }
 
     const uint16_t len11 = mDs.get().readUint16();
@@ -156,7 +156,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len11; ++i)
     {
-        readStructure(); // @todo push structure
+        spdlog::critical("VERIFYING Page Structure11 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
     }
 
     if(!mDs.get().isEoF())
