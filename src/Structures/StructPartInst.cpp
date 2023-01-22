@@ -42,14 +42,13 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     mDs.get().printUnknownData(4, std::string(__func__) + " - 2");
 
-    const uint16_t len = mDs.get().readUint16();
+    const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
 
-    spdlog::trace("len = {}", len);
+    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
-    for(size_t i = 0u; i < len; ++i)
+    for(size_t i = 0; i < lenSymbolDisplayProps; ++i)
     {
-        spdlog::critical("VERIFYING StructPartInst Structure42 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
-        // readStructure(); // @todo push struct
+        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
     mDs.get().printUnknownData(1, std::string(__func__) + " - 3");
@@ -60,14 +59,13 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     mDs.get().printUnknownData(14, std::string(__func__) + " - 4");
 
-    const uint16_t len2 = mDs.get().readUint16();
+    const uint16_t lenT0x10s = mDs.get().readUint16();
 
-    spdlog::trace("len2 = {}", len2);
+    spdlog::trace("lenT0x10s = {}", lenT0x10s);
 
-    for(size_t i = 0u; i < len2; ++i)
+    for(size_t i = 0u; i < lenT0x10s; ++i)
     {
-        spdlog::critical("VERIFYING StructPartInst Structure2 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
-        // readStructure(); // @todo push struct
+        t0x10s.push_back(dynamic_pointer_cast<StructT0x10>(readStructure()));
     }
 
     const std::string sth1 = mDs.get().readStringLenZeroTerm(); // @todo needs verification

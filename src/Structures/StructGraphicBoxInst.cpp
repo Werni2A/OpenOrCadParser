@@ -36,11 +36,7 @@ void StructGraphicBoxInst::read(FileFormatVersion /* aVersion */)
 
     mDs.get().printUnknownData(5, std::string(__func__) + " - 1");
 
-    // @todo Only Rect as a shape would make sense here. Maybe this should be passed
-    //       as a parameter to readSthInPages0 to check this condition. Further,
-    //       parseStructure should always call readSthInPages0.
-    // readStructure();
-    spdlog::critical("VERIFYING StructGraphicBoxInst Structure0 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
+    sthInPages0 = dynamic_pointer_cast<StructSthInPages0>(readStructure());
 
     sanitizeThisFutureSize(thisFuture);
 

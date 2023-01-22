@@ -3,28 +3,35 @@
 
 
 #include <cstdint>
+#include <memory>
 #include <optional>
 #include <ostream>
 #include <string>
+#include <vector>
 
 #include <fmt/core.h>
 #include <nameof.hpp>
 
 #include "CommonBase.hpp"
 #include "General.hpp"
+#include "Structures/StructSymbolDisplayProp.hpp"
+#include "Structures/StructT0x10.hpp"
 
 
 class StructPartInst : public CommonBase
 {
 public:
 
-    StructPartInst(DataStream& aDs) : CommonBase{aDs}
+    StructPartInst(DataStream& aDs) : CommonBase{aDs}, symbolDisplayProps{},
+        t0x10s{}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
+    std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
+    std::vector<std::unique_ptr<StructT0x10>>             t0x10s;
 };
 
 
@@ -34,6 +41,18 @@ static std::string to_string(const StructPartInst& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+
+    str += fmt::format("{}symbolDisplayProps:\n", indent(1));
+    for(size_t i = 0u; i < aObj.symbolDisplayProps.size(); ++i)
+    {
+        str += indent(fmt::format("[{}]: {}", i, aObj.symbolDisplayProps[i]->to_string()), 2);
+    }
+
+    str += fmt::format("{}t0x10s:\n", indent(1));
+    for(size_t i = 0u; i < aObj.t0x10s.size(); ++i)
+    {
+        str += indent(fmt::format("[{}]: {}", i, aObj.t0x10s[i]->to_string()), 2);
+    }
 
     return str;
 }
