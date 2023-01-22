@@ -37,15 +37,13 @@ void StructT0x10::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("unkownInt = {}", unkownInt);
 
-    // Should be Display Properties
-    uint16_t len = mDs.get().readUint16();
+    const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
 
-    spdlog::trace("len = {}", len);
+    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
-    for(size_t i = 0; i < len; ++i)
+    for(size_t i = 0; i < lenSymbolDisplayProps; ++i)
     {
-        spdlog::critical("VERIFYING StructT0x10 Structure0 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
-        // readStructure();
+        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
     sanitizeThisFutureSize(thisFuture);

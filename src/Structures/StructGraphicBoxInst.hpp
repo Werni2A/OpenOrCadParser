@@ -3,6 +3,7 @@
 
 
 #include <cstdint>
+#include <memory>
 #include <optional>
 #include <ostream>
 #include <string>
@@ -13,6 +14,7 @@
 #include "CommonBase.hpp"
 #include "Enums/Color.hpp"
 #include "General.hpp"
+#include "Structures/StructSthInPages0.hpp"
 
 
 class StructGraphicBoxInst : public CommonBase
@@ -20,7 +22,7 @@ class StructGraphicBoxInst : public CommonBase
 public:
 
     StructGraphicBoxInst(DataStream& aDs) : CommonBase{aDs}, dbId{0}, locX{0}, locY{0},
-        x1{0}, y1{0}, x2{0}, y2{0}, color{Color::Default}
+        x1{0}, y1{0}, x2{0}, y2{0}, color{Color::Default}, sthInPages0{}
     { }
 
     std::string to_string() const override;
@@ -39,6 +41,8 @@ public:
     int16_t y2;
 
     Color color;
+
+    std::unique_ptr<StructSthInPages0> sthInPages0;
 };
 
 
@@ -56,6 +60,10 @@ static std::string to_string(const StructGraphicBoxInst& aObj)
     str += fmt::format("{}x2    = {}\n", indent(1), aObj.x2);
     str += fmt::format("{}y2    = {}\n", indent(1), aObj.y2);
     str += fmt::format("{}color = {}\n", indent(1), to_string(aObj.color));
+
+    str += fmt::format("{}sthInPages0:\n", indent(1));
+    str += indent(aObj.sthInPages0->to_string(), 2);
+
     return str;
 }
 

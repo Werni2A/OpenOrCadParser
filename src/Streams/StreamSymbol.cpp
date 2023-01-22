@@ -12,6 +12,8 @@ void StreamSymbol::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
+    // @todo It's one of StructERCSymbol, StructGlobalSymbol, StructHierarchicSymbol or StructOffPageSymbol
+    //       Introduce new base class StructSymbol
     spdlog::critical("VERIFYING StreamSymbol Structure10 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
 
     mDs.get().printUnknownData(4, fmt::format("{}: 0", __func__));
