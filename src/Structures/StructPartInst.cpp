@@ -20,7 +20,7 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
-    const std::optional<FutureData> thisFuture = getFutureData();
+    // const std::optional<FutureData> thisFuture = getFutureData();
 
     mDs.get().printUnknownData(8, std::string(__func__) + " - 0");
 
