@@ -69,9 +69,14 @@ void StreamLibrary::read(FileFormatVersion /* aVersion */)
     }
 
     const uint16_t someLen = mDs.get().readUint16();
+
+    spdlog::trace("someLen = {}", someLen);
+
     for(int i = 0; i < someLen; ++i)
     {
         const uint16_t someData = mDs.get().readUint16();
+
+        spdlog::trace("someData [{}] = {}", i, someData);
     }
 
     mDs.get().printUnknownData(4, std::string(__func__) + " - 2.0");
