@@ -23,7 +23,8 @@ class StreamPage : public CommonBase
 {
 public:
 
-    StreamPage(DataStream& aDs) : CommonBase{aDs}, name{}, pageSize{}, pageSettings{mDs}
+    StreamPage(DataStream& aDs) : CommonBase{aDs}, name{}, pageSize{}, pageSettings{mDs},
+        t0x34s{}, t0x35s{}, wires{}, partInsts{}, ports{}
     { }
 
     std::string to_string() const override;

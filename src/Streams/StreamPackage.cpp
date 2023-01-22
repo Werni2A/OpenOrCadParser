@@ -64,34 +64,33 @@ void StreamPackage::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    const uint16_t sectionCount = mDs.get().readUint16();
+    const uint16_t lenProperties = mDs.get().readUint16();
 
-    spdlog::trace("sectionCount = {}", sectionCount);
+    spdlog::trace("lenProperties = {}", lenProperties);
 
-    for(size_t i = 0u; i < sectionCount; ++i)
+    for(size_t i = 0u; i < lenProperties; ++i)
     {
-        structures.push_back(readStructure());
+        properties.push_back(dynamic_pointer_cast<StructProperties>(readStructure()));
     }
 
-    // @todo maybe number of views (Convert, Normal) or number of units in the current view
-    const uint16_t len2 = mDs.get().readUint16();
+    const uint16_t lenPrimitives = mDs.get().readUint16();
 
-    spdlog::trace("len2 = {}", len2);
+    spdlog::trace("lenPrimitives = {}", lenPrimitives);
 
-    for(size_t i = 0u; i < len2; ++i)
+    for(size_t i = 0u; i < lenPrimitives; ++i)
     {
-        structures.push_back(readStructure());
+        primitives.push_back(dynamic_pointer_cast<StructPrimitives>(readStructure()));
     }
 
-    // @todo Probably only StructSymbolPinScalar
-    const uint16_t len3 = mDs.get().readUint16();
+    const uint16_t lenSymbolPins = mDs.get().readUint16();
 
-    spdlog::trace("len3 = {}", len3);
+    spdlog::trace("lenSymbolPins = {}", lenSymbolPins);
 
-    for(size_t i = 0u; i < len3; ++i)
+    for(size_t i = 0u; i < lenSymbolPins; ++i)
     {
-        structures.push_back(readStructure());
+        symbolPins.push_back(dynamic_pointer_cast<StructSymbolPin>(readStructure()));
 
+        // @todo This hack should probably be moved into StructSymbolPin
         const uint8_t early_out = mDs.get().peek(1)[0];
         spdlog::debug("early_out = {}", early_out);
 
@@ -103,28 +102,24 @@ void StreamPackage::read(FileFormatVersion /* aVersion */)
         }
     }
 
-    const uint16_t len4 = mDs.get().readUint16();
+    const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
 
-    spdlog::trace("len4 = {}", len4);
+    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
-    for(size_t i = 0u; i < len4; ++i)
+    for(size_t i = 0u; i < lenSymbolDisplayProps; ++i)
     {
-        structures.push_back(readStructure());
+        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
+    t0x1f = dynamic_pointer_cast<StructT0x1f>(readStructure());
+
+    const uint16_t lenPinIdxMappings = mDs.get().readUint16();
+
+    spdlog::trace("lenPinIdxMappings = {}", lenPinIdxMappings);
+
+    for(size_t i = 0u; i < lenPinIdxMappings; ++i)
     {
-        structures.push_back(readStructure());
-    }
-
-    // I guess its always a PinIdxMapping (or multiple)
-    // @todo should be the unit of the package
-    const uint16_t len5 = mDs.get().readUint16();
-
-    spdlog::trace("len5 = {}", len5);
-
-    for(size_t i = 0u; i < len5; ++i)
-    {
-        structures.push_back(readStructure());
+        pinIdxMappings.push_back(dynamic_pointer_cast<StructPinIdxMapping>(readStructure()));
     }
 
     if(!mDs.get().isEoF())

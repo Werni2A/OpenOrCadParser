@@ -27,6 +27,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     pageSettings.read();
 
+    // @todo Contains StructTitleBlock
     const uint16_t lenA = mDs.get().readUint16();
 
     spdlog::trace("lenA = {}", lenA);

@@ -44,7 +44,8 @@ void StructT0x10::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0; i < len; ++i)
     {
-        readStructure();
+        spdlog::critical("VERIFYING StructT0x10 Structure0 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
+        // readStructure();
     }
 
     sanitizeThisFutureSize(thisFuture);

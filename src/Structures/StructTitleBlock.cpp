@@ -27,13 +27,13 @@ void StructTitleBlock::read(FileFormatVersion /* aVersion */)
 
     mDs.get().printUnknownData(20, fmt::format("{}: 1", __func__));
 
-    const uint16_t len0 = mDs.get().readUint16();
+    const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
 
-    spdlog::trace("len0 = {}", len0);
+    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
-    for(size_t i = 0; i < len0; ++i)
+    for(size_t i = 0; i < lenSymbolDisplayProps; ++i)
     {
-        readStructure();
+        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
     mDs.get().printUnknownData(11, fmt::format("{}: 2", __func__));

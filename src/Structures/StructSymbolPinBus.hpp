@@ -9,17 +9,17 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "Enums/PortType.hpp"
 #include "PinShape.hpp"
+#include "Structures/StructSymbolPin.hpp"
 
 
 // @todo this looks exactly the same as SymbolPinScalar. Why is that?
-class StructSymbolPinBus : public CommonBase
+class StructSymbolPinBus : public StructSymbolPin
 {
 public:
 
-    StructSymbolPinBus(DataStream& aDs) : CommonBase{aDs}, name{}, startX{0}, startY{0},
+    StructSymbolPinBus(DataStream& aDs) : StructSymbolPin{aDs}, name{}, startX{0}, startY{0},
         hotptX{0}, hotptY{0}, pinShape{}, portType{PortType::Input}
     { }
 

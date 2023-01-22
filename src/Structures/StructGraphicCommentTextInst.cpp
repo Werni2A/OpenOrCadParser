@@ -20,7 +20,7 @@ void StructGraphicCommentTextInst::read(FileFormatVersion /* aVersion */)
 
     mDs.get().printUnknownData(34, std::string(__func__) + " - 0");
 
-    readStructure();
+    sthInPages0 = dynamic_pointer_cast<StructSthInPages0>(readStructure());
 
     mDs.get().printUnknownData(8, std::string(__func__) + " - 1");
 

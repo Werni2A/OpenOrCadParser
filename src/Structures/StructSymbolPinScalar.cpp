@@ -36,11 +36,15 @@ void StructSymbolPinScalar::read(FileFormatVersion /* aVersion */)
 
     mDs.get().printUnknownData(4, std::string(__func__) + " - 1");
 
-    const uint16_t struct_len = mDs.get().readUint16();
+    // @todo Type is StructSymbolDisplayProp
+    const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
 
-    for(size_t i = 0U; i < struct_len; ++i)
+    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
+
+    for(size_t i = 0U; i < lenSymbolDisplayProps; ++i)
     {
-        readStructure();
+        spdlog::critical("VERIFYING StructSymbolPinScalar Structure0 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
+        // readStructure();
     }
 
     sanitizeThisFutureSize(thisFuture);

@@ -9,16 +9,16 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "Enums/PortType.hpp"
 #include "PinShape.hpp"
+#include "Structures/StructSymbolPin.hpp"
 
 
-class StructSymbolPinScalar : public CommonBase
+class StructSymbolPinScalar : public StructSymbolPin
 {
 public:
 
-    StructSymbolPinScalar(DataStream& aDs) : CommonBase{aDs}, name{},
+    StructSymbolPinScalar(DataStream& aDs) : StructSymbolPin{aDs}, name{},
         startX{0}, startY{0}, hotptX{0}, hotptY{0}, pinShape{}, portType{PortType::Input}
     { }
 
