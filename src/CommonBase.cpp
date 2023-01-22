@@ -425,7 +425,7 @@ void CommonBase::sanitizeThisFutureSize(std::optional<FutureData> aThisFuture)
                 __func__, aThisFuture.value().getStopOffset(), stopOffset);
 
             spdlog::error(msg);
-            spdlog::critical("The structure may have changed due to version differences!");
+            spdlog::warn("The structure may have changed due to version differences!");
             throw std::runtime_error(msg);
         }
     }

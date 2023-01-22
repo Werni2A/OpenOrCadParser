@@ -56,7 +56,7 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
         const std::string msg = fmt::format("{}: textFontIdx is out of range! Expected {} < {}!",
             __func__, textFontIdx, gLibrary->library->textFonts.size());
 
-        spdlog::error(msg);
+        spdlog::warn(msg);
         // throw std::out_of_range(msg);
     }
 
