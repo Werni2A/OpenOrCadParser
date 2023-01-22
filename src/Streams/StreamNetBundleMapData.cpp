@@ -60,10 +60,9 @@ void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
         }
     }
 
-    // @todo use function
     if(!mDs.get().isEoF())
     {
-        throw std::runtime_error("Exptected EoF in NetBundleMapData");
+        throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));

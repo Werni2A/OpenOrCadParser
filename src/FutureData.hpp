@@ -26,15 +26,15 @@ public:
 
         if(aAbsStartPreambleOffset <= aAbsStopPreambleOffset)
         {
-            spdlog::error("{}: StopPreamble always appears before the StartPreamble!", __func__);
+            spdlog::warn("{}: StopPreamble always appears before the StartPreamble!", __func__);
         }
 
         mAbsStartOffset = aAbsStartPreambleOffset + PREAMBLE_STRIDE + aRelStartOffset;
         mAbsStopOffset  = aAbsStopPreambleOffset  + PREAMBLE_STRIDE + aRelStopOffset;
 
-        spdlog::debug("{}: aAbsStartPreambleOffset = {:08x}; Start Offset = {}",
+        spdlog::trace("{}: aAbsStartPreambleOffset = {:08x}; Start Offset = {}",
             __func__, aAbsStartPreambleOffset, aRelStartOffset);
-        spdlog::debug("{}: aAbsStopPreambleOffset  = {:08x}; Stop Offset  = {}",
+        spdlog::trace("{}: aAbsStopPreambleOffset  = {:08x}; Stop Offset  = {}",
             __func__, aAbsStopPreambleOffset, aRelStopOffset);
         spdlog::debug("{}: Adding 0x{:08x} -> 0x{:08x}", __func__, mAbsStartOffset, mAbsStopOffset);
 
