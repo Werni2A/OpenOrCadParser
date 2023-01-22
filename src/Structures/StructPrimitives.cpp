@@ -56,7 +56,7 @@ FileFormatVersion StructPrimitives::predictVersion()
 }
 
 
-void StructPrimitives::read(FileFormatVersion aVersion)
+void StructPrimitives::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
