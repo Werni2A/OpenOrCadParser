@@ -22,14 +22,14 @@ void StructPort::read(FileFormatVersion /* aVersion */)
 
     name = mDs.get().readStringLenZeroTerm();
 
-    spdlog::debug("name = {}", name);
+    spdlog::trace("name = {}", name);
 
     mDs.get().printUnknownData(20, fmt::format("{}: 1", __func__));
 
     const uint16_t len = mDs.get().readUint16();
 
     // @todo Should be display property
-    spdlog::debug("len = {}", len);
+    spdlog::trace("len = {}", len);
 
     for(size_t i = 0; i < len; ++i)
     {
@@ -43,5 +43,5 @@ void StructPort::read(FileFormatVersion /* aVersion */)
     readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

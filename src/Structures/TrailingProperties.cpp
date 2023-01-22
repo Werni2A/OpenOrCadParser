@@ -22,7 +22,7 @@ void TrailingProperties::read(FileFormatVersion /* aVersion */)
                                                // 2 with (.Normal and .Convert)
                                                // @todo Add to obj
 
-    spdlog::debug("viewNumber = {}", viewNumber);
+    spdlog::trace("viewNumber = {}", viewNumber);
 
     if(viewNumber == 1U) // Contains ".Normal"
     {
@@ -35,8 +35,8 @@ void TrailingProperties::read(FileFormatVersion /* aVersion */)
         convertName = mDs.get().readStringLenZeroTerm();
     }
 
-    spdlog::debug("normalName  = {}", normalName);
-    spdlog::debug("convertName = {}", convertName);
+    spdlog::trace("normalName  = {}", normalName);
+    spdlog::trace("convertName = {}", convertName);
 
     if(viewNumber != 1U && viewNumber != 2U)
     {
@@ -52,5 +52,5 @@ void TrailingProperties::read(FileFormatVersion /* aVersion */)
     readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

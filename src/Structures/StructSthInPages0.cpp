@@ -26,7 +26,7 @@ void StructSthInPages0::read(FileFormatVersion /* aVersion */)
 
     const uint16_t len = mDs.get().readUint16();
 
-    spdlog::debug("len = {}", len);
+    spdlog::trace("len = {}", len);
 
     for(size_t i = 0u; i < len; ++i)
     {
@@ -40,5 +40,5 @@ void StructSthInPages0::read(FileFormatVersion /* aVersion */)
     readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

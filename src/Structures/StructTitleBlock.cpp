@@ -23,13 +23,13 @@ void StructTitleBlock::read(FileFormatVersion /* aVersion */)
 
     const std::string foo = mDs.get().readStringLenZeroTerm();
 
-    spdlog::debug("foo = {}", foo);
+    spdlog::trace("foo = {}", foo);
 
     mDs.get().printUnknownData(20, fmt::format("{}: 1", __func__));
 
     const uint16_t len0 = mDs.get().readUint16();
 
-    spdlog::debug("len0 = {}", len0);
+    spdlog::trace("len0 = {}", len0);
 
     for(size_t i = 0; i < len0; ++i)
     {
@@ -40,7 +40,7 @@ void StructTitleBlock::read(FileFormatVersion /* aVersion */)
 
     const uint16_t len1 = mDs.get().readUint16();
 
-    spdlog::debug("len1 = {}", len1);
+    spdlog::trace("len1 = {}", len1);
 
     for(size_t i = 0; i < len1; ++i)
     {
@@ -52,5 +52,5 @@ void StructTitleBlock::read(FileFormatVersion /* aVersion */)
     readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

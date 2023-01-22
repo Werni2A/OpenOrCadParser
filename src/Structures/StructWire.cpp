@@ -24,29 +24,29 @@ void StructWire::read(FileFormatVersion /* aVersion */)
 
     id = mDs.get().readUint32();
 
-    spdlog::debug("id = {}", id);
+    spdlog::trace("id = {}", id);
 
     color = ToColor(mDs.get().readUint32());
 
-    spdlog::debug("color = {}", ::to_string(color));
+    spdlog::trace("color = {}", ::to_string(color));
 
     startX = mDs.get().readInt32();
     startY = mDs.get().readInt32();
 
-    spdlog::debug("startX = {}", startX);
-    spdlog::debug("startY = {}", startY);
+    spdlog::trace("startX = {}", startX);
+    spdlog::trace("startY = {}", startY);
 
     endX = mDs.get().readInt32();
     endY = mDs.get().readInt32();
 
-    spdlog::debug("endX = {}", endX);
-    spdlog::debug("endY = {}", endY);
+    spdlog::trace("endX = {}", endX);
+    spdlog::trace("endY = {}", endY);
 
     mDs.get().printUnknownData(1, fmt::format("{}: 1", __func__));
 
     const uint16_t lenAliases = mDs.get().readUint16();
 
-    spdlog::debug("lenAliases = {}", lenAliases);
+    spdlog::trace("lenAliases = {}", lenAliases);
 
     for(size_t i = 0; i < lenAliases; ++i)
     {
@@ -55,7 +55,7 @@ void StructWire::read(FileFormatVersion /* aVersion */)
 
     const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
 
-    spdlog::debug("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
+    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
     for(size_t i = 0; i < lenSymbolDisplayProps; ++i)
     {
@@ -64,16 +64,16 @@ void StructWire::read(FileFormatVersion /* aVersion */)
 
     lineWidth = ToLineWidth(mDs.get().readUint32());
 
-    spdlog::debug("lineWidth = {}", ::to_string(lineWidth));
+    spdlog::trace("lineWidth = {}", ::to_string(lineWidth));
 
     lineStyle = ToLineStyle(mDs.get().readUint32());
 
-    spdlog::debug("lineStyle = {}", ::to_string(lineStyle));
+    spdlog::trace("lineStyle = {}", ::to_string(lineStyle));
 
     sanitizeThisFutureSize(thisFuture);
 
     readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

@@ -66,7 +66,7 @@ void StreamPackage::read(FileFormatVersion /* aVersion */)
 
     const uint16_t sectionCount = mDs.get().readUint16();
 
-    spdlog::info("sectionCount = {}", sectionCount);
+    spdlog::trace("sectionCount = {}", sectionCount);
 
     for(size_t i = 0u; i < sectionCount; ++i)
     {
@@ -76,7 +76,7 @@ void StreamPackage::read(FileFormatVersion /* aVersion */)
     // @todo maybe number of views (Convert, Normal) or number of units in the current view
     const uint16_t len2 = mDs.get().readUint16();
 
-    spdlog::info("len2 = {}", len2);
+    spdlog::trace("len2 = {}", len2);
 
     for(size_t i = 0u; i < len2; ++i)
     {
@@ -86,14 +86,14 @@ void StreamPackage::read(FileFormatVersion /* aVersion */)
     // @todo Probably only StructSymbolPinScalar
     const uint16_t len3 = mDs.get().readUint16();
 
-    spdlog::info("len3 = {}", len3);
+    spdlog::trace("len3 = {}", len3);
 
     for(size_t i = 0u; i < len3; ++i)
     {
         structures.push_back(readStructure());
 
         const uint8_t early_out = mDs.get().peek(1)[0];
-        spdlog::critical("early_out = {}", early_out);
+        spdlog::debug("early_out = {}", early_out);
 
         if(early_out == 0U)
         {
@@ -105,7 +105,7 @@ void StreamPackage::read(FileFormatVersion /* aVersion */)
 
     const uint16_t len4 = mDs.get().readUint16();
 
-    spdlog::info("len4 = {}", len4);
+    spdlog::trace("len4 = {}", len4);
 
     for(size_t i = 0u; i < len4; ++i)
     {
@@ -120,7 +120,7 @@ void StreamPackage::read(FileFormatVersion /* aVersion */)
     // @todo should be the unit of the package
     const uint16_t len5 = mDs.get().readUint16();
 
-    spdlog::info("len5 = {}", len5);
+    spdlog::trace("len5 = {}", len5);
 
     for(size_t i = 0u; i < len5; ++i)
     {
@@ -133,5 +133,5 @@ void StreamPackage::read(FileFormatVersion /* aVersion */)
     }
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::debug(to_string());
+    spdlog::info(to_string());
 }

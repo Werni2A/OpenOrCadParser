@@ -25,7 +25,7 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
 
     const uint16_t pinCount = mDs.get().readUint16();
 
-    spdlog::debug("pinCount = {}", pinCount);
+    spdlog::trace("pinCount = {}", pinCount);
 
     // @todo Add to kaitai file i = 'Order' of pin
     // See OrCAD: 'Pin Properties' -> 'Order'
@@ -61,9 +61,9 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
         // @note The special case of value 127 that represents an empty group
         pinGroup.push_back(bitMapPinGrpCfg & 0x7f);
 
-        spdlog::debug("pinIgnore = {}", pinIgnore[i]);
+        spdlog::trace("pinIgnore = {}", pinIgnore[i]);
         const std::string strPinGroup = (pinGroup[i] != 127U) ? std::to_string(pinGroup[i]) : "";
-        spdlog::debug("pinGroup  = {:>3}", strPinGroup);
+        spdlog::trace("pinGroup  = {:>3}", strPinGroup);
     }
 
     sanitizeThisFutureSize(thisFuture);
@@ -71,5 +71,5 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
     readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

@@ -37,7 +37,7 @@ void StreamPartsDirectory::read(FileFormatVersion /* aVersion */)
         // @todo Just a guess that this is the version but's highly likely
         item.fileFormatVersion = mDs.get().readUint16();
 
-        spdlog::debug("fileFormatVersion = {}", item.fileFormatVersion);
+        spdlog::trace("fileFormatVersion = {}", item.fileFormatVersion);
 
         // Known versions that I obsereved in different files
         // 471 in 17.4-2019 S012 (3898062) [10/18/202]
@@ -51,7 +51,7 @@ void StreamPartsDirectory::read(FileFormatVersion /* aVersion */)
 
         if(!std::any_of(knownFileVersions.begin(), knownFileVersions.end(), [&](unsigned version){ return version == item.fileFormatVersion; }))
         {
-            spdlog::critical("Unexpected File Version {}", item.fileFormatVersion);
+            spdlog::warn("Unexpected File Version {}", item.fileFormatVersion);
         }
 
         item.timezone = mDs.get().readInt16();

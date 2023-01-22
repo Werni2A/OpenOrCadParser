@@ -26,31 +26,31 @@ void StructT0x35::read(FileFormatVersion /* aVersion */)
 
     id = mDs.get().readUint32();
 
-    spdlog::debug("id = {}", id);
+    spdlog::trace("id = {}", id);
 
     std::string unknownStr = mDs.get().readStringLenZeroTerm();
 
-    spdlog::debug("unknownStr = {}", unknownStr);
+    spdlog::trace("unknownStr = {}", unknownStr);
 
     uint32_t unknownInt = mDs.get().readUint32();
 
-    spdlog::debug("unknownInt = {}", unknownInt);
+    spdlog::trace("unknownInt = {}", unknownInt);
 
     color = ToColor(mDs.get().readUint32());
 
-    spdlog::debug("color = {}", ::to_string(color));
+    spdlog::trace("color = {}", ::to_string(color));
 
     lineStyle = ToLineStyle(mDs.get().readUint32());
 
-    spdlog::debug("lineStyle = {}", ::to_string(lineStyle));
+    spdlog::trace("lineStyle = {}", ::to_string(lineStyle));
 
     lineWidth = ToLineWidth(mDs.get().readUint32());
 
-    spdlog::debug("lineWidth = {}", ::to_string(lineWidth));
+    spdlog::trace("lineWidth = {}", ::to_string(lineWidth));
 
     const uint32_t len0 = mDs.get().readUint16();
 
-    spdlog::debug("len0 = {}", len0);
+    spdlog::trace("len0 = {}", len0);
 
     for(size_t i = 0; i < len0; ++i)
     {
@@ -62,5 +62,5 @@ void StructT0x35::read(FileFormatVersion /* aVersion */)
     readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

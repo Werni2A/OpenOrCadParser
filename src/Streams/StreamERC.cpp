@@ -20,4 +20,5 @@ void StreamERC::read(FileFormatVersion /* aVersion */)
     }
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::info(to_string());
 }

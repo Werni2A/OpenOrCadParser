@@ -17,7 +17,7 @@ void StreamAdminData::read(FileFormatVersion /* aVersion */)
     // @todo only those two values have been observed until now
     if(sth0 != 0 && sth0 != 1)
     {
-        spdlog::critical("{}: Found new value. Check it out!", __func__);
+        spdlog::warn("{}: Found new value. Check it out!", __func__);
     }
 
     mDs.get().assumeData({0x00, 0x00, 0x00, 0x00, 0x00}, fmt::format("{}: Found actually useful data!", __func__));

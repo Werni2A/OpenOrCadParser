@@ -23,11 +23,11 @@ void StreamCellsDirectory::read(FileFormatVersion /* aVersion */)
 
         item.name = mDs.get().readStringLenZeroTerm();
 
-        spdlog::debug("name = {}", item.name);
+        spdlog::trace("name = {}", item.name);
 
         item.componentType = ToComponentType(mDs.get().readUint16());
 
-        spdlog::debug("componentType = {}", ::to_string(item.componentType));
+        spdlog::trace("componentType = {}", ::to_string(item.componentType));
 
         if(item.componentType != ComponentType::Cell)
         {
@@ -41,9 +41,9 @@ void StreamCellsDirectory::read(FileFormatVersion /* aVersion */)
         // @todo Just a guess that this is the version but's highly likely
         item.fileFormatVersion = mDs.get().readUint16();
 
-        spdlog::debug("fileFormatVersion = {}", item.fileFormatVersion);
+        spdlog::trace("fileFormatVersion = {}", item.fileFormatVersion);
 
-        // Known versions that I obsereved in different files
+        // Known versions that I observed in different files
         // 471 in 17.4-2019 S012 (3898062) [10/18/202]
         // 472 in 17.4-2019 S019 (3959056) [7/8/2021]
         std::vector<uint16_t> knownFileVersions{
@@ -55,12 +55,12 @@ void StreamCellsDirectory::read(FileFormatVersion /* aVersion */)
 
         if(!std::any_of(knownFileVersions.begin(), knownFileVersions.end(), [&](unsigned version){ return version == item.fileFormatVersion; }))
         {
-            spdlog::critical("Unexpected File Version {}", item.fileFormatVersion);
+            spdlog::warn("Unexpected File Version {}", item.fileFormatVersion);
         }
 
         item.timezone = mDs.get().readInt16();
 
-        spdlog::debug("timezone = {}", item.timezone);
+        spdlog::trace("timezone = {}", item.timezone);
 
         mDs.get().printUnknownData(2, fmt::format("item[{:>3}] - 1", i));
 

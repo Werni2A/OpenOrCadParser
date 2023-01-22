@@ -33,28 +33,28 @@ void PrimBitmap::read(FileFormatVersion /* aVersion */)
     locX = mDs.get().readInt32();
     locY = mDs.get().readInt32();
 
-    spdlog::debug("locX = {}", locX);
-    spdlog::debug("locY = {}", locY);
+    spdlog::trace("locX = {}", locX);
+    spdlog::trace("locY = {}", locY);
 
     x2 = mDs.get().readInt32();
     y2 = mDs.get().readInt32();
     x1 = mDs.get().readInt32();
     y1 = mDs.get().readInt32();
 
-    spdlog::debug("x2 = {}", x2);
-    spdlog::debug("y2 = {}", y2);
-    spdlog::debug("x1 = {}", x1);
-    spdlog::debug("y1 = {}", y1);
+    spdlog::trace("x2 = {}", x2);
+    spdlog::trace("y2 = {}", y2);
+    spdlog::trace("x1 = {}", x1);
+    spdlog::trace("y1 = {}", y1);
 
     bmpWidth  = mDs.get().readUint32();
     bmpHeight = mDs.get().readUint32();
 
-    spdlog::debug("bmpWidth  = {}", bmpWidth);
-    spdlog::debug("bmpHeight = {}", bmpHeight);
+    spdlog::trace("bmpWidth  = {}", bmpWidth);
+    spdlog::trace("bmpHeight = {}", bmpHeight);
 
     const uint32_t dataSize = mDs.get().readUint32();
 
-    spdlog::debug("dataSize = {}", dataSize);
+    spdlog::trace("dataSize = {}", dataSize);
 
     rawImgData.clear();
     rawImgData.reserve(dataSize);
@@ -88,7 +88,7 @@ void PrimBitmap::read(FileFormatVersion /* aVersion */)
     readPreamble();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }
 
 
@@ -201,7 +201,7 @@ static fs::path writeNoBmpFile(fs::path aFilePath, const std::vector<uint8_t>& a
     else
     {
         aFilePath.replace_extension(".unknown");
-        spdlog::error("Unknown image file format");
+        spdlog::warn("Unknown image file format");
     }
 
     std::ofstream img{aFilePath, std::ios::out | std::ios::binary};

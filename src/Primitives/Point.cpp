@@ -16,5 +16,5 @@ void Point::read(FileFormatVersion /* aVersion */)
     x = mDs.get().readUint16();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

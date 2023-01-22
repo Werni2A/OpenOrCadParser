@@ -15,8 +15,8 @@ void PageSettings::read(FileFormatVersion /* aVersion */)
     createDateTime = static_cast<time_t>(mDs.get().readUint32());
     modifyDateTime = static_cast<time_t>(mDs.get().readUint32());
 
-    spdlog::debug("createDateTime = {}", DateTimeToStr(createDateTime));
-    spdlog::debug("modifyDateTime = {}", DateTimeToStr(modifyDateTime));
+    spdlog::trace("createDateTime = {}", DateTimeToStr(createDateTime));
+    spdlog::trace("modifyDateTime = {}", DateTimeToStr(modifyDateTime));
 
     mDs.get().printUnknownData(4, std::string(__func__) + " - 0");
     mDs.get().printUnknownData(4, std::string(__func__) + " - 1");
@@ -26,28 +26,28 @@ void PageSettings::read(FileFormatVersion /* aVersion */)
     width  = mDs.get().readUint32();
     height = mDs.get().readUint32();
 
-    spdlog::debug("width  = {}", width);
-    spdlog::debug("height = {}", height);
+    spdlog::trace("width  = {}", width);
+    spdlog::trace("height = {}", height);
 
     pinToPin = mDs.get().readUint32();
 
-    spdlog::debug("pinToPin = {}", pinToPin);
+    spdlog::trace("pinToPin = {}", pinToPin);
 
     mDs.get().printUnknownData(2, std::string(__func__) + " - 4");
 
     horizontalCount = mDs.get().readUint16();
     verticalCount   = mDs.get().readUint16();
 
-    spdlog::debug("horizontalCount = {}", horizontalCount);
-    spdlog::debug("verticalCount   = {}", verticalCount);
+    spdlog::trace("horizontalCount = {}", horizontalCount);
+    spdlog::trace("verticalCount   = {}", verticalCount);
 
     mDs.get().printUnknownData(2, std::string(__func__) + " - 5");
 
     horizontalWidth = mDs.get().readUint32();
     verticalWidth   = mDs.get().readUint32();
 
-    spdlog::debug("horizontalWidth = {}", horizontalWidth);
-    spdlog::debug("verticalWidth   = {}", verticalWidth);
+    spdlog::trace("horizontalWidth = {}", horizontalWidth);
+    spdlog::trace("verticalWidth   = {}", verticalWidth);
 
     mDs.get().printUnknownData(4, std::string(__func__) + " - 6");
     mDs.get().printUnknownData(4, std::string(__func__) + " - 7");
@@ -64,23 +64,23 @@ void PageSettings::read(FileFormatVersion /* aVersion */)
 
     horizontalChar = mDs.get().readUint32();
 
-    spdlog::debug("horizontalChar = {}", horizontalChar);
+    spdlog::trace("horizontalChar = {}", horizontalChar);
 
     mDs.get().printUnknownData(4, std::string(__func__) + " - 18");
 
     horizontalAscending = mDs.get().readUint32();
 
-    spdlog::debug("horizontalAscending = {}", horizontalAscending);
+    spdlog::trace("horizontalAscending = {}", horizontalAscending);
 
     verticalChar   = mDs.get().readUint32();
 
-    spdlog::debug("verticalChar = {}", verticalChar);
+    spdlog::trace("verticalChar = {}", verticalChar);
 
     mDs.get().printUnknownData(4, std::string(__func__) + " - 19");
 
     verticalAscending = mDs.get().readUint32();
 
-    spdlog::debug("verticalAscending = {}", verticalAscending);
+    spdlog::trace("verticalAscending = {}", verticalAscending);
 
     isMetric            = mDs.get().readUint32();
     borderDisplayed     = mDs.get().readUint32();
@@ -91,15 +91,15 @@ void PageSettings::read(FileFormatVersion /* aVersion */)
     titleblockPrinted   = mDs.get().readUint32();
     ansiGridRefs        = mDs.get().readUint32(); // @todo In the XML it's always 1, maybe a bug in OrCad?
 
-    spdlog::debug("isMetric            = {}", isMetric);
-    spdlog::debug("borderDisplayed     = {}", borderDisplayed);
-    spdlog::debug("borderPrinted       = {}", borderPrinted);
-    spdlog::debug("gridRefDisplayed    = {}", gridRefDisplayed);
-    spdlog::debug("gridRefPrinted      = {}", gridRefPrinted);
-    spdlog::debug("titleblockDisplayed = {}", titleblockDisplayed);
-    spdlog::debug("titleblockPrinted   = {}", titleblockPrinted);
-    spdlog::debug("ansiGridRefs        = {}", ansiGridRefs);
+    spdlog::trace("isMetric            = {}", isMetric);
+    spdlog::trace("borderDisplayed     = {}", borderDisplayed);
+    spdlog::trace("borderPrinted       = {}", borderPrinted);
+    spdlog::trace("gridRefDisplayed    = {}", gridRefDisplayed);
+    spdlog::trace("gridRefPrinted      = {}", gridRefPrinted);
+    spdlog::trace("titleblockDisplayed = {}", titleblockDisplayed);
+    spdlog::trace("titleblockPrinted   = {}", titleblockPrinted);
+    spdlog::trace("ansiGridRefs        = {}", ansiGridRefs);
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

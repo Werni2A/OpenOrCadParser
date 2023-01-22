@@ -20,24 +20,24 @@ void StructBusEntry::read(FileFormatVersion /* aVersion */)
 
     color = ToColor(mDs.get().readUint32());
 
-    spdlog::debug("color = {}", ::to_string(color));
+    spdlog::trace("color = {}", ::to_string(color));
 
     startX = mDs.get().readInt32();
     startY = mDs.get().readInt32();
 
-    spdlog::debug("startX = {}", startX);
-    spdlog::debug("startY = {}", startY);
+    spdlog::trace("startX = {}", startX);
+    spdlog::trace("startY = {}", startY);
 
     endX = mDs.get().readInt32();
     endY = mDs.get().readInt32();
 
-    spdlog::debug("endX = {}", endX);
-    spdlog::debug("endY = {}", endY);
+    spdlog::trace("endX = {}", endX);
+    spdlog::trace("endY = {}", endY);
 
     sanitizeThisFutureSize(thisFuture);
 
     readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-    spdlog::info(to_string());
+    spdlog::trace(to_string());
 }

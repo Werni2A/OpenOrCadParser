@@ -19,17 +19,17 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     name = mDs.get().readStringLenZeroTerm();
 
-    spdlog::debug("name = {}", name);
+    spdlog::trace("name = {}", name);
 
     pageSize = mDs.get().readStringLenZeroTerm();
 
-    spdlog::debug("pageSize = {}", pageSize);
+    spdlog::trace("pageSize = {}", pageSize);
 
     pageSettings.read();
 
     const uint16_t lenA = mDs.get().readUint16();
 
-    spdlog::debug("lenA = {}", lenA);
+    spdlog::trace("lenA = {}", lenA);
 
     for(size_t i = 0u; i < lenA; ++i)
     {
@@ -38,7 +38,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     const uint16_t lenT0x34s = mDs.get().readUint16();
 
-    spdlog::debug("lenT0x34s = {}", lenT0x34s);
+    spdlog::trace("lenT0x34s = {}", lenT0x34s);
 
     for(size_t i = 0u; i < lenT0x34s; ++i)
     {
@@ -47,7 +47,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     const uint16_t lenT0x35s = mDs.get().readUint16();
 
-    spdlog::debug("lenT0x35s = {}", lenT0x35s);
+    spdlog::trace("lenT0x35s = {}", lenT0x35s);
 
     for(size_t i = 0u; i < lenT0x35s; ++i)
     {
@@ -56,20 +56,20 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     const uint16_t lenB = mDs.get().readUint16();
 
-    spdlog::debug("lenB = {}", lenB);
+    spdlog::trace("lenB = {}", lenB);
 
     for(size_t i = 0; i < lenB; ++i)
     {
         const std::string net = mDs.get().readStringLenZeroTerm();
         const uint32_t id = mDs.get().readUint32();
 
-        spdlog::debug("net = {}", net);
-        spdlog::debug("id  = {}", id);
+        spdlog::trace("net = {}", net);
+        spdlog::trace("id  = {}", id);
     }
 
     const uint16_t lenWires = mDs.get().readUint16();
 
-    spdlog::debug("lenWires = {}", lenWires);
+    spdlog::trace("lenWires = {}", lenWires);
 
     for(size_t i = 0u; i < lenWires; ++i)
     {
@@ -78,7 +78,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     const uint16_t lenPartInsts = mDs.get().readUint16();
 
-    spdlog::debug("lenPartInsts = {}", lenPartInsts);
+    spdlog::trace("lenPartInsts = {}", lenPartInsts);
 
     for(size_t i = 0u; i < lenPartInsts; ++i)
     {
@@ -87,7 +87,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     const uint16_t lenPorts = mDs.get().readUint16();
 
-    spdlog::debug("lenPorts = {}", lenPorts);
+    spdlog::trace("lenPorts = {}", lenPorts);
 
     for(size_t i = 0u; i < lenPorts; ++i)
     {
@@ -96,7 +96,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     const uint16_t len5 = mDs.get().readUint16();
 
-    spdlog::debug("len5 = {}", len5);
+    spdlog::trace("len5 = {}", len5);
 
     for(size_t i = 0u; i < len5; ++i)
     {
@@ -105,7 +105,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     const uint16_t len6 = mDs.get().readUint16();
 
-    spdlog::debug("len6 = {}", len6);
+    spdlog::trace("len6 = {}", len6);
 
     for(size_t i = 0u; i < len6; ++i)
     {
@@ -114,7 +114,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     const uint16_t len7 = mDs.get().readUint16();
 
-    spdlog::debug("len7 = {}", len7);
+    spdlog::trace("len7 = {}", len7);
 
     for(size_t i = 0u; i < len7; ++i)
     {
@@ -123,7 +123,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     const uint16_t len8 = mDs.get().readUint16();
 
-    spdlog::debug("len8 = {}", len8);
+    spdlog::trace("len8 = {}", len8);
 
     for(size_t i = 0u; i < len8; ++i)
     {
@@ -132,7 +132,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     const uint16_t lenGraphicInsts = mDs.get().readUint16();
 
-    spdlog::debug("lenGraphicInsts = {}", lenGraphicInsts);
+    spdlog::trace("lenGraphicInsts = {}", lenGraphicInsts);
 
     // @todo Create class GraphicInst and derive all the Graphic*Inst
     //       classes from it
@@ -143,7 +143,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     const uint16_t len10 = mDs.get().readUint16();
 
-    spdlog::debug("len10 = {}", len10);
+    spdlog::trace("len10 = {}", len10);
 
     for(size_t i = 0u; i < len10; ++i)
     {
@@ -152,7 +152,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     const uint16_t len11 = mDs.get().readUint16();
 
-    spdlog::debug("len11 = {}", len11);
+    spdlog::trace("len11 = {}", len11);
 
     for(size_t i = 0u; i < len11; ++i)
     {
