@@ -63,14 +63,16 @@ cmake --build build
 ```bash
 ./cli/OpenOrCadParser-cli --help
 Allowed options:
-  -h [ --help ]         produce help message
-  -t [ --print_tree ]   print container tree
-  -e [ --extract ]      extract binary files from CFBF container
-  -i [ --input ] arg    input file to parse
-  -o [ --output ] arg   output path (required iff extract is set)
+  -h [ --help ]               produce help message
+  -t [ --print_tree ]         print container tree
+  -e [ --extract ]            extract binary files from CFBF container
+  -i [ --input ] arg          input file to parse
+  -o [ --output ] arg         output path (required iff extract is set)
+  -v [ --verbosity ] arg (=3) verbosity level (0 = off, 6 = highest)
 
 ./cli/OpenOrCadParser-cli --input file.DSN --extract --output out/
 ./cli/OpenOrCadParser-cli --input file.DSN --print_tree
+./cli/OpenOrCadParser-cli --input file.OLB --verbosity 6 >> file.txt
 ```
 
 ---

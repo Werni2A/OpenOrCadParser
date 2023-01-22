@@ -13,7 +13,7 @@ namespace fs = std::filesystem;
 namespace po = boost::program_options;
 
 
-void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& extract, fs::path& output, bool& verbose)
+void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& extract, fs::path& output, int& verbosity)
 {
     po::options_description desc("Allowed options");
     desc.add_options()
@@ -22,7 +22,7 @@ void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& e
         ("extract,e",    po::bool_switch()->default_value(false), "extract binary files from CFBF container")
         ("input,i",      po::value<std::string>(),                "input file to parse")
         ("output,o",     po::value<std::string>(),                "output path (required iff extract is set)")
-        ("verbose,v",    po::bool_switch()->default_value(false), "verbose output")
+        ("verbosity,v",  po::value<int>()->default_value(3),      "verbosity level (0 = off, 6 = highest)")
     ;
 
     po::variables_map vm;
@@ -37,7 +37,7 @@ void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& e
 
     printTree = vm.count("print_tree") ? vm["print_tree"].as<bool>() : false;
     extract   = vm.count("extract") ? vm["extract"].as<bool>() : false;
-    verbose   = vm.count("verbose") ? vm["verbose"].as<bool>() : false;
+    verbosity = vm.count("verbosity") ? vm["verbosity"].as<int>() : 3;
 
     if(vm.count("input") > 0U)
     {
@@ -95,9 +95,9 @@ int main(int argc, char* argv[])
     bool     printTree;
     bool     extract;
     fs::path outputPath;
-    bool     verbose;
+    int      verbosity;
 
-    parseArgs(argc, argv, inputFile, printTree, extract, outputPath, verbose);
+    parseArgs(argc, argv, inputFile, printTree, extract, outputPath, verbosity);
 
    // Creating console logger
     auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
@@ -110,13 +110,19 @@ int main(int argc, char* argv[])
 
     spdlog::set_default_logger(std::make_shared<spdlog::logger>(logger));
 
-    if(!verbose)
+    switch(verbosity)
     {
-        spdlog::set_level(spdlog::level::off);
-    }
-    else
-    {
-        spdlog::set_level(spdlog::level::debug);
+        case 0: spdlog::set_level(spdlog::level::off);      break;
+        case 1: spdlog::set_level(spdlog::level::critical); break;
+        case 2: spdlog::set_level(spdlog::level::err);      break;
+        case 3: spdlog::set_level(spdlog::level::warn);     break;
+        case 4: spdlog::set_level(spdlog::level::info);     break;
+        case 5: spdlog::set_level(spdlog::level::debug);    break;
+        case 6: spdlog::set_level(spdlog::level::trace);    break;
+        default:
+            throw std::runtime_error(
+                fmt::format("Invalid verbosity argument {}", verbosity));
+            break;
     }
 
     spdlog::set_pattern("[%^%l%$] %v");
