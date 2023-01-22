@@ -629,10 +629,10 @@ repositories:
   - errors: 0
     options: null
     path: ./OTHER.OLB
-  - errors: 2
+  - errors: 1
     options: null
     path: ./symbol/SYMBOL_GOST.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./symbol/SYMBOL_GOST_0.DBK
   project: ORCAD_lib
@@ -723,7 +723,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/actel/ACT_SEQ.OLB
-  - errors: 135
+  - errors: 12
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/actel/ACT_SOFT.OLB
   - errors: 0
@@ -753,34 +753,34 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/atmel/AT40K.OLB
-  - errors: 38
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/ARITH.OLB
-  - errors: 13
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/CODERS.OLB
-  - errors: 66
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/COUNTERS.OLB
-  - errors: 89
+  - errors: 15
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/IOPINS.OLB
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/latticefpga.olb
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/LOGIC.OLB
-  - errors: 32
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/MUX.OLB
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/PWRGND.OLB
-  - errors: 92
+  - errors: 9
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/REG.OLB
-  - errors: 344
+  - errors: 7
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lucent/L4000E.OLB
   - errors: 0
@@ -2148,7 +2148,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/SmartGardenShield/LIBRARY1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrCAD/DESIGN1.DSN
   - errors: 1
@@ -2160,7 +2160,7 @@ repositories:
   - errors: 1
     options: null
     path: ./OrCAD/Schematic/CC1310LAUNCHPAD.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrCAD/SmartGardenShield/DESIGN1.DSN
   - errors: 1
@@ -2387,7 +2387,7 @@ repositories:
   - errors: 1
     options: null
     path: ./orcadData/RINGCOUNTER_EXAM.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/ATMEGA.DSN
   - errors: 1
@@ -2453,7 +2453,7 @@ repositories:
   - errors: 2
     options: null
     path: ./orcadData/decadeCounter/DECADECOUNTER.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./SPB_Data/MYNE555.DSN
   - errors: 1
@@ -2462,19 +2462,19 @@ repositories:
   - errors: 1
     options: null
     path: ./orcadData/EXAMDCCIRCUIT_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/SPICE_DIFFCIRCUIT_0.DBK
   - errors: 1
     options: null
     path: ./orcadData/RINGCOUNTER_EXAM_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/SPICE_RESONANCECIRCUIT_0.DBK
   - errors: 1
     options: null
     path: ./orcadData/SPICE_MULTIVIBRATOR_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/stm32_f103c8_interrupt/STM32F103C8_INTERRUPT_0.DBK
   - errors: 1
@@ -2492,7 +2492,7 @@ repositories:
   - errors: 1
     options: null
     path: ./orcadData/wheatstonebridge/WHEATSTONEBRIDGE_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/LED/LED_0.DBK
   - errors: 2
@@ -2510,7 +2510,7 @@ repositories:
   - errors: 2
     options: null
     path: ./orcadData/start1/LED_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/start1/BRIDGEDIODE_0.DBK
   - errors: 1
@@ -2537,7 +2537,7 @@ repositories:
   - errors: 2
     options: null
     path: ./orcadData/decadeCounter/DECADECOUNTER_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./SPB_Data/MYNE555_0.DBK
   - errors: 1
@@ -3652,7 +3652,7 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/actel/ACT_SEQ.OLB
-  - errors: 135
+  - errors: 12
     options: null
     path: ./fpga/actel/ACT_SOFT.OLB
   - errors: 0
@@ -3688,7 +3688,7 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/lucent/LUCENT.OLB
-  - errors: 344
+  - errors: 7
     options: null
     path: ./fpga/lucent/L4000E.OLB
   - errors: 32
@@ -3712,28 +3712,28 @@ repositories:
   - errors: 2
     options: null
     path: ./fpga/altera/ALTERA_P.OLB
-  - errors: 32
+  - errors: 0
     options: null
     path: ./fpga/lattice/MUX.OLB
-  - errors: 89
+  - errors: 15
     options: null
     path: ./fpga/lattice/IOPINS.OLB
   - errors: 0
     options: null
     path: ./fpga/lattice/PWRGND.OLB
-  - errors: 66
+  - errors: 0
     options: null
     path: ./fpga/lattice/COUNTERS.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./fpga/lattice/LOGIC.OLB
-  - errors: 92
+  - errors: 9
     options: null
     path: ./fpga/lattice/REG.OLB
-  - errors: 13
+  - errors: 0
     options: null
     path: ./fpga/lattice/CODERS.OLB
-  - errors: 38
+  - errors: 1
     options: null
     path: ./fpga/lattice/ARITH.OLB
   - errors: 0
@@ -4548,16 +4548,16 @@ repositories:
   - errors: 1
     options: null
     path: ./ATmegaStart/ATMEGASTART.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./555timer/DESIGN3.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./555timer/555TIMER.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./555timer/DESIGN1.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./555timer/DESIGN2.DSN
   - errors: 2
@@ -4569,7 +4569,7 @@ repositories:
   - errors: 1
     options: null
     path: ./LED5/LED5.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OP_AMP/OP_AMP.DSN
   - errors: 2
@@ -4590,7 +4590,7 @@ repositories:
   - errors: 1
     options: null
     path: ./Digital_Convertor/DIGITAL_CONVERTOR.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./practice/PRACTICE.DSN
   - errors: 1
@@ -4602,7 +4602,7 @@ repositories:
   - errors: 1
     options: null
     path: ./ATmegaStart/ATMEGASTART_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./555timer/555TIMER_0.DBK
   - errors: 2
@@ -4635,7 +4635,7 @@ repositories:
   - errors: 1
     options: null
     path: ./Digital_Convertor/DIGITAL_CONVERTOR.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./practice/PRACTICE_0.DBK
   - errors: 1
@@ -4696,10 +4696,10 @@ repositories:
   - errors: 63
     options: null
     path: ./arm/Schematic-PCB/TinyADK-1312B-Schematc.DSN
-  - errors: 63
+  - errors: 62
     options: null
     path: ./arm/Schematic-PCB/Tiny210SDK-1310-Schematic.DSN
-  - errors: 20
+  - errors: 19
     options: null
     path: ./arm/Schematic-PCB/Smart210SDK(Tiny210V2SDK)-1305-Schematic.DSN
   - errors: 20
@@ -4801,7 +4801,7 @@ repositories:
 - author: ROHMUSDC
   commit: cd3b1749a528f8ca8a75e09cbea0792261a7ba1d
   files:
-  - errors: 11
+  - errors: 10
     options: null
     path: ./Design Files/Schematic_BOM/BD71815GW_REFERENCE_REV1P30.DSN
   project: BD71815AGW-EVK-101
@@ -4898,10 +4898,10 @@ repositories:
 - author: ROHMUSDC
   commit: 9d00077c29b1241ea5ddbb05d4bff57d327b8f2e
   files:
-  - errors: 8
+  - errors: 7
     options: null
     path: ./HW Source Files/SENSORSHLD0-EVK-101 HW Design Files/Schematic_BOM/ROHM_SENSORSHLD0-EVK-101_SCH_REV00_2015-05-18.DSN
-  - errors: 9
+  - errors: 8
     options: null
     path: ./HW Source Files/SENSORSHLD0-EVK-101 HW Design Files/Schematic_BOM/Revision
       00.1/ROHM_SENSORSHLD1-EVK-101_SCH_REV00.1_2015-09-22.DSN
@@ -4916,7 +4916,7 @@ repositories:
   - errors: 18
     options: null
     path: ./Hardware Design Files/EVK1_BD92T30-Host_REV03/Schematic_BOM/ROHM_USB-PD_DP-ALTMODE_EVK1+2_SCH_REV04_2016-02-23.DSN
-  - errors: 19
+  - errors: 17
     options: null
     path: ./Hardware Design Files/EVK2_BD92T50-Device_REV05/Schematic_BOM/ROHM_USB-PD_DP-ALTMODE_EVK1+2_SCH_REV05_2016-03-17.DSN
   project: ROHM_USB-PD_BM92T30-BM92T70-EVK-Demo
@@ -4924,7 +4924,7 @@ repositories:
 - author: ROHMUSDC
   commit: 0eb8fce47ebb18ee4bdfd4e820022a691b05f244
   files:
-  - errors: 6
+  - errors: 5
     options: null
     path: ./HW Source Files/Schematic_BOM/SENSORS EXPO DEMO_12MAY2016_1200.DSN
   project: ROHM-SensorExpo2016-Pressure-Sensor-Demo
@@ -4932,10 +4932,10 @@ repositories:
 - author: ROHMUSDC
   commit: 0f39ea501b5b7da109f7a9aa7d394ba615c9ab22
   files:
-  - errors: 9
+  - errors: 8
     options: null
     path: ./Hardware Design Files/Sensor Kit Base Board/Schematic-BOM/ROHM_SENSOR_PLATFORM_BASE_BOARD_SCH_REV02_20140918.DSN
-  - errors: 7
+  - errors: 6
     options: null
     path: ./Hardware Design Files/Sensor Kit Breakout Boards/Schematic-BOM/ROHM_SENSOR_PLATFORM_BREAKOUT_BOARD_SCH_REV1.02_20141208.DSN
   project: ROHMSensorPlatformEVK
