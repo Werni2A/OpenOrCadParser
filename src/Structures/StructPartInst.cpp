@@ -40,11 +40,7 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
     spdlog::trace("locX = {}", locX);
     spdlog::trace("locY = {}", locY);
 
-    const Color color = ToColor(mDs.get().readUint16()); // @todo educated guess
-
-    spdlog::trace("color = {}", ::to_string(color));
-
-    mDs.get().printUnknownData(2, std::string(__func__) + " - 2");
+    mDs.get().printUnknownData(4, std::string(__func__) + " - 2");
 
     const uint16_t len = mDs.get().readUint16();
 

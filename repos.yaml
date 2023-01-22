@@ -753,7 +753,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/atmel/AT40K.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/ARITH.OLB
   - errors: 0
@@ -762,7 +762,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/COUNTERS.OLB
-  - errors: 15
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/IOPINS.OLB
   - errors: 0
@@ -777,7 +777,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/PWRGND.OLB
-  - errors: 9
+  - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/REG.OLB
   - errors: 7
@@ -801,7 +801,7 @@ repositories:
   - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/Virtex/Virtex.olb
-  - errors: 3
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/Virtex2/Virtex2.olb
   - errors: 0
@@ -2151,7 +2151,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/DESIGN1.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrCAD/CP_CC1310LAUNCHPAD.DSN
   - errors: 1
@@ -2163,13 +2163,13 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/SmartGardenShield/DESIGN1.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrCAD/SmartGardenShield/CP_CC1310LAUNCHPAD.DSN
   - errors: 4
     options: null
     path: ./Document/Hardware/mcu/swrc319/Cadence/LAUNCHXL-CC1310.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrCAD/CP_CC1310LAUNCHPAD_0.DBK
   - errors: 1
@@ -2178,7 +2178,7 @@ repositories:
   - errors: 1
     options: null
     path: ./OrCAD/Schematic/CC1310LAUNCHPAD_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrCAD/SmartGardenShield/CP_CC1310LAUNCHPAD_0.DBK
   - errors: 4
@@ -2408,7 +2408,7 @@ repositories:
   - errors: 2
     options: null
     path: ./orcadData/wheatstonebridge/DESIGN1.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/LED/LED.DSN
   - errors: 2
@@ -3715,7 +3715,7 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/lattice/MUX.OLB
-  - errors: 15
+  - errors: 0
     options: null
     path: ./fpga/lattice/IOPINS.OLB
   - errors: 0
@@ -3727,13 +3727,13 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/lattice/LOGIC.OLB
-  - errors: 9
+  - errors: 3
     options: null
     path: ./fpga/lattice/REG.OLB
   - errors: 0
     options: null
     path: ./fpga/lattice/CODERS.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./fpga/lattice/ARITH.OLB
   - errors: 0
@@ -4545,7 +4545,7 @@ repositories:
   - errors: 2
     options: null
     path: ./ORCAD_iot/210112.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./ATmegaStart/ATMEGASTART.DSN
   - errors: 0
@@ -4599,7 +4599,7 @@ repositories:
   - errors: 2
     options: null
     path: ./ORCAD_iot/210112_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./ATmegaStart/ATMEGASTART_0.DBK
   - errors: 0
