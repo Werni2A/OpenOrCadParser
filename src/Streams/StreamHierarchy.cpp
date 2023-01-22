@@ -26,7 +26,7 @@ void StreamHierarchy::read(FileFormatVersion /* aVersion */)
 
         readPreamble();
 
-        // @todo Move the following data into a own structure for the specific Structure type
+        // @todo Move the following data into its own structure for the specific Structure type
 
         uint32_t dbId = mDs.get().readUint32();
 
