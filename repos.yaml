@@ -570,7 +570,7 @@ repositories:
 - author: beagleboard
   commit: 1a732ca598999bf4c6c08e1d1546cdecaa0ca30b
   files:
-  - errors: 11
+  - errors: 10
     options: null
     path: ./ALLEGRO/BEAGLEBONEBLK_C3.DSN
   project: beaglebone-black
@@ -620,7 +620,7 @@ repositories:
   - errors: 0
     options: null
     path: ./PASSIVE.OLB
-  - errors: 7
+  - errors: 2
     options: null
     path: ./SYMBOLS_GOST.OLB
   - errors: 1
@@ -629,10 +629,10 @@ repositories:
   - errors: 0
     options: null
     path: ./OTHER.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./symbol/SYMBOL_GOST.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./symbol/SYMBOL_GOST_0.DBK
   project: ORCAD_lib
@@ -653,7 +653,7 @@ repositories:
 - author: fenlogic
   commit: eee280535c9ab5b1b0f4a4cb277fa372a7bc5eb8
   files:
-  - errors: 3
+  - errors: 2
     options: null
     path: ./schematics/MULTIO.DSN
   project: multio
@@ -1434,7 +1434,7 @@ repositories:
   - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/analog.olb
-  - errors: 3
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/anl_misc.olb
   - errors: 0
@@ -1473,7 +1473,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/darlngtn.olb
-  - errors: 72
+  - errors: 68
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/dataconv.olb
   - errors: 1
@@ -1575,7 +1575,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/fairchild.olb
-  - errors: 30
+  - errors: 16
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/filtsub.olb
   - errors: 0
@@ -1806,7 +1806,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/sourcstm.olb
-  - errors: 15
+  - errors: 13
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/special.olb
   - errors: 0
@@ -1866,7 +1866,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/ATMEL.OLB
-  - errors: 192
+  - errors: 191
     options: null
     path: ./orcad capture/unsorted/CONNECTOR.OLB
   - errors: 10
@@ -1944,7 +1944,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/Vishay/TRANSISTORS.OBK
-  - errors: 192
+  - errors: 191
     options: null
     path: ./orcad capture/unsorted/_archive/CONNECTOR.OBK
   - errors: 9
@@ -2125,10 +2125,10 @@ repositories:
 - author: radualexandrub
   commit: 935e733c301946f5df54c1b54a796d228759f590
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Schematics/PREAMPL_SCHEM.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Schematics/PREAMPL_SCHEM_0.DBK
   project: ElectronicDevices-Circuits
@@ -2154,10 +2154,10 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/CP_CC1310LAUNCHPAD.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrCAD/allegro/CC1310LAUNCHPAD.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrCAD/Schematic/CC1310LAUNCHPAD.DSN
   - errors: 0
@@ -2172,10 +2172,10 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/CP_CC1310LAUNCHPAD_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrCAD/allegro/CC1310LAUNCHPAD_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrCAD/Schematic/CC1310LAUNCHPAD_0.DBK
   - errors: 0
@@ -2225,35 +2225,35 @@ repositories:
   - errors: 0
     options: null
     path: "./ORCAD/\u5171\u4EAB\u5E93/lib1.OLB"
-  - errors: 2
+  - errors: 1
     options: null
     path: ./SIM7000.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./89S52.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: "./ORCAD/\u539F\u7406\u56FE/SIM7000/SIM7000.DSN"
-  - errors: 1
+  - errors: 0
     options: null
     path: "./ORCAD/\u539F\u7406\u56FE/89S52/89S52.DSN"
-  - errors: 1
+  - errors: 0
     options: null
     path: "./ORCAD/\u539F\u7406\u56FE/\u72D7\u7FA4\u4E3B\u5347\u538B\u677F/\u72D7\u7FA4\
       \u4E3B\u5347\u538B\u677F.DSN"
-  - errors: 2
+  - errors: 1
     options: null
     path: ./SIM7000_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./89S52_0.DBK
-  - errors: 2
+  - errors: 1
     options: null
     path: "./ORCAD/\u539F\u7406\u56FE/SIM7000/SIM7000_0.DBK"
-  - errors: 1
+  - errors: 0
     options: null
     path: "./ORCAD/\u539F\u7406\u56FE/89S52/89S52_0.DBK"
-  - errors: 1
+  - errors: 0
     options: null
     path: "./ORCAD/\u539F\u7406\u56FE/\u72D7\u7FA4\u4E3B\u5347\u538B\u677F/\u72D7\u7FA4\
       \u4E3B\u5347\u538B\u677F_0.DBK"
@@ -2303,22 +2303,22 @@ repositories:
 - author: ChoiHyungoo
   commit: 487f800fd18a07646b22fc9bb11a6e04113e2657
   files:
-  - errors: 2
+  - errors: 1
     options: null
     path: ./PULSE MODULATION.DSN
   - errors: 1
     options: null
     path: ./DAconvertor/DACONVERTOR.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./CHOPPINGWAVEOSC/CHOPPINGWAVEOSC.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./PULSE MODULATION_0.DBK
   - errors: 1
     options: null
     path: ./DAconvertor/DACONVERTOR_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./CHOPPINGWAVEOSC/CHOPPINGWAVEOSC_0.DBK
   project: DAConvertor
@@ -2343,10 +2343,10 @@ repositories:
   - errors: 0
     options: null
     path: ./LED_SCHLIB.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./LED_YOUTUBE.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./LED_YOUTUBE_0.DBK
   project: youtube-cadence-quick-tutorial
@@ -2381,10 +2381,10 @@ repositories:
   - errors: 1
     options: null
     path: ./orcadData/SPICE_DIFFCIRCUIT.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/EXAMDCCIRCUIT.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/RINGCOUNTER_EXAM.DSN
   - errors: 0
@@ -2393,79 +2393,79 @@ repositories:
   - errors: 1
     options: null
     path: ./orcadData/SPICE_MULTIVIBRATOR.DSN
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcadData/SPICE_RESONANCECIRCUIT.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/stm32_f103c8_interrupt/STM32F103C8_INTERRUPT.DSN
   - errors: 2
     options: null
     path: ./orcadData/atmega/DIGITALCONVERTOR.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcadData/sequentialTimer/SEQUENTIALTIMER.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcadData/wheatstonebridge/DESIGN1.DSN
   - errors: 0
     options: null
     path: ./orcadData/LED/LED.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcadData/choppingWaveGenerator/CHOPPINGWAVEGENERATOR.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/waitingPatientSign/WAITINGPATIENTSIGN.DSN
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcadData/LedWave/LED.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/hearingDevice/HEARINGDEVICE.DSN
   - errors: 2
     options: null
     path: ./orcadData/start1/LED.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/start1/EXAMPLE1_CHOPPONG_WAVE_GENERATOR.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/start1/BRIDGEDIODE.DSN
   - errors: 1
     options: null
     path: ./orcadData/spice_opamp/OPAMP_SPICE.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcadData/binaryCounter/BINARYCOUNTER.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcadData/choppigWaveGenerator/CHOPPINGWAVEGENERATOR.DSN
   - errors: 2
     options: null
     path: ./orcadData/digitalconvertor/DIGITALCONVERTOR.DSN
-  - errors: 2
-    options: null
-    path: ./orcadData/decadeCounterPc30/DECADECOUNTERPC30.DSN
   - errors: 1
     options: null
+    path: ./orcadData/decadeCounterPc30/DECADECOUNTERPC30.DSN
+  - errors: 0
+    options: null
     path: ./orcadData/hole/HOLE.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcadData/decadeCounter/DECADECOUNTER.DSN
   - errors: 0
     options: null
     path: ./SPB_Data/MYNE555.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./SPB_Data/MYLIBRARY.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/EXAMDCCIRCUIT_0.DBK
   - errors: 0
     options: null
     path: ./orcadData/SPICE_DIFFCIRCUIT_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/RINGCOUNTER_EXAM_0.DBK
   - errors: 0
@@ -2477,34 +2477,34 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/stm32_f103c8_interrupt/STM32F103C8_INTERRUPT_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/atmega/ATMEGA_0.DBK
   - errors: 2
     options: null
     path: ./orcadData/atmega/DIGITALCONVERTOR_0.DBK
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcadData/sequentialTimer/SEQUENTIALTIMER_0.DBK
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcadData/wheatstonebridge/DESIGN1_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/wheatstonebridge/WHEATSTONEBRIDGE_0.DBK
   - errors: 0
     options: null
     path: ./orcadData/LED/LED_0.DBK
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcadData/choppingWaveGenerator/CHOPPINGWAVEGENERATOR_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/waitingPatientSign/WAITINGPATIENTSIGN_0.DBK
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcadData/LedWave/LED_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/hearingDevice/HEARINGDEVICE_0.DBK
   - errors: 2
@@ -2513,34 +2513,34 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/start1/BRIDGEDIODE_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/start1/EXAMPLE1_CHOPPONG_WAVE_GENERATOR_0.DBK
   - errors: 1
     options: null
     path: ./orcadData/spice_opamp/OPAMP_SPICE_0.DBK
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcadData/binaryCounter/BINARYCOUNTER_0.DBK
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcadData/choppigWaveGenerator/CHOPPINGWAVEGENERATOR_0.DBK
   - errors: 2
     options: null
     path: ./orcadData/digitalconvertor/DIGITALCONVERTOR_0.DBK
-  - errors: 2
-    options: null
-    path: ./orcadData/decadeCounterPc30/DECADECOUNTERPC30_0.DBK
   - errors: 1
     options: null
+    path: ./orcadData/decadeCounterPc30/DECADECOUNTERPC30_0.DBK
+  - errors: 0
+    options: null
     path: ./orcadData/hole/HOLE_0.DBK
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcadData/decadeCounter/DECADECOUNTER_0.DBK
   - errors: 0
     options: null
     path: ./SPB_Data/MYNE555_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./SPB_Data/MYLIBRARY_0.DBK
   project: OrCADSchematic
@@ -3277,10 +3277,10 @@ repositories:
   - errors: 0
     options: null
     path: ./1-16_POWER_SPLITTER.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./1-16_POWER_SPLITTER.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./1-16_POWER_SPLITTER_0.DBK
   project: 1-16_RF_PWR_DIV
@@ -4144,7 +4144,7 @@ repositories:
   - errors: 1
     options: null
     path: ./oldlibs/ANALOG.OLB
-  - errors: 17
+  - errors: 0
     options: null
     path: ./oldlibs/ASSEMBLY.OLB
   - errors: 0
@@ -4216,7 +4216,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/ANALOG5.OLB
-  - errors: 33
+  - errors: 0
     options: null
     path: ./oldlibs/SHAPES.OLB
   - errors: 0
@@ -4240,7 +4240,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/ANALOG1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./oldlibs/AMDMACH.OLB
   - errors: 0
@@ -4276,7 +4276,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/BIT.OLB
-  - errors: 33
+  - errors: 32
     options: null
     path: ./oldlibs/RF.OLB
   - errors: 60
@@ -4312,7 +4312,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/MOTO2.OLB
-  - errors: 22
+  - errors: 0
     options: null
     path: ./oldlibs/FLOWCHT.OLB
   - errors: 0
@@ -4542,7 +4542,7 @@ repositories:
   - errors: 0
     options: null
     path: ./libraries/M128RS1.OLB
-  - errors: 2
+  - errors: 1
     options: null
     path: ./ORCAD_iot/210112.DSN
   - errors: 0
@@ -4560,43 +4560,43 @@ repositories:
   - errors: 0
     options: null
     path: ./555timer/DESIGN2.DSN
-  - errors: 2
+  - errors: 0
     options: null
     path: ./multivibrator/MULTIVIBRATOR.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./test/TEST.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./LED5/LED5.DSN
   - errors: 0
     options: null
     path: ./OP_AMP/OP_AMP.DSN
-  - errors: 2
+  - errors: 0
     options: null
     path: ./Ring_Counter/RING_COUNTER.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./ringcounter/RINGCOUNTER.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./wave_generator/WAVE_GENERATOR.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./74123/20210121.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./4bitCounter/4BITCOUNTER.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Digital_Convertor/DIGITAL_CONVERTOR.DSN
   - errors: 0
     options: null
     path: ./practice/PRACTICE.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./20210107_TEST/20210107_TEST.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./ORCAD_iot/210112_0.DBK
   - errors: 0
@@ -4605,40 +4605,40 @@ repositories:
   - errors: 0
     options: null
     path: ./555timer/555TIMER_0.DBK
-  - errors: 2
+  - errors: 0
     options: null
     path: ./multivibrator/MULTIVIBRATOR_0.DBK
-  - errors: 2
+  - errors: 1
     options: null
     path: ./test/TEST_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./LED5/LED5_0.DBK
-  - errors: 2
+  - errors: 0
     options: null
     path: ./Ring_Counter/RING_COUNTER_0.DBK
-  - errors: 2
+  - errors: 1
     options: null
     path: ./ringcounter/RINGCOUNTER_0.DBK
-  - errors: 2
+  - errors: 1
     options: null
     path: ./wave_generator/WAVE_GENERATOR_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./74123/20210121_0.DBK
-  - errors: 2
+  - errors: 1
     options: null
     path: ./4bitCounter/4BITCOUNTER_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Digital_Convertor/DIGITAL_CONVERTOR_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Digital_Convertor/DIGITAL_CONVERTOR.DBK
   - errors: 0
     options: null
     path: ./practice/PRACTICE_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./20210107_TEST/20210107_TEST_0.DBK
   project: orcad_project
@@ -4646,10 +4646,10 @@ repositories:
 - author: vlsicad
   commit: 9564912a5d45d72e93a1d9769eeea32175393588
   files:
-  - errors: 2
+  - errors: 1
     options: null
     path: ./STM8_BOB.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./STM8_BOB_0.DBK
   project: stm8_breakout_board
@@ -4674,10 +4674,10 @@ repositories:
   - errors: 0
     options: null
     path: ./supersonic/LIB/LIBRARY1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./supersonic/orcad/sonic_test/SACHAMTIC/SNOIC_TEST.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./supersonic/orcad/sonic_test/SACHAMTIC/SNOIC_TEST_0.DBK
   project: Sonic
@@ -4696,13 +4696,13 @@ repositories:
   - errors: 63
     options: null
     path: ./arm/Schematic-PCB/TinyADK-1312B-Schematc.DSN
-  - errors: 62
+  - errors: 61
     options: null
     path: ./arm/Schematic-PCB/Tiny210SDK-1310-Schematic.DSN
-  - errors: 19
+  - errors: 17
     options: null
     path: ./arm/Schematic-PCB/Smart210SDK(Tiny210V2SDK)-1305-Schematic.DSN
-  - errors: 20
+  - errors: 18
     options: null
     path: ./arm/Schematic-PCB/Tiny210V2SDK-V1.0-120804-Schematic.DSN
   project: develop-reference-data
@@ -4726,7 +4726,7 @@ repositories:
 - author: ROHMUSDC
   commit: 54d5bdc15c57f750e991068113968c2e5c565c8f
   files:
-  - errors: 40
+  - errors: 39
     options: null
     path: ./Design Files/Schematic_BOM/BD9C601EFJEVK-101_SCH_REV00_2014-04-23.DSN
   project: BD9C601EFJEVK-101
@@ -4734,7 +4734,7 @@ repositories:
 - author: ROHMUSDC
   commit: 0b8a83d256560a7b431be542bfedafea8c6f930a
   files:
-  - errors: 4
+  - errors: 3
     options: null
     path: ./Design Files/Schematic_BOM/BD9D321EFJ-E2EVK-101_SCH_REV00_2014-09-26.DSN
   project: BD9D321EFJ-EVK-101
@@ -4742,7 +4742,7 @@ repositories:
 - author: ROHMUSDC
   commit: 53ea6e66930d55ff018aa9e6414b789502c07523
   files:
-  - errors: 3
+  - errors: 2
     options: null
     path: ./Design Files/Schematic_BOM/BD9E151NUX-E2EVK-101_SCH_REV00_2014-08-19_1800.DSN
   project: BD9E151NUX-EVK-101
@@ -4750,7 +4750,7 @@ repositories:
 - author: ROHMUSDC
   commit: 25edaf2ac583a56d575bbda6688fca492a23f83d
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Design Files/Schematic-BOM/BD9G101G-EVK-101_Schematic_10-22-2015.DSN
   project: BD9G101G-EVK-101
@@ -4766,7 +4766,7 @@ repositories:
 - author: ROHMUSDC
   commit: 9a0823d435b286e0d7e908bc0c2153dbaa1a1329
   files:
-  - errors: 3
+  - errors: 2
     options: null
     path: ./Design Files/Schematic_BOM/BD8316GWL-EVK-101_SCH_REV01_2015-11-10.DSN
   project: BD8316GWL-EVK-101
@@ -4774,7 +4774,7 @@ repositories:
 - author: ROHMUSDC
   commit: b1106120fd4126b1a7d263930183c0390a753ffe
   files:
-  - errors: 40
+  - errors: 39
     options: null
     path: ./Design Files/Schematic_BOM/BD9109FVMEVK-101_SCH_REV00_2013-11-22.DSN
   project: BD9109FVM-EVK-101
@@ -4793,7 +4793,7 @@ repositories:
 - author: ROHMUSDC
   commit: f84a9667dfdd8ae0db2929726875530c964adf35
   files:
-  - errors: 41
+  - errors: 40
     options: null
     path: ./Design Files - Schematics/BD9328EFJ_EVK-BD9329AEFJ_EVK_Schematic_07-15-2012.DSN
   project: BD9328EFJ_EVK-and-BD9329AEFJ_EVK
@@ -4801,7 +4801,7 @@ repositories:
 - author: ROHMUSDC
   commit: cd3b1749a528f8ca8a75e09cbea0792261a7ba1d
   files:
-  - errors: 10
+  - errors: 8
     options: null
     path: ./Design Files/Schematic_BOM/BD71815GW_REFERENCE_REV1P30.DSN
   project: BD71815AGW-EVK-101
@@ -4809,7 +4809,7 @@ repositories:
 - author: ROHMUSDC
   commit: 6b341d68e5d62792a5150d642443acd675daf558
   files:
-  - errors: 3
+  - errors: 2
     options: null
     path: ./Design Files/Schematic_BOM/BD95841MUVEVK-101_SCH_REV00_2014-01-06.DSN
   project: BD95841MUVEVK-101
@@ -4817,7 +4817,7 @@ repositories:
 - author: ROHMUSDC
   commit: 451a219bfb7530231c642f9b2100b0dc08c0a28f
   files:
-  - errors: 40
+  - errors: 39
     options: null
     path: ./Design Files/Schematic_BOM/BD95861MUVEVK-101_SCH_REV01_2014-01-22.DSN
   project: BD95861MUV-EVK-101
@@ -4828,7 +4828,7 @@ repositories:
   - errors: 0
     options: null
     path: ./Schematic (Orcad)/BRCC064GWZ.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Schematic (Orcad)/BRCxxxxGWZ-EEPROMBreakout_SCHSRC_REV01_20191028.DSN
   project: BRCxxxxGWZ-EEPROMBreakout
@@ -4890,7 +4890,7 @@ repositories:
   - errors: 1
     options: null
     path: ./DESIGN FILES/OrCAD Capture Schematics/library/stepperlib.olb
-  - errors: 8
+  - errors: 7
     options: null
     path: ./DESIGN FILES/OrCAD Capture Schematics/mini low power micro eval board.dsn
   project: LapisDevBoard
@@ -4924,7 +4924,7 @@ repositories:
 - author: ROHMUSDC
   commit: 0eb8fce47ebb18ee4bdfd4e820022a691b05f244
   files:
-  - errors: 5
+  - errors: 4
     options: null
     path: ./HW Source Files/Schematic_BOM/SENSORS EXPO DEMO_12MAY2016_1200.DSN
   project: ROHM-SensorExpo2016-Pressure-Sensor-Demo
@@ -4932,7 +4932,7 @@ repositories:
 - author: ROHMUSDC
   commit: 0f39ea501b5b7da109f7a9aa7d394ba615c9ab22
   files:
-  - errors: 8
+  - errors: 7
     options: null
     path: ./Hardware Design Files/Sensor Kit Base Board/Schematic-BOM/ROHM_SENSOR_PLATFORM_BASE_BOARD_SCH_REV02_20140918.DSN
   - errors: 6
@@ -4943,10 +4943,10 @@ repositories:
 - author: ROHMUSDC
   commit: 7c7ea69d9f7491705b615af4b8f221540b1c0910
   files:
-  - errors: 7
+  - errors: 5
     options: null
     path: ./Design Files for Rev 1.0/STEPPER EVAL BRD - DESIGN File - Rev 1.0.DSN
-  - errors: 7
+  - errors: 5
     options: null
     path: ./Design Files for Rev 1.0/STEPPER.DSN
   project: StepperDriverCTRL
