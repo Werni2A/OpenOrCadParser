@@ -27,6 +27,7 @@
 #include "Structures/StructBusEntry.hpp"
 #include "Structures/StructERCSymbol.hpp"
 #include "Structures/StructGeneralProperties.hpp"
+#include "Structures/StructGlobal.hpp"
 #include "Structures/StructGlobalSymbol.hpp"
 #include "Structures/StructGraphicBoxInst.hpp"
 #include "Structures/StructGraphicCommentTextInst.hpp"
@@ -559,6 +560,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         case Structure::Alias:                  obj = std::make_unique<StructAlias>(mDs);                  break;
         case Structure::BusEntry:               obj = std::make_unique<StructBusEntry>(mDs);               break;
         case Structure::ERCSymbol:              obj = std::make_unique<StructERCSymbol>(mDs);              break;
+        case Structure::Global:                 obj = std::make_unique<StructGlobal>(mDs);                 break;
         case Structure::GlobalSymbol:           obj = std::make_unique<StructGlobalSymbol>(mDs);           break;
         case Structure::GraphicBoxInst:         obj = std::make_unique<StructGraphicBoxInst>(mDs);         break;
         case Structure::GraphicCommentTextInst: obj = std::make_unique<StructGraphicCommentTextInst>(mDs); break;

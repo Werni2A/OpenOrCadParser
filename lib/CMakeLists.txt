@@ -56,6 +56,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructBusEntry.cpp
    ${LIB_SRC_DIR}/Structures/StructERCSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructGeneralProperties.cpp
+   ${LIB_SRC_DIR}/Structures/StructGlobal.cpp
    ${LIB_SRC_DIR}/Structures/StructGlobalSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructGraphicBoxInst.cpp
    ${LIB_SRC_DIR}/Structures/StructGraphicCommentTextInst.cpp
@@ -138,6 +139,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/StructBusEntry.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructERCSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGeneralProperties.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructGlobal.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGlobalSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGraphicBoxInst.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGraphicCommentTextInst.hpp
