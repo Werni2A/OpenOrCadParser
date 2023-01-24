@@ -113,7 +113,7 @@ const CFB::COMPOUND_FILE_ENTRY* ContainerExtractor::getParent(const CFB::COMPOUN
     const CFB::COMPOUND_FILE_ENTRY* parent = nullptr;
 
     mReader->EnumFiles(mReader->GetRootEntry(), -1,
-        [&, this](const CFB::COMPOUND_FILE_ENTRY* entry, const CFB::utf16string& dir, int level) -> void
+        [&, this](const CFB::COMPOUND_FILE_ENTRY* entry, const CFB::utf16string& /* dir */, int /* level */) -> void
         {
             if(mReader->GetEntry(entry->childID) != nullptr)
             {
@@ -133,7 +133,7 @@ const CFB::COMPOUND_FILE_ENTRY* ContainerExtractor::getParent(const CFB::COMPOUN
 void ContainerExtractor::printContainerTree() const
 {
     mReader->EnumFiles(mReader->GetRootEntry(), -1,
-        [&](const CFB::COMPOUND_FILE_ENTRY* entry, const CFB::utf16string& dir, int level) -> void
+        [&](const CFB::COMPOUND_FILE_ENTRY* entry, const CFB::utf16string& /* dir */, int level) -> void
         {
             std::string prefix;
 
@@ -198,7 +198,7 @@ fs::path ContainerExtractor::extract(const fs::path& aOutputDir)
     }
 
     mReader->EnumFiles(mReader->GetRootEntry(), -1,
-        [&, this](const CFB::COMPOUND_FILE_ENTRY* entry, const CFB::utf16string& dir, int level) -> void
+        [&, this](const CFB::COMPOUND_FILE_ENTRY* entry, const CFB::utf16string& /* dir */, int /* level */) -> void
         {
             const fs::path internalPath{getInternalPath(entry)};
 
