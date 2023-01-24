@@ -77,7 +77,7 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
 
     sanitizeThisFutureSize(thisFuture);
 
-    readOptionalTrailingFuture();
+    // readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

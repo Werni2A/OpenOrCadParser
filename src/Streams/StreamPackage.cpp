@@ -111,6 +111,18 @@ void StreamPackage::read(FileFormatVersion /* aVersion */)
         symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
+    const std::string someStr0 = mDs.get().readStringLenZeroTerm();
+    const std::string someStr1 = mDs.get().readStringLenZeroTerm(); // @todo Maybe incorrect
+    const std::string someStr2 = mDs.get().readStringLenZeroTerm();
+    const std::string someStr3 = mDs.get().readStringLenZeroTerm();
+
+    spdlog::trace("someStr0 = {}", someStr0);
+    spdlog::trace("someStr1 = {}", someStr1);
+    spdlog::trace("someStr2 = {}", someStr2);
+    spdlog::trace("someStr3 = {}", someStr3);
+
+    mDs.get().printUnknownData(2);
+
     t0x1f = dynamic_pointer_cast<StructT0x1f>(readStructure());
 
     const uint16_t lenPinIdxMappings = mDs.get().readUint16();

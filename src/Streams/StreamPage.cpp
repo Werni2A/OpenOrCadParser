@@ -102,6 +102,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
     for(size_t i = 0u; i < len5; ++i)
     {
         spdlog::critical("VERIFYING Page Structure5 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
+        mDs.get().printUnknownData(5, fmt::format("{}: 0", __func__));
     }
 
     const uint16_t len6 = mDs.get().readUint16();
