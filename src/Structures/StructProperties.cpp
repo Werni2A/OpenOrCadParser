@@ -9,7 +9,6 @@
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
 #include "Structures/StructProperties.hpp"
-#include "Structures/TrailingProperties.hpp"
 
 
 void StructProperties::read(FileFormatVersion /* aVersion */)
@@ -29,11 +28,7 @@ void StructProperties::read(FileFormatVersion /* aVersion */)
 
     sanitizeThisFutureSize(thisFuture);
 
-    if(checkTrailingFuture().has_value())
-    {
-        TrailingProperties trailing{mDs};
-        trailing.read();
-    }
+    readOptionalTrailingFuture(); // @note Is equal to TrailingProperties::read()
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());
