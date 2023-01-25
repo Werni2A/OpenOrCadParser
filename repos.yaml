@@ -29,10 +29,10 @@ repositories:
   - errors: 1380
     options: null
     path: ./library/SRAM.OLB
-  - errors: 8
+  - errors: 0
     options: null
     path: ./library/TRANSISTOR.OLB
-  - errors: 143
+  - errors: 130
     options: null
     path: ./library/GATE.OLB
   - errors: 37
@@ -544,7 +544,7 @@ repositories:
 - author: beagleboard
   commit: 6db2f5203c7a172aa6ce9c49b3ef5745ba78c91c
   files:
-  - errors: 6
+  - errors: 4
     options: null
     path: ./BEAGLE1.OLB
   project: beagle-cadence-libraries
@@ -562,7 +562,7 @@ repositories:
 - author: beagleboard
   commit: a14c542f0de8507e001a6d652daaf85bc654e422
   files:
-  - errors: 52
+  - errors: 30
     options: null
     path: ./SCH/BeagleBoard-xM_ORCAD.DSN
   project: beagleboard-xm
@@ -578,7 +578,7 @@ repositories:
 - author: BerZerKku
   commit: 4c8f982beb7da57222bed6af9d1536f6845c3115
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./DIODE.OLB
   - errors: 0
@@ -599,10 +599,10 @@ repositories:
   - errors: 4
     options: null
     path: ./TITLE.OLB
-  - errors: 9
+  - errors: 0
     options: null
     path: ./SAMPLE.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./OPAMP.OLB
   - errors: 0
@@ -611,7 +611,7 @@ repositories:
   - errors: 4
     options: null
     path: ./TITLE_GOST.OLB
-  - errors: 8
+  - errors: 0
     options: null
     path: ./IC.OLB
   - errors: 0
@@ -620,7 +620,7 @@ repositories:
   - errors: 0
     options: null
     path: ./PASSIVE.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./SYMBOLS_GOST.OLB
   - errors: 1
@@ -661,10 +661,10 @@ repositories:
 - author: hypeer
   commit: 907d2a8d3e631860ace9666b726bfbde489a8f1e
   files:
-  - errors: 4
+  - errors: 1
     options: null
     path: ./orcad/XXXLZJXXX_0.OBK
-  - errors: 4
+  - errors: 1
     options: null
     path: ./orcad/XXXLZJXXX.OLB
   project: allegrolib
@@ -681,7 +681,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/ATOD.OLB
-  - errors: 8
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/BusDriverTransceiver.olb
   - errors: 38
@@ -822,7 +822,7 @@ repositories:
   - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/XUnified.olb
-  - errors: 143
+  - errors: 130
     options: null
     path: ./orcad capture/unsorted/_archive/Gate.olb
   - errors: 5
@@ -915,10 +915,10 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/ieeelibs/IEEESRAM.OLB
-  - errors: 3
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/Latch.olb
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/LineDriverReceiver.olb
   - errors: 2
@@ -945,7 +945,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/MiscMemory.olb
-  - errors: 4
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/MiscPower.olb
   - errors: 0
@@ -1251,7 +1251,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/On Semi/HART.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/On Semi/ON_AMP.OLB
   - errors: 0
@@ -1260,7 +1260,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/On Semi/ON_MOS.OLB
-  - errors: 10
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/OPAMP.OLB
   - errors: 0
@@ -1674,7 +1674,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/magnetic.olb
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/maxim.olb
   - errors: 0
@@ -1854,7 +1854,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/TRANSFORMERS.OLB
-  - errors: 9
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/TRANSISTOR.OLB
   - errors: 112
@@ -1866,13 +1866,13 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/ATMEL.OLB
-  - errors: 191
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/CONNECTOR.OLB
-  - errors: 10
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/DIODES.OLB
-  - errors: 28
+  - errors: 13
     options: null
     path: ./orcad capture/unsorted/DISCRETE.OLB
   - errors: 0
@@ -1908,7 +1908,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/ON Semiconductor/NCP109X - POE PD.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/ON Semiconductor/OPAMP.OLB
   - errors: 0
@@ -1944,16 +1944,16 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/Vishay/TRANSISTORS.OBK
-  - errors: 191
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/CONNECTOR.OBK
-  - errors: 9
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/TRANSISTOR.OBK
-  - errors: 10
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/OPAMP.OBK
-  - errors: 38
+  - errors: 13
     options: null
     path: ./orcad capture/unsorted/_archive/DISCRETE.OBK
   - errors: 0
@@ -1968,7 +1968,7 @@ repositories:
   - errors: 80
     options: null
     path: ./orcad capture/unsorted/_archive/On Semi/ON_DIODE_2_0_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/On Semi/ON_AMP.OBK
   - errors: 0
@@ -2278,10 +2278,10 @@ repositories:
 - author: bjut-MrZhang
   commit: ce2de2670079332796f44dfcb2ae6ddb0caabc23
   files:
-  - errors: 7
+  - errors: 1
     options: null
     path: ./SchLib/ZX_0.OBK
-  - errors: 7
+  - errors: 1
     options: null
     path: ./SchLib/ZX.OLB
   project: CadenceLib
@@ -2551,16 +2551,16 @@ repositories:
   - errors: 1
     options: null
     path: ./Hardware/8Mics/8MICS.DSN
-  - errors: 21
+  - errors: 5
     options: null
     path: ./Hardware/Main_board/STM32F746NGH V1.1_last.DSN
-  - errors: 21
+  - errors: 5
     options: null
     path: ./Hardware/Main_board/allegro/MIC_ARRAY_RELEASE.DSN
-  - errors: 21
+  - errors: 5
     options: null
     path: ./Hardware/Main_board/STM32F746NGH V1.1_LAST_0.DBK
-  - errors: 21
+  - errors: 5
     options: null
     path: ./Hardware/Main_board/allegro/MIC_ARRAY_RELEASE_0.DBK
   project: Mic_Array
@@ -2683,7 +2683,7 @@ repositories:
   - errors: 3
     options: null
     path: ./schematic/EP2SGX90.OLB
-  - errors: 5
+  - errors: 0
     options: null
     path: ./schematic/5SGXA7.OLB
   - errors: 3
@@ -2719,7 +2719,7 @@ repositories:
   - errors: 4
     options: null
     path: ./schematic/EP2AGX45.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./schematic/EP4CGX50.OLB
   - errors: 4
@@ -2734,7 +2734,7 @@ repositories:
   - errors: 4
     options: null
     path: ./schematic/EP2C5.OLB
-  - errors: 4
+  - errors: 0
     options: null
     path: ./schematic/5CGXFC7.OLB
   - errors: 2
@@ -2770,13 +2770,13 @@ repositories:
   - errors: 4
     options: null
     path: ./schematic/5AGXMB1.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./schematic/EP2AGZ225.OLB
   - errors: 3
     options: null
     path: ./schematic/EP4S100G5ES1.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./schematic/5SGXB5.OLB
   - errors: 4
@@ -2815,7 +2815,7 @@ repositories:
   - errors: 2
     options: null
     path: ./schematic/EP4SE110.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./schematic/5SGXB6.OLB
   - errors: 4
@@ -2827,7 +2827,7 @@ repositories:
   - errors: 4
     options: null
     path: ./schematic/EP3C80.OLB
-  - errors: 5
+  - errors: 0
     options: null
     path: ./schematic/5SGXA5.OLB
   - errors: 3
@@ -2848,7 +2848,7 @@ repositories:
   - errors: 4
     options: null
     path: ./schematic/EP3CLS70.OLB
-  - errors: 3
+  - errors: 0
     options: null
     path: ./schematic/EP4SGX110_V2.OLB
   - errors: 3
@@ -2869,16 +2869,16 @@ repositories:
   - errors: 3
     options: null
     path: ./schematic/EP4CE75.OLB
-  - errors: 3
+  - errors: 0
     options: null
     path: ./schematic/5SGXA4.OLB
   - errors: 3
     options: null
     path: ./schematic/EP3SE110.OLB
-  - errors: 3
+  - errors: 0
     options: null
     path: ./schematic/EP4CE6.OLB
-  - errors: 4
+  - errors: 0
     options: null
     path: ./schematic/5CGTFD7.OLB
   - errors: 2
@@ -2896,13 +2896,13 @@ repositories:
   - errors: 5
     options: null
     path: ./schematic/EP3C40.OLB
-  - errors: 6
+  - errors: 0
     options: null
     path: ./schematic/EP4SGX360_V1.5.OLB
   - errors: 3
     options: null
     path: ./schematic/EP3SL150.OLB
-  - errors: 4
+  - errors: 0
     options: null
     path: ./schematic/5CGXBC7.OLB
   - errors: 3
@@ -2926,7 +2926,7 @@ repositories:
   - errors: 4
     options: null
     path: ./schematic/EP3SL340.OLB
-  - errors: 3
+  - errors: 0
     options: null
     path: ./schematic/EP2AGZ300.OLB
   - errors: 3
@@ -2953,7 +2953,7 @@ repositories:
   - errors: 4
     options: null
     path: ./schematic/EP4SE530_V1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./schematic/5SGTC5.OLB
   - errors: 2
@@ -2968,7 +2968,7 @@ repositories:
   - errors: 5
     options: null
     path: ./schematic/STRATIX25.OLB
-  - errors: 5
+  - errors: 0
     options: null
     path: ./schematic/EP4CE15.OLB
   - errors: 3
@@ -3016,7 +3016,7 @@ repositories:
   - errors: 5
     options: null
     path: ./schematic/EP3C25.OLB
-  - errors: 3
+  - errors: 0
     options: null
     path: ./schematic/EP2AGZ350.OLB
   - errors: 4
@@ -3034,7 +3034,7 @@ repositories:
   - errors: 3
     options: null
     path: ./schematic/5SGSD5.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./schematic/EP4SGX70_V2.OLB
   - errors: 4
@@ -3079,7 +3079,7 @@ repositories:
   - errors: 3
     options: null
     path: ./schematic/5M2210Z.OLB
-  - errors: 4
+  - errors: 0
     options: null
     path: ./schematic/5SGXA3.OLB
   - errors: 3
@@ -3150,10 +3150,10 @@ repositories:
   - errors: 0
     options: null
     path: ./OrcadLib/schlib1/Schotty Diode/SCHOTTY_0.OBK
-  - errors: 3
+  - errors: 0
     options: null
     path: ./OrcadLib/schlib4/CONNECTOR.OLB
-  - errors: 7
+  - errors: 0
     options: null
     path: ./OrcadLib/schlib4/IC.OLB
   - errors: 0
@@ -3291,7 +3291,7 @@ repositories:
   - errors: 0
     options: null
     path: ./UBLOX_LIBSCH_POS.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./ublox_LIBSCH_SHO.OLB
   project: Cadence-AllegroPCBDesigner-Library
@@ -3302,7 +3302,7 @@ repositories:
   - errors: 0
     options: null
     path: ./PJ-051AH.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OZH.OLB
   project: Allegro_Footprints
@@ -4264,13 +4264,13 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/ELNT_AMP.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./oldlibs/ELNT_FET.OLB
   - errors: 0
     options: null
     path: ./oldlibs/WEITEK.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./oldlibs/ANALOG4.OLB
   - errors: 0
@@ -4327,7 +4327,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/MOTO1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./oldlibs/CONNECTR.OLB
   - errors: 1
@@ -4381,7 +4381,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/MCHP_UC.OLB
-  - errors: 16
+  - errors: 2
     options: null
     path: ./oldlibs/LAYOUT.OLB
   - errors: 0
@@ -4657,7 +4657,7 @@ repositories:
 - author: vpodlesnyi
   commit: 652cacb9e7bc99ee88f78536388b965f4822c5b0
   files:
-  - errors: 167
+  - errors: 80
     options: null
     path: ./MOP44.OLB
   - errors: 6
@@ -4726,7 +4726,7 @@ repositories:
 - author: ROHMUSDC
   commit: 54d5bdc15c57f750e991068113968c2e5c565c8f
   files:
-  - errors: 39
+  - errors: 28
     options: null
     path: ./Design Files/Schematic_BOM/BD9C601EFJEVK-101_SCH_REV00_2014-04-23.DSN
   project: BD9C601EFJEVK-101
@@ -4774,7 +4774,7 @@ repositories:
 - author: ROHMUSDC
   commit: b1106120fd4126b1a7d263930183c0390a753ffe
   files:
-  - errors: 39
+  - errors: 28
     options: null
     path: ./Design Files/Schematic_BOM/BD9109FVMEVK-101_SCH_REV00_2013-11-22.DSN
   project: BD9109FVM-EVK-101
@@ -4793,7 +4793,7 @@ repositories:
 - author: ROHMUSDC
   commit: f84a9667dfdd8ae0db2929726875530c964adf35
   files:
-  - errors: 40
+  - errors: 29
     options: null
     path: ./Design Files - Schematics/BD9328EFJ_EVK-BD9329AEFJ_EVK_Schematic_07-15-2012.DSN
   project: BD9328EFJ_EVK-and-BD9329AEFJ_EVK
@@ -4801,7 +4801,7 @@ repositories:
 - author: ROHMUSDC
   commit: cd3b1749a528f8ca8a75e09cbea0792261a7ba1d
   files:
-  - errors: 8
+  - errors: 4
     options: null
     path: ./Design Files/Schematic_BOM/BD71815GW_REFERENCE_REV1P30.DSN
   project: BD71815AGW-EVK-101
@@ -4817,7 +4817,7 @@ repositories:
 - author: ROHMUSDC
   commit: 451a219bfb7530231c642f9b2100b0dc08c0a28f
   files:
-  - errors: 39
+  - errors: 28
     options: null
     path: ./Design Files/Schematic_BOM/BD95861MUVEVK-101_SCH_REV01_2014-01-22.DSN
   project: BD95861MUV-EVK-101
@@ -4884,7 +4884,7 @@ repositories:
 - author: ROHMUSDC
   commit: 9d9b0e64d89d419d117e60f8accff1a6c0aa4e42
   files:
-  - errors: 38
+  - errors: 13
     options: null
     path: ./DESIGN FILES/OrCAD Capture Schematics/library/discrete.olb
   - errors: 1
