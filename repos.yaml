@@ -544,7 +544,7 @@ repositories:
 - author: beagleboard
   commit: 6db2f5203c7a172aa6ce9c49b3ef5745ba78c91c
   files:
-  - errors: 4
+  - errors: 1
     options: null
     path: ./BEAGLE1.OLB
   project: beagle-cadence-libraries
@@ -596,7 +596,7 @@ repositories:
   - errors: 4
     options: null
     path: ./GOST.OLB
-  - errors: 4
+  - errors: 0
     options: null
     path: ./TITLE.OLB
   - errors: 0
@@ -608,7 +608,7 @@ repositories:
   - errors: 0
     options: null
     path: ./SOCKET.OLB
-  - errors: 4
+  - errors: 3
     options: null
     path: ./TITLE_GOST.OLB
   - errors: 0
@@ -645,7 +645,7 @@ repositories:
 - author: cutiepi-io
   commit: 1c5492733812fe1ae23d3b046f65bc3c73a0dd2f
   files:
-  - errors: 3
+  - errors: 2
     options: null
     path: ./CutiePi_V2.3-20210409.DSN
   project: cutiepi-board
@@ -653,7 +653,7 @@ repositories:
 - author: fenlogic
   commit: eee280535c9ab5b1b0f4a4cb277fa372a7bc5eb8
   files:
-  - errors: 2
+  - errors: 1
     options: null
     path: ./schematics/MULTIO.DSN
   project: multio
@@ -661,10 +661,10 @@ repositories:
 - author: hypeer
   commit: 907d2a8d3e631860ace9666b726bfbde489a8f1e
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad/XXXLZJXXX_0.OBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad/XXXLZJXXX.OLB
   project: allegrolib
@@ -2200,7 +2200,7 @@ repositories:
   - errors: 0
     options: null
     path: ./LIBRARY1.OLB
-  - errors: 2
+  - errors: 1
     options: null
     path: ./NIXIE_0.DBK
   project: nixie
@@ -2265,7 +2265,7 @@ repositories:
   - errors: 0
     options: null
     path: ./Orcad Project/PROIECT_TIE.OLB
-  - errors: 2
+  - errors: 1
     options: null
     path: ./Orcad Project/CALEIDOSCOP.DSN
   project: Proiect-TIE
@@ -2289,10 +2289,10 @@ repositories:
 - author: ChoiHyungoo
   commit: 62c96389289ca0a50f048d53df1c3f85f495f947
   files:
-  - errors: 11
+  - errors: 10
     options: null
     path: ./AVRUSB500.DSN
-  - errors: 11
+  - errors: 10
     options: null
     path: ./AVRUSB500_0.DBK
   - errors: 26
@@ -2329,7 +2329,7 @@ repositories:
   - errors: 0
     options: null
     path: ./src/Hardware/Encoder Board/LIBRARY1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./src/Hardware/Encoder Board/MOTOR_ENCODER_BRD.DSN
   project: Open_Breath
@@ -2548,7 +2548,7 @@ repositories:
 - author: GreenHandLW
   commit: d03b7b714a6ef005709938630623578364478078
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Hardware/8Mics/8MICS.DSN
   - errors: 5
@@ -2586,7 +2586,7 @@ repositories:
   - errors: 3
     options: null
     path: ./OrCAD/CAP_JERRY_0.OBK
-  - errors: 2
+  - errors: 0
     options: null
     path: ./OrCAD/JERRY_TITLE_0.OBK
   - errors: 0
@@ -2601,7 +2601,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/IC_AUDIO_0.OBK
-  - errors: 2
+  - errors: 0
     options: null
     path: ./OrCAD/MIKE_SCH_MIX_0.OBK
   - errors: 0
@@ -2616,7 +2616,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/IC_AUDIO.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./OrCAD/JERRY_TITLE.OLB
   - errors: 0
@@ -2640,7 +2640,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/CAP_JERRY.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./OrCAD/MIKE_SCH_MIX.OLB
   - errors: 0
@@ -3310,7 +3310,7 @@ repositories:
 - author: ucuncu
   commit: 6f6568e344337c5e78b8e16e27db13ae3e209d37
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/TITLE_BLOCK_EPTS_0.OBK
   - errors: 0
@@ -3835,7 +3835,7 @@ repositories:
   - errors: 0
     options: null
     path: ./pspice/advanls/CONTROLLER.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./my_personal_library/TITLE_BLOCK_EPTS.OLB
   - errors: 0
@@ -4381,7 +4381,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/MCHP_UC.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./oldlibs/LAYOUT.OLB
   - errors: 0
@@ -4657,7 +4657,7 @@ repositories:
 - author: vpodlesnyi
   commit: 652cacb9e7bc99ee88f78536388b965f4822c5b0
   files:
-  - errors: 80
+  - errors: 47
     options: null
     path: ./MOP44.OLB
   - errors: 6
@@ -4785,7 +4785,7 @@ repositories:
   - errors: 0
     options: null
     path: ./SCH (Orcad)/BD9251FV.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./SCH (Orcad)/BD9251FV - EVK BOARD.DSN
   project: BD9251FV-EVK-Board
@@ -4913,7 +4913,7 @@ repositories:
 - author: ROHMUSDC
   commit: 4a2274cf8e63591c32e34b8851250a6d24619567
   files:
-  - errors: 18
+  - errors: 13
     options: null
     path: ./Hardware Design Files/EVK1_BD92T30-Host_REV03/Schematic_BOM/ROHM_USB-PD_DP-ALTMODE_EVK1+2_SCH_REV04_2016-02-23.DSN
   - errors: 17
