@@ -70,46 +70,11 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("name = {}", name);
 
-    mDs.get().assumeData({0x00, 0x00, 0x00}, std::string(__func__) + " - 0"); // Unknown but probably a string
+    const std::string someStr = mDs.get().readStringLenZeroTerm();
+
+    spdlog::trace("someStr = {}", someStr);
 
     sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
-
-    // -------------------------------------------------------------------
-
-    readOptionalTrailingFuture();
-
-    // const uint16_t geometryCount = mDs.get().readUint16();
-    // spdlog::trace("geometryCount = {}", geometryCount);
-
-    // for(size_t i = 0u; i < geometryCount; ++i)
-    // {
-    //     spdlog::trace("i of geometryCount = {}", i);
-
-    //     if(i > 0u)
-    //     {
-    //         if(gFileFormatVersion == FileFormatVersion::B)
-    //         {
-    //             // Structure structure = read_prefixes(3);
-    //             Structure structure = auto_read_prefixes();
-    //         }
-
-    //         if(gFileFormatVersion >= FileFormatVersion::B)
-    //         {
-    //             readPreamble();
-    //         }
-    //     }
-
-    //     const Primitive primitive = readPrefixPrimitive();
-
-    //     readPrimitive(primitive);
-
-    //     // if(gFileFormatVersion == FileFormatVersion::A)
-    //     // {
-    //     //     mDs.get().printUnknownData(8, std::string(__func__) + " - 3.5");
-    //     // }
-    // }
 
     readOptionalTrailingFuture();
 
