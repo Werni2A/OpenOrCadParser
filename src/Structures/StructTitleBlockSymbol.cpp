@@ -5,6 +5,7 @@
 #include <nameof.hpp>
 
 #include "General.hpp"
+#include "Structures/StructPrimitives.hpp"
 #include "Structures/StructTitleBlockSymbol.hpp"
 
 
@@ -14,17 +15,9 @@ void StructTitleBlockSymbol::read(FileFormatVersion /* aVersion */)
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    auto_read_prefixes();
-
-    readPreamble();
-
-    const std::string str0 = mDs.get().readStringLenZeroTerm();
-
-    spdlog::trace("str0 = {}", str0);
-
-    const std::string str1 = mDs.get().readStringLenZeroTerm();
-
-    spdlog::trace("str1 = {}", str1);
+    // @todo Use readStructure()
+    StructPrimitives primitives{mDs};
+    primitives.read();
 
     mDs.get().printUnknownData(4, fmt::format("{}: 0", __func__));
 
@@ -40,7 +33,7 @@ void StructTitleBlockSymbol::read(FileFormatVersion /* aVersion */)
 
     sanitizeThisFutureSize(thisFuture);
 
-    // readOptionalTrailingFuture();
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

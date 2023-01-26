@@ -7,6 +7,7 @@
 #include "FutureData.hpp"
 #include "General.hpp"
 #include "Structures/StructERCSymbol.hpp"
+#include "Structures/StructPrimitives.hpp"
 #include "Structures/StructSymbolBBox.hpp"
 
 
@@ -14,21 +15,12 @@ void StructERCSymbol::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes();
-
-    readPreamble();
-
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    name = mDs.get().readStringLenZeroTerm();
+    // @todo Use readStructure()
+    StructPrimitives primitives{mDs};
+    primitives.read();
 
-    // @todo Probably 'sourceLibName' which is a string but I'm not sure. Could also be the
-    //       last part of the next unknown block
-    mDs.get().printUnknownData(3, std::string(__func__) + " - 0");
-
-    sanitizeThisFutureSize(thisFuture);
-
-    // @todo move the following part out of this method?
     mDs.get().printUnknownData(4, std::string(__func__) + " - 1");
 
     uint16_t len = mDs.get().readUint16();
@@ -50,7 +42,9 @@ void StructERCSymbol::read(FileFormatVersion /* aVersion */)
     bbox.read();
     this->symbolBBox = bbox;
 
-    readOptionalTrailingFuture();
+    sanitizeThisFutureSize(thisFuture);
+
+    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());
