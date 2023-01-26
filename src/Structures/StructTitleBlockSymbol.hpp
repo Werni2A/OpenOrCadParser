@@ -10,21 +10,20 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Structures/StructSymbol.hpp"
 
 
-class StructTitleBlockSymbol : public CommonBase
+class StructTitleBlockSymbol : public StructSymbol
 {
 public:
 
-    StructTitleBlockSymbol(DataStream& aDs) : CommonBase{aDs}
+    StructTitleBlockSymbol(DataStream& aDs) : StructSymbol{aDs}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
-
 };
 
 

@@ -74,6 +74,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructSthInHierarchy2.cpp
    ${LIB_SRC_DIR}/Structures/StructSthInHierarchy3.cpp
    ${LIB_SRC_DIR}/Structures/StructSthInPages0.cpp
+   ${LIB_SRC_DIR}/Structures/StructSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructSymbolBBox.cpp
    ${LIB_SRC_DIR}/Structures/StructSymbolDisplayProp.cpp
    ${LIB_SRC_DIR}/Structures/StructSymbolPin.cpp
@@ -157,6 +158,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/StructSthInHierarchy2.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructSthInHierarchy3.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructSthInPages0.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructSymbolPin.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructSymbolPinBus.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructSymbolPinScalar.hpp
