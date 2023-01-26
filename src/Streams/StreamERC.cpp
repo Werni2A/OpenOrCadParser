@@ -12,7 +12,7 @@ void StreamERC::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    readStructure(); // @todo push structure
+    spdlog::critical("VERIFYING StreamERC Structure0 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
 
     if(!mDs.get().isEoF())
     {

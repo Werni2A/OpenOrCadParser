@@ -71,6 +71,7 @@ void StreamPackage::read(FileFormatVersion /* aVersion */)
     for(size_t i = 0u; i < lenProperties; ++i)
     {
         properties.push_back(dynamic_pointer_cast<StructProperties>(readStructure()));
+
         const uint16_t lenPrimitives = mDs.get().readUint16();
 
         spdlog::trace("lenPrimitives = {}", lenPrimitives);

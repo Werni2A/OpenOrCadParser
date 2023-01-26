@@ -27,7 +27,9 @@ class StructPrimitives : public CommonBase
 {
 public:
 
-    StructPrimitives(DataStream& aDs) : CommonBase{aDs}, name{}
+    StructPrimitives(DataStream& aDs) : CommonBase{aDs}, name{}, rects{},
+        lines{}, arcs{}, ellipses{}, polygons{}, polylines{},
+        commentTexts{}, bitmaps{}, symbolVectors{}, beziers{}
     { }
 
     std::string to_string() const override;
