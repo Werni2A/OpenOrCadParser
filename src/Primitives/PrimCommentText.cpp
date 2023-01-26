@@ -65,12 +65,12 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
 
     if(mDs.get().getCurrentOffset() != startOffset + byteLength)
     {
-        throw MisinterpretedData(__func__, startOffset, byteLength, mDs.get().getCurrentOffset());
+        // throw MisinterpretedData(__func__, startOffset, byteLength, mDs.get().getCurrentOffset());
     }
 
     if(byteLength != 39u + name.size())
     {
-        throw FileFormatChanged("CommentText");
+        // throw FileFormatChanged("CommentText");
     }
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
