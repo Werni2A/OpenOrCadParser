@@ -582,6 +582,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         case Structure::T0x34:                  obj = std::make_unique<StructT0x34>(mDs);                  break;
         case Structure::T0x35:                  obj = std::make_unique<StructT0x35>(mDs);                  break;
         case Structure::TitleBlock:             obj = std::make_unique<StructTitleBlock>(mDs);             break;
+        case Structure::TitleBlockSymbol:       obj = std::make_unique<StructTitleBlockSymbol>(mDs);       break;
         case Structure::WireBus:                obj = std::make_unique<StructWireBus>(mDs);                break;
         case Structure::WireScalar:             obj = std::make_unique<StructWireScalar>(mDs);             break;
         default:
