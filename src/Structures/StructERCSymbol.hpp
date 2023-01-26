@@ -10,16 +10,16 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Structures/StructSymbol.hpp"
 #include "Structures/StructSymbolBBox.hpp"
 
 
-class StructERCSymbol : public CommonBase
+class StructERCSymbol : public StructSymbol
 {
 public:
 
-    StructERCSymbol(DataStream& aDs) : CommonBase{aDs}, name{}, symbolBBox{aDs}
+    StructERCSymbol(DataStream& aDs) : StructSymbol{aDs}, name{}, symbolBBox{aDs}
     { }
 
     std::string to_string() const override;

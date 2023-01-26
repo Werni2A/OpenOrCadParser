@@ -10,15 +10,15 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Structures/StructSymbol.hpp"
 
 
-class StructPinShapeSymbol : public CommonBase
+class StructPinShapeSymbol : public StructSymbol
 {
 public:
 
-    StructPinShapeSymbol(DataStream& aDs) : CommonBase{aDs}
+    StructPinShapeSymbol(DataStream& aDs) : StructSymbol{aDs}
     { }
 
     std::string to_string() const override;

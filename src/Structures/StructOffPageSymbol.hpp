@@ -10,15 +10,15 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Structures/StructSymbol.hpp"
 
 
-class StructOffPageSymbol : public CommonBase
+class StructOffPageSymbol : public StructSymbol
 {
 public:
 
-    StructOffPageSymbol(DataStream& aDs) : CommonBase{aDs}
+    StructOffPageSymbol(DataStream& aDs) : StructSymbol{aDs}
     { }
 
     std::string to_string() const override;

@@ -10,15 +10,15 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Structures/StructSymbol.hpp"
 
 
-class StructGlobalSymbol : public CommonBase
+class StructGlobalSymbol : public StructSymbol
 {
 public:
 
-    StructGlobalSymbol(DataStream& aDs) : CommonBase{aDs}
+    StructGlobalSymbol(DataStream& aDs) : StructSymbol{aDs}
     { }
 
     std::string to_string() const override;
