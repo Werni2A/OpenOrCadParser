@@ -12,52 +12,10 @@ void StreamSymbol::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    // @todo It's one of StructERCSymbol, StructGlobalSymbol, StructHierarchicSymbol or StructOffPageSymbol
-    //       Introduce new base class StructSymbol
-    spdlog::critical("VERIFYING StreamSymbol Structure10 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
+    symbol = dynamic_pointer_cast<StructSymbol>(readStructure());
 
-    mDs.get().printUnknownData(4, fmt::format("{}: 0", __func__));
-
-    const uint16_t geometryCount = mDs.get().readUint16();
-
-    spdlog::trace("geometryCount = {}", geometryCount);
-
-    for(size_t i = 0u; i < geometryCount; ++i)
-    {
-        spdlog::trace("i of geometryCount = {}", i);
-
-        // @todo This whole code sequence does not make much sense
-        //       Try if readStructure() works out of the box
-        if(i > 0u)
-        {
-            // @todo Check if the `if` statement is really necessary
-            //       auto_read_prefixes should be able to handle
-            //       a value of 0
-            if(gFileFormatVersion == FileFormatVersion::B)
-            {
-                spdlog::critical("VERIFYING StreamSymbol Structure11 is {}", NAMEOF_TYPE_RTTI(auto_read_prefixes()));
-            }
-
-            // @todo check if if works without the `if` statement
-            //       readPreamble should be able to skip it if it's
-            //       not present
-            if(gFileFormatVersion >= FileFormatVersion::B)
-            {
-                readPreamble();
-            }
-        }
-
-        const Primitive primitive = readPrefixPrimitive();
-
-        readPrimitive(primitive); // @todo add to obj
-    }
-
-    readPreamble();
-
-    mDs.get().printUnknownData(8);
-
-    // @todo Trailing data could be SymbolBBox
-    // readSymbolBBox(); // @todo push structure
+    // @todo The following 2 structure loops should probably be located in StructTitleBLockSymbol and the others?
+    //       Instead of readOptionalTrailingFuture()
 
     const uint16_t lenSymbolPins = mDs.get().readUint16();
 

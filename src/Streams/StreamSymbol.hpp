@@ -12,6 +12,7 @@
 
 #include "CommonBase.hpp"
 #include "General.hpp"
+#include "Structures/StructSymbol.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
@@ -27,6 +28,8 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
+    std::unique_ptr<StructSymbol> symbol;
+
     std::vector<std::unique_ptr<StructSymbolPin>>         symbolPins;
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };
@@ -38,6 +41,9 @@ static std::string to_string(const StreamSymbol& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+
+    str += "symbol:\n";
+    str += indent(aObj.symbol->to_string(), 2);
 
     str += fmt::format("{}symbolPins:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbolPins.size(); ++i)
