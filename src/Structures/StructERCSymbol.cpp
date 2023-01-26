@@ -40,6 +40,7 @@ void StructERCSymbol::read(FileFormatVersion /* aVersion */)
         readPrimitive(primitive);
     }
 
+    // @todo readStructure();
     // @todo not sure if this belongs into this structure and how do we know whether it
     //       is used or not? (BBox should be optional according to XSD)
     //       Probably defined by prefix?
