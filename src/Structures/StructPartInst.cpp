@@ -8,6 +8,7 @@
 #include "Enums/Color.hpp"
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
+#include "Enums/Structure.hpp"
 #include "General.hpp"
 #include "Structures/StructPartInst.hpp"
 
@@ -16,7 +17,7 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes();
+    auto_read_prefixes(Structure::PartInst);
 
     readPreamble();
 

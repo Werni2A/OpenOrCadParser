@@ -5,6 +5,7 @@
 #include <nameof.hpp>
 
 #include "Enums/Primitive.hpp"
+#include "Enums/Structure.hpp"
 #include "FutureData.hpp"
 #include "General.hpp"
 #include "Structures/StructSthInPages0.hpp"
@@ -15,7 +16,7 @@ void StructSthInPages0::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes();
+    auto_read_prefixes(Structure::SthInPages0);
 
     readPreamble();
 

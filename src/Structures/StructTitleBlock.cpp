@@ -4,6 +4,7 @@
 
 #include <nameof.hpp>
 
+#include "Enums/Structure.hpp"
 #include "General.hpp"
 #include "Parser.hpp"
 #include "Structures/StructTitleBlock.hpp"
@@ -13,7 +14,7 @@ void StructTitleBlock::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes();
+    auto_read_prefixes(Structure::TitleBlock);
 
     readPreamble();
 

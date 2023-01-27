@@ -1,6 +1,8 @@
+#include <algorithm>
 #include <array>
 #include <cstdint>
 #include <memory>
+#include <numeric>
 #include <string>
 #include <vector>
 
@@ -183,6 +185,48 @@ Structure CommonBase::auto_read_prefixes()
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
     return structure;
+}
+
+
+Structure CommonBase::auto_read_prefixes(Structure aExpectedStruct)
+{
+    const Structure actualStruct = auto_read_prefixes();
+
+    if(actualStruct != aExpectedStruct)
+    {
+        const std::string err = fmt::format("{}: Expected {} but got {}",
+            ::to_string(aExpectedStruct), ::to_string(actualStruct));
+
+        spdlog::error(err);
+        throw std::runtime_error(err);
+    }
+
+    return actualStruct;
+}
+
+
+Structure CommonBase::auto_read_prefixes(const std::vector<Structure>& aExpectedOneOfStruct)
+{
+    const Structure actualStruct = auto_read_prefixes();
+
+    const bool foundStructure = std::find(aExpectedOneOfStruct.cbegin(),
+        aExpectedOneOfStruct.cend(), actualStruct) != aExpectedOneOfStruct.cend();
+
+    if(!foundStructure)
+    {
+        std::vector<std::string> expectedStrStructs{};
+        std::transform(aExpectedOneOfStruct.cbegin(), aExpectedOneOfStruct.cend(),
+            expectedStrStructs.begin(), [](Structure a){ return ::to_string(a); });
+
+        const std::string err = fmt::format("{}: Expected one of [{}] but got {}",
+            std::accumulate(expectedStrStructs.cbegin(), expectedStrStructs.cend(), std::string{", "}),
+            ::to_string(actualStruct));
+
+        spdlog::error(err);
+        throw std::runtime_error(err);
+    }
+
+    return actualStruct;
 }
 
 

@@ -4,6 +4,7 @@
 
 #include <nameof.hpp>
 
+#include "Enums/Structure.hpp"
 #include "General.hpp"
 #include "Parser.hpp"
 #include "Structures/StructT0x10.hpp"
@@ -13,7 +14,7 @@ void StructT0x10::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes();
+    auto_read_prefixes(Structure::T0x10);
 
     readPreamble();
 

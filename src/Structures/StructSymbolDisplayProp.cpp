@@ -4,6 +4,7 @@
 
 #include <nameof.hpp>
 
+#include "Enums/Structure.hpp"
 #include "General.hpp"
 #include "Library.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
@@ -13,7 +14,7 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes();
+    auto_read_prefixes(Structure::SymbolDisplayProp);
 
     readPreamble();
 
