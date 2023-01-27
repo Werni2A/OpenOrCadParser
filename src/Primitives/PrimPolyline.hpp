@@ -28,8 +28,6 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    FileFormatVersion predictVersion();
-
     static size_t getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount);
 
     void setLineStyle(const LineStyle& aVal)

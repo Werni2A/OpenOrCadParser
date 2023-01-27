@@ -36,8 +36,6 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    FileFormatVersion predictVersion();
-
     std::string name;
 
     // @todo replace all this stuff with PrimBase vector

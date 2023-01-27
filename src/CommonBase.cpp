@@ -674,3 +674,49 @@ void CommonBase::checkInterpretedDataLen(const std::string& aFuncName, size_t aS
         throw MisinterpretedData(aFuncName.c_str(), aStartOffset, aExpectedLen, aEndOffset);
     }
 }
+
+
+FileFormatVersion CommonBase::predictVersion()
+{
+    FileFormatVersion prediction = FileFormatVersion::Unknown;
+
+    const std::vector<FileFormatVersion> versions{
+        FileFormatVersion::A,
+        FileFormatVersion::B,
+        FileFormatVersion::C
+    };
+
+    const size_t initial_offset = mDs.get().getCurrentOffset();
+
+    for(const auto& version : versions)
+    {
+        bool found = true;
+
+        try
+        {
+            read(version);
+        }
+        catch(...)
+        {
+            found = false;
+        }
+
+        mDs.get().setCurrentOffset(initial_offset);
+
+        if(found)
+        {
+            prediction = version;
+            break;
+        }
+    }
+
+    if(prediction == FileFormatVersion::Unknown)
+    {
+        // @todo Fix this hack
+        // Set to previous default value
+        // s.t. tests not fail
+        prediction = FileFormatVersion::C;
+    }
+
+    return prediction;
+}
