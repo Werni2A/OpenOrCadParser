@@ -20,13 +20,13 @@ void StructTitleBlock::read(FileFormatVersion /* aVersion */)
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    mDs.get().printUnknownData(8, fmt::format("{}: 0", __func__));
+    mDs.get().printUnknownData(8, fmt::format("{}: 0", getMethodName(this, __func__)));
 
     const std::string foo = mDs.get().readStringLenZeroTerm();
 
     spdlog::trace("foo = {}", foo);
 
-    mDs.get().printUnknownData(20, fmt::format("{}: 1", __func__));
+    mDs.get().printUnknownData(20, fmt::format("{}: 1", getMethodName(this, __func__)));
 
     const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
 
@@ -37,7 +37,7 @@ void StructTitleBlock::read(FileFormatVersion /* aVersion */)
         symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
-    mDs.get().printUnknownData(11, fmt::format("{}: 2", __func__));
+    mDs.get().printUnknownData(11, fmt::format("{}: 2", getMethodName(this, __func__)));
 
     const uint16_t len1 = mDs.get().readUint16();
 
@@ -45,7 +45,7 @@ void StructTitleBlock::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0; i < len1; ++i)
     {
-        mDs.get().printUnknownData(32, fmt::format("{}: 3.{}", __func__, i));
+        mDs.get().printUnknownData(32, fmt::format("{}: 3.{}", getMethodName(this, __func__), i));
     }
 
     sanitizeThisFutureSize(thisFuture);

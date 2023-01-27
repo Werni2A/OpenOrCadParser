@@ -15,8 +15,6 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes();
-
     // const std::optional<FutureData> thisFuture = getFutureData();
 
     const auto readSmallPrefixPrimitive = [&, this]() -> Primitive
@@ -28,12 +26,7 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
             return primitive;
         };
 
-    // mDs.get().printUnknownData(20, getMethodName(this, __func__) + ": x");
-    // read_type_prefix();
-
-    // @todo Figure out the size
-    //       Probably it's always 20 Byte, try this first
-    // discard_until_preamble();
+    auto_read_prefixes();
 
     readPreamble();
 

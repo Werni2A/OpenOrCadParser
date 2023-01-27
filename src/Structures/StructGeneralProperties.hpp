@@ -26,9 +26,20 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
+    // Implementation path of the symbol.
+    // See OrCAD: 'Part Properties' -> 'Implementation Path'
     std::string implementationPath;
+
+    // Implementation of the symbol.
+    // See OrCAD: 'Part Properties' -> 'Implementation'
     std::string implementation;
+
+    // Reference descriptor for the symbol. E.g. 'R' for resistor.
+    // See OrCAD: 'Package Properties' -> 'Part Reference Prefix'
     std::string refDes;
+
+    // Value of the symbol. E.g. '10k' for a resistor.
+    // See OrCAD: 'Part Properties' -> 'Value'
     std::string partValue;
 
     ImplementationType implementationType;

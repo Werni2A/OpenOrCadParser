@@ -90,7 +90,8 @@ void CommonBase::discard_until_preamble()
 
         if(mDs.get().isEoF())
         {
-            const std::string msg = fmt::format("{}: Unexpectedly reached end-of-file!", __func__);
+            const std::string msg = fmt::format("{}: Unexpectedly reached end-of-file!",
+                getMethodName(this, __func__));
 
             spdlog::error(msg);
             throw std::runtime_error(msg);
@@ -105,7 +106,8 @@ void CommonBase::discard_until_preamble()
 
     const size_t endOffset = mDs.get().getCurrentOffset();
 
-    spdlog::debug("{}: Discarded {} Byte until next preamble", __func__, endOffset - startOffset);
+    spdlog::debug("{}: Discarded {} Byte until next preamble",
+        getMethodName(this, __func__), endOffset - startOffset);
 }
 
 
@@ -165,8 +167,9 @@ Structure CommonBase::auto_read_prefixes()
 
     if(failed)
     {
-        const std::string msg = fmt::format("{}: Could not find valid number of prefixes! (maximum is set to {} but could be higher)",
-            __func__, maxPrefixes);
+        const std::string msg = fmt::format("{}: Could not find valid number of prefixes!"
+            " (maximum is set to {} but could be higher)",
+            getMethodName(this, __func__), maxPrefixes);
 
         spdlog::error(msg);
         throw std::runtime_error(msg);
@@ -178,7 +181,8 @@ Structure CommonBase::auto_read_prefixes()
     //       I.e. figure out the numbers for each structure and move the
     //       parsing code into the structure specific parser. This should
     //       get rid of auto_read_prefixes.
-    spdlog::debug("{}: Found {} prefixes for {}\n", __func__, prefixCtr, ::to_string(structure));
+    spdlog::debug("{}: Found {} prefixes for {}\n",
+        getMethodName(this, __func__), prefixCtr, ::to_string(structure));
 
     mDs.get().sanitizeNoEoF();
 
@@ -195,7 +199,7 @@ Structure CommonBase::auto_read_prefixes(Structure aExpectedStruct)
     if(actualStruct != aExpectedStruct)
     {
         const std::string err = fmt::format("{}: Expected {} but got {}",
-            ::to_string(aExpectedStruct), ::to_string(actualStruct));
+            getMethodName(this, __func__), ::to_string(aExpectedStruct), ::to_string(actualStruct));
 
         spdlog::error(err);
         throw std::runtime_error(err);
@@ -218,7 +222,7 @@ Structure CommonBase::auto_read_prefixes(const std::vector<Structure>& aExpected
         std::transform(aExpectedOneOfStruct.cbegin(), aExpectedOneOfStruct.cend(),
             expectedStrStructs.begin(), [](Structure a){ return ::to_string(a); });
 
-        const std::string err = fmt::format("{}: Expected one of [{}] but got {}",
+        const std::string err = fmt::format("{}: Expected one of [{}] but got {}", getMethodName(this, __func__),
             std::accumulate(expectedStrStructs.cbegin(), expectedStrStructs.cend(), std::string{", "}),
             ::to_string(actualStruct));
 
@@ -237,7 +241,8 @@ Structure CommonBase::read_prefixes(size_t aNumber, bool aPrediction)
 
     if(aNumber == 0U)
     {
-        throw std::invalid_argument(fmt::format("aNumber = {} but must be > 0!", aNumber));
+        throw std::invalid_argument(fmt::format("{}: aNumber = {} but must be > 0!",
+            getMethodName(this, __func__), aNumber));
     }
 
     Structure firstStruct;
@@ -271,7 +276,8 @@ Structure CommonBase::read_prefixes(size_t aNumber, bool aPrediction)
         if(currStruct != firstStruct)
         {
             const std::string msg = fmt::format("{}: {} != {}",
-                __func__, ::to_string(currStruct), ::to_string(firstStruct));
+                getMethodName(this, __func__), ::to_string(currStruct),
+                ::to_string(firstStruct));
 
             spdlog::error(msg);
             throw std::runtime_error(msg);
@@ -287,35 +293,41 @@ Structure CommonBase::read_prefixes(size_t aNumber, bool aPrediction)
                 const std::pair<size_t, size_t> start_pair = offsets[i + 1U];
                 const std::pair<size_t, size_t> stop_pair  = offsets[i];
 
-                const FutureData futureData = FutureData{start_pair.first, start_pair.second, stop_pair.first, stop_pair.second};
+                const FutureData futureData = FutureData{start_pair.first, start_pair.second,
+                    stop_pair.first, stop_pair.second};
 
-                std::optional<FutureData> existing = mFutureDataLst.getByStartOffset(futureData.getStartOffset());
+                const std::optional<FutureData> existing = mFutureDataLst.getByStartOffset(futureData.getStartOffset());
 
                 if(existing.has_value())
                 {
                     if(existing.value().getStopOffset() != futureData.getStopOffset())
                     {
-                        const std::string msg = fmt::format("{}: Future data at 0x{:08x} is either {} or {} Byte long,"
-                            " having both lengths does not make any sense.",
-                            __func__, existing.value().getByteLen(), futureData.getByteLen());
+                        const std::string msg = fmt::format("{}: Future data at 0x{:08x} is"
+                            " either {} or {} Byte long, having both lengths does not make any sense.",
+                            getMethodName(this, __func__), existing.value().getByteLen(),
+                            futureData.getByteLen());
 
                         spdlog::error(msg);
                         throw std::runtime_error(msg);
                     }
                     else
                     {
-                        spdlog::trace("{}: Future data exists already in list", __func__);
+                        // This should never happen
+                        spdlog::warn("{}: Future data exists already in list",
+                            getMethodName(this, __func__));
                     }
                 }
 
                 mFutureDataLst.push_back(futureData);
 
-                spdlog::debug("{}: Found future data: {}", __func__, (mFutureDataLst.end() - 1)->string());
+                spdlog::debug("{}: Found future data: {}", getMethodName(this, __func__),
+                    (mFutureDataLst.end() - 1)->string());
             }
         }
         else if(offsets.size() == 1U)
         {
-            spdlog::debug("{}: Found single structure beginning at 0x{:08x}", __func__, offsets[0].second);
+            spdlog::debug("{}: Found single structure beginning at 0x{:08x}",
+                getMethodName(this, __func__), offsets[0].second);
         }
     }
 
@@ -380,7 +392,9 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix_short()
             }
             catch(const std::exception& e)
             {
-                const std::string msg = fmt::format("{}: Tried to access strLst out of range!\n{}", __func__, e.what());
+                const std::string msg = fmt::format("{}: Tried to access strLst out of range!\n{}",
+                    getMethodName(this, __func__), e.what());
+
                 spdlog::error(msg);
                 throw std::out_of_range(msg);
             }
@@ -413,7 +427,8 @@ void CommonBase::readPreamble()
         mDs.get().assumeData({0xff, 0xe4, 0x5c, 0x39}, getMethodName(this, __func__) + " Preamble Check Failed");
 
         const uint32_t dataLen = mDs.get().readUint32();
-        mDs.get().printUnknownData(dataLen);
+        mDs.get().printUnknownData(dataLen, fmt::format("{}: Trailing preamble data",
+            getMethodName(this, __func__)));
     }
     catch(const std::runtime_error& err)
     {
@@ -467,7 +482,7 @@ void CommonBase::sanitizeThisFutureSize(std::optional<FutureData> aThisFuture)
         if(aThisFuture.value().getStopOffset() != stopOffset)
         {
             const std::string msg = fmt::format("{}: StopOffsets differ! 0x{:08x} (expected) vs. 0x{:08x} (actual)",
-                __func__, aThisFuture.value().getStopOffset(), stopOffset);
+                getMethodName(this, __func__), aThisFuture.value().getStopOffset(), stopOffset);
 
             spdlog::error(msg);
             spdlog::warn("The structure may have changed due to version differences!");
@@ -502,7 +517,8 @@ void CommonBase::readOptionalTrailingFuture()
 
     if(future.has_value())
     {
-        mDs.get().printUnknownData(future.value().getByteLen(), fmt::format("{}: Trailing Future Data", __func__));
+        mDs.get().printUnknownData(future.value().getByteLen(),
+            fmt::format("{}: Trailing Future Data", getMethodName(this, __func__)));
     }
 
     sanitizeThisFutureSize(future);
@@ -517,7 +533,8 @@ Primitive CommonBase::readPrefixPrimitive()
     if(primitive1 != primitive2)
     {
         const std::string msg = fmt::format("{}: Primitives {} != {}",
-            __func__, ::to_string(primitive1), ::to_string(primitive2));
+            getMethodName(this, __func__), ::to_string(primitive1),
+            ::to_string(primitive2));
 
         spdlog::error(msg);
         throw std::runtime_error(msg);
@@ -561,7 +578,7 @@ std::unique_ptr<PrimBase> CommonBase::readPrimitive(Primitive aPrimitive)
         case Primitive::Bezier:       obj = std::make_unique<PrimBezier>(mDs);       break;
         default:
             const std::string msg = fmt::format("{}: Primitive {} is not implemented!",
-                __func__, ::to_string(aPrimitive));
+                getMethodName(this, __func__), ::to_string(aPrimitive));
 
             spdlog::error(msg);
             throw std::runtime_error(msg);
@@ -634,7 +651,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
             const std::optional<FutureData> futureData = getFutureData();
 
             const std::string msg = fmt::format("{}: Structure {} is not implemented!",
-                __func__, ::to_string(aStructure));
+                getMethodName(this, __func__), ::to_string(aStructure));
 
             if(futureData.has_value())
             {

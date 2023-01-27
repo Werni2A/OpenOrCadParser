@@ -24,6 +24,8 @@ void StructProperties::read(FileFormatVersion /* aVersion */)
 
     ref = mDs.get().readStringLenZeroTerm();
 
+    spdlog::trace("ref = {}", ref);
+
     // @todo Probably a string
     mDs.get().assumeData({0x00, 0x00, 0x00}, fmt::format("{}: 0", __func__));
 

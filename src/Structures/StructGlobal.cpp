@@ -20,13 +20,13 @@ void StructGlobal::read(FileFormatVersion /* aVersion */)
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    mDs.get().printUnknownData(8, fmt::format("{}: 0", __func__));
+    mDs.get().printUnknownData(8, fmt::format("{}: 0", getMethodName(this, __func__)));
 
     const std::string name = mDs.get().readStringLenZeroTerm();
 
     spdlog::trace("name = {}", name);
 
-    mDs.get().printUnknownData(20, fmt::format("{}: 1", __func__));
+    mDs.get().printUnknownData(20, fmt::format("{}: 1", getMethodName(this, __func__)));
 
     const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
 
@@ -37,7 +37,7 @@ void StructGlobal::read(FileFormatVersion /* aVersion */)
         symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
-    mDs.get().printUnknownData(1, fmt::format("{}: 2", __func__));
+    mDs.get().printUnknownData(1, fmt::format("{}: 2", getMethodName(this, __func__)));
 
     sanitizeThisFutureSize(thisFuture);
 
