@@ -42,7 +42,6 @@
 #include "Structures/StructPort.hpp"
 #include "Structures/StructPrimitives.hpp"
 #include "Structures/StructProperties.hpp"
-#include "Structures/StructProperties2.hpp"
 #include "Structures/StructSthInHierarchy1.hpp"
 #include "Structures/StructSthInHierarchy2.hpp"
 #include "Structures/StructSthInHierarchy3.hpp"
