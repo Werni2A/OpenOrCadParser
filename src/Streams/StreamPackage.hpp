@@ -32,8 +32,6 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    FileFormatVersion predictVersion();
-
     std::vector<std::unique_ptr<StructProperties>>        properties;
     std::vector<std::unique_ptr<StructPrimitives>>        primitives;
     std::vector<std::unique_ptr<StructSymbolPin>>         symbolPins;

@@ -52,8 +52,9 @@ public:
 
     void readOptionalTrailingFuture();
 
-
     void checkInterpretedDataLen(const std::string &aFuncName, size_t aStartOffset, size_t aEndOffset, size_t aExpectedLen);
+
+    FileFormatVersion predictVersion();
 
     std::unique_ptr<PrimBase> readPrimitive();
     std::unique_ptr<PrimBase> readPrimitive(Primitive aPrimitive);

@@ -30,8 +30,6 @@ public:
 
     static size_t getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount);
 
-    FileFormatVersion predictVersion();
-
     void setLineStyle(const LineStyle& aVal)
     {
         mLineStyle = std::make_optional<LineStyle>(aVal);
