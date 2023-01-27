@@ -19,7 +19,7 @@ void StructOffPageSymbol::read(FileFormatVersion /* aVersion */)
     StructPrimitives primitives{mDs};
     primitives.read();
 
-    mDs.get().printUnknownData(4, fmt::format("{}: 0", __func__));
+    mDs.get().printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
 
     const uint16_t len0 = mDs.get().readUint16();
 

@@ -18,31 +18,25 @@ void StructGeneralProperties::read(FileFormatVersion /* aVersion */)
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    // @todo move to kaitai file
-    // doc: |
-    //   Implementation path of the symbol.
-    //   See OrCAD: 'Part Properties' -> 'Implementation Path'
     implementationPath = mDs.get().readStringLenZeroTerm();
 
-    // @todo move to kaitai file
-    // doc: |
-    //   Implementation of the symbol.
-    //   See OrCAD: 'Part Properties' -> 'Implementation'
+    spdlog::trace("implementationPath = {}", implementationPath);
+
     implementation = mDs.get().readStringLenZeroTerm();
 
-    // @todo move to kaitai file
-    // doc: |
-    //   Reference descriptor for the symbol. E.g. 'R' for resistor.
-    //   See OrCAD: 'Package Properties' -> 'Part Reference Prefix'
+    spdlog::trace("implementation = {}", implementation);
+
     refDes = mDs.get().readStringLenZeroTerm();
 
-    // @todo move to kaitai file
-    // doc: |
-    //   Value of the symbol. E.g. '10k' for a resistor.
-    //   See OrCAD: 'Part Properties' -> 'Value'
+    spdlog::trace("refDes = {}", refDes);
+
     partValue = mDs.get().readStringLenZeroTerm();
 
+    spdlog::trace("partValue = {}", partValue);
+
     const uint8_t properties = mDs.get().readUint8();
+
+    spdlog::trace("properties = {}", properties);
 
     // Expect that upper bits are unused => 00xx xxxxb
     if((properties & 0xc0) != 0x00)
