@@ -43,7 +43,7 @@ void PrimArc::read(FileFormatVersion aVersion)
         default:                                  break;
     }
 
-    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
+    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
     x1 = mDs.get().readInt32();
     y1 = mDs.get().readInt32();

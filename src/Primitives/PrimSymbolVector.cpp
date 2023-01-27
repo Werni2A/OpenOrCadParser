@@ -22,13 +22,13 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
     const auto readSmallPrefixPrimitive = [&, this]() -> Primitive
         {
             Primitive primitive = ToPrimitive(mDs.get().readUint8());
-            mDs.get().assumeData({0x00}, std::string(__func__) + " - 0");
-            mDs.get().assumeData({static_cast<uint8_t>(primitive)}, std::string(__func__) + " - 1");
+            mDs.get().assumeData({0x00}, getMethodName(this, __func__) + ": 0");
+            mDs.get().assumeData({static_cast<uint8_t>(primitive)}, getMethodName(this, __func__) + ": 1");
 
             return primitive;
         };
 
-    // mDs.get().printUnknownData(20, std::string(__func__) + " - x");
+    // mDs.get().printUnknownData(20, getMethodName(this, __func__) + ": x");
     // read_type_prefix();
 
     // @todo Figure out the size
@@ -53,8 +53,8 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
     name = mDs.get().readStringLenZeroTerm();
 
     // @todo contains smallPrefixPrimitive
-    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00, 0x32, 0x00, 0x32, 0x00, 0x00, 0x00, 0x02, 0x00}, std::string(__func__) + " - 2");
-    // mDs.get().printUnknownData(12, std::string(__func__) + " - 2");
+    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00, 0x32, 0x00, 0x32, 0x00, 0x00, 0x00, 0x02, 0x00}, getMethodName(this, __func__) + ": 2");
+    // mDs.get().printUnknownData(12, getMethodName(this, __func__) + ": 2");
 
     // sanitizeThisFutureSize(thisFuture);
 

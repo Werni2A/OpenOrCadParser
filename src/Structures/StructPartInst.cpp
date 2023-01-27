@@ -22,7 +22,7 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     // const std::optional<FutureData> thisFuture = getFutureData();
 
-    mDs.get().printUnknownData(8, std::string(__func__) + " - 0");
+    mDs.get().printUnknownData(8, getMethodName(this, __func__) + ": 0");
 
     const std::string pkgName = mDs.get().readStringLenZeroTerm();
 
@@ -32,7 +32,7 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("dbId = {}", dbId);
 
-    mDs.get().printUnknownData(8, std::string(__func__) + " - 1");
+    mDs.get().printUnknownData(8, getMethodName(this, __func__) + ": 1");
 
     const int16_t locX = mDs.get().readInt16();
     const int16_t locY = mDs.get().readInt16();
@@ -40,7 +40,7 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
     spdlog::trace("locX = {}", locX);
     spdlog::trace("locY = {}", locY);
 
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 2");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 2");
 
     const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
 
@@ -51,13 +51,13 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
         symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
-    mDs.get().printUnknownData(1, std::string(__func__) + " - 3");
+    mDs.get().printUnknownData(1, getMethodName(this, __func__) + ": 3");
 
     const std::string reference = mDs.get().readStringLenZeroTerm();
 
     spdlog::trace("reference = {}", reference);
 
-    mDs.get().printUnknownData(14, std::string(__func__) + " - 4");
+    mDs.get().printUnknownData(14, getMethodName(this, __func__) + ": 4");
 
     const uint16_t lenT0x10s = mDs.get().readUint16();
 
@@ -72,10 +72,10 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("sth1 = {}", sth1);
 
-    mDs.get().printUnknownData(2, std::string(__func__) + " - 5");
+    mDs.get().printUnknownData(2, getMethodName(this, __func__) + ": 5");
 
     // @todo implement type_prefix_very_long
-    // mDs.get().printUnknownData(18, std::string(__func__) + " - 6");
+    // mDs.get().printUnknownData(18, getMethodName(this, __func__) + ": 6");
 
     // auto_read_prefixes();
 

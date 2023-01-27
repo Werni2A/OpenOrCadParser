@@ -47,7 +47,7 @@ void StreamLibrary::read(FileFormatVersion /* aVersion */)
     createDate = static_cast<time_t>(mDs.get().readUint32());
     modifyDate = static_cast<time_t>(mDs.get().readUint32());
 
-    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 1");
+    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 1");
 
     // @todo the GUI specifies 15 fonts under
     //       `Options` -> `Design Templates...` -> `Fonts`
@@ -79,8 +79,8 @@ void StreamLibrary::read(FileFormatVersion /* aVersion */)
         spdlog::trace("someData [{}] = {}", i, someData);
     }
 
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 2.0");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 2.1");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 2.0");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 2.1");
 
     // Property to Part Field Mapping
     // See OrCAD: `Options` -> `Design Template...` -> `SDT Compatibility`
@@ -113,7 +113,7 @@ void StreamLibrary::read(FileFormatVersion /* aVersion */)
 
     if(gFileType == FileType::Schematic)
     {
-        mDs.get().printUnknownData(8, std::string(__func__) + " - 5");
+        mDs.get().printUnknownData(8, getMethodName(this, __func__) + ": 5");
         std::string schematicName = mDs.get().readStringLenZeroTerm();
         spdlog::trace("schematicName = {}", schematicName);
     }

@@ -60,7 +60,7 @@ void StructGeneralProperties::read(FileFormatVersion /* aVersion */)
 
     this->implementationType = ToImplementationType(implementationType);
 
-    mDs.get().printUnknownData(1, std::string(__func__) + " - 0");
+    mDs.get().printUnknownData(1, getMethodName(this, __func__) + ": 0");
 
     sanitizeThisFutureSize(thisFuture);
 

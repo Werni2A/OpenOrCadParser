@@ -20,7 +20,7 @@ void StructT0x34::read(FileFormatVersion /* aVersion */)
     //     0 Byte = structure id
     // 1 - 4 Byte = struct len
     // 5 - 8 Byte = zero vector
-    mDs.get().printUnknownData(9, std::string(__func__) + " - 0");
+    mDs.get().printUnknownData(9, getMethodName(this, __func__) + ": 0");
 
     const std::optional<FutureData> thisFuture = getFutureData();
 

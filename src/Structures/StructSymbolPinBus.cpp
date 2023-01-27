@@ -31,11 +31,11 @@
 
 //     pinShape = ToPinShape(mDs.get().readUint16());
 
-//     mDs.get().printUnknownData(2, std::string(__func__) + " - 0");
+//     mDs.get().printUnknownData(2, getMethodName(this, __func__) + ": 0");
 
 //     portType = ToPortType(mDs.get().readUint32());
 
-//     mDs.get().printUnknownData(6, std::string(__func__) + " - 1");
+//     mDs.get().printUnknownData(6, getMethodName(this, __func__) + ": 1");
 
 //     // @todo compare against SymbolPinScalar, maybe they have the same content
 

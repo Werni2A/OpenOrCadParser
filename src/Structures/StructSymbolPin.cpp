@@ -30,11 +30,11 @@ void StructSymbolPin::read(FileFormatVersion /* aVersion */)
 
     pinShape = ToPinShape(mDs.get().readUint16());
 
-    mDs.get().printUnknownData(2, std::string(__func__) + " - 0");
+    mDs.get().printUnknownData(2, getMethodName(this, __func__) + ": 0");
 
     portType = ToPortType(mDs.get().readUint32());
 
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 1");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 1");
 
     const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
 

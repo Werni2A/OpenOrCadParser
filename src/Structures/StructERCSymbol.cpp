@@ -21,7 +21,7 @@ void StructERCSymbol::read(FileFormatVersion /* aVersion */)
     StructPrimitives primitives{mDs};
     primitives.read();
 
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 1");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 1");
 
     uint16_t len = mDs.get().readUint16();
 

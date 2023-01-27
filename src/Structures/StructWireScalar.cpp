@@ -25,7 +25,7 @@
 
 //     spdlog::debug("dbId = {}", dbId);
 
-//     mDs.get().printUnknownData(4, std::string(__func__) + " - 0");
+//     mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 0");
 
 //     wireColor = ToColor(mDs.get().readUint32());
 
@@ -43,7 +43,7 @@
 //     spdlog::debug("endX = {}", endX);
 //     spdlog::debug("endY = {}", endY);
 
-//     mDs.get().printUnknownData(1, std::string(__func__) + " - 1");
+//     mDs.get().printUnknownData(1, getMethodName(this, __func__) + ": 1");
 
 //     const uint16_t len0 = mDs.get().readUint16();
 

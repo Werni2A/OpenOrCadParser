@@ -94,7 +94,7 @@ void PrimPolygon::read(FileFormatVersion aVersion)
 
     const uint32_t byteLength = mDs.get().readUint32();
 
-    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
+    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
     if(gFileFormatVersion >= FileFormatVersion::B)
     {

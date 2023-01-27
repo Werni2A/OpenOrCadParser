@@ -290,8 +290,8 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix()
 
     spdlog::debug("{:>2} = {}: Offset = {}\n", static_cast<int>(typeId), ::to_string(typeId), byteOffset);
 
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 0");
-    // mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 0");
+    // mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
@@ -366,7 +366,7 @@ void CommonBase::readPreamble()
     try
     {
         // Magic number indicating some data
-        mDs.get().assumeData({0xff, 0xe4, 0x5c, 0x39}, std::string(__func__) + " Preamble Check Failed");
+        mDs.get().assumeData({0xff, 0xe4, 0x5c, 0x39}, getMethodName(this, __func__) + " Preamble Check Failed");
 
         const uint32_t dataLen = mDs.get().readUint32();
         mDs.get().printUnknownData(dataLen);
