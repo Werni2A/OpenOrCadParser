@@ -18,11 +18,11 @@ void StructGraphicLineInst::read(FileFormatVersion /* aVersion */)
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    mDs.get().printUnknownData(34, std::string(__func__) + " - 0");
+    mDs.get().printUnknownData(34, getMethodName(this, __func__) + ": 0");
 
     sthInPages0 = dynamic_pointer_cast<StructSthInPages0>(readStructure());
 
-    mDs.get().printUnknownData(16, std::string(__func__) + " - 1");
+    mDs.get().printUnknownData(16, getMethodName(this, __func__) + ": 1");
 
     sanitizeThisFutureSize(thisFuture);
 

@@ -71,9 +71,9 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
     // 00 03  Name only
     // 00 04  Both if value exist
     //        Value if value exist
-    mDs.get().printUnknownData(2, std::string(__func__) + " - 0");
+    mDs.get().printUnknownData(2, getMethodName(this, __func__) + ": 0");
 
-    mDs.get().assumeData({0x00}, std::string(__func__) + " - 1");
+    mDs.get().assumeData({0x00}, getMethodName(this, __func__) + ": 1");
 
     sanitizeThisFutureSize(thisFuture);
 

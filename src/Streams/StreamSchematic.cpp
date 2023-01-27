@@ -22,7 +22,7 @@ void StreamSchematic::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("schematic_name = {}", schematic_name);
 
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 1");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 1");
 
     const uint16_t schematicPages = mDs.get().readUint16();
 
@@ -40,7 +40,7 @@ void StreamSchematic::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len; ++i)
     {
-        mDs.get().printUnknownData(4, std::string(__func__) + " - 1");
+        mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 1");
     }
 
     const uint16_t len2 = mDs.get().readUint16();
@@ -49,10 +49,10 @@ void StreamSchematic::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len2; ++i)
     {
-        mDs.get().printUnknownData(5, std::string(__func__) + " - 2");
+        mDs.get().printUnknownData(5, getMethodName(this, __func__) + ": 2");
     }
 
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 3");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 3");
 
     if(!mDs.get().isEoF())
     {

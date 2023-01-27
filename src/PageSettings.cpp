@@ -18,10 +18,10 @@ void PageSettings::read(FileFormatVersion /* aVersion */)
     spdlog::trace("createDateTime = {}", DateTimeToStr(createDateTime));
     spdlog::trace("modifyDateTime = {}", DateTimeToStr(modifyDateTime));
 
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 0");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 1");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 2");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 3");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 0");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 1");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 2");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 3");
 
     width  = mDs.get().readUint32();
     height = mDs.get().readUint32();
@@ -33,7 +33,7 @@ void PageSettings::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("pinToPin = {}", pinToPin);
 
-    mDs.get().printUnknownData(2, std::string(__func__) + " - 4");
+    mDs.get().printUnknownData(2, getMethodName(this, __func__) + ": 4");
 
     horizontalCount = mDs.get().readUint16();
     verticalCount   = mDs.get().readUint16();
@@ -41,7 +41,7 @@ void PageSettings::read(FileFormatVersion /* aVersion */)
     spdlog::trace("horizontalCount = {}", horizontalCount);
     spdlog::trace("verticalCount   = {}", verticalCount);
 
-    mDs.get().printUnknownData(2, std::string(__func__) + " - 5");
+    mDs.get().printUnknownData(2, getMethodName(this, __func__) + ": 5");
 
     horizontalWidth = mDs.get().readUint32();
     verticalWidth   = mDs.get().readUint32();
@@ -49,24 +49,24 @@ void PageSettings::read(FileFormatVersion /* aVersion */)
     spdlog::trace("horizontalWidth = {}", horizontalWidth);
     spdlog::trace("verticalWidth   = {}", verticalWidth);
 
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 6");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 7");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 8");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 9");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 10");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 11");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 12");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 13");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 14");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 15");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 16");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 17");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 6");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 7");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 8");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 9");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 10");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 11");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 12");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 13");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 14");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 15");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 16");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 17");
 
     horizontalChar = mDs.get().readUint32();
 
     spdlog::trace("horizontalChar = {}", horizontalChar);
 
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 18");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 18");
 
     horizontalAscending = mDs.get().readUint32();
 
@@ -76,7 +76,7 @@ void PageSettings::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("verticalChar = {}", verticalChar);
 
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 19");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 19");
 
     verticalAscending = mDs.get().readUint32();
 

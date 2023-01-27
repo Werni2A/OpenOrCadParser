@@ -12,13 +12,13 @@ void StreamHierarchy::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    mDs.get().printUnknownData(9, std::string(__func__) + " - 0");
+    mDs.get().printUnknownData(9, getMethodName(this, __func__) + ": 0");
 
     const std::string schematicName = mDs.get().readStringLenZeroTerm();
 
     spdlog::trace("schematicName = {}", schematicName);
 
-    mDs.get().printUnknownData(9, std::string(__func__) + " - 1");
+    mDs.get().printUnknownData(9, getMethodName(this, __func__) + ": 1");
 
     const uint16_t netLen = mDs.get().readUint16();
 

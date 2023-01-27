@@ -21,8 +21,8 @@ void StructSthInPages0::read(FileFormatVersion /* aVersion */)
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    mDs.get().printUnknownData(6, std::string(__func__) + " - 0");
-    mDs.get().printUnknownData(4, std::string(__func__) + " - 1");
+    mDs.get().printUnknownData(6, getMethodName(this, __func__) + ": 0");
+    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 1");
 
     const uint16_t len = mDs.get().readUint16();
 

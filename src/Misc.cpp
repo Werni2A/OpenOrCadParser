@@ -52,7 +52,7 @@ std::string SymbolUserProp::getName() const
     else // nameIdx < -1
     {
         // This should never happen.
-        throw std::runtime_error(std::string(__func__) + ": Unexpected index " + std::to_string(nameIdx));
+        throw std::runtime_error(getMethodName(this, __func__) + ": Unexpected index " + std::to_string(nameIdx));
     }
 
     return name;
@@ -77,7 +77,7 @@ std::string SymbolUserProp::getVal() const
     else // valIdx < -1
     {
         // This should never happen.
-        throw std::runtime_error(std::string(__func__) + ": Unexpected index " + std::to_string(valIdx));
+        throw std::runtime_error(getMethodName(this, __func__) + ": Unexpected index " + std::to_string(valIdx));
     }
 
     return val;
@@ -89,7 +89,7 @@ void Parser::readTitleBlockSymbol()
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    mDs.get().printUnknownData(36, std::string(__func__) + " - 0");
+    mDs.get().printUnknownData(36, getMethodName(this, __func__) + ": 0");
 
     std::vector<SymbolUserProp> symbolUserProps; // @todo store in symbol
 
@@ -117,7 +117,7 @@ void Parser::readTitleBlockSymbol()
     readPreamble();
     std::string str0 = mDs.get().readStringLenZeroTerm();
 
-    mDs.get().printUnknownData(7, std::string(__func__) + " - 1");
+    mDs.get().printUnknownData(7, getMethodName(this, __func__) + ": 1");
 
     const uint16_t someLen = mDs.get().readUint16();
 
@@ -129,8 +129,8 @@ void Parser::readTitleBlockSymbol()
         readPrimitive(primitive);
     }
 
-    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 2");
-    mDs.get().printUnknownData(6, std::string(__func__) + " - 3");
+    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 2");
+    mDs.get().printUnknownData(6, getMethodName(this, __func__) + ": 3");
 
     const uint16_t followingLen = mDs.get().readUint16();
 

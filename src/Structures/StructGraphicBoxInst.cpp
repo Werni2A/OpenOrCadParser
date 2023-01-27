@@ -19,7 +19,7 @@ void StructGraphicBoxInst::read(FileFormatVersion /* aVersion */)
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    mDs.get().printUnknownData(11, std::string(__func__) + " - 0");
+    mDs.get().printUnknownData(11, getMethodName(this, __func__) + ": 0");
 
     dbId = mDs.get().readUint32();
 
@@ -34,7 +34,7 @@ void StructGraphicBoxInst::read(FileFormatVersion /* aVersion */)
 
     color = ToColor(mDs.get().readUint16()); // @todo is it really not a 4 byte value?
 
-    mDs.get().printUnknownData(5, std::string(__func__) + " - 1");
+    mDs.get().printUnknownData(5, getMethodName(this, __func__) + ": 1");
 
     sthInPages0 = dynamic_pointer_cast<StructSthInPages0>(readStructure());
 

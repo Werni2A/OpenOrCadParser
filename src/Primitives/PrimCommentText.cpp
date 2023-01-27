@@ -27,7 +27,7 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
      //       and readOptionalTrailingFuture in StructT0x10
     const uint32_t byteLength = mDs.get().readUint32() + 8U;
 
-    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
+    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
     locX = mDs.get().readInt32();
     locY = mDs.get().readInt32();
@@ -52,12 +52,11 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
 
     if(textFontIdx > gLibrary->library->textFonts.size())
     {
-        throw std::out_of_range(std::string(__func__) + ": textFontIdx is out of range! Expected " +
-            std::to_string(textFontIdx) + " <= " +
-            std::to_string(gLibrary->library->textFonts.size()) + "!");
+        throw std::out_of_range(fmt::format("{}: textFontIdx is out of range! Expected {} <= {}!",
+            getMethodName(this, __func__), textFontIdx, gLibrary->library->textFonts.size()));
     }
 
-    mDs.get().printUnknownData(2, std::string(__func__) + " - 1");
+    mDs.get().printUnknownData(2, getMethodName(this, __func__) + ": 1");
 
     name = mDs.get().readStringLenZeroTerm();
 
@@ -95,12 +94,12 @@ LOGFONTA PrimCommentText::getTextFont() const
     else if(idx == -1)
     {
         // @todo Unknown but it is probably the default font;
-        throw std::runtime_error(std::string(__func__) + ": Check this out!");
+        throw std::runtime_error(getMethodName(this, __func__) + ": Check this out!");
     }
     else // idx < -1
     {
         // This should never happen.
-        throw std::runtime_error(std::string(__func__) + ": Unexpected index " + std::to_string(idx));
+        throw std::runtime_error(getMethodName(this, __func__) + ": Unexpected index " + std::to_string(idx));
     }
 
     return textFont;

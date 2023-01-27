@@ -40,7 +40,7 @@ void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
 
         readPreamble();
 
-        mDs.get().assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, std::string(__func__) + " - 0");
+        mDs.get().assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
         // The following contains the information of a net group but
         // the name of this group is stated outside. How should this
