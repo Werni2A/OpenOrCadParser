@@ -6,6 +6,7 @@
 
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
+#include "Enums/Structure.hpp"
 #include "General.hpp"
 #include "Structures/StructT0x1f.hpp"
 
@@ -15,7 +16,7 @@ void StructT0x1f::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes();
+    auto_read_prefixes(Structure::T0x1f);
 
     readPreamble();
 

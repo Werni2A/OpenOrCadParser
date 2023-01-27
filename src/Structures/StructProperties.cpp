@@ -7,6 +7,7 @@
 
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
+#include "Enums/Structure.hpp"
 #include "General.hpp"
 #include "Structures/StructProperties.hpp"
 
@@ -15,7 +16,7 @@ void StructProperties::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes();
+    auto_read_prefixes(Structure::Properties);
 
     readPreamble();
 

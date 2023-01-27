@@ -6,6 +6,7 @@
 
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
+#include "Enums/Structure.hpp"
 #include "General.hpp"
 #include "Structures/StructPinIdxMapping.hpp"
 
@@ -14,7 +15,7 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes();
+    auto_read_prefixes(Structure::PinIdxMapping);
 
     readPreamble();
 

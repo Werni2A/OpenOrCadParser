@@ -31,6 +31,10 @@ public:
 
     Structure auto_read_prefixes();
 
+    Structure auto_read_prefixes(Structure aExpectedStruct);
+
+    Structure auto_read_prefixes(const std::vector<Structure>& aExpectedOneOfStruct);
+
     Structure read_prefixes(size_t aNumber, bool aPrediction = false);
 
     std::pair<Structure, uint32_t> read_single_prefix();

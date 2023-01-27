@@ -6,6 +6,7 @@
 #include <spdlog/spdlog.h>
 
 #include "Enums/PortType.hpp"
+#include "Enums/Structure.hpp"
 #include "General.hpp"
 #include "PinShape.hpp"
 #include "Structures/StructSymbolPin.hpp"
@@ -15,7 +16,7 @@ void StructSymbolPin::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes();
+    auto_read_prefixes({Structure::SymbolPinBus, Structure::SymbolPinScalar});
 
     readPreamble();
 

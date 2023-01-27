@@ -7,6 +7,7 @@
 
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
+#include "Enums/Structure.hpp"
 #include "General.hpp"
 #include "Structures/StructPrimitives.hpp"
 
@@ -60,6 +61,8 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
+    // @todo Got TitleBlockSymbol at least once
+    // auto_read_prefixes(Structure::Primitives);
     auto_read_prefixes();
 
     readPreamble();
