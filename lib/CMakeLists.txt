@@ -69,7 +69,6 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructPort.cpp
    ${LIB_SRC_DIR}/Structures/StructPrimitives.cpp
    ${LIB_SRC_DIR}/Structures/StructProperties.cpp
-   ${LIB_SRC_DIR}/Structures/StructProperties2.cpp
    ${LIB_SRC_DIR}/Structures/StructSthInHierarchy1.cpp
    ${LIB_SRC_DIR}/Structures/StructSthInHierarchy2.cpp
    ${LIB_SRC_DIR}/Structures/StructSthInHierarchy3.cpp
@@ -153,7 +152,6 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/StructPort.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructPrimitives.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructProperties.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructProperties2.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructSthInHierarchy1.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructSthInHierarchy2.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructSthInHierarchy3.hpp
