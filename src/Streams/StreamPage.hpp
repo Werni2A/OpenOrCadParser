@@ -12,6 +12,7 @@
 #include "CommonBase.hpp"
 #include "General.hpp"
 #include "PageSettings.hpp"
+#include "Structures/StructGraphicInst.hpp"
 #include "Structures/StructPartInst.hpp"
 #include "Structures/StructPort.hpp"
 #include "Structures/StructT0x34.hpp"
@@ -24,7 +25,7 @@ class StreamPage : public CommonBase
 public:
 
     StreamPage(DataStream& aDs) : CommonBase{aDs}, name{}, pageSize{}, pageSettings{mDs},
-        t0x34s{}, t0x35s{}, wires{}, partInsts{}, ports{}
+        t0x34s{}, t0x35s{}, wires{}, partInsts{}, ports{}, graphicInsts{}
     { }
 
     std::string to_string() const override;
@@ -35,11 +36,12 @@ public:
     std::string  pageSize;
     PageSettings pageSettings;
 
-    std::vector<std::unique_ptr<StructT0x34>>    t0x34s;
-    std::vector<std::unique_ptr<StructT0x35>>    t0x35s;
-    std::vector<std::unique_ptr<StructWire>>     wires;
-    std::vector<std::unique_ptr<StructPartInst>> partInsts;
-    std::vector<std::unique_ptr<StructPort>>     ports;
+    std::vector<std::unique_ptr<StructT0x34>>       t0x34s;
+    std::vector<std::unique_ptr<StructT0x35>>       t0x35s;
+    std::vector<std::unique_ptr<StructWire>>        wires;
+    std::vector<std::unique_ptr<StructPartInst>>    partInsts;
+    std::vector<std::unique_ptr<StructPort>>        ports;
+    std::vector<std::unique_ptr<StructGraphicInst>> graphicInsts;
 };
 
 
@@ -82,6 +84,12 @@ static std::string to_string(const StreamPage& aObj)
     for(size_t i = 0u; i < aObj.ports.size(); ++i)
     {
         str += indent(fmt::format("[{}]: {}", i, aObj.ports[i]->to_string()), 2);
+    }
+
+    str += fmt::format("{}graphicInsts:\n", indent(1));
+    for(size_t i = 0u; i < aObj.graphicInsts.size(); ++i)
+    {
+        str += indent(fmt::format("[{}]: {}", i, aObj.graphicInsts[i]->to_string()), 2);
     }
 
     return str;
