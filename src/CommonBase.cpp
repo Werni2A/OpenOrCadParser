@@ -44,7 +44,6 @@
 #include "Structures/StructProperties.hpp"
 #include "Structures/StructSthInHierarchy1.hpp"
 #include "Structures/StructSthInHierarchy2.hpp"
-#include "Structures/StructSthInHierarchy3.hpp"
 #include "Structures/StructSthInPages0.hpp"
 #include "Structures/StructSymbolBBox.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
