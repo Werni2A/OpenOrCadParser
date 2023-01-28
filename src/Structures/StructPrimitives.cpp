@@ -16,9 +16,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    // @todo Got TitleBlockSymbol at least once
-    // auto_read_prefixes(Structure::Primitives);
-    auto_read_prefixes();
+    auto_read_prefixes(Structure::Primitives);
 
     readPreamble();
 

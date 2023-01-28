@@ -4,9 +4,9 @@
 
 #include <nameof.hpp>
 
+#include "Enums/Structure.hpp"
 #include "General.hpp"
 #include "Structures/StructPinShapeSymbol.hpp"
-#include "Structures/StructPrimitives.hpp"
 
 
 void StructPinShapeSymbol::read(FileFormatVersion /* aVersion */)
@@ -15,9 +15,17 @@ void StructPinShapeSymbol::read(FileFormatVersion /* aVersion */)
 
     const std::optional<FutureData> thisFuture = getFutureData();
 
-    // @todo Use readStructure()
-    StructPrimitives primitives{mDs};
-    primitives.read();
+    auto_read_prefixes(Structure::PinShapeSymbol);
+
+    readPreamble();
+
+    const std::string name = mDs.get().readStringLenZeroTerm();
+
+    spdlog::trace("name = {}", name);
+
+    const std::string someStr = mDs.get().readStringLenZeroTerm();
+
+    spdlog::trace("someStr = {}", someStr);
 
     mDs.get().printUnknownData(4, fmt::format("{}: 0", __func__));
 
