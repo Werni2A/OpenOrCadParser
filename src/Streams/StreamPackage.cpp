@@ -44,7 +44,8 @@ void StreamPackage::read(FileFormatVersion /* aVersion */)
             if(early_out == 0U)
             {
                 // @todo does not always occur, even in the same file. Maybe its some byte alignment?
-                mDs.get().printUnknownData(1, "Early Out Indicator");
+                mDs.get().printUnknownData(1, fmt::format("{}: Early Out Indicator",
+                    getMethodName(this, __func__)));
                 break;
             }
         }
@@ -68,7 +69,7 @@ void StreamPackage::read(FileFormatVersion /* aVersion */)
         spdlog::trace("someStr2 = {}", someStr2);
         spdlog::trace("someStr3 = {}", someStr3);
 
-        mDs.get().printUnknownData(2);
+        mDs.get().printUnknownData(2, fmt::format("{}: 0", getMethodName(this, __func__)));
 
     }
 
