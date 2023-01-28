@@ -9,9 +9,14 @@
 #include "Structures/StructGraphicLineInst.hpp"
 
 
-void StructGraphicLineInst::read(FileFormatVersion /* aVersion */)
+void StructGraphicLineInst::read(FileFormatVersion aVersion)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+
+    if(aVersion == FileFormatVersion::Unknown)
+    {
+        aVersion = predictVersion();
+    }
 
     auto_read_prefixes(Structure::GraphicLineInst);
 
@@ -23,7 +28,16 @@ void StructGraphicLineInst::read(FileFormatVersion /* aVersion */)
 
     sthInPages0 = dynamic_pointer_cast<StructSthInPages0>(readStructure());
 
-    mDs.get().printUnknownData(16, getMethodName(this, __func__) + ": 1");
+    // @todo I don't know about the exact file format version.
+    //       `C` was just chosen to get it running.
+    if(aVersion == FileFormatVersion::C)
+    {
+        mDs.get().printUnknownData(8, getMethodName(this, __func__) + ": 1");
+    }
+    else
+    {
+        mDs.get().printUnknownData(16, getMethodName(this, __func__) + ": 1");
+    }
 
     sanitizeThisFutureSize(thisFuture);
 
