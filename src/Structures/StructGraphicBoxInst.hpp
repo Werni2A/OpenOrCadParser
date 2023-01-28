@@ -11,18 +11,18 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "Enums/Color.hpp"
 #include "General.hpp"
+#include "Structures/StructGraphicInst.hpp"
 #include "Structures/StructSthInPages0.hpp"
 
 
-class StructGraphicBoxInst : public CommonBase
+class StructGraphicBoxInst : public StructGraphicInst
 {
 public:
 
-    StructGraphicBoxInst(DataStream& aDs) : CommonBase{aDs}, dbId{0}, locX{0}, locY{0},
-        x1{0}, y1{0}, x2{0}, y2{0}, color{Color::Default}, sthInPages0{}
+    StructGraphicBoxInst(DataStream& aDs) : StructGraphicInst{aDs}, dbId{0},
+    locX{0}, locY{0}, x1{0}, y1{0}, x2{0}, y2{0}, color{Color::Default}, sthInPages0{}
     { }
 
     std::string to_string() const override;

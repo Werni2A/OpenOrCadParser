@@ -136,11 +136,9 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("lenGraphicInsts = {}", lenGraphicInsts);
 
-    // @todo Create class GraphicInst and derive all the Graphic*Inst
-    //       classes from it
     for(size_t i = 0u; i < lenGraphicInsts; ++i)
     {
-        spdlog::critical("VERIFYING Page Structure9 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
+        graphicInsts.push_back(dynamic_pointer_cast<StructGraphicInst>(readStructure()));
     }
 
     const uint16_t len10 = mDs.get().readUint16();

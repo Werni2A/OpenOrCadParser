@@ -11,16 +11,16 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Structures/StructGraphicInst.hpp"
 #include "Structures/StructSthInPages0.hpp"
 
 
-class StructGraphicCommentTextInst : public CommonBase
+class StructGraphicCommentTextInst : public StructGraphicInst
 {
 public:
 
-    StructGraphicCommentTextInst(DataStream& aDs) : CommonBase{aDs}, sthInPages0{}
+    StructGraphicCommentTextInst(DataStream& aDs) : StructGraphicInst{aDs}, sthInPages0{}
     { }
 
     std::string to_string() const override;
