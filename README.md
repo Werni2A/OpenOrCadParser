@@ -23,12 +23,14 @@ The following two XSD files provide a good overview of the `XML` file structure,
    1. [Container Structure](/doc/container_structure.md)
 2. [File Format Changes](/doc/file_format_changes.md)
 3. [Tests](/doc/tests.md)
+4. [Parser Implementation](/doc/implementation.md)
 
 ---
 
 # Current State &mdash; January 2023
 
-- Working on parsing `Page` streams
+- I plan on implementing a very basic XML exporter for `Package`
+  - This allows to generate images by importing into KiCad via [pyorlib2ki](https://github.com/fjullien/pyorlib2ki)
 - It's planned to finish the `Package` parser around spring 2023
 - A PoC KiCad importer should follow in summer 2023
 
