@@ -562,7 +562,7 @@ repositories:
 - author: beagleboard
   commit: a14c542f0de8507e001a6d652daaf85bc654e422
   files:
-  - errors: 30
+  - errors: 29
     options: null
     path: ./SCH/BeagleBoard-xM_ORCAD.DSN
   project: beagleboard-xm
@@ -4690,10 +4690,10 @@ repositories:
 - author: Pf-G
   commit: 59b66608a0891b226234ea9235043dbd49912389
   files:
-  - errors: 60
+  - errors: 59
     options: null
     path: ./arm/Schematic-PCB/TinySDK-1312B-Schematic.DSN
-  - errors: 63
+  - errors: 62
     options: null
     path: ./arm/Schematic-PCB/TinyADK-1312B-Schematc.DSN
   - errors: 61
@@ -4710,7 +4710,7 @@ repositories:
 - author: ROHMUSDC
   commit: 47c251366e4f2838857438bd1300f2fd5812672d
   files:
-  - errors: 3
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BD9B300MUV-E2EVK-101_SCH_REV00_2014-07-08.dsn
   project: BD9B300MUV-EVK-101
@@ -4726,7 +4726,7 @@ repositories:
 - author: ROHMUSDC
   commit: 54d5bdc15c57f750e991068113968c2e5c565c8f
   files:
-  - errors: 28
+  - errors: 26
     options: null
     path: ./Design Files/Schematic_BOM/BD9C601EFJEVK-101_SCH_REV00_2014-04-23.DSN
   project: BD9C601EFJEVK-101
@@ -4734,7 +4734,7 @@ repositories:
 - author: ROHMUSDC
   commit: 0b8a83d256560a7b431be542bfedafea8c6f930a
   files:
-  - errors: 3
+  - errors: 1
     options: null
     path: ./Design Files/Schematic_BOM/BD9D321EFJ-E2EVK-101_SCH_REV00_2014-09-26.DSN
   project: BD9D321EFJ-EVK-101
@@ -4742,7 +4742,7 @@ repositories:
 - author: ROHMUSDC
   commit: 53ea6e66930d55ff018aa9e6414b789502c07523
   files:
-  - errors: 2
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BD9E151NUX-E2EVK-101_SCH_REV00_2014-08-19_1800.DSN
   project: BD9E151NUX-EVK-101
@@ -4766,7 +4766,7 @@ repositories:
 - author: ROHMUSDC
   commit: 9a0823d435b286e0d7e908bc0c2153dbaa1a1329
   files:
-  - errors: 2
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BD8316GWL-EVK-101_SCH_REV01_2015-11-10.DSN
   project: BD8316GWL-EVK-101
@@ -4774,7 +4774,7 @@ repositories:
 - author: ROHMUSDC
   commit: b1106120fd4126b1a7d263930183c0390a753ffe
   files:
-  - errors: 28
+  - errors: 26
     options: null
     path: ./Design Files/Schematic_BOM/BD9109FVMEVK-101_SCH_REV00_2013-11-22.DSN
   project: BD9109FVM-EVK-101
@@ -4793,7 +4793,7 @@ repositories:
 - author: ROHMUSDC
   commit: f84a9667dfdd8ae0db2929726875530c964adf35
   files:
-  - errors: 29
+  - errors: 27
     options: null
     path: ./Design Files - Schematics/BD9328EFJ_EVK-BD9329AEFJ_EVK_Schematic_07-15-2012.DSN
   project: BD9328EFJ_EVK-and-BD9329AEFJ_EVK
@@ -4809,7 +4809,7 @@ repositories:
 - author: ROHMUSDC
   commit: 6b341d68e5d62792a5150d642443acd675daf558
   files:
-  - errors: 2
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BD95841MUVEVK-101_SCH_REV00_2014-01-06.DSN
   project: BD95841MUVEVK-101
@@ -4817,7 +4817,7 @@ repositories:
 - author: ROHMUSDC
   commit: 451a219bfb7530231c642f9b2100b0dc08c0a28f
   files:
-  - errors: 28
+  - errors: 26
     options: null
     path: ./Design Files/Schematic_BOM/BD95861MUVEVK-101_SCH_REV01_2014-01-22.DSN
   project: BD95861MUV-EVK-101
@@ -4836,7 +4836,7 @@ repositories:
 - author: ROHMUSDC
   commit: 4686e17d5788af242d475dd9147909be8dcdb9c5
   files:
-  - errors: 3
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BU90002GWZEVK-101_SCH_REV01_2014-02-10.DSN
   project: BU90002GWZ-EVK-101
@@ -4844,7 +4844,7 @@ repositories:
 - author: ROHMUSDC
   commit: 1870acd6c88b30aa7307365e08cec1150715c66c
   files:
-  - errors: 3
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BU90003GWZEVK-101_SCH_REV00_2014-02-10.DSN
   project: BU90003GWZ-E2-EVK-101
@@ -4852,7 +4852,7 @@ repositories:
 - author: ROHMUSDC
   commit: 1a1b014eb15ccf34413ae4420005f56a0f028735
   files:
-  - errors: 3
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BU90004GWZ-E2EVK-101_SCH_REV00_2014-02-12.DSN
   project: BU90004GWZ-E2-EVK-101
@@ -4860,7 +4860,7 @@ repositories:
 - author: ROHMUSDC
   commit: e851ee88ce75ed88425a71094cb2eae95103acda
   files:
-  - errors: 3
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BU90005GWZ-E2EVK-101_SCH_REV00_2014-02-12.DSN
   project: BU90005GWZ-E2-EVK-101
@@ -4868,7 +4868,7 @@ repositories:
 - author: ROHMUSDC
   commit: 4fc30c47c72ae1b1994d5bd2f9d3fc0b76dadf08
   files:
-  - errors: 3
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BU90006GWZ-E2EVK-101_SCH_REV00_2014-02-12.DSN
   project: BU90006GWZ-E2-EVK-101
@@ -4876,7 +4876,7 @@ repositories:
 - author: ROHMUSDC
   commit: 64133932f786e1704148f0a14f028fb4d441f52d
   files:
-  - errors: 3
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BU90007GWZ-E2EVK-101_SCH_REV00_2014-02-13.DSN
   project: BU90007GWZ-E2EVK-101
@@ -4898,10 +4898,10 @@ repositories:
 - author: ROHMUSDC
   commit: 9d00077c29b1241ea5ddbb05d4bff57d327b8f2e
   files:
-  - errors: 7
+  - errors: 5
     options: null
     path: ./HW Source Files/SENSORSHLD0-EVK-101 HW Design Files/Schematic_BOM/ROHM_SENSORSHLD0-EVK-101_SCH_REV00_2015-05-18.DSN
-  - errors: 8
+  - errors: 6
     options: null
     path: ./HW Source Files/SENSORSHLD0-EVK-101 HW Design Files/Schematic_BOM/Revision
       00.1/ROHM_SENSORSHLD1-EVK-101_SCH_REV00.1_2015-09-22.DSN
@@ -4924,7 +4924,7 @@ repositories:
 - author: ROHMUSDC
   commit: 0eb8fce47ebb18ee4bdfd4e820022a691b05f244
   files:
-  - errors: 4
+  - errors: 2
     options: null
     path: ./HW Source Files/Schematic_BOM/SENSORS EXPO DEMO_12MAY2016_1200.DSN
   project: ROHM-SensorExpo2016-Pressure-Sensor-Demo
@@ -4935,7 +4935,7 @@ repositories:
   - errors: 7
     options: null
     path: ./Hardware Design Files/Sensor Kit Base Board/Schematic-BOM/ROHM_SENSOR_PLATFORM_BASE_BOARD_SCH_REV02_20140918.DSN
-  - errors: 6
+  - errors: 5
     options: null
     path: ./Hardware Design Files/Sensor Kit Breakout Boards/Schematic-BOM/ROHM_SENSOR_PLATFORM_BREAKOUT_BOARD_SCH_REV1.02_20141208.DSN
   project: ROHMSensorPlatformEVK
@@ -4943,10 +4943,10 @@ repositories:
 - author: ROHMUSDC
   commit: 7c7ea69d9f7491705b615af4b8f221540b1c0910
   files:
-  - errors: 5
+  - errors: 4
     options: null
     path: ./Design Files for Rev 1.0/STEPPER EVAL BRD - DESIGN File - Rev 1.0.DSN
-  - errors: 5
+  - errors: 4
     options: null
     path: ./Design Files for Rev 1.0/STEPPER.DSN
   project: StepperDriverCTRL

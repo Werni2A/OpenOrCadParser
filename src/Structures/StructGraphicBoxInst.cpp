@@ -58,7 +58,11 @@ void StructGraphicBoxInst::read(FileFormatVersion aVersion)
     sthInPages0 = dynamic_pointer_cast<StructSthInPages0>(readStructure());
 
     // @todo I don't know about the exact file format version.
-    //       `C` was just chosen to get it running.
+    //       `B` and `C` was just chosen to get it running.
+    if(aVersion == FileFormatVersion::B)
+    {
+        mDs.get().printUnknownData(16, getMethodName(this, __func__) + ": 1");
+    }
     if(aVersion == FileFormatVersion::C)
     {
         mDs.get().printUnknownData(8, getMethodName(this, __func__) + ": 1");
