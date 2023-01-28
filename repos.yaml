@@ -570,7 +570,7 @@ repositories:
 - author: beagleboard
   commit: 1a732ca598999bf4c6c08e1d1546cdecaa0ca30b
   files:
-  - errors: 10
+  - errors: 9
     options: null
     path: ./ALLEGRO/BEAGLEBONEBLK_C3.DSN
   project: beaglebone-black
@@ -1999,7 +1999,7 @@ repositories:
 - author: Kinoma
   commit: 1078d98f83c4971c167e32ef6f5b59c91c8c2b19
   files:
-  - errors: 6
+  - errors: 5
     options: null
     path: ./sch/ELEMENT-DVT.DSN
   project: Kinoma-Element-Open-source-hardware-1st-Generation
@@ -2551,16 +2551,16 @@ repositories:
   - errors: 0
     options: null
     path: ./Hardware/8Mics/8MICS.DSN
-  - errors: 5
+  - errors: 4
     options: null
     path: ./Hardware/Main_board/STM32F746NGH V1.1_last.DSN
-  - errors: 5
+  - errors: 4
     options: null
     path: ./Hardware/Main_board/allegro/MIC_ARRAY_RELEASE.DSN
-  - errors: 5
+  - errors: 4
     options: null
     path: ./Hardware/Main_board/STM32F746NGH V1.1_LAST_0.DBK
-  - errors: 5
+  - errors: 4
     options: null
     path: ./Hardware/Main_board/allegro/MIC_ARRAY_RELEASE_0.DBK
   project: Mic_Array
@@ -2669,10 +2669,10 @@ repositories:
   - errors: 0
     options: null
     path: ./Hardware/schematic/LIB/LIBRARY1.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./Hardware/schematic/PROJECT1.DSN
-  - errors: 2
+  - errors: 0
     options: null
     path: ./Hardware/schematic/PROJECT1_0.DBK
   project: project-2
@@ -3260,10 +3260,10 @@ repositories:
   - errors: 0
     options: null
     path: ./ONYXPSU_LIB.OLB
-  - errors: 8
+  - errors: 2
     options: null
     path: ./ONYXPSU.DSN
-  - errors: 8
+  - errors: 2
     options: null
     path: ./ONYXPSU_0.DBK
   project: OnyxPSU
@@ -4660,7 +4660,7 @@ repositories:
   - errors: 47
     options: null
     path: ./MOP44.OLB
-  - errors: 6
+  - errors: 0
     options: null
     path: ./Template of sheets/SHEETS.DSN
   project: CadenceLibrary
@@ -4718,7 +4718,7 @@ repositories:
 - author: ROHMUSDC
   commit: 359c1ce12a6d31622e4fe9640f8283ba9582e496
   files:
-  - errors: 3
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BD9B301MUV-EVK-101_SCH_REV00_2017-06-05.dsn
   project: BD9B301MUV-EVK-101
@@ -4758,7 +4758,7 @@ repositories:
 - author: ROHMUSDC
   commit: 4523ea64e1a491da37cf8a7083b56ba247a18225
   files:
-  - errors: 3
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BD9G341EFJ-E2EVK-101_SCH_REV01_2014-10-17.DSN
   project: BD9G341AEFJ-EVK-101
@@ -4905,7 +4905,7 @@ repositories:
     options: null
     path: ./HW Source Files/SENSORSHLD0-EVK-101 HW Design Files/Schematic_BOM/Revision
       00.1/ROHM_SENSORSHLD1-EVK-101_SCH_REV00.1_2015-09-22.DSN
-  - errors: 8
+  - errors: 5
     options: null
     path: ./HW Source Files/SENSORSHLD1-EVK-101 HW Design Files/Schematic_BOM/ROHM_SENSORSHLD1-EVK-101_SCH_REV01_2016-03-16.DSN
   project: ROHM_SensorPlatform_Multi-Sensor-Shield
@@ -4913,7 +4913,7 @@ repositories:
 - author: ROHMUSDC
   commit: 4a2274cf8e63591c32e34b8851250a6d24619567
   files:
-  - errors: 13
+  - errors: 9
     options: null
     path: ./Hardware Design Files/EVK1_BD92T30-Host_REV03/Schematic_BOM/ROHM_USB-PD_DP-ALTMODE_EVK1+2_SCH_REV04_2016-02-23.DSN
   - errors: 17
