@@ -703,6 +703,11 @@ FileFormatVersion CommonBase::predictVersion()
 
     const size_t initial_offset = mDs.get().getCurrentOffset();
 
+    // Testing different versions on a try and error basis
+    // should not write into log files
+    const auto logLevel = spdlog::get_level();
+    spdlog::set_level(spdlog::level::off);
+
     for(const auto& version : versions)
     {
         bool found = true;
@@ -724,6 +729,9 @@ FileFormatVersion CommonBase::predictVersion()
             break;
         }
     }
+
+    // Restore user log level
+    spdlog::set_level(logLevel);
 
     if(prediction == FileFormatVersion::Unknown)
     {
