@@ -59,37 +59,55 @@ static std::string to_string(const StreamPage& aObj)
     str += fmt::format("{}t0x34s:\n", indent(1));
     for(size_t i = 0u; i < aObj.t0x34s.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.t0x34s[i]->to_string()), 2);
+        if(aObj.t0x34s[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.t0x34s[i]->to_string()), 2);
+        }
     }
 
     str += fmt::format("{}t0x35s:\n", indent(1));
     for(size_t i = 0u; i < aObj.t0x35s.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.t0x35s[i]->to_string()), 2);
+        if(aObj.t0x35s[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.t0x35s[i]->to_string()), 2);
+        }
     }
 
     str += fmt::format("{}wires:\n", indent(1));
     for(size_t i = 0u; i < aObj.wires.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.wires[i]->to_string()), 2);
+        if(aObj.wires[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.wires[i]->to_string()), 2);
+        }
     }
 
     str += fmt::format("{}partInsts:\n", indent(1));
     for(size_t i = 0u; i < aObj.partInsts.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.partInsts[i]->to_string()), 2);
+        if(aObj.partInsts[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.partInsts[i]->to_string()), 2);
+        }
     }
 
     str += fmt::format("{}ports:\n", indent(1));
     for(size_t i = 0u; i < aObj.ports.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.ports[i]->to_string()), 2);
+        if(aObj.ports[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.ports[i]->to_string()), 2);
+        }
     }
 
     str += fmt::format("{}graphicInsts:\n", indent(1));
     for(size_t i = 0u; i < aObj.graphicInsts.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.graphicInsts[i]->to_string()), 2);
+        if(aObj.graphicInsts[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.graphicInsts[i]->to_string()), 2);
+        }
     }
 
     return str;

@@ -34,7 +34,12 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < lenA; ++i)
     {
-        spdlog::critical("VERIFYING Page StructureA is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
+        // @todo push structure
+        const auto s = readStructure();
+        if(s)
+        {
+            spdlog::critical("VERIFYING Page StructureA is {}", NAMEOF_TYPE_RTTI(*s));
+        }
     }
 
     const uint16_t lenT0x34s = mDs.get().readUint16();
@@ -101,7 +106,13 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len5; ++i)
     {
-        spdlog::critical("VERIFYING Page Structure5 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
+         // @todo push structure
+        const auto s = readStructure();
+        if(s)
+        {
+            spdlog::critical("VERIFYING Page Structure5 is {}", NAMEOF_TYPE_RTTI(*s));
+        }
+
         mDs.get().printUnknownData(5, fmt::format("{}: 0", __func__));
     }
 
@@ -111,7 +122,12 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len6; ++i)
     {
-        spdlog::critical("VERIFYING Page Structure6 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
+         // @todo push structure
+        const auto s = readStructure();
+        if(s)
+        {
+            spdlog::critical("VERIFYING Page Structure6 is {}", NAMEOF_TYPE_RTTI(*s));
+        }
     }
 
     const uint16_t len7 = mDs.get().readUint16();
@@ -120,7 +136,12 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len7; ++i)
     {
-        spdlog::critical("VERIFYING Page Structure7 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
+        // @todo push structure
+        const auto s = readStructure();
+        if(s)
+        {
+            spdlog::critical("VERIFYING Page Structure7 is {}", NAMEOF_TYPE_RTTI(*s));
+        }
     }
 
     const uint16_t len8 = mDs.get().readUint16();
@@ -129,7 +150,12 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len8; ++i)
     {
-        spdlog::critical("VERIFYING Page Structure8 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
+        // @todo push structure
+        const auto s = readStructure();
+        if(s)
+        {
+            spdlog::critical("VERIFYING Page Structure8 is {}", NAMEOF_TYPE_RTTI(*s));
+        }
     }
 
     const uint16_t lenGraphicInsts = mDs.get().readUint16();
@@ -147,7 +173,12 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len10; ++i)
     {
-        spdlog::critical("VERIFYING Page Structure10 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
+        // @todo push structure
+        const auto s = readStructure();
+        if(s)
+        {
+            spdlog::critical("VERIFYING Page Structure10 is {}", NAMEOF_TYPE_RTTI(*s));
+        }
     }
 
     const uint16_t len11 = mDs.get().readUint16();
@@ -156,7 +187,12 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len11; ++i)
     {
-        spdlog::critical("VERIFYING Page Structure11 is {}", NAMEOF_TYPE_RTTI(*readStructure().get())); // @todo push structure
+        // @todo push structure
+        const auto s = readStructure();
+        if(s)
+        {
+            spdlog::critical("VERIFYING Page Structure11 is {}", NAMEOF_TYPE_RTTI(*s));
+        }
     }
 
     if(!mDs.get().isEoF())
