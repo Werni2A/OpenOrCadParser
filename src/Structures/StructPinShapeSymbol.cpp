@@ -43,6 +43,24 @@ void StructPinShapeSymbol::read(FileFormatVersion /* aVersion */)
 
     checkTrailingFuture();
 
+    const uint16_t lenSymbolPins = mDs.get().readUint16();
+
+    spdlog::trace("lenSymbolPins = {}", lenSymbolPins);
+
+    for(size_t i = 0u; i < lenSymbolPins; ++i)
+    {
+        symbolPins.push_back(dynamic_pointer_cast<StructSymbolPin>(readStructure()));
+    }
+
+    const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
+
+    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
+
+    for(size_t i = 0u; i < lenSymbolDisplayProps; ++i)
+    {
+        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
+    }
+
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());
 }
