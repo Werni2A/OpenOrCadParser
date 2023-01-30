@@ -302,8 +302,8 @@ Structure CommonBase::read_prefixes(size_t aNumber, bool aPrediction)
                     {
                         const std::string msg = fmt::format("{}: Future data at 0x{:08x} is"
                             " either {} or {} Byte long, having both lengths does not make any sense.",
-                            getMethodName(this, __func__), existing.value().getByteLen(),
-                            futureData.getByteLen());
+                            getMethodName(this, __func__), existing.value().getStartOffset(),
+                            existing.value().getByteLen(), futureData.getByteLen());
 
                         spdlog::error(msg);
                         throw std::runtime_error(msg);

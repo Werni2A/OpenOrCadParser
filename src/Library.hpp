@@ -60,53 +60,112 @@ static std::string to_string(const Library& aObj)
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
 
-    str += fmt::format("{}exportBlocksDir:\n", indent(1));
-    str += fmt::format("{}exportBlocksDir:\n", indent(1));
-    str += indent(aObj.exportBlocksDir->to_string(), 2);
+    str += fmt::format("{}adminData:\n", indent(1));
+    if(aObj.adminData)
+    {
+        str += indent(aObj.adminData->to_string(), 2);
+    }
 
-    str += fmt::format("{}graphicsDir:\n", indent(1));
-    str += indent(aObj.graphicsDir->to_string(), 2);
+    str += fmt::format("{}dsnStream:\n", indent(1));
+    if(aObj.dsnStream)
+    {
+        str += indent(aObj.dsnStream->to_string(), 2);
+    }
 
-    str += fmt::format("{}packagesDir:\n", indent(1));
-    str += indent(aObj.packagesDir->to_string(), 2);
+    str += fmt::format("{}netBundleMapData:\n", indent(1));
+    if(aObj.netBundleMapData)
+    {
+        str += indent(aObj.netBundleMapData->to_string(), 2);
+    }
 
-    str += fmt::format("{}partsDir:\n", indent(1));
-    str += indent(aObj.partsDir->to_string(), 2);
-
-    str += fmt::format("{}symbolsDir:\n", indent(1));
-    str += indent(aObj.symbolsDir->to_string(), 2);
+    str += fmt::format("{}hsObjects:\n", indent(1));
+    if(aObj.hsObjects)
+    {
+        str += indent(aObj.hsObjects->to_string(), 2);
+    }
 
     str += fmt::format("{}cellsDir:\n", indent(1));
-    str += indent(aObj.cellsDir->to_string(), 2);
+    if(aObj.cellsDir)
+    {
+        str += indent(aObj.cellsDir->to_string(), 2);
+    }
+
+    str += fmt::format("{}exportBlocksDir:\n", indent(1));
+    if(aObj.exportBlocksDir)
+    {
+        str += indent(aObj.exportBlocksDir->to_string(), 2);
+    }
+
+    str += fmt::format("{}graphicsDir:\n", indent(1));
+    if(aObj.graphicsDir)
+    {
+        str += indent(aObj.graphicsDir->to_string(), 2);
+    }
+
+    str += fmt::format("{}packagesDir:\n", indent(1));
+    if(aObj.packagesDir)
+    {
+        str += indent(aObj.packagesDir->to_string(), 2);
+    }
+
+    str += fmt::format("{}partsDir:\n", indent(1));
+    if(aObj.partsDir)
+    {
+        str += indent(aObj.partsDir->to_string(), 2);
+    }
+
+    str += fmt::format("{}symbolsDir:\n", indent(1));
+    if(aObj.symbolsDir)
+    {
+        str += indent(aObj.symbolsDir->to_string(), 2);
+    }
 
     str += fmt::format("{}viewsDir:\n", indent(1));
-    str += indent(aObj.viewsDir->to_string(), 2);
+    if(aObj.viewsDir)
+    {
+        str += indent(aObj.viewsDir->to_string(), 2);
+    }
 
     str += fmt::format("{}library:\n", indent(1));
-    str += indent(aObj.library->to_string(), 2);
+    if(aObj.library)
+    {
+        str += indent(aObj.library->to_string(), 2);
+    }
 
     str += fmt::format("{}graphicsTypes:\n", indent(1));
-    for(size_t i = 0u; i < aObj.graphicsTypes->types.size(); ++i)
+    if(aObj.graphicsTypes)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.graphicsTypes->types[i].to_string()), 2);
+        for(size_t i = 0u; i < aObj.graphicsTypes->types.size(); ++i)
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.graphicsTypes->types[i].to_string()), 2);
+        }
     }
 
     str += fmt::format("{}symbolsTypes:\n", indent(1));
-    for(size_t i = 0u; i < aObj.symbolsTypes->types.size(); ++i)
+    if(aObj.symbolsTypes)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.symbolsTypes->types[i].to_string()), 2);
+        for(size_t i = 0u; i < aObj.symbolsTypes->types.size(); ++i)
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.symbolsTypes->types[i].to_string()), 2);
+        }
     }
 
     str += fmt::format("{}packages:\n", indent(1));
     for(size_t i = 0u; i < aObj.packages.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.packages[i]->to_string()), 2);
+        if(aObj.packages[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.packages[i]->to_string()), 2);
+        }
     }
 
     str += fmt::format("{}symbols:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbols.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.symbols[i]->to_string()), 2);
+        if(aObj.symbols[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.symbols[i]->to_string()), 2);
+        }
     }
 
     return str;

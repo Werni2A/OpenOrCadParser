@@ -42,7 +42,10 @@ static std::string to_string(const StructGlobal& aObj)
     str += fmt::format("{}symbolDisplayProps:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbolDisplayProps.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.symbolDisplayProps[i]->to_string()), 2);
+        if(aObj.symbolDisplayProps[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.symbolDisplayProps[i]->to_string()), 2);
+        }
     }
 
     return str;

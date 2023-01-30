@@ -53,25 +53,37 @@ static std::string to_string(const StreamPackage& aObj)
     str += fmt::format("{}properties:\n", indent(1));
     for(size_t i = 0u; i < aObj.properties.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.properties[i]->to_string()), 2);
+        if(aObj.properties[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.properties[i]->to_string()), 2);
+        }
     }
 
     str += fmt::format("{}primitives:\n", indent(1));
     for(size_t i = 0u; i < aObj.primitives.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.primitives[i]->to_string()), 2);
+        if(aObj.primitives[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.primitives[i]->to_string()), 2);
+        }
     }
 
     str += fmt::format("{}symbolPins:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbolPins.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.symbolPins[i]->to_string()), 2);
+        if(aObj.symbolPins[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.symbolPins[i]->to_string()), 2);
+        }
     }
 
     str += fmt::format("{}symbolDisplayProps:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbolDisplayProps.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.symbolDisplayProps[i]->to_string()), 2);
+        if(aObj.symbolDisplayProps[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.symbolDisplayProps[i]->to_string()), 2);
+        }
     }
 
     str += fmt::format("{}t0x1f:\n", indent(1));
@@ -80,7 +92,10 @@ static std::string to_string(const StreamPackage& aObj)
     str += fmt::format("{}pinIdxMappings:\n", indent(1));
     for(size_t i = 0u; i < aObj.pinIdxMappings.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}", i, aObj.pinIdxMappings[i]->to_string()), 2);
+        if(aObj.pinIdxMappings[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.pinIdxMappings[i]->to_string()), 2);
+        }
     }
 
     return str;

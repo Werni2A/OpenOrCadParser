@@ -39,7 +39,10 @@ static std::string to_string(const StructGraphicLineInst& aObj)
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
 
     str += fmt::format("{}sthInPages0:\n", indent(1));
-    str += indent(aObj.sthInPages0->to_string(), 2);
+    if(aObj.sthInPages0)
+    {
+        str += indent(aObj.sthInPages0->to_string(), 2);
+    }
 
     return str;
 }

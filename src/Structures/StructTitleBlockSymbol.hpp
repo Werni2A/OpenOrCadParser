@@ -43,13 +43,19 @@ static std::string to_string(const StructTitleBlockSymbol& aObj)
     str += fmt::format("{}symbolPins:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbolPins.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}\n", i, aObj.symbolPins[i]), 2);
+        if(aObj.symbolPins[i])
+        {
+            str += indent(fmt::format("[{}]: {}\n", i, aObj.symbolPins[i]->to_string()), 2);
+        }
     }
 
     str += fmt::format("{}symbolDisplayProps:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbolDisplayProps.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}\n", i, aObj.symbolDisplayProps[i]), 2);
+        if(aObj.symbolDisplayProps[i])
+        {
+            str += indent(fmt::format("[{}]: {}\n", i, aObj.symbolDisplayProps[i]->to_string()), 2);
+        }
     }
 
     return str;
