@@ -3,15 +3,18 @@
 
 
 #include <cstdint>
-#include <optional>
+#include <memory>
 #include <ostream>
 #include <string>
+#include <vector>
 
 #include <fmt/core.h>
 #include <nameof.hpp>
 
 #include "General.hpp"
 #include "Structures/StructSymbol.hpp"
+#include "Structures/StructSymbolDisplayProp.hpp"
+#include "Structures/StructSymbolPin.hpp"
 
 
 class StructGlobalSymbol : public StructSymbol
@@ -25,6 +28,8 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
+    std::vector<std::unique_ptr<StructSymbolPin>>         symbolPins;
+    std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };
 
 
@@ -34,6 +39,18 @@ static std::string to_string(const StructGlobalSymbol& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+
+    str += fmt::format("{}symbolPins:\n", indent(1));
+    for(size_t i = 0u; i < aObj.symbolPins.size(); ++i)
+    {
+        str += indent(fmt::format("[{}]: {}\n", i, aObj.symbolPins[i]), 2);
+    }
+
+    str += fmt::format("{}symbolDisplayProps:\n", indent(1));
+    for(size_t i = 0u; i < aObj.symbolDisplayProps.size(); ++i)
+    {
+        str += indent(fmt::format("[{}]: {}\n", i, aObj.symbolDisplayProps[i]), 2);
+    }
 
     return str;
 }
