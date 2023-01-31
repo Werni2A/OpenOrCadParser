@@ -18,7 +18,7 @@ void StructTitleBlock::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
-    const std::optional<FutureData> thisFuture = getFutureData();
+    // const std::optional<FutureData> thisFuture = getFutureData();
 
     mDs.get().printUnknownData(8, fmt::format("{}: 0", getMethodName(this, __func__)));
 
@@ -37,20 +37,12 @@ void StructTitleBlock::read(FileFormatVersion /* aVersion */)
         symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
-    mDs.get().printUnknownData(11, fmt::format("{}: 2", getMethodName(this, __func__)));
+    mDs.get().printUnknownData(13, fmt::format("{}: 2", getMethodName(this, __func__)));
 
-    const uint16_t len1 = mDs.get().readUint16();
 
-    spdlog::trace("len1 = {}", len1);
+    // sanitizeThisFutureSize(thisFuture);
 
-    for(size_t i = 0; i < len1; ++i)
-    {
-        mDs.get().printUnknownData(32, fmt::format("{}: 3.{}", getMethodName(this, __func__), i));
-    }
-
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
+    // readOptionalTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

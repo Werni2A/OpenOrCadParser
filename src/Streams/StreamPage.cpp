@@ -60,6 +60,24 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         t0x35s.push_back(dynamic_pointer_cast<StructT0x35>(readStructure()));
     }
 
+    // const uint16_t lenC = mDs.get().readUint16();
+
+    // spdlog::trace("lenC = {}", lenC);
+
+    // for(size_t i = 0; i < lenC; ++i)
+    // {
+    //     mDs.get().printUnknownData(32);
+    // }
+
+    // const uint16_t lenD = mDs.get().readUint16();
+
+    // spdlog::trace("lenD = {}", lenD);
+
+    // for(size_t i = 0; i < lenD; ++i)
+    // {
+    //     mDs.get().printUnknownData(66);
+    // }
+
     const uint16_t lenB = mDs.get().readUint16();
 
     spdlog::trace("lenB = {}", lenB);
