@@ -2265,7 +2265,7 @@ repositories:
   - errors: 0
     options: null
     path: ./Orcad Project/PROIECT_TIE.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Orcad Project/CALEIDOSCOP.DSN
   project: Proiect-TIE
