@@ -88,7 +88,7 @@ void CommonBase::discard_until_preamble()
             const std::string msg = fmt::format("{}: Unexpectedly reached end-of-file!",
                 getMethodName(this, __func__));
 
-            spdlog::error(msg);
+            spdlog::debug(msg);
             throw std::runtime_error(msg);
         }
     }
@@ -167,7 +167,7 @@ Structure CommonBase::auto_read_prefixes(FutureDataLst& aFutureDataLst)
             " (maximum is set to {} but could be higher)",
             getMethodName(this, __func__), maxPrefixes);
 
-        spdlog::error(msg);
+        spdlog::debug(msg);
         throw std::runtime_error(msg);
     }
 
@@ -198,7 +198,7 @@ Structure CommonBase::auto_read_prefixes(Structure aExpectedStruct, FutureDataLs
         const std::string err = fmt::format("{}: Expected {} but got {}",
             getMethodName(this, __func__), ::to_string(aExpectedStruct), ::to_string(actualStruct));
 
-        spdlog::error(err);
+        spdlog::debug(err);
         throw std::runtime_error(err);
     }
 
@@ -223,7 +223,7 @@ Structure CommonBase::auto_read_prefixes(const std::vector<Structure>& aExpected
             std::accumulate(expectedStrStructs.cbegin(), expectedStrStructs.cend(), std::string{", "}),
             ::to_string(actualStruct));
 
-        spdlog::error(err);
+        spdlog::debug(err);
         throw std::runtime_error(err);
     }
 
@@ -277,7 +277,7 @@ Structure CommonBase::read_prefixes(size_t aNumber, FutureDataLst& aFutureDataLs
                 getMethodName(this, __func__), ::to_string(currStruct),
                 ::to_string(firstStruct));
 
-            spdlog::error(msg);
+            spdlog::debug(msg);
             throw std::runtime_error(msg);
         }
     }
@@ -346,7 +346,7 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix_short()
                 const std::string msg = fmt::format("{}: Tried to access strLst out of range!\n{}",
                     getMethodName(this, __func__), e.what());
 
-                spdlog::error(msg);
+                spdlog::debug(msg);
                 throw std::out_of_range(msg);
             }
         }
@@ -355,7 +355,7 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix_short()
     {
         // @todo Why is -1 used? The value 0 would also suffice...
         // Until now I only saw it for PinIdxMapping, Properties and SymbolDisplayProp
-        spdlog::warn("{}: What does {} mean?", ::to_string(typeId), size); // @todo Figure out
+        spdlog::debug("{}: What does {} mean?", ::to_string(typeId), size); // @todo Figure out
     }
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
@@ -405,7 +405,7 @@ Primitive CommonBase::readPrefixPrimitive()
             getMethodName(this, __func__), ::to_string(primitive1),
             ::to_string(primitive2));
 
-        spdlog::error(msg);
+        spdlog::debug(msg);
         throw std::runtime_error(msg);
     }
 
@@ -449,7 +449,7 @@ std::unique_ptr<PrimBase> CommonBase::readPrimitive(Primitive aPrimitive)
             const std::string msg = fmt::format("{}: Primitive {} is not implemented!",
                 getMethodName(this, __func__), ::to_string(aPrimitive));
 
-            spdlog::error(msg);
+            spdlog::debug(msg);
             throw std::runtime_error(msg);
             break;
     }
@@ -520,7 +520,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
                 const std::string msg = fmt::format("{}: Structure {} is not implemented!",
                     getMethodName(this, __func__), ::to_string(aStructure));
 
-                spdlog::error(msg);
+                spdlog::debug(msg);
 
                 if(!mCtx.get().mSkipInvalidStruct)
                 {

@@ -43,7 +43,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         const auto s = readStructure();
         if(s)
         {
-            spdlog::critical("VERIFYING Page StructureA is {}", NAMEOF_TYPE_RTTI(*s));
+            spdlog::debug("VERIFYING Page StructureA is {}", NAMEOF_TYPE_RTTI(*s));
         }
     }
 
@@ -116,7 +116,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         const auto s = readStructure();
         if(s)
         {
-            spdlog::critical("VERIFYING Page Structure5 is {}", NAMEOF_TYPE_RTTI(*s));
+            spdlog::debug("VERIFYING Page Structure5 is {}", NAMEOF_TYPE_RTTI(*s));
         }
 
         ds.printUnknownData(5, fmt::format("{}: 0", getMethodName(this, __func__)));
@@ -133,7 +133,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         const auto s = readStructure();
         if(s)
         {
-            spdlog::critical("VERIFYING Page Structure6 is {}", NAMEOF_TYPE_RTTI(*s));
+            spdlog::debug("VERIFYING Page Structure6 is {}", NAMEOF_TYPE_RTTI(*s));
         }
 
         ds.printUnknownData(5, fmt::format("{}: 0", getMethodName(this, __func__)));
@@ -149,7 +149,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         const auto s = readStructure();
         if(s)
         {
-            spdlog::critical("VERIFYING Page Structure7 is {}", NAMEOF_TYPE_RTTI(*s));
+            spdlog::debug("VERIFYING Page Structure7 is {}", NAMEOF_TYPE_RTTI(*s));
         }
     }
 
@@ -163,7 +163,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         const auto s = readStructure();
         if(s)
         {
-            spdlog::critical("VERIFYING Page Structure8 is {}", NAMEOF_TYPE_RTTI(*s));
+            spdlog::debug("VERIFYING Page Structure8 is {}", NAMEOF_TYPE_RTTI(*s));
         }
     }
 
@@ -186,7 +186,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         const auto s = readStructure();
         if(s)
         {
-            spdlog::critical("VERIFYING Page Structure10 is {}", NAMEOF_TYPE_RTTI(*s));
+            spdlog::debug("VERIFYING Page Structure10 is {}", NAMEOF_TYPE_RTTI(*s));
         }
     }
 
@@ -200,7 +200,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         const auto s = readStructure();
         if(s)
         {
-            spdlog::critical("VERIFYING Page Structure11 is {}", NAMEOF_TYPE_RTTI(*s));
+            spdlog::debug("VERIFYING Page Structure11 is {}", NAMEOF_TYPE_RTTI(*s));
         }
     }
 

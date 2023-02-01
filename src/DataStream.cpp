@@ -143,8 +143,8 @@ void DataStream::printUnknownData(size_t aLen, const std::string& aComment)
 
     if(aLen > 0u)
     {
-        spdlog::info(aComment);
-        spdlog::info(dataToStr(data));
+        spdlog::debug(aComment);
+        spdlog::debug(dataToStr(data));
     }
 }
 
@@ -160,7 +160,7 @@ void DataStream::padRest(size_t aStartOffset, size_t aBlockSize, bool aPadIsZero
                                  + " bytes but should have only been "
                                  + std::to_string(aBlockSize) + "!";
 
-        spdlog::error(msg);
+        spdlog::debug(msg);
 
         throw std::runtime_error(msg);
     }
@@ -272,7 +272,7 @@ void DataStream::assumeData(const std::vector<uint8_t>& aExpectedData, const std
             + "Expected:\n" + dataToStr(aExpectedData) +
             + "but got:\n" + dataToStr(data);
 
-        spdlog::error(msg);
+        spdlog::debug(msg);
 
         throw std::runtime_error(msg);
     }

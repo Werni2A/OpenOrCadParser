@@ -144,7 +144,7 @@ void Parser::readTitleBlockSymbol()
         const auto s = readStructure();
         if(s)
         {
-            spdlog::critical("VERIFYING Misc Structure0 is {}", NAMEOF_TYPE_RTTI(*s));
+            spdlog::debug("VERIFYING Misc Structure0 is {}", NAMEOF_TYPE_RTTI(*s));
         }
     }
 

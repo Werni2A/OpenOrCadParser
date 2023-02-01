@@ -18,7 +18,7 @@ void StreamERC::read(FileFormatVersion /* aVersion */)
     const auto s = readStructure();
     if(s)
     {
-        spdlog::critical("VERIFYING StreamERC Structure0 is {}", NAMEOF_TYPE_RTTI(*s));
+        spdlog::debug("VERIFYING StreamERC Structure0 is {}", NAMEOF_TYPE_RTTI(*s));
     }
 
     if(!ds.isEoF())
