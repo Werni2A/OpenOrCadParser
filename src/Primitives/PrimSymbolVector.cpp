@@ -15,8 +15,6 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    // const std::optional<FutureData> thisFuture = getFutureData();
-
     const auto readSmallPrefixPrimitive = [&, this]() -> Primitive
         {
             Primitive primitive = ToPrimitive(mDs.get().readUint8());
@@ -26,7 +24,9 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
             return primitive;
         };
 
-    auto_read_prefixes();
+    FutureDataLst localFutureLst{mDs};
+
+    auto_read_prefixes(localFutureLst);
 
     readPreamble();
 
@@ -49,9 +49,6 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
     mDs.get().assumeData({0x00, 0x00, 0x00, 0x00, 0x32, 0x00, 0x32, 0x00, 0x00, 0x00, 0x02, 0x00}, getMethodName(this, __func__) + ": 2");
     // mDs.get().printUnknownData(12, getMethodName(this, __func__) + ": 2");
 
-    // sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

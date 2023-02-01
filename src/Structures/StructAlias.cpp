@@ -13,11 +13,11 @@ void StructAlias::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes(Structure::Alias);
+    FutureDataLst localFutureLst{mDs};
+
+    auto_read_prefixes(Structure::Alias, localFutureLst);
 
     readPreamble();
-
-    const std::optional<FutureData> thisFuture = getFutureData();
 
     locX = mDs.get().readInt32();
     locY = mDs.get().readInt32();
@@ -41,9 +41,7 @@ void StructAlias::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("name = {}", name);
 
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
+    localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

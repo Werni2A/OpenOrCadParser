@@ -13,15 +13,15 @@ void StructWire::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes({Structure::WireBus, Structure::WireScalar});
+    FutureDataLst localFutureLst{mDs};
+
+    auto_read_prefixes({Structure::WireBus, Structure::WireScalar}, localFutureLst);
 
     readPreamble();
 
-    const std::optional<FutureData> thisFuture = getFutureData();
-
     // @todo this 4 Byte and the following 4 byte ID
     //       might be swapped. I need to verify this!
-    mDs.get().printUnknownData(4, fmt::format("{}: 0", __func__));
+    mDs.get().printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
 
     id = mDs.get().readUint32();
 
@@ -43,7 +43,7 @@ void StructWire::read(FileFormatVersion /* aVersion */)
     spdlog::trace("endX = {}", endX);
     spdlog::trace("endY = {}", endY);
 
-    mDs.get().printUnknownData(1, fmt::format("{}: 1", __func__));
+    mDs.get().printUnknownData(1, fmt::format("{}: 1", getMethodName(this, __func__)));
 
     const uint16_t lenAliases = mDs.get().readUint16();
 
@@ -71,9 +71,7 @@ void StructWire::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("lineStyle = {}", ::to_string(lineStyle));
 
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
+    localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

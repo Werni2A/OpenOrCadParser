@@ -29,13 +29,13 @@ public:
 
     void discard_until_preamble();
 
-    Structure auto_read_prefixes();
+    Structure auto_read_prefixes(FutureDataLst& aFutureDataLst);
 
-    Structure auto_read_prefixes(Structure aExpectedStruct);
+    Structure auto_read_prefixes(Structure aExpectedStruct, FutureDataLst& aFutureDataLst);
 
-    Structure auto_read_prefixes(const std::vector<Structure>& aExpectedOneOfStruct);
+    Structure auto_read_prefixes(const std::vector<Structure>& aExpectedOneOfStruct, FutureDataLst& aFutureDataLst);
 
-    Structure read_prefixes(size_t aNumber, bool aPrediction = false);
+    Structure read_prefixes(size_t aNumber, FutureDataLst& aFutureDataLst);
 
     std::pair<Structure, uint32_t> read_single_prefix();
 
@@ -43,14 +43,6 @@ public:
 
     void readPreamble();
     Primitive readPrefixPrimitive();
-
-    std::optional<FutureData> getFutureData();
-
-    void sanitizeThisFutureSize(std::optional<FutureData> aThisFuture);
-
-    std::optional<FutureData> checkTrailingFuture();
-
-    void readOptionalTrailingFuture();
 
     void checkInterpretedDataLen(const std::string &aFuncName, size_t aStartOffset, size_t aEndOffset, size_t aExpectedLen);
 
@@ -67,9 +59,6 @@ protected:
 
     FileFormatVersion mFileFormatVersion;
 };
-
-
-extern FutureDataLst mFutureDataLst;
 
 
 #include "Primitives/PrimBase.hpp"

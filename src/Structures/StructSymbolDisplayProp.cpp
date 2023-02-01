@@ -14,11 +14,11 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes(Structure::SymbolDisplayProp);
+    FutureDataLst localFutureLst{mDs};
+
+    auto_read_prefixes(Structure::SymbolDisplayProp, localFutureLst);
 
     readPreamble();
-
-    const std::optional<FutureData> thisFuture = getFutureData();
 
     nameIdx = mDs.get().readUint32();
 
@@ -76,9 +76,7 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
 
     mDs.get().assumeData({0x00}, getMethodName(this, __func__) + ": 1");
 
-    sanitizeThisFutureSize(thisFuture);
-
-    // readOptionalTrailingFuture();
+    localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

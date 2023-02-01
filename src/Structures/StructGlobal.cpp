@@ -14,11 +14,11 @@ void StructGlobal::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes(Structure::Global);
+    FutureDataLst localFutureLst{mDs};
+
+    auto_read_prefixes(Structure::Global, localFutureLst);
 
     readPreamble();
-
-    const std::optional<FutureData> thisFuture = getFutureData();
 
     mDs.get().printUnknownData(8, fmt::format("{}: 0", getMethodName(this, __func__)));
 
@@ -39,9 +39,7 @@ void StructGlobal::read(FileFormatVersion /* aVersion */)
 
     mDs.get().printUnknownData(1, fmt::format("{}: 2", getMethodName(this, __func__)));
 
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
+    localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

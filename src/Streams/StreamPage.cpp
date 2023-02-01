@@ -13,7 +13,10 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes();
+    FutureDataLst localFutureLst{mDs};
+
+    auto_read_prefixes(localFutureLst);
+    // read_prefixes(3, localFutureLst);
 
     readPreamble();
 
@@ -60,24 +63,6 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         t0x35s.push_back(dynamic_pointer_cast<StructT0x35>(readStructure()));
     }
 
-    // const uint16_t lenC = mDs.get().readUint16();
-
-    // spdlog::trace("lenC = {}", lenC);
-
-    // for(size_t i = 0; i < lenC; ++i)
-    // {
-    //     mDs.get().printUnknownData(32);
-    // }
-
-    // const uint16_t lenD = mDs.get().readUint16();
-
-    // spdlog::trace("lenD = {}", lenD);
-
-    // for(size_t i = 0; i < lenD; ++i)
-    // {
-    //     mDs.get().printUnknownData(66);
-    // }
-
     const uint16_t lenB = mDs.get().readUint16();
 
     spdlog::trace("lenB = {}", lenB);
@@ -118,34 +103,38 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         ports.push_back(dynamic_pointer_cast<StructPort>(readStructure()));
     }
 
+    // @todo They are StructureGlobal
     const uint16_t len5 = mDs.get().readUint16();
 
     spdlog::trace("len5 = {}", len5);
 
     for(size_t i = 0u; i < len5; ++i)
     {
-         // @todo push structure
+        // @todo push structure
         const auto s = readStructure();
         if(s)
         {
             spdlog::critical("VERIFYING Page Structure5 is {}", NAMEOF_TYPE_RTTI(*s));
         }
 
-        mDs.get().printUnknownData(5, fmt::format("{}: 0", __func__));
+        mDs.get().printUnknownData(5, fmt::format("{}: 0", getMethodName(this, __func__)));
     }
 
+    // @todo They are StructureOffPageConnector
     const uint16_t len6 = mDs.get().readUint16();
 
     spdlog::trace("len6 = {}", len6);
 
     for(size_t i = 0u; i < len6; ++i)
     {
-         // @todo push structure
+        // @todo push structure
         const auto s = readStructure();
         if(s)
         {
             spdlog::critical("VERIFYING Page Structure6 is {}", NAMEOF_TYPE_RTTI(*s));
         }
+
+        mDs.get().printUnknownData(5, fmt::format("{}: 0", getMethodName(this, __func__)));
     }
 
     const uint16_t len7 = mDs.get().readUint16();
@@ -212,6 +201,12 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
             spdlog::critical("VERIFYING Page Structure11 is {}", NAMEOF_TYPE_RTTI(*s));
         }
     }
+
+    // localFutureLst.readRestOfStructure();
+
+    // // localFutureLst.checkpoint(mDs.get().getCurrentOffset());
+
+    // // localFutureLst.sanitizeNoFutureDataLeft();
 
     if(!mDs.get().isEoF())
     {

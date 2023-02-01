@@ -13,7 +13,7 @@ void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    mDs.get().printUnknownData(2, fmt::format("{}: 0", __func__));
+    mDs.get().printUnknownData(2, fmt::format("{}: 0", getMethodName(this, __func__)));
 
     uint16_t number_groups = mDs.get().readUint16();
 
@@ -26,13 +26,15 @@ void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
         std::string group_name = mDs.get().readStringLenZeroTerm();
         spdlog::trace("group_name = {}:", group_name);
 
-        Structure structure = auto_read_prefixes();
+        FutureDataLst localFutureLst{mDs};
+
+        Structure structure = auto_read_prefixes(localFutureLst);
 
         // @todo extract the following into a separate readStructNetGroup method
         if(structure != Structure::NetGroup)
         {
             const std::string msg = fmt::format("{}: Expected {} but got {}",
-                __func__, ::to_string(Structure::NetGroup), ::to_string(structure));
+                getMethodName(this, __func__), ::to_string(Structure::NetGroup), ::to_string(structure));
 
             spdlog::error(msg);
             throw std::runtime_error(msg);

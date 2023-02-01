@@ -16,7 +16,7 @@ void StructGeneralProperties::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    const std::optional<FutureData> thisFuture = getFutureData();
+    // FutureDataLst localFutureLst{mDs};
 
     implementationPath = mDs.get().readStringLenZeroTerm();
 
@@ -56,9 +56,7 @@ void StructGeneralProperties::read(FileFormatVersion /* aVersion */)
 
     mDs.get().printUnknownData(1, getMethodName(this, __func__) + ": 0");
 
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
+    // localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

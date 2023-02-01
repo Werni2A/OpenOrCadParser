@@ -255,13 +255,13 @@ fs::path PrimBitmap::writeImgToFile(fs::path aFilePath) const
     //       we can simplify this logic by just checking the file format version.
     if(isBmpImage(rawImgData))
     {
-        spdlog::info("{}: Detected BMP file", __func__);
+        spdlog::info("{}: Detected BMP file", getMethodName(this, __func__));
 
         aFilePath = writeBmpFile(aFilePath, rawImgData);
     }
     else
     {
-        spdlog::info("{}: Detected some non BMP file", __func__);
+        spdlog::info("{}: Detected some non BMP file", getMethodName(this, __func__));
 
         aFilePath = writeNoBmpFile(aFilePath, rawImgData);
     }

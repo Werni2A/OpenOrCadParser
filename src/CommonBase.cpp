@@ -60,9 +60,6 @@
 #include "Structures/TrailingProperties.hpp"
 
 
-FutureDataLst mFutureDataLst{};
-
-
 void CommonBase::discard_until_preamble()
 {
     const int patternSize = 4;
@@ -109,7 +106,7 @@ void CommonBase::discard_until_preamble()
 }
 
 
-Structure CommonBase::auto_read_prefixes()
+Structure CommonBase::auto_read_prefixes(FutureDataLst& aFutureDataLst)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
@@ -136,7 +133,8 @@ Structure CommonBase::auto_read_prefixes()
 
         try
         {
-            read_prefixes(prefixCtr, true);
+            FutureDataLst tmpLst{mDs};
+            read_prefixes(prefixCtr, tmpLst);
         }
         catch(const std::exception& e)
         {
@@ -173,7 +171,7 @@ Structure CommonBase::auto_read_prefixes()
         throw std::runtime_error(msg);
     }
 
-    Structure structure = read_prefixes(prefixCtr);
+    const Structure structure = read_prefixes(prefixCtr, aFutureDataLst);
 
     // @todo Looks like each structure type has a fixed number of prefixes
     //       I.e. figure out the numbers for each structure and move the
@@ -181,6 +179,7 @@ Structure CommonBase::auto_read_prefixes()
     //       get rid of auto_read_prefixes.
     spdlog::debug("{}: Found {} prefixes for {}\n",
         getMethodName(this, __func__), prefixCtr, ::to_string(structure));
+    spdlog::debug("    {}", aFutureDataLst.string());
 
     mDs.get().sanitizeNoEoF();
 
@@ -190,9 +189,9 @@ Structure CommonBase::auto_read_prefixes()
 }
 
 
-Structure CommonBase::auto_read_prefixes(Structure aExpectedStruct)
+Structure CommonBase::auto_read_prefixes(Structure aExpectedStruct, FutureDataLst& aFutureDataLst)
 {
-    const Structure actualStruct = auto_read_prefixes();
+    const Structure actualStruct = auto_read_prefixes(aFutureDataLst);
 
     if(actualStruct != aExpectedStruct)
     {
@@ -207,9 +206,9 @@ Structure CommonBase::auto_read_prefixes(Structure aExpectedStruct)
 }
 
 
-Structure CommonBase::auto_read_prefixes(const std::vector<Structure>& aExpectedOneOfStruct)
+Structure CommonBase::auto_read_prefixes(const std::vector<Structure>& aExpectedOneOfStruct, FutureDataLst& aFutureDataLst)
 {
-    const Structure actualStruct = auto_read_prefixes();
+    const Structure actualStruct = auto_read_prefixes(aFutureDataLst);
 
     const bool foundStructure = std::find(aExpectedOneOfStruct.cbegin(),
         aExpectedOneOfStruct.cend(), actualStruct) != aExpectedOneOfStruct.cend();
@@ -233,7 +232,7 @@ Structure CommonBase::auto_read_prefixes(const std::vector<Structure>& aExpected
 
 
 // Read number of prefixes, where the last one is a short prefix
-Structure CommonBase::read_prefixes(size_t aNumber, bool aPrediction)
+Structure CommonBase::read_prefixes(size_t aNumber, FutureDataLst& aFutureDataLst)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
@@ -244,8 +243,6 @@ Structure CommonBase::read_prefixes(size_t aNumber, bool aPrediction)
     }
 
     Structure firstStruct;
-
-    std::vector<std::pair<size_t, size_t>> offsets; //!< First = Current offset absolute; Second = Offset relative to structure
 
     for(size_t i = 0U; i < aNumber; ++i)
     {
@@ -262,8 +259,11 @@ Structure CommonBase::read_prefixes(size_t aNumber, bool aPrediction)
         {
             const auto currPrefix = read_single_prefix();
             currStruct = currPrefix.first;
+            const size_t currStructSize = static_cast<size_t>(currPrefix.second);
 
-            offsets.push_back(std::pair<size_t, size_t>{preambleOffset, static_cast<size_t>(currPrefix.second)});
+            const FutureData futureData{preambleOffset, currStructSize};
+
+            aFutureDataLst.push_back(futureData);
         }
 
         if(i == 0U)
@@ -279,53 +279,6 @@ Structure CommonBase::read_prefixes(size_t aNumber, bool aPrediction)
 
             spdlog::error(msg);
             throw std::runtime_error(msg);
-        }
-    }
-
-    if(!aPrediction)
-    {
-        if(offsets.size() >= 2U)
-        {
-            for(size_t i = 0U; i < offsets.size() - 1U; i += 2)
-            {
-                const std::pair<size_t, size_t> start_pair = offsets[i + 1U];
-                const std::pair<size_t, size_t> stop_pair  = offsets[i];
-
-                const FutureData futureData = FutureData{start_pair.first, start_pair.second,
-                    stop_pair.first, stop_pair.second};
-
-                const std::optional<FutureData> existing = mFutureDataLst.getByStartOffset(futureData.getStartOffset());
-
-                if(existing.has_value())
-                {
-                    if(existing.value().getStopOffset() != futureData.getStopOffset())
-                    {
-                        const std::string msg = fmt::format("{}: Future data at 0x{:08x} is"
-                            " either {} or {} Byte long, having both lengths does not make any sense.",
-                            getMethodName(this, __func__), existing.value().getStartOffset(),
-                            existing.value().getByteLen(), futureData.getByteLen());
-
-                        spdlog::error(msg);
-                        throw std::runtime_error(msg);
-                    }
-                    else
-                    {
-                        // This should never happen
-                        spdlog::warn("{}: Future data exists already in list",
-                            getMethodName(this, __func__));
-                    }
-                }
-
-                mFutureDataLst.push_back(futureData);
-
-                spdlog::debug("{}: Found future data: {}", getMethodName(this, __func__),
-                    (mFutureDataLst.end() - 1)->string());
-            }
-        }
-        else if(offsets.size() == 1U)
-        {
-            spdlog::debug("{}: Found single structure beginning at 0x{:08x}",
-                getMethodName(this, __func__), offsets[0].second);
         }
     }
 
@@ -427,99 +380,17 @@ void CommonBase::readPreamble()
         const uint32_t dataLen = mDs.get().readUint32();
         mDs.get().printUnknownData(dataLen, fmt::format("{}: Trailing preamble data",
             getMethodName(this, __func__)));
+
+        // spdlog::debug("{}: Found preamble", getMethodName(this, __func__));
     }
     catch(const std::runtime_error& err)
     {
         mDs.get().setCurrentOffset(startOffset);
+
+        spdlog::debug("{}: Skipping preamble", getMethodName(this, __func__));
     }
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
-}
-
-
-
-std::optional<FutureData> CommonBase::getFutureData()
-{
-    const size_t startOffset = mDs.get().getCurrentOffset();
-
-    const std::optional<FutureData> thisFuture = mFutureDataLst.getByStartOffset(startOffset);
-
-    if(thisFuture.has_value())
-    {
-        spdlog::info("Found this structure in future data: 0x{:08x} -> 0x{:08x} ({} Byte)",
-            thisFuture.value().getStartOffset(), thisFuture.value().getStopOffset(),
-            thisFuture.value().getByteLen());
-    }
-    else
-    {
-        spdlog::warn("Did not find this structure in future data with startOffset 0x{:08x}",
-            startOffset);
-
-        constexpr std::size_t showElemCnt = 10U;
-        spdlog::debug("Last {} FutureDataLst Elements:", showElemCnt);
-
-        for(auto it = (mFutureDataLst.size() <= showElemCnt) ?
-                mFutureDataLst.cbegin() :
-                (mFutureDataLst.cbegin() + mFutureDataLst.size() - showElemCnt);
-            it != mFutureDataLst.cend(); ++it)
-        {
-            spdlog::debug(it->string());
-        }
-    }
-
-    return thisFuture;
-}
-
-
-void CommonBase::sanitizeThisFutureSize(std::optional<FutureData> aThisFuture)
-{
-    const size_t stopOffset = mDs.get().getCurrentOffset();
-
-    if(aThisFuture.has_value())
-    {
-        if(aThisFuture.value().getStopOffset() != stopOffset)
-        {
-            const std::string msg = fmt::format("{}: StopOffsets differ! 0x{:08x} (expected) vs. 0x{:08x} (actual)",
-                getMethodName(this, __func__), aThisFuture.value().getStopOffset(), stopOffset);
-
-            spdlog::error(msg);
-            spdlog::warn("The structure may have changed due to version differences!");
-            throw std::runtime_error(msg);
-        }
-    }
-    else
-    {
-        spdlog::debug("{}: Could not verify structure size as future is not available.", __func__);
-    }
-}
-
-
-std::optional<FutureData> CommonBase::checkTrailingFuture()
-{
-    const size_t stopOffset = mDs.get().getCurrentOffset();
-
-    const std::optional<FutureData> nextFuture = mFutureDataLst.getByStartOffset(stopOffset);
-
-    if(nextFuture.has_value())
-    {
-        spdlog::warn("Detected trailing future data at 0x{:08x}", nextFuture.value().getStartOffset());
-    }
-
-    return nextFuture;
-}
-
-
-void CommonBase::readOptionalTrailingFuture()
-{
-    std::optional<FutureData> future = checkTrailingFuture();
-
-    if(future.has_value())
-    {
-        mDs.get().printUnknownData(future.value().getByteLen(),
-            fmt::format("{}: Trailing Future Data", getMethodName(this, __func__)));
-    }
-
-    sanitizeThisFutureSize(future);
 }
 
 
@@ -645,26 +516,29 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         case Structure::WireBus:                obj = std::make_unique<StructWireBus>(mDs);                break;
         case Structure::WireScalar:             obj = std::make_unique<StructWireScalar>(mDs);             break;
         default:
-
-            const std::optional<FutureData> futureData = getFutureData();
-
-            const std::string msg = fmt::format("{}: Structure {} is not implemented!",
-                getMethodName(this, __func__), ::to_string(aStructure));
-
-            if(futureData.has_value())
             {
-                mDs.get().printUnknownData(futureData.value().getByteLen(), msg);
-            }
-            else
-            {
+                const std::string msg = fmt::format("{}: Structure {} is not implemented!",
+                    getMethodName(this, __func__), ::to_string(aStructure));
+
                 spdlog::error(msg);
-                throw std::runtime_error(msg);
-            }
+                // throw std::runtime_error(msg);
 
-            break;
+                spdlog::debug("{}: Skipping Structure {}",
+                    getMethodName(this, __func__), ::to_string(aStructure));
+
+                FutureDataLst localFutureDataLst{mDs};
+
+                auto_read_prefixes(localFutureDataLst);
+
+                localFutureDataLst.readRestOfStructure();
+
+                return {};
+
+                break;
+            }
     }
 
-    if(obj.get() != nullptr)
+    if(obj)
     {
         obj->read();
     }

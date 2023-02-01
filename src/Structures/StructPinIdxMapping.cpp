@@ -15,11 +15,11 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes(Structure::PinIdxMapping);
+    FutureDataLst localFutureLst{mDs};
+
+    auto_read_prefixes(Structure::PinIdxMapping, localFutureLst);
 
     readPreamble();
-
-    const std::optional<FutureData> thisFuture = getFutureData();
 
     unitRef = mDs.get().readStringLenZeroTerm();
     refDes  = mDs.get().readStringLenZeroTerm();
@@ -70,9 +70,7 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
         spdlog::trace("pinGroup  = {:>3}", strPinGroup);
     }
 
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
+    localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

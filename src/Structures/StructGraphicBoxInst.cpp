@@ -19,11 +19,11 @@ void StructGraphicBoxInst::read(FileFormatVersion aVersion)
         aVersion = predictVersion();
     }
 
-    auto_read_prefixes(Structure::GraphicBoxInst);
+    FutureDataLst localFutureLst{mDs};
+
+    auto_read_prefixes(Structure::GraphicBoxInst, localFutureLst);
 
     readPreamble();
-
-    const std::optional<FutureData> thisFuture = getFutureData();
 
     mDs.get().printUnknownData(11, getMethodName(this, __func__) + ": 0");
 
@@ -57,22 +57,7 @@ void StructGraphicBoxInst::read(FileFormatVersion aVersion)
 
     sthInPages0 = dynamic_pointer_cast<StructSthInPages0>(readStructure());
 
-    // @todo I don't know about the exact file format version.
-    //       `B` and `C` was just chosen to get it running.
-    if(aVersion == FileFormatVersion::B)
-    {
-        mDs.get().printUnknownData(16, getMethodName(this, __func__) + ": 1");
-    }
-    if(aVersion == FileFormatVersion::C)
-    {
-        mDs.get().printUnknownData(8, getMethodName(this, __func__) + ": 1");
-    }
-    else
-    { }
-
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
+    localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

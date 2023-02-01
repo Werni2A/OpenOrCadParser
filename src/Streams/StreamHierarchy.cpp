@@ -26,9 +26,13 @@ void StreamHierarchy::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < netLen; ++i)
     {
-        auto_read_prefixes();
+        FutureDataLst localFutureLst{mDs};
+
+        auto_read_prefixes(localFutureLst);
 
         readPreamble();
+
+        localFutureLst.readRestOfStructure();
 
         // @todo Move the following data into its own structure for the specific Structure type
 

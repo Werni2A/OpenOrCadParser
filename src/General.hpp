@@ -51,11 +51,17 @@ enum class FileType
 
 
 // Copied from StackExchange [1] and slightly modified
-// to throw on invalid cast
+// to throw on invalid cast and pass nullptrs through
 // [1] https://codereview.stackexchange.com/a/280784
 template<typename T, typename S>
 static std::unique_ptr<T> dynamic_pointer_cast(std::unique_ptr<S>&& p)
 {
+    // Do not try to cast
+    if(!p)
+    {
+        return {};
+    }
+
     if (T* const converted = dynamic_cast<T*>(p.get())) {
         // cast succeeded; clear input
         p.release();

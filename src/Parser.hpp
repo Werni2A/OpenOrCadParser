@@ -43,7 +43,7 @@ public:
         auto obj = std::make_unique<T>(aDs);
 
         ++mFileCtr;
-        mFutureDataLst.clear();
+
         try
         {
             openFile(aFilePath.string());

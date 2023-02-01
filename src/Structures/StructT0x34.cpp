@@ -13,7 +13,9 @@ void StructT0x34::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    // auto_read_prefixes(Structure::T0x34);
+    // FutureDataLst localFutureLst{mDs};
+
+    // auto_read_prefixes(Structure::T0x34, localFutureLst);
 
     // readPreamble();
 
@@ -22,8 +24,6 @@ void StructT0x34::read(FileFormatVersion /* aVersion */)
     // 1 - 4 Byte = struct len
     // 5 - 8 Byte = zero vector
     mDs.get().printUnknownData(9, getMethodName(this, __func__) + ": 0");
-
-    const std::optional<FutureData> thisFuture = getFutureData();
 
     id = mDs.get().readUint32();
 
@@ -49,9 +49,7 @@ void StructT0x34::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("lineWidth = {}", ::to_string(lineWidth));
 
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
+    // localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

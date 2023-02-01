@@ -13,9 +13,9 @@ void StructGlobalSymbol::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    const std::optional<FutureData> thisFuture = getFutureData();
+    FutureDataLst localFutureLst{mDs};
 
-    auto_read_prefixes(Structure::GlobalSymbol);
+    auto_read_prefixes(Structure::GlobalSymbol, localFutureLst);
 
     readPreamble();
 
@@ -27,7 +27,7 @@ void StructGlobalSymbol::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("someStr = {}", someStr);
 
-    mDs.get().printUnknownData(4, fmt::format("{}: 0", __func__));
+    mDs.get().printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
 
     const uint16_t len0 = mDs.get().readUint16();
 
@@ -39,9 +39,7 @@ void StructGlobalSymbol::read(FileFormatVersion /* aVersion */)
 
     mDs.get().printUnknownData(8);
 
-    sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
+    // checkTrailingFuture();
 
     const uint16_t lenSymbolPins = mDs.get().readUint16();
 
@@ -60,6 +58,8 @@ void StructGlobalSymbol::read(FileFormatVersion /* aVersion */)
     {
         symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
+
+    localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

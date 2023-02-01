@@ -15,9 +15,9 @@ void StructERCSymbol::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    const std::optional<FutureData> thisFuture = getFutureData();
+    FutureDataLst localFutureLst{mDs};
 
-    auto_read_prefixes(Structure::ERCSymbol);
+    auto_read_prefixes(Structure::ERCSymbol, localFutureLst);
 
     readPreamble();
 
@@ -50,9 +50,7 @@ void StructERCSymbol::read(FileFormatVersion /* aVersion */)
     bbox.read();
     this->symbolBBox = bbox;
 
-    sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
+    localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

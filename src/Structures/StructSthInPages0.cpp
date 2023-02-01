@@ -16,11 +16,11 @@ void StructSthInPages0::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes(Structure::SthInPages0);
+    FutureDataLst localFutureLst{mDs};
+
+    auto_read_prefixes(Structure::SthInPages0, localFutureLst);
 
     readPreamble();
-
-    const std::optional<FutureData> thisFuture = getFutureData();
 
     mDs.get().printUnknownData(6, getMethodName(this, __func__) + ": 0");
     mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 1");
@@ -36,9 +36,7 @@ void StructSthInPages0::read(FileFormatVersion /* aVersion */)
         readPrimitive(primitive);
     }
 
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
+    localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

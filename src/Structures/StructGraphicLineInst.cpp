@@ -18,30 +18,17 @@ void StructGraphicLineInst::read(FileFormatVersion aVersion)
         aVersion = predictVersion();
     }
 
-    auto_read_prefixes(Structure::GraphicLineInst);
+    FutureDataLst localFutureLst{mDs};
+
+    auto_read_prefixes(Structure::GraphicLineInst, localFutureLst);
 
     readPreamble();
-
-    const std::optional<FutureData> thisFuture = getFutureData();
 
     mDs.get().printUnknownData(34, getMethodName(this, __func__) + ": 0");
 
     sthInPages0 = dynamic_pointer_cast<StructSthInPages0>(readStructure());
 
-    // @todo I don't know about the exact file format version.
-    //       `C` was just chosen to get it running.
-    if(aVersion == FileFormatVersion::C)
-    {
-        mDs.get().printUnknownData(8, getMethodName(this, __func__) + ": 1");
-    }
-    else
-    {
-        mDs.get().printUnknownData(16, getMethodName(this, __func__) + ": 1");
-    }
-
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
+    localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());
