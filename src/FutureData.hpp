@@ -64,7 +64,7 @@ public:
 
     std::optional<FutureData> getByStartOffset(std::size_t aAbsStartOffset) const
     {
-        spdlog::info("Searching for StartOffset 0x{:08x}", aAbsStartOffset);
+        spdlog::debug("Searching for StartOffset 0x{:08x}", aAbsStartOffset);
 
         const auto cmp = [&aAbsStartOffset] (FutureData aFutureData) -> bool
             { return aFutureData.getStartOffset() == aAbsStartOffset; };
@@ -81,7 +81,7 @@ public:
 
     std::optional<FutureData> getByStopOffset(std::size_t aAbsStopOffset) const
     {
-        spdlog::info("Searching for StopOffset 0x{:08x}", aAbsStopOffset);
+        spdlog::debug("Searching for StopOffset 0x{:08x}", aAbsStopOffset);
 
         const auto cmp = [&aAbsStopOffset] (FutureData aFutureData) -> bool
             { return aFutureData.getStopOffset() == aAbsStopOffset; };
@@ -155,7 +155,7 @@ public:
                 " in future data list but got {}. Check your code for missing checkpoints!\n{}",
                 getMethodName(this, __func__), size(), string());
 
-            spdlog::error(msg);
+            spdlog::debug(msg);
             throw std::runtime_error(msg);
         }
     }
@@ -207,7 +207,7 @@ public:
                 " Expected it to end at 0x{:08x} but ended at 0x{:08x}. Too large by {} Byte.",
                 getMethodName(this, __func__), endPos, curPos, std::abs(byteDiff));
 
-            spdlog::error(msg);
+            spdlog::debug(msg);
             throw std::runtime_error(msg);
         }
     }

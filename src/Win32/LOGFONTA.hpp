@@ -49,7 +49,7 @@ public:
         }
 
         spdlog::debug(getClosingMsg(getMethodName(this, __func__), aCtx.mDs.get().getCurrentOffset()));
-        spdlog::info(to_string());
+        spdlog::trace(to_string());
     }
 
     std::string to_string() const
