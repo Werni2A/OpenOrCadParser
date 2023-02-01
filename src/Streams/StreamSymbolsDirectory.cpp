@@ -12,19 +12,21 @@
 
 void StreamSymbolsDirectory::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    lastModifiedDate = static_cast<time_t>(mDs.get().readUint32());
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    const uint16_t size = mDs.get().readUint16();
+    lastModifiedDate = static_cast<time_t>(ds.readUint32());
+
+    const uint16_t size = ds.readUint16();
 
     for(size_t i = 0u; i < size; ++i)
     {
         DirItemType item;
 
-        item.name = mDs.get().readStringLenZeroTerm();
+        item.name = ds.readStringLenZeroTerm();
 
-        item.componentType = ToComponentType(mDs.get().readUint16());
+        item.componentType = ToComponentType(ds.readUint16());
 
         std::vector<ComponentType> expected_types = {
             ComponentType::GlobalSymbol,
@@ -43,10 +45,10 @@ void StreamSymbolsDirectory::read(FileFormatVersion /* aVersion */)
 
         // @todo This changes with the version of the file format, so maybe it contains
         //       more details for the format? Or some hash of the specified stream?
-        mDs.get().printUnknownData(14, fmt::format("item[{:>3}] - 0", i));
+        ds.printUnknownData(14, fmt::format("item[{:>3}] - 0", i));
 
         // @todo Just a guess that this is the version but's highly likely
-        item.fileFormatVersion = mDs.get().readUint16();
+        item.fileFormatVersion = ds.readUint16();
 
         spdlog::trace("fileFormatVersion = {}", item.fileFormatVersion);
 
@@ -65,18 +67,18 @@ void StreamSymbolsDirectory::read(FileFormatVersion /* aVersion */)
             spdlog::warn("Unexpected File Version {}", item.fileFormatVersion);
         }
 
-        item.timezone = mDs.get().readInt16();
+        item.timezone = ds.readInt16();
 
-        mDs.get().printUnknownData(2, fmt::format("item[{:>3}] - 1", i));
+        ds.printUnknownData(2, fmt::format("item[{:>3}] - 1", i));
 
         items.push_back(item);
     }
 
-    if(!mDs.get().isEoF())
+    if(!ds.isEoF())
     {
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::info(to_string());
 }

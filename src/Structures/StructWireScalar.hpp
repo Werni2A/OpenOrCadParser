@@ -22,7 +22,7 @@ class StructWireScalar : public StructWire
 {
 public:
 
-    StructWireScalar(DataStream& aDs) : StructWire{aDs}
+    StructWireScalar(ParserContext& aCtx) : StructWire{aCtx}
     { }
 
     // std::string to_string() const override;

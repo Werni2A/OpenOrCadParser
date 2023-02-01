@@ -10,9 +10,11 @@
 
 void StreamPackage::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    const uint16_t lenProperties = mDs.get().readUint16();
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    const uint16_t lenProperties = ds.readUint16();
 
     spdlog::trace("lenProperties = {}", lenProperties);
 
@@ -20,7 +22,7 @@ void StreamPackage::read(FileFormatVersion /* aVersion */)
     {
         properties.push_back(dynamic_pointer_cast<StructProperties>(readStructure()));
 
-        const uint16_t lenPrimitives = mDs.get().readUint16();
+        const uint16_t lenPrimitives = ds.readUint16();
 
         spdlog::trace("lenPrimitives = {}", lenPrimitives);
 
@@ -32,11 +34,11 @@ void StreamPackage::read(FileFormatVersion /* aVersion */)
 
     t0x1f = dynamic_pointer_cast<StructT0x1f>(readStructure());
 
-    if(!mDs.get().isEoF())
+    if(!ds.isEoF())
     {
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::info(to_string());
 }

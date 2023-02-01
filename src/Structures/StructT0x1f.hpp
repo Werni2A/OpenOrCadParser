@@ -15,7 +15,7 @@ class StructT0x1f : public CommonBase
 {
 public:
 
-    StructT0x1f(DataStream& aDs) : CommonBase{aDs}, name{},
+    StructT0x1f(ParserContext& aCtx) : CommonBase{aCtx}, name{},
         refDes{}, pcbFootprint{}
     { }
 

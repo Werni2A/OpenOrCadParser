@@ -25,7 +25,7 @@ class PrimEllipse : public PrimBase
 {
 public:
 
-    PrimEllipse(DataStream& aDs) : PrimBase{aDs}, x1{0}, y1{0}, x2{0}, y2{0},
+    PrimEllipse(ParserContext& aCtx) : PrimBase{aCtx}, x1{0}, y1{0}, x2{0}, y2{0},
         mLineStyle{}, mLineWidth{}, mFillStyle{}, mHatchStyle{}
     { }
 

@@ -56,7 +56,7 @@ enum class FileType
 template<typename T, typename S>
 static std::unique_ptr<T> dynamic_pointer_cast(std::unique_ptr<S>&& p)
 {
-    // Do not try to cast
+    // Do not try to cast nullptr
     if(!p)
     {
         return {};

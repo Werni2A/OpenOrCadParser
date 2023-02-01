@@ -13,18 +13,20 @@
 
 void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(Structure::PinIdxMapping, localFutureLst);
 
     readPreamble();
 
-    unitRef = mDs.get().readStringLenZeroTerm();
-    refDes  = mDs.get().readStringLenZeroTerm();
+    unitRef = ds.readStringLenZeroTerm();
+    refDes  = ds.readStringLenZeroTerm();
 
-    const uint16_t pinCount = mDs.get().readUint16();
+    const uint16_t pinCount = ds.readUint16();
 
     spdlog::trace("pinCount = {}", pinCount);
 
@@ -32,9 +34,9 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
     // See OrCAD: 'Pin Properties' -> 'Order'
     for(size_t i = 0u; i < pinCount; ++i)
     {
-        const auto currOffset = mDs.get().getCurrentOffset();
-        const int16_t strLen = mDs.get().readInt16();
-        mDs.get().setCurrentOffset(currOffset);
+        const auto currOffset = ds.getCurrentOffset();
+        const int16_t strLen = ds.readInt16();
+        ds.setCurrentOffset(currOffset);
 
         // @todo What means a string length of -1?
         //       Maybe I should return from the read string
@@ -45,18 +47,18 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
         //       strLen = -1 ->   0xff 0xff           = ?
         if(strLen == -1)
         {
-            const int16_t strLen = mDs.get().readInt16();
+            const int16_t strLen = ds.readInt16();
 
             spdlog::trace("strLen = {}", strLen);
 
             continue;
         }
 
-        pinMap.push_back(mDs.get().readStringLenZeroTerm());
+        pinMap.push_back(ds.readStringLenZeroTerm());
 
         // Bit 7         : Pin Ignore
         // Bit 6 downto 0: Pin Group
-        const uint8_t bitMapPinGrpCfg = mDs.get().readUint8();
+        const uint8_t bitMapPinGrpCfg = ds.readUint8();
 
         // 0 = No
         // 1 = Yes
@@ -72,6 +74,6 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

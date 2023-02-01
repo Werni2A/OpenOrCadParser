@@ -20,7 +20,7 @@ class StructPrimitives : public CommonBase
 {
 public:
 
-    StructPrimitives(DataStream& aDs) : CommonBase{aDs}, name{}, symbolPins{}, symbolDisplayProps{}
+    StructPrimitives(ParserContext& aCtx) : CommonBase{aCtx}, name{}, symbolPins{}, symbolDisplayProps{}
     { }
 
     std::string to_string() const override;

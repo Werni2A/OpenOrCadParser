@@ -10,8 +10,19 @@
 
 #include <spdlog/spdlog.h>
 
+#include <Parser.hpp>
+
 
 namespace fs = std::filesystem;
+
+
+[[maybe_unused]]
+inline void configure_parser(Parser& aParser)
+{
+    ParserContext ctx = aParser.getContext();
+
+    ctx.mSkipInvalidStruct = false;
+}
 
 
 [[maybe_unused]]

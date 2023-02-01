@@ -61,7 +61,7 @@ class StreamType : public CommonBase
 {
 public:
 
-    StreamType(DataStream& aDs) : CommonBase{aDs}, types{}
+    StreamType(ParserContext& aCtx) : CommonBase{aCtx}, types{}
     { }
 
     std::string to_string() const override;

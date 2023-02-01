@@ -19,7 +19,7 @@
 class PrimLine : public PrimBase
 {
 public:
-    PrimLine(DataStream& aDs) : PrimBase{aDs}, x1{0}, y1{0}, x2{0}, y2{0}, mLineStyle{}, mLineWidth{}
+    PrimLine(ParserContext& aCtx) : PrimBase{aCtx}, x1{0}, y1{0}, x2{0}, y2{0}, mLineStyle{}, mLineWidth{}
     { }
 
     std::string to_string() const override;

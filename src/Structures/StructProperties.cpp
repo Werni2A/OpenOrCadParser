@@ -14,23 +14,25 @@
 
 void StructProperties::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(Structure::Properties, localFutureLst);
 
     readPreamble();
 
-    ref = mDs.get().readStringLenZeroTerm();
+    ref = ds.readStringLenZeroTerm();
 
     spdlog::trace("ref = {}", ref);
 
     // @todo Probably a string
-    mDs.get().assumeData({0x00, 0x00, 0x00}, fmt::format("{}: 0", getMethodName(this, __func__)));
+    ds.assumeData({0x00, 0x00, 0x00}, fmt::format("{}: 0", getMethodName(this, __func__)));
 
     localFutureLst.readRestOfStructure(); // @note Is equal to TrailingProperties::read()
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

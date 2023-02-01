@@ -16,7 +16,7 @@ class StreamDsnStream : public CommonBase
 {
 public:
 
-    StreamDsnStream(DataStream& aDs) : CommonBase{aDs}
+    StreamDsnStream(ParserContext& aCtx) : CommonBase{aCtx}
     { }
 
     std::string to_string() const override;

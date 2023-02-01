@@ -16,7 +16,7 @@ class StructProperties : public CommonBase
 {
 public:
 
-    StructProperties(DataStream& aDs) : CommonBase{aDs}, ref{}
+    StructProperties(ParserContext& aCtx) : CommonBase{aCtx}, ref{}
     { }
 
     std::string to_string() const override;

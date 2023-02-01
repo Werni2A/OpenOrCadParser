@@ -15,35 +15,37 @@
 
 void StructPartInst::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(Structure::PartInst, localFutureLst);
 
     readPreamble();
 
-    mDs.get().printUnknownData(8, getMethodName(this, __func__) + ": 0");
+    ds.printUnknownData(8, getMethodName(this, __func__) + ": 0");
 
-    const std::string pkgName = mDs.get().readStringLenZeroTerm();
+    const std::string pkgName = ds.readStringLenZeroTerm();
 
     spdlog::trace("pkgName = {}", pkgName);
 
-    const uint32_t dbId = mDs.get().readUint32();
+    const uint32_t dbId = ds.readUint32();
 
     spdlog::trace("dbId = {}", dbId);
 
-    mDs.get().printUnknownData(8, getMethodName(this, __func__) + ": 1");
+    ds.printUnknownData(8, getMethodName(this, __func__) + ": 1");
 
-    const int16_t locX = mDs.get().readInt16();
-    const int16_t locY = mDs.get().readInt16();
+    const int16_t locX = ds.readInt16();
+    const int16_t locY = ds.readInt16();
 
     spdlog::trace("locX = {}", locX);
     spdlog::trace("locY = {}", locY);
 
-    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 2");
+    ds.printUnknownData(4, getMethodName(this, __func__) + ": 2");
 
-    const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
+    const uint16_t lenSymbolDisplayProps = ds.readUint16();
 
     spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
@@ -52,15 +54,15 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
         symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
-    mDs.get().printUnknownData(1, getMethodName(this, __func__) + ": 3");
+    ds.printUnknownData(1, getMethodName(this, __func__) + ": 3");
 
-    const std::string reference = mDs.get().readStringLenZeroTerm();
+    const std::string reference = ds.readStringLenZeroTerm();
 
     spdlog::trace("reference = {}", reference);
 
-    mDs.get().printUnknownData(14, getMethodName(this, __func__) + ": 4");
+    ds.printUnknownData(14, getMethodName(this, __func__) + ": 4");
 
-    const uint16_t lenT0x10s = mDs.get().readUint16();
+    const uint16_t lenT0x10s = ds.readUint16();
 
     spdlog::trace("lenT0x10s = {}", lenT0x10s);
 
@@ -69,19 +71,19 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
         t0x10s.push_back(dynamic_pointer_cast<StructT0x10>(readStructure()));
     }
 
-    const std::string sth1 = mDs.get().readStringLenZeroTerm(); // @todo needs verification
+    const std::string sth1 = ds.readStringLenZeroTerm(); // @todo needs verification
 
     spdlog::trace("sth1 = {}", sth1);
 
-    mDs.get().printUnknownData(2, getMethodName(this, __func__) + ": 5");
+    ds.printUnknownData(2, getMethodName(this, __func__) + ": 5");
 
     // @todo implement type_prefix_very_long
-    // mDs.get().printUnknownData(18, getMethodName(this, __func__) + ": 6");
+    // ds.printUnknownData(18, getMethodName(this, __func__) + ": 6");
 
     // auto_read_prefixes();
 
     localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

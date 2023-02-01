@@ -13,9 +13,11 @@
 
 void PrimCommentText::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    const size_t startOffset = mDs.get().getCurrentOffset();
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    const size_t startOffset = ds.getCurrentOffset();
 
      // @todo Adding 8 Byte does not make any sense, why did it
      //       work previously and why does it work in other
@@ -25,20 +27,20 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
      //       This issue is somehow related to the disabled
      //       readOptionalTrailingFuture check in StructPartInst
      //       and readOptionalTrailingFuture in StructT0x10
-    const uint32_t byteLength = mDs.get().readUint32() + 8U;
+    const uint32_t byteLength = ds.readUint32() + 8U;
 
-    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
+    ds.assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
-    locX = mDs.get().readInt32();
-    locY = mDs.get().readInt32();
+    locX = ds.readInt32();
+    locY = ds.readInt32();
 
     spdlog::trace("locX = {}", locX);
     spdlog::trace("locY = {}", locY);
 
-    x2 = mDs.get().readInt32();
-    y2 = mDs.get().readInt32();
-    x1 = mDs.get().readInt32();
-    y1 = mDs.get().readInt32();
+    x2 = ds.readInt32();
+    y2 = ds.readInt32();
+    x1 = ds.readInt32();
+    y1 = ds.readInt32();
 
     spdlog::trace("x2 = {}", x2);
     spdlog::trace("y2 = {}", y2);
@@ -46,7 +48,7 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
     spdlog::trace("y1 = {}", y1);
 
     // @todo Check if fontIdx with 4 byte fits. I.e. are the following 2 Byte all 0?
-    textFontIdx = mDs.get().readUint16();
+    textFontIdx = ds.readUint16();
 
     spdlog::trace("textFontIdx = {}", textFontIdx);
 
@@ -56,15 +58,15 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
             getMethodName(this, __func__), textFontIdx, gLibrary->library->textFonts.size()));
     }
 
-    mDs.get().printUnknownData(2, getMethodName(this, __func__) + ": 1");
+    ds.printUnknownData(2, getMethodName(this, __func__) + ": 1");
 
-    name = mDs.get().readStringLenZeroTerm();
+    name = ds.readStringLenZeroTerm();
 
     spdlog::trace("name = {}", name);
 
-    if(mDs.get().getCurrentOffset() != startOffset + byteLength)
+    if(ds.getCurrentOffset() != startOffset + byteLength)
     {
-        // throw MisinterpretedData(__func__, startOffset, byteLength, mDs.get().getCurrentOffset());
+        // throw MisinterpretedData(__func__, startOffset, byteLength, ds.getCurrentOffset());
     }
 
     if(byteLength != 39u + name.size())
@@ -72,7 +74,7 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
         // throw FileFormatChanged("CommentText");
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 
     readPreamble();

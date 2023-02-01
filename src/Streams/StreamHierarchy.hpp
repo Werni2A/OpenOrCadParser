@@ -16,7 +16,7 @@ class StreamHierarchy : public CommonBase
 {
 public:
 
-    StreamHierarchy(DataStream& aDs) : CommonBase{aDs}
+    StreamHierarchy(ParserContext& aCtx) : CommonBase{aCtx}
     { }
 
     std::string to_string() const override;

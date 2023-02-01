@@ -18,7 +18,7 @@ class StructSthInHierarchy1 : public CommonBase
 {
 public:
 
-    StructSthInHierarchy1(DataStream& aDs) : CommonBase{aDs}
+    StructSthInHierarchy1(ParserContext& aCtx) : CommonBase{aCtx}
     { }
 
     std::string to_string() const override;

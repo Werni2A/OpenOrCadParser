@@ -18,6 +18,7 @@
 #include "FutureData.hpp"
 #include "General.hpp"
 #include "Library.hpp"
+#include "ParserContext.hpp"
 #include "Primitives/PrimBase.hpp"
 
 
@@ -37,10 +38,15 @@ public:
         return mFileErrCtr;
     }
 
-    template <typename T>
-    std::unique_ptr<T> parseFile(const fs::path &aFilePath, DataStream& aDs)
+    ParserContext& getContext()
     {
-        auto obj = std::make_unique<T>(aDs);
+        return mCtx;
+    }
+
+    template <typename T>
+    std::unique_ptr<T> parseFile(const fs::path &aFilePath, ParserContext& aCtx)
+    {
+        auto obj = std::make_unique<T>(aCtx);
 
         ++mFileCtr;
 
@@ -104,20 +110,15 @@ private:
 
     std::vector<fs::path> mRemainingFiles; //!< Streams that have not yet been parsed
 
-    fs::path mInputFile;
-    size_t   mInputFileSize;
-
-    fs::path mCurrOpenFile;
-    size_t   mCurrOpenFileSize;
-
+    fs::path mInputFile; //!< Input container
+    fs::path mCurrOpenFile; //!< Input stream
     fs::path mExtractedPath;
 
     size_t mFileCtr;    //!< Counts all files that were opened for parsing
     size_t mFileErrCtr; //!< Counts all files that failed somewhere
 
     DataStream mDs;
-
-    size_t mImgCtr; //!< Counts images per stream
+    ParserContext mCtx;
 };
 
 

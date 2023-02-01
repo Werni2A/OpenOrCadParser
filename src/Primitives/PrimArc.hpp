@@ -21,7 +21,7 @@ class PrimArc : public PrimBase
 {
 public:
 
-    PrimArc(DataStream& aDs) : PrimBase{aDs}, x1{0}, y1{0}, x2{0}, y2{0},
+    PrimArc(ParserContext& aCtx) : PrimBase{aCtx}, x1{0}, y1{0}, x2{0}, y2{0},
         startX{0}, startY{0}, endX{0}, endY{0}, mLineStyle{}, mLineWidth{}
     { }
 

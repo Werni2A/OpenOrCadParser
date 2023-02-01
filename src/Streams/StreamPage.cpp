@@ -11,27 +11,29 @@
 
 void StreamPage::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(localFutureLst);
     // read_prefixes(3, localFutureLst);
 
     readPreamble();
 
-    name = mDs.get().readStringLenZeroTerm();
+    name = ds.readStringLenZeroTerm();
 
     spdlog::trace("name = {}", name);
 
-    pageSize = mDs.get().readStringLenZeroTerm();
+    pageSize = ds.readStringLenZeroTerm();
 
     spdlog::trace("pageSize = {}", pageSize);
 
     pageSettings.read();
 
     // @todo Contains StructTitleBlock
-    const uint16_t lenA = mDs.get().readUint16();
+    const uint16_t lenA = ds.readUint16();
 
     spdlog::trace("lenA = {}", lenA);
 
@@ -45,7 +47,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         }
     }
 
-    const uint16_t lenT0x34s = mDs.get().readUint16();
+    const uint16_t lenT0x34s = ds.readUint16();
 
     spdlog::trace("lenT0x34s = {}", lenT0x34s);
 
@@ -54,7 +56,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         t0x34s.push_back(dynamic_pointer_cast<StructT0x34>(readStructure()));
     }
 
-    const uint16_t lenT0x35s = mDs.get().readUint16();
+    const uint16_t lenT0x35s = ds.readUint16();
 
     spdlog::trace("lenT0x35s = {}", lenT0x35s);
 
@@ -63,20 +65,20 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         t0x35s.push_back(dynamic_pointer_cast<StructT0x35>(readStructure()));
     }
 
-    const uint16_t lenB = mDs.get().readUint16();
+    const uint16_t lenB = ds.readUint16();
 
     spdlog::trace("lenB = {}", lenB);
 
     for(size_t i = 0; i < lenB; ++i)
     {
-        const std::string net = mDs.get().readStringLenZeroTerm();
-        const uint32_t id = mDs.get().readUint32();
+        const std::string net = ds.readStringLenZeroTerm();
+        const uint32_t id = ds.readUint32();
 
         spdlog::trace("net = {}", net);
         spdlog::trace("id  = {}", id);
     }
 
-    const uint16_t lenWires = mDs.get().readUint16();
+    const uint16_t lenWires = ds.readUint16();
 
     spdlog::trace("lenWires = {}", lenWires);
 
@@ -85,7 +87,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         wires.push_back(dynamic_pointer_cast<StructWire>(readStructure()));
     }
 
-    const uint16_t lenPartInsts = mDs.get().readUint16();
+    const uint16_t lenPartInsts = ds.readUint16();
 
     spdlog::trace("lenPartInsts = {}", lenPartInsts);
 
@@ -94,7 +96,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         partInsts.push_back(dynamic_pointer_cast<StructPartInst>(readStructure()));
     }
 
-    const uint16_t lenPorts = mDs.get().readUint16();
+    const uint16_t lenPorts = ds.readUint16();
 
     spdlog::trace("lenPorts = {}", lenPorts);
 
@@ -104,7 +106,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
     }
 
     // @todo They are StructureGlobal
-    const uint16_t len5 = mDs.get().readUint16();
+    const uint16_t len5 = ds.readUint16();
 
     spdlog::trace("len5 = {}", len5);
 
@@ -117,11 +119,11 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
             spdlog::critical("VERIFYING Page Structure5 is {}", NAMEOF_TYPE_RTTI(*s));
         }
 
-        mDs.get().printUnknownData(5, fmt::format("{}: 0", getMethodName(this, __func__)));
+        ds.printUnknownData(5, fmt::format("{}: 0", getMethodName(this, __func__)));
     }
 
     // @todo They are StructureOffPageConnector
-    const uint16_t len6 = mDs.get().readUint16();
+    const uint16_t len6 = ds.readUint16();
 
     spdlog::trace("len6 = {}", len6);
 
@@ -134,10 +136,10 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
             spdlog::critical("VERIFYING Page Structure6 is {}", NAMEOF_TYPE_RTTI(*s));
         }
 
-        mDs.get().printUnknownData(5, fmt::format("{}: 0", getMethodName(this, __func__)));
+        ds.printUnknownData(5, fmt::format("{}: 0", getMethodName(this, __func__)));
     }
 
-    const uint16_t len7 = mDs.get().readUint16();
+    const uint16_t len7 = ds.readUint16();
 
     spdlog::trace("len7 = {}", len7);
 
@@ -151,7 +153,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         }
     }
 
-    const uint16_t len8 = mDs.get().readUint16();
+    const uint16_t len8 = ds.readUint16();
 
     spdlog::trace("len8 = {}", len8);
 
@@ -165,7 +167,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         }
     }
 
-    const uint16_t lenGraphicInsts = mDs.get().readUint16();
+    const uint16_t lenGraphicInsts = ds.readUint16();
 
     spdlog::trace("lenGraphicInsts = {}", lenGraphicInsts);
 
@@ -174,7 +176,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         graphicInsts.push_back(dynamic_pointer_cast<StructGraphicInst>(readStructure()));
     }
 
-    const uint16_t len10 = mDs.get().readUint16();
+    const uint16_t len10 = ds.readUint16();
 
     spdlog::trace("len10 = {}", len10);
 
@@ -188,7 +190,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         }
     }
 
-    const uint16_t len11 = mDs.get().readUint16();
+    const uint16_t len11 = ds.readUint16();
 
     spdlog::trace("len11 = {}", len11);
 
@@ -204,15 +206,15 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     // localFutureLst.readRestOfStructure();
 
-    // // localFutureLst.checkpoint(mDs.get().getCurrentOffset());
+    // // localFutureLst.checkpoint(ds.getCurrentOffset());
 
     // // localFutureLst.sanitizeNoFutureDataLeft();
 
-    if(!mDs.get().isEoF())
+    if(!ds.isEoF())
     {
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::info(to_string());
 }

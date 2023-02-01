@@ -21,7 +21,7 @@ class StructTitleBlockSymbol : public StructSymbol
 {
 public:
 
-    StructTitleBlockSymbol(DataStream& aDs) : StructSymbol{aDs}
+    StructTitleBlockSymbol(ParserContext& aCtx) : StructSymbol{aCtx}
     { }
 
     std::string to_string() const override;

@@ -21,7 +21,7 @@ class StructTitleBlock : public CommonBase
 {
 public:
 
-    StructTitleBlock(DataStream& aDs) : CommonBase{aDs}, symbolDisplayProps{}
+    StructTitleBlock(ParserContext& aCtx) : CommonBase{aCtx}, symbolDisplayProps{}
     { }
 
     std::string to_string() const override;

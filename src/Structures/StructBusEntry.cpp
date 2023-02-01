@@ -11,32 +11,34 @@
 
 void StructBusEntry::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(Structure::BusEntry, localFutureLst);
 
     readPreamble();
 
-    color = ToColor(mDs.get().readUint32());
+    color = ToColor(ds.readUint32());
 
     spdlog::trace("color = {}", ::to_string(color));
 
-    startX = mDs.get().readInt32();
-    startY = mDs.get().readInt32();
+    startX = ds.readInt32();
+    startY = ds.readInt32();
 
     spdlog::trace("startX = {}", startX);
     spdlog::trace("startY = {}", startY);
 
-    endX = mDs.get().readInt32();
-    endY = mDs.get().readInt32();
+    endX = ds.readInt32();
+    endY = ds.readInt32();
 
     spdlog::trace("endX = {}", endX);
     spdlog::trace("endY = {}", endY);
 
     localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

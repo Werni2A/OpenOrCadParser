@@ -14,9 +14,11 @@
 //       I.e. parse `Library` first and later on `DsnStream` to avoid issues.
 void StreamDsnStream::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    FutureDataLst localFutureLst{mCtx};
 
     // @todo return the parsed nameValueMapping from within read_single_short_prefix()
     //       and save it in DsnStream. I.e. `Library guid` and `Time Format Index`
@@ -32,11 +34,11 @@ void StreamDsnStream::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.readRestOfStructure();
 
-    if(!mDs.get().isEoF())
+    if(!ds.isEoF())
     {
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::info(to_string());
 }

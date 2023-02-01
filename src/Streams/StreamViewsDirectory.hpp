@@ -16,7 +16,7 @@ class StreamViewsDirectory : public StreamDirectoryStruct
 {
 public:
 
-    StreamViewsDirectory(DataStream& aDs) : StreamDirectoryStruct{aDs}
+    StreamViewsDirectory(ParserContext& aCtx) : StreamDirectoryStruct{aCtx}
     { }
 
     std::string to_string() const override;

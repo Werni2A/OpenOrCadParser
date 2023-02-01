@@ -11,11 +11,13 @@
 
 void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    mDs.get().printUnknownData(2, fmt::format("{}: 0", getMethodName(this, __func__)));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    uint16_t number_groups = mDs.get().readUint16();
+    ds.printUnknownData(2, fmt::format("{}: 0", getMethodName(this, __func__)));
+
+    uint16_t number_groups = ds.readUint16();
 
     spdlog::trace("number_groups = {}", number_groups);
 
@@ -23,10 +25,10 @@ void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
     {
         spdlog::trace("[{}]:", i);
 
-        std::string group_name = mDs.get().readStringLenZeroTerm();
+        std::string group_name = ds.readStringLenZeroTerm();
         spdlog::trace("group_name = {}:", group_name);
 
-        FutureDataLst localFutureLst{mDs};
+        FutureDataLst localFutureLst{mCtx};
 
         Structure structure = auto_read_prefixes(localFutureLst);
 
@@ -42,31 +44,31 @@ void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
 
         readPreamble();
 
-        mDs.get().assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
+        ds.assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
         // The following contains the information of a net group but
         // the name of this group is stated outside. How should this
         // be handled?
 
-        uint16_t number_group_elements = mDs.get().readUint16();
+        uint16_t number_group_elements = ds.readUint16();
 
         for(size_t j = 0U; j < number_group_elements; ++j)
         {
-            std::string element_name = mDs.get().readStringLenZeroTerm();
+            std::string element_name = ds.readStringLenZeroTerm();
             spdlog::trace("  [{}]: element_name = {}", j, element_name);
 
             // @todo 0x01 is probably a scalar wire
             //       0x02 is probably a bus
-            uint16_t wire_type = mDs.get().readUint16();
+            uint16_t wire_type = ds.readUint16();
             spdlog::trace("       wire_type = {}", wire_type == 0x01 ? "Scalar" : wire_type == 0x02 ? "Bus" : "Unknown");
         }
     }
 
-    if(!mDs.get().isEoF())
+    if(!ds.isEoF())
     {
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::info(to_string());
 }

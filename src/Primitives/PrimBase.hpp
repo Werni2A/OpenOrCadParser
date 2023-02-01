@@ -9,7 +9,7 @@
 class PrimBase : public CommonBase
 {
 public:
-    PrimBase(DataStream& aDs) : CommonBase{aDs}
+    PrimBase(ParserContext& aCtx) : CommonBase{aCtx}
     { }
 };
 

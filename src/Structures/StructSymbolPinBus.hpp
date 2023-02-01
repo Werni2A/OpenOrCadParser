@@ -18,7 +18,7 @@ class StructSymbolPinBus : public StructSymbolPin
 {
 public:
 
-    StructSymbolPinBus(DataStream& aDs) : StructSymbolPin{aDs}
+    StructSymbolPinBus(ParserContext& aCtx) : StructSymbolPin{aCtx}
     { }
 
     // std::string to_string() const override;

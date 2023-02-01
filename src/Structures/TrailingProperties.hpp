@@ -16,7 +16,7 @@ class TrailingProperties : public CommonBase
 {
 public:
 
-    TrailingProperties(DataStream& aDs) : CommonBase{aDs}, normalName{}, convertName{}
+    TrailingProperties(ParserContext& aCtx) : CommonBase{aCtx}, normalName{}, convertName{}
     { }
 
     std::string to_string() const override;

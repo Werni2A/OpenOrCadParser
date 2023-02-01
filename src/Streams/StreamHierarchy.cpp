@@ -10,23 +10,25 @@
 
 void StreamHierarchy::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    mDs.get().printUnknownData(9, getMethodName(this, __func__) + ": 0");
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    const std::string schematicName = mDs.get().readStringLenZeroTerm();
+    ds.printUnknownData(9, getMethodName(this, __func__) + ": 0");
+
+    const std::string schematicName = ds.readStringLenZeroTerm();
 
     spdlog::trace("schematicName = {}", schematicName);
 
-    mDs.get().printUnknownData(9, getMethodName(this, __func__) + ": 1");
+    ds.printUnknownData(9, getMethodName(this, __func__) + ": 1");
 
-    const uint16_t netLen = mDs.get().readUint16();
+    const uint16_t netLen = ds.readUint16();
 
     spdlog::trace("netLen = {}", netLen);
 
     for(size_t i = 0u; i < netLen; ++i)
     {
-        FutureDataLst localFutureLst{mDs};
+        FutureDataLst localFutureLst{mCtx};
 
         auto_read_prefixes(localFutureLst);
 
@@ -36,15 +38,15 @@ void StreamHierarchy::read(FileFormatVersion /* aVersion */)
 
         // @todo Move the following data into its own structure for the specific Structure type
 
-        const uint32_t dbId = mDs.get().readUint32();
+        const uint32_t dbId = ds.readUint32();
 
         spdlog::trace("dbId = {}", dbId);
 
-        const std::string name = mDs.get().readStringLenZeroTerm(); // net name
+        const std::string name = ds.readStringLenZeroTerm(); // net name
 
         spdlog::trace("name = {}", name);
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::info(to_string());
 }

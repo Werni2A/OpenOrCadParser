@@ -10,8 +10,8 @@
 #include <nameof.hpp>
 #include <spdlog/spdlog.h>
 
-#include "DataStream.hpp"
 #include "General.hpp"
+#include "ParserContext.hpp"
 
 
 // See Win32 API for reference, where the original structure was copied from
@@ -25,11 +25,11 @@ public:
         lfFaceName{""}
     { }
 
-    void read(DataStream& aDs)
+    void read(ParserContext& aCtx)
     {
-        spdlog::debug(getOpeningMsg(getMethodName(this, __func__), aDs.getCurrentOffset()));
+        spdlog::debug(getOpeningMsg(getMethodName(this, __func__), aCtx.mDs.get().getCurrentOffset()));
 
-        const auto buffer = aDs.readBytes(sizeof(*this));
+        const auto buffer = aCtx.mDs.get().readBytes(sizeof(*this));
 
         std::memcpy(this, buffer.data(), sizeof(*this));
 
@@ -48,7 +48,7 @@ public:
             throw std::runtime_error(fmt::format("lfQuality <= 6 must hold but lfQuality = {}", lfQuality));
         }
 
-        spdlog::debug(getClosingMsg(getMethodName(this, __func__), aDs.getCurrentOffset()));
+        spdlog::debug(getClosingMsg(getMethodName(this, __func__), aCtx.mDs.get().getCurrentOffset()));
         spdlog::info(to_string());
     }
 

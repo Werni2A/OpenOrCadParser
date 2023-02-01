@@ -29,26 +29,28 @@ size_t PrimPolyline::getExpectedStructSize(FileFormatVersion aVersion, size_t aP
 
 void PrimPolyline::read(FileFormatVersion aVersion)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
+
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     if(aVersion == FileFormatVersion::Unknown)
     {
         aVersion = predictVersion();
     }
 
-    const size_t startOffset = mDs.get().getCurrentOffset();
+    const size_t startOffset = ds.getCurrentOffset();
 
-    const uint32_t byteLength = mDs.get().readUint32();
+    const uint32_t byteLength = ds.readUint32();
 
-    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
+    ds.assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
     if(aVersion >= FileFormatVersion::B)
     {
-        setLineStyle(ToLineStyle(mDs.get().readUint32()));
-        setLineWidth(ToLineWidth(mDs.get().readUint32()));
+        setLineStyle(ToLineStyle(ds.readUint32()));
+        setLineWidth(ToLineWidth(ds.readUint32()));
     }
 
-    const uint16_t pointCount = mDs.get().readUint16();
+    const uint16_t pointCount = ds.readUint16();
 
     spdlog::trace("pointCount = {}", pointCount);
 
@@ -60,14 +62,14 @@ void PrimPolyline::read(FileFormatVersion aVersion)
 
     for(size_t i = 0u; i < pointCount; ++i)
     {
-        Point point{mDs};
+        Point point{mCtx};
         point.read();
         points.push_back(point);
     }
 
-    if(mDs.get().getCurrentOffset() != startOffset + byteLength)
+    if(ds.getCurrentOffset() != startOffset + byteLength)
     {
-        throw MisinterpretedData(__func__, startOffset, byteLength, mDs.get().getCurrentOffset());
+        throw MisinterpretedData(__func__, startOffset, byteLength, ds.getCurrentOffset());
     }
 
     if(byteLength != getExpectedStructSize(aVersion, pointCount))
@@ -77,6 +79,6 @@ void PrimPolyline::read(FileFormatVersion aVersion)
 
     readPreamble();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

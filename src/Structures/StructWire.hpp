@@ -30,7 +30,7 @@ class StructWire : public CommonBase
 {
 public:
 
-    StructWire(DataStream& aDs) : CommonBase{aDs}, id{0}, color{Color::Default},
+    StructWire(ParserContext& aCtx) : CommonBase{aCtx}, id{0}, color{Color::Default},
         startX{0}, startY{0}, endX{0}, endY{0},
         lineWidth{LineWidth::Default}, lineStyle{LineStyle::Default}
     { }

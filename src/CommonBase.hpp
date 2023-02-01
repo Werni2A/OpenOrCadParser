@@ -7,11 +7,11 @@
 #include <optional>
 #include <utility>
 
-#include "DataStream.hpp"
 #include "Enums/Primitive.hpp"
 #include "Enums/Structure.hpp"
 #include "FutureData.hpp"
 #include "General.hpp"
+#include "ParserContext.hpp"
 
 
 class PrimBase;
@@ -20,7 +20,7 @@ class PrimBase;
 class CommonBase
 {
 public:
-    CommonBase(DataStream& aDs) : mDs{aDs}, mFileFormatVersion{FileFormatVersion::C}
+    CommonBase(ParserContext& aCtx) : mCtx{aCtx}, mFileFormatVersion{FileFormatVersion::C}
     { }
 
     virtual std::string to_string() const = 0;
@@ -55,7 +55,7 @@ public:
     std::unique_ptr<CommonBase> readStructure(Structure aStructure);
 
 protected:
-    std::reference_wrapper<DataStream> mDs;
+    std::reference_wrapper<ParserContext> mCtx;
 
     FileFormatVersion mFileFormatVersion;
 };

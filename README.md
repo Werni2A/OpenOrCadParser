@@ -70,7 +70,8 @@ Allowed options:
   -e [ --extract ]            extract binary files from CFBF container
   -i [ --input ] arg          input file to parse
   -o [ --output ] arg         output path (required iff extract is set)
-  -v [ --verbosity ] arg (=3) verbosity level (0 = off, 6 = highest)
+  -v [ --verbosity ] arg (=4) verbosity level (0 = off, 6 = highest)
+  -s [ --stop ]               stop parsing on low severity errors
 
 ./cli/OpenOrCadParser-cli --input file.DSN --extract --output out/
 ./cli/OpenOrCadParser-cli --input file.DSN --print_tree

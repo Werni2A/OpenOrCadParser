@@ -21,7 +21,7 @@ class StructT0x35 : public CommonBase
 {
 public:
 
-    StructT0x35(DataStream& aDs) : CommonBase{aDs}, id{0}, color{Color::Default},
+    StructT0x35(ParserContext& aCtx) : CommonBase{aCtx}, id{0}, color{Color::Default},
         lineStyle{LineStyle::Default}, lineWidth{LineWidth::Default}
     { }
 

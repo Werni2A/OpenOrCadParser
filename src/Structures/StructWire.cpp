@@ -11,9 +11,11 @@
 
 void StructWire::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes({Structure::WireBus, Structure::WireScalar}, localFutureLst);
 
@@ -21,31 +23,31 @@ void StructWire::read(FileFormatVersion /* aVersion */)
 
     // @todo this 4 Byte and the following 4 byte ID
     //       might be swapped. I need to verify this!
-    mDs.get().printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
+    ds.printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
 
-    id = mDs.get().readUint32();
+    id = ds.readUint32();
 
     spdlog::trace("id = {}", id);
 
-    color = ToColor(mDs.get().readUint32());
+    color = ToColor(ds.readUint32());
 
     spdlog::trace("color = {}", ::to_string(color));
 
-    startX = mDs.get().readInt32();
-    startY = mDs.get().readInt32();
+    startX = ds.readInt32();
+    startY = ds.readInt32();
 
     spdlog::trace("startX = {}", startX);
     spdlog::trace("startY = {}", startY);
 
-    endX = mDs.get().readInt32();
-    endY = mDs.get().readInt32();
+    endX = ds.readInt32();
+    endY = ds.readInt32();
 
     spdlog::trace("endX = {}", endX);
     spdlog::trace("endY = {}", endY);
 
-    mDs.get().printUnknownData(1, fmt::format("{}: 1", getMethodName(this, __func__)));
+    ds.printUnknownData(1, fmt::format("{}: 1", getMethodName(this, __func__)));
 
-    const uint16_t lenAliases = mDs.get().readUint16();
+    const uint16_t lenAliases = ds.readUint16();
 
     spdlog::trace("lenAliases = {}", lenAliases);
 
@@ -54,7 +56,7 @@ void StructWire::read(FileFormatVersion /* aVersion */)
         aliases.push_back(dynamic_pointer_cast<StructAlias>(readStructure()));
     }
 
-    const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
+    const uint16_t lenSymbolDisplayProps = ds.readUint16();
 
     spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
@@ -63,16 +65,16 @@ void StructWire::read(FileFormatVersion /* aVersion */)
         symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
-    lineWidth = ToLineWidth(mDs.get().readUint32());
+    lineWidth = ToLineWidth(ds.readUint32());
 
     spdlog::trace("lineWidth = {}", ::to_string(lineWidth));
 
-    lineStyle = ToLineStyle(mDs.get().readUint32());
+    lineStyle = ToLineStyle(ds.readUint32());
 
     spdlog::trace("lineStyle = {}", ::to_string(lineStyle));
 
     localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

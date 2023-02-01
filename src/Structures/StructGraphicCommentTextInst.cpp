@@ -11,20 +11,22 @@
 
 void StructGraphicCommentTextInst::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(Structure::GraphicCommentTextInst, localFutureLst);
 
     readPreamble();
 
-    mDs.get().printUnknownData(34, getMethodName(this, __func__) + ": 0");
+    ds.printUnknownData(34, getMethodName(this, __func__) + ": 0");
 
     sthInPages0 = dynamic_pointer_cast<StructSthInPages0>(readStructure());
 
     localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

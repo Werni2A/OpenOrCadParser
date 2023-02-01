@@ -22,37 +22,40 @@ namespace fs = std::filesystem;
 
 void PrimBitmap::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ctx = mCtx.get();
+    auto& ds  = mCtx.get().mDs.get();
 
-    const size_t startOffset = mDs.get().getCurrentOffset();
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    const uint32_t byteLength = mDs.get().readUint32();
+    const size_t startOffset = ds.getCurrentOffset();
 
-    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
+    const uint32_t byteLength = ds.readUint32();
 
-    locX = mDs.get().readInt32();
-    locY = mDs.get().readInt32();
+    ds.assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
+
+    locX = ds.readInt32();
+    locY = ds.readInt32();
 
     spdlog::trace("locX = {}", locX);
     spdlog::trace("locY = {}", locY);
 
-    x2 = mDs.get().readInt32();
-    y2 = mDs.get().readInt32();
-    x1 = mDs.get().readInt32();
-    y1 = mDs.get().readInt32();
+    x2 = ds.readInt32();
+    y2 = ds.readInt32();
+    x1 = ds.readInt32();
+    y1 = ds.readInt32();
 
     spdlog::trace("x2 = {}", x2);
     spdlog::trace("y2 = {}", y2);
     spdlog::trace("x1 = {}", x1);
     spdlog::trace("y1 = {}", y1);
 
-    bmpWidth  = mDs.get().readUint32();
-    bmpHeight = mDs.get().readUint32();
+    bmpWidth  = ds.readUint32();
+    bmpHeight = ds.readUint32();
 
     spdlog::trace("bmpWidth  = {}", bmpWidth);
     spdlog::trace("bmpHeight = {}", bmpHeight);
 
-    const uint32_t dataSize = mDs.get().readUint32();
+    const uint32_t dataSize = ds.readUint32();
 
     spdlog::trace("dataSize = {}", dataSize);
 
@@ -61,23 +64,21 @@ void PrimBitmap::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0U; i < dataSize; ++i)
     {
-        rawImgData.push_back(mDs.get().readUint8());
+        rawImgData.push_back(ds.readUint8());
     }
 
-    // fs::path filename = mCurrOpenFile.parent_path() / fmt::format("{}_img_{}.bmp", // @todo fixme
-    //    mCurrOpenFile.stem().string(), mImgCtr);
-    fs::path filename = fs::temp_directory_path() / fmt::format("{}_img_{}.bmp", 0, 0);
+    fs::path filename = ctx.mCurrOpenFile.parent_path() / fmt::format("{}_img_{}.bmp",
+        ctx.mCurrOpenFile.stem().string(), ctx.mImgCtr);
 
     filename = writeImgToFile(filename);
 
     spdlog::info("{}: Wrote bitmap file to {}", __func__, filename.string());
 
-    // @todo fixme
-    // ++mImgCtr;
+    ++ctx.mImgCtr;
 
-    if(mDs.get().getCurrentOffset() != startOffset + byteLength)
+    if(ds.getCurrentOffset() != startOffset + byteLength)
     {
-        throw MisinterpretedData(__func__, startOffset, byteLength, mDs.get().getCurrentOffset());
+        throw MisinterpretedData(__func__, startOffset, byteLength, ds.getCurrentOffset());
     }
 
     if(byteLength != 44U + dataSize)
@@ -87,7 +88,7 @@ void PrimBitmap::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }
 

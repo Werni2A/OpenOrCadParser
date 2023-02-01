@@ -10,19 +10,21 @@
 
 void StructSthInHierarchy2::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    mDs.get().printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    const uint16_t val = mDs.get().readUint16();
+    ds.printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
+
+    const uint16_t val = ds.readUint16();
 
     spdlog::trace("val = {}", val);
 
-    FutureDataLst localFutureLst{mDs};
+    FutureDataLst localFutureLst{mCtx};
 
     // Try parsing either 0 or 10 bytes until the next prefix occurs
     {
-        size_t currOffset = mDs.get().getCurrentOffset();
+        size_t currOffset = ds.getCurrentOffset();
 
         bool success = false;
 
@@ -30,18 +32,18 @@ void StructSthInHierarchy2::read(FileFormatVersion /* aVersion */)
         {
             try
             {
-                localFutureLst = FutureDataLst{mDs};
+                localFutureLst = FutureDataLst{mCtx};
 
                 auto_read_prefixes(localFutureLst);
                 readPreamble();
                 success = true;
 
                 // Restore previous state and parse bytes
-                mDs.get().setCurrentOffset(currOffset);
+                ds.setCurrentOffset(currOffset);
             }
             catch(...)
             {
-                mDs.get().setCurrentOffset(currOffset);
+                ds.setCurrentOffset(currOffset);
             }
         }
 
@@ -49,21 +51,21 @@ void StructSthInHierarchy2::read(FileFormatVersion /* aVersion */)
         {
             try
             {
-                mDs.get().printUnknownData(10, fmt::format("{}: 1", getMethodName(this, __func__)));
+                ds.printUnknownData(10, fmt::format("{}: 1", getMethodName(this, __func__)));
 
-                localFutureLst = FutureDataLst{mDs};
+                localFutureLst = FutureDataLst{mCtx};
 
                 auto_read_prefixes(localFutureLst);
                 readPreamble();
                 success = true;
 
                 // Restore previous state and parse bytes
-                mDs.get().setCurrentOffset(currOffset);
-                mDs.get().printUnknownData(10, fmt::format("{}: 2", getMethodName(this, __func__)));
+                ds.setCurrentOffset(currOffset);
+                ds.printUnknownData(10, fmt::format("{}: 2", getMethodName(this, __func__)));
             }
             catch(...)
             {
-                mDs.get().setCurrentOffset(currOffset);
+                ds.setCurrentOffset(currOffset);
             }
         }
 
@@ -75,6 +77,6 @@ void StructSthInHierarchy2::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

@@ -19,7 +19,7 @@ class Point : public CommonBase
 {
 public:
 
-    Point(DataStream& aDs) : CommonBase{aDs}, x{0}, y{0}
+    Point(ParserContext& aCtx) : CommonBase{aCtx}, x{0}, y{0}
     { }
 
     std::string to_string() const override;

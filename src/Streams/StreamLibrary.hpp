@@ -21,8 +21,8 @@ class StreamLibrary : public CommonBase
 {
 public:
 
-    StreamLibrary(DataStream& aDs) : CommonBase{aDs}, introduction{}, createDate{0}, modifyDate{0},
-        textFonts{}, strLstPartField{}, pageSettings{aDs}, strLst{}, partAliases{}
+    StreamLibrary(ParserContext& aCtx) : CommonBase{aCtx}, introduction{}, createDate{0}, modifyDate{0},
+        textFonts{}, strLstPartField{}, pageSettings{aCtx}, strLst{}, partAliases{}
     { }
 
     std::string to_string() const override;

@@ -23,7 +23,7 @@ class PrimPolygon : public PrimBase
 {
 public:
 
-    PrimPolygon(DataStream& aDs) : PrimBase{aDs}, mLineStyle{}, mLineWidth{},
+    PrimPolygon(ParserContext& aCtx) : PrimBase{aCtx}, mLineStyle{}, mLineWidth{},
         fillStyle{}, hatchStyle{}, points{}
     { }
 

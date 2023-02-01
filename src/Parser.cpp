@@ -63,11 +63,10 @@ FileFormatVersion gFileFormatVersion = FileFormatVersion::C;
 
 
 Parser::Parser(const fs::path& aFile) :
-    mFileCtr{0U}, mFileErrCtr{0U}, mImgCtr{0U}
+    mFileCtr{0U}, mFileErrCtr{0U}, mDs{""}, mCtx{mDs, "", "", ""}
 {
     gFileType      = getFileTypeByExtension(aFile);
     mInputFile     = aFile;
-    mInputFileSize = fs::file_size(aFile);
 
     // Extract to a unique folder in case two similar named files
     // are extracted at the same time. E.g. in parallel execution.
@@ -257,7 +256,7 @@ void Parser::parseLibrary()
 
     if(fs::exists(pathCellsDir))
     {
-        gLibrary->cellsDir = parseFile<StreamCellsDirectory>(pathCellsDir, mDs);
+        gLibrary->cellsDir = parseFile<StreamCellsDirectory>(pathCellsDir, mCtx);
     }
     else
     {
@@ -268,7 +267,7 @@ void Parser::parseLibrary()
 
     if(fs::exists(pathExportBlocksDir))
     {
-        gLibrary->exportBlocksDir = parseFile<StreamExportBlocksDirectory>(pathExportBlocksDir, mDs);
+        gLibrary->exportBlocksDir = parseFile<StreamExportBlocksDirectory>(pathExportBlocksDir, mCtx);
     }
     else
     {
@@ -279,7 +278,7 @@ void Parser::parseLibrary()
 
     if(fs::exists(pathGraphicsDir))
     {
-        gLibrary->graphicsDir = parseFile<StreamGraphicsDirectory>(pathGraphicsDir, mDs);
+        gLibrary->graphicsDir = parseFile<StreamGraphicsDirectory>(pathGraphicsDir, mCtx);
     }
     else
     {
@@ -290,7 +289,7 @@ void Parser::parseLibrary()
 
     if(fs::exists(pathPackagesDir))
     {
-        gLibrary->packagesDir = parseFile<StreamPackagesDirectory>(pathPackagesDir, mDs);
+        gLibrary->packagesDir = parseFile<StreamPackagesDirectory>(pathPackagesDir, mCtx);
     }
     else
     {
@@ -301,7 +300,7 @@ void Parser::parseLibrary()
 
     if(fs::exists(pathPartsDir))
     {
-        gLibrary->partsDir = parseFile<StreamPartsDirectory>(pathPartsDir, mDs);
+        gLibrary->partsDir = parseFile<StreamPartsDirectory>(pathPartsDir, mCtx);
     }
     else
     {
@@ -312,7 +311,7 @@ void Parser::parseLibrary()
 
     if(fs::exists(pathSymbolsDir))
     {
-        gLibrary->symbolsDir = parseFile<StreamSymbolsDirectory>(pathSymbolsDir, mDs);
+        gLibrary->symbolsDir = parseFile<StreamSymbolsDirectory>(pathSymbolsDir, mCtx);
     }
     else
     {
@@ -323,7 +322,7 @@ void Parser::parseLibrary()
 
     if(fs::exists(pathViewsDir))
     {
-        gLibrary->viewsDir = parseFile<StreamViewsDirectory>(pathViewsDir, mDs);
+        gLibrary->viewsDir = parseFile<StreamViewsDirectory>(pathViewsDir, mCtx);
     }
     else
     {
@@ -334,22 +333,22 @@ void Parser::parseLibrary()
 
     if(fs::exists(pathAdminData))
     {
-        gLibrary->adminData = parseFile<StreamAdminData>(pathAdminData, mDs);
+        gLibrary->adminData = parseFile<StreamAdminData>(pathAdminData, mCtx);
     }
 
     if(fs::exists(pathHSObjects))
     {
-        gLibrary->hsObjects = parseFile<StreamHSObjects>(pathHSObjects, mDs);
+        gLibrary->hsObjects = parseFile<StreamHSObjects>(pathHSObjects, mCtx);
     }
 
     if(fs::exists(pathNetBundleMapData))
     {
-        gLibrary->netBundleMapData = parseFile<StreamNetBundleMapData>(pathNetBundleMapData, mDs);
+        gLibrary->netBundleMapData = parseFile<StreamNetBundleMapData>(pathNetBundleMapData, mCtx);
     }
 
     if(fs::exists(pathGraphicsTypes))
     {
-        gLibrary->graphicsTypes = parseFile<StreamType>(pathGraphicsTypes, mDs);
+        gLibrary->graphicsTypes = parseFile<StreamType>(pathGraphicsTypes, mCtx);
     }
     else
     {
@@ -360,7 +359,7 @@ void Parser::parseLibrary()
 
     if(fs::exists(pathSymbolsTypes))
     {
-        gLibrary->symbolsTypes = parseFile<StreamType>(pathSymbolsTypes, mDs);
+        gLibrary->symbolsTypes = parseFile<StreamType>(pathSymbolsTypes, mCtx);
     }
     else
     {
@@ -371,7 +370,7 @@ void Parser::parseLibrary()
 
     if(fs::exists(pathLibrary))
     {
-        gLibrary->library = parseFile<StreamLibrary>(pathLibrary, mDs);
+        gLibrary->library = parseFile<StreamLibrary>(pathLibrary, mCtx);
     }
     else
     {
@@ -382,7 +381,7 @@ void Parser::parseLibrary()
 
     if(fs::exists(pathDsnStream))
     {
-        gLibrary->dsnStream = parseFile<StreamDsnStream>(pathDsnStream, mDs);
+        gLibrary->dsnStream = parseFile<StreamDsnStream>(pathDsnStream, mCtx);
     }
 
     spdlog::info("----------------------------------------------------------------------------------\n");
@@ -390,7 +389,7 @@ void Parser::parseLibrary()
     if(fs::exists(pathSymbolsERC))
     {
         // @todo write results into mLibrary
-        parseFile<StreamERC>(pathSymbolsERC, mDs);
+        parseFile<StreamERC>(pathSymbolsERC, mCtx);
     }
     else
     {
@@ -413,7 +412,7 @@ void Parser::parseLibrary()
                 continue;
             }
 
-            gLibrary->packages.push_back(parseFile<StreamPackage>(pathPackage, mDs));
+            gLibrary->packages.push_back(parseFile<StreamPackage>(pathPackage, mCtx));
 
             spdlog::info("----------------------------------------------------------------------------------\n");
         }
@@ -446,7 +445,7 @@ void Parser::parseLibrary()
                 continue;
             }
 
-            gLibrary->symbols.push_back(parseFile<StreamSymbol>(pathSymbol, mDs));
+            gLibrary->symbols.push_back(parseFile<StreamSymbol>(pathSymbol, mCtx));
 
             spdlog::info("----------------------------------------------------------------------------------\n");
         }
@@ -461,7 +460,7 @@ void Parser::parseLibrary()
         if(fs::exists(schematic))
         {
             // @todo write results into mLibrary
-            parseFile<StreamSchematic>(schematic, mDs);
+            parseFile<StreamSchematic>(schematic, mCtx);
         }
         else
         {
@@ -476,7 +475,7 @@ void Parser::parseLibrary()
         if(fs::exists(hierarchy))
         {
             // @todo write results into mLibrary
-            parseFile<StreamHierarchy>(hierarchy, mDs);
+            parseFile<StreamHierarchy>(hierarchy, mCtx);
         }
         else
         {
@@ -493,7 +492,7 @@ void Parser::parseLibrary()
             if(fs::exists(page))
             {
                 // @todo write results into mLibrary
-                parseFile<StreamPage>(page, mDs);
+                parseFile<StreamPage>(page, mCtx);
             }
             else
             {
@@ -606,8 +605,6 @@ void Parser::openFile(const fs::path& aFile)
 
     mRemainingFiles.erase(it);
 
-    mImgCtr = 0U;
-
     mDs = DataStream{aFile};
     if(!mDs)
     {
@@ -615,9 +612,10 @@ void Parser::openFile(const fs::path& aFile)
     }
 
     mCurrOpenFile     = aFile;
-    mCurrOpenFileSize = fs::file_size(aFile);
 
-    spdlog::info("File contains {} byte.", mCurrOpenFileSize);
+    mCtx = ParserContext{mDs, mInputFile, mCurrOpenFile, mExtractedPath};
+
+    spdlog::info("File contains {} byte.", fs::file_size(aFile));
 }
 
 
@@ -628,5 +626,4 @@ void Parser::closeFile()
     mDs.close();
 
     mCurrOpenFile.clear();
-    mCurrOpenFileSize = 0u;
 }

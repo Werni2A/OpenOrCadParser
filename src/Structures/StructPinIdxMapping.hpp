@@ -23,7 +23,7 @@ class StructPinIdxMapping : public CommonBase
 {
 public:
 
-    StructPinIdxMapping(DataStream& aDs) : CommonBase{aDs}, unitRef{}, refDes{},
+    StructPinIdxMapping(ParserContext& aCtx) : CommonBase{aCtx}, unitRef{}, refDes{},
         pinMap{}, pinIgnore{}, pinGroup{}
     { }
 

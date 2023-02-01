@@ -27,7 +27,7 @@ class StructSymbolPin : public CommonBase
 {
 public:
 
-    StructSymbolPin(DataStream& aDs) : CommonBase{aDs}, name{}, startX{0}, startY{0},
+    StructSymbolPin(ParserContext& aCtx) : CommonBase{aCtx}, name{}, startX{0}, startY{0},
         hotptX{0}, hotptY{0}, pinShape{}, portType{PortType::Input}, symbolDisplayProps{}
     { }
 
