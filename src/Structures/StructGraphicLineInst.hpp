@@ -20,7 +20,7 @@ class StructGraphicLineInst : public StructGraphicInst
 {
 public:
 
-    StructGraphicLineInst(DataStream& aDs) : StructGraphicInst{aDs}, sthInPages0{}
+    StructGraphicLineInst(ParserContext& aCtx) : StructGraphicInst{aCtx}, sthInPages0{}
     { }
 
     std::string to_string() const override;

@@ -22,7 +22,7 @@ class StreamPackage : public CommonBase
 {
 public:
 
-    StreamPackage(DataStream& aDs) : CommonBase{aDs}, properties{}, primitives{},
+    StreamPackage(ParserContext& aCtx) : CommonBase{aCtx}, properties{}, primitives{},
         t0x1f{}, pinIdxMappings{}
     { }
 

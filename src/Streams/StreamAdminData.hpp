@@ -16,7 +16,7 @@ class StreamAdminData : public CommonBase
 {
 public:
 
-    StreamAdminData(DataStream& aDs) : CommonBase{aDs}
+    StreamAdminData(ParserContext& aCtx) : CommonBase{aCtx}
     { }
 
     std::string to_string() const override;

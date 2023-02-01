@@ -24,7 +24,7 @@ class StructPort : public CommonBase
 {
 public:
 
-    StructPort(DataStream& aDs) : CommonBase{aDs}, name{}, symbolDisplayProps{}
+    StructPort(ParserContext& aCtx) : CommonBase{aCtx}, name{}, symbolDisplayProps{}
     { }
 
     std::string to_string() const override;

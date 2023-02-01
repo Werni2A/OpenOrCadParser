@@ -17,7 +17,7 @@ class StreamSchematic : public CommonBase
 {
 public:
 
-    StreamSchematic(DataStream& aDs) : CommonBase{aDs}
+    StreamSchematic(ParserContext& aCtx) : CommonBase{aCtx}
     { }
 
     std::string to_string() const override;

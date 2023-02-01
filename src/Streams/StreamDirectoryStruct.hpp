@@ -68,7 +68,7 @@ class StreamDirectoryStruct : public CommonBase
 {
 public:
 
-    StreamDirectoryStruct(DataStream& aDs) : CommonBase{aDs}, lastModifiedDate{0}, items{}
+    StreamDirectoryStruct(ParserContext& aCtx) : CommonBase{aCtx}, lastModifiedDate{0}, items{}
     { }
 
     std::string to_string() const;

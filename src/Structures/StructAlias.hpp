@@ -20,7 +20,7 @@ class StructAlias : public CommonBase
 {
 public:
 
-    StructAlias(DataStream& aDs) : CommonBase{aDs}, locX{0}, locY{0},
+    StructAlias(ParserContext& aCtx) : CommonBase{aCtx}, locX{0}, locY{0},
         color{Color::Default}, rotation{Rotation::Deg_0}, name{}
     { }
 

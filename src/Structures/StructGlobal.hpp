@@ -21,7 +21,7 @@ class StructGlobal : public CommonBase
 {
 public:
 
-    StructGlobal(DataStream& aDs) : CommonBase{aDs}, symbolDisplayProps{}
+    StructGlobal(ParserContext& aCtx) : CommonBase{aCtx}, symbolDisplayProps{}
     { }
 
     std::string to_string() const override;

@@ -21,7 +21,7 @@ class StructT0x10 : public CommonBase
 {
 public:
 
-    StructT0x10(DataStream& aDs) : CommonBase{aDs}, symbolDisplayProps{}
+    StructT0x10(ParserContext& aCtx) : CommonBase{aCtx}, symbolDisplayProps{}
     { }
 
     std::string to_string() const override;

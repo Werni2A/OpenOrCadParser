@@ -23,7 +23,7 @@ class StructSymbol : public CommonBase
 {
 public:
 
-    StructSymbol(DataStream& aDs) : CommonBase{aDs}
+    StructSymbol(ParserContext& aCtx) : CommonBase{aCtx}
     { }
 
     std::string to_string() const override;

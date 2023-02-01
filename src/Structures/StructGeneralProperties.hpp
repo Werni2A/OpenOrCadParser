@@ -17,7 +17,7 @@ class StructGeneralProperties : public CommonBase
 {
 public:
 
-    StructGeneralProperties(DataStream& aDs) : CommonBase{aDs}, implementationPath{},
+    StructGeneralProperties(ParserContext& aCtx) : CommonBase{aCtx}, implementationPath{},
         implementation{}, refDes{}, partValue{}, implementationType{ImplementationType::None},
         pinNameVisible{true}, pinNameRotate{false}, pinNumberVisible{true}
     { }

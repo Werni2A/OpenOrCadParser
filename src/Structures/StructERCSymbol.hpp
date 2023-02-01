@@ -18,7 +18,7 @@ class StructERCSymbol : public StructSymbol
 {
 public:
 
-    StructERCSymbol(DataStream& aDs) : StructSymbol{aDs}, name{}, symbolBBox{aDs}
+    StructERCSymbol(ParserContext& aCtx) : StructSymbol{aCtx}, name{}, symbolBBox{aCtx}
     { }
 
     std::string to_string() const override;

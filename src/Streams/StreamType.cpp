@@ -10,24 +10,26 @@
 
 void StreamType::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
+
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     // File can be completely empty (size of 0 Byte)
-    while(!mDs.get().isEoF())
+    while(!ds.isEoF())
     {
         Type type;
 
-        type.name = mDs.get().readStringLenZeroTerm();
-        type.componentType = ToComponentType(mDs.get().readUint16());
+        type.name = ds.readStringLenZeroTerm();
+        type.componentType = ToComponentType(ds.readUint16());
 
         types.push_back(type);
     }
 
-    if(!mDs.get().isEoF())
+    if(!ds.isEoF())
     {
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::info(to_string());
 }

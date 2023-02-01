@@ -107,6 +107,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/General.hpp
    ${LIB_INCLUDE_DIR}/PageSettings.hpp
    ${LIB_INCLUDE_DIR}/Parser.hpp
+   ${LIB_INCLUDE_DIR}/ParserContext.hpp
    ${LIB_INCLUDE_DIR}/Primitives/Point.hpp
    ${LIB_INCLUDE_DIR}/Primitives/PrimArc.hpp
    ${LIB_INCLUDE_DIR}/Primitives/PrimBezier.hpp

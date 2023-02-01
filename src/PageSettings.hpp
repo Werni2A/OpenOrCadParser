@@ -17,7 +17,7 @@ class PageSettings : public CommonBase
 {
 public:
 
-    PageSettings(DataStream& aDs) : CommonBase{aDs},
+    PageSettings(ParserContext& aCtx) : CommonBase{aCtx},
         createDateTime{0}, modifyDateTime{0},
         width{0}, height{0},
         pinToPin{0},

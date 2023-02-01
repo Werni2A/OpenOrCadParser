@@ -14,30 +14,32 @@
 
 void StructSymbolPin::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes({Structure::SymbolPinBus, Structure::SymbolPinScalar}, localFutureLst);
 
     readPreamble();
 
-    name = mDs.get().readStringLenZeroTerm();
+    name = ds.readStringLenZeroTerm();
 
-    startX = mDs.get().readInt32();
-    startY = mDs.get().readInt32();
-    hotptX = mDs.get().readInt32();
-    hotptY = mDs.get().readInt32();
+    startX = ds.readInt32();
+    startY = ds.readInt32();
+    hotptX = ds.readInt32();
+    hotptY = ds.readInt32();
 
-    pinShape = ToPinShape(mDs.get().readUint16());
+    pinShape = ToPinShape(ds.readUint16());
 
-    mDs.get().printUnknownData(2, getMethodName(this, __func__) + ": 0");
+    ds.printUnknownData(2, getMethodName(this, __func__) + ": 0");
 
-    portType = ToPortType(mDs.get().readUint32());
+    portType = ToPortType(ds.readUint32());
 
-    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 1");
+    ds.printUnknownData(4, getMethodName(this, __func__) + ": 1");
 
-    const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
+    const uint16_t lenSymbolDisplayProps = ds.readUint16();
 
     spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
@@ -48,6 +50,6 @@ void StructSymbolPin::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

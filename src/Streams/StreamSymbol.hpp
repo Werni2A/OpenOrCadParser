@@ -21,7 +21,7 @@ class StreamSymbol : public CommonBase
 {
 public:
 
-    StreamSymbol(DataStream& aDs) : CommonBase{aDs}, symbolPins{}, symbolDisplayProps{}
+    StreamSymbol(ParserContext& aCtx) : CommonBase{aCtx}, symbolPins{}, symbolDisplayProps{}
     { }
 
     std::string to_string() const override;

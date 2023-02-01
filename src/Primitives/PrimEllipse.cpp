@@ -39,11 +39,13 @@ size_t PrimEllipse::getExpectedStructSize(FileFormatVersion aVersion)
 
 void PrimEllipse::read(FileFormatVersion aVersion)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    const size_t startOffset = mDs.get().getCurrentOffset();
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    uint32_t byteLength = mDs.get().readUint32();
+    const size_t startOffset = ds.getCurrentOffset();
+
+    uint32_t byteLength = ds.readUint32();
 
     // Predict version
     switch(byteLength)
@@ -54,28 +56,28 @@ void PrimEllipse::read(FileFormatVersion aVersion)
         default:                                  break;
     }
 
-    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
+    ds.assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
-    x1 = mDs.get().readInt32();
-    y1 = mDs.get().readInt32();
-    x2 = mDs.get().readInt32();
-    y2 = mDs.get().readInt32();
+    x1 = ds.readInt32();
+    y1 = ds.readInt32();
+    x2 = ds.readInt32();
+    y2 = ds.readInt32();
 
     if(aVersion >= FileFormatVersion::B)
     {
-        setLineStyle(ToLineStyle(mDs.get().readUint32()));
-        setLineWidth(ToLineWidth(mDs.get().readUint32()));
+        setLineStyle(ToLineStyle(ds.readUint32()));
+        setLineWidth(ToLineWidth(ds.readUint32()));
     }
 
     if(aVersion >= FileFormatVersion::C)
     {
-        setFillStyle(ToFillStyle(mDs.get().readUint32()));
-        setHatchStyle(ToHatchStyle(mDs.get().readInt32()));
+        setFillStyle(ToFillStyle(ds.readUint32()));
+        setHatchStyle(ToHatchStyle(ds.readInt32()));
     }
 
-    if(mDs.get().getCurrentOffset() != startOffset + byteLength)
+    if(ds.getCurrentOffset() != startOffset + byteLength)
     {
-        throw MisinterpretedData(__func__, startOffset, byteLength, mDs.get().getCurrentOffset());
+        throw MisinterpretedData(__func__, startOffset, byteLength, ds.getCurrentOffset());
     }
 
     if(byteLength != getExpectedStructSize(aVersion))
@@ -85,6 +87,6 @@ void PrimEllipse::read(FileFormatVersion aVersion)
 
     readPreamble();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

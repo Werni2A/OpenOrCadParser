@@ -11,25 +11,27 @@
 
 void StructOffPageSymbol::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(Structure::OffPageSymbol, localFutureLst);
 
     readPreamble();
 
-    const std::string name = mDs.get().readStringLenZeroTerm();
+    const std::string name = ds.readStringLenZeroTerm();
 
     spdlog::trace("name = {}", name);
 
-    const std::string someStr = mDs.get().readStringLenZeroTerm();
+    const std::string someStr = ds.readStringLenZeroTerm();
 
     spdlog::trace("someStr = {}", someStr);
 
-    mDs.get().printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
+    ds.printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
 
-    const uint16_t len0 = mDs.get().readUint16();
+    const uint16_t len0 = ds.readUint16();
 
     for(size_t i = 0; i < len0; ++i)
     {
@@ -37,9 +39,9 @@ void StructOffPageSymbol::read(FileFormatVersion /* aVersion */)
         readPrimitive(primitive);
     }
 
-    mDs.get().printUnknownData(8);
+    ds.printUnknownData(8);
 
-    const uint16_t lenSymbolPins = mDs.get().readUint16();
+    const uint16_t lenSymbolPins = ds.readUint16();
 
     spdlog::trace("lenSymbolPins = {}", lenSymbolPins);
 
@@ -48,7 +50,7 @@ void StructOffPageSymbol::read(FileFormatVersion /* aVersion */)
         symbolPins.push_back(dynamic_pointer_cast<StructSymbolPin>(readStructure()));
     }
 
-    const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
+    const uint16_t lenSymbolDisplayProps = ds.readUint16();
 
     spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
@@ -59,6 +61,6 @@ void StructOffPageSymbol::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

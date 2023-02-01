@@ -14,27 +14,29 @@
 
 void StructGeneralProperties::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    // FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    implementationPath = mDs.get().readStringLenZeroTerm();
+    // FutureDataLst localFutureLst{mCtx};
+
+    implementationPath = ds.readStringLenZeroTerm();
 
     spdlog::trace("implementationPath = {}", implementationPath);
 
-    implementation = mDs.get().readStringLenZeroTerm();
+    implementation = ds.readStringLenZeroTerm();
 
     spdlog::trace("implementation = {}", implementation);
 
-    refDes = mDs.get().readStringLenZeroTerm();
+    refDes = ds.readStringLenZeroTerm();
 
     spdlog::trace("refDes = {}", refDes);
 
-    partValue = mDs.get().readStringLenZeroTerm();
+    partValue = ds.readStringLenZeroTerm();
 
     spdlog::trace("partValue = {}", partValue);
 
-    const uint8_t properties = mDs.get().readUint8();
+    const uint8_t properties = ds.readUint8();
 
     spdlog::trace("properties = {}", properties);
 
@@ -54,10 +56,10 @@ void StructGeneralProperties::read(FileFormatVersion /* aVersion */)
 
     this->implementationType = ToImplementationType(implementationType);
 
-    mDs.get().printUnknownData(1, getMethodName(this, __func__) + ": 0");
+    ds.printUnknownData(1, getMethodName(this, __func__) + ": 0");
 
     // localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

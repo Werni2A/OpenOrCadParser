@@ -12,23 +12,25 @@
 
 void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(Structure::SymbolDisplayProp, localFutureLst);
 
     readPreamble();
 
-    nameIdx = mDs.get().readUint32();
+    nameIdx = ds.readUint32();
 
     // @todo move to left shift operator
     // @bug The required string is not this one but the value of the associated property!!!!
     //      This is just the name of the property!!
     spdlog::trace("strLst Item = {}", gLibrary->library->strLst.at(nameIdx));
 
-    x = mDs.get().readInt16();
-    y = mDs.get().readInt16();
+    x = ds.readInt16();
+    y = ds.readInt16();
 
     // Rotation and Font ID bit field
     struct RotFontIdBitField
@@ -43,7 +45,7 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
         uint16_t rotation    :  2; // 15 downto 14
     };
 
-    const RotFontIdBitField rotFontIdBitField{mDs.get().readUint16()};
+    const RotFontIdBitField rotFontIdBitField{ds.readUint16()};
 
     textFontIdx = rotFontIdBitField.textFontIdx;
 
@@ -63,7 +65,7 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
 
     rotation = ToRotation(rotFontIdBitField.rotation);
 
-    propColor = ToColor(mDs.get().readUint8());
+    propColor = ToColor(ds.readUint8());
 
     // Somehow relates to the visiblity of text. See show "Value if Value exist" and the other options
     //        Do not display
@@ -72,12 +74,12 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
     // 00 03  Name only
     // 00 04  Both if value exist
     //        Value if value exist
-    mDs.get().printUnknownData(2, getMethodName(this, __func__) + ": 0");
+    ds.printUnknownData(2, getMethodName(this, __func__) + ": 0");
 
-    mDs.get().assumeData({0x00}, getMethodName(this, __func__) + ": 1");
+    ds.assumeData({0x00}, getMethodName(this, __func__) + ": 1");
 
     localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

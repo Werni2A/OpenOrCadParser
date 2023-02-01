@@ -17,7 +17,7 @@ class PrimSymbolVector : public PrimBase // @todo probably derive from PrimBase,
 {
 public:
 
-    PrimSymbolVector(DataStream& aDs) : PrimBase{aDs}, locX{0}, locY{0}, name{}, primitives{}
+    PrimSymbolVector(ParserContext& aCtx) : PrimBase{aCtx}, locX{0}, locY{0}, name{}, primitives{}
     { }
 
     std::string to_string() const override;

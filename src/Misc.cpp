@@ -87,20 +87,22 @@ std::string SymbolUserProp::getVal() const
 // @todo this is a whole file parser. Split it up into the title block structure and move the rest to the symbol parser?
 void Parser::readTitleBlockSymbol()
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    mDs.get().printUnknownData(36, getMethodName(this, __func__) + ": 0");
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    ds.printUnknownData(36, getMethodName(this, __func__) + ": 0");
 
     std::vector<SymbolUserProp> symbolUserProps; // @todo store in symbol
 
-    const uint16_t propertyLen = mDs.get().readUint16();
+    const uint16_t propertyLen = ds.readUint16();
 
     for(size_t i = 0u; i < propertyLen; ++i)
     {
         SymbolUserProp symbolUserProp{};
 
-        symbolUserProp.nameIdx = mDs.get().readUint32(); // @todo move to Kaitai OrCAD: 'Symbol Properties' (Fixed value on the left)
-        symbolUserProp.valIdx  = mDs.get().readUint32(); // @todo move to Kaitai OrCAD: 'Symbol Properties' (Adjustable value on the right)
+        symbolUserProp.nameIdx = ds.readUint32(); // @todo move to Kaitai OrCAD: 'Symbol Properties' (Fixed value on the left)
+        symbolUserProp.valIdx  = ds.readUint32(); // @todo move to Kaitai OrCAD: 'Symbol Properties' (Adjustable value on the right)
 
         symbolUserProps.push_back(symbolUserProp);
     }
@@ -115,11 +117,11 @@ void Parser::readTitleBlockSymbol()
 
     // The following should be its own structure
     readPreamble();
-    std::string str0 = mDs.get().readStringLenZeroTerm();
+    std::string str0 = ds.readStringLenZeroTerm();
 
-    mDs.get().printUnknownData(7, getMethodName(this, __func__) + ": 1");
+    ds.printUnknownData(7, getMethodName(this, __func__) + ": 1");
 
-    const uint16_t someLen = mDs.get().readUint16();
+    const uint16_t someLen = ds.readUint16();
 
     spdlog::trace("someLen = {}", someLen);
 
@@ -129,10 +131,10 @@ void Parser::readTitleBlockSymbol()
         readPrimitive(primitive);
     }
 
-    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 2");
-    mDs.get().printUnknownData(6, getMethodName(this, __func__) + ": 3");
+    ds.assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 2");
+    ds.printUnknownData(6, getMethodName(this, __func__) + ": 3");
 
-    const uint16_t followingLen = mDs.get().readUint16();
+    const uint16_t followingLen = ds.readUint16();
 
     spdlog::trace("followingLen = {}", followingLen);
 
@@ -146,10 +148,10 @@ void Parser::readTitleBlockSymbol()
         }
     }
 
-    if(!mDs.get().isEoF())
+    if(!ds.isEoF())
     {
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 }

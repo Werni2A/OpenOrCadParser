@@ -21,7 +21,7 @@ class StructPinShapeSymbol : public StructSymbol
 {
 public:
 
-    StructPinShapeSymbol(DataStream& aDs) : StructSymbol{aDs}
+    StructPinShapeSymbol(ParserContext& aCtx) : StructSymbol{aCtx}
     { }
 
     std::string to_string() const override;

@@ -12,33 +12,35 @@
 
 void StructT0x10::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(Structure::T0x10, localFutureLst);
 
     readPreamble();
 
-    const uint16_t sth = mDs.get().readUint16();
+    const uint16_t sth = ds.readUint16();
 
     spdlog::trace("sth = {}", sth);
 
-    const int16_t pointX = mDs.get().readInt16();
-    const int16_t pointY = mDs.get().readInt16();
+    const int16_t pointX = ds.readInt16();
+    const int16_t pointY = ds.readInt16();
 
     spdlog::trace("pointX = {}", pointX);
     spdlog::trace("pointY = {}", pointY);
 
-    const uint32_t maybeId = mDs.get().readUint32();
+    const uint32_t maybeId = ds.readUint32();
 
     spdlog::trace("maybeId = {}", maybeId);
 
-    const uint32_t unkownInt = mDs.get().readUint32();
+    const uint32_t unkownInt = ds.readUint32();
 
     spdlog::trace("unkownInt = {}", unkownInt);
 
-    const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
+    const uint16_t lenSymbolDisplayProps = ds.readUint16();
 
     spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
@@ -49,6 +51,6 @@ void StructT0x10::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

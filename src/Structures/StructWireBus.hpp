@@ -22,7 +22,7 @@ class StructWireBus : public StructWire
 {
 public:
 
-    StructWireBus(DataStream& aDs) : StructWire{aDs}
+    StructWireBus(ParserContext& aCtx) : StructWire{aCtx}
     { }
 
     // std::string to_string() const override;

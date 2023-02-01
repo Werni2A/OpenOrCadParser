@@ -21,7 +21,7 @@
 class PrimBezier : public PrimBase
 {
 public:
-    PrimBezier(DataStream& aDs) : PrimBase{aDs}, mLineStyle{}, mLineWidth{}, points{}
+    PrimBezier(ParserContext& aCtx) : PrimBase{aCtx}, mLineStyle{}, mLineWidth{}, points{}
     { }
 
     std::string to_string() const override;

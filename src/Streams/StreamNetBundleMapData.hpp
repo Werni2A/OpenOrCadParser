@@ -15,7 +15,7 @@ class StreamNetBundleMapData : public CommonBase
 {
 public:
 
-    StreamNetBundleMapData(DataStream& aDs) : CommonBase{aDs}
+    StreamNetBundleMapData(ParserContext& aCtx) : CommonBase{aCtx}
     { }
 
     std::string to_string() const override;

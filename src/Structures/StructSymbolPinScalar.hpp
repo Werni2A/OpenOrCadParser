@@ -18,7 +18,7 @@ class StructSymbolPinScalar : public StructSymbolPin
 {
 public:
 
-    StructSymbolPinScalar(DataStream& aDs) : StructSymbolPin{aDs}
+    StructSymbolPinScalar(ParserContext& aCtx) : StructSymbolPin{aCtx}
     { }
 
     // std::string to_string() const override;

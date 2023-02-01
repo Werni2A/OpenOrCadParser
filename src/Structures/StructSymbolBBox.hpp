@@ -17,7 +17,7 @@ class StructSymbolBBox : public CommonBase
 {
 public:
 
-    StructSymbolBBox(DataStream& aDs) : CommonBase{aDs}, x1{0}, y1{0}, x2{0}, y2{0}
+    StructSymbolBBox(ParserContext& aCtx) : CommonBase{aCtx}, x1{0}, y1{0}, x2{0}, y2{0}
     { }
 
     std::string to_string() const override;

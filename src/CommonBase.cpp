@@ -65,7 +65,7 @@ void CommonBase::discard_until_preamble()
     const int patternSize = 4;
     std::array<uint8_t, patternSize> buffer = {0};
 
-    const size_t startOffset = mDs.get().getCurrentOffset();
+    const size_t startOffset = mCtx.get().mDs.get().getCurrentOffset();
 
     // Magic number specifying the beginning of a struct
     const std::array<uint8_t, patternSize> preamble = {0xff, 0xe4, 0x5c, 0x39};
@@ -81,9 +81,9 @@ void CommonBase::discard_until_preamble()
     while(buffer != preamble)
     {
         shift_left(buffer);
-        mDs.get().read(reinterpret_cast<char*>(buffer.data()) + buffer.size() - 1, 1);
+        mCtx.get().mDs.get().read(reinterpret_cast<char*>(buffer.data()) + buffer.size() - 1, 1);
 
-        if(mDs.get().isEoF())
+        if(mCtx.get().mDs.get().isEoF())
         {
             const std::string msg = fmt::format("{}: Unexpectedly reached end-of-file!",
                 getMethodName(this, __func__));
@@ -96,10 +96,10 @@ void CommonBase::discard_until_preamble()
     // Put back the preamble such that it can be parsed in the next step
     for(size_t i = 0u; i < preamble.size(); ++i)
     {
-        mDs.get().putback(preamble[preamble.size() - 1 - i]);
+        mCtx.get().mDs.get().putback(preamble[preamble.size() - 1 - i]);
     }
 
-    const size_t endOffset = mDs.get().getCurrentOffset();
+    const size_t endOffset = mCtx.get().mDs.get().getCurrentOffset();
 
     spdlog::debug("{}: Discarded {} Byte until next preamble",
         getMethodName(this, __func__), endOffset - startOffset);
@@ -108,9 +108,9 @@ void CommonBase::discard_until_preamble()
 
 Structure CommonBase::auto_read_prefixes(FutureDataLst& aFutureDataLst)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
-    const size_t startOffset = mDs.get().getCurrentOffset();
+    const size_t startOffset = mCtx.get().mDs.get().getCurrentOffset();
 
     const auto logLevel = spdlog::get_level();
     spdlog::set_level(spdlog::level::off);
@@ -127,13 +127,13 @@ Structure CommonBase::auto_read_prefixes(FutureDataLst& aFutureDataLst)
         // Reading the prefixes might read beyond EoF in some cases,
         // because its just a prediction, we do not care. Therefore
         // reset the EoF flag.
-        mDs.get().clear();
+        mCtx.get().mDs.get().clear();
 
         failed = false;
 
         try
         {
-            FutureDataLst tmpLst{mDs};
+            FutureDataLst tmpLst{mCtx};
             read_prefixes(prefixCtr, tmpLst);
         }
         catch(const std::exception& e)
@@ -141,12 +141,12 @@ Structure CommonBase::auto_read_prefixes(FutureDataLst& aFutureDataLst)
             failed = true;
         }
 
-        mDs.get().setCurrentOffset(startOffset);
+        mCtx.get().mDs.get().setCurrentOffset(startOffset);
 
         // Reading the prefixes might read beyond EoF in some cases,
         // because its just a prediction, we do not care. Therefore
         // reset the EoF flag.
-        mDs.get().clear();
+        mCtx.get().mDs.get().clear();
 
         if(!failed)
         {
@@ -157,7 +157,7 @@ Structure CommonBase::auto_read_prefixes(FutureDataLst& aFutureDataLst)
     // Reading the prefixes might read beyond EoF in some cases,
     // because its just a prediction, we do not care. Therefore
     // reset the EoF flag.
-    mDs.get().clear();
+    mCtx.get().mDs.get().clear();
 
     spdlog::set_level(logLevel);
 
@@ -181,9 +181,9 @@ Structure CommonBase::auto_read_prefixes(FutureDataLst& aFutureDataLst)
         getMethodName(this, __func__), prefixCtr, ::to_string(structure));
     spdlog::debug("    {}", aFutureDataLst.string());
 
-    mDs.get().sanitizeNoEoF();
+    mCtx.get().mDs.get().sanitizeNoEoF();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
     return structure;
 }
@@ -234,7 +234,7 @@ Structure CommonBase::auto_read_prefixes(const std::vector<Structure>& aExpected
 // Read number of prefixes, where the last one is a short prefix
 Structure CommonBase::read_prefixes(size_t aNumber, FutureDataLst& aFutureDataLst)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
     if(aNumber == 0U)
     {
@@ -248,7 +248,7 @@ Structure CommonBase::read_prefixes(size_t aNumber, FutureDataLst& aFutureDataLs
     {
         Structure currStruct;
 
-        const size_t preambleOffset = mDs.get().getCurrentOffset();
+        const size_t preambleOffset = mCtx.get().mDs.get().getCurrentOffset();
 
         if(i == aNumber - 1)
         {
@@ -282,25 +282,25 @@ Structure CommonBase::read_prefixes(size_t aNumber, FutureDataLst& aFutureDataLs
         }
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
     return firstStruct;
 }
 
 std::pair<Structure, uint32_t> CommonBase::read_single_prefix()
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
-    const Structure typeId = ToStructure(mDs.get().readUint8());
+    const Structure typeId = ToStructure(mCtx.get().mDs.get().readUint8());
 
-    const uint32_t byteOffset = mDs.get().readUint32();
+    const uint32_t byteOffset = mCtx.get().mDs.get().readUint32();
 
     spdlog::debug("{:>2} = {}: Offset = {}\n", static_cast<int>(typeId), ::to_string(typeId), byteOffset);
 
-    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 0");
-    // mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
+    mCtx.get().mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 0");
+    // mCtx.get().mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
     return std::pair<Structure, uint32_t>{typeId, byteOffset};
 }
@@ -308,11 +308,11 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix()
 
 std::pair<Structure, uint32_t> CommonBase::read_single_prefix_short()
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
-    const Structure typeId = ToStructure(mDs.get().readUint8());
+    const Structure typeId = ToStructure(mCtx.get().mDs.get().readUint8());
 
-    const int16_t size = mDs.get().readInt16();
+    const int16_t size = mCtx.get().mDs.get().readInt16();
 
     spdlog::debug("{:>2} = {}: Size = {}\n", static_cast<int>(typeId), ::to_string(typeId), size);
 
@@ -323,8 +323,8 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix_short()
 
         for(int i = 0; i < size; ++i)
         {
-            uint32_t strLstIdxName  = mDs.get().readUint32();
-            uint32_t strLstIdxValue = mDs.get().readUint32();
+            uint32_t strLstIdxName  = mCtx.get().mDs.get().readUint32();
+            uint32_t strLstIdxValue = mCtx.get().mDs.get().readUint32();
 
             nameValueMapping.push_back(std::make_pair(strLstIdxName, strLstIdxValue));
         }
@@ -358,7 +358,7 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix_short()
         spdlog::warn("{}: What does {} mean?", ::to_string(typeId), size); // @todo Figure out
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
     return std::pair<Structure, uint32_t>{typeId, size};
 }
@@ -366,38 +366,38 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix_short()
 
 void CommonBase::readPreamble()
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
-    const std::size_t startOffset = mDs.get().getCurrentOffset();
+    const std::size_t startOffset = mCtx.get().mDs.get().getCurrentOffset();
 
     // Try to find prefix and read trailing data. If
     // the prefix is not there, just skip it.
     try
     {
         // Magic number indicating some data
-        mDs.get().assumeData({0xff, 0xe4, 0x5c, 0x39}, getMethodName(this, __func__) + " Preamble Check Failed");
+        mCtx.get().mDs.get().assumeData({0xff, 0xe4, 0x5c, 0x39}, getMethodName(this, __func__) + " Preamble Check Failed");
 
-        const uint32_t dataLen = mDs.get().readUint32();
-        mDs.get().printUnknownData(dataLen, fmt::format("{}: Trailing preamble data",
+        const uint32_t dataLen = mCtx.get().mDs.get().readUint32();
+        mCtx.get().mDs.get().printUnknownData(dataLen, fmt::format("{}: Trailing preamble data",
             getMethodName(this, __func__)));
 
         // spdlog::debug("{}: Found preamble", getMethodName(this, __func__));
     }
     catch(const std::runtime_error& err)
     {
-        mDs.get().setCurrentOffset(startOffset);
+        mCtx.get().mDs.get().setCurrentOffset(startOffset);
 
         spdlog::debug("{}: Skipping preamble", getMethodName(this, __func__));
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 }
 
 
 Primitive CommonBase::readPrefixPrimitive()
 {
-    Primitive primitive1 = ToPrimitive(mDs.get().readUint8());
-    Primitive primitive2 = ToPrimitive(mDs.get().readUint8());
+    Primitive primitive1 = ToPrimitive(mCtx.get().mDs.get().readUint8());
+    Primitive primitive2 = ToPrimitive(mCtx.get().mDs.get().readUint8());
 
     if(primitive1 != primitive2)
     {
@@ -415,13 +415,13 @@ Primitive CommonBase::readPrefixPrimitive()
 
 std::unique_ptr<PrimBase> CommonBase::readPrimitive()
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
-    Primitive typeId = ToPrimitive(mDs.get().peek(1)[0]);
+    Primitive typeId = ToPrimitive(mCtx.get().mDs.get().peek(1)[0]);
 
     std::unique_ptr<PrimBase> obj = readPrimitive(typeId);
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
     return obj;
 }
@@ -429,22 +429,22 @@ std::unique_ptr<PrimBase> CommonBase::readPrimitive()
 
 std::unique_ptr<PrimBase> CommonBase::readPrimitive(Primitive aPrimitive)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
     std::unique_ptr<PrimBase> obj{};
 
     switch(aPrimitive)
     {
-        case Primitive::Rect:         obj = std::make_unique<PrimRect>(mDs);         break;
-        case Primitive::Line:         obj = std::make_unique<PrimLine>(mDs);         break;
-        case Primitive::Arc:          obj = std::make_unique<PrimArc>(mDs);          break;
-        case Primitive::Ellipse:      obj = std::make_unique<PrimEllipse>(mDs);      break;
-        case Primitive::Polygon:      obj = std::make_unique<PrimPolygon>(mDs);      break;
-        case Primitive::Polyline:     obj = std::make_unique<PrimPolyline>(mDs);     break;
-        case Primitive::CommentText:  obj = std::make_unique<PrimCommentText>(mDs);  break;
-        case Primitive::Bitmap:       obj = std::make_unique<PrimBitmap>(mDs);       break;
-        case Primitive::SymbolVector: obj = std::make_unique<PrimSymbolVector>(mDs); break;
-        case Primitive::Bezier:       obj = std::make_unique<PrimBezier>(mDs);       break;
+        case Primitive::Rect:         obj = std::make_unique<PrimRect>(mCtx);         break;
+        case Primitive::Line:         obj = std::make_unique<PrimLine>(mCtx);         break;
+        case Primitive::Arc:          obj = std::make_unique<PrimArc>(mCtx);          break;
+        case Primitive::Ellipse:      obj = std::make_unique<PrimEllipse>(mCtx);      break;
+        case Primitive::Polygon:      obj = std::make_unique<PrimPolygon>(mCtx);      break;
+        case Primitive::Polyline:     obj = std::make_unique<PrimPolyline>(mCtx);     break;
+        case Primitive::CommentText:  obj = std::make_unique<PrimCommentText>(mCtx);  break;
+        case Primitive::Bitmap:       obj = std::make_unique<PrimBitmap>(mCtx);       break;
+        case Primitive::SymbolVector: obj = std::make_unique<PrimSymbolVector>(mCtx); break;
+        case Primitive::Bezier:       obj = std::make_unique<PrimBezier>(mCtx);       break;
         default:
             const std::string msg = fmt::format("{}: Primitive {} is not implemented!",
                 getMethodName(this, __func__), ::to_string(aPrimitive));
@@ -459,7 +459,7 @@ std::unique_ptr<PrimBase> CommonBase::readPrimitive(Primitive aPrimitive)
         obj->read();
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
     return obj;
 }
@@ -467,13 +467,13 @@ std::unique_ptr<PrimBase> CommonBase::readPrimitive(Primitive aPrimitive)
 
 std::unique_ptr<CommonBase> CommonBase::readStructure()
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
-    Structure typeId = ToStructure(mDs.get().peek(1)[0]);
+    Structure typeId = ToStructure(mCtx.get().mDs.get().peek(1)[0]);
 
     std::unique_ptr<CommonBase> obj = readStructure(typeId);
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
     return obj;
 }
@@ -481,58 +481,60 @@ std::unique_ptr<CommonBase> CommonBase::readStructure()
 
 std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
     std::unique_ptr<CommonBase> obj{};
 
     switch(aStructure)
     {
-        case Structure::Alias:                  obj = std::make_unique<StructAlias>(mDs);                  break;
-        case Structure::BusEntry:               obj = std::make_unique<StructBusEntry>(mDs);               break;
-        case Structure::ERCSymbol:              obj = std::make_unique<StructERCSymbol>(mDs);              break;
-        case Structure::Global:                 obj = std::make_unique<StructGlobal>(mDs);                 break;
-        case Structure::GlobalSymbol:           obj = std::make_unique<StructGlobalSymbol>(mDs);           break;
-        case Structure::GraphicBoxInst:         obj = std::make_unique<StructGraphicBoxInst>(mDs);         break;
-        case Structure::GraphicCommentTextInst: obj = std::make_unique<StructGraphicCommentTextInst>(mDs); break;
-        case Structure::GraphicLineInst:        obj = std::make_unique<StructGraphicLineInst>(mDs);        break;
-        case Structure::OffPageSymbol:          obj = std::make_unique<StructOffPageSymbol>(mDs);          break;
-        case Structure::PartInst:               obj = std::make_unique<StructPartInst>(mDs);               break;
-        case Structure::PinIdxMapping:          obj = std::make_unique<StructPinIdxMapping>(mDs);          break;
-        case Structure::PinShapeSymbol:         obj = std::make_unique<StructPinShapeSymbol>(mDs);         break;
-        case Structure::Port:                   obj = std::make_unique<StructPort>(mDs);                   break;
-        case Structure::PortSymbol:             obj = std::make_unique<StructHierarchicSymbol>(mDs);       break;
-        case Structure::Primitives:             obj = std::make_unique<StructPrimitives>(mDs);             break;
-        case Structure::Properties:             obj = std::make_unique<StructProperties>(mDs);             break;
-        case Structure::SthInPages0:            obj = std::make_unique<StructSthInPages0>(mDs);            break;
-        case Structure::SymbolDisplayProp:      obj = std::make_unique<StructSymbolDisplayProp>(mDs);      break;
-        case Structure::SymbolPinBus:           obj = std::make_unique<StructSymbolPinBus>(mDs);           break;
-        case Structure::SymbolPinScalar:        obj = std::make_unique<StructSymbolPinScalar>(mDs);        break;
-        case Structure::T0x10:                  obj = std::make_unique<StructT0x10>(mDs);                  break;
-        case Structure::T0x1f:                  obj = std::make_unique<StructT0x1f>(mDs);                  break;
-        case Structure::T0x34:                  obj = std::make_unique<StructT0x34>(mDs);                  break;
-        case Structure::T0x35:                  obj = std::make_unique<StructT0x35>(mDs);                  break;
-        case Structure::TitleBlock:             obj = std::make_unique<StructTitleBlock>(mDs);             break;
-        case Structure::TitleBlockSymbol:       obj = std::make_unique<StructTitleBlockSymbol>(mDs);       break;
-        case Structure::WireBus:                obj = std::make_unique<StructWireBus>(mDs);                break;
-        case Structure::WireScalar:             obj = std::make_unique<StructWireScalar>(mDs);             break;
+        case Structure::Alias:                  obj = std::make_unique<StructAlias>(mCtx);                  break;
+        case Structure::BusEntry:               obj = std::make_unique<StructBusEntry>(mCtx);               break;
+        case Structure::ERCSymbol:              obj = std::make_unique<StructERCSymbol>(mCtx);              break;
+        case Structure::Global:                 obj = std::make_unique<StructGlobal>(mCtx);                 break;
+        case Structure::GlobalSymbol:           obj = std::make_unique<StructGlobalSymbol>(mCtx);           break;
+        case Structure::GraphicBoxInst:         obj = std::make_unique<StructGraphicBoxInst>(mCtx);         break;
+        case Structure::GraphicCommentTextInst: obj = std::make_unique<StructGraphicCommentTextInst>(mCtx); break;
+        case Structure::GraphicLineInst:        obj = std::make_unique<StructGraphicLineInst>(mCtx);        break;
+        case Structure::OffPageSymbol:          obj = std::make_unique<StructOffPageSymbol>(mCtx);          break;
+        case Structure::PartInst:               obj = std::make_unique<StructPartInst>(mCtx);               break;
+        case Structure::PinIdxMapping:          obj = std::make_unique<StructPinIdxMapping>(mCtx);          break;
+        case Structure::PinShapeSymbol:         obj = std::make_unique<StructPinShapeSymbol>(mCtx);         break;
+        case Structure::Port:                   obj = std::make_unique<StructPort>(mCtx);                   break;
+        case Structure::PortSymbol:             obj = std::make_unique<StructHierarchicSymbol>(mCtx);       break;
+        case Structure::Primitives:             obj = std::make_unique<StructPrimitives>(mCtx);             break;
+        case Structure::Properties:             obj = std::make_unique<StructProperties>(mCtx);             break;
+        case Structure::SthInPages0:            obj = std::make_unique<StructSthInPages0>(mCtx);            break;
+        case Structure::SymbolDisplayProp:      obj = std::make_unique<StructSymbolDisplayProp>(mCtx);      break;
+        case Structure::SymbolPinBus:           obj = std::make_unique<StructSymbolPinBus>(mCtx);           break;
+        case Structure::SymbolPinScalar:        obj = std::make_unique<StructSymbolPinScalar>(mCtx);        break;
+        case Structure::T0x10:                  obj = std::make_unique<StructT0x10>(mCtx);                  break;
+        case Structure::T0x1f:                  obj = std::make_unique<StructT0x1f>(mCtx);                  break;
+        case Structure::T0x34:                  obj = std::make_unique<StructT0x34>(mCtx);                  break;
+        case Structure::T0x35:                  obj = std::make_unique<StructT0x35>(mCtx);                  break;
+        case Structure::TitleBlock:             obj = std::make_unique<StructTitleBlock>(mCtx);             break;
+        case Structure::TitleBlockSymbol:       obj = std::make_unique<StructTitleBlockSymbol>(mCtx);       break;
+        case Structure::WireBus:                obj = std::make_unique<StructWireBus>(mCtx);                break;
+        case Structure::WireScalar:             obj = std::make_unique<StructWireScalar>(mCtx);             break;
         default:
             {
                 const std::string msg = fmt::format("{}: Structure {} is not implemented!",
                     getMethodName(this, __func__), ::to_string(aStructure));
 
                 spdlog::error(msg);
-                // throw std::runtime_error(msg);
+
+                if(!mCtx.get().mSkipInvalidStruct)
+                {
+                    throw std::runtime_error(msg);
+                }
 
                 spdlog::debug("{}: Skipping Structure {}",
                     getMethodName(this, __func__), ::to_string(aStructure));
 
-                FutureDataLst localFutureDataLst{mDs};
+                FutureDataLst localFutureDataLst{mCtx};
 
                 auto_read_prefixes(localFutureDataLst);
 
                 localFutureDataLst.readRestOfStructure();
-
-                return {};
 
                 break;
             }
@@ -543,7 +545,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         obj->read();
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
     return obj;
 }
@@ -575,7 +577,7 @@ FileFormatVersion CommonBase::predictVersion()
         FileFormatVersion::C
     };
 
-    const size_t initial_offset = mDs.get().getCurrentOffset();
+    const size_t initial_offset = mCtx.get().mDs.get().getCurrentOffset();
 
     // Testing different versions on a try and error basis
     // should not write into log files
@@ -595,7 +597,7 @@ FileFormatVersion CommonBase::predictVersion()
             found = false;
         }
 
-        mDs.get().setCurrentOffset(initial_offset);
+        mCtx.get().mDs.get().setCurrentOffset(initial_offset);
 
         if(found)
         {

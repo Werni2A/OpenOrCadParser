@@ -21,7 +21,7 @@ class StructGlobalSymbol : public StructSymbol
 {
 public:
 
-    StructGlobalSymbol(DataStream& aDs) : StructSymbol{aDs}
+    StructGlobalSymbol(ParserContext& aCtx) : StructSymbol{aCtx}
     { }
 
     std::string to_string() const override;

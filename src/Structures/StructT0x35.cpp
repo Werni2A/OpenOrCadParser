@@ -11,9 +11,11 @@
 
 void StructT0x35::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    // FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    // FutureDataLst localFutureLst{mCtx};
 
     // auto_read_prefixes(Structure::T0x35, localFutureLst);
 
@@ -23,44 +25,44 @@ void StructT0x35::read(FileFormatVersion /* aVersion */)
     //     0 Byte = structure id
     // 1 - 4 Byte = struct len
     // 5 - 8 Byte = zero vector
-    mDs.get().printUnknownData(9, fmt::format("{}: 0", getMethodName(this, __func__)));
+    ds.printUnknownData(9, fmt::format("{}: 0", getMethodName(this, __func__)));
 
-    id = mDs.get().readUint32();
+    id = ds.readUint32();
 
     spdlog::trace("id = {}", id);
 
-    std::string unknownStr = mDs.get().readStringLenZeroTerm();
+    std::string unknownStr = ds.readStringLenZeroTerm();
 
     spdlog::trace("unknownStr = {}", unknownStr);
 
-    uint32_t unknownInt = mDs.get().readUint32();
+    uint32_t unknownInt = ds.readUint32();
 
     spdlog::trace("unknownInt = {}", unknownInt);
 
-    color = ToColor(mDs.get().readUint32());
+    color = ToColor(ds.readUint32());
 
     spdlog::trace("color = {}", ::to_string(color));
 
-    lineStyle = ToLineStyle(mDs.get().readUint32());
+    lineStyle = ToLineStyle(ds.readUint32());
 
     spdlog::trace("lineStyle = {}", ::to_string(lineStyle));
 
-    lineWidth = ToLineWidth(mDs.get().readUint32());
+    lineWidth = ToLineWidth(ds.readUint32());
 
     spdlog::trace("lineWidth = {}", ::to_string(lineWidth));
 
-    const uint32_t len0 = mDs.get().readUint16();
+    const uint32_t len0 = ds.readUint16();
 
     spdlog::trace("len0 = {}", len0);
 
     for(size_t i = 0; i < len0; ++i)
     {
-        mDs.get().printUnknownData(4, fmt::format("{}: 1 - {}",
+        ds.printUnknownData(4, fmt::format("{}: 1 - {}",
             getMethodName(this, __func__), i));
     }
 
     // localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

@@ -16,7 +16,7 @@ class StreamExportBlocksDirectory : public StreamDirectoryStruct
 {
 public:
 
-    StreamExportBlocksDirectory(DataStream& aDs) : StreamDirectoryStruct{aDs}
+    StreamExportBlocksDirectory(ParserContext& aCtx) : StreamDirectoryStruct{aCtx}
     { }
 
     std::string to_string() const override;

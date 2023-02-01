@@ -36,16 +36,18 @@ size_t PrimRect::getExpectedStructSize(FileFormatVersion aVersion)
 
 void PrimRect::read(FileFormatVersion aVersion)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
+
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     if(aVersion == FileFormatVersion::Unknown)
     {
         aVersion = predictVersion();
     }
 
-    const size_t startOffset = mDs.get().getCurrentOffset();
+    const size_t startOffset = ds.getCurrentOffset();
 
-    const uint32_t byteLength = mDs.get().readUint32();
+    const uint32_t byteLength = ds.readUint32();
 
     // @todo better move this if-statement into Rect::checkByteLength(byteLength, version)
     if(byteLength != PrimRect::getExpectedStructSize(aVersion))
@@ -53,23 +55,23 @@ void PrimRect::read(FileFormatVersion aVersion)
         throw FileFormatChanged("Rect");
     }
 
-    mDs.get().assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
+    ds.assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
-    x1 = mDs.get().readInt32();
-    y1 = mDs.get().readInt32();
-    x2 = mDs.get().readInt32();
-    y2 = mDs.get().readInt32();
+    x1 = ds.readInt32();
+    y1 = ds.readInt32();
+    x2 = ds.readInt32();
+    y2 = ds.readInt32();
 
     if(aVersion >= FileFormatVersion::B)
     {
-        setLineStyle(ToLineStyle(mDs.get().readUint32()));
-        setLineWidth(ToLineWidth(mDs.get().readUint32()));
+        setLineStyle(ToLineStyle(ds.readUint32()));
+        setLineWidth(ToLineWidth(ds.readUint32()));
     }
 
     if(aVersion >= FileFormatVersion::C)
     {
-        fillStyle  = ToFillStyle(mDs.get().readUint32());
-        hatchStyle = ToHatchStyle(mDs.get().readInt32());
+        fillStyle  = ToFillStyle(ds.readUint32());
+        hatchStyle = ToHatchStyle(ds.readInt32());
     }
     else
     {
@@ -79,10 +81,10 @@ void PrimRect::read(FileFormatVersion aVersion)
     }
 
     // @todo use for all read methods.
-    checkInterpretedDataLen(__func__, startOffset, mDs.get().getCurrentOffset(), byteLength);
+    checkInterpretedDataLen(__func__, startOffset, ds.getCurrentOffset(), byteLength);
 
     readPreamble();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

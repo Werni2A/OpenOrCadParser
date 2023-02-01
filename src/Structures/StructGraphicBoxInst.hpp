@@ -21,7 +21,7 @@ class StructGraphicBoxInst : public StructGraphicInst
 {
 public:
 
-    StructGraphicBoxInst(DataStream& aDs) : StructGraphicInst{aDs}, dbId{0},
+    StructGraphicBoxInst(ParserContext& aCtx) : StructGraphicInst{aCtx}, dbId{0},
     locX{0}, locY{0}, x1{0}, y1{0}, x2{0}, y2{0}, color{Color::Default}, sthInPages0{}
     { }
 

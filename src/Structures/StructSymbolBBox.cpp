@@ -12,18 +12,20 @@
 // @todo is probably trailing data and not a struct object!
 void StructSymbolBBox::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    x1 = mDs.get().readInt16();
-    y1 = mDs.get().readInt16();
-    x2 = mDs.get().readInt16();
-    y2 = mDs.get().readInt16();
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    x1 = ds.readInt16();
+    y1 = ds.readInt16();
+    x2 = ds.readInt16();
+    y2 = ds.readInt16();
 
     // @todo not sure weather this belongs to the structure or should be outside of it
-    mDs.get().printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
+    ds.printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
 
     // localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

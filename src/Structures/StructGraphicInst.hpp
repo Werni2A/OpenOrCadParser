@@ -23,7 +23,7 @@ class StructGraphicInst : public CommonBase
 {
 public:
 
-    StructGraphicInst(DataStream& aDs) : CommonBase{aDs}
+    StructGraphicInst(ParserContext& aCtx) : CommonBase{aCtx}
     { }
 
     std::string to_string() const override;

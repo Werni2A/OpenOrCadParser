@@ -10,10 +10,12 @@
 
 void StructSthInHierarchy1::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    mDs.get().printUnknownData(27, fmt::format("{}: 0", getMethodName(this, __func__)));
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    ds.printUnknownData(27, fmt::format("{}: 0", getMethodName(this, __func__)));
+
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

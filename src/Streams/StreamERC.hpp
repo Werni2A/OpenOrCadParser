@@ -17,7 +17,7 @@ class StreamERC : public CommonBase
 {
 public:
 
-    StreamERC(DataStream& aDs) : CommonBase{aDs}
+    StreamERC(ParserContext& aCtx) : CommonBase{aCtx}
     { }
 
     std::string to_string() const override;

@@ -19,7 +19,7 @@ class StructBusEntry : public CommonBase
 {
 public:
 
-    StructBusEntry(DataStream& aDs) : CommonBase{aDs}, color{Color::Default},
+    StructBusEntry(ParserContext& aCtx) : CommonBase{aCtx}, color{Color::Default},
         startX{0}, startY{0}, endX{0}, endY{0}
     { }
 

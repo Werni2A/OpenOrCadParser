@@ -20,7 +20,7 @@ class StructGraphicCommentTextInst : public StructGraphicInst
 {
 public:
 
-    StructGraphicCommentTextInst(DataStream& aDs) : StructGraphicInst{aDs}, sthInPages0{}
+    StructGraphicCommentTextInst(ParserContext& aCtx) : StructGraphicInst{aCtx}, sthInPages0{}
     { }
 
     std::string to_string() const override;

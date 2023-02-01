@@ -21,7 +21,7 @@ class PrimBitmap : public PrimBase
 {
 public:
 
-    PrimBitmap(DataStream& aDs) : PrimBase{aDs}, locX{0}, locY{0},
+    PrimBitmap(ParserContext& aCtx) : PrimBase{aCtx}, locX{0}, locY{0},
         x1{0}, y1{0}, x2{0}, y2{0}, bmpWidth{0}, bmpHeight{0}
     { }
 

@@ -18,7 +18,7 @@ class StructSthInPages0 : public CommonBase
 {
 public:
 
-    StructSthInPages0(DataStream& aDs) : CommonBase{aDs}
+    StructSthInPages0(ParserContext& aCtx) : CommonBase{aCtx}
     { }
 
     std::string to_string() const override;

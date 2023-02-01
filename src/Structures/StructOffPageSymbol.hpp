@@ -22,7 +22,7 @@ class StructOffPageSymbol : public StructSymbol
 {
 public:
 
-    StructOffPageSymbol(DataStream& aDs) : StructSymbol{aDs}
+    StructOffPageSymbol(ParserContext& aCtx) : StructSymbol{aCtx}
     { }
 
     std::string to_string() const override;

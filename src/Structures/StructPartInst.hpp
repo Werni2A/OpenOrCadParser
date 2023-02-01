@@ -22,7 +22,7 @@ class StructPartInst : public CommonBase
 {
 public:
 
-    StructPartInst(DataStream& aDs) : CommonBase{aDs}, symbolDisplayProps{},
+    StructPartInst(ParserContext& aCtx) : CommonBase{aCtx}, symbolDisplayProps{},
         t0x10s{}
     { }
 

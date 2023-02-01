@@ -20,7 +20,7 @@ struct Library;
 class PrimCommentText : public PrimBase
 {
 public:
-    PrimCommentText(DataStream& aDs) : PrimBase{aDs}, locX{0}, locY{0}, name{}, x1{0}, y1{0}, x2{0}, y2{0}, textFontIdx{0}
+    PrimCommentText(ParserContext& aCtx) : PrimBase{aCtx}, locX{0}, locY{0}, name{}, x1{0}, y1{0}, x2{0}, y2{0}, textFontIdx{0}
     { }
 
     std::string to_string() const override;

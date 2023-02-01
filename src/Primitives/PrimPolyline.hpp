@@ -21,7 +21,7 @@ class PrimPolyline : public PrimBase
 {
 public:
 
-    PrimPolyline(DataStream& aDs) : PrimBase{aDs}, mLineStyle{}, mLineWidth{}, points{}
+    PrimPolyline(ParserContext& aCtx) : PrimBase{aCtx}, mLineStyle{}, mLineWidth{}, points{}
     { }
 
     std::string to_string() const override;

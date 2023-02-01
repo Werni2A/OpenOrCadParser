@@ -18,7 +18,7 @@ class StructSymbolDisplayProp : public CommonBase
 {
 public:
 
-    StructSymbolDisplayProp(DataStream& aDs) : CommonBase{aDs}, nameIdx{0}, textFontIdx{0},
+    StructSymbolDisplayProp(ParserContext& aCtx) : CommonBase{aCtx}, nameIdx{0}, textFontIdx{0},
         rotation{Rotation::Deg_0}, x{0}, y{0}, propColor{Color::Default}
     { }
 

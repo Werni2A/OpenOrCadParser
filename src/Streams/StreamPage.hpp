@@ -24,7 +24,7 @@ class StreamPage : public CommonBase
 {
 public:
 
-    StreamPage(DataStream& aDs) : CommonBase{aDs}, name{}, pageSize{}, pageSettings{mDs},
+    StreamPage(ParserContext& aCtx) : CommonBase{aCtx}, name{}, pageSize{}, pageSettings{aCtx},
         t0x34s{}, t0x35s{}, wires{}, partInsts{}, ports{}, graphicInsts{}
     { }
 

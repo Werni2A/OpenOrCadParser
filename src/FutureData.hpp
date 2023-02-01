@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <functional>
 #include <optional>
 #include <stdexcept>
 #include <vector>
@@ -10,8 +11,8 @@
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
-#include "DataStream.hpp"
 #include "General.hpp"
+#include "ParserContext.hpp"
 
 
 class FutureData
@@ -58,7 +59,7 @@ class FutureDataLst : public std::vector<FutureData>
 {
 public:
 
-    FutureDataLst(DataStream& aDs) : std::vector<FutureData>{}, mDs{aDs}
+    FutureDataLst(ParserContext& aCtx) : std::vector<FutureData>{}, mCtx{aCtx}
     { }
 
     std::optional<FutureData> getByStartOffset(std::size_t aAbsStartOffset) const
@@ -181,7 +182,7 @@ public:
             endPos = std::max(static_cast<int64_t>(data.getStopOffset()), endPos);
         }
 
-        const int64_t curPos = static_cast<int64_t>(mDs.get().getCurrentOffset());
+        const int64_t curPos = static_cast<int64_t>(mCtx.get().mDs.get().getCurrentOffset());
 
         const int64_t byteDiff = endPos - curPos;
 
@@ -191,7 +192,7 @@ public:
                 " Expected it to end at 0x{:08x} but ended at 0x{:08x}. Too small by {} Byte.",
                 getMethodName(this, __func__), endPos, curPos, std::abs(byteDiff));
 
-            mDs.get().printUnknownData(byteDiff, msg);
+            mCtx.get().mDs.get().printUnknownData(byteDiff, msg);
         }
         else if(byteDiff < 0)
         {
@@ -213,7 +214,7 @@ public:
 
 private:
 
-    std::reference_wrapper<DataStream> mDs;
+    std::reference_wrapper<ParserContext> mCtx;
 
 };
 

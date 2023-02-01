@@ -16,7 +16,7 @@ class StreamHSObjects : public CommonBase
 {
 public:
 
-    StreamHSObjects(DataStream& aDs) : CommonBase{aDs}
+    StreamHSObjects(ParserContext& aCtx) : CommonBase{aCtx}
     { }
 
     std::string to_string() const override;

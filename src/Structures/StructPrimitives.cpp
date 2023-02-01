@@ -14,25 +14,27 @@
 
 void StructPrimitives::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(Structure::Primitives, localFutureLst);
 
     readPreamble();
 
-    name = mDs.get().readStringLenZeroTerm();
+    name = ds.readStringLenZeroTerm();
 
     spdlog::trace("name = {}", name);
 
-    const std::string someStr = mDs.get().readStringLenZeroTerm();
+    const std::string someStr = ds.readStringLenZeroTerm();
 
     spdlog::trace("someStr = {}", someStr);
 
-    mDs.get().printUnknownData(4);
+    ds.printUnknownData(4);
 
-    // const uint16_t len0 = mDs.get().readUint16();
+    // const uint16_t len0 = ds.readUint16();
 
     // spdlog::trace("len0 = {}", len0);
 
@@ -44,7 +46,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
     // }
 
 
-    // const uint16_t lenSymbolPins = mDs.get().readUint16();
+    // const uint16_t lenSymbolPins = ds.readUint16();
 
     // spdlog::trace("lenSymbolPins = {}", lenSymbolPins);
 
@@ -53,19 +55,19 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
     //     symbolPins.push_back(dynamic_pointer_cast<StructSymbolPin>(readStructure()));
 
     //     // @todo This hack should probably be moved into StructSymbolPin
-    //     const uint8_t early_out = mDs.get().peek(1)[0];
+    //     const uint8_t early_out = ds.peek(1)[0];
     //     spdlog::debug("early_out = {}", early_out);
 
     //     if(early_out == 0U)
     //     {
     //         // @todo does not always occur, even in the same file. Maybe its some byte alignment?
-    //         mDs.get().printUnknownData(1, fmt::format("{}: Early Out Indicator",
+    //         ds.printUnknownData(1, fmt::format("{}: Early Out Indicator",
     //             getMethodName(this, __func__)));
     //         break;
     //     }
     // }
 
-    // const uint16_t lenSymbolDisplayProps = mDs.get().readUint16();
+    // const uint16_t lenSymbolDisplayProps = ds.readUint16();
 
     // spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
@@ -74,20 +76,20 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
     //     symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     // }
 
-    // const std::string someStr0 = mDs.get().readStringLenZeroTerm();
-    // const std::string someStr1 = mDs.get().readStringLenZeroTerm(); // @todo Maybe incorrect
-    // const std::string someStr2 = mDs.get().readStringLenZeroTerm();
-    // const std::string someStr3 = mDs.get().readStringLenZeroTerm();
+    // const std::string someStr0 = ds.readStringLenZeroTerm();
+    // const std::string someStr1 = ds.readStringLenZeroTerm(); // @todo Maybe incorrect
+    // const std::string someStr2 = ds.readStringLenZeroTerm();
+    // const std::string someStr3 = ds.readStringLenZeroTerm();
 
     // spdlog::trace("someStr0 = {}", someStr0);
     // spdlog::trace("someStr1 = {}", someStr1);
     // spdlog::trace("someStr2 = {}", someStr2);
     // spdlog::trace("someStr3 = {}", someStr3);
 
-    // mDs.get().printUnknownData(2, fmt::format("{}: 0", getMethodName(this, __func__)));
+    // ds.printUnknownData(2, fmt::format("{}: 0", getMethodName(this, __func__)));
 
     localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

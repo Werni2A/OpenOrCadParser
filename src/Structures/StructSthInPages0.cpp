@@ -14,18 +14,20 @@
 // @todo Probably a wrapper for Inst (Instances)
 void StructSthInPages0::read(FileFormatVersion /* aVersion */)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    FutureDataLst localFutureLst{mDs};
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(Structure::SthInPages0, localFutureLst);
 
     readPreamble();
 
-    mDs.get().printUnknownData(6, getMethodName(this, __func__) + ": 0");
-    mDs.get().printUnknownData(4, getMethodName(this, __func__) + ": 1");
+    ds.printUnknownData(6, getMethodName(this, __func__) + ": 0");
+    ds.printUnknownData(4, getMethodName(this, __func__) + ": 1");
 
-    const uint16_t len = mDs.get().readUint16();
+    const uint16_t len = ds.readUint16();
 
     spdlog::trace("len = {}", len);
 
@@ -38,6 +40,6 @@ void StructSthInPages0::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
 }

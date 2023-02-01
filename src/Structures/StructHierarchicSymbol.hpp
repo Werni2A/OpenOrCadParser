@@ -18,7 +18,7 @@ class StructHierarchicSymbol : public CommonBase
 {
 public:
 
-    StructHierarchicSymbol(DataStream& aDs) : CommonBase{aDs}
+    StructHierarchicSymbol(ParserContext& aCtx) : CommonBase{aCtx}
     { }
 
     std::string to_string() const override;
