@@ -18,7 +18,8 @@ void StreamExportBlocksDirectory::read(FileFormatVersion /* aVersion */)
 
     if(size > 0U)
     {
-        spdlog::warn("{}: Check it out. First time that we have some elements here!", __func__);
+        spdlog::warn("{}: Check it out. First time that we have some elements here!",
+            getMethodName(this, __func__));
     }
 
     for(size_t i = 0u; i < size; ++i)

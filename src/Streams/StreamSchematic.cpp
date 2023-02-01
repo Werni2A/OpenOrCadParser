@@ -12,7 +12,9 @@ void StreamSchematic::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes();
+    FutureDataLst localFutureLst{mDs};
+
+    auto_read_prefixes(localFutureLst);
 
     readPreamble();
 

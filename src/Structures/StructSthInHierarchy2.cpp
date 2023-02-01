@@ -12,13 +12,13 @@ void StructSthInHierarchy2::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    const std::optional<FutureData> thisFuture = getFutureData();
-
-    mDs.get().printUnknownData(4, fmt::format("{}: 0", __func__));
+    mDs.get().printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
 
     const uint16_t val = mDs.get().readUint16();
 
     spdlog::trace("val = {}", val);
+
+    FutureDataLst localFutureLst{mDs};
 
     // Try parsing either 0 or 10 bytes until the next prefix occurs
     {
@@ -30,7 +30,9 @@ void StructSthInHierarchy2::read(FileFormatVersion /* aVersion */)
         {
             try
             {
-                auto_read_prefixes();
+                localFutureLst = FutureDataLst{mDs};
+
+                auto_read_prefixes(localFutureLst);
                 readPreamble();
                 success = true;
 
@@ -47,14 +49,17 @@ void StructSthInHierarchy2::read(FileFormatVersion /* aVersion */)
         {
             try
             {
-                mDs.get().printUnknownData(10, fmt::format("{}: 1", __func__));
-                auto_read_prefixes();
+                mDs.get().printUnknownData(10, fmt::format("{}: 1", getMethodName(this, __func__)));
+
+                localFutureLst = FutureDataLst{mDs};
+
+                auto_read_prefixes(localFutureLst);
                 readPreamble();
                 success = true;
 
                 // Restore previous state and parse bytes
                 mDs.get().setCurrentOffset(currOffset);
-                mDs.get().printUnknownData(10, fmt::format("{}: 1", __func__));
+                mDs.get().printUnknownData(10, fmt::format("{}: 2", getMethodName(this, __func__)));
             }
             catch(...)
             {
@@ -68,9 +73,7 @@ void StructSthInHierarchy2::read(FileFormatVersion /* aVersion */)
         }
     }
 
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
+    localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

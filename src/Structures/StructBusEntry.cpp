@@ -13,11 +13,11 @@ void StructBusEntry::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes(Structure::BusEntry);
+    FutureDataLst localFutureLst{mDs};
+
+    auto_read_prefixes(Structure::BusEntry, localFutureLst);
 
     readPreamble();
-
-    const std::optional<FutureData> thisFuture = getFutureData();
 
     color = ToColor(mDs.get().readUint32());
 
@@ -35,9 +35,7 @@ void StructBusEntry::read(FileFormatVersion /* aVersion */)
     spdlog::trace("endX = {}", endX);
     spdlog::trace("endY = {}", endY);
 
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
+    localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

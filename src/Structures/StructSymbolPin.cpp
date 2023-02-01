@@ -16,11 +16,11 @@ void StructSymbolPin::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes({Structure::SymbolPinBus, Structure::SymbolPinScalar});
+    FutureDataLst localFutureLst{mDs};
+
+    auto_read_prefixes({Structure::SymbolPinBus, Structure::SymbolPinScalar}, localFutureLst);
 
     readPreamble();
-
-    const std::optional<FutureData> thisFuture = getFutureData();
 
     name = mDs.get().readStringLenZeroTerm();
 
@@ -46,9 +46,7 @@ void StructSymbolPin::read(FileFormatVersion /* aVersion */)
         symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
+    localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

@@ -13,9 +13,9 @@ void StructTitleBlockSymbol::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    const std::optional<FutureData> thisFuture = getFutureData();
+    FutureDataLst localFutureLst{mDs};
 
-    auto_read_prefixes(Structure::TitleBlockSymbol);
+    auto_read_prefixes(Structure::TitleBlockSymbol, localFutureLst);
 
     readPreamble();
 
@@ -27,7 +27,7 @@ void StructTitleBlockSymbol::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("someStr = {}", someStr);
 
-    mDs.get().printUnknownData(4, fmt::format("{}: 0", __func__));
+    mDs.get().printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
 
     const uint16_t len0 = mDs.get().readUint16();
 
@@ -37,11 +37,7 @@ void StructTitleBlockSymbol::read(FileFormatVersion /* aVersion */)
         readPrimitive(primitive);
     }
 
-    mDs.get().printUnknownData(8, fmt::format("{}: 1", __func__));
-
-    sanitizeThisFutureSize(thisFuture);
-
-    checkTrailingFuture();
+    mDs.get().printUnknownData(8, fmt::format("{}: 1", getMethodName(this, __func__)));
 
     const uint16_t lenSymbolPins = mDs.get().readUint16();
 
@@ -60,6 +56,8 @@ void StructTitleBlockSymbol::read(FileFormatVersion /* aVersion */)
     {
         symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
+
+    localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

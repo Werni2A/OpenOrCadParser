@@ -17,11 +17,11 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes(Structure::PartInst);
+    FutureDataLst localFutureLst{mDs};
+
+    auto_read_prefixes(Structure::PartInst, localFutureLst);
 
     readPreamble();
-
-    // const std::optional<FutureData> thisFuture = getFutureData();
 
     mDs.get().printUnknownData(8, getMethodName(this, __func__) + ": 0");
 
@@ -80,9 +80,7 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     // auto_read_prefixes();
 
-    // sanitizeThisFutureSize(thisFuture);
-
-    // readOptionalTrailingFuture();
+    localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

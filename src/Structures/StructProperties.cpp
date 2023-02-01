@@ -16,22 +16,20 @@ void StructProperties::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    auto_read_prefixes(Structure::Properties);
+    FutureDataLst localFutureLst{mDs};
+
+    auto_read_prefixes(Structure::Properties, localFutureLst);
 
     readPreamble();
-
-    const std::optional<FutureData> thisFuture = getFutureData();
 
     ref = mDs.get().readStringLenZeroTerm();
 
     spdlog::trace("ref = {}", ref);
 
     // @todo Probably a string
-    mDs.get().assumeData({0x00, 0x00, 0x00}, fmt::format("{}: 0", __func__));
+    mDs.get().assumeData({0x00, 0x00, 0x00}, fmt::format("{}: 0", getMethodName(this, __func__)));
 
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture(); // @note Is equal to TrailingProperties::read()
+    localFutureLst.readRestOfStructure(); // @note Is equal to TrailingProperties::read()
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

@@ -12,13 +12,7 @@ void StructSthInHierarchy1::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    const std::optional<FutureData> thisFuture = getFutureData();
-
-    mDs.get().printUnknownData(27, fmt::format("{}: 0", __func__));
-
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
+    mDs.get().printUnknownData(27, fmt::format("{}: 0", getMethodName(this, __func__)));
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());

@@ -14,8 +14,6 @@ void TrailingProperties::read(FileFormatVersion /* aVersion */)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
 
-    const std::optional<FutureData> thisFuture = getFutureData();
-
     // @todo use enum for the view (normal/convert)
     const uint16_t viewNumber = mDs.get().readUint16(); // @todo I assume that this is the amount of views
                                                // the symbol has. Typically 1 (.Normal) or maybe
@@ -47,9 +45,7 @@ void TrailingProperties::read(FileFormatVersion /* aVersion */)
         throw std::runtime_error(msg);
     }
 
-    sanitizeThisFutureSize(thisFuture);
-
-    readOptionalTrailingFuture();
+    // localFutureLst.readRestOfStructure();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mDs.get().getCurrentOffset()));
     spdlog::trace(to_string());
