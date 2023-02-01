@@ -483,6 +483,8 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
 {
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
 
+    const size_t startOffset = mCtx.get().mDs.get().getCurrentOffset();
+
     std::unique_ptr<CommonBase> obj{};
 
     switch(aStructure)
@@ -540,9 +542,42 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
             }
     }
 
+    bool success = true;
+
     if(obj)
     {
-        obj->read();
+        try
+        {
+            obj->read();
+        }
+        catch(...)
+        {
+            success = false;
+        }
+    }
+
+    if(!success)
+    {
+        if(mCtx.get().mSkipInvalidStruct)
+        {
+            // Reset file position to the state before
+            // the structure was parsed and failed
+            mCtx.get().mDs.get().setCurrentOffset(startOffset);
+
+            // Previous read operations might have read beyond EoF,
+            // therefore reset the EoF flag.
+            mCtx.get().mDs.get().clear();
+
+            FutureDataLst localFutureDataLst{mCtx};
+
+            auto_read_prefixes(localFutureDataLst);
+
+            localFutureDataLst.readRestOfStructure();
+        }
+        else
+        {
+            throw;
+        }
     }
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
