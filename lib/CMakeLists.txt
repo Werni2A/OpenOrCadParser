@@ -88,7 +88,6 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructWire.cpp
    ${LIB_SRC_DIR}/Structures/StructWireBus.cpp
    ${LIB_SRC_DIR}/Structures/StructWireScalar.cpp
-   ${LIB_SRC_DIR}/Structures/TrailingProperties.cpp
 )
 
 set(HEADERS
@@ -170,7 +169,6 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/StructWire.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructWireBus.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructWireScalar.hpp
-   ${LIB_INCLUDE_DIR}/Structures/TrailingProperties.hpp
    ${LIB_INCLUDE_DIR}/Win32/LOGFONTA.hpp
 )
 
