@@ -33,6 +33,8 @@ void StructT0x1f::read(FileFormatVersion /* aVersion */)
     std::string unknownStr0 = ds.readStringLenZeroTerm(); // @todo figure out
     spdlog::trace("{}: unknownStr0 = {}", __func__, unknownStr0);
 
+    localFutureLst.checkpoint();
+
     refDes = ds.readStringLenZeroTerm();
 
     spdlog::trace("refDes = {}", refDes);
@@ -42,17 +44,18 @@ void StructT0x1f::read(FileFormatVersion /* aVersion */)
 
     pcbFootprint = ds.readStringLenZeroTerm();
 
-    // @todo It's probably located at the end of the structure
-    // const uint16_t lenPinIdxMappings = ds.readUint16();
+    const uint16_t lenPinIdxMappings = ds.readUint16();
 
-    // spdlog::trace("lenPinIdxMappings = {}", lenPinIdxMappings);
+    spdlog::trace("lenPinIdxMappings = {}", lenPinIdxMappings);
 
-    // for(size_t i = 0u; i < lenPinIdxMappings; ++i)
-    // {
-    //     pinIdxMappings.push_back(dynamic_pointer_cast<StructPinIdxMapping>(readStructure()));
-    // }
+    for(size_t i = 0u; i < lenPinIdxMappings; ++i)
+    {
+        pinIdxMappings.push_back(dynamic_pointer_cast<StructPinIdxMapping>(readStructure()));
+    }
 
-    localFutureLst.readRestOfStructure();
+    localFutureLst.checkpoint();
+
+    localFutureLst.sanitizeCheckpoints();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
