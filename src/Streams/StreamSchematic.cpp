@@ -20,6 +20,8 @@ void StreamSchematic::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     // @todo extract into parseSchematic method that is called with structure
 
     const std::string schematic_name = ds.readStringLenZeroTerm();

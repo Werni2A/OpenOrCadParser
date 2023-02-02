@@ -22,6 +22,8 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     nameIdx = ds.readUint32();
 
     // @todo move to left shift operator

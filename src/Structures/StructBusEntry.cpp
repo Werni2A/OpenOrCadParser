@@ -21,6 +21,8 @@ void StructBusEntry::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     color = ToColor(ds.readUint32());
 
     spdlog::trace("color = {}", ::to_string(color));

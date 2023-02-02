@@ -22,6 +22,8 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     name = ds.readStringLenZeroTerm();
 
     spdlog::trace("name = {}", name);
@@ -206,9 +208,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     // localFutureLst.readRestOfStructure();
 
-    // // localFutureLst.checkpoint(ds.getCurrentOffset());
-
-    // // localFutureLst.sanitizeNoFutureDataLeft();
+    // localFutureLst.checkpoint(ds.getCurrentOffset());
 
     if(!ds.isEoF())
     {

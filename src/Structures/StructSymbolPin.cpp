@@ -24,6 +24,8 @@ void StructSymbolPin::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     name = ds.readStringLenZeroTerm();
 
     startX = ds.readInt32();

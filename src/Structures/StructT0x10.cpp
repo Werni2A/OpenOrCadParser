@@ -22,6 +22,8 @@ void StructT0x10::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     const uint16_t sth = ds.readUint16();
 
     spdlog::trace("sth = {}", sth);
@@ -49,7 +51,9 @@ void StructT0x10::read(FileFormatVersion /* aVersion */)
         symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
-    localFutureLst.readRestOfStructure();
+    localFutureLst.checkpoint();
+
+    localFutureLst.sanitizeCheckpoints();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

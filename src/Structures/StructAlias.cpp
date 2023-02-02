@@ -21,6 +21,8 @@ void StructAlias::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     locX = ds.readInt32();
     locY = ds.readInt32();
 

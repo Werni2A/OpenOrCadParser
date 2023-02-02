@@ -21,6 +21,8 @@ void StructPort::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     ds.printUnknownData(8, fmt::format("{}: 0", getMethodName(this, __func__)));
 
     name = ds.readStringLenZeroTerm();

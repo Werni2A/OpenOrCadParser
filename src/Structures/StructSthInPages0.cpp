@@ -24,6 +24,8 @@ void StructSthInPages0::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     ds.printUnknownData(6, getMethodName(this, __func__) + ": 0");
     ds.printUnknownData(4, getMethodName(this, __func__) + ": 1");
 

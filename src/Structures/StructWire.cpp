@@ -21,6 +21,8 @@ void StructWire::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     // @todo this 4 Byte and the following 4 byte ID
     //       might be swapped. I need to verify this!
     ds.printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
