@@ -19,7 +19,7 @@ class FutureData
 {
 public:
 
-    FutureData(std::size_t aPreambleOffset, std::size_t aSize)
+    FutureData(std::size_t aPreambleOffset, std::size_t aSize) : mParsed{false}
     {
         const size_t PREAMBLE_STRIDE = 9U; //!< Stride from one preamble to the next one in byte
 
@@ -42,15 +42,28 @@ public:
         return mAbsStopOffset - mAbsStartOffset;
     }
 
+    void setParsed(bool aParsed)
+    {
+        mParsed = aParsed;
+    }
+
+    bool getParsed() const
+    {
+        return mParsed;
+    }
+
     std::string string() const
     {
-        return fmt::format("0x{:08x} -> 0x{:08x}: {} Byte", getStartOffset(), getStopOffset(), getByteLen());
+        return fmt::format("0x{:08x} -> 0x{:08x}: {} Byte{}", getStartOffset(), getStopOffset(), getByteLen(),
+            (getParsed() ? " (verified by checkpoint)" : ""));
     }
 
 private:
 
     std::size_t mAbsStartOffset; //!< Absolute offset from the beginning of the file where the data starts
     std::size_t mAbsStopOffset; //!< Absolute offset from the beginning of the file where the data ends
+
+    bool mParsed; //!< Set if the specified range has been parsed
 };
 
 
@@ -128,32 +141,51 @@ public:
         return false;
     }
 
-    void checkpoint(std::size_t aCurrOffset)
+    void checkpoint()
     {
-        const auto futureData = getByStopOffset(aCurrOffset);
-        bool removed = removeByStopOffset(aCurrOffset);
+        const size_t currOffset = mCtx.get().mDs.get().getCurrentOffset();
 
-        if(removed)
+        const auto cmp = [&currOffset] (FutureData aFutureData) -> bool
+            { return aFutureData.getStopOffset() == currOffset; };
+
+        auto res = std::find_if(this->begin(), this->end(), cmp);
+
+        if(res != this->end())
         {
-            spdlog::debug("{}: Found future data and removed it from list: {}",
-                getMethodName(this, __func__),
-                futureData.has_value() ? futureData.value().string() : "null");
+            auto& futureData = *res;
+
+            futureData.setParsed(true);
+
+            spdlog::debug("{}: Checkpoint at 0x{:08x} was successful",
+                getMethodName(this, __func__), currOffset);
         }
         else
         {
-            // @todo Should probably throw
-            spdlog::debug("{}: Did not find future data in list. Skipping it.",
-                getMethodName(this, __func__));
+            spdlog::trace("{}: Checkpoint at 0x{:08x} was not found",
+                getMethodName(this, __func__), currOffset);
         }
     }
 
-    void sanitizeNoFutureDataLeft() const
+    void sanitizeCheckpoints() const
     {
-        if(size() != 0U)
+        bool checkpoint_missing = false;
+
+        for(const FutureData& data : *this)
         {
-            const std::string msg = fmt::format("{}: Sanitization failed, expected 0 elements"
-                " in future data list but got {}. Check your code for missing checkpoints!\n{}",
-                getMethodName(this, __func__), size(), string());
+            if(!data.getParsed())
+            {
+                checkpoint_missing = true;
+
+                spdlog::debug("{}: Checkpoint missing for 0x{:08x} -> 0x{:08x}",
+                    getMethodName(this, __func__),
+                    data.getStartOffset(), data.getStopOffset());
+            }
+        }
+
+        if(checkpoint_missing)
+        {
+            const std::string msg = fmt::format("{}: Check your code for missing checkpoints!\n{}",
+                getMethodName(this, __func__), string());
 
             spdlog::debug(msg);
             throw std::runtime_error(msg);
@@ -175,6 +207,8 @@ public:
 
     void readRestOfStructure()
     {
+        spdlog::trace(string());
+
         int64_t endPos = 0;
 
         for(const auto& data : *this)
