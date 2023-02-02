@@ -16,7 +16,8 @@ class StructProperties : public CommonBase
 {
 public:
 
-    StructProperties(ParserContext& aCtx) : CommonBase{aCtx}, ref{}
+    StructProperties(ParserContext& aCtx) : CommonBase{aCtx}, ref{},
+        normalName{}, convertName{}
     { }
 
     std::string to_string() const override;
@@ -24,6 +25,8 @@ public:
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
     std::string ref;
+    std::string normalName;
+    std::string convertName;
 };
 
 
@@ -34,6 +37,8 @@ static std::string to_string(const StructProperties& aObj)
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
     str += fmt::format("{}ref = {}\n", indent(1), aObj.ref);
+    str += fmt::format("{}normalName  = {}\n", indent(1), aObj.normalName);
+    str += fmt::format("{}convertName = {}\n", indent(1), aObj.convertName);
 
     return str;
 }

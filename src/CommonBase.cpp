@@ -57,7 +57,6 @@
 #include "Structures/StructTitleBlockSymbol.hpp"
 #include "Structures/StructWireBus.hpp"
 #include "Structures/StructWireScalar.hpp"
-#include "Structures/TrailingProperties.hpp"
 
 
 void CommonBase::discard_until_preamble()

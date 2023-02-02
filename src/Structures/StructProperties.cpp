@@ -24,6 +24,8 @@ void StructProperties::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     ref = ds.readStringLenZeroTerm();
 
     spdlog::trace("ref = {}", ref);
@@ -31,7 +33,42 @@ void StructProperties::read(FileFormatVersion /* aVersion */)
     // @todo Probably a string
     ds.assumeData({0x00, 0x00, 0x00}, fmt::format("{}: 0", getMethodName(this, __func__)));
 
-    localFutureLst.readRestOfStructure(); // @note Is equal to TrailingProperties::read()
+    localFutureLst.checkpoint();
+
+    // @todo use enum for the view (normal/convert)
+    const uint16_t viewNumber = ds.readUint16(); // @todo I assume that this is the amount of views
+                                               // the symbol has. Typically 1 (.Normal) or maybe
+                                               // 2 with (.Normal and .Convert)
+                                               // @todo Add to obj
+
+    spdlog::trace("viewNumber = {}", viewNumber);
+
+    if(viewNumber == 1U) // Contains ".Normal"
+    {
+        normalName = ds.readStringLenZeroTerm();
+    }
+
+    if(viewNumber == 2U) // Contains ".Normal" and ".Convert"
+    {
+        normalName = ds.readStringLenZeroTerm();
+        convertName = ds.readStringLenZeroTerm();
+    }
+
+    spdlog::trace("normalName  = {}", normalName);
+    spdlog::trace("convertName = {}", convertName);
+
+    if(viewNumber != 1U && viewNumber != 2U)
+    {
+        const std::string msg = fmt::format("viewNumber = {} but expected it to be 1 or 2!",
+            viewNumber);
+
+        spdlog::error(msg);
+        throw std::runtime_error(msg);
+    }
+
+    localFutureLst.checkpoint();
+
+    localFutureLst.sanitizeCheckpoints();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
