@@ -3,13 +3,16 @@
 
 
 #include <cstdint>
+#include <memory>
 #include <ostream>
 #include <string>
+#include <vector>
 
 #include <fmt/core.h>
 #include <nameof.hpp>
 
 #include "CommonBase.hpp"
+#include "Structures/StructPinIdxMapping.hpp"
 
 class StructT0x1f : public CommonBase
 {
@@ -26,6 +29,8 @@ public:
     std::string name;
     std::string refDes;
     std::string pcbFootprint;
+
+    std::vector<std::unique_ptr<StructPinIdxMapping>> pinIdxMappings;
 };
 
 
@@ -38,6 +43,15 @@ static std::string to_string(const StructT0x1f& aObj)
     str += fmt::format("{}name   = {}\n", indent(1), aObj.name);
     str += fmt::format("{}refDes = {}\n", indent(1), aObj.refDes);
     str += fmt::format("{}pcbFootprint = {}\n", indent(1), aObj.pcbFootprint);
+
+    str += fmt::format("{}pinIdxMappings:\n", indent(1));
+    for(size_t i = 0u; i < aObj.pinIdxMappings.size(); ++i)
+    {
+        if(aObj.pinIdxMappings[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.pinIdxMappings[i]->to_string()), 2);
+        }
+    }
 
     return str;
 }
