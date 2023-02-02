@@ -35,7 +35,7 @@ repositories:
   - errors: 0
     options: null
     path: ./library/GATE.OLB
-  - errors: 8
+  - errors: 36
     options: null
     path: ./library/CAPSYM.OLB
   - errors: 682
@@ -590,10 +590,10 @@ repositories:
   - errors: 0
     options: null
     path: ./TRANSISTOR.OLB
-  - errors: 0
+  - errors: 27
     options: null
     path: ./_SYMBOLS.OLB
-  - errors: 0
+  - errors: 4
     options: null
     path: ./GOST.OLB
   - errors: 0
@@ -608,7 +608,7 @@ repositories:
   - errors: 0
     options: null
     path: ./SOCKET.OLB
-  - errors: 0
+  - errors: 3
     options: null
     path: ./TITLE_GOST.OLB
   - errors: 0
@@ -623,7 +623,7 @@ repositories:
   - errors: 0
     options: null
     path: ./SYMBOLS_GOST.OLB
-  - errors: 0
+  - errors: 1
     options: null
     path: ./MY_TITLE.OLB
   - errors: 0
@@ -684,7 +684,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/BusDriverTransceiver.olb
-  - errors: 8
+  - errors: 37
     options: null
     path: ./orcad capture/unsorted/_archive/capsym.olb
   - errors: 0
@@ -777,7 +777,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/PWRGND.OLB
-  - errors: 1
+  - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/REG.OLB
   - errors: 0
@@ -792,16 +792,16 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/LOGIBLOX.OLB
-  - errors: 0
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/Spartan2/SPARTAN2.OLB
-  - errors: 0
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/SpartanXL/SPARTANXL.OLB
-  - errors: 0
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/Virtex/Virtex.olb
-  - errors: 0
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/Virtex2/Virtex2.olb
   - errors: 0
@@ -813,7 +813,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/X5K_MISC.OLB
-  - errors: 0
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/XC4000E/XC4000E.OLB
   - errors: 0
@@ -840,7 +840,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/iec/CMOS4.OLB
-  - errors: 0
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/iec/DEVICE.OLB
   - errors: 0
@@ -921,7 +921,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/LineDriverReceiver.olb
-  - errors: 0
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/Mechanical.olb
   - errors: 3
@@ -1434,7 +1434,7 @@ repositories:
   - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/analog.olb
-  - errors: 1
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/anl_misc.olb
   - errors: 0
@@ -1473,7 +1473,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/darlngtn.olb
-  - errors: 3
+  - errors: 7
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/dataconv.olb
   - errors: 1
@@ -1494,7 +1494,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/dig_pal.olb
-  - errors: 0
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/dig_prim.olb
   - errors: 0
@@ -1575,7 +1575,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/fairchild.olb
-  - errors: 1
+  - errors: 16
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/filtsub.olb
   - errors: 0
@@ -1800,7 +1800,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/siliconix.olb
-  - errors: 0
+  - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/source.olb
   - errors: 0
@@ -1872,7 +1872,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/DIODES.OLB
-  - errors: 0
+  - errors: 5
     options: null
     path: ./orcad capture/unsorted/DISCRETE.OLB
   - errors: 0
@@ -1953,7 +1953,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/OPAMP.OBK
-  - errors: 0
+  - errors: 5
     options: null
     path: ./orcad capture/unsorted/_archive/DISCRETE.OBK
   - errors: 0
@@ -3673,13 +3673,13 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/xilinx/X3K_MISC.OLB
-  - errors: 0
+  - errors: 2
     options: null
     path: ./fpga/xilinx/SpartanXL/SPARTANXL.OLB
-  - errors: 0
+  - errors: 2
     options: null
     path: ./fpga/xilinx/XC4000E/XC4000E.OLB
-  - errors: 0
+  - errors: 2
     options: null
     path: ./fpga/xilinx/Spartan2/SPARTAN2.OLB
   - errors: 0
@@ -3727,7 +3727,7 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/lattice/LOGIC.OLB
-  - errors: 1
+  - errors: 3
     options: null
     path: ./fpga/lattice/REG.OLB
   - errors: 0
@@ -4447,7 +4447,7 @@ repositories:
   - errors: 0
     options: null
     path: ./iec/TTL12.OLB
-  - errors: 0
+  - errors: 2
     options: null
     path: ./iec/DEVICE.OLB
   - errors: 0
@@ -4726,7 +4726,7 @@ repositories:
 - author: ROHMUSDC
   commit: 54d5bdc15c57f750e991068113968c2e5c565c8f
   files:
-  - errors: 11
+  - errors: 15
     options: null
     path: ./Design Files/Schematic_BOM/BD9C601EFJEVK-101_SCH_REV00_2014-04-23.DSN
   project: BD9C601EFJEVK-101
@@ -4774,7 +4774,7 @@ repositories:
 - author: ROHMUSDC
   commit: b1106120fd4126b1a7d263930183c0390a753ffe
   files:
-  - errors: 11
+  - errors: 15
     options: null
     path: ./Design Files/Schematic_BOM/BD9109FVMEVK-101_SCH_REV00_2013-11-22.DSN
   project: BD9109FVM-EVK-101
@@ -4793,7 +4793,7 @@ repositories:
 - author: ROHMUSDC
   commit: f84a9667dfdd8ae0db2929726875530c964adf35
   files:
-  - errors: 11
+  - errors: 15
     options: null
     path: ./Design Files - Schematics/BD9328EFJ_EVK-BD9329AEFJ_EVK_Schematic_07-15-2012.DSN
   project: BD9328EFJ_EVK-and-BD9329AEFJ_EVK
@@ -4801,7 +4801,7 @@ repositories:
 - author: ROHMUSDC
   commit: cd3b1749a528f8ca8a75e09cbea0792261a7ba1d
   files:
-  - errors: 0
+  - errors: 2
     options: null
     path: ./Design Files/Schematic_BOM/BD71815GW_REFERENCE_REV1P30.DSN
   project: BD71815AGW-EVK-101
@@ -4817,7 +4817,7 @@ repositories:
 - author: ROHMUSDC
   commit: 451a219bfb7530231c642f9b2100b0dc08c0a28f
   files:
-  - errors: 11
+  - errors: 15
     options: null
     path: ./Design Files/Schematic_BOM/BD95861MUVEVK-101_SCH_REV01_2014-01-22.DSN
   project: BD95861MUV-EVK-101
@@ -4884,7 +4884,7 @@ repositories:
 - author: ROHMUSDC
   commit: 9d9b0e64d89d419d117e60f8accff1a6c0aa4e42
   files:
-  - errors: 0
+  - errors: 5
     options: null
     path: ./DESIGN FILES/OrCAD Capture Schematics/library/discrete.olb
   - errors: 0
@@ -5067,3 +5067,38 @@ repositories:
     path: ./Symbol/Power-VoltageReferences/ti_voltager_reference.olb
   project: CadenceLibrary
   url: https://github.com/Werni2A/XiaoSenLuo_CadenceLibrary
+- author: claudiolorini
+  commit: 27ef17f82406b37e696fb0778efe566ce43e2b0f
+  files:
+  - errors: 23
+    options: null
+    path: ./TB9.DSN
+  - errors: 23
+    options: null
+    path: ./TB10.DSN
+  - errors: 0
+    options: null
+    path: ./TB8.DSN
+  - errors: 11
+    options: null
+    path: ./TB1.DSN
+  - errors: 0
+    options: null
+    path: ./TB6.DSN
+  - errors: 0
+    options: null
+    path: ./TB5.DSN
+  - errors: 11
+    options: null
+    path: ./TB2.DSN
+  - errors: 1
+    options: null
+    path: ./TB7.dsn
+  - errors: 18
+    options: null
+    path: ./TB3.DSN
+  - errors: 0
+    options: null
+    path: ./TB4.DSN
+  project: OOPTB
+  url: https://github.com/claudiolorini/OOPTB
