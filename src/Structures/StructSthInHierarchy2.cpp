@@ -35,7 +35,11 @@ void StructSthInHierarchy2::read(FileFormatVersion /* aVersion */)
                 localFutureLst = FutureDataLst{mCtx};
 
                 auto_read_prefixes(localFutureLst);
+
                 readPreamble();
+
+                localFutureLst.checkpoint();
+
                 success = true;
 
                 // Restore previous state and parse bytes
@@ -56,7 +60,11 @@ void StructSthInHierarchy2::read(FileFormatVersion /* aVersion */)
                 localFutureLst = FutureDataLst{mCtx};
 
                 auto_read_prefixes(localFutureLst);
+
                 readPreamble();
+
+                localFutureLst.checkpoint();
+
                 success = true;
 
                 // Restore previous state and parse bytes

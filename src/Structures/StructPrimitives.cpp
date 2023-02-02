@@ -24,6 +24,8 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     name = ds.readStringLenZeroTerm();
 
     spdlog::trace("name = {}", name);
@@ -31,6 +33,8 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
     const std::string someStr = ds.readStringLenZeroTerm();
 
     spdlog::trace("someStr = {}", someStr);
+
+    localFutureLst.checkpoint();
 
     ds.printUnknownData(4);
 

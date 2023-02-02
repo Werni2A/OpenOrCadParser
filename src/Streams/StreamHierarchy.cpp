@@ -34,6 +34,8 @@ void StreamHierarchy::read(FileFormatVersion /* aVersion */)
 
         readPreamble();
 
+        localFutureLst.checkpoint();
+
         localFutureLst.readRestOfStructure();
 
         // @todo Move the following data into its own structure for the specific Structure type

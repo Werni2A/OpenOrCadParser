@@ -27,6 +27,8 @@ void StructGraphicBoxInst::read(FileFormatVersion aVersion)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     ds.printUnknownData(11, getMethodName(this, __func__) + ": 0");
 
     dbId = ds.readUint32();

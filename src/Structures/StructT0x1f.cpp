@@ -24,12 +24,18 @@ void StructT0x1f::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     name = ds.readStringLenZeroTerm();
+
+    spdlog::trace("name = {}", name);
 
     std::string unknownStr0 = ds.readStringLenZeroTerm(); // @todo figure out
     spdlog::trace("{}: unknownStr0 = {}", __func__, unknownStr0);
 
     refDes = ds.readStringLenZeroTerm();
+
+    spdlog::trace("refDes = {}", refDes);
 
     std::string unknownStr1 = ds.readStringLenZeroTerm(); // @todo figure out
     spdlog::trace("{}: unknownStr1 = {}", __func__, unknownStr1);

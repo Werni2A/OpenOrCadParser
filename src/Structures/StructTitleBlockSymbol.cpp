@@ -21,6 +21,8 @@ void StructTitleBlockSymbol::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     const std::string name = ds.readStringLenZeroTerm();
 
     spdlog::trace("name = {}", name);

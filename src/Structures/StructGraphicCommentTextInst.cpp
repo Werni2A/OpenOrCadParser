@@ -21,6 +21,8 @@ void StructGraphicCommentTextInst::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     ds.printUnknownData(34, getMethodName(this, __func__) + ": 0");
 
     sthInPages0 = dynamic_pointer_cast<StructSthInPages0>(readStructure());

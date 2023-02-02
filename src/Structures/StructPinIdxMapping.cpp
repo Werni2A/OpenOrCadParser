@@ -23,6 +23,8 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     unitRef = ds.readStringLenZeroTerm();
     refDes  = ds.readStringLenZeroTerm();
 

@@ -23,14 +23,11 @@ void StreamDsnStream::read(FileFormatVersion /* aVersion */)
     // @todo return the parsed nameValueMapping from within read_single_short_prefix()
     //       and save it in DsnStream. I.e. `Library guid` and `Time Format Index`
     // const Structure structure = read_prefixes(2);
-    const Structure structure = auto_read_prefixes(localFutureLst);
-
-    if(structure != Structure::DsnStream)
-    {
-        throw std::runtime_error(fmt::format("{}: Unexpected Structure `{}`", __func__, ::to_string(structure)));
-    }
+    auto_read_prefixes(Structure::DsnStream, localFutureLst);
 
     readPreamble();
+
+    localFutureLst.checkpoint();
 
     localFutureLst.readRestOfStructure();
 
