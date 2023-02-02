@@ -307,11 +307,13 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix()
 
 std::pair<Structure, uint32_t> CommonBase::read_single_prefix_short()
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
+    auto& ds = mCtx.get().mDs.get();
 
-    const Structure typeId = ToStructure(mCtx.get().mDs.get().readUint8());
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    const int16_t size = mCtx.get().mDs.get().readInt16();
+    const Structure typeId = ToStructure(ds.readUint8());
+
+    const int16_t size = ds.readInt16();
 
     spdlog::debug("{:>2} = {}: Size = {}\n", static_cast<int>(typeId), ::to_string(typeId), size);
 
@@ -322,8 +324,8 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix_short()
 
         for(int i = 0; i < size; ++i)
         {
-            uint32_t strLstIdxName  = mCtx.get().mDs.get().readUint32();
-            uint32_t strLstIdxValue = mCtx.get().mDs.get().readUint32();
+            uint32_t strLstIdxName  = ds.readUint32();
+            uint32_t strLstIdxValue = ds.readUint32();
 
             nameValueMapping.push_back(std::make_pair(strLstIdxName, strLstIdxValue));
         }
@@ -357,7 +359,7 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix_short()
         spdlog::debug("{}: What does {} mean?", ::to_string(typeId), size); // @todo Figure out
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     return std::pair<Structure, uint32_t>{typeId, size};
 }
@@ -552,30 +554,35 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         catch(...)
         {
             success = false;
-        }
-    }
 
-    if(!success)
-    {
-        if(mCtx.get().mSkipInvalidStruct)
-        {
-            // Reset file position to the state before
-            // the structure was parsed and failed
-            mCtx.get().mDs.get().setCurrentOffset(startOffset);
+            if(!success)
+            {
+                // @todo There is some issue here, therefore deactivating
+                //       the if statement for now. The branches were not
+                //       taken as expected. mSkipInvalidStruct seems to
+                //       be overridden somewhere...
+                // if(mCtx.get().mSkipInvalidStruct)
+                if(false)
+                {
+                    // Reset file position to the state before
+                    // the structure was parsed and failed
+                    mCtx.get().mDs.get().setCurrentOffset(startOffset);
 
-            // Previous read operations might have read beyond EoF,
-            // therefore reset the EoF flag.
-            mCtx.get().mDs.get().clear();
+                    // Previous read operations might have read beyond EoF,
+                    // therefore reset the EoF flag.
+                    mCtx.get().mDs.get().clear();
 
-            FutureDataLst localFutureDataLst{mCtx};
+                    FutureDataLst localFutureDataLst{mCtx};
 
-            auto_read_prefixes(localFutureDataLst);
+                    auto_read_prefixes(localFutureDataLst);
 
-            localFutureDataLst.readRestOfStructure();
-        }
-        else
-        {
-            throw;
+                    localFutureDataLst.readRestOfStructure();
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
     }
 
