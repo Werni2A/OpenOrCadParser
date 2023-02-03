@@ -12,11 +12,16 @@
 
 
 // @todo Probably a wrapper for Inst (Instances)
-void StructSthInPages0::read(FileFormatVersion /* aVersion */)
+void StructSthInPages0::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.get().mDs.get();
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    if(aVersion == FileFormatVersion::Unknown)
+    {
+        aVersion = predictVersion();
+    }
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -27,20 +32,39 @@ void StructSthInPages0::read(FileFormatVersion /* aVersion */)
     localFutureLst.checkpoint();
 
     ds.printUnknownData(6, getMethodName(this, __func__) + ": 0");
-    ds.printUnknownData(4, getMethodName(this, __func__) + ": 1");
 
-    const uint16_t len = ds.readUint16();
+    localFutureLst.checkpoint();
 
-    spdlog::trace("len = {}", len);
+    color = ToColor(ds.readUint32());
 
-    for(size_t i = 0u; i < len; ++i)
+    spdlog::trace("color = {}", ::to_string(color));
+
+    const uint16_t lenPrimitives = ds.readUint16();
+
+    spdlog::trace("lenPrimitives = {}", lenPrimitives);
+
+    for(size_t i = 0u; i < lenPrimitives; ++i)
     {
         const Primitive primitive = readPrefixPrimitive();
 
         readPrimitive(primitive);
     }
 
-    localFutureLst.readRestOfStructure();
+    // @todo The versions were chosen arbitrarily
+    if(aVersion == FileFormatVersion::C)
+    {
+        ds.printUnknownData(16, getMethodName(this, __func__) + ": 2");
+    }
+    else if(aVersion == FileFormatVersion::B)
+    {
+        ds.printUnknownData(8, getMethodName(this, __func__) + ": 3");
+    }
+    else
+    { }
+
+    localFutureLst.checkpoint();
+
+    localFutureLst.sanitizeCheckpoints();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
