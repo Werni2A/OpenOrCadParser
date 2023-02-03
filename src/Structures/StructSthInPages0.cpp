@@ -31,9 +31,31 @@ void StructSthInPages0::read(FileFormatVersion aVersion)
 
     localFutureLst.checkpoint();
 
-    ds.printUnknownData(6, getMethodName(this, __func__) + ": 0");
+    read_raw(aVersion, localFutureLst);
 
-    localFutureLst.checkpoint();
+    localFutureLst.sanitizeCheckpoints();
+
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    spdlog::trace(to_string());
+}
+
+
+void StructSthInPages0::read_raw(FileFormatVersion aVersion, FutureDataLst& aLocalFutureLst)
+{
+    auto& ds = mCtx.get().mDs.get();
+
+    spdlog::trace("{}: Version is set to {}",
+        getMethodName(this, __func__), magic_enum::enum_name(aVersion));
+
+    name = ds.readStringLenZeroTerm();
+
+    spdlog::trace("name = {}", name);
+
+    someStr0 = ds.readStringLenZeroTerm();
+
+    spdlog::trace("someStr0 = {}", someStr0);
+
+    aLocalFutureLst.checkpoint();
 
     color = ToColor(ds.readUint32());
 
@@ -51,21 +73,20 @@ void StructSthInPages0::read(FileFormatVersion aVersion)
     }
 
     // @todo The versions were chosen arbitrarily
-    if(aVersion == FileFormatVersion::C)
+    if(aVersion == FileFormatVersion::A)
     {
-        ds.printUnknownData(16, getMethodName(this, __func__) + ": 2");
+        ds.printUnknownData(20, getMethodName(this, __func__) + ": 2");
     }
     else if(aVersion == FileFormatVersion::B)
     {
-        ds.printUnknownData(8, getMethodName(this, __func__) + ": 3");
+        ds.printUnknownData(16, getMethodName(this, __func__) + ": 3");
+    }
+    else if(aVersion == FileFormatVersion::C)
+    {
+        ds.printUnknownData(8, getMethodName(this, __func__) + ": 4");
     }
     else
     { }
 
-    localFutureLst.checkpoint();
-
-    localFutureLst.sanitizeCheckpoints();
-
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    aLocalFutureLst.checkpoint();
 }

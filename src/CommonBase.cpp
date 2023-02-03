@@ -615,7 +615,12 @@ FileFormatVersion CommonBase::predictVersion()
     const std::vector<FileFormatVersion> versions{
         FileFormatVersion::A,
         FileFormatVersion::B,
-        FileFormatVersion::C
+        FileFormatVersion::C,
+        FileFormatVersion::D,
+        FileFormatVersion::E,
+        FileFormatVersion::F,
+        FileFormatVersion::G,
+        FileFormatVersion::H
     };
 
     const size_t initial_offset = mCtx.get().mDs.get().getCurrentOffset();
@@ -650,12 +655,17 @@ FileFormatVersion CommonBase::predictVersion()
     // Restore user log level
     spdlog::set_level(logLevel);
 
+    spdlog::debug("{}: Predicted version to be {}",
+        getMethodName(this, __func__), magic_enum::enum_name(prediction));
+
     if(prediction == FileFormatVersion::Unknown)
     {
         // @todo Fix this hack
         // Set to previous default value
         // s.t. tests not fail
         prediction = FileFormatVersion::C;
+        spdlog::debug("{}: Setting version to {} anyway",
+            getMethodName(this, __func__), magic_enum::enum_name(prediction));
     }
 
     return prediction;

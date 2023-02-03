@@ -9,11 +9,16 @@
 #include "Structures/StructPinShapeSymbol.hpp"
 
 
-void StructPinShapeSymbol::read(FileFormatVersion /* aVersion */)
+void StructPinShapeSymbol::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.get().mDs.get();
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    if(aVersion == FileFormatVersion::Unknown)
+    {
+        aVersion = predictVersion();
+    }
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -23,25 +28,7 @@ void StructPinShapeSymbol::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.checkpoint();
 
-    const std::string name = ds.readStringLenZeroTerm();
-
-    spdlog::trace("name = {}", name);
-
-    const std::string someStr = ds.readStringLenZeroTerm();
-
-    spdlog::trace("someStr = {}", someStr);
-
-    ds.printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
-
-    const uint16_t len0 = ds.readUint16();
-
-    for(size_t i = 0; i < len0; ++i)
-    {
-        const Primitive primitive = readPrefixPrimitive();
-        readPrimitive(primitive);
-    }
-
-    ds.printUnknownData(8);
+    StructSthInPages0::read_raw(aVersion, localFutureLst);
 
     const uint16_t lenSymbolPins = ds.readUint16();
 

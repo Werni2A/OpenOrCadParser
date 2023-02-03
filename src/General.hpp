@@ -31,7 +31,7 @@ extern FileFormatVersion gFileFormatVersion;
 /**
  * @brief Version of the file format.
  * @warning This is not an official version but was introduced
- *          by myself as I don't know how or where the acutal
+ *          by myself as I don't know how or where the actual
  *          version number is stored.
  */
 enum class FileFormatVersion
@@ -39,7 +39,12 @@ enum class FileFormatVersion
     Unknown,
     A, // Oldest version
     B,
-    C  // Latest Version
+    C,
+    D,
+    E,
+    F,
+    G,
+    H  // Latest Version
 };
 
 

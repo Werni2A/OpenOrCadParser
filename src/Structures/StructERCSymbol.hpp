@@ -18,14 +18,12 @@ class StructERCSymbol : public StructSymbol
 {
 public:
 
-    StructERCSymbol(ParserContext& aCtx) : StructSymbol{aCtx}, name{}, symbolBBox{aCtx}
+    StructERCSymbol(ParserContext& aCtx) : StructSymbol{aCtx}, symbolBBox{aCtx}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
-
-    std::string name;
 
     StructSymbolBBox symbolBBox;
 };
@@ -37,7 +35,9 @@ static std::string to_string(const StructERCSymbol& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-    str += fmt::format("{}name = {}\n", indent(1), aObj.name);
+    str += fmt::format("{}name     = {}\n", indent(1), aObj.name);
+    str += fmt::format("{}someStr0 = {}\n", indent(1), aObj.someStr0);
+    str += fmt::format("{}color    = {}\n", indent(1), ::to_string(aObj.color));
     str += fmt::format("{}symbolBBox = {}", indent(1), aObj.symbolBBox.to_string());
 
     return str;
