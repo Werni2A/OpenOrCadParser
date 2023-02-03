@@ -161,6 +161,14 @@ public:
         }
         else
         {
+            if(!empty())
+            {
+                const std::string msg = fmt::format("{}: Checkpoint position at 0x{:08x} is incorrect",
+                    getMethodName(this, __func__), currOffset);
+
+                throw std::runtime_error(msg);
+            }
+
             spdlog::trace("{}: Checkpoint at 0x{:08x} was not found",
                 getMethodName(this, __func__), currOffset);
         }
