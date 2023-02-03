@@ -9,8 +9,8 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Structures/StructSthInPages0.hpp"
 
 
 /*!
@@ -19,11 +19,11 @@
           are derived from it and extract common code
           into it.
  */
-class StructSymbol : public CommonBase
+class StructSymbol : public StructSthInPages0
 {
 public:
 
-    StructSymbol(ParserContext& aCtx) : CommonBase{aCtx}
+    StructSymbol(ParserContext& aCtx) : StructSthInPages0{aCtx}
     { }
 
     std::string to_string() const override;

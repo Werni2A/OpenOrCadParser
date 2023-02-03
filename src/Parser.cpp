@@ -58,8 +58,8 @@ namespace fs = std::filesystem;
 
 
 Library* gLibrary = new Library{};
-FileType gFileType = FileType::Library;
-FileFormatVersion gFileFormatVersion = FileFormatVersion::C;
+FileType gFileType = FileType::Library; // @todo move to parser context
+FileFormatVersion gFileFormatVersion = FileFormatVersion::C; // @todo move to parser context
 
 
 Parser::Parser(const fs::path& aFile) :

@@ -14,6 +14,7 @@
 
 #include "CommonBase.hpp"
 #include "Enums/Color.hpp"
+#include "FutureData.hpp"
 #include "General.hpp"
 #include "Primitives/PrimBase.hpp"
 
@@ -23,14 +24,18 @@ class StructSthInPages0 : public CommonBase
 public:
 
     StructSthInPages0(ParserContext& aCtx) : CommonBase{aCtx},
-        color{Color::Default}, primitives{}
+        name{}, someStr0{}, color{Color::Default}, primitives{}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    Color color;
+    void read_raw(FileFormatVersion aVersion, FutureDataLst& aLocalFutureLst);
+
+    std::string name;
+    std::string someStr0;
+    Color       color;
 
     std::vector<std::unique_ptr<PrimBase>> primitives;
 };
@@ -42,8 +47,9 @@ static std::string to_string(const StructSthInPages0& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-
-    str += fmt::format("{}color = {}\n", indent(1), ::to_string(aObj.color));
+    str += fmt::format("{}name     = {}\n", indent(1), aObj.name);
+    str += fmt::format("{}someStr0 = {}\n", indent(1), aObj.someStr0);
+    str += fmt::format("{}color    = {}\n", indent(1), ::to_string(aObj.color));
 
     str += fmt::format("{}primitives:\n", indent(1));
     for(size_t i = 0u; i < aObj.primitives.size(); ++i)
