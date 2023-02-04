@@ -613,7 +613,10 @@ void Parser::openFile(const fs::path& aFile)
 
     mCurrOpenFile     = aFile;
 
-    mCtx = ParserContext{mDs, mInputFile, mCurrOpenFile, mExtractedPath};
+    mCtx.mDs            = mDs;
+    mCtx.mInputFile     = mInputFile;
+    mCtx.mCurrOpenFile  = mCurrOpenFile;
+    mCtx.mExtractedPath = mExtractedPath;
 
     spdlog::info("File contains {} byte.", fs::file_size(aFile));
 }
