@@ -40,9 +40,15 @@ void StructPort::read(FileFormatVersion /* aVersion */)
         symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
-    ds.printUnknownData(10, fmt::format("{}: 2", getMethodName(this, __func__)));
+    ds.printUnknownData(1, fmt::format("{}: 2", getMethodName(this, __func__)));
 
-    localFutureLst.readRestOfStructure();
+    localFutureLst.checkpoint();
+
+    ds.printUnknownData(9, fmt::format("{}: 3", getMethodName(this, __func__)));
+
+    localFutureLst.checkpoint();
+
+    localFutureLst.sanitizeCheckpoints();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
