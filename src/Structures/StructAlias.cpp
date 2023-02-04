@@ -45,7 +45,9 @@ void StructAlias::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("name = {}", name);
 
-    localFutureLst.readRestOfStructure();
+    localFutureLst.checkpoint();
+
+    localFutureLst.sanitizeCheckpoints();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
