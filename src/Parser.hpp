@@ -110,6 +110,7 @@ private:
 
     std::vector<fs::path> mRemainingFiles; //!< Streams that have not yet been parsed
 
+    // @todo Move them into the parser context
     fs::path mInputFile; //!< Input container
     fs::path mCurrOpenFile; //!< Input stream
     fs::path mExtractedPath;

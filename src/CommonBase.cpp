@@ -430,7 +430,12 @@ std::unique_ptr<PrimBase> CommonBase::readPrimitive()
 
 std::unique_ptr<PrimBase> CommonBase::readPrimitive(Primitive aPrimitive)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
+    auto& ctx = mCtx.get();
+    auto& ds  = mCtx.get().mDs.get();
+
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    const size_t startOffset = ds.getCurrentOffset();
 
     std::unique_ptr<PrimBase> obj{};
 
@@ -447,20 +452,67 @@ std::unique_ptr<PrimBase> CommonBase::readPrimitive(Primitive aPrimitive)
         case Primitive::SymbolVector: obj = std::make_unique<PrimSymbolVector>(mCtx); break;
         case Primitive::Bezier:       obj = std::make_unique<PrimBezier>(mCtx);       break;
         default:
-            const std::string msg = fmt::format("{}: Primitive {} is not implemented!",
-                getMethodName(this, __func__), ::to_string(aPrimitive));
+            {
+                const std::string msg = fmt::format("{}: Primitive {} is not implemented!",
+                    getMethodName(this, __func__), ::to_string(aPrimitive));
 
-            spdlog::debug(msg);
-            throw std::runtime_error(msg);
-            break;
+                spdlog::debug(msg);
+
+                if(!ctx.mSkipUnknownPrim)
+                {
+                    throw std::runtime_error(msg);
+                }
+
+                spdlog::debug("{}: Skipping unimplemented Primitive {}",
+                    getMethodName(this, __func__), ::to_string(aPrimitive));
+
+                const uint32_t byteLength = ds.readUint32();
+
+                ds.printUnknownData(byteLength - sizeof(byteLength),
+                    fmt::format("{} data", ::to_string(aPrimitive)));
+
+                readPreamble();
+
+                break;
+            }
     }
 
     if(obj.get() != nullptr)
     {
-        obj->read();
+        try
+        {
+            obj->read();
+        }
+        catch(...)
+        {
+            if(ctx.mSkipInvalidPrim)
+            {
+                spdlog::debug("{}: Skipping invalid Primitive {}",
+                    getMethodName(this, __func__), ::to_string(aPrimitive));
+
+                // Reset file position to the state before
+                // the structure was parsed and failed
+                ds.setCurrentOffset(startOffset);
+
+                // Previous read operations might have read beyond EoF,
+                // therefore reset the EoF flag.
+                ds.clear();
+
+                const uint32_t byteLength = ds.readUint32();
+
+                ds.printUnknownData(byteLength - sizeof(byteLength),
+                    fmt::format("{} data", ::to_string(aPrimitive)));
+
+                readPreamble();
+            }
+            else
+            {
+                throw;
+            }
+        }
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     return obj;
 }
@@ -482,9 +534,12 @@ std::unique_ptr<CommonBase> CommonBase::readStructure()
 
 std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
+    auto& ctx = mCtx.get();
+    auto& ds  = mCtx.get().mDs.get();
 
-    const size_t startOffset = mCtx.get().mDs.get().getCurrentOffset();
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    const size_t startOffset = ds.getCurrentOffset();
 
     std::unique_ptr<CommonBase> obj{};
 
@@ -520,17 +575,17 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         case Structure::WireScalar:             obj = std::make_unique<StructWireScalar>(mCtx);             break;
         default:
             {
-                const std::string msg = fmt::format("{}: Structure {} is not implemented!",
+                const std::string msg = fmt::format("{}: Structure {} is unimplemented!",
                     getMethodName(this, __func__), ::to_string(aStructure));
 
                 spdlog::debug(msg);
 
-                if(!mCtx.get().mSkipInvalidStruct)
+                if(!ctx.mSkipUnknownStruct)
                 {
                     throw std::runtime_error(msg);
                 }
 
-                spdlog::debug("{}: Skipping Structure {}",
+                spdlog::debug("{}: Skipping unimplemented Structure {}",
                     getMethodName(this, __func__), ::to_string(aStructure));
 
                 FutureDataLst localFutureDataLst{mCtx};
@@ -543,8 +598,6 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
             }
     }
 
-    bool success = true;
-
     if(obj)
     {
         try
@@ -553,40 +606,33 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         }
         catch(...)
         {
-            success = false;
-
-            if(!success)
+            if(ctx.mSkipInvalidStruct)
             {
-                // @todo There is some issue here, therefore deactivating
-                //       the if statement for now. The branches were not
-                //       taken as expected. mSkipInvalidStruct seems to
-                //       be overridden somewhere...
-                // if(mCtx.get().mSkipInvalidStruct)
-                if(false)
-                {
-                    // Reset file position to the state before
-                    // the structure was parsed and failed
-                    mCtx.get().mDs.get().setCurrentOffset(startOffset);
+                spdlog::debug("{}: Skipping invalid Structure {}",
+                    getMethodName(this, __func__), ::to_string(aStructure));
 
-                    // Previous read operations might have read beyond EoF,
-                    // therefore reset the EoF flag.
-                    mCtx.get().mDs.get().clear();
+                // Reset file position to the state before
+                // the structure was parsed and failed
+                ds.setCurrentOffset(startOffset);
 
-                    FutureDataLst localFutureDataLst{mCtx};
+                // Previous read operations might have read beyond EoF,
+                // therefore reset the EoF flag.
+                ds.clear();
 
-                    auto_read_prefixes(localFutureDataLst);
+                FutureDataLst localFutureDataLst{mCtx};
 
-                    localFutureDataLst.readRestOfStructure();
-                }
-                else
-                {
-                    throw;
-                }
+                auto_read_prefixes(localFutureDataLst);
+
+                localFutureDataLst.readRestOfStructure();
+            }
+            else
+            {
+                throw;
             }
         }
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.get().mDs.get().getCurrentOffset()));
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     return obj;
 }

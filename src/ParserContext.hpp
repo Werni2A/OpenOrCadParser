@@ -25,7 +25,8 @@ public:
         const fs::path& aCurrOpenFile, const fs::path& aExtractedPath)
         : mInputFile{aInputFile}, mCurrOpenFile{aCurrOpenFile},
           mExtractedPath{aExtractedPath}, mDs{aDs}, mImgCtr{0U},
-          mSkipInvalidStruct{true}
+          mSkipUnknownPrim{true}, mSkipInvalidPrim{true},
+          mSkipUnknownStruct{true}, mSkipInvalidStruct{true}
     { }
 
     fs::path mInputFile;
@@ -36,7 +37,11 @@ public:
 
     size_t mImgCtr; //!< Counts images per stream
 
-    bool mSkipInvalidStruct;
+    bool mSkipUnknownPrim; //!< Unknown primitives should be skipped during parsing
+    bool mSkipInvalidPrim; //!< Invalid primitives should be skipped during parsing
+
+    bool mSkipUnknownStruct; //!< Unknown structures should be skipped during parsing
+    bool mSkipInvalidStruct; //!< Invalid structures should be skipped during parsing
 };
 
 

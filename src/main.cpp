@@ -132,9 +132,15 @@ int main(int argc, char* argv[])
 
     Parser parser{inputFile};
 
-    ParserContext ctx = parser.getContext();
+    ParserContext& ctx = parser.getContext();
 
-    ctx.mSkipInvalidStruct = !stopParsing;
+    // Allow skipping of unknown or invalid components
+    const bool allowSkipping = !stopParsing;
+
+    ctx.mSkipUnknownStruct = allowSkipping;
+    ctx.mSkipInvalidStruct = allowSkipping;
+    ctx.mSkipUnknownPrim   = allowSkipping;
+    ctx.mSkipInvalidPrim   = allowSkipping;
 
     if(printTree)
     {
