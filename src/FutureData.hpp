@@ -213,6 +213,32 @@ public:
         return txt;
     }
 
+    void readUntilNextFutureData()
+    {
+        auto& ds = mCtx.get().mDs.get();
+
+        const size_t curPos = ds.getCurrentOffset();
+
+        const auto pred = [&curPos] (const FutureData aFutureData) -> bool {
+                return curPos < aFutureData.getStopOffset();
+            };
+
+        auto res = std::find_if(this->rbegin(), this->rend(), pred);
+
+        if(res != this->rend())
+        {
+            size_t byteDiff = res->getStopOffset() - curPos;
+
+            ds.printUnknownData(byteDiff, fmt::format("{}: Reading rest of future data ({} Byte)",
+                getMethodName(this, __func__), byteDiff));
+        }
+        else
+        {
+            spdlog::debug("{}: Did not find any future data following current offset 0x{:08x}",
+                getMethodName(this, __func__), curPos);
+        }
+    }
+
     void readRestOfStructure()
     {
         spdlog::trace(string());

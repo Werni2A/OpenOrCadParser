@@ -15,11 +15,6 @@ void StructGlobalSymbol::read(FileFormatVersion aVersion)
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    if(aVersion == FileFormatVersion::Unknown)
-    {
-        aVersion = predictVersion();
-    }
-
     FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(Structure::GlobalSymbol, localFutureLst);

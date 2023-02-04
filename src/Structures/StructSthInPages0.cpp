@@ -18,11 +18,6 @@ void StructSthInPages0::read(FileFormatVersion aVersion)
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    if(aVersion == FileFormatVersion::Unknown)
-    {
-        aVersion = predictVersion();
-    }
-
     FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(Structure::SthInPages0, localFutureLst);
@@ -40,12 +35,9 @@ void StructSthInPages0::read(FileFormatVersion aVersion)
 }
 
 
-void StructSthInPages0::read_raw(FileFormatVersion aVersion, FutureDataLst& aLocalFutureLst)
+void StructSthInPages0::read_raw(FileFormatVersion /* aVersion */, FutureDataLst& aLocalFutureLst)
 {
     auto& ds = mCtx.get().mDs.get();
-
-    spdlog::trace("{}: Version is set to {}",
-        getMethodName(this, __func__), magic_enum::enum_name(aVersion));
 
     name = ds.readStringLenZeroTerm();
 
@@ -72,21 +64,8 @@ void StructSthInPages0::read_raw(FileFormatVersion aVersion, FutureDataLst& aLoc
         readPrimitive(primitive);
     }
 
-    // @todo The versions were chosen arbitrarily
-    if(aVersion == FileFormatVersion::A)
-    {
-        ds.printUnknownData(20, getMethodName(this, __func__) + ": 2");
-    }
-    else if(aVersion == FileFormatVersion::B)
-    {
-        ds.printUnknownData(16, getMethodName(this, __func__) + ": 3");
-    }
-    else if(aVersion == FileFormatVersion::C)
-    {
-        ds.printUnknownData(8, getMethodName(this, __func__) + ": 4");
-    }
-    else
-    { }
+    // @todo Looks like it has one of {0, 8, 16 , 20} Byte in size
+    aLocalFutureLst.readUntilNextFutureData();
 
     aLocalFutureLst.checkpoint();
 }
