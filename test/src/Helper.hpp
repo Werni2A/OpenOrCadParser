@@ -19,8 +19,11 @@ namespace fs = std::filesystem;
 [[maybe_unused]]
 inline void configure_parser(Parser& aParser)
 {
-    ParserContext ctx = aParser.getContext();
+    ParserContext& ctx = aParser.getContext();
 
+    ctx.mSkipUnknownPrim   = false;
+    ctx.mSkipInvalidPrim   = false;
+    ctx.mSkipUnknownStruct = false;
     ctx.mSkipInvalidStruct = false;
 }
 
