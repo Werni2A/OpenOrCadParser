@@ -16,11 +16,16 @@
 #include "Win32/LOGFONTA.hpp"
 
 
-void StreamLibrary::read(FileFormatVersion /* aVersion */)
+void StreamLibrary::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.get().mDs.get();
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    if(aVersion == FileFormatVersion::Unknown)
+    {
+        aVersion = predictVersion();
+    }
 
     size_t startOffset = ds.getCurrentOffset();
 
@@ -95,9 +100,17 @@ void StreamLibrary::read(FileFormatVersion /* aVersion */)
 
     pageSettings.read();
 
-    // @todo sometimes it's 2 and sometimes 4 byte... Looks like a data format change
-    // const uint32_t strLstLen = mDs.readUint16();
-    const uint32_t strLstLen = ds.readUint32();
+    uint32_t strLstLen = 0U;
+
+    // @todo Versions were chosen randomly
+    if(aVersion == FileFormatVersion::A)
+    {
+        strLstLen = ds.readUint16();
+    }
+    else
+    {
+        strLstLen = ds.readUint32();
+    }
 
     for(size_t i = 0u; i < strLstLen; ++i)
     {
