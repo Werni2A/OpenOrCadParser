@@ -18,8 +18,6 @@ void StructGeneralProperties::read(FileFormatVersion /* aVersion */)
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    // FutureDataLst localFutureLst{mCtx};
-
     implementationPath = ds.readStringLenZeroTerm();
 
     spdlog::trace("implementationPath = {}", implementationPath);
@@ -56,9 +54,8 @@ void StructGeneralProperties::read(FileFormatVersion /* aVersion */)
 
     this->implementationType = ToImplementationType(implementationType);
 
-    ds.printUnknownData(1, getMethodName(this, __func__) + ": 0");
-
-    // localFutureLst.readRestOfStructure();
+    // @todo Maybe merge with bit field above?
+    ds.assumeData({0}, getMethodName(this, __func__) + ": 0");
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

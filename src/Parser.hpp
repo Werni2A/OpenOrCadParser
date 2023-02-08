@@ -103,6 +103,11 @@ public:
 
     void parseLibrary();
 
+    Library& getLibrary() const
+    {
+        return *gLibrary;
+    }
+
 private:
     void openFile(const fs::path& aFile);
     void closeFile();

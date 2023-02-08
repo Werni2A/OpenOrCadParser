@@ -52,6 +52,11 @@ public:
         spdlog::trace(to_string());
     }
 
+    void accept(Visitor& aVisitor) const
+    {
+        aVisitor.visit(*this);
+    }
+
     std::string to_string() const
     {
         std::string str;

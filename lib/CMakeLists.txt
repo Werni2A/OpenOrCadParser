@@ -1,6 +1,9 @@
 # Add CompoundFileReader dependency
 find_path(COMPOUNDFILEREADER_INCLUDE_DIRS "compoundfilereader.h")
 
+# Add tinyxml2 dependency
+find_package(tinyxml2 CONFIG REQUIRED)
+
 set(SOURCES
    ${LIB_SRC_DIR}/CommonBase.cpp
    ${LIB_SRC_DIR}/ContainerExtractor.cpp
@@ -76,6 +79,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructWire.cpp
    ${LIB_SRC_DIR}/Structures/StructWireBus.cpp
    ${LIB_SRC_DIR}/Structures/StructWireScalar.cpp
+   ${LIB_SRC_DIR}/XmlExporter.cpp
 )
 
 set(HEADERS
@@ -157,7 +161,9 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/StructWire.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructWireBus.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructWireScalar.hpp
+   ${LIB_INCLUDE_DIR}/VisitorPattern.hpp
    ${LIB_INCLUDE_DIR}/Win32/LOGFONTA.hpp
+   ${LIB_INCLUDE_DIR}/XmlExporter.hpp
 )
 
 # Create library file from sources
@@ -174,4 +180,5 @@ target_link_libraries(${NAME_LIB} PRIVATE
                       nameof::nameof
                       spdlog::spdlog
                       spdlog::spdlog_header_only
+                      tinyxml2::tinyxml2
 )

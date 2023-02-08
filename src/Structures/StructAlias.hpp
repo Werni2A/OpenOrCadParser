@@ -28,6 +28,11 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
+    virtual void accept(Visitor& aVisitor) const override
+    {
+        aVisitor.visit(*this);
+    }
+
     int32_t  locX;
     int32_t  locY;
 

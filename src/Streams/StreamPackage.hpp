@@ -23,19 +23,22 @@ class StreamPackage : public CommonBase
 public:
 
     StreamPackage(ParserContext& aCtx) : CommonBase{aCtx}, properties{}, primitives{},
-        t0x1f{}, pinIdxMappings{}
+        t0x1f{}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
+    virtual void accept(Visitor& aVisitor) const override
+    {
+        aVisitor.visit(*this);
+    }
+
     std::vector<std::unique_ptr<StructProperties>>    properties;
     std::vector<std::unique_ptr<StructPrimitives>>    primitives;
 
     std::unique_ptr<StructT0x1f>                      t0x1f;
-
-    std::vector<std::unique_ptr<StructPinIdxMapping>> pinIdxMappings;
 };
 
 
@@ -68,15 +71,6 @@ static std::string to_string(const StreamPackage& aObj)
     if(aObj.t0x1f)
     {
         str += indent(aObj.t0x1f->to_string(), 2);
-    }
-
-    str += fmt::format("{}pinIdxMappings:\n", indent(1));
-    for(size_t i = 0u; i < aObj.pinIdxMappings.size(); ++i)
-    {
-        if(aObj.pinIdxMappings[i])
-        {
-            str += indent(fmt::format("[{}]: {}", i, aObj.pinIdxMappings[i]->to_string()), 2);
-        }
     }
 
     return str;

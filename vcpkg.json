@@ -8,7 +8,8 @@
     "fmt",
     "magic-enum",
     "nameof",
-    "spdlog"
+    "spdlog",
+    "tinyxml2"
   ],
   "builtin-baseline": "71d3fa60b67540e9bf5fde2bf2188f579ff09433"
 }

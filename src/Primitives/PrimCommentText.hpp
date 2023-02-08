@@ -27,6 +27,11 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
+    virtual void accept(Visitor& aVisitor) const override
+    {
+        aVisitor.visit(*this);
+    }
+
     LOGFONTA getTextFont() const;
 
     int32_t locX;

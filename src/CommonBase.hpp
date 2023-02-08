@@ -12,12 +12,13 @@
 #include "FutureData.hpp"
 #include "General.hpp"
 #include "ParserContext.hpp"
+#include "VisitorPattern.hpp"
 
 
 class PrimBase;
 
 
-class CommonBase
+class CommonBase : public Component
 {
 public:
     CommonBase(ParserContext& aCtx) : mCtx{aCtx}, mFileFormatVersion{FileFormatVersion::C}
