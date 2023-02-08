@@ -26,7 +26,8 @@ public:
         : mInputFile{aInputFile}, mCurrOpenFile{aCurrOpenFile},
           mExtractedPath{aExtractedPath}, mDs{aDs}, mImgCtr{0U},
           mSkipUnknownPrim{true}, mSkipInvalidPrim{true},
-          mSkipUnknownStruct{true}, mSkipInvalidStruct{true}
+          mSkipUnknownStruct{true}, mSkipInvalidStruct{true},
+          mKeepTmpFiles(false)
     { }
 
     fs::path mInputFile;
@@ -42,6 +43,8 @@ public:
 
     bool mSkipUnknownStruct; //!< Unknown structures should be skipped during parsing
     bool mSkipInvalidStruct; //!< Invalid structures should be skipped during parsing
+
+    bool mKeepTmpFiles; //!< Do not delete temporary files after parser completed
 };
 
 

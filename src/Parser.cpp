@@ -92,8 +92,11 @@ Parser::Parser(const fs::path& aFile) :
 
 Parser::~Parser()
 {
-    // Remove temporary extracted files
-    fs::remove_all(mExtractedPath.parent_path());
+    if(!mCtx.mKeepTmpFiles)
+    {
+        // Remove temporary extracted files
+        fs::remove_all(mExtractedPath.parent_path());
+    }
 
     if(!mRemainingFiles.empty())
     {
