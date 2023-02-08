@@ -96,6 +96,8 @@ void StreamLibrary::read(FileFormatVersion aVersion)
     for(size_t i = 0u; i < partFields; ++i)
     {
         strLstPartField.push_back(ds.readStringLenZeroTerm());
+
+        spdlog::trace("strLstPartField[{}] = {}", i, strLstPartField.back());
     }
 
     pageSettings.read();
@@ -112,18 +114,26 @@ void StreamLibrary::read(FileFormatVersion aVersion)
         strLstLen = ds.readUint32();
     }
 
+    spdlog::trace("strLstLen = {}", strLstLen);
+
     for(size_t i = 0u; i < strLstLen; ++i)
     {
         strLst.push_back(ds.readStringLenZeroTerm());
+
+        spdlog::trace("strLst[{}] = {}", i, strLst.back());
     }
 
     const uint16_t aliasLstLen = ds.readUint16();
 
+    spdlog::trace("aliasLstLen = {}", aliasLstLen);
+
     for(size_t i = 0u; i < aliasLstLen; ++i)
     {
-        std::string alias   = ds.readStringLenZeroTerm();
-        std::string package = ds.readStringLenZeroTerm();
+        const std::string alias   = ds.readStringLenZeroTerm();
+        const std::string package = ds.readStringLenZeroTerm();
         partAliases.push_back(std::make_pair(alias, package));
+
+        spdlog::trace("partAliases[{}] = (alias = {}, package = {})", i, alias, package);
     }
 
     if(gFileType == FileType::Schematic)
