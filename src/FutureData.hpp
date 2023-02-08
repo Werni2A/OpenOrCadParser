@@ -243,6 +243,13 @@ public:
     {
         spdlog::trace(string());
 
+        // We don't know anything about the
+        // structure, therefore do nothing
+        if(empty())
+        {
+            return;
+        }
+
         int64_t endPos = 0;
 
         for(const auto& data : *this)
