@@ -36,6 +36,11 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
+    virtual void accept(Visitor& aVisitor) const override
+    {
+        aVisitor.visit(*this);
+    }
+
     time_t createDateTime;
     time_t modifyDateTime;
 

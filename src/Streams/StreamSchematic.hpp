@@ -24,6 +24,10 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
+    virtual void accept(Visitor& aVisitor) const override
+    {
+        aVisitor.visit(*this);
+    }
 };
 
 

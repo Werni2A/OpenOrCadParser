@@ -26,8 +26,15 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
+    virtual void accept(Visitor& aVisitor) const override
+    {
+        aVisitor.visit(*this);
+    }
+
     std::string name;
     std::string refDes;
+
+    // OrCAD GUI: `Property Sheet` -> `Package Properties` -> `PCB Footprint`
     std::string pcbFootprint;
 
     std::vector<std::unique_ptr<StructPinIdxMapping>> pinIdxMappings;

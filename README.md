@@ -57,6 +57,7 @@ cmake --build build
 - [Magic Enum](https://github.com/Neargye/magic_enum)
 - [Nameof](https://github.com/Neargye/nameof)
 - [spdlog](https://github.com/gabime/spdlog)
+- [TinyXML2](https://github.com/leethomason/tinyxml2)
 
 ---
 
@@ -79,6 +80,32 @@ Allowed options:
 ./cli/OpenOrCadParser-cli --input file.DSN --print_tree
 ./cli/OpenOrCadParser-cli --input file.OLB --verbosity 6 --keep >> file.txt
 ```
+
+## Generate Image from Library `Package`
+
+[pyorlib2ki](https://github.com/fjullien/pyorlib2ki) makes it possible to import XML files into KiCad getting a graphical representation of the `Package`.
+
+Pictures make it easy to compare against OrCAD's original but do not expect much of it at the moment. The required XML export feature is still in a very early stage. See the following image as an example.
+
+![Example XML import into KiCad](/doc/img/example_xml_kicad_import.png)
+
+```bash
+#!/bin/bash
+
+# Generate XML file
+./build/cli/OpenOrCadParser-cli -k -i "Library.OLB"
+
+# Copy XML path to this variable
+XML_PATH=/tmp/OpenOrCadParser/bffb65106f5b2365049dfc9de4a8b7e3/Package.OLB/xml/PackageName0.xml
+
+SYM_PATH=PackageName0.kicad_sym
+
+# Use https://github.com/fjullien/pyorlib2ki
+python pyorlib2ki.py -i $XML_PATH -o $SYM_PATH
+
+# Import symbol into KiCad and export graphical representation
+```
+
 
 ---
 

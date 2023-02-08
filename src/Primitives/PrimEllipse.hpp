@@ -33,6 +33,11 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
+    virtual void accept(Visitor& aVisitor) const override
+    {
+        aVisitor.visit(*this);
+    }
+
     static size_t getExpectedStructSize(FileFormatVersion aVersion);
 
     void setLineStyle(const LineStyle& aVal)

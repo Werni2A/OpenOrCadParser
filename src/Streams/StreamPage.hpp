@@ -32,6 +32,11 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
+    virtual void accept(Visitor& aVisitor) const override
+    {
+        aVisitor.visit(*this);
+    }
+
     std::string  name;
     std::string  pageSize;
     PageSettings pageSettings;

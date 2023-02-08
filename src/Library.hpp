@@ -20,11 +20,25 @@
 #include "Streams/StreamPackage.hpp"
 #include "Streams/StreamSymbol.hpp"
 #include "Streams/StreamType.hpp"
+#include "VisitorPattern.hpp"
 
 
-class Library
+class Library : public Component
 {
 public:
+
+    Library() : Component{}, adminData{}, dsnStream{}, netBundleMapData{}, hsObjects{},
+        cellsDir{}, exportBlocksDir{}, graphicsDir{}, packagesDir{}, partsDir{}, symbolsDir{},
+        viewsDir{}, library{}, graphicsTypes{}, symbolsTypes{}, packages{}, symbols{}
+    { }
+
+    ~Library() override
+    { }
+
+    virtual void accept(Visitor& aVisitor) const override
+    {
+        aVisitor.visit(*this);
+    }
 
     std::unique_ptr<StreamAdminData>        adminData;
     std::unique_ptr<StreamDsnStream>        dsnStream;

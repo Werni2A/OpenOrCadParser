@@ -29,6 +29,11 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
+    virtual void accept(Visitor& aVisitor) const override
+    {
+        aVisitor.visit(*this);
+    }
+
     fs::path writeImgToFile(fs::path aFilePath) const;
 
     int32_t locX;

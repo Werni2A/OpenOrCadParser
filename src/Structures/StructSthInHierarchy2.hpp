@@ -23,6 +23,11 @@ public:
 
     std::string to_string() const override;
 
+    virtual void accept(Visitor& aVisitor) const override
+    {
+        aVisitor.visit(*this);
+    }
+
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
 };

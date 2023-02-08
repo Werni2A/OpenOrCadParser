@@ -35,9 +35,9 @@ void StructPrimitives::read(FileFormatVersion aVersion)
 
     spdlog::trace("name = {}", name);
 
-    const std::string someStr = ds.readStringLenZeroTerm();
+    const std::string someStr791411 = ds.readStringLenZeroTerm();
 
-    spdlog::trace("someStr = {}", someStr);
+    spdlog::trace("someStr791411 = {}", someStr791411);
 
     localFutureLst.checkpoint();
 
@@ -59,7 +59,7 @@ void StructPrimitives::read(FileFormatVersion aVersion)
             ds.setCurrentOffset(ds.getCurrentOffset() - 1U);
         }
 
-        readPrimitive(primitive);
+        primitives.push_back(readPrimitive(primitive));
 
         // @todo Sometimes there is trailing data after the primitives
         //       but I don't know how many bytes, therefore discard them
@@ -124,17 +124,9 @@ void StructPrimitives::read(FileFormatVersion aVersion)
 
     localFutureLst.checkpoint();
 
-    const std::string someStr0 = ds.readStringLenZeroTerm();
-    const std::string someStr1 = ds.readStringLenZeroTerm(); // @todo Maybe incorrect
-    const std::string someStr2 = ds.readStringLenZeroTerm();
-    const std::string someStr3 = ds.readStringLenZeroTerm();
-
-    spdlog::trace("someStr0 = {}", someStr0);
-    spdlog::trace("someStr1 = {}", someStr1);
-    spdlog::trace("someStr2 = {}", someStr2);
-    spdlog::trace("someStr3 = {}", someStr3);
-
-    ds.printUnknownData(2, fmt::format("{}: 0", getMethodName(this, __func__)));
+    auto genProp = StructGeneralProperties{mCtx.get()};
+    genProp.read();
+    generalProperties = genProp;
 
     localFutureLst.checkpoint();
 

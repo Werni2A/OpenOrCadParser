@@ -13,6 +13,9 @@
 #include "Enums/ImplementationType.hpp"
 
 
+// @todo This is just a helper class but not a real structure
+//       Check if the same code is used multiple times, otherwise
+//       Inline this structure?
 class StructGeneralProperties : public CommonBase
 {
 public:
@@ -26,26 +29,37 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    // Implementation path of the symbol.
-    // See OrCAD: 'Part Properties' -> 'Implementation Path'
+    virtual void accept(Visitor& aVisitor) const override
+    {
+        aVisitor.visit(*this);
+    }
+
+    // Implementation path to open the corresponding folder.
+    // See OrCAD: 'Property Sheet' -> 'Part Properties' -> 'Implementation Path'
     std::string implementationPath;
 
     // Implementation of the symbol.
-    // See OrCAD: 'Part Properties' -> 'Implementation'
+    // See OrCAD: 'Property Sheet' -> 'Part Properties' -> 'Implementation'
     std::string implementation;
 
     // Reference descriptor for the symbol. E.g. 'R' for resistor.
-    // See OrCAD: 'Package Properties' -> 'Part Reference Prefix'
+    // See OrCAD: 'Property Sheet' -> 'Package Properties' -> 'Part Reference Prefix'
     std::string refDes;
 
     // Value of the symbol. E.g. '10k' for a resistor.
-    // See OrCAD: 'Part Properties' -> 'Value'
+    // See OrCAD: 'Property Sheet' -> 'Part Properties' -> 'Value'
     std::string partValue;
 
+    // See OrCAD Dropdown Menu: 'Property Sheet' -> 'Part Properties' -> 'Implementation Type'
     ImplementationType implementationType;
 
+    // See OrCAD Checkbox: 'Property Sheet' -> 'Part Properties' -> 'Pin Name Visible'
     bool pinNameVisible;
+
+    // See OrCAD Checkbox: 'Property Sheet' -> 'Part Properties' -> 'Pin Name Rotate'
     bool pinNameRotate;
+
+    // See OrCAD Checkbox: 'Property Sheet' -> 'Part Properties' -> 'Pin Number Visible'
     bool pinNumberVisible;
 };
 
