@@ -25,6 +25,7 @@ inline void configure_parser(Parser& aParser)
     ctx.mSkipInvalidPrim   = false;
     ctx.mSkipUnknownStruct = false;
     ctx.mSkipInvalidStruct = false;
+    ctx.mKeepTmpFiles      = false;
 }
 
 

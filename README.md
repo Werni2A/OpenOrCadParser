@@ -72,10 +72,12 @@ Allowed options:
   -o [ --output ] arg         output path (required iff extract is set)
   -v [ --verbosity ] arg (=4) verbosity level (0 = off, 6 = highest)
   -s [ --stop ]               stop parsing on low severity errors
+  -k [ --keep ]               keep temporary files after parser completed
 
+./cli/OpenOrCadParser-cli --input file.DSN
 ./cli/OpenOrCadParser-cli --input file.DSN --extract --output out/
 ./cli/OpenOrCadParser-cli --input file.DSN --print_tree
-./cli/OpenOrCadParser-cli --input file.OLB --verbosity 6 >> file.txt
+./cli/OpenOrCadParser-cli --input file.OLB --verbosity 6 --keep >> file.txt
 ```
 
 ---
