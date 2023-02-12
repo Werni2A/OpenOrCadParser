@@ -10,16 +10,11 @@
 
 
 // @todo is this a specialized instance for Rects or general for all types?
-void StructGraphicBoxInst::read(FileFormatVersion aVersion)
+void StructGraphicBoxInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.get().mDs.get();
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-
-    if(aVersion == FileFormatVersion::Unknown)
-    {
-        aVersion = predictVersion();
-    }
 
     FutureDataLst localFutureLst{mCtx};
 

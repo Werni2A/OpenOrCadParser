@@ -26,7 +26,7 @@ public:
 
     std::string to_string() const override;
 
-    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+    void read(FileFormatVersion aVersion = FileFormatVersion{}) override;
 
     int32_t  locX;
     int32_t  locY;

@@ -74,7 +74,7 @@ public:
     std::string to_string() const;
 
     // @todo This is more a workaround to get inheritance working for e.g. StreamExportBlocksDirectory
-    void read(FileFormatVersion /* aVersion */ = FileFormatVersion::Unknown) override
+    void read(FileFormatVersion /* aVersion */ = FileFormatVersion{}) override
     { }
 
     time_t lastModifiedDate;

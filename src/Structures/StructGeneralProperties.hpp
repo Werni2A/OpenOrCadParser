@@ -24,7 +24,7 @@ public:
 
     std::string to_string() const override;
 
-    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+    void read(FileFormatVersion aVersion = FileFormatVersion{}) override;
 
     // Implementation path of the symbol.
     // See OrCAD: 'Part Properties' -> 'Implementation Path'

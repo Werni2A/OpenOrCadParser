@@ -20,12 +20,12 @@ class PrimBase;
 class CommonBase
 {
 public:
-    CommonBase(ParserContext& aCtx) : mCtx{aCtx}, mFileFormatVersion{FileFormatVersion::C}
+    CommonBase(ParserContext& aCtx) : mCtx{aCtx}, mFileFormatVersion{}
     { }
 
     virtual std::string to_string() const = 0;
 
-    virtual void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) = 0;
+    virtual void read(FileFormatVersion aVersion = FileFormatVersion{}) = 0;
 
     void discard_until_preamble();
 

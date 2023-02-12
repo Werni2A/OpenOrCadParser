@@ -13,15 +13,11 @@
 
 size_t PrimLine::getExpectedStructSize(FileFormatVersion aVersion)
 {
-    size_t expectedByteLength;
+    size_t expectedByteLength = 24U;
 
-    if(aVersion <= FileFormatVersion::A)
+    if(aVersion.optLine)
     {
-        expectedByteLength = 24u;
-    }
-    else
-    {
-        expectedByteLength = 32u;
+        expectedByteLength += 8U;
     }
 
     return expectedByteLength;
@@ -34,17 +30,14 @@ void PrimLine::read(FileFormatVersion aVersion)
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
+    if(aVersion.isUnknown)
+    {
+        aVersion = predictVersion();
+    }
+
     const size_t startOffset = ds.getCurrentOffset();
 
     const uint32_t byteLength = ds.readUint32();
-
-    // Predict version
-    switch(byteLength)
-    {
-        case 24: aVersion = FileFormatVersion::A; break;
-        case 32: aVersion = FileFormatVersion::B; break;
-        default:                                  break;
-    }
 
     ds.assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
@@ -53,7 +46,7 @@ void PrimLine::read(FileFormatVersion aVersion)
     x2 = ds.readInt32();
     y2 = ds.readInt32();
 
-    if(aVersion >= FileFormatVersion::B)
+    if(aVersion.optLine)
     {
         setLineStyle(ToLineStyle(ds.readUint32()));
         setLineWidth(ToLineWidth(ds.readUint32()));

@@ -28,7 +28,7 @@ public:
 
     std::string to_string() const override;
 
-    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+    void read(FileFormatVersion aVersion = FileFormatVersion{}) override;
 
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
     std::vector<std::unique_ptr<StructT0x10>>             t0x10s;

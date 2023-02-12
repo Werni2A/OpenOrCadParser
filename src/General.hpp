@@ -22,30 +22,87 @@ namespace fs = std::filesystem;
 
 
 enum class FileType;
-enum class FileFormatVersion;
+
 
 extern FileType gFileType;
-extern FileFormatVersion gFileFormatVersion;
 
 
-/**
- * @brief Version of the file format.
- * @warning This is not an official version but was introduced
- *          by myself as I don't know how or where the actual
- *          version number is stored.
- */
-enum class FileFormatVersion
+struct FileFormatVersion
 {
-    Unknown,
-    A, // Oldest version
-    B,
-    C,
-    D,
-    E,
-    F,
-    G,
-    H  // Latest Version
+    FileFormatVersion() : optLine{false}, optFill{false}, optStreamLib2Byte{false},
+        opt3{false}, opt4{false}, opt5{false}, opt6{false}, opt7{false}, rest{0U},
+        isUnknown{true}
+    { }
+
+    bool optLine           : 1; // Bit 0 - Use LineStyle/LineWidth
+    bool optFill           : 1; // Bit 1 - Use FillStyle/HatchStyle
+    bool optStreamLib2Byte : 1; // Bit 2 - Toggle size in StreamLibrary
+    bool opt3              : 1; // Bit 3
+    bool opt4              : 1; // Bit 4
+    bool opt5              : 1; // Bit 5
+    bool opt6              : 1; // Bit 6
+    bool opt7              : 1; // Bit 7
+
+    uint32_t rest          : 23;
+
+    bool isUnknown         : 1; // Bit 31 - Version is unknown
 };
+
+
+inline uint32_t VersionToInt(FileFormatVersion aVersion)
+{
+
+    uint32_t i = 0U;
+
+    i |= (static_cast<uint32_t>(aVersion.optLine) << 0U);
+    i |= (static_cast<uint32_t>(aVersion.optFill) << 1U);
+    i |= (static_cast<uint32_t>(aVersion.optStreamLib2Byte) << 2U);
+    i |= (static_cast<uint32_t>(aVersion.opt3) << 3U);
+    i |= (static_cast<uint32_t>(aVersion.opt4) << 4U);
+    i |= (static_cast<uint32_t>(aVersion.opt5) << 5U);
+    i |= (static_cast<uint32_t>(aVersion.opt6) << 6U);
+    i |= (static_cast<uint32_t>(aVersion.opt7) << 7U);
+
+    return i;
+}
+
+
+inline FileFormatVersion VersionToOpt(uint32_t aVersion)
+{
+    FileFormatVersion v{};
+
+    v.optLine           = aVersion & (1 << 0U);
+    v.optFill           = aVersion & (1 << 1U);
+    v.optStreamLib2Byte = aVersion & (1 << 2U);
+    v.opt3              = aVersion & (1 << 3U);
+    v.opt4              = aVersion & (1 << 4U);
+    v.opt5              = aVersion & (1 << 5U);
+    v.opt6              = aVersion & (1 << 6U);
+    v.opt7              = aVersion & (1 << 7U);
+
+    v.isUnknown         = false;
+
+    return v;
+}
+
+
+inline bool operator==(const FileFormatVersion& lhs, const FileFormatVersion& rhs)
+{
+    bool eq = true;
+
+    eq = eq && (lhs.optLine == rhs.optLine);
+    eq = eq && (lhs.optFill == rhs.optFill);
+    eq = eq && (lhs.optStreamLib2Byte == rhs.optStreamLib2Byte);
+    eq = eq && (lhs.opt3 == rhs.opt3);
+    eq = eq && (lhs.opt4 == rhs.opt4);
+    eq = eq && (lhs.opt5 == rhs.opt5);
+    eq = eq && (lhs.opt6 == rhs.opt6);
+    eq = eq && (lhs.opt7 == rhs.opt7);
+
+    eq = eq && (lhs.isUnknown == rhs.isUnknown);
+
+    return eq;
+}
 
 
 enum class FileType

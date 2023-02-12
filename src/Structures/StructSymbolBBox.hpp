@@ -22,7 +22,7 @@ public:
 
     std::string to_string() const override;
 
-    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+    void read(FileFormatVersion aVersion = FileFormatVersion{}) override;
 
     // @todo they are probably int16_t, see where those values are read.
     int32_t x1;

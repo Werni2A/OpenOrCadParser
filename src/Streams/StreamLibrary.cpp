@@ -22,7 +22,7 @@ void StreamLibrary::read(FileFormatVersion aVersion)
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    if(aVersion == FileFormatVersion::Unknown)
+    if(aVersion.isUnknown)
     {
         aVersion = predictVersion();
     }
@@ -104,8 +104,7 @@ void StreamLibrary::read(FileFormatVersion aVersion)
 
     uint32_t strLstLen = 0U;
 
-    // @todo Versions were chosen randomly
-    if(aVersion == FileFormatVersion::A)
+    if(aVersion.optStreamLib2Byte)
     {
         strLstLen = ds.readUint16();
     }

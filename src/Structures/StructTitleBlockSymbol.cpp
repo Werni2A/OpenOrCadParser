@@ -15,7 +15,7 @@ void StructTitleBlockSymbol::read(FileFormatVersion aVersion)
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    if(aVersion == FileFormatVersion::Unknown)
+    if(aVersion.isUnknown)
     {
         aVersion = predictVersion();
     }

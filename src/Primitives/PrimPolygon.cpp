@@ -14,19 +14,16 @@
 
 size_t PrimPolygon::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount)
 {
-    size_t expectedByteLength;
+    size_t expectedByteLength = 10U + 4U * aPointCount;
 
-    if(aVersion <= FileFormatVersion::A)
+    if(aVersion.optLine)
     {
-        expectedByteLength = 10u + 4u * aPointCount;
+        expectedByteLength += 8U;
     }
-    else if(aVersion <= FileFormatVersion::B)
+
+    if(aVersion.optFill)
     {
-        expectedByteLength = 18u + 4u * aPointCount;
-    }
-    else
-    {
-        expectedByteLength = 26u + 4u * aPointCount;
+        expectedByteLength += 8U;
     }
 
     return expectedByteLength;
@@ -39,7 +36,7 @@ void PrimPolygon::read(FileFormatVersion aVersion)
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    if(aVersion == FileFormatVersion::Unknown)
+    if(aVersion.isUnknown)
     {
         aVersion = predictVersion();
     }
@@ -50,13 +47,13 @@ void PrimPolygon::read(FileFormatVersion aVersion)
 
     ds.assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
-    if(gFileFormatVersion >= FileFormatVersion::B)
+    if(aVersion.optLine)
     {
         setLineStyle(ToLineStyle(ds.readUint32()));
         setLineWidth(ToLineWidth(ds.readUint32()));
     }
 
-    if(gFileFormatVersion >= FileFormatVersion::C)
+    if(aVersion.optFill)
     {
         fillStyle  = ToFillStyle(ds.readUint32());
         hatchStyle = ToHatchStyle(ds.readInt32());
@@ -88,7 +85,7 @@ void PrimPolygon::read(FileFormatVersion aVersion)
         throw MisinterpretedData(__func__, startOffset, byteLength, ds.getCurrentOffset());
     }
 
-    if(byteLength != getExpectedStructSize(gFileFormatVersion, pointCount))
+    if(byteLength != getExpectedStructSize(aVersion, pointCount))
     {
         throw FileFormatChanged(std::string(nameof::nameof_type<decltype(*this)>()));
     }

@@ -24,7 +24,7 @@ public:
 
     std::string to_string() const override;
 
-    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+    void read(FileFormatVersion aVersion = FileFormatVersion{}) override;
 
     std::string name;
     std::string refDes;

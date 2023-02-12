@@ -12,15 +12,11 @@
 
 size_t PrimArc::getExpectedStructSize(FileFormatVersion aVersion)
 {
-    size_t expectedByteLength;
+    size_t expectedByteLength = 40U;
 
-    if(aVersion <= FileFormatVersion::A)
+    if(aVersion.optLine)
     {
-        expectedByteLength = 40u;
-    }
-    else
-    {
-        expectedByteLength = 48u;
+        expectedByteLength += 8U;
     }
 
     return expectedByteLength;
@@ -37,12 +33,9 @@ void PrimArc::read(FileFormatVersion aVersion)
 
     const uint32_t byteLength = ds.readUint32();
 
-    // Predict version
-    switch(byteLength)
+    if(aVersion.isUnknown)
     {
-        case 40: aVersion = FileFormatVersion::A; break;
-        case 48: aVersion = FileFormatVersion::B; break;
-        default:                                  break;
+        aVersion = predictVersion();
     }
 
     ds.assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
@@ -57,7 +50,7 @@ void PrimArc::read(FileFormatVersion aVersion)
     endX   = ds.readInt32();
     endY   = ds.readInt32();
 
-    if(aVersion >= FileFormatVersion::B)
+    if(aVersion.optLine)
     {
         setLineStyle(ToLineStyle(ds.readUint32()));
         setLineWidth(ToLineWidth(ds.readUint32()));

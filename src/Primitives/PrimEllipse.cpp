@@ -12,25 +12,16 @@
 
 size_t PrimEllipse::getExpectedStructSize(FileFormatVersion aVersion)
 {
-    size_t expectedByteLength;
+    size_t expectedByteLength = 24U;
 
-    switch(aVersion)
+    if(aVersion.optLine)
     {
-        case FileFormatVersion::A:
-            expectedByteLength = 24U;
-            break;
+        expectedByteLength += 8U;
+    }
 
-        case FileFormatVersion::B:
-            expectedByteLength = 32U;
-            break;
-
-        case FileFormatVersion::C:
-            expectedByteLength = 40U;
-            break;
-
-        default:
-            expectedByteLength = 0U;
-            break;
+    if(aVersion.optFill)
+    {
+        expectedByteLength += 8U;
     }
 
     return expectedByteLength;
@@ -43,18 +34,14 @@ void PrimEllipse::read(FileFormatVersion aVersion)
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
+    if(aVersion.isUnknown)
+    {
+        aVersion = predictVersion();
+    }
+
     const size_t startOffset = ds.getCurrentOffset();
 
     uint32_t byteLength = ds.readUint32();
-
-    // Predict version
-    switch(byteLength)
-    {
-        case 24: aVersion = FileFormatVersion::A; break;
-        case 32: aVersion = FileFormatVersion::B; break;
-        case 40: aVersion = FileFormatVersion::C; break;
-        default:                                  break;
-    }
 
     ds.assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
@@ -63,13 +50,13 @@ void PrimEllipse::read(FileFormatVersion aVersion)
     x2 = ds.readInt32();
     y2 = ds.readInt32();
 
-    if(aVersion >= FileFormatVersion::B)
+    if(aVersion.optLine)
     {
         setLineStyle(ToLineStyle(ds.readUint32()));
         setLineWidth(ToLineWidth(ds.readUint32()));
     }
 
-    if(aVersion >= FileFormatVersion::C)
+    if(aVersion.optFill)
     {
         setFillStyle(ToFillStyle(ds.readUint32()));
         setHatchStyle(ToHatchStyle(ds.readInt32()));

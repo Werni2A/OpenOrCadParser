@@ -28,7 +28,7 @@ public:
 
     std::string to_string() const override;
 
-    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+    void read(FileFormatVersion aVersion = FileFormatVersion{}) override;
 
     std::vector<std::unique_ptr<StructProperties>>    properties;
     std::vector<std::unique_ptr<StructPrimitives>>    primitives;

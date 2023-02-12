@@ -29,7 +29,7 @@ public:
 
     std::string to_string() const override;
 
-    void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+    void read(FileFormatVersion aVersion = FileFormatVersion{}) override;
 
     void read_raw(FileFormatVersion aVersion, FutureDataLst& aLocalFutureLst);
 

@@ -12,10 +12,6 @@
 #include "General.hpp"
 
 
-// Forward declaration
-enum class FileFormatVersion;
-
-
 template<typename T, typename TVal>
 struct InvalidEnumEntry : public std::invalid_argument
 {
@@ -45,9 +41,9 @@ struct MisinterpretedData : public std::runtime_error
 
 struct MissingFileFormatCheck : public std::runtime_error
 {
-    MissingFileFormatCheck(const std::string& aFunctionName, size_t aLine, FileFormatVersion aVersion) :
-        std::runtime_error(fmt::format("{} in line {} is missing a file format check for version {}",
-            aFunctionName, aLine, static_cast<int>(aVersion)))
+    MissingFileFormatCheck(const std::string& aFunctionName, size_t aLine) :
+        std::runtime_error(fmt::format("{} in line {} is missing a file format check",
+            aFunctionName, aLine))
     { }
 };
 

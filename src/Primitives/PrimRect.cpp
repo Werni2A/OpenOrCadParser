@@ -15,19 +15,16 @@
 
 size_t PrimRect::getExpectedStructSize(FileFormatVersion aVersion)
 {
-    size_t expectedByteLength;
+    size_t expectedByteLength = 24U;
 
-    if(aVersion <= FileFormatVersion::A)
+    if(aVersion.optLine)
     {
-        expectedByteLength = 24U;
+        expectedByteLength += 8U;
     }
-    else if(aVersion <= FileFormatVersion::B)
+
+    if(aVersion.optFill)
     {
-        expectedByteLength = 32u;
-    }
-    else
-    {
-        expectedByteLength = 40u;
+        expectedByteLength += 8U;
     }
 
     return expectedByteLength;
@@ -40,7 +37,7 @@ void PrimRect::read(FileFormatVersion aVersion)
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    if(aVersion == FileFormatVersion::Unknown)
+    if(aVersion.isUnknown)
     {
         aVersion = predictVersion();
     }
@@ -62,13 +59,13 @@ void PrimRect::read(FileFormatVersion aVersion)
     x2 = ds.readInt32();
     y2 = ds.readInt32();
 
-    if(aVersion >= FileFormatVersion::B)
+    if(aVersion.optLine)
     {
         setLineStyle(ToLineStyle(ds.readUint32()));
         setLineWidth(ToLineWidth(ds.readUint32()));
     }
 
-    if(aVersion >= FileFormatVersion::C)
+    if(aVersion.optFill)
     {
         fillStyle  = ToFillStyle(ds.readUint32());
         hatchStyle = ToHatchStyle(ds.readInt32());

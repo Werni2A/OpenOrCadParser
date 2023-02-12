@@ -656,20 +656,18 @@ void CommonBase::checkInterpretedDataLen(const std::string& aFuncName, size_t aS
 
 FileFormatVersion CommonBase::predictVersion()
 {
-    FileFormatVersion prediction = FileFormatVersion::Unknown;
+    auto& ds = mCtx.get().mDs.get();
 
-    const std::vector<FileFormatVersion> versions{
-        FileFormatVersion::A,
-        FileFormatVersion::B,
-        FileFormatVersion::C,
-        FileFormatVersion::D,
-        FileFormatVersion::E,
-        FileFormatVersion::F,
-        FileFormatVersion::G,
-        FileFormatVersion::H
-    };
+    FileFormatVersion prediction{};
 
-    const size_t initial_offset = mCtx.get().mDs.get().getCurrentOffset();
+    std::vector<FileFormatVersion> versions{};
+
+    for(uint32_t i = 0U; i < 256U; ++i)
+    {
+        versions.push_back(VersionToOpt(i));
+    }
+
+    const size_t initial_offset = ds.getCurrentOffset();
 
     // Testing different versions on a try and error basis
     // should not write into log files
@@ -689,7 +687,7 @@ FileFormatVersion CommonBase::predictVersion()
             found = false;
         }
 
-        mCtx.get().mDs.get().setCurrentOffset(initial_offset);
+        ds.setCurrentOffset(initial_offset);
 
         if(found)
         {
@@ -701,17 +699,15 @@ FileFormatVersion CommonBase::predictVersion()
     // Restore user log level
     spdlog::set_level(logLevel);
 
-    spdlog::debug("{}: Predicted version to be {}",
-        getMethodName(this, __func__), magic_enum::enum_name(prediction));
-
-    if(prediction == FileFormatVersion::Unknown)
+    if(prediction.isUnknown)
     {
-        // @todo Fix this hack
-        // Set to previous default value
-        // s.t. tests not fail
-        prediction = FileFormatVersion::C;
-        spdlog::debug("{}: Setting version to {} anyway",
-            getMethodName(this, __func__), magic_enum::enum_name(prediction));
+        spdlog::debug("{}: Could not predict version",
+            getMethodName(this, __func__));
+    }
+    else
+    {
+        spdlog::debug("{}: Predicted version to be {}",
+            getMethodName(this, __func__), VersionToInt(prediction));
     }
 
     return prediction;

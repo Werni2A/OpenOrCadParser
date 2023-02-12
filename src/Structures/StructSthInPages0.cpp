@@ -61,6 +61,7 @@ void StructSthInPages0::read_raw(FileFormatVersion /* aVersion */, FutureDataLst
     {
         const Primitive primitive = readPrefixPrimitive();
 
+        // @todo Save
         readPrimitive(primitive);
     }
 

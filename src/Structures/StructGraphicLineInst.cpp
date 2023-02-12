@@ -9,16 +9,11 @@
 #include "Structures/StructGraphicLineInst.hpp"
 
 
-void StructGraphicLineInst::read(FileFormatVersion aVersion)
+void StructGraphicLineInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.get().mDs.get();
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-
-    if(aVersion == FileFormatVersion::Unknown)
-    {
-        aVersion = predictVersion();
-    }
 
     FutureDataLst localFutureLst{mCtx};
 
