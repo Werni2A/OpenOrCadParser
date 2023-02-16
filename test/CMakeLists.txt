@@ -1,18 +1,6 @@
 # Add Catch2 dependency
 find_package(Catch2 REQUIRED)
 
-# Add fmt dependency
-find_package(fmt CONFIG REQUIRED)
-
-# Add Magic Enum dependency
-find_package(magic_enum CONFIG REQUIRED)
-
-# Add Nameof dependency
-find_package(nameof CONFIG REQUIRED)
-
-# Add spdlog dependency
-find_package(spdlog CONFIG REQUIRED)
-
 # Add automatically generated test files
 file(GLOB TEST_MISC_SRC ${TEST_SRC_DIR}/generated_tests/Test_*.cpp)
 
