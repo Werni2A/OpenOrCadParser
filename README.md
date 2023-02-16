@@ -55,7 +55,7 @@ cmake --build build
 - [compoundfilereader](https://github.com/Microsoft/compoundfilereader)
 - [fmt](https://github.com/fmtlib/fmt)
 - [Magic Enum](https://github.com/Neargye/magic_enum)
-- [Nameof](https://github.com/Neargye/magic_enum)
+- [Nameof](https://github.com/Neargye/nameof)
 - [spdlog](https://github.com/gabime/spdlog)
 
 ---
