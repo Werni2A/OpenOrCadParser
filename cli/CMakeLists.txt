@@ -1,18 +1,6 @@
 # Add Boost dependency
 find_package(Boost COMPONENTS program_options REQUIRED)
 
-# Add fmt dependency
-find_package(fmt CONFIG REQUIRED)
-
-# Add Magic Enum dependency
-find_package(magic_enum CONFIG REQUIRED)
-
-# Add Nameof dependency
-find_package(nameof CONFIG REQUIRED)
-
-# Add spdlog dependency
-find_package(spdlog CONFIG REQUIRED)
-
 set(SOURCES
     ${CLI_SRC_DIR}/main.cpp
 )

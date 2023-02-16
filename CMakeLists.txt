@@ -19,6 +19,18 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -flto")
 endif()
 
+# Add fmt dependency
+find_package(fmt CONFIG REQUIRED)
+
+# Add Magic Enum dependency
+find_package(magic_enum CONFIG REQUIRED)
+
+# Add Nameof dependency
+find_package(nameof CONFIG REQUIRED)
+
+# Add spdlog dependency
+find_package(spdlog CONFIG REQUIRED)
+
 set(LIB_SRC_DIR      ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(LIB_INCLUDE_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(CLI_SRC_DIR      ${CMAKE_CURRENT_SOURCE_DIR}/src)
