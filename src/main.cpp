@@ -73,9 +73,15 @@ void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& e
         output = fs::path{vm["output"].as<std::string>()};
         if(!fs::exists(output))
         {
-            std::cout << "The following output directory was not found: " << output.string() << std::endl;
-            std::cout << desc << std::endl;
-            std::exit(1);
+            try
+            {
+                fs::create_directory(output);
+            }
+            catch(const fs::filesystem_error& e)
+            {
+                std::cout << "The following output directory could not be created: " << output.string() << std::endl;
+                std::exit(1);
+            }
         }
 
         if(!fs::is_directory(output))
