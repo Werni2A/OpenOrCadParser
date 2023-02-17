@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(OpenOrCadParser)
 
+option(ENABLE_UNIT_TESTING "Enable unit testing" ON)
+
 if(CMAKE_BUILD_TYPE STREQUAL "")
     message(STATUS "CMAKE_BUILD_TYPE not defined, 'Debug' will be used")
     set(CMAKE_BUILD_TYPE "Debug")
@@ -44,4 +46,6 @@ set(NAME_TEST test)
 
 add_subdirectory(lib)
 add_subdirectory(cli)
-add_subdirectory(test)
+if(ENABLE_UNIT_TESTING)
+    add_subdirectory(test)
+endif(ENABLE_UNIT_TESTING)
