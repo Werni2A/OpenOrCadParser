@@ -80,7 +80,11 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
 
     ds.assumeData({0x00}, getMethodName(this, __func__) + ": 1");
 
-    localFutureLst.readRestOfStructure();
+    localFutureLst.readUntilNextFutureData("See FuturData of StructSymbolDisplayProp");
+
+    localFutureLst.checkpoint();
+
+    localFutureLst.sanitizeCheckpoints();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

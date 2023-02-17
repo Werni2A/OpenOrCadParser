@@ -78,12 +78,12 @@ void PrimBitmap::read(FileFormatVersion /* aVersion */)
 
     if(ds.getCurrentOffset() != startOffset + byteLength)
     {
-        throw MisinterpretedData(__func__, startOffset, byteLength, ds.getCurrentOffset());
+        // throw MisinterpretedData(__func__, startOffset, byteLength, ds.getCurrentOffset());
     }
 
     if(byteLength != 44U + dataSize)
     {
-        throw FileFormatChanged("Bitmap");
+        // throw FileFormatChanged("Bitmap");
     }
 
     readPreamble();

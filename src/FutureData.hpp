@@ -154,10 +154,21 @@ public:
         {
             auto& futureData = *res;
 
-            futureData.setParsed(true);
+            if(futureData.getParsed())
+            {
+                const std::string msg = fmt::format("{}: Checkpoint position at 0x{:08x} is duplicated",
+                    getMethodName(this, __func__), currOffset);
 
-            spdlog::debug("{}: Checkpoint at 0x{:08x} was successful",
-                getMethodName(this, __func__), currOffset);
+                spdlog::error(msg);
+                throw std::runtime_error(msg);
+            }
+            else
+            {
+                futureData.setParsed(true);
+
+                spdlog::debug("{}: Checkpoint at 0x{:08x} was successful",
+                    getMethodName(this, __func__), currOffset);
+            }
         }
         else
         {
@@ -166,6 +177,7 @@ public:
                 const std::string msg = fmt::format("{}: Checkpoint position at 0x{:08x} is incorrect",
                     getMethodName(this, __func__), currOffset);
 
+                spdlog::error(msg);
                 throw std::runtime_error(msg);
             }
 
@@ -213,7 +225,27 @@ public:
         return txt;
     }
 
-    void readUntilNextFutureData()
+    std::optional<size_t> getNextCheckpointPos() const
+    {
+        auto& ds = mCtx.get().mDs.get();
+
+        const size_t curPos = ds.getCurrentOffset();
+
+        const auto pred = [&curPos] (const FutureData aFutureData) -> bool {
+                return curPos < aFutureData.getStopOffset();
+            };
+
+        const auto res = std::find_if(this->crbegin(), this->crend(), pred);
+
+        if(res != this->crend())
+        {
+            return res->getStopOffset();
+        }
+
+        return {};
+    }
+
+    void readUntilNextFutureData(const std::string& aComment = "")
     {
         auto& ds = mCtx.get().mDs.get();
 
@@ -229,8 +261,8 @@ public:
         {
             size_t byteDiff = res->getStopOffset() - curPos;
 
-            ds.printUnknownData(byteDiff, fmt::format("{}: Reading rest of future data ({} Byte)",
-                getMethodName(this, __func__), byteDiff));
+            ds.printUnknownData(byteDiff, fmt::format("{}: Reading rest of future data ({} Byte) - {}",
+                getMethodName(this, __func__), byteDiff, aComment));
         }
         else
         {

@@ -38,17 +38,56 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     ds.printUnknownData(4);
 
-    // const uint16_t len0 = ds.readUint16();
+    const uint16_t len0 = ds.readUint16();
 
-    // spdlog::trace("len0 = {}", len0);
+    const size_t nextCheckpointPos = localFutureLst.getNextCheckpointPos().value_or(0U);
 
-    // for(size_t i = 0u; i < len0; ++i)
-    // {
-    //     const Primitive primitive = readPrefixPrimitive();
+    spdlog::trace("len0 = {}", len0);
 
-    //     readPrimitive(primitive);
-    // }
+    for(size_t i = 0u; i < len0; ++i)
+    {
+        const Primitive primitive = readPrefixPrimitive();
 
+        // @todo Hack to get SymbolVector working
+        if(primitive == Primitive::SymbolVector)
+        {
+            ds.setCurrentOffset(ds.getCurrentOffset() - 1U);
+        }
+
+        readPrimitive(primitive);
+
+        // @todo Sometimes there is trailing data after the primitives
+        //       but I don't know how many bytes, therefore discard them
+        //       until the next primitive occurs. There might be rare
+        //       false positives
+        for(int i = 0; i < 64 && ds.getCurrentOffset() < nextCheckpointPos; ++i)
+        {
+            const auto prefix = ds.peek(2);
+
+            bool isPrimValid = true;
+
+            try
+            {
+                ToPrimitive(prefix[0]);
+            }
+            catch(...)
+            {
+                isPrimValid = false;
+            }
+
+            if(prefix[0] == prefix[1] && isPrimValid)
+            {
+                break;
+            }
+
+            ds.printUnknownData(1U);
+        }
+    }
+
+    if(ds.getCurrentOffset() < nextCheckpointPos)
+        localFutureLst.readUntilNextFutureData();
+
+    localFutureLst.checkpoint();
 
     // const uint16_t lenSymbolPins = ds.readUint16();
 
@@ -80,19 +119,25 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
     //     symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     // }
 
-    // const std::string someStr0 = ds.readStringLenZeroTerm();
-    // const std::string someStr1 = ds.readStringLenZeroTerm(); // @todo Maybe incorrect
-    // const std::string someStr2 = ds.readStringLenZeroTerm();
-    // const std::string someStr3 = ds.readStringLenZeroTerm();
+    localFutureLst.readUntilNextFutureData();
 
-    // spdlog::trace("someStr0 = {}", someStr0);
-    // spdlog::trace("someStr1 = {}", someStr1);
-    // spdlog::trace("someStr2 = {}", someStr2);
-    // spdlog::trace("someStr3 = {}", someStr3);
+    localFutureLst.checkpoint();
 
-    // ds.printUnknownData(2, fmt::format("{}: 0", getMethodName(this, __func__)));
+    const std::string someStr0 = ds.readStringLenZeroTerm();
+    const std::string someStr1 = ds.readStringLenZeroTerm(); // @todo Maybe incorrect
+    const std::string someStr2 = ds.readStringLenZeroTerm();
+    const std::string someStr3 = ds.readStringLenZeroTerm();
 
-    localFutureLst.readRestOfStructure();
+    spdlog::trace("someStr0 = {}", someStr0);
+    spdlog::trace("someStr1 = {}", someStr1);
+    spdlog::trace("someStr2 = {}", someStr2);
+    spdlog::trace("someStr3 = {}", someStr3);
+
+    ds.printUnknownData(2, fmt::format("{}: 0", getMethodName(this, __func__)));
+
+    localFutureLst.checkpoint();
+
+    localFutureLst.sanitizeCheckpoints();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

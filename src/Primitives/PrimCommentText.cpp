@@ -74,10 +74,10 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
         // throw FileFormatChanged("CommentText");
     }
 
+    readPreamble();
+
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
-
-    readPreamble();
 }
 
 
@@ -96,7 +96,7 @@ LOGFONTA PrimCommentText::getTextFont() const
     else if(idx == -1)
     {
         // @todo Unknown but it is probably the default font;
-        throw std::runtime_error(getMethodName(this, __func__) + ": Check this out!");
+        // throw std::runtime_error(getMethodName(this, __func__) + ": Check this out!");
     }
     else // idx < -1
     {

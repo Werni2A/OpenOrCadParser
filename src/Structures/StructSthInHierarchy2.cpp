@@ -83,7 +83,11 @@ void StructSthInHierarchy2::read(FileFormatVersion /* aVersion */)
         }
     }
 
-    localFutureLst.readRestOfStructure();
+    localFutureLst.readUntilNextFutureData();
+
+    localFutureLst.checkpoint();
+
+    localFutureLst.sanitizeCheckpoints();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

@@ -43,7 +43,11 @@ void StructGlobal::read(FileFormatVersion /* aVersion */)
 
     ds.printUnknownData(1, fmt::format("{}: 2", getMethodName(this, __func__)));
 
-    localFutureLst.readRestOfStructure();
+    localFutureLst.readUntilNextFutureData("See FuturData of StructGlobal");
+
+    localFutureLst.checkpoint();
+
+    localFutureLst.sanitizeCheckpoints();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());
