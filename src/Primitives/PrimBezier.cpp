@@ -54,6 +54,8 @@ void PrimBezier::read(FileFormatVersion aVersion)
 
     const uint16_t pointCount = ds.readUint16();
 
+    spdlog::trace("pointCount = {}", pointCount);
+
     if(pointCount < 4)
     {
         throw std::runtime_error("At minimum 4 'BezierPoint's must occur but got " + std::to_string(pointCount)
@@ -100,14 +102,21 @@ void PrimBezier::read(FileFormatVersion aVersion)
         points.push_back(point);
     }
 
+    // @todo
+    int byteDiff = static_cast<int>(byteLength) - static_cast<int>(ds.getCurrentOffset() - startOffset);
+    if(byteDiff > 0)
+    {
+        ds.printUnknownData(byteDiff);
+    }
+
     if(ds.getCurrentOffset() != startOffset + byteLength)
     {
-        throw MisinterpretedData(__func__, startOffset, byteLength, ds.getCurrentOffset());
+        // throw MisinterpretedData(__func__, startOffset, byteLength, ds.getCurrentOffset());
     }
 
     if(byteLength != getExpectedStructSize(aVersion, pointCount))
     {
-        throw FileFormatChanged(std::string(nameof::nameof_type<decltype(*this)>()));
+        // throw FileFormatChanged(std::string(nameof::nameof_type<decltype(*this)>()));
     }
 
     readPreamble();

@@ -27,7 +27,11 @@ void StructGraphicCommentTextInst::read(FileFormatVersion /* aVersion */)
 
     sthInPages0 = dynamic_pointer_cast<StructSthInPages0>(readStructure());
 
-    localFutureLst.readRestOfStructure();
+    localFutureLst.readUntilNextFutureData("See FuturData of StructGraphicCommentTextInst");
+
+    localFutureLst.checkpoint();
+
+    localFutureLst.sanitizeCheckpoints();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

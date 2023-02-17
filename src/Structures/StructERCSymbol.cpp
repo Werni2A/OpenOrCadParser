@@ -37,7 +37,11 @@ void StructERCSymbol::read(FileFormatVersion aVersion)
     // bbox.read();
     // this->symbolBBox = bbox;
 
-    localFutureLst.readRestOfStructure();
+    localFutureLst.readUntilNextFutureData("See FuturData of StructERCSymbol");
+
+    localFutureLst.checkpoint();
+
+    localFutureLst.sanitizeCheckpoints();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

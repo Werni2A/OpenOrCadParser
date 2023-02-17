@@ -10,11 +10,16 @@
 #include "Structures/StructTitleBlock.hpp"
 
 
-void StructTitleBlock::read(FileFormatVersion /* aVersion */)
+void StructTitleBlock::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.get().mDs.get();
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    if(aVersion == FileFormatVersion::Unknown)
+    {
+        aVersion = predictVersion();
+    }
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -41,9 +46,18 @@ void StructTitleBlock::read(FileFormatVersion /* aVersion */)
         symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
-    ds.printUnknownData(13, fmt::format("{}: 2", getMethodName(this, __func__)));
+    if(aVersion == FileFormatVersion::A)
+    {
+        ds.printUnknownData(1, fmt::format("{}: 2", getMethodName(this, __func__)));
+    }
 
-    localFutureLst.readRestOfStructure();
+    localFutureLst.checkpoint();
+
+    ds.printUnknownData(12, fmt::format("{}: 3", getMethodName(this, __func__)));
+
+    localFutureLst.checkpoint();
+
+    localFutureLst.sanitizeCheckpoints();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

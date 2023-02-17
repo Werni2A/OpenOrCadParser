@@ -25,6 +25,8 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     readPreamble();
 
+    localFutureLst.checkpoint();
+
     ds.printUnknownData(8, getMethodName(this, __func__) + ": 0");
 
     const std::string pkgName = ds.readStringLenZeroTerm();
@@ -56,6 +58,8 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     ds.printUnknownData(1, getMethodName(this, __func__) + ": 3");
 
+    localFutureLst.checkpoint();
+
     const std::string reference = ds.readStringLenZeroTerm();
 
     spdlog::trace("reference = {}", reference);
@@ -71,6 +75,8 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
         t0x10s.push_back(dynamic_pointer_cast<StructT0x10>(readStructure()));
     }
 
+    localFutureLst.checkpoint();
+
     const std::string sth1 = ds.readStringLenZeroTerm(); // @todo needs verification
 
     spdlog::trace("sth1 = {}", sth1);
@@ -82,7 +88,9 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     // auto_read_prefixes();
 
-    localFutureLst.readRestOfStructure();
+    localFutureLst.checkpoint();
+
+    localFutureLst.sanitizeCheckpoints();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

@@ -74,7 +74,11 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
         spdlog::trace("pinGroup  = {:>3}", strPinGroup);
     }
 
-    localFutureLst.readRestOfStructure();
+    localFutureLst.readUntilNextFutureData("See FuturData of StructPinIdxMapping");
+
+    localFutureLst.checkpoint();
+
+    localFutureLst.sanitizeCheckpoints();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

@@ -35,10 +35,11 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
     locX = ds.readInt16();
     locY = ds.readInt16();
 
-    const uint16_t repetition = ds.readUint16();
+    const uint16_t lenPrimitives = ds.readUint16();
 
-    // Only primitives are expected here
-    for(size_t i = 0u; i < repetition; ++i)
+    spdlog::trace("lenPrimitives = {}", lenPrimitives);
+
+    for(size_t i = 0u; i < lenPrimitives; ++i)
     {
         const Primitive primitive = readSmallPrefixPrimitive();
 
@@ -48,7 +49,7 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
     name = ds.readStringLenZeroTerm();
 
     // @todo contains smallPrefixPrimitive
-    ds.assumeData({0x00, 0x00, 0x00, 0x00, 0x32, 0x00, 0x32, 0x00, 0x00, 0x00, 0x02, 0x00}, getMethodName(this, __func__) + ": 2");
+    // ds.assumeData({0x00, 0x00, 0x00, 0x00, 0x32, 0x00, 0x32, 0x00, 0x00, 0x00, 0x02, 0x00}, getMethodName(this, __func__) + ": 2");
     // ds.printUnknownData(12, getMethodName(this, __func__) + ": 2");
 
 

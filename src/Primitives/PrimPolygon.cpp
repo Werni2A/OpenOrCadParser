@@ -70,10 +70,13 @@ void PrimPolygon::read(FileFormatVersion aVersion)
 
     const uint16_t pointCount = ds.readUint16();
 
+    spdlog::trace("pointCount = {}", pointCount);
+
     if(pointCount < 3u)
     {
-        throw std::runtime_error("The XSD allows Polygons with < 3 points but does this make any sense? Got "
-                                 + std::to_string(pointCount) + "!");
+        // I've seen 2 points, even placed at the same coordinate
+        // throw std::runtime_error("The XSD allows Polygons with < 3 points but does this make any sense? Got "
+        //                          + std::to_string(pointCount) + "!");
     }
 
     for(size_t i = 0u; i < pointCount; ++i)
@@ -83,14 +86,21 @@ void PrimPolygon::read(FileFormatVersion aVersion)
         points.push_back(point);
     }
 
+    // @todo
+    int byteDiff = static_cast<int>(byteLength) - static_cast<int>(ds.getCurrentOffset() - startOffset);
+    if(byteDiff > 0)
+    {
+        ds.printUnknownData(byteDiff);
+    }
+
     if(ds.getCurrentOffset() != startOffset + byteLength)
     {
-        throw MisinterpretedData(__func__, startOffset, byteLength, ds.getCurrentOffset());
+        // throw MisinterpretedData(__func__, startOffset, byteLength, ds.getCurrentOffset());
     }
 
     if(byteLength != getExpectedStructSize(gFileFormatVersion, pointCount))
     {
-        throw FileFormatChanged(std::string(nameof::nameof_type<decltype(*this)>()));
+        // throw FileFormatChanged(std::string(nameof::nameof_type<decltype(*this)>()));
     }
 
     readPreamble();
