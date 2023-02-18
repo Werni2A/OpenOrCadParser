@@ -562,7 +562,7 @@ repositories:
 - author: beagleboard
   commit: a14c542f0de8507e001a6d652daaf85bc654e422
   files:
-  - errors: 26
+  - errors: 28
     options: null
     path: ./SCH/BeagleBoard-xM_ORCAD.DSN
   project: beagleboard-xm
@@ -810,7 +810,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/x4k_misc.olb
-  - errors: 0
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/X5K_MISC.OLB
   - errors: 2
@@ -3664,7 +3664,7 @@ repositories:
   - errors: 1
     options: null
     path: ./fpga/atmel/AT6K.OLB
-  - errors: 0
+  - errors: 1
     options: null
     path: ./fpga/xilinx/X5K_MISC.OLB
   - errors: 0
@@ -4887,10 +4887,10 @@ repositories:
   - errors: 5
     options: null
     path: ./DESIGN FILES/OrCAD Capture Schematics/library/discrete.olb
-  - errors: 0
+  - errors: 1
     options: null
     path: ./DESIGN FILES/OrCAD Capture Schematics/library/stepperlib.olb
-  - errors: 2
+  - errors: 6
     options: null
     path: ./DESIGN FILES/OrCAD Capture Schematics/mini low power micro eval board.dsn
   project: LapisDevBoard
@@ -4898,14 +4898,14 @@ repositories:
 - author: ROHMUSDC
   commit: 9d00077c29b1241ea5ddbb05d4bff57d327b8f2e
   files:
-  - errors: 1
+  - errors: 5
     options: null
     path: ./HW Source Files/SENSORSHLD0-EVK-101 HW Design Files/Schematic_BOM/ROHM_SENSORSHLD0-EVK-101_SCH_REV00_2015-05-18.DSN
-  - errors: 1
+  - errors: 5
     options: null
     path: ./HW Source Files/SENSORSHLD0-EVK-101 HW Design Files/Schematic_BOM/Revision
       00.1/ROHM_SENSORSHLD1-EVK-101_SCH_REV00.1_2015-09-22.DSN
-  - errors: 1
+  - errors: 5
     options: null
     path: ./HW Source Files/SENSORSHLD1-EVK-101 HW Design Files/Schematic_BOM/ROHM_SENSORSHLD1-EVK-101_SCH_REV01_2016-03-16.DSN
   project: ROHM_SensorPlatform_Multi-Sensor-Shield
@@ -4932,10 +4932,10 @@ repositories:
 - author: ROHMUSDC
   commit: 0f39ea501b5b7da109f7a9aa7d394ba615c9ab22
   files:
-  - errors: 2
+  - errors: 6
     options: null
     path: ./Hardware Design Files/Sensor Kit Base Board/Schematic-BOM/ROHM_SENSOR_PLATFORM_BASE_BOARD_SCH_REV02_20140918.DSN
-  - errors: 0
+  - errors: 4
     options: null
     path: ./Hardware Design Files/Sensor Kit Breakout Boards/Schematic-BOM/ROHM_SENSOR_PLATFORM_BREAKOUT_BOARD_SCH_REV1.02_20141208.DSN
   project: ROHMSensorPlatformEVK
