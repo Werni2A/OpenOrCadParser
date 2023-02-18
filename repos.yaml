@@ -840,7 +840,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/iec/CMOS4.OLB
-  - errors: 2
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/iec/DEVICE.OLB
   - errors: 0
@@ -4447,7 +4447,7 @@ repositories:
   - errors: 0
     options: null
     path: ./iec/TTL12.OLB
-  - errors: 2
+  - errors: 1
     options: null
     path: ./iec/DEVICE.OLB
   - errors: 0
@@ -4726,7 +4726,7 @@ repositories:
 - author: ROHMUSDC
   commit: 54d5bdc15c57f750e991068113968c2e5c565c8f
   files:
-  - errors: 15
+  - errors: 14
     options: null
     path: ./Design Files/Schematic_BOM/BD9C601EFJEVK-101_SCH_REV00_2014-04-23.DSN
   project: BD9C601EFJEVK-101
@@ -4774,7 +4774,7 @@ repositories:
 - author: ROHMUSDC
   commit: b1106120fd4126b1a7d263930183c0390a753ffe
   files:
-  - errors: 15
+  - errors: 14
     options: null
     path: ./Design Files/Schematic_BOM/BD9109FVMEVK-101_SCH_REV00_2013-11-22.DSN
   project: BD9109FVM-EVK-101
@@ -4793,7 +4793,7 @@ repositories:
 - author: ROHMUSDC
   commit: f84a9667dfdd8ae0db2929726875530c964adf35
   files:
-  - errors: 15
+  - errors: 14
     options: null
     path: ./Design Files - Schematics/BD9328EFJ_EVK-BD9329AEFJ_EVK_Schematic_07-15-2012.DSN
   project: BD9328EFJ_EVK-and-BD9329AEFJ_EVK
@@ -4801,7 +4801,7 @@ repositories:
 - author: ROHMUSDC
   commit: cd3b1749a528f8ca8a75e09cbea0792261a7ba1d
   files:
-  - errors: 3
+  - errors: 2
     options: null
     path: ./Design Files/Schematic_BOM/BD71815GW_REFERENCE_REV1P30.DSN
   project: BD71815AGW-EVK-101
@@ -4817,7 +4817,7 @@ repositories:
 - author: ROHMUSDC
   commit: 451a219bfb7530231c642f9b2100b0dc08c0a28f
   files:
-  - errors: 15
+  - errors: 14
     options: null
     path: ./Design Files/Schematic_BOM/BD95861MUVEVK-101_SCH_REV01_2014-01-22.DSN
   project: BD95861MUV-EVK-101
