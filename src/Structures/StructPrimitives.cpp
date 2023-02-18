@@ -12,11 +12,16 @@
 #include "Structures/StructPrimitives.hpp"
 
 
-void StructPrimitives::read(FileFormatVersion /* aVersion */)
+void StructPrimitives::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.get().mDs.get();
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
+    if(aVersion == FileFormatVersion::Unknown)
+    {
+        aVersion = predictVersion();
+    }
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -36,7 +41,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.checkpoint();
 
-    ds.printUnknownData(4);
+    ds.printUnknownData(4, fmt::format("{}: 2", getMethodName(this, __func__)));
 
     const uint16_t len0 = ds.readUint16();
 
@@ -89,26 +94,31 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.checkpoint();
 
-    // const uint16_t lenSymbolPins = ds.readUint16();
+    const uint16_t lenSymbolPins = ds.readUint16();
 
-    // spdlog::trace("lenSymbolPins = {}", lenSymbolPins);
+    spdlog::trace("lenSymbolPins = {}", lenSymbolPins);
 
-    // for(size_t i = 0u; i < lenSymbolPins; ++i)
-    // {
-    //     symbolPins.push_back(dynamic_pointer_cast<StructSymbolPin>(readStructure()));
+    if(aVersion == FileFormatVersion::B)
+    {
+        ds.printUnknownData(1, fmt::format("{}: 1", getMethodName(this, __func__)));
+    }
 
-    //     // @todo This hack should probably be moved into StructSymbolPin
-    //     const uint8_t early_out = ds.peek(1)[0];
-    //     spdlog::debug("early_out = {}", early_out);
+    for(size_t i = 0u; i < lenSymbolPins; ++i)
+    {
+        symbolPins.push_back(dynamic_pointer_cast<StructSymbolPin>(readStructure()));
 
-    //     if(early_out == 0U)
-    //     {
-    //         // @todo does not always occur, even in the same file. Maybe its some byte alignment?
-    //         ds.printUnknownData(1, fmt::format("{}: Early Out Indicator",
-    //             getMethodName(this, __func__)));
-    //         break;
-    //     }
-    // }
+        // @todo This hack should probably be moved into StructSymbolPin
+        const uint8_t early_out = ds.peek(1)[0];
+        spdlog::debug("early_out = {}", early_out);
+
+        if(early_out == 0U)
+        {
+            // @todo does not always occur, even in the same file. Maybe its some byte alignment?
+            ds.printUnknownData(1, fmt::format("{}: Early Out Indicator",
+                getMethodName(this, __func__)));
+            break;
+        }
+    }
 
     // const uint16_t lenSymbolDisplayProps = ds.readUint16();
 
