@@ -32,7 +32,7 @@ repositories:
   - errors: 0
     options: null
     path: ./library/TRANSISTOR.OLB
-  - errors: 0
+  - errors: 1
     options: null
     path: ./library/GATE.OLB
   - errors: 37
@@ -729,7 +729,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/altera/ALTERA_M.OLB
-  - errors: 2
+  - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/altera/ALTERA_P.OLB
   - errors: 0
@@ -780,7 +780,7 @@ repositories:
   - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/REG.OLB
-  - errors: 0
+  - errors: 4
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lucent/L4000E.OLB
   - errors: 0
@@ -819,10 +819,10 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/xpla/coolpack.olb
-  - errors: 0
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/xilinx/XUnified.olb
-  - errors: 0
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/Gate.olb
   - errors: 0
@@ -837,7 +837,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/iec/CMOS3.OLB
-  - errors: 0
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/iec/CMOS4.OLB
   - errors: 1
@@ -855,10 +855,10 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/iec/TTL3.OLB
-  - errors: 0
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/iec/TTL4.OLB
-  - errors: 0
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/iec/TTL5.OLB
   - errors: 0
@@ -870,10 +870,10 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/iec/TTL8.OLB
-  - errors: 0
+  - errors: 2
     options: null
     path: ./orcad capture/unsorted/_archive/iec/TTL9.OLB
-  - errors: 0
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/iec/TTL10.OLB
   - errors: 0
@@ -885,10 +885,10 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/iec/TTL13.OLB
-  - errors: 0
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/iec/TTL14.OLB
-  - errors: 0
+  - errors: 3
     options: null
     path: ./orcad capture/unsorted/_archive/iec/TTL15.OLB
   - errors: 0
@@ -3688,7 +3688,7 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/lucent/LUCENT.OLB
-  - errors: 0
+  - errors: 4
     options: null
     path: ./fpga/lucent/L4000E.OLB
   - errors: 0
@@ -3709,7 +3709,7 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/altera/PCI_A.OLB
-  - errors: 2
+  - errors: 3
     options: null
     path: ./fpga/altera/ALTERA_P.OLB
   - errors: 0
@@ -4459,13 +4459,13 @@ repositories:
   - errors: 0
     options: null
     path: ./iec/TTL7.OLB
-  - errors: 0
+  - errors: 1
     options: null
     path: ./iec/TTL14.OLB
-  - errors: 0
+  - errors: 1
     options: null
     path: ./iec/TTL10.OLB
-  - errors: 0
+  - errors: 3
     options: null
     path: ./iec/TTL15.OLB
   - errors: 0
@@ -4480,7 +4480,7 @@ repositories:
   - errors: 0
     options: null
     path: ./iec/TTL13.OLB
-  - errors: 0
+  - errors: 2
     options: null
     path: ./iec/TTL9.OLB
   - errors: 0
@@ -4495,10 +4495,10 @@ repositories:
   - errors: 0
     options: null
     path: ./iec/CMOS2.OLB
-  - errors: 0
+  - errors: 1
     options: null
     path: ./iec/CMOS4.OLB
-  - errors: 0
+  - errors: 1
     options: null
     path: ./iec/TTL5.OLB
   - errors: 0
@@ -4507,7 +4507,7 @@ repositories:
   - errors: 0
     options: null
     path: ./iec/TTL1.OLB
-  - errors: 0
+  - errors: 2
     options: null
     path: ./iec/TTL4.OLB
   project: Capture_Libraries
@@ -4657,7 +4657,7 @@ repositories:
 - author: vpodlesnyi
   commit: 652cacb9e7bc99ee88f78536388b965f4822c5b0
   files:
-  - errors: 0
+  - errors: 30
     options: null
     path: ./MOP44.OLB
   - errors: 0
@@ -5079,7 +5079,7 @@ repositories:
   - errors: 7
     options: null
     path: ./TB8.DSN
-  - errors: 11
+  - errors: 12
     options: null
     path: ./TB1.DSN
   - errors: 1
@@ -5094,7 +5094,7 @@ repositories:
   - errors: 17
     options: null
     path: ./TB7.dsn
-  - errors: 18
+  - errors: 23
     options: null
     path: ./TB3.DSN
   - errors: 7
