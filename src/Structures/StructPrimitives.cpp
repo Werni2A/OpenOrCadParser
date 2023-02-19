@@ -98,7 +98,7 @@ void StructPrimitives::read(FileFormatVersion aVersion)
 
     spdlog::trace("lenSymbolPins = {}", lenSymbolPins);
 
-    if(aVersion == FileFormatVersion::B)
+    if(aVersion == FileFormatVersion::B || aVersion == FileFormatVersion::D)
     {
         ds.printUnknownData(1, fmt::format("{}: 1", getMethodName(this, __func__)));
     }
@@ -107,29 +107,20 @@ void StructPrimitives::read(FileFormatVersion aVersion)
     {
         symbolPins.push_back(dynamic_pointer_cast<StructSymbolPin>(readStructure()));
 
-        // @todo This hack should probably be moved into StructSymbolPin
-        const uint8_t early_out = ds.peek(1)[0];
-        spdlog::debug("early_out = {}", early_out);
-
-        if(early_out == 0U)
+        if(aVersion == FileFormatVersion::C || aVersion == FileFormatVersion::D)
         {
-            // @todo does not always occur, even in the same file. Maybe its some byte alignment?
-            ds.printUnknownData(1, fmt::format("{}: Early Out Indicator",
-                getMethodName(this, __func__)));
-            break;
+            ds.printUnknownData(1, fmt::format("{}: 1", getMethodName(this, __func__)));
         }
     }
 
-    // const uint16_t lenSymbolDisplayProps = ds.readUint16();
+    const uint16_t lenSymbolDisplayProps = ds.readUint16();
 
-    // spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
+    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
-    // for(size_t i = 0u; i < lenSymbolDisplayProps; ++i)
-    // {
-    //     symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
-    // }
-
-    localFutureLst.readUntilNextFutureData();
+    for(size_t i = 0u; i < lenSymbolDisplayProps; ++i)
+    {
+        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
+    }
 
     localFutureLst.checkpoint();
 
