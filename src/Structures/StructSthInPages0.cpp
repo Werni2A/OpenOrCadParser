@@ -65,7 +65,7 @@ void StructSthInPages0::read_raw(FileFormatVersion /* aVersion */, FutureDataLst
     }
 
     // @todo Looks like it has one of {0, 8, 16 , 20} Byte in size
-    aLocalFutureLst.readUntilNextFutureData();
+    aLocalFutureLst.readUntilNextFutureData("See FuturData of StructSthInPages0 - raw");
 
     aLocalFutureLst.checkpoint();
 }

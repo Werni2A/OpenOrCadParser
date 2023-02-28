@@ -15,6 +15,7 @@ void StructT0x35::read(FileFormatVersion /* aVersion */)
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
+    // @todo Try to activate this part
     // FutureDataLst localFutureLst{mCtx};
 
     // auto_read_prefixes(Structure::T0x35, localFutureLst);

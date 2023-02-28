@@ -21,7 +21,7 @@ class StructTitleBlock : public CommonBase
 {
 public:
 
-    StructTitleBlock(ParserContext& aCtx) : CommonBase{aCtx}, symbolDisplayProps{}
+    StructTitleBlock(ParserContext& aCtx) : CommonBase{aCtx}, name{}, symbolDisplayProps{}
     { }
 
     std::string to_string() const override;
@@ -33,6 +33,8 @@ public:
         aVisitor.visit(*this);
     }
 
+    std::string name;
+
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };
 
@@ -43,6 +45,8 @@ static std::string to_string(const StructTitleBlock& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+
+    str += fmt::format("{}name = {}\n", indent(1), aObj.name);
 
     str += fmt::format("{}symbolDisplayProps:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbolDisplayProps.size(); ++i)

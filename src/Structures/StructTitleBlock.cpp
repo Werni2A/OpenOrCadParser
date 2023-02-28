@@ -31,9 +31,9 @@ void StructTitleBlock::read(FileFormatVersion aVersion)
 
     ds.printUnknownData(8, fmt::format("{}: 0", getMethodName(this, __func__)));
 
-    const std::string foo = ds.readStringLenZeroTerm();
+    name = ds.readStringLenZeroTerm();
 
-    spdlog::trace("foo = {}", foo);
+    spdlog::trace("name = {}", name);
 
     ds.printUnknownData(20, fmt::format("{}: 1", getMethodName(this, __func__)));
 
