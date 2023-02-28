@@ -48,8 +48,6 @@ void StructTitleBlockSymbol::read(FileFormatVersion aVersion)
         symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
     }
 
-    localFutureLst.readUntilNextFutureData("See FuturData of StructTitleBlockSymbol");
-
     localFutureLst.checkpoint();
 
     localFutureLst.sanitizeCheckpoints();

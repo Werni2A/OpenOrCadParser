@@ -1,7 +1,7 @@
 __pycache__
 .vscode/
-build/
-*.log
 *.bin
+*.log
+build/
 test/designs
 test/src/generated_tests

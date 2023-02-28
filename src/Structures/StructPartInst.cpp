@@ -83,11 +83,6 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     ds.printUnknownData(2, getMethodName(this, __func__) + ": 5");
 
-    // @todo implement type_prefix_very_long
-    // ds.printUnknownData(18, getMethodName(this, __func__) + ": 6");
-
-    // auto_read_prefixes();
-
     localFutureLst.checkpoint();
 
     localFutureLst.sanitizeCheckpoints();

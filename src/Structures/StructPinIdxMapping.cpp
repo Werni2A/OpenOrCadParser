@@ -74,8 +74,6 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
         spdlog::trace("pinGroup  = {:>3}", strPinGroup);
     }
 
-    localFutureLst.readUntilNextFutureData("See FuturData of StructPinIdxMapping");
-
     localFutureLst.checkpoint();
 
     localFutureLst.sanitizeCheckpoints();

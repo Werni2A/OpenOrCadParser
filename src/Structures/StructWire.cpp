@@ -75,8 +75,6 @@ void StructWire::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("lineStyle = {}", ::to_string(lineStyle));
 
-    localFutureLst.readUntilNextFutureData("See FuturData of StructWire");
-
     localFutureLst.checkpoint();
 
     localFutureLst.sanitizeCheckpoints();

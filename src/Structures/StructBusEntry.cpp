@@ -39,7 +39,7 @@ void StructBusEntry::read(FileFormatVersion /* aVersion */)
     spdlog::trace("endX = {}", endX);
     spdlog::trace("endY = {}", endY);
 
-    localFutureLst.readUntilNextFutureData("See FuturData of StructBusEntry");
+    ds.printUnknownData(8, getMethodName(this, __func__) + ": 0");
 
     localFutureLst.checkpoint();
 

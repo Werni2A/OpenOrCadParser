@@ -43,8 +43,6 @@ void StructGlobal::read(FileFormatVersion /* aVersion */)
 
     ds.printUnknownData(1, fmt::format("{}: 2", getMethodName(this, __func__)));
 
-    localFutureLst.readUntilNextFutureData("See FuturData of StructGlobal");
-
     localFutureLst.checkpoint();
 
     localFutureLst.sanitizeCheckpoints();

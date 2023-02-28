@@ -61,8 +61,6 @@ void StructGraphicBoxInst::read(FileFormatVersion aVersion)
 
     sthInPages0 = dynamic_pointer_cast<StructSthInPages0>(readStructure());
 
-    localFutureLst.readUntilNextFutureData("See FuturData of StructGraphicBoxInst");
-
     localFutureLst.checkpoint();
 
     localFutureLst.sanitizeCheckpoints();
