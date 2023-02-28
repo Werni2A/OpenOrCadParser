@@ -10,6 +10,8 @@ jobs:
     - uses: actions/checkout@v3
     - name: Set up vcpkg
       run: |
+        # Workaround for failing grub-efi installation during upgrade
+        echo 'APT::Get::Always-Include-Phased-Updates "false";' | sudo tee /etc/apt/apt.conf.d/99-phased-updates
         sudo apt update
         sudo apt upgrade -y
         sudo apt install -y cmake
