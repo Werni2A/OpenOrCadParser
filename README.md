@@ -23,7 +23,7 @@ The following two XSD files provide a good overview of the `XML` file structure,
    1. [Container Structure](/doc/container_structure.md)
 2. [File Format Changes](/doc/file_format_changes.md)
 3. [Tests](/doc/tests.md)
-4. [Parser Implementation](/doc/implementation.md)
+4. [Parser Implementation](/doc/parser/parser.md)
 
 ---
 
