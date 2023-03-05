@@ -17,3 +17,4 @@ More detailed parser implementation:
 - [Prefixes](/doc/parser/parser_prefixes.md)
 - [Structure](/doc/parser/parser_structure.md)
 - [Primitive](/doc/parser/parser_primitive.md)
+- [Structure Example](/doc/parser/example_structure.md)
