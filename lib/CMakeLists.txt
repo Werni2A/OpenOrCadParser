@@ -44,16 +44,26 @@ set(SOURCES
    ${LIB_SRC_DIR}/Streams/StreamType.cpp
    ${LIB_SRC_DIR}/Streams/StreamViewsDirectory.cpp
    ${LIB_SRC_DIR}/Structures/StructAlias.cpp
+   ${LIB_SRC_DIR}/Structures/StructBookMarkSymbolInst.cpp
    ${LIB_SRC_DIR}/Structures/StructBusEntry.cpp
    ${LIB_SRC_DIR}/Structures/StructERCSymbol.cpp
+   ${LIB_SRC_DIR}/Structures/StructERCSymbolInst.cpp
    ${LIB_SRC_DIR}/Structures/StructGeneralProperties.cpp
    ${LIB_SRC_DIR}/Structures/StructGlobal.cpp
    ${LIB_SRC_DIR}/Structures/StructGlobalSymbol.cpp
+   ${LIB_SRC_DIR}/Structures/StructGraphicArcInst.cpp
+   ${LIB_SRC_DIR}/Structures/StructGraphicBezierInst.cpp
+   ${LIB_SRC_DIR}/Structures/StructGraphicBitMapInst.cpp
    ${LIB_SRC_DIR}/Structures/StructGraphicBoxInst.cpp
    ${LIB_SRC_DIR}/Structures/StructGraphicCommentTextInst.cpp
+   ${LIB_SRC_DIR}/Structures/StructGraphicEllipseInst.cpp
    ${LIB_SRC_DIR}/Structures/StructGraphicInst.cpp
    ${LIB_SRC_DIR}/Structures/StructGraphicLineInst.cpp
+   ${LIB_SRC_DIR}/Structures/StructGraphicOleEmbedInst.cpp
+   ${LIB_SRC_DIR}/Structures/StructGraphicPolygonInst.cpp
+   ${LIB_SRC_DIR}/Structures/StructGraphicPolylineInst.cpp
    ${LIB_SRC_DIR}/Structures/StructHierarchicSymbol.cpp
+   ${LIB_SRC_DIR}/Structures/StructOffPageConnector.cpp
    ${LIB_SRC_DIR}/Structures/StructOffPageSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructPartInst.cpp
    ${LIB_SRC_DIR}/Structures/StructPinIdxMapping.cpp
@@ -128,16 +138,26 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Streams/StreamType.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamViewsDirectory.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructAlias.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructBookMarkSymbolInst.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructBusEntry.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructERCSymbol.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructERCSymbolInst.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGeneralProperties.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGlobal.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGlobalSymbol.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructGraphicArcInst.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructGraphicBezierInst.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructGraphicBitMapInst.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGraphicBoxInst.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGraphicCommentTextInst.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructGraphicEllipseInst.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGraphicInst.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructGraphicLineInst.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructGraphicOleEmbedInst.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructGraphicPolygonInst.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructGraphicPolylineInst.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructHierarchicSymbol.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructOffPageConnector.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructOffPageSymbol.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructPartInst.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructPinIdxMapping.hpp

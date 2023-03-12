@@ -1,5 +1,5 @@
-#ifndef STRUCTTITLEBLOCK_HPP
-#define STRUCTTITLEBLOCK_HPP
+#ifndef STRUCTERCSYMBOLINST_HPP
+#define STRUCTERCSYMBOLINST_HPP
 
 
 #include <cstdint>
@@ -17,11 +17,11 @@
 #include "Structures/StructGraphicInst.hpp"
 
 
-class StructTitleBlock : public StructGraphicInst
+class StructERCSymbolInst : public StructGraphicInst
 {
 public:
 
-    StructTitleBlock(ParserContext& aCtx) : StructGraphicInst{aCtx}
+    StructERCSymbolInst(ParserContext& aCtx) : StructGraphicInst{aCtx}, s0{}, s1{}, s2{}
     { }
 
     std::string to_string() const override;
@@ -32,17 +32,21 @@ public:
     {
         aVisitor.visit(*this);
     }
+
+    std::string s0;
+    std::string s1;
+    std::string s2;
 };
 
 
 [[maybe_unused]]
-static std::string to_string(const StructTitleBlock& aObj)
+static std::string to_string(const StructERCSymbolInst& aObj)
 {
     return aObj.to_string();
 }
 
 
-inline std::string StructTitleBlock::to_string() const
+inline std::string StructERCSymbolInst::to_string() const
 {
     std::string str;
 
@@ -50,12 +54,16 @@ inline std::string StructTitleBlock::to_string() const
 
     str += StructGraphicInst::to_string();
 
+    str += fmt::format("{}s0 = {}\n", indent(1), s0);
+    str += fmt::format("{}s1 = {}\n", indent(1), s1);
+    str += fmt::format("{}s2 = {}\n", indent(1), s2);
+
     return str;
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructTitleBlock& aObj)
+static std::ostream& operator<<(std::ostream& aOs, const StructERCSymbolInst& aObj)
 {
     aOs << to_string(aObj);
 
@@ -63,4 +71,4 @@ static std::ostream& operator<<(std::ostream& aOs, const StructTitleBlock& aObj)
 }
 
 
-#endif // STRUCTTITLEBLOCK_HPP
+#endif // STRUCTERCSYMBOLINST_HPP

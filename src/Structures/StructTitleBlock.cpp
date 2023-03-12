@@ -10,50 +10,19 @@
 #include "Structures/StructTitleBlock.hpp"
 
 
-void StructTitleBlock::read(FileFormatVersion aVersion)
+void StructTitleBlock::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.get().mDs.get();
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    if(aVersion == FileFormatVersion::Unknown)
-    {
-        aVersion = predictVersion();
-    }
-
     FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(Structure::TitleBlock, localFutureLst);
 
-    readPreamble();
+    StructGraphicInst::read(localFutureLst);
 
-    localFutureLst.checkpoint();
-
-    ds.printUnknownData(8, fmt::format("{}: 0", getMethodName(this, __func__)));
-
-    name = ds.readStringLenZeroTerm();
-
-    spdlog::trace("name = {}", name);
-
-    ds.printUnknownData(20, fmt::format("{}: 1", getMethodName(this, __func__)));
-
-    const uint16_t lenSymbolDisplayProps = ds.readUint16();
-
-    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
-
-    for(size_t i = 0; i < lenSymbolDisplayProps; ++i)
-    {
-        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
-    }
-
-    if(aVersion == FileFormatVersion::A)
-    {
-        ds.printUnknownData(1, fmt::format("{}: 2", getMethodName(this, __func__)));
-    }
-
-    localFutureLst.checkpoint();
-
-    ds.printUnknownData(12, fmt::format("{}: 3", getMethodName(this, __func__)));
+    ds.printUnknownData(12, fmt::format("{}: 1", getMethodName(this, __func__)));
 
     localFutureLst.checkpoint();
 

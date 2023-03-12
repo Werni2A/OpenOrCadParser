@@ -12,19 +12,15 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
-#include "Enums/Color.hpp"
-#include "Enums/LineStyle.hpp"
-#include "Enums/LineWidth.hpp"
 #include "General.hpp"
-#include "Structures/StructSymbolDisplayProp.hpp"
+#include "Structures/StructGraphicInst.hpp"
 
 
-class StructPort : public CommonBase
+class StructPort : public StructGraphicInst
 {
 public:
 
-    StructPort(ParserContext& aCtx) : CommonBase{aCtx}, name{}, symbolDisplayProps{}
+    StructPort(ParserContext& aCtx) : StructGraphicInst{aCtx}
     { }
 
     std::string to_string() const override;
@@ -35,37 +31,25 @@ public:
     {
         aVisitor.visit(*this);
     }
-
-    std::string name;
-
-    std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };
 
 
 [[maybe_unused]]
 static std::string to_string(const StructPort& aObj)
 {
-    std::string str;
-
-    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-    str += fmt::format("{}name = {}\n", indent(1), aObj.name);
-
-    str += fmt::format("{}symbolDisplayProps:\n", indent(1));
-    for(size_t i = 0u; i < aObj.symbolDisplayProps.size(); ++i)
-    {
-        if(aObj.symbolDisplayProps[i])
-        {
-            str += indent(fmt::format("[{}]: {}", i, aObj.symbolDisplayProps[i]->to_string()), 2);
-        }
-    }
-
-    return str;
+    return aObj.to_string();
 }
 
 
 inline std::string StructPort::to_string() const
 {
-    return ::to_string(*this);
+    std::string str;
+
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(*this)>());
+
+    str += StructGraphicInst::to_string();
+
+    return str;
 }
 
 

@@ -83,15 +83,25 @@ public:
     virtual void visit(const StreamType& /* aObj */) override { }
     virtual void visit(const StreamViewsDirectory& /* aObj */) override { }
     virtual void visit(const StructAlias& /* aObj */) override { }
+    virtual void visit(const StructBookMarkSymbolInst& /* aObj */) override { }
     virtual void visit(const StructBusEntry& /* aObj */) override { }
     virtual void visit(const StructERCSymbol& /* aObj */) override { }
+    virtual void visit(const StructERCSymbolInst& /* aObj */) override { }
     virtual void visit(const StructGeneralProperties& /* aObj */) override { }
     virtual void visit(const StructGlobal& /* aObj */) override { }
     virtual void visit(const StructGlobalSymbol& /* aObj */) override { }
+    virtual void visit(const StructGraphicArcInst& /* aObj */) override { }
+    virtual void visit(const StructGraphicBezierInst& /* aObj */) override { }
+    virtual void visit(const StructGraphicBitMapInst& /* aObj */) override { }
     virtual void visit(const StructGraphicBoxInst& /* aObj */) override { }
     virtual void visit(const StructGraphicCommentTextInst& /* aObj */) override { }
+    virtual void visit(const StructGraphicEllipseInst& /* aObj */) override { }
     virtual void visit(const StructGraphicLineInst& /* aObj */) override { }
+    virtual void visit(const StructGraphicOleEmbedInst& /* aObj */) override { }
+    virtual void visit(const StructGraphicPolygonInst& /* aObj */) override { }
+    virtual void visit(const StructGraphicPolylineInst& /* aObj */) override { }
     virtual void visit(const StructHierarchicSymbol& /* aObj */) override { }
+    virtual void visit(const StructOffPageConnector& /* aObj */) override { }
     virtual void visit(const StructOffPageSymbol& /* aObj */) override { }
     virtual void visit(const StructPartInst& /* aObj */) override { }
     virtual void visit(const StructPinIdxMapping& /* aObj */) override { }

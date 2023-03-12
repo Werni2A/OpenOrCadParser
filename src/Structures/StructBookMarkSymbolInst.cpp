@@ -6,10 +6,11 @@
 
 #include "Enums/Structure.hpp"
 #include "General.hpp"
-#include "Structures/StructPort.hpp"
+#include "Parser.hpp"
+#include "Structures/StructBookMarkSymbolInst.hpp"
 
 
-void StructPort::read(FileFormatVersion /* aVersion */)
+void StructBookMarkSymbolInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.get().mDs.get();
 
@@ -17,13 +18,9 @@ void StructPort::read(FileFormatVersion /* aVersion */)
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes(Structure::Port, localFutureLst);
+    auto_read_prefixes(Structure::BookMarkSymbolInst, localFutureLst);
 
     StructGraphicInst::read(localFutureLst);
-
-    ds.printUnknownData(9, getMethodName(this, __func__) + ": 0");
-
-    localFutureLst.checkpoint();
 
     localFutureLst.sanitizeCheckpoints();
 

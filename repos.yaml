@@ -562,7 +562,7 @@ repositories:
 - author: beagleboard
   commit: a14c542f0de8507e001a6d652daaf85bc654e422
   files:
-  - errors: 28
+  - errors: 19
     options: null
     path: ./SCH/BeagleBoard-xM_ORCAD.DSN
   project: beagleboard-xm
@@ -570,7 +570,7 @@ repositories:
 - author: beagleboard
   commit: 1a732ca598999bf4c6c08e1d1546cdecaa0ca30b
   files:
-  - errors: 9
+  - errors: 0
     options: null
     path: ./ALLEGRO/BEAGLEBONEBLK_C3.DSN
   project: beaglebone-black
@@ -645,7 +645,7 @@ repositories:
 - author: cutiepi-io
   commit: 1c5492733812fe1ae23d3b046f65bc3c73a0dd2f
   files:
-  - errors: 2
+  - errors: 0
     options: null
     path: ./CutiePi_V2.3-20210409.DSN
   project: cutiepi-board
@@ -1473,7 +1473,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/darlngtn.olb
-  - errors: 63
+  - errors: 7
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/dataconv.olb
   - errors: 1
@@ -1999,7 +1999,7 @@ repositories:
 - author: Kinoma
   commit: 1078d98f83c4971c167e32ef6f5b59c91c8c2b19
   files:
-  - errors: 5
+  - errors: 0
     options: null
     path: ./sch/ELEMENT-DVT.DSN
   project: Kinoma-Element-Open-source-hardware-1st-Generation
@@ -2166,7 +2166,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/SmartGardenShield/CP_CC1310LAUNCHPAD.DSN
-  - errors: 4
+  - errors: 0
     options: null
     path: ./Document/Hardware/mcu/swrc319/Cadence/LAUNCHXL-CC1310.DSN
   - errors: 0
@@ -2181,7 +2181,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/SmartGardenShield/CP_CC1310LAUNCHPAD_0.DBK
-  - errors: 4
+  - errors: 0
     options: null
     path: ./Document/Hardware/mcu/swrc319/Cadence/LAUNCHXL-CC1310_0.DBK
   project: CP_SmartGarden
@@ -2306,7 +2306,7 @@ repositories:
   - errors: 1
     options: null
     path: ./PULSE MODULATION.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./DAconvertor/DACONVERTOR.DSN
   - errors: 0
@@ -2315,7 +2315,7 @@ repositories:
   - errors: 1
     options: null
     path: ./PULSE MODULATION_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./DAconvertor/DACONVERTOR_0.DBK
   - errors: 0
@@ -2378,7 +2378,7 @@ repositories:
   - errors: 0
     options: null
     path: ./SPB_Data/mylib/ATMEGA16.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/SPICE_DIFFCIRCUIT.DSN
   - errors: 0
@@ -2399,7 +2399,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/stm32_f103c8_interrupt/STM32F103C8_INTERRUPT.DSN
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcadData/atmega/DIGITALCONVERTOR.DSN
   - errors: 1
@@ -2441,7 +2441,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/choppigWaveGenerator/CHOPPINGWAVEGENERATOR.DSN
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcadData/digitalconvertor/DIGITALCONVERTOR.DSN
   - errors: 0
@@ -2480,7 +2480,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/atmega/ATMEGA_0.DBK
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcadData/atmega/DIGITALCONVERTOR_0.DBK
   - errors: 1
@@ -2525,7 +2525,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/choppigWaveGenerator/CHOPPINGWAVEGENERATOR_0.DBK
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcadData/digitalconvertor/DIGITALCONVERTOR_0.DBK
   - errors: 0
@@ -2551,16 +2551,16 @@ repositories:
   - errors: 0
     options: null
     path: ./Hardware/8Mics/8MICS.DSN
-  - errors: 3
+  - errors: 1
     options: null
     path: ./Hardware/Main_board/STM32F746NGH V1.1_last.DSN
-  - errors: 3
+  - errors: 1
     options: null
     path: ./Hardware/Main_board/allegro/MIC_ARRAY_RELEASE.DSN
-  - errors: 3
+  - errors: 1
     options: null
     path: ./Hardware/Main_board/STM32F746NGH V1.1_LAST_0.DBK
-  - errors: 3
+  - errors: 1
     options: null
     path: ./Hardware/Main_board/allegro/MIC_ARRAY_RELEASE_0.DBK
   project: Mic_Array
@@ -3260,10 +3260,10 @@ repositories:
   - errors: 0
     options: null
     path: ./ONYXPSU_LIB.OLB
-  - errors: 2
+  - errors: 1
     options: null
     path: ./ONYXPSU.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./ONYXPSU_0.DBK
   project: OnyxPSU
@@ -4690,19 +4690,19 @@ repositories:
 - author: Pf-G
   commit: 59b66608a0891b226234ea9235043dbd49912389
   files:
-  - errors: 31
+  - errors: 25
     options: null
     path: ./arm/Schematic-PCB/TinySDK-1312B-Schematic.DSN
-  - errors: 34
+  - errors: 25
     options: null
     path: ./arm/Schematic-PCB/TinyADK-1312B-Schematc.DSN
-  - errors: 33
+  - errors: 25
     options: null
     path: ./arm/Schematic-PCB/Tiny210SDK-1310-Schematic.DSN
-  - errors: 16
+  - errors: 10
     options: null
     path: ./arm/Schematic-PCB/Smart210SDK(Tiny210V2SDK)-1305-Schematic.DSN
-  - errors: 17
+  - errors: 10
     options: null
     path: ./arm/Schematic-PCB/Tiny210V2SDK-V1.0-120804-Schematic.DSN
   project: develop-reference-data
@@ -4801,7 +4801,7 @@ repositories:
 - author: ROHMUSDC
   commit: cd3b1749a528f8ca8a75e09cbea0792261a7ba1d
   files:
-  - errors: 2
+  - errors: 1
     options: null
     path: ./Design Files/Schematic_BOM/BD71815GW_REFERENCE_REV1P30.DSN
   project: BD71815AGW-EVK-101
@@ -4913,10 +4913,10 @@ repositories:
 - author: ROHMUSDC
   commit: 4a2274cf8e63591c32e34b8851250a6d24619567
   files:
-  - errors: 4
+  - errors: 2
     options: null
     path: ./Hardware Design Files/EVK1_BD92T30-Host_REV03/Schematic_BOM/ROHM_USB-PD_DP-ALTMODE_EVK1+2_SCH_REV04_2016-02-23.DSN
-  - errors: 11
+  - errors: 2
     options: null
     path: ./Hardware Design Files/EVK2_BD92T50-Device_REV05/Schematic_BOM/ROHM_USB-PD_DP-ALTMODE_EVK1+2_SCH_REV05_2016-03-17.DSN
   project: ROHM_USB-PD_BM92T30-BM92T70-EVK-Demo
@@ -4943,10 +4943,10 @@ repositories:
 - author: ROHMUSDC
   commit: 7c7ea69d9f7491705b615af4b8f221540b1c0910
   files:
-  - errors: 3
+  - errors: 2
     options: null
     path: ./Design Files for Rev 1.0/STEPPER EVAL BRD - DESIGN File - Rev 1.0.DSN
-  - errors: 3
+  - errors: 2
     options: null
     path: ./Design Files for Rev 1.0/STEPPER.DSN
   project: StepperDriverCTRL
@@ -5070,34 +5070,34 @@ repositories:
 - author: claudiolorini
   commit: 27ef17f82406b37e696fb0778efe566ce43e2b0f
   files:
-  - errors: 36
+  - errors: 26
     options: null
     path: ./TB9.DSN
-  - errors: 33
+  - errors: 23
     options: null
     path: ./TB10.DSN
-  - errors: 7
+  - errors: 0
     options: null
     path: ./TB8.DSN
   - errors: 12
     options: null
     path: ./TB1.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./TB6.DSN
-  - errors: 6
+  - errors: 0
     options: null
     path: ./TB5.DSN
   - errors: 11
     options: null
     path: ./TB2.DSN
-  - errors: 17
+  - errors: 1
     options: null
     path: ./TB7.dsn
   - errors: 23
     options: null
     path: ./TB3.DSN
-  - errors: 7
+  - errors: 0
     options: null
     path: ./TB4.DSN
   project: OOPTB
