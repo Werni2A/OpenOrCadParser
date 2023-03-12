@@ -1,5 +1,5 @@
-#ifndef STRUCTTITLEBLOCK_HPP
-#define STRUCTTITLEBLOCK_HPP
+#ifndef STRUCTGRAPHICPOLYGONINST_HPP
+#define STRUCTGRAPHICPOLYGONINST_HPP
 
 
 #include <cstdint>
@@ -7,21 +7,19 @@
 #include <optional>
 #include <ostream>
 #include <string>
-#include <vector>
 
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
 
-class StructTitleBlock : public StructGraphicInst
+class StructGraphicPolygonInst : public StructGraphicInst
 {
 public:
 
-    StructTitleBlock(ParserContext& aCtx) : StructGraphicInst{aCtx}
+    StructGraphicPolygonInst(ParserContext& aCtx) : StructGraphicInst{aCtx}
     { }
 
     std::string to_string() const override;
@@ -36,13 +34,13 @@ public:
 
 
 [[maybe_unused]]
-static std::string to_string(const StructTitleBlock& aObj)
+static std::string to_string(const StructGraphicPolygonInst& aObj)
 {
     return aObj.to_string();
 }
 
 
-inline std::string StructTitleBlock::to_string() const
+inline std::string StructGraphicPolygonInst::to_string() const
 {
     std::string str;
 
@@ -55,12 +53,12 @@ inline std::string StructTitleBlock::to_string() const
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructTitleBlock& aObj)
+static std::ostream& operator<<(std::ostream& aOs, const StructGraphicPolygonInst& aVal)
 {
-    aOs << to_string(aObj);
+    aOs << to_string(aVal);
 
     return aOs;
 }
 
 
-#endif // STRUCTTITLEBLOCK_HPP
+#endif // STRUCTGRAPHICPOLYGONINST_HPP

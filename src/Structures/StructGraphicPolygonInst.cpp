@@ -6,10 +6,10 @@
 
 #include "Enums/Structure.hpp"
 #include "General.hpp"
-#include "Structures/StructPort.hpp"
+#include "Structures/StructGraphicPolygonInst.hpp"
 
 
-void StructPort::read(FileFormatVersion /* aVersion */)
+void StructGraphicPolygonInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.get().mDs.get();
 
@@ -17,13 +17,9 @@ void StructPort::read(FileFormatVersion /* aVersion */)
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes(Structure::Port, localFutureLst);
+    auto_read_prefixes(Structure::GraphicPolygonInst, localFutureLst);
 
     StructGraphicInst::read(localFutureLst);
-
-    ds.printUnknownData(9, getMethodName(this, __func__) + ": 0");
-
-    localFutureLst.checkpoint();
 
     localFutureLst.sanitizeCheckpoints();
 

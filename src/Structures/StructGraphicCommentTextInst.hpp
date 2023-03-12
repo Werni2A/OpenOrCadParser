@@ -13,14 +13,13 @@
 
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
-#include "Structures/StructSthInPages0.hpp"
 
 
 class StructGraphicCommentTextInst : public StructGraphicInst
 {
 public:
 
-    StructGraphicCommentTextInst(ParserContext& aCtx) : StructGraphicInst{aCtx}, sthInPages0{}
+    StructGraphicCommentTextInst(ParserContext& aCtx) : StructGraphicInst{aCtx}
     { }
 
     std::string to_string() const override;
@@ -31,31 +30,25 @@ public:
     {
         aVisitor.visit(*this);
     }
-
-    std::unique_ptr<StructSthInPages0> sthInPages0;
 };
 
 
 [[maybe_unused]]
 static std::string to_string(const StructGraphicCommentTextInst& aObj)
 {
-    std::string str;
-
-    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-
-    str += fmt::format("{}sthInPages0:\n", indent(1));
-    if(aObj.sthInPages0)
-    {
-        str += indent(aObj.sthInPages0->to_string(), 2);
-    }
-
-    return str;
+    return aObj.to_string();
 }
 
 
 inline std::string StructGraphicCommentTextInst::to_string() const
 {
-    return ::to_string(*this);
+    std::string str;
+
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(*this)>());
+
+    str += StructGraphicInst::to_string();
+
+    return str;
 }
 
 

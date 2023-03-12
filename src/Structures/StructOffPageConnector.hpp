@@ -1,5 +1,5 @@
-#ifndef STRUCTTITLEBLOCK_HPP
-#define STRUCTTITLEBLOCK_HPP
+#ifndef STRUCTOFFPAGECONNECTOR_HPP
+#define STRUCTOFFPAGECONNECTOR_HPP
 
 
 #include <cstdint>
@@ -12,16 +12,15 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
 
-class StructTitleBlock : public StructGraphicInst
+class StructOffPageConnector : public StructGraphicInst
 {
 public:
 
-    StructTitleBlock(ParserContext& aCtx) : StructGraphicInst{aCtx}
+    StructOffPageConnector(ParserContext& aCtx) : StructGraphicInst{aCtx}
     { }
 
     std::string to_string() const override;
@@ -36,13 +35,13 @@ public:
 
 
 [[maybe_unused]]
-static std::string to_string(const StructTitleBlock& aObj)
+static std::string to_string(const StructOffPageConnector& aObj)
 {
     return aObj.to_string();
 }
 
 
-inline std::string StructTitleBlock::to_string() const
+inline std::string StructOffPageConnector::to_string() const
 {
     std::string str;
 
@@ -55,7 +54,7 @@ inline std::string StructTitleBlock::to_string() const
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructTitleBlock& aObj)
+static std::ostream& operator<<(std::ostream& aOs, const StructOffPageConnector& aObj)
 {
     aOs << to_string(aObj);
 
@@ -63,4 +62,4 @@ static std::ostream& operator<<(std::ostream& aOs, const StructTitleBlock& aObj)
 }
 
 
-#endif // STRUCTTITLEBLOCK_HPP
+#endif // STRUCTOFFPAGECONNECTOR_HPP

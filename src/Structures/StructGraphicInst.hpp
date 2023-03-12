@@ -3,14 +3,19 @@
 
 
 #include <cstdint>
+#include <memory>
 #include <ostream>
 #include <string>
+#include <vector>
 
 #include <fmt/core.h>
 #include <nameof.hpp>
 
 #include "CommonBase.hpp"
+#include "Enums/Color.hpp"
 #include "General.hpp"
+#include "Structures/StructSthInPages0.hpp"
+#include "Structures/StructSymbolDisplayProp.hpp"
 
 
 /*!
@@ -23,29 +28,75 @@ class StructGraphicInst : public CommonBase
 {
 public:
 
-    StructGraphicInst(ParserContext& aCtx) : CommonBase{aCtx}
+    StructGraphicInst(ParserContext& aCtx) : CommonBase{aCtx}, name{}, dbId{0},
+    locX{0}, locY{0}, x1{0}, y1{0}, x2{0}, y2{0}, color{Color::Default}, symbolDisplayProps{},
+    sthInPages0{}
     { }
 
     std::string to_string() const override;
 
     // void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
+    void read(FutureDataLst& mLocalFutureLst, FileFormatVersion aVersion = FileFormatVersion::Unknown);
+
+    std::string name;
+
+    uint32_t dbId;
+
+    int16_t locX;
+    int16_t locY;
+
+    int16_t x1;
+    int16_t y1;
+
+    int16_t x2;
+    int16_t y2;
+
+    Color color;
+
+    std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
+
+    std::unique_ptr<StructSthInPages0> sthInPages0;
 };
 
 
 [[maybe_unused]]
 static std::string to_string(const StructGraphicInst& aObj)
 {
-    std::string str;
-
-    str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-
-    return str;
+    return aObj.to_string();
 }
 
 
 inline std::string StructGraphicInst::to_string() const
 {
-    return ::to_string(*this);
+    std::string str;
+
+    str += fmt::format("{}:\n", nameof::nameof_type<decltype(*this)>());
+    str += fmt::format("{}name  = {}\n", indent(1), name);
+    str += fmt::format("{}dbId  = {}\n", indent(1), dbId);
+    str += fmt::format("{}locX  = {}\n", indent(1), locX);
+    str += fmt::format("{}locY  = {}\n", indent(1), locY);
+    str += fmt::format("{}x1    = {}\n", indent(1), x1);
+    str += fmt::format("{}y1    = {}\n", indent(1), y1);
+    str += fmt::format("{}x2    = {}\n", indent(1), x2);
+    str += fmt::format("{}y2    = {}\n", indent(1), y2);
+    str += fmt::format("{}color = {}\n", indent(1), ::to_string(color));
+
+    str += fmt::format("{}symbolDisplayProps:\n", indent(1));
+    for(size_t i = 0u; i < symbolDisplayProps.size(); ++i)
+    {
+        if(symbolDisplayProps[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, symbolDisplayProps[i]->to_string()), 2);
+        }
+    }
+
+    str += fmt::format("{}sthInPages0:\n", indent(1));
+    if(sthInPages0)
+    {
+        str += indent(sthInPages0->to_string(), 2);
+    }
+
+    return str;
 }
 
 

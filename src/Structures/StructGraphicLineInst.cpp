@@ -9,30 +9,17 @@
 #include "Structures/StructGraphicLineInst.hpp"
 
 
-void StructGraphicLineInst::read(FileFormatVersion aVersion)
+void StructGraphicLineInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.get().mDs.get();
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    if(aVersion == FileFormatVersion::Unknown)
-    {
-        aVersion = predictVersion();
-    }
-
     FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(Structure::GraphicLineInst, localFutureLst);
 
-    readPreamble();
-
-    localFutureLst.checkpoint();
-
-    ds.printUnknownData(34, getMethodName(this, __func__) + ": 0");
-
-    sthInPages0 = dynamic_pointer_cast<StructSthInPages0>(readStructure());
-
-    localFutureLst.checkpoint();
+    StructGraphicInst::read(localFutureLst);
 
     localFutureLst.sanitizeCheckpoints();
 

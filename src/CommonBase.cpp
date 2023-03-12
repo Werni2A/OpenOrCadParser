@@ -26,15 +26,25 @@
 #include "Primitives/PrimRect.hpp"
 #include "Primitives/PrimSymbolVector.hpp"
 #include "Structures/StructAlias.hpp"
+#include "Structures/StructBookMarkSymbolInst.hpp"
 #include "Structures/StructBusEntry.hpp"
 #include "Structures/StructERCSymbol.hpp"
+#include "Structures/StructERCSymbolInst.hpp"
 #include "Structures/StructGeneralProperties.hpp"
 #include "Structures/StructGlobal.hpp"
 #include "Structures/StructGlobalSymbol.hpp"
+#include "Structures/StructGraphicArcInst.hpp"
+#include "Structures/StructGraphicBezierInst.hpp"
+#include "Structures/StructGraphicBitMapInst.hpp"
 #include "Structures/StructGraphicBoxInst.hpp"
 #include "Structures/StructGraphicCommentTextInst.hpp"
+#include "Structures/StructGraphicEllipseInst.hpp"
 #include "Structures/StructGraphicLineInst.hpp"
+#include "Structures/StructGraphicOleEmbedInst.hpp"
+#include "Structures/StructGraphicPolygonInst.hpp"
+#include "Structures/StructGraphicPolylineInst.hpp"
 #include "Structures/StructHierarchicSymbol.hpp"
+#include "Structures/StructOffPageConnector.hpp"
 #include "Structures/StructOffPageSymbol.hpp"
 #include "Structures/StructPartInst.hpp"
 #include "Structures/StructPinIdxMapping.hpp"
@@ -546,13 +556,23 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
     switch(aStructure)
     {
         case Structure::Alias:                  obj = std::make_unique<StructAlias>(mCtx);                  break;
+        case Structure::BookMarkSymbolInst:     obj = std::make_unique<StructBookMarkSymbolInst>(mCtx);     break;
         case Structure::BusEntry:               obj = std::make_unique<StructBusEntry>(mCtx);               break;
         case Structure::ERCSymbol:              obj = std::make_unique<StructERCSymbol>(mCtx);              break;
+        case Structure::ERCSymbolInst:          obj = std::make_unique<StructERCSymbolInst>(mCtx);          break;
         case Structure::Global:                 obj = std::make_unique<StructGlobal>(mCtx);                 break;
         case Structure::GlobalSymbol:           obj = std::make_unique<StructGlobalSymbol>(mCtx);           break;
+        case Structure::GraphicArcInst:         obj = std::make_unique<StructGraphicArcInst>(mCtx);         break;
+        case Structure::GraphicBezierInst:      obj = std::make_unique<StructGraphicBezierInst>(mCtx);      break;
+        case Structure::GraphicBitMapInst:      obj = std::make_unique<StructGraphicBitMapInst>(mCtx);      break;
         case Structure::GraphicBoxInst:         obj = std::make_unique<StructGraphicBoxInst>(mCtx);         break;
         case Structure::GraphicCommentTextInst: obj = std::make_unique<StructGraphicCommentTextInst>(mCtx); break;
+        case Structure::GraphicEllipseInst:     obj = std::make_unique<StructGraphicEllipseInst>(mCtx);     break;
         case Structure::GraphicLineInst:        obj = std::make_unique<StructGraphicLineInst>(mCtx);        break;
+        case Structure::GraphicOleEmbedInst:    obj = std::make_unique<StructGraphicOleEmbedInst>(mCtx);    break;
+        case Structure::GraphicPolygonInst:     obj = std::make_unique<StructGraphicPolygonInst>(mCtx);     break;
+        case Structure::GraphicPolylineInst:    obj = std::make_unique<StructGraphicPolylineInst>(mCtx);    break;
+        case Structure::OffPageConnector:       obj = std::make_unique<StructOffPageConnector>(mCtx);       break;
         case Structure::OffPageSymbol:          obj = std::make_unique<StructOffPageSymbol>(mCtx);          break;
         case Structure::PartInst:               obj = std::make_unique<StructPartInst>(mCtx);               break;
         case Structure::PinIdxMapping:          obj = std::make_unique<StructPinIdxMapping>(mCtx);          break;

@@ -1,5 +1,5 @@
-#ifndef STRUCTTITLEBLOCK_HPP
-#define STRUCTTITLEBLOCK_HPP
+#ifndef STRUCTBOOKMARKSYMBOLINST_HPP
+#define STRUCTBOOKMARKSYMBOLINST_HPP
 
 
 #include <cstdint>
@@ -17,11 +17,11 @@
 #include "Structures/StructGraphicInst.hpp"
 
 
-class StructTitleBlock : public StructGraphicInst
+class StructBookMarkSymbolInst : public StructGraphicInst
 {
 public:
 
-    StructTitleBlock(ParserContext& aCtx) : StructGraphicInst{aCtx}
+    StructBookMarkSymbolInst(ParserContext& aCtx) : StructGraphicInst{aCtx}
     { }
 
     std::string to_string() const override;
@@ -36,13 +36,13 @@ public:
 
 
 [[maybe_unused]]
-static std::string to_string(const StructTitleBlock& aObj)
+static std::string to_string(const StructBookMarkSymbolInst& aObj)
 {
     return aObj.to_string();
 }
 
 
-inline std::string StructTitleBlock::to_string() const
+inline std::string StructBookMarkSymbolInst::to_string() const
 {
     std::string str;
 
@@ -55,7 +55,7 @@ inline std::string StructTitleBlock::to_string() const
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructTitleBlock& aObj)
+static std::ostream& operator<<(std::ostream& aOs, const StructBookMarkSymbolInst& aObj)
 {
     aOs << to_string(aObj);
 
@@ -63,4 +63,4 @@ static std::ostream& operator<<(std::ostream& aOs, const StructTitleBlock& aObj)
 }
 
 
-#endif // STRUCTTITLEBLOCK_HPP
+#endif // STRUCTBOOKMARKSYMBOLINST_HPP
