@@ -12,16 +12,11 @@
 #include "Structures/StructPrimitives.hpp"
 
 
-void StructPrimitives::read(FileFormatVersion aVersion)
+void StructPrimitives::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.get().mDs.get();
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-
-    if(aVersion == FileFormatVersion::Unknown)
-    {
-        aVersion = predictVersion();
-    }
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -98,19 +93,23 @@ void StructPrimitives::read(FileFormatVersion aVersion)
 
     spdlog::trace("lenSymbolPins = {}", lenSymbolPins);
 
-    if(aVersion == FileFormatVersion::B || aVersion == FileFormatVersion::D)
-    {
-        ds.printUnknownData(1, fmt::format("{}: 1", getMethodName(this, __func__)));
-    }
-
     for(size_t i = 0u; i < lenSymbolPins; ++i)
     {
-        symbolPins.push_back(dynamic_pointer_cast<StructSymbolPin>(readStructure()));
-
-        if(aVersion == FileFormatVersion::C || aVersion == FileFormatVersion::D)
+        // Skip pin
+        // @todo But why? Should I add an empty SymbolPin to the vector
+        //       to keep the index correct. What does it mean to skip
+        //       pins? Are previous definitions reused?
+        //       I've seen the usage of 0x00 for pins in convert view
+        //       but I'm not sure if this was just a coincidence. See
+        //       test/designs/ROHMUSDC/LapisDevBoard/DESIGN FILES/OrCAD Capture Schematics/library/stepperlib.olb
+        //       ML610Q111
+        if(std::vector<uint8_t>{0U} == ds.peek(1U))
         {
-            ds.printUnknownData(1, fmt::format("{}: 1", getMethodName(this, __func__)));
+            ds.printUnknownData(1U, "Skipping Pin");
+            continue;
         }
+
+        symbolPins.push_back(dynamic_pointer_cast<StructSymbolPin>(readStructure()));
     }
 
     const uint16_t lenSymbolDisplayProps = ds.readUint16();
