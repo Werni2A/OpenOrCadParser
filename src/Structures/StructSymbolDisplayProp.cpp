@@ -80,8 +80,6 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
 
     ds.assumeData({0x00}, getMethodName(this, __func__) + ": 1");
 
-    localFutureLst.readUntilNextFutureData("See FuturData of StructSymbolDisplayProp");
-
     localFutureLst.checkpoint();
 
     localFutureLst.sanitizeCheckpoints();
