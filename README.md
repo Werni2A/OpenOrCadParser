@@ -50,7 +50,7 @@ cmake --build build
 ## Dependencies
 
 - Compiler with C++17 Support
-- [CMake](https://cmake.org/) >= 2.8.12
+- [CMake](https://cmake.org/) >= 3.8
 - [Boost](https://www.boost.org/) - Program Options
 - [compoundfilereader](https://github.com/Microsoft/compoundfilereader)
 - [fmt](https://github.com/fmtlib/fmt)
