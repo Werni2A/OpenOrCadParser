@@ -11,13 +11,14 @@
 
 #include "CommonBase.hpp"
 #include "General.hpp"
+#include "Structures/StructERCSymbol.hpp"
 
 
 class StreamERC : public CommonBase
 {
 public:
 
-    StreamERC(ParserContext& aCtx) : CommonBase{aCtx}
+    StreamERC(ParserContext& aCtx) : CommonBase{aCtx}, ercSymbol{}
     { }
 
     std::string to_string() const override;
@@ -28,6 +29,8 @@ public:
     {
         aVisitor.visit(*this);
     }
+
+    std::unique_ptr<StructERCSymbol> ercSymbol;
 };
 
 
@@ -37,6 +40,12 @@ static std::string to_string(const StreamERC& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
+
+    str += fmt::format("{}ercSymbol:\n", indent(1));
+    if(aObj.ercSymbol)
+    {
+        str += indent(aObj.ercSymbol->to_string(), 2);
+    }
 
     return str;
 }
