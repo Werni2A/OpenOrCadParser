@@ -12,11 +12,16 @@
 #include "CommonBase.hpp"
 #include "General.hpp"
 #include "PageSettings.hpp"
+#include "Structures/StructBusEntry.hpp"
+#include "Structures/StructERCSymbolInst.hpp"
+#include "Structures/StructGlobal.hpp"
 #include "Structures/StructGraphicInst.hpp"
+#include "Structures/StructOffPageConnector.hpp"
 #include "Structures/StructPartInst.hpp"
 #include "Structures/StructPort.hpp"
 #include "Structures/StructT0x34.hpp"
 #include "Structures/StructT0x35.hpp"
+#include "Structures/StructTitleBlock.hpp"
 #include "Structures/StructWire.hpp"
 
 
@@ -25,7 +30,8 @@ class StreamPage : public CommonBase
 public:
 
     StreamPage(ParserContext& aCtx) : CommonBase{aCtx}, name{}, pageSize{}, pageSettings{aCtx},
-        t0x34s{}, t0x35s{}, wires{}, partInsts{}, ports{}, graphicInsts{}
+        titleBlocks{}, t0x34s{}, t0x35s{}, wires{}, partInsts{}, ports{}, globals{}, offPageConnectors{},
+        ercSymbolInsts{}, busEntries{}, graphicInsts{}
     { }
 
     std::string to_string() const override;
@@ -41,12 +47,17 @@ public:
     std::string  pageSize;
     PageSettings pageSettings;
 
-    std::vector<std::unique_ptr<StructT0x34>>       t0x34s;
-    std::vector<std::unique_ptr<StructT0x35>>       t0x35s;
-    std::vector<std::unique_ptr<StructWire>>        wires;
-    std::vector<std::unique_ptr<StructPartInst>>    partInsts;
-    std::vector<std::unique_ptr<StructPort>>        ports;
-    std::vector<std::unique_ptr<StructGraphicInst>> graphicInsts;
+    std::vector<std::unique_ptr<StructTitleBlock>>       titleBlocks;
+    std::vector<std::unique_ptr<StructT0x34>>            t0x34s;
+    std::vector<std::unique_ptr<StructT0x35>>            t0x35s;
+    std::vector<std::unique_ptr<StructWire>>             wires;
+    std::vector<std::unique_ptr<StructPartInst>>         partInsts;
+    std::vector<std::unique_ptr<StructPort>>             ports;
+    std::vector<std::unique_ptr<StructGlobal>>           globals;
+    std::vector<std::unique_ptr<StructOffPageConnector>> offPageConnectors;
+    std::vector<std::unique_ptr<StructERCSymbolInst>>    ercSymbolInsts;
+    std::vector<std::unique_ptr<StructBusEntry>>         busEntries;
+    std::vector<std::unique_ptr<StructGraphicInst>>      graphicInsts;
 };
 
 
@@ -67,6 +78,15 @@ static std::string to_string(const StreamPage& aObj)
         if(aObj.t0x34s[i])
         {
             str += indent(fmt::format("[{}]: {}", i, aObj.t0x34s[i]->to_string()), 2);
+        }
+    }
+
+    str += fmt::format("{}titleBlocks:\n", indent(1));
+    for(size_t i = 0u; i < aObj.titleBlocks.size(); ++i)
+    {
+        if(aObj.titleBlocks[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.titleBlocks[i]->to_string()), 2);
         }
     }
 
@@ -103,6 +123,42 @@ static std::string to_string(const StreamPage& aObj)
         if(aObj.ports[i])
         {
             str += indent(fmt::format("[{}]: {}", i, aObj.ports[i]->to_string()), 2);
+        }
+    }
+
+    str += fmt::format("{}globals:\n", indent(1));
+    for(size_t i = 0u; i < aObj.globals.size(); ++i)
+    {
+        if(aObj.globals[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.globals[i]->to_string()), 2);
+        }
+    }
+
+    str += fmt::format("{}offPageConnectors:\n", indent(1));
+    for(size_t i = 0u; i < aObj.offPageConnectors.size(); ++i)
+    {
+        if(aObj.offPageConnectors[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.offPageConnectors[i]->to_string()), 2);
+        }
+    }
+
+    str += fmt::format("{}ercSymbolInsts:\n", indent(1));
+    for(size_t i = 0u; i < aObj.ercSymbolInsts.size(); ++i)
+    {
+        if(aObj.ercSymbolInsts[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.ercSymbolInsts[i]->to_string()), 2);
+        }
+    }
+
+    str += fmt::format("{}busEntries:\n", indent(1));
+    for(size_t i = 0u; i < aObj.busEntries.size(); ++i)
+    {
+        if(aObj.busEntries[i])
+        {
+            str += indent(fmt::format("[{}]: {}", i, aObj.busEntries[i]->to_string()), 2);
         }
     }
 
