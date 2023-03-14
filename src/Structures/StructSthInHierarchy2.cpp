@@ -83,8 +83,6 @@ void StructSthInHierarchy2::read(FileFormatVersion /* aVersion */)
         }
     }
 
-    localFutureLst.readUntilNextFutureData();
-
     localFutureLst.checkpoint();
 
     localFutureLst.sanitizeCheckpoints();
