@@ -18,7 +18,6 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
     FutureDataLst localFutureLst{mCtx};
 
     auto_read_prefixes(localFutureLst);
-    // read_prefixes(3, localFutureLst);
 
     readPreamble();
 
@@ -34,19 +33,13 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     pageSettings.read();
 
-    // @todo Contains StructTitleBlock
-    const uint16_t lenA = ds.readUint16();
+    const uint16_t lenTitleBlocks = ds.readUint16();
 
-    spdlog::trace("lenA = {}", lenA);
+    spdlog::trace("lenTitleBlocks = {}", lenTitleBlocks);
 
-    for(size_t i = 0u; i < lenA; ++i)
+    for(size_t i = 0u; i < lenTitleBlocks; ++i)
     {
-        // @todo push structure
-        const auto s = readStructure();
-        if(s)
-        {
-            spdlog::debug("VERIFYING Page StructureA is {}", NAMEOF_TYPE_RTTI(*s));
-        }
+        titleBlocks.push_back(dynamic_pointer_cast<StructTitleBlock>(readStructure()));
     }
 
     const uint16_t lenT0x34s = ds.readUint16();
@@ -73,6 +66,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0; i < lenB; ++i)
     {
+        // @todo Add attributes
         const std::string net = ds.readStringLenZeroTerm();
         const uint32_t id = ds.readUint32();
 
@@ -107,66 +101,44 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         ports.push_back(dynamic_pointer_cast<StructPort>(readStructure()));
     }
 
-    // @todo They are StructureGlobal
-    const uint16_t len5 = ds.readUint16();
+    const uint16_t lenGlobals = ds.readUint16();
 
-    spdlog::trace("len5 = {}", len5);
+    spdlog::trace("lenGlobals = {}", lenGlobals);
 
-    for(size_t i = 0u; i < len5; ++i)
+    for(size_t i = 0u; i < lenGlobals; ++i)
     {
-        // @todo push structure
-        const auto s = readStructure();
-        if(s)
-        {
-            spdlog::debug("VERIFYING Page Structure5 is {}", NAMEOF_TYPE_RTTI(*s));
-        }
+        globals.push_back(dynamic_pointer_cast<StructGlobal>(readStructure()));
 
         ds.printUnknownData(5, fmt::format("{}: 0", getMethodName(this, __func__)));
     }
 
-    // @todo They are StructureOffPageConnector
-    const uint16_t len6 = ds.readUint16();
+    const uint16_t lenOffPageConnectors = ds.readUint16();
 
-    spdlog::trace("len6 = {}", len6);
+    spdlog::trace("lenOffPageConnectors = {}", lenOffPageConnectors);
 
-    for(size_t i = 0u; i < len6; ++i)
+    for(size_t i = 0u; i < lenOffPageConnectors; ++i)
     {
-        // @todo push structure
-        const auto s = readStructure();
-        if(s)
-        {
-            spdlog::debug("VERIFYING Page Structure6 is {}", NAMEOF_TYPE_RTTI(*s));
-        }
+        offPageConnectors.push_back(dynamic_pointer_cast<StructOffPageConnector>(readStructure()));
 
-        ds.printUnknownData(5, fmt::format("{}: 0", getMethodName(this, __func__)));
+        ds.printUnknownData(5, fmt::format("{}: 1", getMethodName(this, __func__)));
     }
 
-    const uint16_t len7 = ds.readUint16();
+    const uint16_t lenERCSymbolInsts = ds.readUint16();
 
-    spdlog::trace("len7 = {}", len7);
+    spdlog::trace("lenERCSymbolInsts = {}", lenERCSymbolInsts);
 
-    for(size_t i = 0u; i < len7; ++i)
+    for(size_t i = 0u; i < lenERCSymbolInsts; ++i)
     {
-        // @todo push structure
-        const auto s = readStructure();
-        if(s)
-        {
-            spdlog::debug("VERIFYING Page Structure7 is {}", NAMEOF_TYPE_RTTI(*s));
-        }
+        ercSymbolInsts.push_back(dynamic_pointer_cast<StructERCSymbolInst>(readStructure()));
     }
 
-    const uint16_t len8 = ds.readUint16();
+    const uint16_t lenBusEntries = ds.readUint16();
 
-    spdlog::trace("len8 = {}", len8);
+    spdlog::trace("lenBusEntries = {}", lenBusEntries);
 
-    for(size_t i = 0u; i < len8; ++i)
+    for(size_t i = 0u; i < lenBusEntries; ++i)
     {
-        // @todo push structure
-        const auto s = readStructure();
-        if(s)
-        {
-            spdlog::debug("VERIFYING Page Structure8 is {}", NAMEOF_TYPE_RTTI(*s));
-        }
+        busEntries.push_back(dynamic_pointer_cast<StructBusEntry>(readStructure()));
     }
 
     const uint16_t lenGraphicInsts = ds.readUint16();
@@ -206,9 +178,9 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         }
     }
 
-    // localFutureLst.readRestOfStructure();
+    localFutureLst.checkpoint();
 
-    // localFutureLst.checkpoint(ds.getCurrentOffset());
+    localFutureLst.sanitizeCheckpoints();
 
     if(!ds.isEoF())
     {
