@@ -60,7 +60,8 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
         //       but I don't know how many bytes, therefore discard them
         //       until the next primitive occurs. There might be rare
         //       false positives
-        for(int i = 0; i < 64 && ds.getCurrentOffset() < nextCheckpointPos; ++i)
+        int discard_ctr = 0;
+        for(discard_ctr = 0; discard_ctr < 64 && ds.getCurrentOffset() < nextCheckpointPos; ++discard_ctr)
         {
             const auto prefix = ds.peek(2);
 
@@ -80,12 +81,16 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
                 break;
             }
 
-            ds.printUnknownData(1U);
+            ds.discardBytes(1U);
         }
+
+        ds.setCurrentOffset(ds.getCurrentOffset() - discard_ctr);
+        ds.printUnknownData(discard_ctr, getMethodName(this, __func__) + ": Mysterious Content");
     }
 
+    // @todo Parts of it probably belong to the upper trailing data
     if(ds.getCurrentOffset() < nextCheckpointPos)
-        localFutureLst.readUntilNextFutureData();
+        localFutureLst.readUntilNextFutureData("See FuturData of StructPrimitives");
 
     localFutureLst.checkpoint();
 
