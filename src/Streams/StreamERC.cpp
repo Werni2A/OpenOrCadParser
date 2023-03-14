@@ -14,12 +14,7 @@ void StreamERC::read(FileFormatVersion /* aVersion */)
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    // @todo push structure
-    const auto s = readStructure();
-    if(s)
-    {
-        spdlog::debug("VERIFYING StreamERC Structure0 is {}", NAMEOF_TYPE_RTTI(*s));
-    }
+    ercSymbol = dynamic_pointer_cast<StructERCSymbol>(readStructure());
 
     if(!ds.isEoF())
     {
