@@ -1,5 +1,3 @@
-# Parser
-
 # Parser Implementation
 
 Implementing a stream parser consists of two consecutive steps.
