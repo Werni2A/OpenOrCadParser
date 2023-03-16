@@ -16,13 +16,12 @@ void StreamSchematic::read(FileFormatVersion /* aVersion */)
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes(localFutureLst);
+    // @todo Extract in separate structure parser
+    auto_read_prefixes(Structure::SchLib, localFutureLst);
 
     readPreamble();
 
     localFutureLst.checkpoint();
-
-    // @todo extract into parseSchematic method that is called with structure
 
     const std::string schematic_name = ds.readStringLenZeroTerm();
 
@@ -59,6 +58,9 @@ void StreamSchematic::read(FileFormatVersion /* aVersion */)
     }
 
     ds.printUnknownData(4, getMethodName(this, __func__) + ": 3");
+
+    // @todo
+    // localFutureLst.sanitizeCheckpoints();
 
     if(!ds.isEoF())
     {

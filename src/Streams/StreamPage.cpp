@@ -17,7 +17,8 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes(localFutureLst);
+    // @todo Extract in separate structure parser
+    auto_read_prefixes(Structure::Page, localFutureLst);
 
     readPreamble();
 

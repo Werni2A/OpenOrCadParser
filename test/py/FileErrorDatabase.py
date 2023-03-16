@@ -47,7 +47,7 @@ class FileErrorDatabase:
 
     def addRepo(self, repo: Repository) -> None:
         if self.isRepoInDb(repo):
-            raise Exception('Repository is alread present in the database, can not add it!')
+            raise Exception('Repository is already present in the database, can not add it!')
 
         self.data.repositories += [repo]
 

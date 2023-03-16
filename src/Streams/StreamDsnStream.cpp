@@ -20,6 +20,7 @@ void StreamDsnStream::read(FileFormatVersion /* aVersion */)
 
     FutureDataLst localFutureLst{mCtx};
 
+    // @todo Extract in separate structure parser
     // @todo return the parsed nameValueMapping from within read_single_short_prefix()
     //       and save it in DsnStream. I.e. `Library guid` and `Time Format Index`
     // const Structure structure = read_prefixes(2);
@@ -30,6 +31,9 @@ void StreamDsnStream::read(FileFormatVersion /* aVersion */)
     localFutureLst.checkpoint();
 
     localFutureLst.readRestOfStructure();
+
+    // @todo Add checkpoint sanitization
+    // localFutureLst.sanitizeCheckpoints();
 
     if(!ds.isEoF())
     {
