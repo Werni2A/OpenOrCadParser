@@ -5,10 +5,10 @@
 #include <nameof.hpp>
 
 #include "General.hpp"
-#include "Structures/StructSthInHierarchy1.hpp"
+#include "Structures/StructNetDbIdMapping.hpp"
 
 
-void StructSthInHierarchy1::read(FileFormatVersion /* aVersion */)
+void StructNetDbIdMapping::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.get().mDs.get();
 
@@ -16,7 +16,7 @@ void StructSthInHierarchy1::read(FileFormatVersion /* aVersion */)
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes(Structure::SthInHierarchy1, localFutureLst);
+    auto_read_prefixes(Structure::NetDbIdMapping, localFutureLst);
 
     readPreamble();
 

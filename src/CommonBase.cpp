@@ -44,6 +44,7 @@
 #include "Structures/StructGraphicPolygonInst.hpp"
 #include "Structures/StructGraphicPolylineInst.hpp"
 #include "Structures/StructHierarchicSymbol.hpp"
+#include "Structures/StructNetDbIdMapping.hpp"
 #include "Structures/StructOffPageConnector.hpp"
 #include "Structures/StructOffPageSymbol.hpp"
 #include "Structures/StructPartInst.hpp"
@@ -54,6 +55,7 @@
 #include "Structures/StructProperties.hpp"
 #include "Structures/StructSthInHierarchy1.hpp"
 #include "Structures/StructSthInHierarchy2.hpp"
+#include "Structures/StructSthInHierarchy3.hpp"
 #include "Structures/StructSthInPages0.hpp"
 #include "Structures/StructSymbolBBox.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
@@ -63,6 +65,7 @@
 #include "Structures/StructT0x1f.hpp"
 #include "Structures/StructT0x34.hpp"
 #include "Structures/StructT0x35.hpp"
+#include "Structures/StructT0x5b.hpp"
 #include "Structures/StructTitleBlock.hpp"
 #include "Structures/StructTitleBlockSymbol.hpp"
 #include "Structures/StructWireBus.hpp"
@@ -572,6 +575,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         case Structure::GraphicOleEmbedInst:    obj = std::make_unique<StructGraphicOleEmbedInst>(mCtx);    break;
         case Structure::GraphicPolygonInst:     obj = std::make_unique<StructGraphicPolygonInst>(mCtx);     break;
         case Structure::GraphicPolylineInst:    obj = std::make_unique<StructGraphicPolylineInst>(mCtx);    break;
+        case Structure::NetDbIdMapping:         obj = std::make_unique<StructNetDbIdMapping>(mCtx);         break;
         case Structure::OffPageConnector:       obj = std::make_unique<StructOffPageConnector>(mCtx);       break;
         case Structure::OffPageSymbol:          obj = std::make_unique<StructOffPageSymbol>(mCtx);          break;
         case Structure::PartInst:               obj = std::make_unique<StructPartInst>(mCtx);               break;
@@ -581,6 +585,9 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         case Structure::PortSymbol:             obj = std::make_unique<StructHierarchicSymbol>(mCtx);       break;
         case Structure::Primitives:             obj = std::make_unique<StructPrimitives>(mCtx);             break;
         case Structure::Properties:             obj = std::make_unique<StructProperties>(mCtx);             break;
+        case Structure::SthInHierarchy1:        obj = std::make_unique<StructSthInHierarchy1>(mCtx);        break;
+        case Structure::SthInHierarchy2:        obj = std::make_unique<StructSthInHierarchy2>(mCtx);        break;
+        case Structure::SthInHierarchy3:        obj = std::make_unique<StructSthInHierarchy3>(mCtx);        break;
         case Structure::SthInPages0:            obj = std::make_unique<StructSthInPages0>(mCtx);            break;
         case Structure::SymbolDisplayProp:      obj = std::make_unique<StructSymbolDisplayProp>(mCtx);      break;
         case Structure::SymbolPinBus:           obj = std::make_unique<StructSymbolPinBus>(mCtx);           break;
@@ -589,6 +596,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         case Structure::T0x1f:                  obj = std::make_unique<StructT0x1f>(mCtx);                  break;
         case Structure::T0x34:                  obj = std::make_unique<StructT0x34>(mCtx);                  break;
         case Structure::T0x35:                  obj = std::make_unique<StructT0x35>(mCtx);                  break;
+        case Structure::T0x5b:                  obj = std::make_unique<StructT0x5b>(mCtx);                  break;
         case Structure::TitleBlock:             obj = std::make_unique<StructTitleBlock>(mCtx);             break;
         case Structure::TitleBlockSymbol:       obj = std::make_unique<StructTitleBlockSymbol>(mCtx);       break;
         case Structure::WireBus:                obj = std::make_unique<StructWireBus>(mCtx);                break;
@@ -686,7 +694,15 @@ FileFormatVersion CommonBase::predictVersion()
         FileFormatVersion::E,
         FileFormatVersion::F,
         FileFormatVersion::G,
-        FileFormatVersion::H
+        FileFormatVersion::H,
+        FileFormatVersion::I,
+        FileFormatVersion::J,
+        FileFormatVersion::K,
+        FileFormatVersion::L,
+        FileFormatVersion::M,
+        FileFormatVersion::N,
+        FileFormatVersion::O,
+        FileFormatVersion::P
     };
 
     const size_t initial_offset = mCtx.get().mDs.get().getCurrentOffset();

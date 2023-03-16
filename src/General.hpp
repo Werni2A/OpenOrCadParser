@@ -36,15 +36,23 @@ extern FileFormatVersion gFileFormatVersion;
  */
 enum class FileFormatVersion
 {
-    Unknown,
-    A, // Oldest version
+    A = 0, // Oldest version
     B,
     C,
     D,
     E,
     F,
     G,
-    H  // Latest Version
+    H,
+    I,
+    J,
+    K,
+    L,
+    M,
+    N,
+    O,
+    P, // Latest Version
+    Unknown,
 };
 
 

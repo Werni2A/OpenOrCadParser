@@ -14,74 +14,11 @@ void StructSthInHierarchy2::read(FileFormatVersion /* aVersion */)
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    ds.printUnknownData(4, fmt::format("{}: 0", getMethodName(this, __func__)));
-
-    const uint16_t val = ds.readUint16();
-
-    spdlog::trace("val = {}", val);
-
     FutureDataLst localFutureLst{mCtx};
 
-    // Try parsing either 0 or 10 bytes until the next prefix occurs
-    {
-        size_t currOffset = ds.getCurrentOffset();
+    auto_read_prefixes(Structure::SthInHierarchy2, localFutureLst);
 
-        bool success = false;
-
-        if(!success)
-        {
-            try
-            {
-                localFutureLst = FutureDataLst{mCtx};
-
-                auto_read_prefixes(localFutureLst);
-
-                readPreamble();
-
-                localFutureLst.checkpoint();
-
-                success = true;
-
-                // Restore previous state and parse bytes
-                ds.setCurrentOffset(currOffset);
-            }
-            catch(...)
-            {
-                ds.setCurrentOffset(currOffset);
-            }
-        }
-
-        if(!success)
-        {
-            try
-            {
-                ds.printUnknownData(10, fmt::format("{}: 1", getMethodName(this, __func__)));
-
-                localFutureLst = FutureDataLst{mCtx};
-
-                auto_read_prefixes(localFutureLst);
-
-                readPreamble();
-
-                localFutureLst.checkpoint();
-
-                success = true;
-
-                // Restore previous state and parse bytes
-                ds.setCurrentOffset(currOffset);
-                ds.printUnknownData(10, fmt::format("{}: 2", getMethodName(this, __func__)));
-            }
-            catch(...)
-            {
-                ds.setCurrentOffset(currOffset);
-            }
-        }
-
-        if(!success)
-        {
-            throw std::runtime_error("Unfortunate...");
-        }
-    }
+    readPreamble();
 
     localFutureLst.checkpoint();
 
