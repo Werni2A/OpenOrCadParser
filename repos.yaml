@@ -2402,7 +2402,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/atmega/DIGITALCONVERTOR.DSN
-  - errors: 1
+  - errors: 2
     options: null
     path: ./orcadData/sequentialTimer/SEQUENTIALTIMER.DSN
   - errors: 0
@@ -2483,7 +2483,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/atmega/DIGITALCONVERTOR_0.DBK
-  - errors: 1
+  - errors: 2
     options: null
     path: ./orcadData/sequentialTimer/SEQUENTIALTIMER_0.DBK
   - errors: 0
@@ -5070,7 +5070,7 @@ repositories:
 - author: claudiolorini
   commit: 27ef17f82406b37e696fb0778efe566ce43e2b0f
   files:
-  - errors: 26
+  - errors: 27
     options: null
     path: ./TB9.DSN
   - errors: 23
@@ -5094,7 +5094,7 @@ repositories:
   - errors: 1
     options: null
     path: ./TB7.dsn
-  - errors: 23
+  - errors: 24
     options: null
     path: ./TB3.DSN
   - errors: 0
