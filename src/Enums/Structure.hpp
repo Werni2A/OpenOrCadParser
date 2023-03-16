@@ -83,6 +83,8 @@ enum class Structure
     GraphicBezierInst      =  88,
     GraphicOleEmbedInst    =  89, //!< Embedds a file into the schematic, see https://en.wikipedia.org/wiki/Object_Linking_and_Embedding
 
+    T0x5b                  =  91,
+
     PinShapeSymbol         =  98,
 
     NetGroup               = 103  //!< Specifies which wires/busses belong to a given net group

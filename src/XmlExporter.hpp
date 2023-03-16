@@ -101,6 +101,7 @@ public:
     virtual void visit(const StructGraphicPolygonInst& /* aObj */) override { }
     virtual void visit(const StructGraphicPolylineInst& /* aObj */) override { }
     virtual void visit(const StructHierarchicSymbol& /* aObj */) override { }
+    virtual void visit(const StructNetDbIdMapping& /* aObj */) override { }
     virtual void visit(const StructOffPageConnector& /* aObj */) override { }
     virtual void visit(const StructOffPageSymbol& /* aObj */) override { }
     virtual void visit(const StructPartInst& /* aObj */) override { }
@@ -111,6 +112,7 @@ public:
     virtual void visit(const StructProperties& /* aObj */) override { }
     virtual void visit(const StructSthInHierarchy1& /* aObj */) override { }
     virtual void visit(const StructSthInHierarchy2& /* aObj */) override { }
+    virtual void visit(const StructSthInHierarchy3& /* aObj */) override { }
     virtual void visit(const StructSthInPages0& /* aObj */) override { }
     virtual void visit(const StructSymbol& /* aObj */) override { }
     virtual void visit(const StructSymbolBBox& /* aObj */) override { }
@@ -122,6 +124,7 @@ public:
     virtual void visit(const StructT0x1f& aObj) override;
     virtual void visit(const StructT0x34& /* aObj */) override { }
     virtual void visit(const StructT0x35& /* aObj */) override { }
+    virtual void visit(const StructT0x5b& /* aObj */) override { }
     virtual void visit(const StructTitleBlock& /* aObj */) override { }
     virtual void visit(const StructTitleBlockSymbol& /* aObj */) override { }
     virtual void visit(const StructWire& /* aObj */) override { }
