@@ -66,11 +66,6 @@ void StreamHierarchy::read(FileFormatVersion aVersion)
         ds.printUnknownData(8, getMethodName(this, __func__) + ": 1.6");
     }
 
-    if((int)aVersion & 0x02)
-    {
-        ds.printUnknownData(8, getMethodName(this, __func__) + ": 2.1");
-    }
-
     if((int)aVersion & 0x04)
     {
         ds.printUnknownData(8, getMethodName(this, __func__) + ": 2.2");
