@@ -23,6 +23,10 @@ void StreamSchematic::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.checkpoint();
 
+    localFutureLst.sanitizeCheckpoints();
+
+    // -----------------------------------------------
+
     const std::string schematic_name = ds.readStringLenZeroTerm();
 
     spdlog::trace("schematic_name = {}", schematic_name);
@@ -58,9 +62,6 @@ void StreamSchematic::read(FileFormatVersion /* aVersion */)
     }
 
     ds.printUnknownData(4, getMethodName(this, __func__) + ": 3");
-
-    // @todo
-    // localFutureLst.sanitizeCheckpoints();
 
     if(!ds.isEoF())
     {
