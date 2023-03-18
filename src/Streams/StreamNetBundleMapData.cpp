@@ -28,27 +28,23 @@ void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
         std::string group_name = ds.readStringLenZeroTerm();
         spdlog::trace("group_name = {}:", group_name);
 
+        // ----------------------------------------
+
         FutureDataLst localFutureLst{mCtx};
 
-        Structure structure = auto_read_prefixes(localFutureLst);
-
-        // @todo extract the following into a separate readStructNetGroup method
-        if(structure != Structure::NetGroup)
-        {
-            const std::string msg = fmt::format("{}: Expected {} but got {}",
-                getMethodName(this, __func__), ::to_string(Structure::NetGroup), ::to_string(structure));
-
-            spdlog::error(msg);
-            throw std::runtime_error(msg);
-        }
+        auto_read_prefixes(Structure::NetGroup, localFutureLst);
 
         readPreamble();
 
+        localFutureLst.checkpoint();
+
         ds.assumeData({0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
-        // The following contains the information of a net group but
-        // the name of this group is stated outside. How should this
-        // be handled?
+        localFutureLst.checkpoint();
+
+        localFutureLst.sanitizeCheckpoints();
+
+        // ----------------------------------
 
         uint16_t number_group_elements = ds.readUint16();
 
