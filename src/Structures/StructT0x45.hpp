@@ -1,5 +1,5 @@
-#ifndef STRUCTSTHINHIERARCHY2_HPP
-#define STRUCTSTHINHIERARCHY2_HPP
+#ifndef STRUCTT0X45_HPP
+#define STRUCTT0X45_HPP
 
 
 #include <cstdint>
@@ -14,11 +14,11 @@
 #include "StructSomeHierarchyBase.hpp"
 
 
-class StructSthInHierarchy2 : public StructSomeHierarchyBase
+class StructT0x45 : public StructSomeHierarchyBase
 {
 public:
 
-    StructSthInHierarchy2(ParserContext& aCtx) : StructSomeHierarchyBase{aCtx}
+    StructT0x45(ParserContext& aCtx) : StructSomeHierarchyBase{aCtx}
     { }
 
     std::string to_string() const override;
@@ -34,7 +34,7 @@ public:
 
 
 [[maybe_unused]]
-static std::string to_string(const StructSthInHierarchy2& aObj)
+static std::string to_string(const StructT0x45& aObj)
 {
     std::string str;
 
@@ -44,14 +44,14 @@ static std::string to_string(const StructSthInHierarchy2& aObj)
 }
 
 
-inline std::string StructSthInHierarchy2::to_string() const
+inline std::string StructT0x45::to_string() const
 {
     return ::to_string(*this);
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructSthInHierarchy2& aVal)
+static std::ostream& operator<<(std::ostream& aOs, const StructT0x45& aVal)
 {
     aOs << to_string(aVal);
 
@@ -59,4 +59,4 @@ static std::ostream& operator<<(std::ostream& aOs, const StructSthInHierarchy2& 
 }
 
 
-#endif // STRUCTSTHINHIERARCHY2_HPP
+#endif // STRUCTT0X45_HPP

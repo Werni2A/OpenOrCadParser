@@ -124,6 +124,7 @@ public:
     virtual void visit(const StructT0x1f& aObj) override;
     virtual void visit(const StructT0x34& /* aObj */) override { }
     virtual void visit(const StructT0x35& /* aObj */) override { }
+    virtual void visit(const StructT0x45& /* aObj */) override { }
     virtual void visit(const StructT0x5b& /* aObj */) override { }
     virtual void visit(const StructTitleBlock& /* aObj */) override { }
     virtual void visit(const StructTitleBlockSymbol& /* aObj */) override { }

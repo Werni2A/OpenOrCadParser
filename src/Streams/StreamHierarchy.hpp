@@ -13,8 +13,8 @@
 #include "CommonBase.hpp"
 #include "General.hpp"
 #include "Structures/StructNetDbIdMapping.hpp"
+#include "Structures/StructSomeHierarchyBase.hpp"
 #include "Structures/StructSthInHierarchy1.hpp"
-#include "Structures/StructSthInHierarchy2.hpp"
 #include "Structures/StructSthInHierarchy3.hpp"
 #include "Structures/StructT0x5b.hpp"
 
@@ -24,7 +24,7 @@ class StreamHierarchy : public CommonBase
 public:
 
     StreamHierarchy(ParserContext& aCtx) : CommonBase{aCtx}, netDbIdMappings{},
-        sthInHierarchy3s{}, t0x5bs{}, sthInHierarchy1s{}, sthInHierarchy2s{}
+        sthInHierarchy3s{}, t0x5bs{}, sthInHierarchy1s{}, someHierarchyBases{}
     { }
 
     std::string to_string() const override;
@@ -36,11 +36,11 @@ public:
         aVisitor.visit(*this);
     }
 
-    std::vector<std::unique_ptr<StructNetDbIdMapping>>  netDbIdMappings;
-    std::vector<std::unique_ptr<StructSthInHierarchy3>> sthInHierarchy3s;
-    std::vector<std::unique_ptr<StructT0x5b>>           t0x5bs;
-    std::vector<std::unique_ptr<StructSthInHierarchy1>> sthInHierarchy1s;
-    std::vector<std::unique_ptr<StructSthInHierarchy2>> sthInHierarchy2s;
+    std::vector<std::unique_ptr<StructNetDbIdMapping>>    netDbIdMappings;
+    std::vector<std::unique_ptr<StructSthInHierarchy3>>   sthInHierarchy3s;
+    std::vector<std::unique_ptr<StructT0x5b>>             t0x5bs;
+    std::vector<std::unique_ptr<StructSthInHierarchy1>>   sthInHierarchy1s;
+    std::vector<std::unique_ptr<StructSomeHierarchyBase>> someHierarchyBases;
 };
 
 
@@ -87,12 +87,12 @@ static std::string to_string(const StreamHierarchy& aObj)
         }
     }
 
-    str += fmt::format("{}sthInHierarchy2s:\n", indent(1));
-    for(size_t i = 0u; i < aObj.sthInHierarchy2s.size(); ++i)
+    str += fmt::format("{}someHierarchyBases:\n", indent(1));
+    for(size_t i = 0u; i < aObj.someHierarchyBases.size(); ++i)
     {
-        if(aObj.sthInHierarchy2s[i])
+        if(aObj.someHierarchyBases[i])
         {
-            str += indent(fmt::format("[{}]: {}", i, aObj.sthInHierarchy2s[i]->to_string()), 2);
+            str += indent(fmt::format("[{}]: {}", i, aObj.someHierarchyBases[i]->to_string()), 2);
         }
     }
 

@@ -86,6 +86,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructT0x1f.cpp
    ${LIB_SRC_DIR}/Structures/StructT0x34.cpp
    ${LIB_SRC_DIR}/Structures/StructT0x35.cpp
+   ${LIB_SRC_DIR}/Structures/StructT0x45.cpp
    ${LIB_SRC_DIR}/Structures/StructT0x5b.cpp
    ${LIB_SRC_DIR}/Structures/StructTitleBlock.cpp
    ${LIB_SRC_DIR}/Structures/StructTitleBlockSymbol.cpp
@@ -169,6 +170,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/StructPort.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructPrimitives.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructProperties.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructSomeHierarchyBase.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructSthInHierarchy1.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructSthInHierarchy2.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructSthInHierarchy3.hpp
@@ -181,6 +183,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Structures/StructT0x1f.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructT0x34.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructT0x35.hpp
+   ${LIB_INCLUDE_DIR}/Structures/StructT0x45.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructT0x5b.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructTitleBlock.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructTitleBlockSymbol.hpp

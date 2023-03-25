@@ -83,13 +83,13 @@ void StreamHierarchy::read(FileFormatVersion aVersion)
         // ds.printUnknownData(8, getMethodName(this, __func__) + ": 3");
         ds.printUnknownData(27, getMethodName(this, __func__) + ": 3");
 
-        const uint16_t lenSthInHierarchy2 = ds.readUint16();
+        const uint16_t lenSomeHierarchyBase = ds.readUint16();
 
-        spdlog::trace("lenSthInHierarchy2 = {}", lenSthInHierarchy2);
+        spdlog::trace("lenSomeHierarchyBase = {}", lenSomeHierarchyBase);
 
-        for(size_t i = 0u; i < lenSthInHierarchy2; ++i)
+        for(size_t i = 0u; i < lenSomeHierarchyBase; ++i)
         {
-            sthInHierarchy2s.push_back(dynamic_pointer_cast<StructSthInHierarchy2>(readStructure()));
+            someHierarchyBases.push_back(dynamic_pointer_cast<StructSomeHierarchyBase>(readStructure()));
 
             ds.printUnknownData(6, getMethodName(this, __func__) + ": 4");
         }
