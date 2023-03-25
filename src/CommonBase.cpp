@@ -65,6 +65,7 @@
 #include "Structures/StructT0x1f.hpp"
 #include "Structures/StructT0x34.hpp"
 #include "Structures/StructT0x35.hpp"
+#include "Structures/StructT0x45.hpp"
 #include "Structures/StructT0x5b.hpp"
 #include "Structures/StructTitleBlock.hpp"
 #include "Structures/StructTitleBlockSymbol.hpp"
@@ -596,6 +597,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         case Structure::T0x1f:                  obj = std::make_unique<StructT0x1f>(mCtx);                  break;
         case Structure::T0x34:                  obj = std::make_unique<StructT0x34>(mCtx);                  break;
         case Structure::T0x35:                  obj = std::make_unique<StructT0x35>(mCtx);                  break;
+        case Structure::T0x45:                  obj = std::make_unique<StructT0x45>(mCtx);                  break;
         case Structure::T0x5b:                  obj = std::make_unique<StructT0x5b>(mCtx);                  break;
         case Structure::TitleBlock:             obj = std::make_unique<StructTitleBlock>(mCtx);             break;
         case Structure::TitleBlockSymbol:       obj = std::make_unique<StructTitleBlockSymbol>(mCtx);       break;

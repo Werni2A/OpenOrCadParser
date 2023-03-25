@@ -76,6 +76,7 @@ class StructT0x10;
 class StructT0x1f;
 class StructT0x34;
 class StructT0x35;
+class StructT0x45;
 class StructT0x5b;
 class StructTitleBlock;
 class StructTitleBlockSymbol;
@@ -161,6 +162,7 @@ public:
     virtual void visit(const StructT0x1f& aObj) = 0;
     virtual void visit(const StructT0x34& aObj) = 0;
     virtual void visit(const StructT0x35& aObj) = 0;
+    virtual void visit(const StructT0x45& aObj) = 0;
     virtual void visit(const StructT0x5b& aObj) = 0;
     virtual void visit(const StructTitleBlock& aObj) = 0;
     virtual void visit(const StructTitleBlockSymbol& aObj) = 0;

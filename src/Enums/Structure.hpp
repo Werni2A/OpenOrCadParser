@@ -72,6 +72,7 @@ enum class Structure
     SthInHierarchy1        =  66, // @todo
     NetDbIdMapping         =  67,
     SthInHierarchy2        =  68, // @todo
+    T0x45                  =  69, // @todo
 
     ERCSymbol              =  75, //!< ERC symbol in the library
     BookMarkSymbol         =  76, //!< Book mark symbol in the library
