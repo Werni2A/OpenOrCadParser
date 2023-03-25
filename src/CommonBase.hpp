@@ -45,6 +45,63 @@ public:
     void readPreamble();
     Primitive readPrefixPrimitive();
 
+    // @todo Choose a more suitable name
+    size_t discard_until_auto_read_prefix_preamble()
+    {
+        auto& ds = mCtx.get().mDs.get();
+
+        const size_t startOffset = ds.getCurrentOffset();
+
+        const auto logLevel = spdlog::get_level();
+        spdlog::set_level(spdlog::level::off);
+
+        bool failed = false;
+
+        int discard = 0;
+        for(discard = 0; discard < 128; ++discard)
+        {
+            failed = false;
+
+            // Reading the prefixes might read beyond EoF in some cases,
+            // because its just a prediction, we do not care. Therefore
+            // reset the EoF flag.
+            ds.clear();
+
+            try
+            {
+                ds.discardBytes(discard);
+
+                FutureDataLst localFutureLst{mCtx};
+
+                read_prefixes(2U, localFutureLst);
+
+                readPreamble();
+
+                localFutureLst.checkpoint();
+
+                localFutureLst.sanitizeCheckpoints();
+            }
+            catch(...)
+            {
+                failed = true;
+            }
+
+            // Undo parsing
+            ds.setCurrentOffset(startOffset);
+
+            if(!failed)
+            {
+                break;
+            }
+        }
+
+        spdlog::set_level(logLevel);
+
+        // ds.printUnknownData(discard, fmt::format("Discard {} Byte until prefixes and preamble"));
+
+        return failed ? 0U : discard;
+    }
+
     void checkInterpretedDataLen(const std::string &aFuncName, size_t aStartOffset, size_t aEndOffset, size_t aExpectedLen);
 
     FileFormatVersion predictVersion();
