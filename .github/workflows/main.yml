@@ -29,7 +29,7 @@ jobs:
 
     - name: Build Library, CLI Application and Tests
       run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=Release -S . -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake
+        cmake -B build -DCMAKE_BUILD_TYPE=Release -S . -DENABLE_UNIT_TESTING=1 -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake
         cmake --build build -j $(nproc)
 
     - name: Run Tests
