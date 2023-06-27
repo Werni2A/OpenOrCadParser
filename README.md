@@ -39,8 +39,17 @@ The following two XSD files provide a good overview of the `XML` file structure,
 # Build
 
 ```bash
+# Install and set up vcpkg
+git clone https://github.com/microsoft/vcpkg.git
+./vcpkg/bootstrap-vcpkg.sh
+
 # Set path to vcpkg
-VCPKG_DIR=../vcpkg
+VCPKG_DIR=$(realpath ./vcpkg)
+
+# Get OpenOrCadParser
+git clone https://github.com/Werni2A/OpenOrCadParser.git
+
+cd OpenOrCadParser
 
 # Build
 cmake -B build -DCMAKE_BUILD_TYPE=Release -S . -DCMAKE_TOOLCHAIN_FILE=$VCPKG_DIR/scripts/buildsystems/vcpkg.cmake
