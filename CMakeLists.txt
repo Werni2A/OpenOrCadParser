@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.8)
 
 project(OpenOrCadParser)
 
-option(ENABLE_UNIT_TESTING "Enable unit testing" ON)
+option(ENABLE_UNIT_TESTING "Enable unit testing" OFF)
 
 if(CMAKE_BUILD_TYPE STREQUAL "")
     message(STATUS "CMAKE_BUILD_TYPE not defined, 'Debug' will be used")
