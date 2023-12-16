@@ -39,6 +39,8 @@ void StructSthInPages0::read_raw(FileFormatVersion /* aVersion */, FutureDataLst
 {
     auto& ds = mCtx.get().mDs.get();
 
+    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+
     name = ds.readStringLenZeroTerm();
 
     spdlog::trace("name = {}", name);
@@ -65,7 +67,31 @@ void StructSthInPages0::read_raw(FileFormatVersion /* aVersion */, FutureDataLst
     }
 
     // @todo Looks like it has one of {0, 8, 16 , 20} Byte in size
-    aLocalFutureLst.readUntilNextFutureData("See FuturData of StructSthInPages0 - raw");
+    //       16 Byte could be the coordinates with 4 byte each value
+    //       20 Byte could be the 4 Byte coordinates with with some additional value
+    spdlog::trace("Calculating {} - {} == 8", aLocalFutureLst.cbegin()->getStopOffset(), ds.getCurrentOffset());
+    if(aLocalFutureLst.getNextCheckpointPos().value_or(0U) - ds.getCurrentOffset() == std::size_t{8U})
+    {
+        spdlog::trace("Probably coordinates");
+
+        const int16_t x1 = ds.readInt16();
+        spdlog::trace("x1 = {}", x1);
+
+        const int16_t y1 = ds.readInt16();
+        spdlog::trace("y1 = {}", y1);
+
+        const int16_t x2 = ds.readInt16();
+        spdlog::trace("x2 = {}", x2);
+
+        const int16_t y2 = ds.readInt16();
+        spdlog::trace("y2 = {}", y2);
+    }
+    else
+    {
+        aLocalFutureLst.readUntilNextFutureData("See FuturData of StructSthInPages0 - raw");
+    }
 
     aLocalFutureLst.checkpoint();
+
+    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 }
