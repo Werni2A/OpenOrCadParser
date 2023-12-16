@@ -30,8 +30,9 @@ void StructProperties::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("ref = {}", ref);
 
-    // @todo Probably a string
-    ds.assumeData({0x00, 0x00, 0x00}, fmt::format("{}: 0", getMethodName(this, __func__)));
+    const std::string some_str = ds.readStringLenZeroTerm();
+
+    spdlog::trace("some_str = {}", some_str);
 
     localFutureLst.checkpoint();
 
