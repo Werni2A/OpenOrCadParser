@@ -52,10 +52,16 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
 
     spdlog::trace("textFontIdx = {}", textFontIdx);
 
-    if(textFontIdx > gLibrary->library->textFonts.size())
+    if(gLibrary != nullptr)
     {
-        throw std::out_of_range(fmt::format("{}: textFontIdx is out of range! Expected {} <= {}!",
-            getMethodName(this, __func__), textFontIdx, gLibrary->library->textFonts.size()));
+        if(gLibrary->library)
+        {
+            if(textFontIdx > gLibrary->library->textFonts.size())
+            {
+                throw std::out_of_range(fmt::format("{}: textFontIdx is out of range! Expected {} <= {}!",
+                    getMethodName(this, __func__), textFontIdx, gLibrary->library->textFonts.size()));
+            }
+        }
     }
 
     ds.printUnknownData(2, getMethodName(this, __func__) + ": 1");
@@ -90,7 +96,13 @@ LOGFONTA PrimCommentText::getTextFont() const
     if(idx >= 0)
     {
         // Retrieve font from the library.
-        textFont = gLibrary->library->textFonts.at(idx);
+        if(gLibrary != nullptr)
+        {
+            if(gLibrary->library)
+            {
+                textFont = gLibrary->library->textFonts.at(idx);
+            }
+        }
         // @todo provide try catch block for better exception messages
     }
     else if(idx == -1)
