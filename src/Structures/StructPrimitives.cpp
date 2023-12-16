@@ -128,23 +128,26 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.checkpoint();
 
-    spdlog::debug("Checking {} vs {}", localFutureLst.cbegin()->getStopOffset(), ds.getCurrentOffset());
-    if(localFutureLst.cbegin()->getStopOffset() != ds.getCurrentOffset())
+    if(!localFutureLst.empty())
     {
-        readPreamble();
-
-        for(std::size_t i{0U}; i < std::size_t{4U}; ++i)
+        spdlog::debug("Checking {} vs {}", localFutureLst.cbegin()->getStopOffset(), ds.getCurrentOffset());
+        if(localFutureLst.cbegin()->getStopOffset() > ds.getCurrentOffset())
         {
-            const std::string s = ds.readStringLenZeroTerm();
-            spdlog::trace("s[{}] = {}", i, s);
-        }
+            readPreamble();
 
-        if(localFutureLst.cbegin()->getStopOffset() != ds.getCurrentOffset())
-        {
-            ds.printUnknownData(2, getMethodName(this, __func__) + ": Interesting but weird bytes");
-        }
+            for(std::size_t i{0U}; i < std::size_t{4U}; ++i)
+            {
+                const std::string s = ds.readStringLenZeroTerm();
+                spdlog::trace("s[{}] = {}", i, s);
+            }
 
-        localFutureLst.checkpoint();
+            if(localFutureLst.cbegin()->getStopOffset() > ds.getCurrentOffset())
+            {
+                ds.printUnknownData(2, getMethodName(this, __func__) + ": Interesting but weird bytes");
+            }
+
+            localFutureLst.checkpoint();
+        }
     }
 
     localFutureLst.sanitizeCheckpoints();

@@ -19,7 +19,7 @@ class FutureData
 {
 public:
 
-    FutureData(std::size_t aPreambleOffset, std::size_t aSize) : mParsed{false}
+    FutureData(std::size_t aPreambleOffset, std::size_t aSize) : mAbsStartOffset{0U}, mAbsStopOffset{0U}, mParsed{false}
     {
         const size_t PREAMBLE_STRIDE = 9U; //!< Stride from one preamble to the next one in byte
 
