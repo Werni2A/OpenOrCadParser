@@ -61,9 +61,34 @@ void StructSthInPages0::read_raw(FileFormatVersion /* aVersion */, FutureDataLst
 
     for(size_t i = 0u; i < lenPrimitives; ++i)
     {
+        bool hasAdditionalBytes = false;
+
+        if(i + 1 < lenPrimitives)
+        {
+            const auto currOffset = ds.getCurrentOffset();
+            try
+            {
+                const Primitive primitive = readPrefixPrimitive();
+                readPrimitive(primitive);
+                // Here in between could be additional data.
+                // Check if this is the case
+                readPrefixPrimitive();
+            }
+            catch(...)
+            {
+                hasAdditionalBytes = true;
+            }
+            ds.setCurrentOffset(currOffset);
+        }
+
         const Primitive primitive = readPrefixPrimitive();
 
         readPrimitive(primitive);
+
+        if(hasAdditionalBytes)
+        {
+            ds.printUnknownData(8U, "Seems like all zero");
+        }
     }
 
     // @todo Looks like it has one of {0, 8, 16 , 20} Byte in size
