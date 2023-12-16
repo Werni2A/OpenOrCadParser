@@ -351,7 +351,15 @@ std::pair<Structure, uint32_t> CommonBase::read_single_prefix_short()
                 const auto getStr = [&, this](uint32_t idx) -> std::string
                     {
                         int64_t newIdx = static_cast<int64_t>(idx);
-                        return newIdx >= 0 ? gLibrary->library->strLst.at(newIdx) : "";
+                        if(gLibrary != nullptr)
+                        {
+                            if(gLibrary->library)
+                            {
+                                return newIdx >= 0 ? gLibrary->library->strLst.at(newIdx) : "";
+                            }
+                        }
+
+                        return "";
                     };
 
                 spdlog::debug("  {}: {} <- {}", i, getStr(nameValueMapping.at(i).first), getStr(nameValueMapping.at(i).second));
