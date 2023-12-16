@@ -128,11 +128,24 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.checkpoint();
 
-    auto genProp = StructGeneralProperties{mCtx.get()};
-    genProp.read();
-    generalProperties = genProp;
+    spdlog::debug("Checking {} vs {}", localFutureLst.cbegin()->getStopOffset(), ds.getCurrentOffset());
+    if(localFutureLst.cbegin()->getStopOffset() != ds.getCurrentOffset())
+    {
+        readPreamble();
 
-    localFutureLst.checkpoint();
+        for(std::size_t i{0U}; i < std::size_t{4U}; ++i)
+        {
+            const std::string s = ds.readStringLenZeroTerm();
+            spdlog::trace("s[{}] = {}", i, s);
+        }
+
+        if(localFutureLst.cbegin()->getStopOffset() != ds.getCurrentOffset())
+        {
+            ds.printUnknownData(2, getMethodName(this, __func__) + ": Interesting but weird bytes");
+        }
+
+        localFutureLst.checkpoint();
+    }
 
     localFutureLst.sanitizeCheckpoints();
 
