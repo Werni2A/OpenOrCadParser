@@ -39,6 +39,15 @@ public:
         }
     }
 
+    // Throws if not at EoF.
+    void sanitizeEoF()
+    {
+        if(!isEoF())
+        {
+            throw std::runtime_error("Expected EoF but did not reach it!");
+        }
+    }
+
     std::vector<uint8_t> peek(size_t aLen)
     {
         std::vector<uint8_t> data;

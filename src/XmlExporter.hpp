@@ -64,6 +64,7 @@ public:
     virtual void visit(const PrimRect& aObj) override;
     virtual void visit(const PrimSymbolVector& aObj) override;
     virtual void visit(const StreamAdminData& /* aObj */) override { }
+    virtual void visit(const StreamCache& /* aObj */) override { }
     virtual void visit(const StreamCellsDirectory& /* aObj */) override { }
     virtual void visit(const StreamDsnStream& /* aObj */) override { }
     virtual void visit(const StreamERC& /* aObj */) override { }
