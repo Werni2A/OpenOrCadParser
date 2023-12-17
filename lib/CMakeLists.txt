@@ -23,6 +23,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Primitives/PrimRect.cpp
    ${LIB_SRC_DIR}/Primitives/PrimSymbolVector.cpp
    ${LIB_SRC_DIR}/Streams/StreamAdminData.cpp
+   ${LIB_SRC_DIR}/Streams/StreamCache.cpp
    ${LIB_SRC_DIR}/Streams/StreamCellsDirectory.cpp
    ${LIB_SRC_DIR}/Streams/StreamCellsDirectory.hpp
    ${LIB_SRC_DIR}/Streams/StreamDsnStream.cpp
@@ -124,6 +125,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Primitives/PrimPolyline.hpp
    ${LIB_INCLUDE_DIR}/Primitives/PrimRect.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamAdminData.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamCache.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamDirectoryStruct.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamDsnStream.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamERC.hpp

@@ -34,6 +34,7 @@
 #include "Parser.hpp"
 #include "PinShape.hpp"
 #include "Streams/StreamAdminData.hpp"
+#include "Streams/StreamCache.hpp"
 #include "Streams/StreamCellsDirectory.hpp"
 #include "Streams/StreamDsnStream.hpp"
 #include "Streams/StreamERC.hpp"
@@ -253,6 +254,18 @@ void Parser::parseLibrary()
         }
 
         pathViewsSchematicsPagesPages.push_back(schematicPages);
+    }
+
+    spdlog::info("----------------------------------------------------------------------------------\n");
+
+    if(fs::exists(pathCache))
+    {
+        // @todo add to gLibrary
+        /* gLibrary->cache = */ parseFile<StreamCache>(pathCache, mCtx);
+    }
+    else
+    {
+        spdlog::debug("File does not exist: {}", pathCache.string());
     }
 
     spdlog::info("----------------------------------------------------------------------------------\n");

@@ -676,6 +676,28 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
 }
 
 
+bool CommonBase::tryRead(std::function<void(void)> aFunction)
+{
+    auto& ds = mCtx.get().mDs.get();
+
+    const auto offsetBeforeTest = ds.getCurrentOffset();
+    bool checkFailed = false;
+
+    try
+    {
+        aFunction();
+    }
+    catch(...)
+    {
+        checkFailed = true;
+    }
+
+    ds.setCurrentOffset(offsetBeforeTest);
+
+    return !checkFailed;
+}
+
+
 void CommonBase::checkInterpretedDataLen(const std::string& aFuncName, size_t aStartOffset, size_t aEndOffset, size_t aExpectedLen)
 {
     if(aStartOffset > aEndOffset)

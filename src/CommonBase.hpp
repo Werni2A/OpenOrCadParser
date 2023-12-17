@@ -55,6 +55,9 @@ public:
     std::unique_ptr<CommonBase> readStructure();
     std::unique_ptr<CommonBase> readStructure(Structure aStructure);
 
+    // Return true if function call was successful, i.e. without throwing exceptions
+    bool tryRead(std::function<void(void)> aFunction);
+
 protected:
     std::reference_wrapper<ParserContext> mCtx;
 
