@@ -142,18 +142,20 @@ int main(int argc, char* argv[])
 
     spdlog::set_pattern("[%^%l%$] %v");
 
-    Parser parser{inputFile};
-
-    ParserContext& ctx = parser.getContext();
-
     // Allow skipping of unknown or invalid components
     const bool allowSkipping = !stopParsing;
 
-    ctx.mSkipUnknownStruct = allowSkipping;
-    ctx.mSkipInvalidStruct = allowSkipping;
-    ctx.mSkipUnknownPrim   = allowSkipping;
-    ctx.mSkipInvalidPrim   = allowSkipping;
-    ctx.mKeepTmpFiles      = keepTmpFiles;
+    ParserConfig cfg;
+
+    cfg.mSkipUnknownStruct = allowSkipping;
+    cfg.mSkipInvalidStruct = allowSkipping;
+    cfg.mSkipUnknownPrim   = allowSkipping;
+    cfg.mSkipInvalidPrim   = allowSkipping;
+    cfg.mKeepTmpFiles      = keepTmpFiles;
+
+    Parser parser{inputFile, cfg};
+
+    ParserContext& ctx = parser.getContext();
 
     if(printTree)
     {
@@ -169,7 +171,7 @@ int main(int argc, char* argv[])
     {
         parser.parseLibrary();
 
-        const fs::path xmlDir = ctx.mExtractedPath / "xml";
+        const fs::path xmlDir = ctx.mExtractedCfbfPath / "xml";
         fs::create_directory(xmlDir);
 
         spdlog::info("Setting XML path to {}", xmlDir.string());

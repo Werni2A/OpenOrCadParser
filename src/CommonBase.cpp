@@ -480,7 +480,7 @@ std::unique_ptr<PrimBase> CommonBase::readPrimitive(Primitive aPrimitive)
 
                 spdlog::debug(msg);
 
-                if(!ctx.mSkipUnknownPrim)
+                if(!mCtx.get().mCfg.mSkipUnknownPrim)
                 {
                     throw std::runtime_error(msg);
                 }
@@ -507,7 +507,7 @@ std::unique_ptr<PrimBase> CommonBase::readPrimitive(Primitive aPrimitive)
         }
         catch(...)
         {
-            if(ctx.mSkipInvalidPrim)
+            if(ctx.mCfg.mSkipInvalidPrim)
             {
                 spdlog::debug("{}: Skipping invalid Primitive {}",
                     getMethodName(this, __func__), ::to_string(aPrimitive));
@@ -618,7 +618,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
 
                 spdlog::debug(msg);
 
-                if(!ctx.mSkipUnknownStruct)
+                if(!ctx.mCfg.mSkipUnknownStruct)
                 {
                     throw std::runtime_error(msg);
                 }
@@ -644,7 +644,7 @@ std::unique_ptr<CommonBase> CommonBase::readStructure(Structure aStructure)
         }
         catch(...)
         {
-            if(ctx.mSkipInvalidStruct)
+            if(ctx.mCfg.mSkipInvalidStruct)
             {
                 spdlog::debug("{}: Skipping invalid Structure {}",
                     getMethodName(this, __func__), ::to_string(aStructure));

@@ -67,8 +67,8 @@ void PrimBitmap::read(FileFormatVersion /* aVersion */)
         rawImgData.push_back(ds.readUint8());
     }
 
-    fs::path filename = ctx.mCurrOpenFile.parent_path() / fmt::format("{}_img_{}.bmp",
-        ctx.mCurrOpenFile.stem().string(), ctx.mImgCtr);
+    fs::path filename = ctx.mExtractedCfbfPath / "data" / fmt::format("{}_img_{}.bmp",
+        ctx.mInputStream.stem().string(), ctx.mImgCtr);
 
     filename = writeImgToFile(filename);
 

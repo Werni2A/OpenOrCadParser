@@ -21,7 +21,7 @@ void StreamGraphicsDirectory::read(FileFormatVersion /* aVersion */)
 
     if(size > 0U)
     {
-        // spdlog::warn("{} contains Graphic. Check it out!", mInputFile.string());
+        // spdlog::warn("{} contains Graphic. Check it out!", mInputCfbfFile.string());
     }
 
     for(size_t i = 0u; i < size; ++i)
