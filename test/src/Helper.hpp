@@ -17,15 +17,17 @@ namespace fs = std::filesystem;
 
 
 [[maybe_unused]]
-inline void configure_parser(Parser& aParser)
+inline ParserConfig get_parser_config()
 {
-    ParserContext& ctx = aParser.getContext();
+    ParserConfig cfg;
 
-    ctx.mSkipUnknownPrim   = false;
-    ctx.mSkipInvalidPrim   = false;
-    ctx.mSkipUnknownStruct = false;
-    ctx.mSkipInvalidStruct = false;
-    ctx.mKeepTmpFiles      = false;
+    cfg.mSkipUnknownPrim   = false;
+    cfg.mSkipInvalidPrim   = false;
+    cfg.mSkipUnknownStruct = false;
+    cfg.mSkipInvalidStruct = false;
+    cfg.mKeepTmpFiles      = false;
+
+    return cfg;
 }
 
 

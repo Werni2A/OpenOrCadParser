@@ -29,7 +29,7 @@ class Parser
 {
 public:
 
-    Parser(const fs::path& aFile);
+    Parser(const fs::path& aFile, ParserConfig aCfg);
 
     ~Parser();
 
@@ -40,32 +40,8 @@ public:
 
     ParserContext& getContext()
     {
-        return mCtx;
+        return mCtx.get();
     }
-
-    template <typename T>
-    std::unique_ptr<T> parseFile(const fs::path &aFilePath, ParserContext& aCtx)
-    {
-        auto obj = std::make_unique<T>(aCtx);
-
-        ++mFileCtr;
-
-        try
-        {
-            openFile(aFilePath.string());
-            obj->read();
-            closeFile();
-        }
-        catch(...)
-        {
-            exceptionHandling();
-        }
-
-        spdlog::info("----------------------------------------------------------------------------------\n");
-
-        return obj;
-    }
-
 
     /**
      * @brief Extract container.
@@ -113,18 +89,16 @@ private:
     void closeFile();
     void exceptionHandling();
 
-    std::vector<fs::path> mRemainingFiles; //!< Streams that have not yet been parsed
-
-    // @todo Move them into the parser context
-    fs::path mInputFile; //!< Input container
-    fs::path mCurrOpenFile; //!< Input stream
-    fs::path mExtractedPath;
-
     size_t mFileCtr;    //!< Counts all files that were opened for parsing
     size_t mFileErrCtr; //!< Counts all files that failed somewhere
 
-    DataStream mDs;
-    ParserContext mCtx;
+    fs::path mInputCfbfFile;
+    fs::path mExtractedCfbfPath;
+
+    ParserContext tmpCtx;
+    std::reference_wrapper<ParserContext> mCtx;
+
+    ParserConfig mCfg;
 };
 
 
