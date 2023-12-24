@@ -98,6 +98,7 @@ static fs::path writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>& aRa
 {
     aFilePath.replace_extension(".bmp");
 
+    fs::create_directories(aFilePath.parent_path());
     std::ofstream img{aFilePath, std::ios::out | std::ios::binary};
 
     if(!img)
@@ -205,6 +206,7 @@ static fs::path writeNoBmpFile(fs::path aFilePath, const std::vector<uint8_t>& a
         spdlog::warn("Unknown image file format");
     }
 
+    fs::create_directories(aFilePath.parent_path());
     std::ofstream img{aFilePath, std::ios::out | std::ios::binary};
 
     if(!img)
