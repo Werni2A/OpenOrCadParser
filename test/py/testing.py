@@ -102,7 +102,7 @@ def create_repo_cpp_unit_test(repo: Repository, path_repo: str, path_unit_test: 
 
 #include <catch2/catch_all.hpp>
 
-#include <Parser.hpp>
+#include <Container.hpp>
 
 #include "Helper.hpp"
 
@@ -125,7 +125,7 @@ TEST_CASE("{repo.author} - {repo.project} - {file_name} : Check File {full_path}
 
     ParserConfig cfg = get_parser_config();
 
-    Parser parser{{inputFile, cfg}};
+    Container parser{{inputFile, cfg}};
 
     parser.parseLibrary();
     check_error_count(inputFile, parser.getFileErrCtr(), {file.errors});

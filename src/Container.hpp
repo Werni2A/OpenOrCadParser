@@ -1,5 +1,5 @@
-#ifndef PARSER_HPP
-#define PARSER_HPP
+#ifndef CONTAINER_HPP
+#define CONTAINER_HPP
 
 
 #include <any>
@@ -25,13 +25,13 @@
 namespace fs = std::filesystem;
 
 
-class Parser
+class Container
 {
 public:
 
-    Parser(const fs::path& aFile, ParserConfig aCfg);
+    Container(const fs::path& aFile, ParserConfig aCfg);
 
-    ~Parser();
+    ~Container();
 
     size_t getFileErrCtr() const
     {
@@ -102,4 +102,4 @@ private:
 };
 
 
-#endif // PARSER_HPP
+#endif // CONTAINER_HPP
