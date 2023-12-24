@@ -69,8 +69,10 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
         // @note The special case of value 127 that represents an empty group
         pinGroup.push_back(bitMapPinGrpCfg & 0x7f);
 
-        spdlog::trace("pinIgnore = {}", pinIgnore[i]);
-        const std::string strPinGroup = (pinGroup[i] != 127U) ? std::to_string(pinGroup[i]) : "";
+        spdlog::trace("pinIgnore = {}", pinIgnore.back());
+        const std::string strPinGroup = (pinGroup.back() != 127U)
+            ? std::to_string(pinGroup.back())
+            : std::string{};
         spdlog::trace("pinGroup  = {:>3}", strPinGroup);
     }
 
