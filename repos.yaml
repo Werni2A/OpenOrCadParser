@@ -570,7 +570,7 @@ repositories:
 - author: beagleboard
   commit: 1a732ca598999bf4c6c08e1d1546cdecaa0ca30b
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./ALLEGRO/BEAGLEBONEBLK_C3.DSN
   project: beaglebone-black
@@ -629,7 +629,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OTHER.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./symbol/SYMBOL_GOST.DSN
   - errors: 0
@@ -645,7 +645,7 @@ repositories:
 - author: cutiepi-io
   commit: 1c5492733812fe1ae23d3b046f65bc3c73a0dd2f
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./CutiePi_V2.3-20210409.DSN
   project: cutiepi-board
@@ -1999,7 +1999,7 @@ repositories:
 - author: Kinoma
   commit: 1078d98f83c4971c167e32ef6f5b59c91c8c2b19
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./sch/ELEMENT-DVT.DSN
   project: Kinoma-Element-Open-source-hardware-1st-Generation
@@ -2166,7 +2166,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/SmartGardenShield/CP_CC1310LAUNCHPAD.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Document/Hardware/mcu/swrc319/Cadence/LAUNCHXL-CC1310.DSN
   - errors: 0
@@ -2181,7 +2181,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/SmartGardenShield/CP_CC1310LAUNCHPAD_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Document/Hardware/mcu/swrc319/Cadence/LAUNCHXL-CC1310_0.DBK
   project: CP_SmartGarden
@@ -2200,7 +2200,7 @@ repositories:
   - errors: 0
     options: null
     path: ./LIBRARY1.OLB
-  - errors: 2
+  - errors: 1
     options: null
     path: ./NIXIE_0.DBK
   project: nixie
@@ -2265,7 +2265,7 @@ repositories:
   - errors: 0
     options: null
     path: ./Orcad Project/PROIECT_TIE.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Orcad Project/CALEIDOSCOP.DSN
   project: Proiect-TIE
@@ -2295,7 +2295,7 @@ repositories:
   - errors: 10
     options: null
     path: ./AVRUSB500_0.DBK
-  - errors: 26
+  - errors: 25
     options: null
     path: ./AVRUSB500_9_0_0.DBK
   project: AVRUSB500_2
@@ -2329,7 +2329,7 @@ repositories:
   - errors: 0
     options: null
     path: ./src/Hardware/Encoder Board/LIBRARY1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./src/Hardware/Encoder Board/MOTOR_ENCODER_BRD.DSN
   project: Open_Breath
@@ -2343,7 +2343,7 @@ repositories:
   - errors: 0
     options: null
     path: ./LED_SCHLIB.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./LED_YOUTUBE.DSN
   - errors: 0
@@ -2378,7 +2378,7 @@ repositories:
   - errors: 0
     options: null
     path: ./SPB_Data/mylib/ATMEGA16.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/SPICE_DIFFCIRCUIT.DSN
   - errors: 0
@@ -2390,7 +2390,7 @@ repositories:
   - errors: 1
     options: null
     path: ./orcadData/ATMEGA.DSN
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcadData/SPICE_MULTIVIBRATOR.DSN
   - errors: 0
@@ -2432,7 +2432,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/start1/BRIDGEDIODE.DSN
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcadData/spice_opamp/OPAMP_SPICE.DSN
   - errors: 0
@@ -2450,7 +2450,7 @@ repositories:
   - errors: 1
     options: null
     path: ./orcadData/hole/HOLE.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/decadeCounter/DECADECOUNTER.DSN
   - errors: 0
@@ -2465,19 +2465,19 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/SPICE_DIFFCIRCUIT_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/RINGCOUNTER_EXAM_0.DBK
   - errors: 1
     options: null
     path: ./orcadData/SPICE_RESONANCECIRCUIT_0.DBK
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcadData/SPICE_MULTIVIBRATOR_0.DBK
   - errors: 1
     options: null
     path: ./orcadData/stm32_f103c8_interrupt/STM32F103C8_INTERRUPT_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/atmega/ATMEGA_0.DBK
   - errors: 0
@@ -2495,7 +2495,7 @@ repositories:
   - errors: 1
     options: null
     path: ./orcadData/LED/LED_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/choppingWaveGenerator/CHOPPINGWAVEGENERATOR_0.DBK
   - errors: 0
@@ -2513,10 +2513,10 @@ repositories:
   - errors: 1
     options: null
     path: ./orcadData/start1/BRIDGEDIODE_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/start1/EXAMPLE1_CHOPPONG_WAVE_GENERATOR_0.DBK
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcadData/spice_opamp/OPAMP_SPICE_0.DBK
   - errors: 0
@@ -2534,7 +2534,7 @@ repositories:
   - errors: 1
     options: null
     path: ./orcadData/hole/HOLE_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/decadeCounter/DECADECOUNTER_0.DBK
   - errors: 0
@@ -2548,7 +2548,7 @@ repositories:
 - author: GreenHandLW
   commit: d03b7b714a6ef005709938630623578364478078
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Hardware/8Mics/8MICS.DSN
   - errors: 2
@@ -2669,7 +2669,7 @@ repositories:
   - errors: 0
     options: null
     path: ./Hardware/schematic/LIB/LIBRARY1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Hardware/schematic/PROJECT1.DSN
   - errors: 0
@@ -3277,7 +3277,7 @@ repositories:
   - errors: 0
     options: null
     path: ./1-16_POWER_SPLITTER.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./1-16_POWER_SPLITTER.DSN
   - errors: 0
@@ -4542,7 +4542,7 @@ repositories:
   - errors: 0
     options: null
     path: ./libraries/M128RS1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./ORCAD_iot/210112.DSN
   - errors: 0
@@ -4560,7 +4560,7 @@ repositories:
   - errors: 1
     options: null
     path: ./555timer/DESIGN2.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./multivibrator/MULTIVIBRATOR.DSN
   - errors: 0
@@ -4572,7 +4572,7 @@ repositories:
   - errors: 1
     options: null
     path: ./OP_AMP/OP_AMP.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Ring_Counter/RING_COUNTER.DSN
   - errors: 0
@@ -4593,7 +4593,7 @@ repositories:
   - errors: 1
     options: null
     path: ./practice/PRACTICE.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./20210107_TEST/20210107_TEST.DSN
   - errors: 0
@@ -4605,7 +4605,7 @@ repositories:
   - errors: 1
     options: null
     path: ./555timer/555TIMER_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./multivibrator/MULTIVIBRATOR_0.DBK
   - errors: 0
@@ -4638,7 +4638,7 @@ repositories:
   - errors: 1
     options: null
     path: ./practice/PRACTICE_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./20210107_TEST/20210107_TEST_0.DBK
   project: orcad_project
@@ -4660,7 +4660,7 @@ repositories:
   - errors: 0
     options: null
     path: ./MOP44.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Template of sheets/SHEETS.DSN
   project: CadenceLibrary
@@ -4674,7 +4674,7 @@ repositories:
   - errors: 0
     options: null
     path: ./supersonic/LIB/LIBRARY1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./supersonic/orcad/sonic_test/SACHAMTIC/SNOIC_TEST.DSN
   - errors: 0
@@ -4726,7 +4726,7 @@ repositories:
 - author: ROHMUSDC
   commit: 54d5bdc15c57f750e991068113968c2e5c565c8f
   files:
-  - errors: 12
+  - errors: 11
     options: null
     path: ./Design Files/Schematic_BOM/BD9C601EFJEVK-101_SCH_REV00_2014-04-23.DSN
   project: BD9C601EFJEVK-101
@@ -4742,7 +4742,7 @@ repositories:
 - author: ROHMUSDC
   commit: 53ea6e66930d55ff018aa9e6414b789502c07523
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BD9E151NUX-E2EVK-101_SCH_REV00_2014-08-19_1800.DSN
   project: BD9E151NUX-EVK-101
@@ -4758,7 +4758,7 @@ repositories:
 - author: ROHMUSDC
   commit: 4523ea64e1a491da37cf8a7083b56ba247a18225
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BD9G341EFJ-E2EVK-101_SCH_REV01_2014-10-17.DSN
   project: BD9G341AEFJ-EVK-101
@@ -4774,7 +4774,7 @@ repositories:
 - author: ROHMUSDC
   commit: b1106120fd4126b1a7d263930183c0390a753ffe
   files:
-  - errors: 12
+  - errors: 11
     options: null
     path: ./Design Files/Schematic_BOM/BD9109FVMEVK-101_SCH_REV00_2013-11-22.DSN
   project: BD9109FVM-EVK-101
@@ -4785,7 +4785,7 @@ repositories:
   - errors: 0
     options: null
     path: ./SCH (Orcad)/BD9251FV.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./SCH (Orcad)/BD9251FV - EVK BOARD.DSN
   project: BD9251FV-EVK-Board
@@ -4801,7 +4801,7 @@ repositories:
 - author: ROHMUSDC
   commit: cd3b1749a528f8ca8a75e09cbea0792261a7ba1d
   files:
-  - errors: 2
+  - errors: 1
     options: null
     path: ./Design Files/Schematic_BOM/BD71815GW_REFERENCE_REV1P30.DSN
   project: BD71815AGW-EVK-101
@@ -4817,7 +4817,7 @@ repositories:
 - author: ROHMUSDC
   commit: 451a219bfb7530231c642f9b2100b0dc08c0a28f
   files:
-  - errors: 12
+  - errors: 11
     options: null
     path: ./Design Files/Schematic_BOM/BD95861MUVEVK-101_SCH_REV01_2014-01-22.DSN
   project: BD95861MUV-EVK-101
@@ -4828,7 +4828,7 @@ repositories:
   - errors: 0
     options: null
     path: ./Schematic (Orcad)/BRCC064GWZ.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Schematic (Orcad)/BRCxxxxGWZ-EEPROMBreakout_SCHSRC_REV01_20191028.DSN
   project: BRCxxxxGWZ-EEPROMBreakout
@@ -4844,7 +4844,7 @@ repositories:
 - author: ROHMUSDC
   commit: 1870acd6c88b30aa7307365e08cec1150715c66c
   files:
-  - errors: 1
+  - errors: 0
     options: null
     path: ./Design Files/Schematic_BOM/BU90003GWZEVK-101_SCH_REV00_2014-02-10.DSN
   project: BU90003GWZ-E2-EVK-101
@@ -5079,25 +5079,25 @@ repositories:
   - errors: 0
     options: null
     path: ./TB8.DSN
-  - errors: 12
+  - errors: 1
     options: null
     path: ./TB1.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./TB6.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./TB5.DSN
-  - errors: 11
+  - errors: 1
     options: null
     path: ./TB2.DSN
-  - errors: 2
+  - errors: 1
     options: null
     path: ./TB7.dsn
-  - errors: 25
+  - errors: 4
     options: null
     path: ./TB3.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./TB4.DSN
   project: OOPTB
