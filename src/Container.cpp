@@ -19,6 +19,7 @@
 #include <spdlog/spdlog.h>
 
 #include "CommonBase.hpp"
+#include "Container.hpp"
 #include "ContainerExtractor.hpp"
 #include "DataStream.hpp"
 #include "Enums/FillStyle.hpp"
@@ -32,7 +33,6 @@
 #include "Exception.hpp"
 #include "General.hpp"
 #include "Library.hpp"
-#include "Parser.hpp"
 #include "PinShape.hpp"
 #include "StreamFactory.hpp"
 
@@ -46,7 +46,7 @@ FileType gFileType = FileType::Library; // @todo move to parser context
 FileFormatVersion gFileFormatVersion = FileFormatVersion::C; // @todo move to parser context
 
 
-Parser::Parser(const fs::path& aCfbfContainer, ParserConfig aCfg) :
+Container::Container(const fs::path& aCfbfContainer, ParserConfig aCfg) :
     mFileCtr{0U}, mFileErrCtr{0U}, tmpCtx{"", "", "", aCfg}, mCtx{tmpCtx}, mCfg{aCfg}
 {
     gFileType      = getFileTypeByExtension(aCfbfContainer);
@@ -67,7 +67,7 @@ Parser::Parser(const fs::path& aCfbfContainer, ParserConfig aCfg) :
 }
 
 
-Parser::~Parser()
+Container::~Container()
 {
     if(!mCfg.mKeepTmpFiles)
     {
@@ -81,7 +81,7 @@ Parser::~Parser()
 /**
  * @brief Parse the whole library.
  */
-void Parser::parseLibrary()
+void Container::parseLibrary()
 {
     spdlog::info("Start parsing library located at {}", mExtractedCfbfPath.string());
 
@@ -134,7 +134,7 @@ void Parser::parseLibrary()
 }
 
 
-void Parser::exceptionHandling()
+void Container::exceptionHandling()
 {
     try
     {
@@ -158,7 +158,7 @@ void Parser::exceptionHandling()
 }
 
 
-fs::path Parser::extractContainer(const fs::path& aFile, const fs::path& aOutDir) const
+fs::path Container::extractContainer(const fs::path& aFile, const fs::path& aOutDir) const
 {
     ContainerExtractor extractor{aFile};
 
@@ -168,20 +168,20 @@ fs::path Parser::extractContainer(const fs::path& aFile, const fs::path& aOutDir
 }
 
 
-fs::path Parser::extractContainer(const fs::path& aOutDir) const
+fs::path Container::extractContainer(const fs::path& aOutDir) const
 {
     return extractContainer(mInputCfbfFile, aOutDir);
 }
 
 
-void Parser::printContainerTree() const
+void Container::printContainerTree() const
 {
     ContainerExtractor extractor{mInputCfbfFile};
     extractor.printContainerTree();
 }
 
 
-FileType Parser::getFileTypeByExtension(const fs::path& aFile) const
+FileType Container::getFileTypeByExtension(const fs::path& aFile) const
 {
     std::string extension = aFile.extension().string();
 
@@ -212,7 +212,7 @@ FileType Parser::getFileTypeByExtension(const fs::path& aFile) const
 }
 
 
-void Parser::openFile(const fs::path& aInputStream)
+void Container::openFile(const fs::path& aInputStream)
 {
     spdlog::info("Opening file: {}", aInputStream.string());
 
@@ -220,7 +220,7 @@ void Parser::openFile(const fs::path& aInputStream)
 }
 
 
-void Parser::closeFile()
+void Container::closeFile()
 {
     spdlog::info("Closing file: {}", mCtx.get().mInputStream.string());
 

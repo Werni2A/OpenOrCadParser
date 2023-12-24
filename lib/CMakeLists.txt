@@ -6,11 +6,11 @@ find_package(tinyxml2 CONFIG REQUIRED)
 
 set(SOURCES
    ${LIB_SRC_DIR}/CommonBase.cpp
+   ${LIB_SRC_DIR}/Container.cpp
    ${LIB_SRC_DIR}/ContainerExtractor.cpp
    ${LIB_SRC_DIR}/DataStream.cpp
    # ${LIB_SRC_DIR}/Misc.cpp
    ${LIB_SRC_DIR}/PageSettings.cpp
-   ${LIB_SRC_DIR}/Parser.cpp
    ${LIB_SRC_DIR}/Primitives/Point.cpp
    ${LIB_SRC_DIR}/Primitives/PrimArc.cpp
    ${LIB_SRC_DIR}/Primitives/PrimBezier.cpp
@@ -99,6 +99,7 @@ set(SOURCES
 )
 
 set(HEADERS
+   ${LIB_INCLUDE_DIR}/Container.hpp
    ${LIB_INCLUDE_DIR}/ContainerExtractor.hpp
    ${LIB_INCLUDE_DIR}/DataStream.hpp
    ${LIB_INCLUDE_DIR}/Enums/Color.hpp
@@ -113,7 +114,6 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/FutureData.hpp
    ${LIB_INCLUDE_DIR}/General.hpp
    ${LIB_INCLUDE_DIR}/PageSettings.hpp
-   ${LIB_INCLUDE_DIR}/Parser.hpp
    ${LIB_INCLUDE_DIR}/ParserContext.hpp
    ${LIB_INCLUDE_DIR}/Primitives/Point.hpp
    ${LIB_INCLUDE_DIR}/Primitives/PrimArc.hpp

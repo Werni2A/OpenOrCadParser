@@ -6,7 +6,7 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
-#include "Parser.hpp"
+#include "Container.hpp"
 #include "XmlExporter.hpp"
 
 
@@ -153,7 +153,7 @@ int main(int argc, char* argv[])
     cfg.mSkipInvalidPrim   = allowSkipping;
     cfg.mKeepTmpFiles      = keepTmpFiles;
 
-    Parser parser{inputFile, cfg};
+    Container parser{inputFile, cfg};
 
     ParserContext& ctx = parser.getContext();
 

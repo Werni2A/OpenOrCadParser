@@ -85,7 +85,7 @@ std::string SymbolUserProp::getVal() const
 
 
 // @todo this is a whole file parser. Split it up into the title block structure and move the rest to the symbol parser?
-void Parser::readTitleBlockSymbol()
+void Container::readTitleBlockSymbol()
 {
     auto& ds = mCtx.get().mDs.get();
 
