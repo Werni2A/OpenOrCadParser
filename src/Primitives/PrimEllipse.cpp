@@ -7,6 +7,7 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Primitives/PrimEllipse.hpp"
 
 
@@ -39,7 +40,8 @@ size_t PrimEllipse::getExpectedStructSize(FileFormatVersion aVersion)
 
 void PrimEllipse::read(FileFormatVersion aVersion)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
@@ -85,7 +87,7 @@ void PrimEllipse::read(FileFormatVersion aVersion)
         throw FileFormatChanged(std::string(nameof::nameof_type<decltype(*this)>()));
     }
 
-    readPreamble();
+    parser.readPreamble();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

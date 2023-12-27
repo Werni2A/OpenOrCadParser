@@ -6,17 +6,19 @@
 
 #include "Enums/Structure.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Streams/StreamCache.hpp"
 
 
 void StreamCache::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     // Early out for empty caches
-    if(tryRead([&](){ ds.readBytes(10U); ds.sanitizeEoF(); }))
+    if(parser.tryRead([&](){ ds.readBytes(10U); ds.sanitizeEoF(); }))
     {
         ds.printUnknownData(10U, getMethodName(this, __func__) + ": 0");
     }
@@ -28,9 +30,9 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
         {
             spdlog::trace("iteration i = {}", i);
 
-            const bool hasStrAfter8Byte = tryRead([&](){ ds.readBytes(8U); ds.readStringLenZeroTerm(); });
-            const bool hasStrAfter2Byte = tryRead([&](){ ds.readBytes(2U); ds.readStringLenZeroTerm(); });
-            const bool hasStrAfter0Byte = tryRead([&](){ ds.readBytes(0U); ds.readStringLenZeroTerm(); });
+            const bool hasStrAfter8Byte = parser.tryRead([&](){ ds.readBytes(8U); ds.readStringLenZeroTerm(); });
+            const bool hasStrAfter2Byte = parser.tryRead([&](){ ds.readBytes(2U); ds.readStringLenZeroTerm(); });
+            const bool hasStrAfter0Byte = parser.tryRead([&](){ ds.readBytes(0U); ds.readStringLenZeroTerm(); });
 
             spdlog::trace("hasStrAfter8Byte = {}", hasStrAfter8Byte);
             spdlog::trace("hasStrAfter2Byte = {}", hasStrAfter2Byte);
@@ -71,7 +73,7 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
                         break;
                     }
 
-                    const bool hasMysterious2Byte = !tryRead([&](){ ds.readStringLenZeroTerm(); });
+                    const bool hasMysterious2Byte = !parser.tryRead([&](){ ds.readStringLenZeroTerm(); });
 
                     if(hasMysterious2Byte)
                     {
@@ -102,7 +104,7 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
             const Structure my_struct = ToStructure(ds.readUint16());
             spdlog::trace(::to_string(my_struct));
 
-            readStructure();
+            parser.readStructure();
         }
     }
 

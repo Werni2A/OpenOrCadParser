@@ -11,18 +11,17 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
-#include "Primitives/PrimBase.hpp"
+#include "Record.hpp"
 #include "Structures/StructGeneralProperties.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
 
-class StructPrimitives : public CommonBase
+class StructPrimitives : public Record
 {
 public:
 
-    StructPrimitives(ParserContext& aCtx) : CommonBase{aCtx}, name{}, symbolPins{},
+    StructPrimitives(StreamContext& aCtx) : Record{aCtx}, name{}, symbolPins{},
         symbolDisplayProps{}, generalProperties{aCtx}
     { }
 
@@ -30,14 +29,14 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }
 
     std::string name;
 
-    std::vector<std::unique_ptr<PrimBase>>                primitives;
+    std::vector<std::unique_ptr<Record>>                  primitives;
     std::vector<std::unique_ptr<StructSymbolPin>>         symbolPins;
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 

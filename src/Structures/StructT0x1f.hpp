@@ -11,14 +11,14 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
+#include "Record.hpp"
 #include "Structures/StructPinIdxMapping.hpp"
 
-class StructT0x1f : public CommonBase
+class StructT0x1f : public Record
 {
 public:
 
-    StructT0x1f(ParserContext& aCtx) : CommonBase{aCtx}, name{},
+    StructT0x1f(StreamContext& aCtx) : Record{aCtx}, name{},
         refDes{}, pcbFootprint{}
     { }
 
@@ -26,7 +26,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

@@ -10,25 +10,25 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Stream.hpp"
 #include "Structures/StructSymbol.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
 
-class StreamSymbol : public CommonBase
+class StreamSymbol : public Stream
 {
 public:
 
-    StreamSymbol(ParserContext& aCtx) : CommonBase{aCtx}, symbolPins{}, symbolDisplayProps{}
+    StreamSymbol(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, symbolPins{}, symbolDisplayProps{}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

@@ -17,14 +17,14 @@ class PrimSymbolVector : public PrimBase // @todo probably derive from PrimBase,
 {
 public:
 
-    PrimSymbolVector(ParserContext& aCtx) : PrimBase{aCtx}, locX{0}, locY{0}, name{}, primitives{}
+    PrimSymbolVector(StreamContext& aCtx) : PrimBase{aCtx}, locX{0}, locY{0}, name{}, primitives{}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

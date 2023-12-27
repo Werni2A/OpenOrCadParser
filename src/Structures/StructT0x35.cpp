@@ -11,16 +11,16 @@
 
 void StructT0x35::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     // @todo Try to activate this part
     // FutureDataLst localFutureLst{mCtx};
 
-    // auto_read_prefixes(Structure::T0x35, localFutureLst);
+    // ds.auto_read_prefixes(Structure::T0x35, localFutureLst);
 
-    // readPreamble();
+    // ds.readPreamble();
 
     // @todo Looks like Primitive types!
     //     0 Byte = structure id

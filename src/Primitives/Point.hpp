@@ -9,24 +9,24 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "PrimBase.hpp"
 
 
 /// @note Represents 'BezierPoint', 'PolygonPoint' and 'PolylinePoint' because
 ///       all of them use the same point structure.
-class Point : public CommonBase
+class Point : public PrimBase
 {
 public:
 
-    Point(ParserContext& aCtx) : CommonBase{aCtx}, x{0}, y{0}
+    Point(StreamContext& aCtx) : PrimBase{aCtx}, x{0}, y{0}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

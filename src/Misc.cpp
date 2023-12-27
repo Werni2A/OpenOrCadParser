@@ -87,7 +87,7 @@ std::string SymbolUserProp::getVal() const
 // @todo this is a whole file parser. Split it up into the title block structure and move the rest to the symbol parser?
 void Container::readTitleBlockSymbol()
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
@@ -116,7 +116,7 @@ void Container::readTitleBlockSymbol()
     }
 
     // The following should be its own structure
-    readPreamble();
+    ds.readPreamble();
     std::string str0 = ds.readStringLenZeroTerm();
 
     ds.printUnknownData(7, getMethodName(this, __func__) + ": 1");
@@ -128,7 +128,7 @@ void Container::readTitleBlockSymbol()
     for(size_t i = 0u; i < someLen; ++i)
     {
         const Primitive primitive = readPrefixPrimitive();
-        readPrimitive(primitive);
+        ds.readPrimitive(primitive);
     }
 
     ds.assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 2");
@@ -141,7 +141,7 @@ void Container::readTitleBlockSymbol()
     for(size_t i = 0u; i < followingLen; ++i)
     {
         // @todo push structure
-        const auto s = readStructure();
+        const auto s = ds.readStructure();
         if(s)
         {
             spdlog::debug("VERIFYING Misc Structure0 is {}", NAMEOF_TYPE_RTTI(*s));

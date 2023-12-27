@@ -12,7 +12,7 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
-#include "ParserContext.hpp"
+#include "StreamContext.hpp"
 
 
 class FutureData
@@ -72,7 +72,7 @@ class FutureDataLst : public std::vector<FutureData>
 {
 public:
 
-    FutureDataLst(ParserContext& aCtx) : std::vector<FutureData>{}, mCtx{aCtx}
+    FutureDataLst(StreamContext& aCtx) : std::vector<FutureData>{}, mCtx{aCtx}
     { }
 
     std::optional<FutureData> getByStartOffset(std::size_t aAbsStartOffset) const
@@ -143,7 +143,7 @@ public:
 
     void checkpoint()
     {
-        const size_t currOffset = mCtx.get().mDs.get().getCurrentOffset();
+        const size_t currOffset = mCtx.get().mDs.getCurrentOffset();
 
         const auto cmp = [&currOffset] (FutureData aFutureData) -> bool
             { return aFutureData.getStopOffset() == currOffset; };
@@ -227,7 +227,7 @@ public:
 
     std::optional<size_t> getNextCheckpointPos() const
     {
-        auto& ds = mCtx.get().mDs.get();
+        auto& ds = mCtx.get().mDs;
 
         const size_t curPos = ds.getCurrentOffset();
 
@@ -247,7 +247,7 @@ public:
 
     void readUntilNextFutureData(const std::string& aComment = "")
     {
-        auto& ds = mCtx.get().mDs.get();
+        auto& ds = mCtx.get().mDs;
 
         const size_t curPos = ds.getCurrentOffset();
 
@@ -289,7 +289,7 @@ public:
             endPos = std::max(static_cast<int64_t>(data.getStopOffset()), endPos);
         }
 
-        const int64_t curPos = static_cast<int64_t>(mCtx.get().mDs.get().getCurrentOffset());
+        const int64_t curPos = static_cast<int64_t>(mCtx.get().mDs.getCurrentOffset());
 
         const int64_t byteDiff = endPos - curPos;
 
@@ -299,7 +299,7 @@ public:
                 " Expected it to end at 0x{:08x} but ended at 0x{:08x}. Too small by {} Byte.",
                 getMethodName(this, __func__), endPos, curPos, std::abs(byteDiff));
 
-            mCtx.get().mDs.get().printUnknownData(byteDiff, msg);
+            mCtx.get().mDs.printUnknownData(byteDiff, msg);
         }
         else if(byteDiff < 0)
         {
@@ -321,7 +321,7 @@ public:
 
 private:
 
-    std::reference_wrapper<ParserContext> mCtx;
+    std::reference_wrapper<StreamContext> mCtx;
 
 };
 

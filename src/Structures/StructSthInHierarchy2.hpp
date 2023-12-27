@@ -18,12 +18,12 @@ class StructSthInHierarchy2 : public StructSomeHierarchyBase
 {
 public:
 
-    StructSthInHierarchy2(ParserContext& aCtx) : StructSomeHierarchyBase{aCtx}
+    StructSthInHierarchy2(StreamContext& aCtx) : StructSomeHierarchyBase{aCtx}
     { }
 
     std::string to_string() const override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

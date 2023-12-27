@@ -1,32 +1,35 @@
-#ifndef COMMONBASE_HPP
-#define COMMONBASE_HPP
+#ifndef GENERICPARSER_HPP
+#define GENERICPARSER_HPP
 
 
+#include <filesystem>
+#include <fstream>
 #include <functional>
+#include <iostream>
 #include <memory>
 #include <optional>
+#include <stdexcept>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "Enums/Primitive.hpp"
 #include "Enums/Structure.hpp"
-#include "FutureData.hpp"
 #include "General.hpp"
-#include "ParserContext.hpp"
-#include "VisitorPattern.hpp"
+#include "StreamContext.hpp"
+// #include "Record.hpp"
 
 
-class PrimBase;
+class FutureDataLst;
+class Record;
 
 
-class CommonBase : public Component
+class GenericParser
 {
 public:
-    CommonBase(ParserContext& aCtx) : mCtx{aCtx}, mFileFormatVersion{FileFormatVersion::C}
+
+    GenericParser(StreamContext& aCtx) : mCtx{aCtx}
     { }
-
-    virtual std::string to_string() const = 0;
-
-    virtual void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) = 0;
 
     void discard_until_preamble();
 
@@ -47,25 +50,21 @@ public:
 
     void checkInterpretedDataLen(const std::string &aFuncName, size_t aStartOffset, size_t aEndOffset, size_t aExpectedLen);
 
-    FileFormatVersion predictVersion();
+    FileFormatVersion predictVersion(std::function<void(FileFormatVersion)> aFunc);
 
-    std::unique_ptr<PrimBase> readPrimitive();
-    std::unique_ptr<PrimBase> readPrimitive(Primitive aPrimitive);
+    std::unique_ptr<Record> readPrimitive();
+    std::unique_ptr<Record> readPrimitive(Primitive aPrimitive);
 
-    std::unique_ptr<CommonBase> readStructure();
-    std::unique_ptr<CommonBase> readStructure(Structure aStructure);
+    std::unique_ptr<Record> readStructure();
+    std::unique_ptr<Record> readStructure(Structure aStructure);
 
     // Return true if function call was successful, i.e. without throwing exceptions
     bool tryRead(std::function<void(void)> aFunction);
 
-protected:
-    std::reference_wrapper<ParserContext> mCtx;
+private:
 
-    FileFormatVersion mFileFormatVersion;
+    StreamContext& mCtx;
 };
 
 
-#include "Primitives/PrimBase.hpp"
-
-
-#endif // COMMONBASE_HPP
+#endif // GENERICPARSER_HPP

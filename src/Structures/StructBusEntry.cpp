@@ -5,21 +5,24 @@
 #include <nameof.hpp>
 
 #include "Enums/Structure.hpp"
+#include "FutureData.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Structures/StructBusEntry.hpp"
 
 
 void StructBusEntry::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes(Structure::BusEntry, localFutureLst);
+    parser.auto_read_prefixes(Structure::BusEntry, localFutureLst);
 
-    readPreamble();
+    parser.readPreamble();
 
     localFutureLst.checkpoint();
 

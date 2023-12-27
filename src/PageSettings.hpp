@@ -9,15 +9,15 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Record.hpp"
 
 
-class PageSettings : public CommonBase
+class PageSettings : public Record
 {
 public:
 
-    PageSettings(ParserContext& aCtx) : CommonBase{aCtx},
+    PageSettings(StreamContext& aCtx) : Record{aCtx},
         createDateTime{0}, modifyDateTime{0},
         width{0}, height{0},
         pinToPin{0},
@@ -36,7 +36,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

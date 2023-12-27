@@ -9,21 +9,24 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "Enums/Structure.hpp"
+#include "FutureData.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Structures/StructPartInst.hpp"
 
 
 void StructPartInst::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes(Structure::PartInst, localFutureLst);
+    parser.auto_read_prefixes(Structure::PartInst, localFutureLst);
 
-    readPreamble();
+    parser.readPreamble();
 
     localFutureLst.checkpoint();
 
@@ -53,7 +56,7 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0; i < lenSymbolDisplayProps; ++i)
     {
-        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
+        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(parser.readStructure()));
     }
 
     ds.printUnknownData(1, getMethodName(this, __func__) + ": 3");
@@ -72,7 +75,7 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < lenT0x10s; ++i)
     {
-        t0x10s.push_back(dynamic_pointer_cast<StructT0x10>(readStructure()));
+        t0x10s.push_back(dynamic_pointer_cast<StructT0x10>(parser.readStructure()));
     }
 
     localFutureLst.checkpoint();

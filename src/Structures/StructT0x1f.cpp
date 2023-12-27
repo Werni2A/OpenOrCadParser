@@ -7,22 +7,25 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "Enums/Structure.hpp"
+#include "FutureData.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Structures/StructT0x1f.hpp"
 
 
 // @todo Probably specifies the 'Package Properties'
 void StructT0x1f::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes(Structure::T0x1f, localFutureLst);
+    parser.auto_read_prefixes(Structure::T0x1f, localFutureLst);
 
-    readPreamble();
+    parser.readPreamble();
 
     localFutureLst.checkpoint();
 
@@ -50,7 +53,7 @@ void StructT0x1f::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < lenPinIdxMappings; ++i)
     {
-        pinIdxMappings.push_back(dynamic_pointer_cast<StructPinIdxMapping>(readStructure()));
+        pinIdxMappings.push_back(dynamic_pointer_cast<StructPinIdxMapping>(parser.readStructure()));
     }
 
     localFutureLst.checkpoint();

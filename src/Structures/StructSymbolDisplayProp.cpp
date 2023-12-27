@@ -6,21 +6,23 @@
 
 #include "Enums/Structure.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Library.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 
 
 void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes(Structure::SymbolDisplayProp, localFutureLst);
+    parser.auto_read_prefixes(Structure::SymbolDisplayProp, localFutureLst);
 
-    readPreamble();
+    parser.readPreamble();
 
     localFutureLst.checkpoint();
 

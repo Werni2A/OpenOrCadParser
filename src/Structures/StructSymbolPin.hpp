@@ -11,9 +11,9 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "Enums/PortType.hpp"
 #include "PinShape.hpp"
+#include "Record.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 
 
@@ -23,11 +23,11 @@
           are derived from it and extract common code
           into it.
  */
-class StructSymbolPin : public CommonBase
+class StructSymbolPin : public Record
 {
 public:
 
-    StructSymbolPin(ParserContext& aCtx) : CommonBase{aCtx}, name{}, startX{0}, startY{0},
+    StructSymbolPin(StreamContext& aCtx) : Record{aCtx}, name{}, startX{0}, startY{0},
         hotptX{0}, hotptY{0}, pinShape{}, portType{PortType::Input}, symbolDisplayProps{}
     { }
 
@@ -35,7 +35,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

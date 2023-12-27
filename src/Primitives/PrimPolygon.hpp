@@ -23,7 +23,7 @@ class PrimPolygon : public PrimBase
 {
 public:
 
-    PrimPolygon(ParserContext& aCtx) : PrimBase{aCtx}, mLineStyle{}, mLineWidth{},
+    PrimPolygon(StreamContext& aCtx) : PrimBase{aCtx}, mLineStyle{}, mLineWidth{},
         fillStyle{}, hatchStyle{}, points{}
     { }
 
@@ -31,7 +31,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

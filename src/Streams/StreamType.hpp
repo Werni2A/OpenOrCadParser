@@ -10,7 +10,7 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
+#include "Stream.hpp"
 #include "Enums/ComponentType.hpp"
 
 
@@ -57,18 +57,18 @@ static std::ostream& operator<<(std::ostream& aOs, const Type& aObj)
 }
 
 
-class StreamType : public CommonBase
+class StreamType : public Stream
 {
 public:
 
-    StreamType(ParserContext& aCtx) : CommonBase{aCtx}, types{}
+    StreamType(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, types{}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

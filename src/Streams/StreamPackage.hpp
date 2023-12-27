@@ -11,18 +11,18 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
+#include "Stream.hpp"
 #include "Structures/StructPinIdxMapping.hpp"
 #include "Structures/StructPrimitives.hpp"
 #include "Structures/StructProperties.hpp"
 #include "Structures/StructT0x1f.hpp"
 
 
-class StreamPackage : public CommonBase
+class StreamPackage : public Stream
 {
 public:
 
-    StreamPackage(ParserContext& aCtx) : CommonBase{aCtx}, properties{}, primitives{},
+    StreamPackage(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, properties{}, primitives{},
         t0x1f{}
     { }
 
@@ -30,7 +30,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

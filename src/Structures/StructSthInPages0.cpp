@@ -8,21 +8,23 @@
 #include "Enums/Structure.hpp"
 #include "FutureData.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Structures/StructSthInPages0.hpp"
 
 
 // @todo Probably a wrapper for Inst (Instances)
 void StructSthInPages0::read(FileFormatVersion aVersion)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes(Structure::SthInPages0, localFutureLst);
+    parser.auto_read_prefixes(Structure::SthInPages0, localFutureLst);
 
-    readPreamble();
+    parser.readPreamble();
 
     localFutureLst.checkpoint();
 
@@ -37,7 +39,8 @@ void StructSthInPages0::read(FileFormatVersion aVersion)
 
 void StructSthInPages0::read_raw(FileFormatVersion /* aVersion */, FutureDataLst& aLocalFutureLst)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
@@ -68,11 +71,11 @@ void StructSthInPages0::read_raw(FileFormatVersion /* aVersion */, FutureDataLst
             const auto currOffset = ds.getCurrentOffset();
             try
             {
-                const Primitive primitive = readPrefixPrimitive();
-                readPrimitive(primitive);
+                const Primitive primitive = parser.readPrefixPrimitive();
+                parser.readPrimitive(primitive);
                 // Here in between could be additional data.
                 // Check if this is the case
-                readPrefixPrimitive();
+                parser.readPrefixPrimitive();
             }
             catch(...)
             {
@@ -81,9 +84,9 @@ void StructSthInPages0::read_raw(FileFormatVersion /* aVersion */, FutureDataLst
             ds.setCurrentOffset(currOffset);
         }
 
-        const Primitive primitive = readPrefixPrimitive();
+        const Primitive primitive = parser.readPrefixPrimitive();
 
-        readPrimitive(primitive);
+        parser.readPrimitive(primitive);
 
         if(hasAdditionalBytes)
         {

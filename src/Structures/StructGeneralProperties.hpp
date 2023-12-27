@@ -9,18 +9,18 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "Enums/ImplementationType.hpp"
+#include "Record.hpp"
 
 
 // @todo This is just a helper class but not a real structure
 //       Check if the same code is used multiple times, otherwise
 //       Inline this structure?
-class StructGeneralProperties : public CommonBase
+class StructGeneralProperties : public Record
 {
 public:
 
-    StructGeneralProperties(ParserContext& aCtx) : CommonBase{aCtx}, implementationPath{},
+    StructGeneralProperties(StreamContext& aCtx) : Record{aCtx}, implementationPath{},
         implementation{}, refDes{}, partValue{}, implementationType{ImplementationType::None},
         pinNameVisible{true}, pinNameRotate{false}, pinNumberVisible{true}
     { }
@@ -29,7 +29,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

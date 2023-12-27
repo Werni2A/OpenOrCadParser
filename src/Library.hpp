@@ -35,7 +35,7 @@ public:
     ~Library() override
     { }
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

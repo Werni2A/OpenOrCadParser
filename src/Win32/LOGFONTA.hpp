@@ -11,7 +11,7 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
-#include "ParserContext.hpp"
+#include "StreamContext.hpp"
 
 
 // See Win32 API for reference, where the original structure was copied from
@@ -25,11 +25,11 @@ public:
         lfFaceName{""}
     { }
 
-    void read(ParserContext& aCtx)
+    void read(StreamContext& aCtx)
     {
-        spdlog::debug(getOpeningMsg(getMethodName(this, __func__), aCtx.mDs.get().getCurrentOffset()));
+        spdlog::debug(getOpeningMsg(getMethodName(this, __func__), aCtx.mDs.getCurrentOffset()));
 
-        const auto buffer = aCtx.mDs.get().readBytes(sizeof(*this));
+        const auto buffer = aCtx.mDs.readBytes(sizeof(*this));
 
         std::memcpy(this, buffer.data(), sizeof(*this));
 
@@ -48,7 +48,7 @@ public:
             throw std::runtime_error(fmt::format("lfQuality <= 6 must hold but lfQuality = {}", lfQuality));
         }
 
-        spdlog::debug(getClosingMsg(getMethodName(this, __func__), aCtx.mDs.get().getCurrentOffset()));
+        spdlog::debug(getClosingMsg(getMethodName(this, __func__), aCtx.mDs.getCurrentOffset()));
         spdlog::trace(to_string());
     }
 

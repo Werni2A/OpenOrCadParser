@@ -10,18 +10,18 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "Enums/Color.hpp"
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
+#include "Record.hpp"
 
 
-class StructT0x34 : public CommonBase
+class StructT0x34 : public Record
 {
 public:
 
-    StructT0x34(ParserContext& aCtx) : CommonBase{aCtx}, id{0}, color{Color::Default},
+    StructT0x34(StreamContext& aCtx) : Record{aCtx}, id{0}, color{Color::Default},
         lineStyle{LineStyle::Default}, lineWidth{LineWidth::Default}
     { }
 
@@ -29,7 +29,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

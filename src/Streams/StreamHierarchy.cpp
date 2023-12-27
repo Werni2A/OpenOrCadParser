@@ -5,18 +5,21 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Streams/StreamHierarchy.hpp"
 
 
 void StreamHierarchy::read(FileFormatVersion aVersion)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     if(aVersion == FileFormatVersion::Unknown)
     {
-        aVersion = predictVersion();
+        const auto predictionFunc = [this](FileFormatVersion aVersion){ this->read(aVersion); };
+        aVersion = parser.predictVersion(predictionFunc);
     }
 
     ds.printUnknownData(9, getMethodName(this, __func__) + ": 0");
@@ -33,7 +36,7 @@ void StreamHierarchy::read(FileFormatVersion aVersion)
 
     for(size_t i = 0u; i < lenNetDbIdMappings; ++i)
     {
-        netDbIdMappings.push_back(dynamic_pointer_cast<StructNetDbIdMapping>(readStructure()));
+        netDbIdMappings.push_back(dynamic_pointer_cast<StructNetDbIdMapping>(parser.readStructure()));
 
         const uint32_t dbId = ds.readUint32();
 
@@ -50,7 +53,7 @@ void StreamHierarchy::read(FileFormatVersion aVersion)
 
     for(size_t i = 0u; i < lenSthInHierarchy3; ++i)
     {
-        sthInHierarchy3s.push_back(dynamic_pointer_cast<StructSthInHierarchy3>(readStructure()));
+        sthInHierarchy3s.push_back(dynamic_pointer_cast<StructSthInHierarchy3>(parser.readStructure()));
 
         ds.printUnknownData(8, getMethodName(this, __func__) + ": 1.5");
     }
@@ -61,7 +64,7 @@ void StreamHierarchy::read(FileFormatVersion aVersion)
 
     for(size_t i = 0u; i < lenT0x5bs; ++i)
     {
-        t0x5bs.push_back(dynamic_pointer_cast<StructT0x5b>(readStructure()));
+        t0x5bs.push_back(dynamic_pointer_cast<StructT0x5b>(parser.readStructure()));
 
         ds.printUnknownData(8, getMethodName(this, __func__) + ": 1.6");
     }
@@ -77,7 +80,7 @@ void StreamHierarchy::read(FileFormatVersion aVersion)
 
     for(size_t i = 0u; i < lenSthInHierarchy1; ++i)
     {
-        sthInHierarchy1s.push_back(dynamic_pointer_cast<StructSthInHierarchy1>(readStructure()));
+        sthInHierarchy1s.push_back(dynamic_pointer_cast<StructSthInHierarchy1>(parser.readStructure()));
 
         // Is one of [8, 27]
         // ds.printUnknownData(8, getMethodName(this, __func__) + ": 3");
@@ -89,7 +92,7 @@ void StreamHierarchy::read(FileFormatVersion aVersion)
 
         for(size_t i = 0u; i < lenSomeHierarchyBase; ++i)
         {
-            someHierarchyBases.push_back(dynamic_pointer_cast<StructSomeHierarchyBase>(readStructure()));
+            someHierarchyBases.push_back(dynamic_pointer_cast<StructSomeHierarchyBase>(parser.readStructure()));
 
             ds.printUnknownData(6, getMethodName(this, __func__) + ": 4");
         }

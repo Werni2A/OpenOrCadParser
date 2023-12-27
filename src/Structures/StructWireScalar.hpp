@@ -10,7 +10,6 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "Enums/Color.hpp"
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
@@ -22,14 +21,14 @@ class StructWireScalar : public StructWire
 {
 public:
 
-    StructWireScalar(ParserContext& aCtx) : StructWire{aCtx}
+    StructWireScalar(StreamContext& aCtx) : StructWire{aCtx}
     { }
 
     // std::string to_string() const override;
 
     // void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

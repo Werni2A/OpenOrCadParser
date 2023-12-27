@@ -10,20 +10,20 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Record.hpp"
 
 
-class StructT0x5b : public CommonBase
+class StructT0x5b : public Record
 {
 public:
 
-    StructT0x5b(ParserContext& aCtx) : CommonBase{aCtx}
+    StructT0x5b(StreamContext& aCtx) : Record{aCtx}
     { }
 
     std::string to_string() const override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

@@ -9,14 +9,14 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
+#include "Record.hpp"
 
 
-class StructProperties : public CommonBase
+class StructProperties : public Record
 {
 public:
 
-    StructProperties(ParserContext& aCtx) : CommonBase{aCtx}, ref{},
+    StructProperties(StreamContext& aCtx) : Record{aCtx}, ref{},
         normalName{}, convertName{}
     { }
 
@@ -24,7 +24,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

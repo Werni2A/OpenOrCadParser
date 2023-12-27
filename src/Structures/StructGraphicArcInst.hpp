@@ -19,14 +19,14 @@ class StructGraphicArcInst : public StructGraphicInst
 {
 public:
 
-    StructGraphicArcInst(ParserContext& aCtx) : StructGraphicInst{aCtx}
+    StructGraphicArcInst(StreamContext& aCtx) : StructGraphicInst{aCtx}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

@@ -20,14 +20,14 @@ struct Library;
 class PrimCommentText : public PrimBase
 {
 public:
-    PrimCommentText(ParserContext& aCtx) : PrimBase{aCtx}, locX{0}, locY{0}, name{}, x1{0}, y1{0}, x2{0}, y2{0}, textFontIdx{0}
+    PrimCommentText(StreamContext& aCtx) : PrimBase{aCtx}, locX{0}, locY{0}, name{}, x1{0}, y1{0}, x2{0}, y2{0}, textFontIdx{0}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

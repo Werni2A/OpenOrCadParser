@@ -12,7 +12,6 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
@@ -21,14 +20,14 @@ class StructBookMarkSymbolInst : public StructGraphicInst
 {
 public:
 
-    StructBookMarkSymbolInst(ParserContext& aCtx) : StructGraphicInst{aCtx}
+    StructBookMarkSymbolInst(StreamContext& aCtx) : StructGraphicInst{aCtx}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

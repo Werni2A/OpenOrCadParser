@@ -19,14 +19,14 @@ class StructGraphicPolylineInst : public StructGraphicInst
 {
 public:
 
-    StructGraphicPolylineInst(ParserContext& aCtx) : StructGraphicInst{aCtx}
+    StructGraphicPolylineInst(StreamContext& aCtx) : StructGraphicInst{aCtx}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

@@ -18,14 +18,14 @@ class StructERCSymbol : public StructSymbol
 {
 public:
 
-    StructERCSymbol(ParserContext& aCtx) : StructSymbol{aCtx}, symbolBBox{aCtx}
+    StructERCSymbol(StreamContext& aCtx) : StructSymbol{aCtx}, symbolBBox{aCtx}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

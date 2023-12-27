@@ -5,21 +5,23 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Streams/StreamSchematic.hpp"
 
 
 void StreamSchematic::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
     // @todo Extract in separate structure parser
-    auto_read_prefixes(Structure::SchLib, localFutureLst);
+    parser.auto_read_prefixes(Structure::SchLib, localFutureLst);
 
-    readPreamble();
+    parser.readPreamble();
 
     localFutureLst.checkpoint();
 

@@ -10,6 +10,7 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Primitives/PrimRect.hpp"
 
 
@@ -36,13 +37,15 @@ size_t PrimRect::getExpectedStructSize(FileFormatVersion aVersion)
 
 void PrimRect::read(FileFormatVersion aVersion)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     if(aVersion == FileFormatVersion::Unknown)
     {
-        aVersion = predictVersion();
+        const auto predictionFunc = [this](FileFormatVersion aVersion){ this->read(aVersion); };
+        aVersion = parser.predictVersion(predictionFunc);
     }
 
     const size_t startOffset = ds.getCurrentOffset();
@@ -81,9 +84,9 @@ void PrimRect::read(FileFormatVersion aVersion)
     }
 
     // @todo use for all read methods.
-    checkInterpretedDataLen(__func__, startOffset, ds.getCurrentOffset(), byteLength);
+    parser.checkInterpretedDataLen(__func__, startOffset, ds.getCurrentOffset(), byteLength);
 
-    readPreamble();
+    parser.readPreamble();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

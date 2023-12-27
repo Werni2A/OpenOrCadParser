@@ -12,18 +12,18 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "Enums/Color.hpp"
 #include "FutureData.hpp"
 #include "General.hpp"
 #include "Primitives/PrimBase.hpp"
+#include "Record.hpp"
 
 
-class StructSthInPages0 : public CommonBase
+class StructSthInPages0 : public Record
 {
 public:
 
-    StructSthInPages0(ParserContext& aCtx) : CommonBase{aCtx},
+    StructSthInPages0(StreamContext& aCtx) : Record{aCtx},
         name{}, someStr0{}, color{Color::Default}, primitives{}
     { }
 
@@ -31,7 +31,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

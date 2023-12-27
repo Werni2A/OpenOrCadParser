@@ -6,12 +6,14 @@
 
 #include "Enums/Structure.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Streams/StreamNetBundleMapData.hpp"
 
 
 void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
@@ -32,9 +34,9 @@ void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
 
         FutureDataLst localFutureLst{mCtx};
 
-        auto_read_prefixes(Structure::NetGroup, localFutureLst);
+        parser.auto_read_prefixes(Structure::NetGroup, localFutureLst);
 
-        readPreamble();
+        parser.readPreamble();
 
         localFutureLst.checkpoint();
 

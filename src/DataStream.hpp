@@ -4,10 +4,23 @@
 
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <iostream>
+#include <memory>
+#include <optional>
 #include <stdexcept>
 #include <string>
+#include <utility>
 #include <vector>
+
+#include "Enums/Primitive.hpp"
+#include "Enums/Structure.hpp"
+#include "General.hpp"
+// #include "Record.hpp"
+
+
+class FutureDataLst;
+class Record;
 
 
 namespace fs = std::filesystem;

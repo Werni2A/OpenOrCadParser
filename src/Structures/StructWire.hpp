@@ -12,11 +12,11 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "Enums/Color.hpp"
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
+#include "Record.hpp"
 #include "Structures/StructAlias.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 
@@ -26,11 +26,11 @@
           are derived from it and extract common code
           into it.
  */
-class StructWire : public CommonBase
+class StructWire : public Record
 {
 public:
 
-    StructWire(ParserContext& aCtx) : CommonBase{aCtx}, id{0}, color{Color::Default},
+    StructWire(StreamContext& aCtx) : Record{aCtx}, id{0}, color{Color::Default},
         startX{0}, startY{0}, endX{0}, endY{0},
         lineWidth{LineWidth::Default}, lineStyle{LineStyle::Default}
     { }

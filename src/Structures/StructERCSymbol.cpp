@@ -7,21 +7,23 @@
 #include "Enums/Structure.hpp"
 #include "FutureData.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Structures/StructERCSymbol.hpp"
 #include "Structures/StructSymbolBBox.hpp"
 
 
 void StructERCSymbol::read(FileFormatVersion aVersion)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes(Structure::ERCSymbol, localFutureLst);
+    parser.auto_read_prefixes(Structure::ERCSymbol, localFutureLst);
 
-    readPreamble();
+    parser.readPreamble();
 
     localFutureLst.checkpoint();
 
@@ -32,7 +34,7 @@ void StructERCSymbol::read(FileFormatVersion aVersion)
     // @todo not sure if this belongs into this structure and how do we know whether it
     //       is used or not? (BBox should be optional according to XSD)
     //       Probably defined by prefix?
-    // readPreamble();
+    // ds.readPreamble();
 
     // StructSymbolBBox bbox{mCtx};
     // bbox.read();

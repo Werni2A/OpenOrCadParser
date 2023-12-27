@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include <thread>
 
 #include <spdlog/spdlog.h>
 
@@ -19,8 +20,9 @@ namespace fs = std::filesystem;
 [[maybe_unused]]
 inline ParserConfig get_parser_config()
 {
-    ParserConfig cfg;
+    ParserConfig cfg{};
 
+    cfg.mThreadCount       = std::size_t{1U};
     cfg.mSkipUnknownPrim   = false;
     cfg.mSkipInvalidPrim   = false;
     cfg.mSkipUnknownStruct = false;
