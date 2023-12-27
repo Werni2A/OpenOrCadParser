@@ -5,16 +5,18 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Streams/StreamERC.hpp"
 
 
 void StreamERC::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    ercSymbol = dynamic_pointer_cast<StructERCSymbol>(readStructure());
+    ercSymbol = dynamic_pointer_cast<StructERCSymbol>(parser.readStructure());
 
     if(!ds.isEoF())
     {

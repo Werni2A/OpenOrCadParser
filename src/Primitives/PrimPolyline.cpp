@@ -7,6 +7,7 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Primitives/PrimPolyline.hpp"
 
 
@@ -29,13 +30,15 @@ size_t PrimPolyline::getExpectedStructSize(FileFormatVersion aVersion, size_t aP
 
 void PrimPolyline::read(FileFormatVersion aVersion)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     if(aVersion == FileFormatVersion::Unknown)
     {
-        aVersion = predictVersion();
+        const auto predictionFunc = [this](FileFormatVersion aVersion){ this->read(aVersion); };
+        aVersion = parser.predictVersion(predictionFunc);
     }
 
     const size_t startOffset = ds.getCurrentOffset();
@@ -84,7 +87,7 @@ void PrimPolyline::read(FileFormatVersion aVersion)
         // throw FileFormatChanged(std::string(nameof::nameof_type<decltype(*this)>()));
     }
 
-    readPreamble();
+    parser.readPreamble();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

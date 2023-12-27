@@ -12,17 +12,17 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Record.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructT0x10.hpp"
 
 
-class StructPartInst : public CommonBase
+class StructPartInst : public Record
 {
 public:
 
-    StructPartInst(ParserContext& aCtx) : CommonBase{aCtx}, symbolDisplayProps{},
+    StructPartInst(StreamContext& aCtx) : Record{aCtx}, symbolDisplayProps{},
         t0x10s{}
     { }
 
@@ -30,7 +30,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

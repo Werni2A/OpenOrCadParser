@@ -10,16 +10,16 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "Enums/Color.hpp"
 #include "General.hpp"
+#include "Record.hpp"
 
 
-class StructBusEntry : public CommonBase
+class StructBusEntry : public Record
 {
 public:
 
-    StructBusEntry(ParserContext& aCtx) : CommonBase{aCtx}, color{Color::Default},
+    StructBusEntry(StreamContext& aCtx) : Record{aCtx}, color{Color::Default},
         startX{0}, startY{0}, endX{0}, endY{0}
     { }
 
@@ -27,7 +27,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

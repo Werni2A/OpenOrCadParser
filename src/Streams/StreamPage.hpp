@@ -9,9 +9,9 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
 #include "PageSettings.hpp"
+#include "Stream.hpp"
 #include "Structures/StructBusEntry.hpp"
 #include "Structures/StructERCSymbolInst.hpp"
 #include "Structures/StructGlobal.hpp"
@@ -25,11 +25,11 @@
 #include "Structures/StructWire.hpp"
 
 
-class StreamPage : public CommonBase
+class StreamPage : public Stream
 {
 public:
 
-    StreamPage(ParserContext& aCtx) : CommonBase{aCtx}, name{}, pageSize{}, pageSettings{aCtx},
+    StreamPage(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, name{}, pageSize{}, pageSettings{mCtx},
         titleBlocks{}, t0x34s{}, t0x35s{}, wires{}, partInsts{}, ports{}, globals{}, offPageConnectors{},
         ercSymbolInsts{}, busEntries{}, graphicInsts{}
     { }
@@ -38,7 +38,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

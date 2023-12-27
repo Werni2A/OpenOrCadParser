@@ -12,23 +12,23 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Record.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 
 
-class StructT0x10 : public CommonBase
+class StructT0x10 : public Record
 {
 public:
 
-    StructT0x10(ParserContext& aCtx) : CommonBase{aCtx}, symbolDisplayProps{}
+    StructT0x10(StreamContext& aCtx) : Record{aCtx}, symbolDisplayProps{}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

@@ -16,14 +16,14 @@ class StreamExportBlocksDirectory : public StreamDirectoryStruct
 {
 public:
 
-    StreamExportBlocksDirectory(ParserContext& aCtx) : StreamDirectoryStruct{aCtx}
+    StreamExportBlocksDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

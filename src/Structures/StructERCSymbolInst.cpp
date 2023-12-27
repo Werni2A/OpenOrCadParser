@@ -7,18 +7,20 @@
 #include "Container.hpp"
 #include "Enums/Structure.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Structures/StructERCSymbolInst.hpp"
 
 
 void StructERCSymbolInst::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes(Structure::ERCSymbolInst, localFutureLst);
+    parser.auto_read_prefixes(Structure::ERCSymbolInst, localFutureLst);
 
     StructGraphicInst::read(localFutureLst);
 

@@ -5,16 +5,18 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Streams/StreamSymbol.hpp"
 
 
 void StreamSymbol::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    symbol = dynamic_pointer_cast<StructSymbol>(readStructure());
+    symbol = dynamic_pointer_cast<StructSymbol>(parser.readStructure());
 
     if(!ds.isEoF())
     {

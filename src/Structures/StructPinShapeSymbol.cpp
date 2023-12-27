@@ -5,21 +5,24 @@
 #include <nameof.hpp>
 
 #include "Enums/Structure.hpp"
+#include "FutureData.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Structures/StructPinShapeSymbol.hpp"
 
 
 void StructPinShapeSymbol::read(FileFormatVersion aVersion)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes(Structure::PinShapeSymbol, localFutureLst);
+    parser.auto_read_prefixes(Structure::PinShapeSymbol, localFutureLst);
 
-    readPreamble();
+    parser.readPreamble();
 
     localFutureLst.checkpoint();
 
@@ -31,7 +34,7 @@ void StructPinShapeSymbol::read(FileFormatVersion aVersion)
 
     for(size_t i = 0u; i < lenSymbolPins; ++i)
     {
-        symbolPins.push_back(dynamic_pointer_cast<StructSymbolPin>(readStructure()));
+        symbolPins.push_back(dynamic_pointer_cast<StructSymbolPin>(parser.readStructure()));
     }
 
     const uint16_t lenSymbolDisplayProps = ds.readUint16();
@@ -40,7 +43,7 @@ void StructPinShapeSymbol::read(FileFormatVersion aVersion)
 
     for(size_t i = 0u; i < lenSymbolDisplayProps; ++i)
     {
-        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
+        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(parser.readStructure()));
     }
 
     localFutureLst.checkpoint();

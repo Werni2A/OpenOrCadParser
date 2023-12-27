@@ -9,16 +9,16 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "Enums/Color.hpp"
 #include "Enums/Rotation.hpp"
+#include "Record.hpp"
 
 
-class StructSymbolDisplayProp : public CommonBase
+class StructSymbolDisplayProp : public Record
 {
 public:
 
-    StructSymbolDisplayProp(ParserContext& aCtx) : CommonBase{aCtx}, nameIdx{0}, textFontIdx{0},
+    StructSymbolDisplayProp(StreamContext& aCtx) : Record{aCtx}, nameIdx{0}, textFontIdx{0},
         rotation{Rotation::Deg_0}, x{0}, y{0}, propColor{Color::Default}
     { }
 
@@ -26,7 +26,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

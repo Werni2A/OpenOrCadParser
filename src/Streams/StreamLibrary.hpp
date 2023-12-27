@@ -12,24 +12,24 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "PageSettings.hpp"
+#include "Stream.hpp"
 #include "Win32/LOGFONTA.hpp"
 
 
-class StreamLibrary : public CommonBase
+class StreamLibrary : public Stream
 {
 public:
 
-    StreamLibrary(ParserContext& aCtx) : CommonBase{aCtx}, introduction{}, createDate{0}, modifyDate{0},
-        textFonts{}, strLstPartField{}, pageSettings{aCtx}, strLst{}, partAliases{}
+    StreamLibrary(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, introduction{}, createDate{0}, modifyDate{0},
+        textFonts{}, strLstPartField{}, pageSettings{mCtx}, strLst{}, partAliases{}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

@@ -21,7 +21,7 @@ class PrimArc : public PrimBase
 {
 public:
 
-    PrimArc(ParserContext& aCtx) : PrimBase{aCtx}, x1{0}, y1{0}, x2{0}, y2{0},
+    PrimArc(StreamContext& aCtx) : PrimBase{aCtx}, x1{0}, y1{0}, x2{0}, y2{0},
         startX{0}, startY{0}, endX{0}, endY{0}, mLineStyle{}, mLineWidth{}
     { }
 
@@ -29,7 +29,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

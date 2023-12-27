@@ -8,21 +8,24 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "Enums/Structure.hpp"
+#include "FutureData.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Structures/StructPrimitives.hpp"
 
 
 void StructPrimitives::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes(Structure::Primitives, localFutureLst);
+    parser.auto_read_prefixes(Structure::Primitives, localFutureLst);
 
-    readPreamble();
+    parser.readPreamble();
 
     localFutureLst.checkpoint();
 
@@ -46,7 +49,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < len0; ++i)
     {
-        const Primitive primitive = readPrefixPrimitive();
+        const Primitive primitive = parser.readPrefixPrimitive();
 
         // @todo Hack to get SymbolVector working
         if(primitive == Primitive::SymbolVector)
@@ -54,7 +57,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
             ds.setCurrentOffset(ds.getCurrentOffset() - 1U);
         }
 
-        primitives.push_back(readPrimitive(primitive));
+        primitives.push_back(parser.readPrimitive(primitive));
 
         // @todo Sometimes there is trailing data after the primitives
         //       but I don't know how many bytes, therefore discard them
@@ -114,7 +117,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
             continue;
         }
 
-        symbolPins.push_back(dynamic_pointer_cast<StructSymbolPin>(readStructure()));
+        symbolPins.push_back(dynamic_pointer_cast<StructSymbolPin>(parser.readStructure()));
     }
 
     const uint16_t lenSymbolDisplayProps = ds.readUint16();
@@ -123,7 +126,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < lenSymbolDisplayProps; ++i)
     {
-        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
+        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(parser.readStructure()));
     }
 
     localFutureLst.checkpoint();
@@ -133,7 +136,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
         spdlog::debug("Checking {} vs {}", localFutureLst.cbegin()->getStopOffset(), ds.getCurrentOffset());
         if(localFutureLst.cbegin()->getStopOffset() > ds.getCurrentOffset())
         {
-            readPreamble();
+            parser.readPreamble();
 
             for(std::size_t i{0U}; i < std::size_t{4U}; ++i)
             {

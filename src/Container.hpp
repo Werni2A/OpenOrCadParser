@@ -7,19 +7,25 @@
 #include <fstream>
 #include <functional>
 #include <iostream>
+#include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
 #include <spdlog/spdlog.h>
 
+#include "ContainerContext.hpp"
 #include "DataStream.hpp"
 #include "Enums/Primitive.hpp"
 #include "Enums/Structure.hpp"
 #include "FutureData.hpp"
 #include "General.hpp"
 #include "Library.hpp"
-#include "ParserContext.hpp"
 #include "Primitives/PrimBase.hpp"
+#include "Stream.hpp"
+
+
+class StreamLibrary;
 
 
 namespace fs = std::filesystem;
@@ -38,9 +44,9 @@ public:
         return mFileErrCtr;
     }
 
-    ParserContext& getContext()
+    ContainerContext& getContext()
     {
-        return mCtx.get();
+        return mCtx;
     }
 
     /**
@@ -77,6 +83,7 @@ public:
     // -------------- Read Container ---------------
     // ---------------------------------------------
 
+    void parseLibraryThread(std::vector<std::unique_ptr<Stream>*> aStreamList);
     void parseLibrary();
 
     Library& getLibrary() const
@@ -84,21 +91,37 @@ public:
         return *gLibrary;
     }
 
+    std::optional<StreamLibrary*> getStreamLibrary() const
+    {
+        for(auto& stream : mStreams)
+        {
+            if(!stream)
+            {
+                continue;
+            }
+
+            const std::vector<std::optional<std::string>> pattern = {"Library"};
+            if(stream->mCtx.mCfbfStreamLocation.matches_pattern(pattern))
+            {
+                return dynamic_cast<StreamLibrary*>(stream.get());
+            }
+        }
+
+        return std::nullopt;
+    }
+
 private:
-    void openFile(const fs::path& aFile);
-    void closeFile();
     void exceptionHandling();
 
     size_t mFileCtr;    //!< Counts all files that were opened for parsing
     size_t mFileErrCtr; //!< Counts all files that failed somewhere
 
-    fs::path mInputCfbfFile;
-    fs::path mExtractedCfbfPath;
-
-    ParserContext tmpCtx;
-    std::reference_wrapper<ParserContext> mCtx;
+    ContainerContext mCtx;
 
     ParserConfig mCfg;
+
+    // List of streams in the CFBF container
+    std::vector<std::unique_ptr<Stream>> mStreams;
 };
 
 

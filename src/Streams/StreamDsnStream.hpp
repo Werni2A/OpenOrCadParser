@@ -8,22 +8,22 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
+#include "Stream.hpp"
 #include "General.hpp"
 
 
-class StreamDsnStream : public CommonBase
+class StreamDsnStream : public Stream
 {
 public:
 
-    StreamDsnStream(ParserContext& aCtx) : CommonBase{aCtx}
+    StreamDsnStream(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

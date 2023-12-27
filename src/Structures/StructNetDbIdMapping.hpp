@@ -10,20 +10,20 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Record.hpp"
 
 
-class StructNetDbIdMapping : public CommonBase
+class StructNetDbIdMapping : public Record
 {
 public:
 
-    StructNetDbIdMapping(ParserContext& aCtx) : CommonBase{aCtx}
+    StructNetDbIdMapping(StreamContext& aCtx) : Record{aCtx}
     { }
 
     std::string to_string() const override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

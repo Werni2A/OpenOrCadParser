@@ -6,6 +6,7 @@
 #include <nameof.hpp>
 
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Library.hpp"
 #include "Primitives/PrimCommentText.hpp"
 #include "Win32/LOGFONTA.hpp"
@@ -13,7 +14,8 @@
 
 void PrimCommentText::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
@@ -80,7 +82,7 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
         // throw FileFormatChanged("CommentText");
     }
 
-    readPreamble();
+    parser.readPreamble();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

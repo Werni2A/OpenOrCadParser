@@ -9,6 +9,7 @@
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Primitives/PrimPolygon.hpp"
 
 
@@ -35,13 +36,15 @@ size_t PrimPolygon::getExpectedStructSize(FileFormatVersion aVersion, size_t aPo
 
 void PrimPolygon::read(FileFormatVersion aVersion)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     if(aVersion == FileFormatVersion::Unknown)
     {
-        aVersion = predictVersion();
+        const auto predictionFunc = [this](FileFormatVersion aVersion){ this->read(aVersion); };
+        aVersion = parser.predictVersion(predictionFunc);
     }
 
     const size_t startOffset = ds.getCurrentOffset();
@@ -50,13 +53,13 @@ void PrimPolygon::read(FileFormatVersion aVersion)
 
     ds.assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
-    if(gFileFormatVersion >= FileFormatVersion::B)
+    if(mCtx.mFileFormatVersion >= FileFormatVersion::B)
     {
         setLineStyle(ToLineStyle(ds.readUint32()));
         setLineWidth(ToLineWidth(ds.readUint32()));
     }
 
-    if(gFileFormatVersion >= FileFormatVersion::C)
+    if(mCtx.mFileFormatVersion >= FileFormatVersion::C)
     {
         fillStyle  = ToFillStyle(ds.readUint32());
         hatchStyle = ToHatchStyle(ds.readInt32());
@@ -98,12 +101,12 @@ void PrimPolygon::read(FileFormatVersion aVersion)
         // throw MisinterpretedData(__func__, startOffset, byteLength, ds.getCurrentOffset());
     }
 
-    if(byteLength != getExpectedStructSize(gFileFormatVersion, pointCount))
+    if(byteLength != getExpectedStructSize(mCtx.mFileFormatVersion, pointCount))
     {
         // throw FileFormatChanged(std::string(nameof::nameof_type<decltype(*this)>()));
     }
 
-    readPreamble();
+    parser.readPreamble();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

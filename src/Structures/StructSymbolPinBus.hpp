@@ -18,14 +18,14 @@ class StructSymbolPinBus : public StructSymbolPin
 {
 public:
 
-    StructSymbolPinBus(ParserContext& aCtx) : StructSymbolPin{aCtx}
+    StructSymbolPinBus(StreamContext& aCtx) : StructSymbolPin{aCtx}
     { }
 
     // std::string to_string() const override;
 
     // void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

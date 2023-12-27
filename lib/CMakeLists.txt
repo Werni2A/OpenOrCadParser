@@ -5,11 +5,10 @@ find_path(COMPOUNDFILEREADER_INCLUDE_DIRS "compoundfilereader.h")
 find_package(tinyxml2 CONFIG REQUIRED)
 
 set(SOURCES
-   ${LIB_SRC_DIR}/CommonBase.cpp
    ${LIB_SRC_DIR}/Container.cpp
    ${LIB_SRC_DIR}/ContainerExtractor.cpp
    ${LIB_SRC_DIR}/DataStream.cpp
-   # ${LIB_SRC_DIR}/Misc.cpp
+   ${LIB_SRC_DIR}/GenericParser.cpp
    ${LIB_SRC_DIR}/PageSettings.cpp
    ${LIB_SRC_DIR}/Primitives/Point.cpp
    ${LIB_SRC_DIR}/Primitives/PrimArc.cpp
@@ -22,6 +21,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Primitives/PrimPolyline.cpp
    ${LIB_SRC_DIR}/Primitives/PrimRect.cpp
    ${LIB_SRC_DIR}/Primitives/PrimSymbolVector.cpp
+   ${LIB_SRC_DIR}/RecordFactory.cpp
    ${LIB_SRC_DIR}/StreamFactory.cpp
    ${LIB_SRC_DIR}/Streams/StreamAdminData.cpp
    ${LIB_SRC_DIR}/Streams/StreamCache.cpp
@@ -100,6 +100,7 @@ set(SOURCES
 
 set(HEADERS
    ${LIB_INCLUDE_DIR}/Container.hpp
+   ${LIB_INCLUDE_DIR}/ContainerContext.hpp
    ${LIB_INCLUDE_DIR}/ContainerExtractor.hpp
    ${LIB_INCLUDE_DIR}/DataStream.hpp
    ${LIB_INCLUDE_DIR}/Enums/Color.hpp
@@ -113,8 +114,8 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Enums/Structure.hpp
    ${LIB_INCLUDE_DIR}/FutureData.hpp
    ${LIB_INCLUDE_DIR}/General.hpp
+   ${LIB_INCLUDE_DIR}/GenericParser.hpp
    ${LIB_INCLUDE_DIR}/PageSettings.hpp
-   ${LIB_INCLUDE_DIR}/ParserContext.hpp
    ${LIB_INCLUDE_DIR}/Primitives/Point.hpp
    ${LIB_INCLUDE_DIR}/Primitives/PrimArc.hpp
    ${LIB_INCLUDE_DIR}/Primitives/PrimBezier.hpp
@@ -125,6 +126,10 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Primitives/PrimPolygon.hpp
    ${LIB_INCLUDE_DIR}/Primitives/PrimPolyline.hpp
    ${LIB_INCLUDE_DIR}/Primitives/PrimRect.hpp
+   ${LIB_INCLUDE_DIR}/Record.hpp
+   ${LIB_INCLUDE_DIR}/RecordFactory.hpp
+   ${LIB_INCLUDE_DIR}/Stream.hpp
+   ${LIB_INCLUDE_DIR}/StreamContext.hpp
    ${LIB_INCLUDE_DIR}/StreamFactory.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamAdminData.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamCache.hpp

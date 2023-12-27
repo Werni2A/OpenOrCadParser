@@ -14,16 +14,16 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
+#include "Record.hpp"
 
 
 // @todo Probably called 'PhysicalPart' in the XSD
 //       Structure should also contain 'PinShared' and 'PinSwap'
-class StructPinIdxMapping : public CommonBase
+class StructPinIdxMapping : public Record
 {
 public:
 
-    StructPinIdxMapping(ParserContext& aCtx) : CommonBase{aCtx}, unitRef{}, refDes{},
+    StructPinIdxMapping(StreamContext& aCtx) : Record{aCtx}, unitRef{}, refDes{},
         pinMap{}, pinIgnore{}, pinGroup{}
     { }
 
@@ -31,7 +31,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

@@ -10,22 +10,22 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Record.hpp"
 
 
-class StructHierarchicSymbol : public CommonBase
+class StructHierarchicSymbol : public Record
 {
 public:
 
-    StructHierarchicSymbol(ParserContext& aCtx) : CommonBase{aCtx}
+    StructHierarchicSymbol(StreamContext& aCtx) : Record{aCtx}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

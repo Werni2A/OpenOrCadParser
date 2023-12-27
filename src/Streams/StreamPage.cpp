@@ -5,22 +5,24 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "PageSettings.hpp"
 #include "Streams/StreamPage.hpp"
 
 
 void StreamPage::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
     // @todo Extract in separate structure parser
-    auto_read_prefixes(Structure::Page, localFutureLst);
+    parser.auto_read_prefixes(Structure::Page, localFutureLst);
 
-    readPreamble();
+    parser.readPreamble();
 
     localFutureLst.checkpoint();
 
@@ -40,7 +42,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < lenTitleBlocks; ++i)
     {
-        titleBlocks.push_back(dynamic_pointer_cast<StructTitleBlock>(readStructure()));
+        titleBlocks.push_back(dynamic_pointer_cast<StructTitleBlock>(parser.readStructure()));
     }
 
     const uint16_t lenT0x34s = ds.readUint16();
@@ -49,7 +51,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < lenT0x34s; ++i)
     {
-        t0x34s.push_back(dynamic_pointer_cast<StructT0x34>(readStructure()));
+        t0x34s.push_back(dynamic_pointer_cast<StructT0x34>(parser.readStructure()));
     }
 
     const uint16_t lenT0x35s = ds.readUint16();
@@ -58,7 +60,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < lenT0x35s; ++i)
     {
-        t0x35s.push_back(dynamic_pointer_cast<StructT0x35>(readStructure()));
+        t0x35s.push_back(dynamic_pointer_cast<StructT0x35>(parser.readStructure()));
     }
 
     const uint16_t lenB = ds.readUint16();
@@ -81,7 +83,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < lenWires; ++i)
     {
-        wires.push_back(dynamic_pointer_cast<StructWire>(readStructure()));
+        wires.push_back(dynamic_pointer_cast<StructWire>(parser.readStructure()));
     }
 
     const uint16_t lenPartInsts = ds.readUint16();
@@ -90,7 +92,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < lenPartInsts; ++i)
     {
-        partInsts.push_back(dynamic_pointer_cast<StructPartInst>(readStructure()));
+        partInsts.push_back(dynamic_pointer_cast<StructPartInst>(parser.readStructure()));
     }
 
     const uint16_t lenPorts = ds.readUint16();
@@ -99,7 +101,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < lenPorts; ++i)
     {
-        ports.push_back(dynamic_pointer_cast<StructPort>(readStructure()));
+        ports.push_back(dynamic_pointer_cast<StructPort>(parser.readStructure()));
     }
 
     const uint16_t lenGlobals = ds.readUint16();
@@ -108,7 +110,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < lenGlobals; ++i)
     {
-        globals.push_back(dynamic_pointer_cast<StructGlobal>(readStructure()));
+        globals.push_back(dynamic_pointer_cast<StructGlobal>(parser.readStructure()));
 
         ds.printUnknownData(5, fmt::format("{}: 0", getMethodName(this, __func__)));
     }
@@ -119,7 +121,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < lenOffPageConnectors; ++i)
     {
-        offPageConnectors.push_back(dynamic_pointer_cast<StructOffPageConnector>(readStructure()));
+        offPageConnectors.push_back(dynamic_pointer_cast<StructOffPageConnector>(parser.readStructure()));
 
         ds.printUnknownData(5, fmt::format("{}: 1", getMethodName(this, __func__)));
     }
@@ -130,7 +132,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < lenERCSymbolInsts; ++i)
     {
-        ercSymbolInsts.push_back(dynamic_pointer_cast<StructERCSymbolInst>(readStructure()));
+        ercSymbolInsts.push_back(dynamic_pointer_cast<StructERCSymbolInst>(parser.readStructure()));
     }
 
     const uint16_t lenBusEntries = ds.readUint16();
@@ -139,7 +141,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < lenBusEntries; ++i)
     {
-        busEntries.push_back(dynamic_pointer_cast<StructBusEntry>(readStructure()));
+        busEntries.push_back(dynamic_pointer_cast<StructBusEntry>(parser.readStructure()));
     }
 
     const uint16_t lenGraphicInsts = ds.readUint16();
@@ -148,7 +150,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0u; i < lenGraphicInsts; ++i)
     {
-        graphicInsts.push_back(dynamic_pointer_cast<StructGraphicInst>(readStructure()));
+        graphicInsts.push_back(dynamic_pointer_cast<StructGraphicInst>(parser.readStructure()));
     }
 
     const uint16_t len10 = ds.readUint16();
@@ -158,7 +160,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
     for(size_t i = 0u; i < len10; ++i)
     {
         // @todo push structure
-        const auto s = readStructure();
+        const auto s = parser.readStructure();
         if(s)
         {
             spdlog::debug("VERIFYING Page Structure10 is {}", NAMEOF_TYPE_RTTI(*s));
@@ -172,7 +174,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
     for(size_t i = 0u; i < len11; ++i)
     {
         // @todo push structure
-        const auto s = readStructure();
+        const auto s = parser.readStructure();
         if(s)
         {
             spdlog::debug("VERIFYING Page Structure11 is {}", NAMEOF_TYPE_RTTI(*s));

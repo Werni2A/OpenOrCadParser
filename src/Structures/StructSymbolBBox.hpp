@@ -9,22 +9,22 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Record.hpp"
 
 
-class StructSymbolBBox : public CommonBase
+class StructSymbolBBox : public Record
 {
 public:
 
-    StructSymbolBBox(ParserContext& aCtx) : CommonBase{aCtx}, x1{0}, y1{0}, x2{0}, y2{0}
+    StructSymbolBBox(StreamContext& aCtx) : Record{aCtx}, x1{0}, y1{0}, x2{0}, y2{0}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

@@ -10,9 +10,9 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "Enums/ComponentType.hpp"
 #include "General.hpp"
+#include "Stream.hpp"
 
 
 class DirItemType
@@ -64,11 +64,12 @@ static std::ostream& operator<<(std::ostream& aOs, const DirItemType& aVal)
 }
 
 
-class StreamDirectoryStruct : public CommonBase
+class StreamDirectoryStruct : public Stream
 {
 public:
 
-    StreamDirectoryStruct(ParserContext& aCtx) : CommonBase{aCtx}, lastModifiedDate{0}, items{}
+    StreamDirectoryStruct(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream},
+        lastModifiedDate{0}, items{}
     { }
 
     std::string to_string() const;

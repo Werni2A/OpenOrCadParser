@@ -5,21 +5,24 @@
 #include <nameof.hpp>
 
 #include "Enums/Structure.hpp"
+#include "FutureData.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Structures/StructWire.hpp"
 
 
 void StructWire::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes({Structure::WireBus, Structure::WireScalar}, localFutureLst);
+    parser.auto_read_prefixes({Structure::WireBus, Structure::WireScalar}, localFutureLst);
 
-    readPreamble();
+    parser.readPreamble();
 
     localFutureLst.checkpoint();
 
@@ -55,7 +58,7 @@ void StructWire::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0; i < lenAliases; ++i)
     {
-        aliases.push_back(dynamic_pointer_cast<StructAlias>(readStructure()));
+        aliases.push_back(dynamic_pointer_cast<StructAlias>(parser.readStructure()));
     }
 
     const uint16_t lenSymbolDisplayProps = ds.readUint16();
@@ -64,7 +67,7 @@ void StructWire::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0; i < lenSymbolDisplayProps; ++i)
     {
-        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
+        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(parser.readStructure()));
     }
 
     lineWidth = ToLineWidth(ds.readUint32());

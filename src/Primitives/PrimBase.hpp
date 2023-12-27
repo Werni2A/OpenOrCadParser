@@ -2,13 +2,13 @@
 #define PRIMBASE_HPP
 
 
-#include "CommonBase.hpp"
+#include "Record.hpp"
 
 
-class PrimBase : public CommonBase
+class PrimBase : public Record
 {
 public:
-    PrimBase(ParserContext& aCtx) : CommonBase{aCtx}
+    PrimBase(StreamContext& aCtx) : Record{aCtx}
     { }
 };
 

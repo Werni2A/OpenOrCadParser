@@ -9,23 +9,23 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Stream.hpp"
 #include "Structures/StructERCSymbol.hpp"
 
 
-class StreamERC : public CommonBase
+class StreamERC : public Stream
 {
 public:
 
-    StreamERC(ParserContext& aCtx) : CommonBase{aCtx}, ercSymbol{}
+    StreamERC(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, ercSymbol{}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

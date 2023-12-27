@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+#include "GenericParser.hpp"
 #include "PageSettings.hpp"
 #include "Streams/StreamLibrary.hpp"
 #include "Win32/LOGFONTA.hpp"
@@ -18,13 +19,15 @@
 
 void StreamLibrary::read(FileFormatVersion aVersion)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     if(aVersion == FileFormatVersion::Unknown)
     {
-        aVersion = predictVersion();
+        const auto predictionFunc = [this](FileFormatVersion aVersion){ this->read(aVersion); };
+        aVersion = parser.predictVersion(predictionFunc);
     }
 
     size_t startOffset = ds.getCurrentOffset();
@@ -136,7 +139,7 @@ void StreamLibrary::read(FileFormatVersion aVersion)
         spdlog::trace("partAliases[{}] = (alias = {}, package = {})", i, alias, package);
     }
 
-    if(gFileType == FileType::Schematic)
+    if(mCtx.mFileType == FileType::Schematic)
     {
         ds.printUnknownData(8, getMethodName(this, __func__) + ": 5");
         std::string schematicName = ds.readStringLenZeroTerm();

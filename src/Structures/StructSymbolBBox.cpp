@@ -12,7 +12,7 @@
 // @todo is probably trailing data and not a struct object!
 void StructSymbolBBox::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 

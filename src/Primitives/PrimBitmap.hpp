@@ -21,7 +21,7 @@ class PrimBitmap : public PrimBase
 {
 public:
 
-    PrimBitmap(ParserContext& aCtx) : PrimBase{aCtx}, locX{0}, locY{0},
+    PrimBitmap(StreamContext& aCtx) : PrimBase{aCtx}, locX{0}, locY{0},
         x1{0}, y1{0}, x2{0}, y2{0}, bmpWidth{0}, bmpHeight{0}
     { }
 
@@ -29,7 +29,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

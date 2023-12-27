@@ -14,6 +14,7 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Primitives/PrimBitmap.hpp"
 
 
@@ -22,8 +23,8 @@ namespace fs = std::filesystem;
 
 void PrimBitmap::read(FileFormatVersion /* aVersion */)
 {
-    auto& ctx = mCtx.get();
-    auto& ds  = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
@@ -67,14 +68,14 @@ void PrimBitmap::read(FileFormatVersion /* aVersion */)
         rawImgData.push_back(ds.readUint8());
     }
 
-    fs::path filename = ctx.mExtractedCfbfPath / "data" / fmt::format("{}_img_{}.bmp",
-        ctx.mInputStream.stem().string(), ctx.mImgCtr);
+    fs::path filename = mCtx.mExtractedCfbfPath / "data" / fmt::format("{}_img_{}.bmp",
+        mCtx.mInputStream.stem().string(), mCtx.mImgCtr);
 
     filename = writeImgToFile(filename);
 
     spdlog::info("{}: Wrote bitmap file to {}", __func__, filename.string());
 
-    ++ctx.mImgCtr;
+    ++mCtx.mImgCtr;
 
     if(ds.getCurrentOffset() != startOffset + byteLength)
     {
@@ -86,7 +87,7 @@ void PrimBitmap::read(FileFormatVersion /* aVersion */)
         // throw FileFormatChanged("Bitmap");
     }
 
-    readPreamble();
+    parser.readPreamble();
 
     spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     spdlog::trace(to_string());

@@ -22,7 +22,7 @@ class StructOffPageSymbol : public StructSymbol
 {
 public:
 
-    StructOffPageSymbol(ParserContext& aCtx) : StructSymbol{aCtx},
+    StructOffPageSymbol(StreamContext& aCtx) : StructSymbol{aCtx},
         symbolPins{}, symbolDisplayProps{}
     { }
 
@@ -30,7 +30,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

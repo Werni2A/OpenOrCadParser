@@ -10,17 +10,17 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "Enums/Color.hpp"
 #include "Enums/Rotation.hpp"
 #include "General.hpp"
+#include "Record.hpp"
 
 
-class StructAlias : public CommonBase
+class StructAlias : public Record
 {
 public:
 
-    StructAlias(ParserContext& aCtx) : CommonBase{aCtx}, locX{0}, locY{0},
+    StructAlias(StreamContext& aCtx) : Record{aCtx}, locX{0}, locY{0},
         color{Color::Default}, rotation{Rotation::Deg_0}, name{}
     { }
 
@@ -28,7 +28,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

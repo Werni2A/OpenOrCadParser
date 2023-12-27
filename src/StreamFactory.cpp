@@ -1,13 +1,14 @@
 #include <algorithm>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
-#include "CommonBase.hpp"
-#include "ParserContext.hpp"
+#include "ContainerContext.hpp"
+#include "Stream.hpp"
 #include "StreamFactory.hpp"
 #include "Streams/StreamAdminData.hpp"
 #include "Streams/StreamCache.hpp"
@@ -30,305 +31,296 @@
 #include "Streams/StreamViewsDirectory.hpp"
 
 
-std::unique_ptr<CommonBase> StreamFactory::build(ParserContext& aCtx, const std::vector<std::string>& aCfbfStreamLocation)
+std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::path& aInputStream)
 {
-    const auto& loc = aCfbfStreamLocation;
+    auto streamLoc = CfbfStreamLocation{aInputStream, aCtx.mExtractedCfbfPath};
 
-    std::string locStr{};
-    for(const auto& locPart : loc)
-    {
-        locStr += "/" + locPart;
-    }
+    spdlog::debug("Got stream location: {}", ::to_string(streamLoc));
 
-    spdlog::debug("Got stream location: {}", locStr);
-
-    // Match `AdminData`
-    if(loc.size() == 1U && loc.at(0U) == "AdminData")
-    {
-        return std::make_unique<StreamAdminData>(aCtx);
-    }
-
-    // Match `Cache`
-    if(loc.size() == 1U && loc.at(0U) == "Cache")
-    {
-        return std::make_unique<StreamCache>(aCtx);
-    }
-
-    // Match `Cells/*`
-    if(loc.size() == 2U && loc.at(0U) == "Cells")
-    {
-        // return std::make_unique<StreamCells>(aCtx);
-        const std::string errMsg = fmt::format(
-            "Detected Cell but stream parser is not yet implemented!");
-        spdlog::warn(errMsg);
-
-        return std::unique_ptr<CommonBase>{};
-    }
-
-    // Match `Cells Directory`
-    if(loc.size() == 1U && loc.at(0U) == "Cells Directory")
-    {
-        return std::make_unique<StreamCellsDirectory>(aCtx);
-    }
-
-    // Match `CIS/CISSchematicStore/CISSchematicStream`
-    if(loc.size() == 3U && loc.at(0U) == "CIS"
-        && loc.at(1U) == "CISSchematicStore"
-        && loc.at(2U) == "CISSchematicStream")
-    {
-        // return std::make_unique<StreamCISSchematicStream>(aCtx);
-        const std::string errMsg = fmt::format(
-            "Detected CISSchematicStream but stream parser is not yet implemented!");
-        spdlog::warn(errMsg);
-
-        return std::unique_ptr<CommonBase>{};
-    }
-
-    // Match `CIS/VariantStore/BOM/BOMDataStream`
-    if(loc.size() == 4U && loc.at(0U) == "CIS"
-        && loc.at(1U) == "VariantStore"
-        && loc.at(2U) == "BOM"
-        && loc.at(3U) == "BOMDataStream")
-    {
-        // return std::make_unique<BOMDataStream>(aCtx);
-        const std::string errMsg = fmt::format(
-            "Detected BOMDataStream but stream parser is not yet implemented!");
-        spdlog::warn(errMsg);
-
-        return std::unique_ptr<CommonBase>{};
-    }
-
-    // Match `CIS/VariantStore/Groups/GroupsDataStream`
-    if(loc.size() == 4U && loc.at(0U) == "CIS"
-        && loc.at(1U) == "VariantStore"
-        && loc.at(2U) == "Groups"
-        && loc.at(3U) == "GroupsDataStream")
-    {
-        // return std::make_unique<GroupsDataStream>(aCtx);
-        const std::string errMsg = fmt::format(
-            "Detected GroupsDataStream but stream parser is not yet implemented!");
-        spdlog::warn(errMsg);
-
-        return std::unique_ptr<CommonBase>{};
-    }
-
-    // Match `CIS/VariantStore/VariantNames`
-    if(loc.size() == 3U && loc.at(0U) == "CIS"
-        && loc.at(1U) == "VariantStore"
-        && loc.at(2U) == "VariantNames")
-    {
-        // return std::make_unique<VariantNames>(aCtx);
-        const std::string errMsg = fmt::format(
-            "Detected VariantName but stream parser is not yet implemented!");
-        spdlog::warn(errMsg);
-
-        return std::unique_ptr<CommonBase>{};
-    }
-
-    // Match `DsnStream`
-    if(loc.size() == 1U && loc.at(0U) == "DsnStream")
-    {
-        return std::make_unique<StreamDsnStream>(aCtx);
-    }
-
-    // Match `ExportBlocks/*`
-    if(loc.size() == 2U && loc.at(0U) == "ExportBlocks")
-    {
-        // return std::make_unique<StreamExportBlock>(aCtx);
-        const std::string errMsg = fmt::format(
-            "Detected ExportBlock but stream parser is not yet implemented!");
-        spdlog::warn(errMsg);
-
-        return std::unique_ptr<CommonBase>{};
-    }
-
-    // Match `ExportBlocks Directory`
-    if(loc.size() == 1U && loc.at(0U) == "ExportBlocks Directory")
-    {
-        return std::make_unique<StreamExportBlocksDirectory>(aCtx);
-    }
-
-    // Match `Graphics/$Types$`
-    if(loc.size() == 2U && loc.at(0U) == "Graphics"
-        && loc.at(1U) == "$Types$")
-    {
-        return std::make_unique<StreamType>(aCtx);
-    }
-
-    // Match `Graphics/*`
-    if(loc.size() == 2U && loc.at(0U) == "Graphics"
-        && loc.at(1U) != "$Types$")
-    {
-        // return std::make_unique<StreamGraphics>(aCtx);
-        const std::string errMsg = fmt::format(
-            "Detected Graphic but stream parser is not yet implemented!");
-        spdlog::warn(errMsg);
-
-        return std::unique_ptr<CommonBase>{};
-    }
-
-    // Match `Graphics Directory`
-    if(loc.size() == 1U && loc.at(0U) == "Graphics Directory")
-    {
-        return std::make_unique<StreamGraphicsDirectory>(aCtx);
-    }
-
-    // Match `HSObjects`
-    if(loc.size() == 1U && loc.at(0U) == "HSObjects")
-    {
-        return std::make_unique<StreamHSObjects>(aCtx);
-    }
-
-    // Match `LayoutReuse/ReuseSchematics`
-    if(loc.size() == 2U && loc.at(0U) == "LayoutReuse"
-        && loc.at(1U) == "ReuseSchematics")
-    {
-        // return std::make_unique<StreamReuseSchematic>(aCtx);
-        const std::string errMsg = fmt::format(
-            "Detected ReuseSchematic but stream parser is not yet implemented!");
-        spdlog::warn(errMsg);
-
-        return std::unique_ptr<CommonBase>{};
-    }
-
-    // Match `Library`
-    if(loc.size() == 1U && loc.at(0U) == "Library")
-    {
-        return std::make_unique<StreamLibrary>(aCtx);
-    }
-
-    // Match `NetBundleMapData`
-    if(loc.size() == 1U && loc.at(0U) == "NetBundleMapData")
-    {
-        return std::make_unique<StreamNetBundleMapData>(aCtx);
-    }
-
-    // Match `Packages/*`
-    if(loc.size() == 2U && loc.at(0U) == "Packages")
-    {
-        // We extract embedded files into the same directory but do
-        // not want to parse them as stream. Therefore skip them.
-        // @todo This is just a workaround; needs some refactoring
-        // if(!fs::path(loc.at(1)).has_extension())
+    const auto getErrMsg = [](const std::vector<std::optional<std::string>>& aPattern, const CfbfStreamLocation& aStreamLoc)
         {
-            return std::make_unique<StreamPackage>(aCtx);
-        }
-    }
+            std::string strPattern{};
 
-    // Match `Packages Directory`
-    if(loc.size() == 1U && loc.at(0U) == "Packages Directory")
+            for(const auto& part : aPattern)
+            {
+                strPattern += "/" + part.value_or("*");
+            }
+
+            return fmt::format(
+                "Detected `{}` matching `{}` but stream parser is not yet implemented!",
+                ::to_string(aStreamLoc), strPattern
+                );
+        };
+
+    std::vector<std::optional<std::string>> pattern;
+
+    // Match `/AdminData`
+    pattern = {"AdminData"};
+    if(streamLoc.matches_pattern(pattern))
     {
-        return std::make_unique<StreamPackagesDirectory>(aCtx);
+        return std::make_unique<StreamAdminData>(aCtx, aInputStream);
     }
 
-    // Match `Parts/*`
-    if(loc.size() == 2U && loc.at(0U) == "Parts")
+    // Match `/BundleMapData`
+    pattern = {"BundleMapData"};
+    if(streamLoc.matches_pattern(pattern))
     {
-        // return std::make_unique<StreamPart>(aCtx);
-        const std::string errMsg = fmt::format(
-            "Detected Part but stream parser is not yet implemented!");
-        spdlog::warn(errMsg);
-
-        return std::unique_ptr<CommonBase>{};
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
     }
 
-    // Match `Parts Directory`
-    if(loc.size() == 1U && loc.at(0U) == "Parts Directory")
+    // Match `/Cache`
+    pattern = {"Cache"};
+    if(streamLoc.matches_pattern(pattern))
     {
-        return std::make_unique<StreamPartsDirectory>(aCtx);
+        return std::make_unique<StreamCache>(aCtx, aInputStream);
     }
 
-    // Match `Symbols/$Types$`
-    if(loc.size() == 2U && loc.at(0U) == "Symbols"
-        && loc.at(1U) == "$Types$")
+    // Match `/Cells/*`
+    pattern = {"Cells", std::nullopt};
+    if(streamLoc.matches_pattern(pattern))
     {
-        // return std::make_unique<StreamType>(aCtx);
-        const std::string errMsg = fmt::format(
-            "Detected Symbols/$Types$ but stream parser is skipped!");
-        spdlog::warn(errMsg);
-
-        return std::unique_ptr<CommonBase>{};
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
     }
 
-    // Match `Symbols/ERC`
-    if(loc.size() == 2U && loc.at(0U) == "Symbols"
-        && loc.at(1U) == "ERC")
+    // Match `/Cells Directory`
+    pattern = {"Cells Directory"};
+    if(streamLoc.matches_pattern(pattern))
     {
-        // return std::make_unique<StreamERC>(aCtx);
-        const std::string errMsg = fmt::format(
-            "Detected Symbols/ERC but stream parser is skipped!");
-        spdlog::warn(errMsg);
-
-        return std::unique_ptr<CommonBase>{};
+        return std::make_unique<StreamCellsDirectory>(aCtx, aInputStream);
     }
 
-    // Match `Symbols/ERC_PHYSICAL`
-    if(loc.size() == 2U && loc.at(0U) == "Symbols"
-        && loc.at(1U) == "ERC_PHYSICAL")
+    // Match `/CIS/CISSchematicStore/CISSchematicStream`
+    pattern = {"CIS", "CISSchematicStore", "CISSchematicStream"};
+    if(streamLoc.matches_pattern(pattern))
     {
-        // return std::make_unique<StreamERCPHYSICAL>(aCtx);
-        const std::string errMsg = fmt::format(
-            "Detected ERC_PHYSICAL but stream parser is not yet implemented!");
-        spdlog::warn(errMsg);
-
-        return std::unique_ptr<CommonBase>{};
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
     }
 
-    // Match `Symbols/*`
-    if(loc.size() == 2U && loc.at(0U) == "Symbols"
-        && loc.at(1U) != "$Types$"
-        && loc.at(1U) != "ERC"
-        && loc.at(1U) != "ERC_PHYSICAL")
+    // Match `/CIS/VariantStore/BOM/*/BOMAmbugity`
+    pattern = {"CIS", "VariantStore", "BOM", std::nullopt, "BOMAmbugity"};
+    if(streamLoc.matches_pattern(pattern))
     {
-        // We extract embedded files into the same directory but do
-        // not want to parse them as stream. Therefore skip them.
-        // @todo This is just a workaround; needs some refactoring
-        // if(!fs::path(loc.at(1)).has_extension())
-        {
-            return std::make_unique<StreamSymbol>(aCtx);
-        }
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
     }
 
-    // Match `Symbols Directory`
-    if(loc.size() == 1U && loc.at(0U) == "Symbols Directory")
+    // Match `/CIS/VariantStore/BOM/*/BOMPartData`
+    pattern = {"CIS", "VariantStore", "BOM", std::nullopt, "BOMPartData"};
+    if(streamLoc.matches_pattern(pattern))
     {
-        return std::make_unique<StreamSymbolsDirectory>(aCtx);
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
     }
 
-    // Match `Views/*/Hierarchy/Hierarchy`
-    if(loc.size() == 4U && loc.at(0U) == "Views"
-        && loc.at(2U) == "Hierarchy"
-        && loc.at(3U) == "Hierarchy")
+    // Match `/CIS/VariantStore/BOM/*/*`
+    pattern = {"CIS", "VariantStore", "BOM", std::nullopt, std::nullopt};
+    if(streamLoc.matches_pattern(pattern))
     {
-        return std::make_unique<StreamHierarchy>(aCtx);
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
     }
 
-    // Match `Views/*/Pages/*`
-    if(loc.size() == 4U && loc.at(0U) == "Views"
-        && loc.at(2U) == "Pages")
+    // Match `/CIS/VariantStore/Groups/GroupsDataStream`
+    pattern = {"CIS", "VariantStore", "Groups", "GroupsDataStream"};
+    if(streamLoc.matches_pattern(pattern))
     {
-        return std::make_unique<StreamPage>(aCtx);
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
     }
 
-    // Match `Views/*/Schematic`
-    if(loc.size() == 3U && loc.at(0U) == "Views"
-        && loc.at(2U) == "Schematic")
+    // Match `/CIS/VariantStore/Groups/*/*`
+    pattern = {"CIS", "VariantStore", "Groups", std::nullopt, std::nullopt};
+    if(streamLoc.matches_pattern(pattern))
     {
-        return std::make_unique<StreamSchematic>(aCtx);
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
     }
 
-    // Match `Views Directory`
-    if(loc.size() == 1U && loc.at(0U) == "Views Directory")
+    // Match `/CIS/VariantStore/VariantNames`
+    pattern = {"CIS", "VariantStore", "VariantNames"};
+    if(streamLoc.matches_pattern(pattern))
     {
-        return std::make_unique<StreamViewsDirectory>(aCtx);
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
     }
 
-    std::string locPath;
-    std::for_each(loc.cbegin(), loc.cend(),
-        [&locPath](const std::string& pathPart){ locPath += "/" + pathPart;});
+    // Match `/DsnStream`
+    pattern = {"DsnStream"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamDsnStream>(aCtx, aInputStream);
+    }
 
-    const std::string errMsg = fmt::format("Didn't find a suitable stream parser for loc = {}", locPath);
+    // Match `/ExportBlocks/*`
+    pattern = {"ExportBlocks", std::nullopt};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
+    }
+
+    // Match `/ExportBlocks Directory`
+    pattern = {"ExportBlocks Directory"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamExportBlocksDirectory>(aCtx, aInputStream);
+    }
+
+    // Match `/Graphics/$Types$`
+    pattern = {"Graphics", "$Types$"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamType>(aCtx, aInputStream);
+    }
+
+    // Match `/Graphics/*`
+    pattern = {"Graphics", std::nullopt};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
+    }
+
+    // Match `/Graphics Directory`
+    pattern = {"Graphics Directory"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamGraphicsDirectory>(aCtx, aInputStream);
+    }
+
+    // Match `/HSObjects`
+    pattern = {"HSObjects"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamHSObjects>(aCtx, aInputStream);
+    }
+
+    // Match `/LayoutReuse/ReuseSchematics`
+    pattern = {"LayoutReuse", "ReuseSchematics"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
+    }
+
+    // Match `/Library`
+    pattern = {"Library"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamLibrary>(aCtx, aInputStream);
+    }
+
+    // Match `/NetBundleMapData`
+    pattern = {"NetBundleMapData"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamNetBundleMapData>(aCtx, aInputStream);
+    }
+
+    // Match `/Packages/*`
+    pattern = {"Packages", std::nullopt};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamPackage>(aCtx, aInputStream);
+    }
+
+    // Match `/Packages Directory`
+    pattern = {"Packages Directory"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamPackagesDirectory>(aCtx, aInputStream);
+    }
+
+    // Match `/Parts/*`
+    pattern = {"Parts", std::nullopt};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
+    }
+
+    // Match `/Parts Directory`
+    pattern = {"Parts Directory"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamPartsDirectory>(aCtx, aInputStream);
+    }
+
+    // Match `/Symbols/$Types$`
+    pattern = {"Symbols", "$Types$"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
+    }
+
+    // Match `/Symbols/ERC`
+    pattern = {"Symbols", "ERC"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
+    }
+
+    // Match `/Symbols/ERC_PHYSICAL`
+    pattern = {"Symbols", "ERC_PHYSICAL"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        spdlog::warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
+    }
+
+    // Match `/Symbols/*`
+    pattern = {"Symbols", std::nullopt};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamSymbol>(aCtx, aInputStream);
+    }
+
+    // Match `/Symbols Directory`
+    pattern = {"Symbols Directory"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamSymbolsDirectory>(aCtx, aInputStream);
+    }
+
+    // Match `/Views/*/Hierarchy/Hierarchy`
+    pattern = {"Views", std::nullopt, "Hierarchy", "Hierarchy"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamHierarchy>(aCtx, aInputStream);
+    }
+
+    // Match `/Views/*/Pages/*`
+    pattern = {"Views", std::nullopt, "Pages", std::nullopt};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamPage>(aCtx, aInputStream);
+    }
+
+    // Match `/Views/*/Schematic`
+    pattern = {"Views", std::nullopt, "Schematic"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamSchematic>(aCtx, aInputStream);
+    }
+
+    // Match `/Views Directory`
+    pattern = {"Views Directory"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        return std::make_unique<StreamViewsDirectory>(aCtx, aInputStream);
+    }
+
+    const std::string errMsg = fmt::format(
+        "Didn't find a suitable stream parser for stream location `{}`",
+        ::to_string(streamLoc)
+        );
+
     spdlog::warn(errMsg);
 
-    return std::unique_ptr<CommonBase>{};
+    return std::unique_ptr<Stream>{};
 }

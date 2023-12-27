@@ -12,13 +12,13 @@
 #include <random>
 #include <stdexcept>
 #include <string>
+#include <thread>
 #include <vector>
 
 #include <fmt/color.h>
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
-#include "CommonBase.hpp"
 #include "Container.hpp"
 #include "ContainerExtractor.hpp"
 #include "DataStream.hpp"
@@ -34,6 +34,7 @@
 #include "General.hpp"
 #include "Library.hpp"
 #include "PinShape.hpp"
+#include "Stream.hpp"
 #include "StreamFactory.hpp"
 
 
@@ -42,15 +43,12 @@ namespace fs = std::filesystem;
 
 // @todo Add ContainerContext and ParserContext where ContainerContext is shared by all ParserContexts, maybe even derived from it?
 Library* gLibrary = new Library{};
-FileType gFileType = FileType::Library; // @todo move to parser context
-FileFormatVersion gFileFormatVersion = FileFormatVersion::C; // @todo move to parser context
 
 
 Container::Container(const fs::path& aCfbfContainer, ParserConfig aCfg) :
-    mFileCtr{0U}, mFileErrCtr{0U}, tmpCtx{"", "", "", aCfg}, mCtx{tmpCtx}, mCfg{aCfg}
+    mFileCtr{0U}, mFileErrCtr{0U}, mCtx{aCfbfContainer, "", aCfg, *this}, mCfg{aCfg}, mStreams{}
 {
-    gFileType      = getFileTypeByExtension(aCfbfContainer);
-    mInputCfbfFile = aCfbfContainer;
+    mCtx.mFileType = getFileTypeByExtension(aCfbfContainer);
 
     // Extract to a unique folder in case two similar named files
     // are extracted at the same time. E.g. in parallel execution.
@@ -60,7 +58,7 @@ Container::Container(const fs::path& aCfbfContainer, ParserConfig aCfg) :
     const std::string uuid = fmt::format("{:08x}{:08x}{:08x}{:08x}", gen(), gen(), gen(), gen());
 
     const fs::path extractTo = fs::temp_directory_path() / "OpenOrCadParser" / uuid;
-    mExtractedCfbfPath = extractContainer(aCfbfContainer, extractTo);
+    mCtx.mExtractedCfbfPath = extractContainer(aCfbfContainer, extractTo);
 
     spdlog::debug("Using parser configuration:");
     spdlog::debug(to_string(mCfg));
@@ -72,10 +70,54 @@ Container::~Container()
     if(!mCfg.mKeepTmpFiles)
     {
         // Remove temporary extracted files
-        fs::remove_all(mExtractedCfbfPath.parent_path());
+        fs::remove_all(mCtx.mExtractedCfbfPath.parent_path());
 
-        spdlog::debug("Deleted CFBF container at `{}`", mExtractedCfbfPath.string());
+        spdlog::debug("Deleted CFBF container at `{}`", mCtx.mExtractedCfbfPath.string());
     }
+}
+
+
+void Container::parseLibraryThread(std::vector<std::unique_ptr<Stream>*> aStreamList)
+{
+    for(auto& stream : aStreamList)
+    {
+        bool parsedSuccessfully = true;
+        try
+        {
+            (*stream)->mCtx.mAttemptedParsing = true;
+            (*stream)->openFile();
+            (*stream)->read();
+            (*stream)->closeFile();
+        }
+        catch(...)
+        {
+            parsedSuccessfully = false;
+            exceptionHandling();
+        }
+
+        (*stream)->mCtx.mParsedSuccessfully = parsedSuccessfully;
+    }
+}
+
+
+// Equally distribute elements into new lists of pointers to the original elements
+template<typename ElementType>
+std::vector<std::vector<ElementType*>> equallyDistributeElementsIntoLists(
+    std::size_t aListCount, std::vector<ElementType>& aElements)
+{
+    std::vector<std::vector<ElementType*>> lists{};
+
+    lists.resize(aListCount);
+
+    std::size_t listIdx{0U};
+
+    for(auto& element : aElements)
+    {
+        lists.at(listIdx).push_back(&element);
+        listIdx = (listIdx + 1U) % aListCount;
+    }
+
+    return lists;
 }
 
 /**
@@ -83,10 +125,12 @@ Container::~Container()
  */
 void Container::parseLibrary()
 {
-    spdlog::info("Start parsing library located at {}", mExtractedCfbfPath.string());
+    spdlog::info("Using {} threads", mCtx.mCfg.mThreadCount);
+
+    spdlog::info("Start parsing library located at {}", mCtx.mExtractedCfbfPath.string());
 
     // Parse all streams in the container i.e. files in the file system
-    for(const auto& dir_entry : fs::recursive_directory_iterator(mExtractedCfbfPath))
+    for(const auto& dir_entry : fs::recursive_directory_iterator(mCtx.mExtractedCfbfPath))
     {
         if(!dir_entry.is_regular_file())
         {
@@ -97,29 +141,51 @@ void Container::parseLibrary()
 
         ++mFileCtr;
 
-        std::unique_ptr<CommonBase> stream;
+        auto stream = StreamFactory::build(mCtx, remainingFile);
 
-        ParserContext ctx{mInputCfbfFile, remainingFile, mExtractedCfbfPath, mCfg};
-        mCtx = ctx;
-
-        const auto streamLoc = getCfbfStreamLocationFromFileSytemLayout(remainingFile, mExtractedCfbfPath);
-        stream = StreamFactory::build(ctx, streamLoc);
-
-        if(nullptr == stream)
+        if(!stream)
         {
             continue;
         }
 
-        try
+        mStreams.push_back(std::move(stream));
+    }
+
+    auto threadJobList = equallyDistributeElementsIntoLists<std::unique_ptr<Stream>>(mCtx.mCfg.mThreadCount, mStreams);
+
+    for(std::size_t i{0U}; i < threadJobList.size(); ++i)
+    {
+        spdlog::info("Assigning thread {} with the following {}/{} jobs:",
+            i, threadJobList.at(i).size(), mFileCtr);
+
+        const auto& threadJobs = threadJobList.at(i);
+
+        for(const auto& job : threadJobs)
         {
-            openFile(remainingFile);
-            stream->read();
-            closeFile();
+            spdlog::debug("    {}", (*job)->mCtx.mInputStream.string());
         }
-        catch(...)
+    }
+
+    std::vector<std::thread> threadList;
+
+    for(auto& threadJobs : threadJobList)
+    {
+        if(threadJobs.size() > 0U)
         {
-            mCtx.get().mFinishedParsing = true;
-            exceptionHandling();
+            threadList.push_back(std::thread{&Container::parseLibraryThread, this, threadJobs});
+        }
+    }
+
+    for(auto& thread : threadList)
+    {
+        thread.join();
+    }
+
+    for(const auto& stream : mStreams)
+    {
+        if(!stream->mCtx.mParsedSuccessfully.value_or(false))
+        {
+            mFileErrCtr++;
         }
     }
 
@@ -142,12 +208,11 @@ void Container::exceptionHandling()
     }
     catch(const std::exception& e)
     {
-        ++mFileErrCtr;
-
         spdlog::error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
-        spdlog::error(fmt::format(fg(fmt::color::crimson), "Input Container: {}", mCtx.get().mInputCfbfFile.string()));
-        spdlog::error(fmt::format(fg(fmt::color::crimson), "Current File:    {}", mCtx.get().mInputStream.string()));
-        spdlog::error(fmt::format(fg(fmt::color::crimson), mCtx.get().mDs.get().getCurrentOffsetStrMsg()));
+        spdlog::error(fmt::format(fg(fmt::color::crimson), "Input Container: {}", mCtx.mInputCfbfFile.string()));
+        // @todo
+        // spdlog::error(fmt::format(fg(fmt::color::crimson), "Current File:    {}", mCtx.mInputStream.string()));
+        // spdlog::error(fmt::format(fg(fmt::color::crimson), mCtx.mDs.getCurrentOffsetStrMsg()));
         spdlog::error(fmt::format(fg(fmt::color::crimson), "\nError Message: {}\n\n", e.what()));
     }
     catch(...)
@@ -170,13 +235,13 @@ fs::path Container::extractContainer(const fs::path& aFile, const fs::path& aOut
 
 fs::path Container::extractContainer(const fs::path& aOutDir) const
 {
-    return extractContainer(mInputCfbfFile, aOutDir);
+    return extractContainer(mCtx.mInputCfbfFile, aOutDir);
 }
 
 
 void Container::printContainerTree() const
 {
-    ContainerExtractor extractor{mInputCfbfFile};
+    ContainerExtractor extractor{mCtx.mInputCfbfFile};
     extractor.printContainerTree();
 }
 
@@ -209,22 +274,4 @@ FileType Container::getFileTypeByExtension(const fs::path& aFile) const
     }
 
     return fileType;
-}
-
-
-void Container::openFile(const fs::path& aInputStream)
-{
-    spdlog::info("Opening file: {}", aInputStream.string());
-
-    spdlog::info("File contains {} byte.", fs::file_size(aInputStream));
-}
-
-
-void Container::closeFile()
-{
-    spdlog::info("Closing file: {}", mCtx.get().mInputStream.string());
-
-    mCtx.get().mDs.get().close();
-
-    mCtx.get().mFinishedParsing = true;
 }

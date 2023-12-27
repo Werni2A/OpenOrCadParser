@@ -11,9 +11,9 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "Enums/Color.hpp"
 #include "General.hpp"
+#include "Record.hpp"
 #include "Structures/StructSthInPages0.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 
@@ -24,11 +24,11 @@
           are derived from it and extract common code
           into it.
  */
-class StructGraphicInst : public CommonBase
+class StructGraphicInst : public Record
 {
 public:
 
-    StructGraphicInst(ParserContext& aCtx) : CommonBase{aCtx}, name{}, dbId{0},
+    StructGraphicInst(StreamContext& aCtx) : Record{aCtx}, name{}, dbId{0},
     locX{0}, locY{0}, x1{0}, y1{0}, x2{0}, y2{0}, color{Color::Default}, symbolDisplayProps{},
     sthInPages0{}
     { }

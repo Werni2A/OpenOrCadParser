@@ -6,14 +6,16 @@
 
 #include "Enums/Structure.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
 
 void StructGraphicInst::read(FutureDataLst& mLocalFutureLst, FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
-    readPreamble();
+    parser.readPreamble();
 
     mLocalFutureLst.checkpoint();
 
@@ -59,7 +61,7 @@ void StructGraphicInst::read(FutureDataLst& mLocalFutureLst, FileFormatVersion /
 
     for(size_t i = 0; i < lenSymbolDisplayProps; ++i)
     {
-        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(readStructure()));
+        symbolDisplayProps.push_back(dynamic_pointer_cast<StructSymbolDisplayProp>(parser.readStructure()));
     }
 
     // @todo This flag relates to Enums/Structure
@@ -78,7 +80,7 @@ void StructGraphicInst::read(FutureDataLst& mLocalFutureLst, FileFormatVersion /
         // StructGraphicCommentTextInst
         // StructGraphicLineInst
         case 0x02:
-            sthInPages0 = dynamic_pointer_cast<StructSthInPages0>(readStructure());
+            sthInPages0 = dynamic_pointer_cast<StructSthInPages0>(parser.readStructure());
             break;
 
         case 0x21: // StructGlobal

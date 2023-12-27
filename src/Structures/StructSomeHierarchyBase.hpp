@@ -10,8 +10,8 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Record.hpp"
 
 
 /*!
@@ -20,16 +20,16 @@
           are derived from it and extract common code
           into it.
  */
-class StructSomeHierarchyBase : public CommonBase
+class StructSomeHierarchyBase : public Record
 {
 public:
 
-    StructSomeHierarchyBase(ParserContext& aCtx) : CommonBase{aCtx}
+    StructSomeHierarchyBase(StreamContext& aCtx) : Record{aCtx}
     { }
 
     // std::string to_string() const override;
 
-    // virtual void accept(Visitor& aVisitor) const override
+    // void accept(Visitor& aVisitor) const override
     // {
     //     aVisitor.visit(*this);
     // }

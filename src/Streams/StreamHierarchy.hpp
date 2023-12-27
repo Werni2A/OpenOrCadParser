@@ -10,8 +10,8 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Stream.hpp"
 #include "Structures/StructNetDbIdMapping.hpp"
 #include "Structures/StructSomeHierarchyBase.hpp"
 #include "Structures/StructSthInHierarchy1.hpp"
@@ -19,11 +19,11 @@
 #include "Structures/StructT0x5b.hpp"
 
 
-class StreamHierarchy : public CommonBase
+class StreamHierarchy : public Stream
 {
 public:
 
-    StreamHierarchy(ParserContext& aCtx) : CommonBase{aCtx}, netDbIdMappings{},
+    StreamHierarchy(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, netDbIdMappings{},
         sthInHierarchy3s{}, t0x5bs{}, sthInHierarchy1s{}, someHierarchyBases{}
     { }
 
@@ -31,7 +31,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

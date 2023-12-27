@@ -21,7 +21,7 @@ class StructGlobalSymbol : public StructSymbol
 {
 public:
 
-    StructGlobalSymbol(ParserContext& aCtx) : StructSymbol{aCtx},
+    StructGlobalSymbol(StreamContext& aCtx) : StructSymbol{aCtx},
         symbolPins{}, symbolDisplayProps{}
     { }
 
@@ -29,7 +29,7 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

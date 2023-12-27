@@ -23,7 +23,7 @@ class StructSymbol : public StructSthInPages0
 {
 public:
 
-    StructSymbol(ParserContext& aCtx) : StructSthInPages0{aCtx}
+    StructSymbol(StreamContext& aCtx) : StructSthInPages0{aCtx}
     { }
 
     std::string to_string() const override;

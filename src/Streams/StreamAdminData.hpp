@@ -8,22 +8,22 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "CommonBase.hpp"
 #include "General.hpp"
+#include "Stream.hpp"
 
 
-class StreamAdminData : public CommonBase
+class StreamAdminData : public Stream
 {
 public:
 
-    StreamAdminData(ParserContext& aCtx) : CommonBase{aCtx}
+    StreamAdminData(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }

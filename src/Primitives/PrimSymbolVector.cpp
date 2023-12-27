@@ -7,13 +7,16 @@
 
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
+#include "FutureData.hpp"
 #include "General.hpp"
+#include "GenericParser.hpp"
 #include "Primitives/PrimSymbolVector.hpp"
 
 
 void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
 {
-    auto& ds = mCtx.get().mDs.get();
+    auto& ds = mCtx.mDs;
+    GenericParser parser{mCtx};
 
     spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
@@ -28,9 +31,9 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
 
     FutureDataLst localFutureLst{mCtx};
 
-    auto_read_prefixes(localFutureLst);
+    parser.auto_read_prefixes(localFutureLst);
 
-    readPreamble();
+    parser.readPreamble();
 
     locX = ds.readInt16();
     locY = ds.readInt16();
@@ -43,7 +46,7 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
     {
         const Primitive primitive = readSmallPrefixPrimitive();
 
-        readPrimitive(primitive);
+        parser.readPrimitive(primitive);
     }
 
     name = ds.readStringLenZeroTerm();

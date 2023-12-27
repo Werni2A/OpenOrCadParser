@@ -16,14 +16,14 @@ class StreamCellsDirectory : public StreamDirectoryStruct
 {
 public:
 
-    StreamCellsDirectory(ParserContext& aCtx) : StreamDirectoryStruct{aCtx}
+    StreamCellsDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    virtual void accept(Visitor& aVisitor) const override
+    void accept(Visitor& aVisitor) const override
     {
         aVisitor.visit(*this);
     }
