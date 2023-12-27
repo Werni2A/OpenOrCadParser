@@ -22,7 +22,7 @@ inline ParserConfig get_parser_config()
 {
     ParserConfig cfg{};
 
-    cfg.mThreadCount       = std::size_t{1U};
+    cfg.mThreadCount       = std::size_t{std::thread::hardware_concurrency()};
     cfg.mSkipUnknownPrim   = false;
     cfg.mSkipInvalidPrim   = false;
     cfg.mSkipUnknownStruct = false;
