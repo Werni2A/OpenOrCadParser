@@ -60,8 +60,12 @@ Container::Container(const fs::path& aCfbfContainer, ParserConfig aCfg) :
     const fs::path extractTo = fs::temp_directory_path() / "OpenOrCadParser" / uuid;
     mCtx.mExtractedCfbfPath = extractContainer(aCfbfContainer, extractTo);
 
-    spdlog::debug("Using parser configuration:");
-    spdlog::debug(to_string(mCfg));
+    // @todo This is a hack, since mExtractedCfbfPath is not available at construction of the context
+    const fs::path logPath = extractTo / "logs" / "OpenOrCadParser.log";
+    mCtx.configureLogger(logPath);
+
+    mCtx.mLogger.debug("Using parser configuration:");
+    mCtx.mLogger.debug(to_string(mCfg));
 }
 
 
@@ -72,7 +76,7 @@ Container::~Container()
         // Remove temporary extracted files
         fs::remove_all(mCtx.mExtractedCfbfPath.parent_path());
 
-        spdlog::debug("Deleted CFBF container at `{}`", mCtx.mExtractedCfbfPath.string());
+        mCtx.mLogger.debug("Deleted CFBF container at `{}`", mCtx.mExtractedCfbfPath.string());
     }
 }
 
@@ -125,9 +129,9 @@ std::vector<std::vector<ElementType*>> equallyDistributeElementsIntoLists(
  */
 void Container::parseLibrary()
 {
-    spdlog::info("Using {} threads", mCtx.mCfg.mThreadCount);
+    mCtx.mLogger.info("Using {} threads", mCtx.mCfg.mThreadCount);
 
-    spdlog::info("Start parsing library located at {}", mCtx.mExtractedCfbfPath.string());
+    mCtx.mLogger.info("Start parsing library located at {}", mCtx.mExtractedCfbfPath.string());
 
     // Parse all streams in the container i.e. files in the file system
     for(const auto& dir_entry : fs::recursive_directory_iterator(mCtx.mExtractedCfbfPath))
@@ -155,14 +159,14 @@ void Container::parseLibrary()
 
     for(std::size_t i{0U}; i < threadJobList.size(); ++i)
     {
-        spdlog::info("Assigning thread {} with the following {}/{} jobs:",
+        mCtx.mLogger.info("Assigning thread {} with the following {}/{} jobs:",
             i, threadJobList.at(i).size(), mFileCtr);
 
         const auto& threadJobs = threadJobList.at(i);
 
         for(const auto& job : threadJobs)
         {
-            spdlog::debug("    {}", (*job)->mCtx.mInputStream.string());
+            mCtx.mLogger.debug("    {}", (*job)->mCtx.mInputStream.string());
         }
     }
 
@@ -194,9 +198,9 @@ void Container::parseLibrary()
     errCtrStr = fmt::format((mFileErrCtr == 0u) ? fg(fmt::color::green) : fg(fmt::color::crimson),
         errCtrStr);
 
-    spdlog::info(errCtrStr);
+    mCtx.mLogger.info(errCtrStr);
 
-    // spdlog::info(to_string(mLibrary));
+    // mCtx.mLogger.info(to_string(mLibrary));
 }
 
 
@@ -208,17 +212,17 @@ void Container::exceptionHandling()
     }
     catch(const std::exception& e)
     {
-        spdlog::error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
-        spdlog::error(fmt::format(fg(fmt::color::crimson), "Input Container: {}", mCtx.mInputCfbfFile.string()));
+        mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
+        mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "Input Container: {}", mCtx.mInputCfbfFile.string()));
         // @todo
-        // spdlog::error(fmt::format(fg(fmt::color::crimson), "Current File:    {}", mCtx.mInputStream.string()));
-        // spdlog::error(fmt::format(fg(fmt::color::crimson), mCtx.mDs.getCurrentOffsetStrMsg()));
-        spdlog::error(fmt::format(fg(fmt::color::crimson), "\nError Message: {}\n\n", e.what()));
+        // mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "Current File:    {}", mCtx.mInputStream.string()));
+        // mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), mCtx.mDs.getCurrentOffsetStrMsg()));
+        mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "\nError Message: {}\n\n", e.what()));
     }
     catch(...)
     {
-        spdlog::error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
-        spdlog::error(fmt::format(fg(fmt::color::crimson), "Unknown exception caught!\n"));
+        mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
+        mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "Unknown exception caught!\n"));
     }
 }
 

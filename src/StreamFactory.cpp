@@ -35,7 +35,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
 {
     auto streamLoc = CfbfStreamLocation{aInputStream, aCtx.mExtractedCfbfPath};
 
-    spdlog::debug("Got stream location: {}", ::to_string(streamLoc));
+    aCtx.mLogger.debug("Got stream location: {}", ::to_string(streamLoc));
 
     const auto getErrMsg = [](const std::vector<std::optional<std::string>>& aPattern, const CfbfStreamLocation& aStreamLoc)
         {
@@ -65,7 +65,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"BundleMapData"};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -80,7 +80,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"Cells", std::nullopt};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -95,7 +95,15 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"CIS", "CISSchematicStore", "CISSchematicStream"};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
+        return std::unique_ptr<Stream>{};
+    }
+
+    // Match `/CIS/VariantStore/BOM/BOMDataStream`
+    pattern = {"CIS", "VariantStore", "BOM", "BOMDataStream"};
+    if(streamLoc.matches_pattern(pattern))
+    {
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -103,7 +111,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"CIS", "VariantStore", "BOM", std::nullopt, "BOMAmbugity"};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -111,7 +119,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"CIS", "VariantStore", "BOM", std::nullopt, "BOMPartData"};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -119,7 +127,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"CIS", "VariantStore", "BOM", std::nullopt, std::nullopt};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -127,7 +135,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"CIS", "VariantStore", "Groups", "GroupsDataStream"};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -135,7 +143,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"CIS", "VariantStore", "Groups", std::nullopt, std::nullopt};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -143,7 +151,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"CIS", "VariantStore", "VariantNames"};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -158,7 +166,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"ExportBlocks", std::nullopt};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -180,7 +188,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"Graphics", std::nullopt};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -202,7 +210,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"LayoutReuse", "ReuseSchematics"};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -238,7 +246,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"Parts", std::nullopt};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -253,7 +261,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"Symbols", "$Types$"};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -261,7 +269,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"Symbols", "ERC"};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -269,7 +277,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"Symbols", "ERC_PHYSICAL"};
     if(streamLoc.matches_pattern(pattern))
     {
-        spdlog::warn(getErrMsg(pattern, streamLoc));
+        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
         return std::unique_ptr<Stream>{};
     }
 
@@ -320,7 +328,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
         ::to_string(streamLoc)
         );
 
-    spdlog::warn(errMsg);
+    aCtx.mLogger.warn(errMsg);
 
     return std::unique_ptr<Stream>{};
 }

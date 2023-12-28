@@ -16,7 +16,7 @@ void StructERCSymbolInst::read(FileFormatVersion /* aVersion */)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -28,14 +28,14 @@ void StructERCSymbolInst::read(FileFormatVersion /* aVersion */)
     s1 = ds.readStringLenZeroTerm();
     s2 = ds.readStringLenZeroTerm();
 
-    spdlog::trace("s0 = {}", s0);
-    spdlog::trace("s1 = {}", s1);
-    spdlog::trace("s2 = {}", s2);
+    mCtx.mLogger.trace("s0 = {}", s0);
+    mCtx.mLogger.trace("s1 = {}", s1);
+    mCtx.mLogger.trace("s2 = {}", s2);
 
     localFutureLst.checkpoint();
 
     localFutureLst.sanitizeCheckpoints();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

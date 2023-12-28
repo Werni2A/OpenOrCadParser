@@ -11,9 +11,6 @@
 #include <string>
 #include <vector>
 
-#include <fmt/core.h>
-#include <spdlog/spdlog.h>
-
 #include "ContainerContext.hpp"
 #include "DataStream.hpp"
 #include "General.hpp"
@@ -31,13 +28,19 @@ class StreamContext : public ContainerContext
 public:
 
     StreamContext(const ContainerContext& aCtx, const fs::path& aInputStream)
-        : ContainerContext{aCtx}, mCfbfStreamLocation{mInputStream, mExtractedCfbfPath},
-          mDs{aInputStream}, mMtx{}
+        : ContainerContext{aCtx}, mInputStream{aInputStream}, mCfbfStreamLocation{mInputStream, mExtractedCfbfPath},
+          mDs{aInputStream, *this}, mMtx{}
     {
-        mInputStream = aInputStream;
         mImgCtr = 0U;
         mAttemptedParsing = false;
         mParsedSuccessfully = std::nullopt;
+
+        // Create stream specific logger
+        const fs::path logPath{
+            mExtractedCfbfPath.parent_path() / "logs"
+            / mInputCfbfFile.filename()
+            / mCfbfStreamLocation.get_relative_fs_path().concat(".log")};
+        configureLogger(logPath);
     }
 
     fs::path mInputStream; //!< Input CFBF stream as file in the file system

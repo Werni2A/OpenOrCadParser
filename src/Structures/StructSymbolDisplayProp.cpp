@@ -16,7 +16,7 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -35,7 +35,7 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
     {
         if(gLibrary->library)
         {
-            spdlog::trace("strLst Item = {}", gLibrary->library->strLst.at(nameIdx));
+            mCtx.mLogger.trace("strLst Item = {}", gLibrary->library->strLst.at(nameIdx));
         }
     }
 
@@ -73,7 +73,7 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
                 const std::string msg = fmt::format("{}: textFontIdx is out of range! Expected {} < {}!",
                     __func__, textFontIdx, gLibrary->library->textFonts.size());
 
-                spdlog::warn(msg);
+                mCtx.mLogger.warn(msg);
                 // throw std::out_of_range(msg);
             }
         }
@@ -98,6 +98,6 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.sanitizeCheckpoints();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

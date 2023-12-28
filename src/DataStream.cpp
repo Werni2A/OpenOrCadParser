@@ -8,6 +8,7 @@
 
 #include "DataStream.hpp"
 #include "General.hpp"
+#include "StreamContext.hpp"
 
 
 void DataStream::discardBytes(size_t aLen)
@@ -58,7 +59,7 @@ std::string DataStream::readStringZeroTerm()
         const std::string msg = fmt::format("Loop canceled because the string is unexpectedly large.\n"
             "More than {} characters! The following string was read until now:\n{}", max_chars, str);
 
-        spdlog::error(msg);
+        mCtx.mLogger.error(msg);
 
         throw std::runtime_error(msg);
     }
@@ -89,7 +90,7 @@ std::string DataStream::readStringLenTerm()
         {
             const std::string msg = "Didn't expect null byte within string!";
 
-            spdlog::error(msg);
+            mCtx.mLogger.error(msg);
 
             throw std::runtime_error(msg);
         }
@@ -103,7 +104,7 @@ std::string DataStream::readStringLenTerm()
         const std::string msg = "Loop cancled because the string is unexpectedly large. More than "
                                  + std::to_string(max_chars) + " characters!";
 
-        spdlog::error(msg);
+        mCtx.mLogger.error(msg);
 
         throw std::runtime_error(msg);
     }
@@ -126,7 +127,7 @@ std::string DataStream::readStringLenZeroTerm()
                                  + ") does not match the preceding length ("
                                  + std::to_string(len) + ") definition!";
 
-        spdlog::error(msg);
+        mCtx.mLogger.error(msg);
 
         throw std::runtime_error(msg);
     }
@@ -143,8 +144,8 @@ void DataStream::printUnknownData(size_t aLen, const std::string& aComment)
 
     if(aLen > 0u)
     {
-        spdlog::debug(aComment);
-        spdlog::debug(dataToStr(data));
+        mCtx.mLogger.debug(aComment);
+        mCtx.mLogger.debug(dataToStr(data));
     }
 }
 
@@ -160,7 +161,7 @@ void DataStream::padRest(size_t aStartOffset, size_t aBlockSize, bool aPadIsZero
                                  + " bytes but should have only been "
                                  + std::to_string(aBlockSize) + "!";
 
-        spdlog::debug(msg);
+        mCtx.mLogger.debug(msg);
 
         throw std::runtime_error(msg);
     }
@@ -177,7 +178,7 @@ void DataStream::padRest(size_t aStartOffset, size_t aBlockSize, bool aPadIsZero
             {
                 const std::string msg = "Padding byte is expected to be 0x00!";
 
-                spdlog::error(msg);
+                mCtx.mLogger.error(msg);
 
                 throw std::runtime_error(msg);
             }
@@ -199,7 +200,7 @@ std::string DataStream::getCurrentOffsetStrMsg()
 
 void DataStream::printData(const std::vector<uint8_t>& aData)
 {
-    spdlog::info(dataToStr(aData));
+    mCtx.mLogger.info(dataToStr(aData));
 }
 
 
@@ -272,7 +273,7 @@ void DataStream::assumeData(const std::vector<uint8_t>& aExpectedData, const std
             + "Expected:\n" + dataToStr(aExpectedData) +
             + "but got:\n" + dataToStr(data);
 
-        spdlog::debug(msg);
+        mCtx.mLogger.debug(msg);
 
         throw std::runtime_error(msg);
     }

@@ -14,7 +14,7 @@ void StreamSchematic::read(FileFormatVersion /* aVersion */)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -31,23 +31,23 @@ void StreamSchematic::read(FileFormatVersion /* aVersion */)
 
     const std::string schematic_name = ds.readStringLenZeroTerm();
 
-    spdlog::trace("schematic_name = {}", schematic_name);
+    mCtx.mLogger.trace("schematic_name = {}", schematic_name);
 
     ds.printUnknownData(4, getMethodName(this, __func__) + ": 1");
 
     const uint16_t schematicPages = ds.readUint16();
 
-    spdlog::trace("schematicPages = {}", schematicPages);
+    mCtx.mLogger.trace("schematicPages = {}", schematicPages);
 
     for(size_t i = 0u; i < schematicPages; ++i)
     {
         const std::string page_name = ds.readStringLenZeroTerm();
-        spdlog::trace("page_name = {}", page_name);
+        mCtx.mLogger.trace("page_name = {}", page_name);
     }
 
     const uint16_t len = ds.readUint16();
 
-    spdlog::trace("len = {}", len);
+    mCtx.mLogger.trace("len = {}", len);
 
     for(size_t i = 0u; i < len; ++i)
     {
@@ -56,7 +56,7 @@ void StreamSchematic::read(FileFormatVersion /* aVersion */)
 
     const uint16_t len2 = ds.readUint16();
 
-    spdlog::trace("len2 = {}", len2);
+    mCtx.mLogger.trace("len2 = {}", len2);
 
     for(size_t i = 0u; i < len2; ++i)
     {
@@ -70,6 +70,6 @@ void StreamSchematic::read(FileFormatVersion /* aVersion */)
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::info(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.info(to_string());
 }

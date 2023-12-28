@@ -13,7 +13,7 @@ void StructT0x35::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     // @todo Try to activate this part
     // FutureDataLst localFutureLst{mCtx};
@@ -30,31 +30,31 @@ void StructT0x35::read(FileFormatVersion /* aVersion */)
 
     id = ds.readUint32();
 
-    spdlog::trace("id = {}", id);
+    mCtx.mLogger.trace("id = {}", id);
 
     std::string unknownStr = ds.readStringLenZeroTerm();
 
-    spdlog::trace("unknownStr = {}", unknownStr);
+    mCtx.mLogger.trace("unknownStr = {}", unknownStr);
 
     uint32_t unknownInt = ds.readUint32();
 
-    spdlog::trace("unknownInt = {}", unknownInt);
+    mCtx.mLogger.trace("unknownInt = {}", unknownInt);
 
     color = ToColor(ds.readUint32());
 
-    spdlog::trace("color = {}", ::to_string(color));
+    mCtx.mLogger.trace("color = {}", ::to_string(color));
 
     lineStyle = ToLineStyle(ds.readUint32());
 
-    spdlog::trace("lineStyle = {}", ::to_string(lineStyle));
+    mCtx.mLogger.trace("lineStyle = {}", ::to_string(lineStyle));
 
     lineWidth = ToLineWidth(ds.readUint32());
 
-    spdlog::trace("lineWidth = {}", ::to_string(lineWidth));
+    mCtx.mLogger.trace("lineWidth = {}", ::to_string(lineWidth));
 
     const uint32_t len0 = ds.readUint16();
 
-    spdlog::trace("len0 = {}", len0);
+    mCtx.mLogger.trace("len0 = {}", len0);
 
     for(size_t i = 0; i < len0; ++i)
     {
@@ -64,6 +64,6 @@ void StructT0x35::read(FileFormatVersion /* aVersion */)
 
     // localFutureLst.readRestOfStructure();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

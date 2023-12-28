@@ -48,7 +48,7 @@ void GenericParser::discard_until_preamble()
             const std::string msg = fmt::format("{}: Unexpectedly reached end-of-file!",
                 getMethodName(this, __func__));
 
-            spdlog::debug(msg);
+            mCtx.mLogger.debug(msg);
             throw std::runtime_error(msg);
         }
     }
@@ -61,19 +61,18 @@ void GenericParser::discard_until_preamble()
 
     const size_t endOffset = mCtx.mDs.getCurrentOffset();
 
-    spdlog::debug("{}: Discarded {} Byte until next preamble",
+    mCtx.mLogger.debug("{}: Discarded {} Byte until next preamble",
         getMethodName(this, __func__), endOffset - startOffset);
 }
 
 
 Structure GenericParser::auto_read_prefixes(FutureDataLst& aFutureDataLst)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     const size_t startOffset = mCtx.mDs.getCurrentOffset();
 
-    const auto logLevel = spdlog::get_level();
-    spdlog::set_level(spdlog::level::off);
+    mCtx.mLogger.set_level(spdlog::level::off);
 
     bool failed = true;
     size_t prefixCtr = 0U;
@@ -119,7 +118,7 @@ Structure GenericParser::auto_read_prefixes(FutureDataLst& aFutureDataLst)
     // reset the EoF flag.
     mCtx.mDs.clear();
 
-    spdlog::set_level(logLevel);
+    mCtx.mLogger.set_level(mCtx.mLogLevel);
 
     if(failed)
     {
@@ -127,7 +126,7 @@ Structure GenericParser::auto_read_prefixes(FutureDataLst& aFutureDataLst)
             " (maximum is set to {} but could be higher)",
             getMethodName(this, __func__), maxPrefixes);
 
-        spdlog::debug(msg);
+        mCtx.mLogger.debug(msg);
         throw std::runtime_error(msg);
     }
 
@@ -137,13 +136,13 @@ Structure GenericParser::auto_read_prefixes(FutureDataLst& aFutureDataLst)
     //       I.e. figure out the numbers for each structure and move the
     //       parsing code into the structure specific parser. This should
     //       get rid of auto_read_prefixes.
-    spdlog::debug("{}: Found {} prefixes for {}\n",
+    mCtx.mLogger.debug("{}: Found {} prefixes for {}\n",
         getMethodName(this, __func__), prefixCtr, ::to_string(structure));
-    spdlog::debug("    {}", aFutureDataLst.string());
+    mCtx.mLogger.debug("    {}", aFutureDataLst.string());
 
     mCtx.mDs.sanitizeNoEoF();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     return structure;
 }
@@ -158,7 +157,7 @@ Structure GenericParser::auto_read_prefixes(Structure aExpectedStruct, FutureDat
         const std::string err = fmt::format("{}: Expected {} but got {}",
             getMethodName(this, __func__), ::to_string(aExpectedStruct), ::to_string(actualStruct));
 
-        spdlog::debug(err);
+        mCtx.mLogger.debug(err);
         throw std::runtime_error(err);
     }
 
@@ -183,7 +182,7 @@ Structure GenericParser::auto_read_prefixes(const std::vector<Structure>& aExpec
             std::accumulate(expectedStrStructs.cbegin(), expectedStrStructs.cend(), std::string{", "}),
             ::to_string(actualStruct));
 
-        spdlog::debug(err);
+        mCtx.mLogger.debug(err);
         throw std::runtime_error(err);
     }
 
@@ -194,7 +193,7 @@ Structure GenericParser::auto_read_prefixes(const std::vector<Structure>& aExpec
 // Read number of prefixes, where the last one is a short prefix
 Structure GenericParser::read_prefixes(size_t aNumber, FutureDataLst& aFutureDataLst)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     if(aNumber == 0U)
     {
@@ -237,30 +236,30 @@ Structure GenericParser::read_prefixes(size_t aNumber, FutureDataLst& aFutureDat
                 getMethodName(this, __func__), ::to_string(currStruct),
                 ::to_string(firstStruct));
 
-            spdlog::debug(msg);
+            mCtx.mLogger.debug(msg);
             throw std::runtime_error(msg);
         }
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     return firstStruct;
 }
 
 std::pair<Structure, uint32_t> GenericParser::read_single_prefix()
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     const Structure typeId = ToStructure(mCtx.mDs.readUint8());
 
     const uint32_t byteOffset = mCtx.mDs.readUint32();
 
-    spdlog::debug("{:>2} = {}: Offset = {}\n", static_cast<int>(typeId), ::to_string(typeId), byteOffset);
+    mCtx.mLogger.debug("{:>2} = {}: Offset = {}\n", static_cast<int>(typeId), ::to_string(typeId), byteOffset);
 
     mCtx.mDs.printUnknownData(4, getMethodName(this, __func__) + ": 0");
     // assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     return std::pair<Structure, uint32_t>{typeId, byteOffset};
 }
@@ -268,13 +267,13 @@ std::pair<Structure, uint32_t> GenericParser::read_single_prefix()
 
 std::pair<Structure, uint32_t> GenericParser::read_single_prefix_short()
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     const Structure typeId = ToStructure(mCtx.mDs.readUint8());
 
     const int16_t size = mCtx.mDs.readInt16();
 
-    spdlog::debug("{:>2} = {}: Size = {}\n", static_cast<int>(typeId), ::to_string(typeId), size);
+    mCtx.mLogger.debug("{:>2} = {}: Size = {}\n", static_cast<int>(typeId), ::to_string(typeId), size);
 
     if(size >= 0)
     {
@@ -307,14 +306,14 @@ std::pair<Structure, uint32_t> GenericParser::read_single_prefix_short()
                         return "";
                     };
 
-                spdlog::debug("  {}: {} <- {}", i, getStr(nameValueMapping.at(i).first), getStr(nameValueMapping.at(i).second));
+                mCtx.mLogger.debug("  {}: {} <- {}", i, getStr(nameValueMapping.at(i).first), getStr(nameValueMapping.at(i).second));
             }
             catch(const std::exception& e)
             {
                 const std::string msg = fmt::format("{}: Tried to access strLst out of range!\n{}",
                     getMethodName(this, __func__), e.what());
 
-                spdlog::debug(msg);
+                mCtx.mLogger.debug(msg);
                 throw std::out_of_range(msg);
             }
         }
@@ -323,10 +322,10 @@ std::pair<Structure, uint32_t> GenericParser::read_single_prefix_short()
     {
         // @todo Why is -1 used? The value 0 would also suffice...
         // Until now I only saw it for PinIdxMapping, Properties and SymbolDisplayProp
-        spdlog::debug("{}: What does {} mean?", ::to_string(typeId), size); // @todo Figure out
+        mCtx.mLogger.debug("{}: What does {} mean?", ::to_string(typeId), size); // @todo Figure out
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     return std::pair<Structure, uint32_t>{typeId, size};
 }
@@ -334,7 +333,7 @@ std::pair<Structure, uint32_t> GenericParser::read_single_prefix_short()
 
 void GenericParser::readPreamble()
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     const std::size_t startOffset = mCtx.mDs.getCurrentOffset();
 
@@ -349,16 +348,16 @@ void GenericParser::readPreamble()
         mCtx.mDs.printUnknownData(dataLen, fmt::format("{}: Trailing preamble data",
             getMethodName(this, __func__)));
 
-        // spdlog::debug("{}: Found preamble", getMethodName(this, __func__));
+        // mCtx.mLogger.debug("{}: Found preamble", getMethodName(this, __func__));
     }
     catch(const std::runtime_error& err)
     {
         mCtx.mDs.setCurrentOffset(startOffset);
 
-        spdlog::debug("{}: Skipping preamble", getMethodName(this, __func__));
+        mCtx.mLogger.debug("{}: Skipping preamble", getMethodName(this, __func__));
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 }
 
 
@@ -373,7 +372,7 @@ Primitive GenericParser::readPrefixPrimitive()
             getMethodName(this, __func__), ::to_string(primitive1),
             ::to_string(primitive2));
 
-        spdlog::debug(msg);
+        mCtx.mLogger.debug(msg);
         throw std::runtime_error(msg);
     }
 
@@ -383,13 +382,13 @@ Primitive GenericParser::readPrefixPrimitive()
 
 std::unique_ptr<Record> GenericParser::readPrimitive()
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     Primitive typeId = ToPrimitive(mCtx.mDs.peek(1)[0]);
 
     std::unique_ptr<Record> obj = readPrimitive(typeId);
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     return obj;
 }
@@ -397,7 +396,7 @@ std::unique_ptr<Record> GenericParser::readPrimitive()
 
 std::unique_ptr<Record> GenericParser::readPrimitive(Primitive aPrimitive)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     const size_t startOffset = mCtx.mDs.getCurrentOffset();
 
@@ -413,7 +412,7 @@ std::unique_ptr<Record> GenericParser::readPrimitive(Primitive aPrimitive)
         {
             if(mCtx.mCfg.mSkipInvalidPrim)
             {
-                spdlog::debug("{}: Skipping invalid Primitive {}",
+                mCtx.mLogger.debug("{}: Skipping invalid Primitive {}",
                     getMethodName(this, __func__), ::to_string(aPrimitive));
 
                 // Reset file position to the state before
@@ -442,14 +441,14 @@ std::unique_ptr<Record> GenericParser::readPrimitive(Primitive aPrimitive)
         const std::string msg = fmt::format("{}: Primitive {} is not implemented!",
             getMethodName(this, __func__), ::to_string(aPrimitive));
 
-        spdlog::debug(msg);
+        mCtx.mLogger.debug(msg);
 
         if(!mCtx.mCfg.mSkipUnknownPrim)
         {
             throw std::runtime_error(msg);
         }
 
-        spdlog::debug("{}: Skipping unimplemented Primitive {}",
+        mCtx.mLogger.debug("{}: Skipping unimplemented Primitive {}",
             getMethodName(this, __func__), ::to_string(aPrimitive));
 
         const uint32_t byteLength = mCtx.mDs.readUint32();
@@ -460,7 +459,7 @@ std::unique_ptr<Record> GenericParser::readPrimitive(Primitive aPrimitive)
         readPreamble();
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     return obj;
 }
@@ -468,13 +467,13 @@ std::unique_ptr<Record> GenericParser::readPrimitive(Primitive aPrimitive)
 
 std::unique_ptr<Record> GenericParser::readStructure()
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     Structure typeId = ToStructure(mCtx.mDs.peek(1)[0]);
 
     std::unique_ptr<Record> obj = readStructure(typeId);
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     return obj;
 }
@@ -482,7 +481,7 @@ std::unique_ptr<Record> GenericParser::readStructure()
 
 std::unique_ptr<Record> GenericParser::readStructure(Structure aStructure)
 {
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     const size_t startOffset = mCtx.mDs.getCurrentOffset();
 
@@ -498,7 +497,7 @@ std::unique_ptr<Record> GenericParser::readStructure(Structure aStructure)
         {
             if(mCtx.mCfg.mSkipInvalidStruct)
             {
-                spdlog::debug("{}: Skipping invalid Structure {}",
+                mCtx.mLogger.debug("{}: Skipping invalid Structure {}",
                     getMethodName(this, __func__), ::to_string(aStructure));
 
                 // Reset file position to the state before
@@ -526,14 +525,14 @@ std::unique_ptr<Record> GenericParser::readStructure(Structure aStructure)
         const std::string msg = fmt::format("{}: Structure {} is unimplemented!",
             getMethodName(this, __func__), ::to_string(aStructure));
 
-        spdlog::debug(msg);
+        mCtx.mLogger.debug(msg);
 
         if(!mCtx.mCfg.mSkipUnknownStruct)
         {
             throw std::runtime_error(msg);
         }
 
-        spdlog::debug("{}: Skipping unimplemented Structure {}",
+        mCtx.mLogger.debug("{}: Skipping unimplemented Structure {}",
             getMethodName(this, __func__), ::to_string(aStructure));
 
         FutureDataLst localFutureDataLst{mCtx};
@@ -543,7 +542,7 @@ std::unique_ptr<Record> GenericParser::readStructure(Structure aStructure)
         localFutureDataLst.readRestOfStructure();
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     return obj;
 }
@@ -612,8 +611,7 @@ FileFormatVersion GenericParser::predictVersion(std::function<void(FileFormatVer
 
     // Testing different versions on a try and error basis
     // should not write into log files
-    const auto logLevel = spdlog::get_level();
-    spdlog::set_level(spdlog::level::off);
+    mCtx.mLogger.set_level(spdlog::level::off);
 
     for(const auto& version : versions)
     {
@@ -638,9 +636,9 @@ FileFormatVersion GenericParser::predictVersion(std::function<void(FileFormatVer
     }
 
     // Restore user log level
-    spdlog::set_level(logLevel);
+    mCtx.mLogger.set_level(mCtx.mLogLevel);
 
-    spdlog::debug("{}: Predicted version to be {}",
+    mCtx.mLogger.debug("{}: Predicted version to be {}",
         getMethodName(this, __func__), magic_enum::enum_name(prediction));
 
     if(prediction == FileFormatVersion::Unknown)
@@ -649,7 +647,7 @@ FileFormatVersion GenericParser::predictVersion(std::function<void(FileFormatVer
         // Set to previous default value
         // s.t. tests not fail
         prediction = FileFormatVersion::C;
-        spdlog::debug("{}: Setting version to {} anyway",
+        mCtx.mLogger.debug("{}: Setting version to {} anyway",
             getMethodName(this, __func__), magic_enum::enum_name(prediction));
     }
 

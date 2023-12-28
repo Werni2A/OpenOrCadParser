@@ -18,7 +18,7 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -33,7 +33,7 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
 
     const uint16_t pinCount = ds.readUint16();
 
-    spdlog::trace("pinCount = {}", pinCount);
+    mCtx.mLogger.trace("pinCount = {}", pinCount);
 
     // @todo Add to kaitai file i = 'Order' of pin
     // See OrCAD: 'Pin Properties' -> 'Order'
@@ -54,7 +54,7 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
         {
             const int16_t strLen = ds.readInt16();
 
-            spdlog::trace("strLen = {}", strLen);
+            mCtx.mLogger.trace("strLen = {}", strLen);
 
             continue;
         }
@@ -72,17 +72,17 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
         // @note The special case of value 127 that represents an empty group
         pinGroup.push_back(bitMapPinGrpCfg & 0x7f);
 
-        spdlog::trace("pinIgnore = {}", pinIgnore.back());
+        mCtx.mLogger.trace("pinIgnore = {}", pinIgnore.back());
         const std::string strPinGroup = (pinGroup.back() != 127U)
             ? std::to_string(pinGroup.back())
             : std::string{};
-        spdlog::trace("pinGroup  = {:>3}", strPinGroup);
+        mCtx.mLogger.trace("pinGroup  = {:>3}", strPinGroup);
     }
 
     localFutureLst.checkpoint();
 
     localFutureLst.sanitizeCheckpoints();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

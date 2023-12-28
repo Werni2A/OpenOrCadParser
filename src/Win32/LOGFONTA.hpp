@@ -27,7 +27,7 @@ public:
 
     void read(StreamContext& aCtx)
     {
-        spdlog::debug(getOpeningMsg(getMethodName(this, __func__), aCtx.mDs.getCurrentOffset()));
+        aCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), aCtx.mDs.getCurrentOffset()));
 
         const auto buffer = aCtx.mDs.readBytes(sizeof(*this));
 
@@ -48,8 +48,8 @@ public:
             throw std::runtime_error(fmt::format("lfQuality <= 6 must hold but lfQuality = {}", lfQuality));
         }
 
-        spdlog::debug(getClosingMsg(getMethodName(this, __func__), aCtx.mDs.getCurrentOffset()));
-        spdlog::trace(to_string());
+        aCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), aCtx.mDs.getCurrentOffset()));
+        aCtx.mLogger.trace(to_string());
     }
 
     void accept(Visitor& aVisitor) const

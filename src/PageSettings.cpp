@@ -12,13 +12,13 @@ void PageSettings::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     createDateTime = static_cast<time_t>(ds.readUint32());
     modifyDateTime = static_cast<time_t>(ds.readUint32());
 
-    spdlog::trace("createDateTime = {}", DateTimeToStr(createDateTime));
-    spdlog::trace("modifyDateTime = {}", DateTimeToStr(modifyDateTime));
+    mCtx.mLogger.trace("createDateTime = {}", DateTimeToStr(createDateTime));
+    mCtx.mLogger.trace("modifyDateTime = {}", DateTimeToStr(modifyDateTime));
 
     ds.printUnknownData(4, getMethodName(this, __func__) + ": 0");
     ds.printUnknownData(4, getMethodName(this, __func__) + ": 1");
@@ -28,28 +28,28 @@ void PageSettings::read(FileFormatVersion /* aVersion */)
     width  = ds.readUint32();
     height = ds.readUint32();
 
-    spdlog::trace("width  = {}", width);
-    spdlog::trace("height = {}", height);
+    mCtx.mLogger.trace("width  = {}", width);
+    mCtx.mLogger.trace("height = {}", height);
 
     pinToPin = ds.readUint32();
 
-    spdlog::trace("pinToPin = {}", pinToPin);
+    mCtx.mLogger.trace("pinToPin = {}", pinToPin);
 
     ds.printUnknownData(2, getMethodName(this, __func__) + ": 4");
 
     horizontalCount = ds.readUint16();
     verticalCount   = ds.readUint16();
 
-    spdlog::trace("horizontalCount = {}", horizontalCount);
-    spdlog::trace("verticalCount   = {}", verticalCount);
+    mCtx.mLogger.trace("horizontalCount = {}", horizontalCount);
+    mCtx.mLogger.trace("verticalCount   = {}", verticalCount);
 
     ds.printUnknownData(2, getMethodName(this, __func__) + ": 5");
 
     horizontalWidth = ds.readUint32();
     verticalWidth   = ds.readUint32();
 
-    spdlog::trace("horizontalWidth = {}", horizontalWidth);
-    spdlog::trace("verticalWidth   = {}", verticalWidth);
+    mCtx.mLogger.trace("horizontalWidth = {}", horizontalWidth);
+    mCtx.mLogger.trace("verticalWidth   = {}", verticalWidth);
 
     ds.printUnknownData(4, getMethodName(this, __func__) + ": 6");
     ds.printUnknownData(4, getMethodName(this, __func__) + ": 7");
@@ -66,23 +66,23 @@ void PageSettings::read(FileFormatVersion /* aVersion */)
 
     horizontalChar = ds.readUint32();
 
-    spdlog::trace("horizontalChar = {}", horizontalChar);
+    mCtx.mLogger.trace("horizontalChar = {}", horizontalChar);
 
     ds.printUnknownData(4, getMethodName(this, __func__) + ": 18");
 
     horizontalAscending = ds.readUint32();
 
-    spdlog::trace("horizontalAscending = {}", horizontalAscending);
+    mCtx.mLogger.trace("horizontalAscending = {}", horizontalAscending);
 
     verticalChar   = ds.readUint32();
 
-    spdlog::trace("verticalChar = {}", verticalChar);
+    mCtx.mLogger.trace("verticalChar = {}", verticalChar);
 
     ds.printUnknownData(4, getMethodName(this, __func__) + ": 19");
 
     verticalAscending = ds.readUint32();
 
-    spdlog::trace("verticalAscending = {}", verticalAscending);
+    mCtx.mLogger.trace("verticalAscending = {}", verticalAscending);
 
     isMetric            = ds.readUint32();
     borderDisplayed     = ds.readUint32();
@@ -93,15 +93,15 @@ void PageSettings::read(FileFormatVersion /* aVersion */)
     titleblockPrinted   = ds.readUint32();
     ansiGridRefs        = ds.readUint32(); // @todo In the XML it's always 1, maybe a bug in OrCad?
 
-    spdlog::trace("isMetric            = {}", isMetric);
-    spdlog::trace("borderDisplayed     = {}", borderDisplayed);
-    spdlog::trace("borderPrinted       = {}", borderPrinted);
-    spdlog::trace("gridRefDisplayed    = {}", gridRefDisplayed);
-    spdlog::trace("gridRefPrinted      = {}", gridRefPrinted);
-    spdlog::trace("titleblockDisplayed = {}", titleblockDisplayed);
-    spdlog::trace("titleblockPrinted   = {}", titleblockPrinted);
-    spdlog::trace("ansiGridRefs        = {}", ansiGridRefs);
+    mCtx.mLogger.trace("isMetric            = {}", isMetric);
+    mCtx.mLogger.trace("borderDisplayed     = {}", borderDisplayed);
+    mCtx.mLogger.trace("borderPrinted       = {}", borderPrinted);
+    mCtx.mLogger.trace("gridRefDisplayed    = {}", gridRefDisplayed);
+    mCtx.mLogger.trace("gridRefPrinted      = {}", gridRefPrinted);
+    mCtx.mLogger.trace("titleblockDisplayed = {}", titleblockDisplayed);
+    mCtx.mLogger.trace("titleblockPrinted   = {}", titleblockPrinted);
+    mCtx.mLogger.trace("ansiGridRefs        = {}", ansiGridRefs);
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

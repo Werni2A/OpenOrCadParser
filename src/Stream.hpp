@@ -27,14 +27,14 @@ public:
 
     void openFile()
     {
-        spdlog::info("Opening file: {}", mCtx.mInputStream.string());
+        mCtx.mLogger.info("Opening file: {}", mCtx.mInputStream.string());
 
-        spdlog::info("File contains {} byte.", fs::file_size(mCtx.mInputStream));
+        mCtx.mLogger.info("File contains {} byte.", fs::file_size(mCtx.mInputStream));
     }
 
     void closeFile()
     {
-        spdlog::info("Closing file: {}", mCtx.mInputStream.string());
+        mCtx.mLogger.info("Closing file: {}", mCtx.mInputStream.string());
 
         mCtx.mDs.close();
     }

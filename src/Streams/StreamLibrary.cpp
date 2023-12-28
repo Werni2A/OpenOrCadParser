@@ -22,7 +22,7 @@ void StreamLibrary::read(FileFormatVersion aVersion)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     if(aVersion == FileFormatVersion::Unknown)
     {
@@ -45,14 +45,14 @@ void StreamLibrary::read(FileFormatVersion aVersion)
     // write_data_to_file(buffer, sizeof(buffer));
     ds.padRest(startOffset, 32, false);
 
-    spdlog::trace("introduction = {}", introduction);
+    mCtx.mLogger.trace("introduction = {}", introduction);
 
     // I saw versions:
     // 2.0; 3.2; 3.3
     const uint16_t versionMajor = ds.readUint16();
     const uint16_t versionMinor = ds.readUint16();
 
-    spdlog::trace("version = {}.{}", versionMajor, versionMinor);
+    mCtx.mLogger.trace("version = {}.{}", versionMajor, versionMinor);
 
     createDate = static_cast<time_t>(ds.readUint32());
     modifyDate = static_cast<time_t>(ds.readUint32());
@@ -64,7 +64,7 @@ void StreamLibrary::read(FileFormatVersion aVersion)
     //       is there some correlation?
     const uint16_t textFontLen = ds.readUint16();
 
-    spdlog::trace("textFontLen = {}", textFontLen);
+    mCtx.mLogger.trace("textFontLen = {}", textFontLen);
 
     if(textFontLen == 0u)
     {
@@ -80,13 +80,13 @@ void StreamLibrary::read(FileFormatVersion aVersion)
 
     const uint16_t someLen = ds.readUint16();
 
-    spdlog::trace("someLen = {}", someLen);
+    mCtx.mLogger.trace("someLen = {}", someLen);
 
     for(int i = 0; i < someLen; ++i)
     {
         const uint16_t someData = ds.readUint16();
 
-        spdlog::trace("someData [{}] = {}", i, someData);
+        mCtx.mLogger.trace("someData [{}] = {}", i, someData);
     }
 
     ds.printUnknownData(4, getMethodName(this, __func__) + ": 2.0");
@@ -100,7 +100,7 @@ void StreamLibrary::read(FileFormatVersion aVersion)
     {
         strLstPartField.push_back(ds.readStringLenZeroTerm());
 
-        spdlog::trace("strLstPartField[{}] = {}", i, strLstPartField.back());
+        mCtx.mLogger.trace("strLstPartField[{}] = {}", i, strLstPartField.back());
     }
 
     pageSettings.read();
@@ -117,18 +117,18 @@ void StreamLibrary::read(FileFormatVersion aVersion)
         strLstLen = ds.readUint32();
     }
 
-    spdlog::trace("strLstLen = {}", strLstLen);
+    mCtx.mLogger.trace("strLstLen = {}", strLstLen);
 
     for(size_t i = 0u; i < strLstLen; ++i)
     {
         strLst.push_back(ds.readStringLenZeroTerm());
 
-        spdlog::trace("strLst[{}] = {}", i, strLst.back());
+        mCtx.mLogger.trace("strLst[{}] = {}", i, strLst.back());
     }
 
     const uint16_t aliasLstLen = ds.readUint16();
 
-    spdlog::trace("aliasLstLen = {}", aliasLstLen);
+    mCtx.mLogger.trace("aliasLstLen = {}", aliasLstLen);
 
     for(size_t i = 0u; i < aliasLstLen; ++i)
     {
@@ -136,14 +136,14 @@ void StreamLibrary::read(FileFormatVersion aVersion)
         const std::string package = ds.readStringLenZeroTerm();
         partAliases.push_back(std::make_pair(alias, package));
 
-        spdlog::trace("partAliases[{}] = (alias = {}, package = {})", i, alias, package);
+        mCtx.mLogger.trace("partAliases[{}] = (alias = {}, package = {})", i, alias, package);
     }
 
     if(mCtx.mFileType == FileType::Schematic)
     {
         ds.printUnknownData(8, getMethodName(this, __func__) + ": 5");
         std::string schematicName = ds.readStringLenZeroTerm();
-        spdlog::trace("schematicName = {}", schematicName);
+        mCtx.mLogger.trace("schematicName = {}", schematicName);
     }
 
     if(!ds.isEoF())
@@ -151,6 +151,6 @@ void StreamLibrary::read(FileFormatVersion aVersion)
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::info(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.info(to_string());
 }

@@ -20,7 +20,7 @@ void StructSymbolPin::read(FileFormatVersion /* aVersion */)
     GenericParser parser{mCtx};
 
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -37,7 +37,7 @@ void StructSymbolPin::read(FileFormatVersion /* aVersion */)
     hotptX = ds.readInt32();
     hotptY = ds.readInt32();
 
-    pinShape = ToPinShape(ds.readUint16());
+    pinShape = ToPinShape(ds.readUint16(), mCtx.mLogger);
 
     ds.printUnknownData(2, getMethodName(this, __func__) + ": 0");
 
@@ -47,7 +47,7 @@ void StructSymbolPin::read(FileFormatVersion /* aVersion */)
 
     const uint16_t lenSymbolDisplayProps = ds.readUint16();
 
-    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
+    mCtx.mLogger.trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
     for(size_t i = 0; i < lenSymbolDisplayProps; ++i)
     {
@@ -58,6 +58,6 @@ void StructSymbolPin::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.sanitizeCheckpoints();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

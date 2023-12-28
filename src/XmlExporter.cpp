@@ -456,7 +456,8 @@ void XmlExporter::visit(const StructT0x1f& aObj)
 
     for(size_t i = 0U; i < aObj.pinIdxMappings.size(); ++i)
     {
-        assert(aObj.pinIdxMappings.at(i)->pinMap.size() == aObj.pinIdxMappings.at(i)->pinIgnore.size() == aObj.pinIdxMappings.at(i)->pinGroup.size());
+        assert(aObj.pinIdxMappings.at(i)->pinMap.size() == aObj.pinIdxMappings.at(i)->pinIgnore.size());
+        assert(aObj.pinIdxMappings.at(i)->pinMap.size() == aObj.pinIdxMappings.at(i)->pinGroup.size());
 
         for(size_t position = 0U; position < aObj.pinIdxMappings.at(i)->pinMap.size(); ++position)
         {

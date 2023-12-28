@@ -15,20 +15,20 @@ void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     ds.printUnknownData(2, fmt::format("{}: 0", getMethodName(this, __func__)));
 
     uint16_t number_groups = ds.readUint16();
 
-    spdlog::trace("number_groups = {}", number_groups);
+    mCtx.mLogger.trace("number_groups = {}", number_groups);
 
     for(size_t i = 0U; i < number_groups; ++i)
     {
-        spdlog::trace("[{}]:", i);
+        mCtx.mLogger.trace("[{}]:", i);
 
         std::string group_name = ds.readStringLenZeroTerm();
-        spdlog::trace("group_name = {}:", group_name);
+        mCtx.mLogger.trace("group_name = {}:", group_name);
 
         // ----------------------------------------
 
@@ -53,12 +53,12 @@ void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
         for(size_t j = 0U; j < number_group_elements; ++j)
         {
             std::string element_name = ds.readStringLenZeroTerm();
-            spdlog::trace("  [{}]: element_name = {}", j, element_name);
+            mCtx.mLogger.trace("  [{}]: element_name = {}", j, element_name);
 
             // @todo 0x01 is probably a scalar wire
             //       0x02 is probably a bus
             uint16_t wire_type = ds.readUint16();
-            spdlog::trace("       wire_type = {}", wire_type == 0x01 ? "Scalar" : wire_type == 0x02 ? "Bus" : "Unknown");
+            mCtx.mLogger.trace("       wire_type = {}", wire_type == 0x01 ? "Scalar" : wire_type == 0x02 ? "Bus" : "Unknown");
         }
     }
 
@@ -67,6 +67,6 @@ void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::info(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.info(to_string());
 }

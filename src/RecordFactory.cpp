@@ -120,7 +120,7 @@ std::unique_ptr<Record> RecordFactory::build(StreamContext& aCtx, Structure aStr
             {
                 const std::string errMsg = fmt::format(
                     "RecordFactory can not yet build {}", to_string(aStructure));
-                spdlog::error(errMsg);
+                aCtx.mLogger.error(errMsg);
             }
     }
 
@@ -146,7 +146,7 @@ std::unique_ptr<Record> RecordFactory::build(StreamContext& aCtx, Primitive aPri
             {
                 const std::string errMsg = fmt::format(
                     "RecordFactory can not yet build {}", to_string(aPrimitive));
-                spdlog::error(errMsg);
+                aCtx.mLogger.error(errMsg);
             }
     }
 

@@ -18,7 +18,7 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     const auto readSmallPrefixPrimitive = [&, this]() -> Primitive
         {
@@ -40,7 +40,7 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
 
     const uint16_t lenPrimitives = ds.readUint16();
 
-    spdlog::trace("lenPrimitives = {}", lenPrimitives);
+    mCtx.mLogger.trace("lenPrimitives = {}", lenPrimitives);
 
     for(size_t i = 0u; i < lenPrimitives; ++i)
     {
@@ -56,6 +56,6 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
     // ds.printUnknownData(12, getMethodName(this, __func__) + ": 2");
 
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

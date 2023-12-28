@@ -43,7 +43,7 @@ void PrimEllipse::read(FileFormatVersion aVersion)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     const size_t startOffset = ds.getCurrentOffset();
 
@@ -89,6 +89,6 @@ void PrimEllipse::read(FileFormatVersion aVersion)
 
     parser.readPreamble();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

@@ -16,27 +16,27 @@ void StructGeneralProperties::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     implementationPath = ds.readStringLenZeroTerm();
 
-    spdlog::trace("implementationPath = {}", implementationPath);
+    mCtx.mLogger.trace("implementationPath = {}", implementationPath);
 
     implementation = ds.readStringLenZeroTerm();
 
-    spdlog::trace("implementation = {}", implementation);
+    mCtx.mLogger.trace("implementation = {}", implementation);
 
     refDes = ds.readStringLenZeroTerm();
 
-    spdlog::trace("refDes = {}", refDes);
+    mCtx.mLogger.trace("refDes = {}", refDes);
 
     partValue = ds.readStringLenZeroTerm();
 
-    spdlog::trace("partValue = {}", partValue);
+    mCtx.mLogger.trace("partValue = {}", partValue);
 
     const uint8_t properties = ds.readUint8();
 
-    spdlog::trace("properties = {}", properties);
+    mCtx.mLogger.trace("properties = {}", properties);
 
     // Expect that upper bits are unused => 00xx xxxxb
     if((properties & 0xc0) != 0x00)
@@ -57,6 +57,6 @@ void StructGeneralProperties::read(FileFormatVersion /* aVersion */)
     // @todo Maybe merge with bit field above?
     ds.assumeData({0}, getMethodName(this, __func__) + ": 0");
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

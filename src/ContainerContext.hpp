@@ -11,6 +11,7 @@
 #include <vector>
 
 #include <fmt/core.h>
+#include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
@@ -45,6 +46,20 @@ public:
         }
 
         mStreamLocation = std::move(streamLocation);
+    }
+
+    fs::path get_relative_fs_path() const
+    {
+        const auto vec = get_vector();
+
+        fs::path fsPath{};
+
+        for(const auto& part : vec)
+        {
+            fsPath = fsPath / part;
+        }
+
+        return fsPath;
     }
 
     const std::vector<std::string>& get_vector() const
@@ -154,22 +169,44 @@ class ContainerContext
 public:
 
     ContainerContext(const fs::path& aInputCfbfFile,
-        const fs::path& aExtractedCfbfPath, ParserConfig aCfg, Container& aContainer) : mContainer{aContainer}
+        const fs::path& aExtractedCfbfPath, ParserConfig aCfg, Container& aContainer) : mContainer{aContainer},
+            mLogger{"tmp"}
     {
         mInputCfbfFile = aInputCfbfFile;
         mExtractedCfbfPath = aExtractedCfbfPath;
         mCfg = aCfg;
         mFileFormatVersion = FileFormatVersion::C;
         mFileType = FileType::Library;
+        mLogLevel = spdlog::level::trace;
+
+        const fs::path logPath = mExtractedCfbfPath / "logs" / "OpenOrCadParser.log";
+        configureLogger(logPath);
     }
 
-    ContainerContext(const ContainerContext& aCtx) : mContainer{aCtx.mContainer}
+    ContainerContext(const ContainerContext& aCtx) : mContainer{aCtx.mContainer}, mLogger{"tmp"}
     {
         mInputCfbfFile = aCtx.mInputCfbfFile;
         mExtractedCfbfPath = aCtx.mExtractedCfbfPath;
         mCfg = aCtx.mCfg;
         mFileFormatVersion = aCtx.mFileFormatVersion;
         mFileType = aCtx.mFileType;
+        mLogLevel = aCtx.mLogLevel;
+    }
+
+    void configureLogger(const fs::path& aLogPath)
+    {
+        if(aLogPath.has_parent_path())
+        {
+            fs::create_directories(aLogPath.parent_path());
+        }
+
+        auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(aLogPath);
+        mLogger = spdlog::logger{"file logger", {file_sink}};
+        mLogger.set_pattern("[%^%l%$] %v");
+        mLogger.set_level(mLogLevel);
+
+        mLogger.info("Created log file at {}", aLogPath.string());
+        spdlog::info("Created log file at {}", aLogPath.string());
     }
 
     Container& mContainer;
@@ -181,6 +218,9 @@ public:
 
     FileFormatVersion mFileFormatVersion;
     FileType mFileType;
+
+    spdlog::level::level_enum mLogLevel;
+    spdlog::logger mLogger;
 };
 
 
