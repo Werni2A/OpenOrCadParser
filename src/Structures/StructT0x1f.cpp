@@ -19,7 +19,7 @@ void StructT0x1f::read(FileFormatVersion /* aVersion */)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -31,25 +31,25 @@ void StructT0x1f::read(FileFormatVersion /* aVersion */)
 
     name = ds.readStringLenZeroTerm();
 
-    spdlog::trace("name = {}", name);
+    mCtx.mLogger.trace("name = {}", name);
 
     std::string unknownStr0 = ds.readStringLenZeroTerm(); // @todo figure out
-    spdlog::trace("{}: unknownStr0 = {}", __func__, unknownStr0);
+    mCtx.mLogger.trace("{}: unknownStr0 = {}", __func__, unknownStr0);
 
     localFutureLst.checkpoint();
 
     refDes = ds.readStringLenZeroTerm();
 
-    spdlog::trace("refDes = {}", refDes);
+    mCtx.mLogger.trace("refDes = {}", refDes);
 
     std::string unknownStr1 = ds.readStringLenZeroTerm(); // @todo figure out
-    spdlog::trace("{}: unknownStr1 = {}", __func__, unknownStr1);
+    mCtx.mLogger.trace("{}: unknownStr1 = {}", __func__, unknownStr1);
 
     pcbFootprint = ds.readStringLenZeroTerm();
 
     const uint16_t lenPinIdxMappings = ds.readUint16();
 
-    spdlog::trace("lenPinIdxMappings = {}", lenPinIdxMappings);
+    mCtx.mLogger.trace("lenPinIdxMappings = {}", lenPinIdxMappings);
 
     for(size_t i = 0u; i < lenPinIdxMappings; ++i)
     {
@@ -60,6 +60,6 @@ void StructT0x1f::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.sanitizeCheckpoints();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

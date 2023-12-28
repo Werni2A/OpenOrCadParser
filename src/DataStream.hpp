@@ -21,6 +21,7 @@
 
 class FutureDataLst;
 class Record;
+class StreamContext;
 
 
 namespace fs = std::filesystem;
@@ -30,10 +31,10 @@ class DataStream : public std::ifstream
 {
 public:
 
-    DataStream() : std::ifstream{}
-    { }
+    // DataStream() : std::ifstream{}
+    // { }
 
-    DataStream(const fs::path& aFile) : std::ifstream{aFile, std::ifstream::binary}
+    DataStream(const fs::path& aFile, StreamContext& aCtx) : std::ifstream{aFile, std::ifstream::binary}, mCtx{aCtx}
     { }
 
     // Checks whether the stream has reached the end of the file.
@@ -215,6 +216,8 @@ public:
     std::string dataToStr(const std::vector<uint8_t>& aData);
 
     void assumeData(const std::vector<uint8_t>& aExpectedData, const std::string& aComment = "");
+
+    StreamContext& mCtx;
 };
 
 

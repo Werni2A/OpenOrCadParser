@@ -16,7 +16,7 @@ void StructT0x10::read(FileFormatVersion /* aVersion */)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -28,25 +28,25 @@ void StructT0x10::read(FileFormatVersion /* aVersion */)
 
     const uint16_t sth = ds.readUint16();
 
-    spdlog::trace("sth = {}", sth);
+    mCtx.mLogger.trace("sth = {}", sth);
 
     const int16_t pointX = ds.readInt16();
     const int16_t pointY = ds.readInt16();
 
-    spdlog::trace("pointX = {}", pointX);
-    spdlog::trace("pointY = {}", pointY);
+    mCtx.mLogger.trace("pointX = {}", pointX);
+    mCtx.mLogger.trace("pointY = {}", pointY);
 
     const uint32_t maybeId = ds.readUint32();
 
-    spdlog::trace("maybeId = {}", maybeId);
+    mCtx.mLogger.trace("maybeId = {}", maybeId);
 
     const uint32_t unkownInt = ds.readUint32();
 
-    spdlog::trace("unkownInt = {}", unkownInt);
+    mCtx.mLogger.trace("unkownInt = {}", unkownInt);
 
     const uint16_t lenSymbolDisplayProps = ds.readUint16();
 
-    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
+    mCtx.mLogger.trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
     for(size_t i = 0; i < lenSymbolDisplayProps; ++i)
     {
@@ -57,6 +57,6 @@ void StructT0x10::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.sanitizeCheckpoints();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

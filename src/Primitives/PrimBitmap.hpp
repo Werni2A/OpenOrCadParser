@@ -34,6 +34,10 @@ public:
         aVisitor.visit(*this);
     }
 
+    fs::path writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData) const;
+    fs::path writeDifferentImageFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData) const;
+    bool isBmpImage(const std::vector<uint8_t>& aRawImgData) const;
+
     fs::path writeImgToFile(fs::path aFilePath) const;
 
     int32_t locX;

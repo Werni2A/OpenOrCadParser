@@ -16,7 +16,7 @@ void StructAlias::read(FileFormatVersion /* aVersion */)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -29,29 +29,29 @@ void StructAlias::read(FileFormatVersion /* aVersion */)
     locX = ds.readInt32();
     locY = ds.readInt32();
 
-    spdlog::trace("locX = {}", locX);
-    spdlog::trace("locY = {}", locY);
+    mCtx.mLogger.trace("locX = {}", locX);
+    mCtx.mLogger.trace("locY = {}", locY);
 
     color = ToColor(ds.readUint32());
 
-    spdlog::trace("color = {}", ::to_string(color));
+    mCtx.mLogger.trace("color = {}", ::to_string(color));
 
     rotation = ToRotation(ds.readUint32()); // @todo Why is it 4 byte? Probably increase Rotation size
 
-    spdlog::trace("rotation = {}", ::to_string(rotation));
+    mCtx.mLogger.trace("rotation = {}", ::to_string(rotation));
 
     uint32_t textFontIdx = ds.readUint32();
 
-    spdlog::trace("Alias fontIdx = {}", textFontIdx);
+    mCtx.mLogger.trace("Alias fontIdx = {}", textFontIdx);
 
     name = ds.readStringLenZeroTerm();
 
-    spdlog::trace("name = {}", name);
+    mCtx.mLogger.trace("name = {}", name);
 
     localFutureLst.checkpoint();
 
     localFutureLst.sanitizeCheckpoints();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

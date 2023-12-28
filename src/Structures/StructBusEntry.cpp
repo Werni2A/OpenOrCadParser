@@ -16,7 +16,7 @@ void StructBusEntry::read(FileFormatVersion /* aVersion */)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -28,19 +28,19 @@ void StructBusEntry::read(FileFormatVersion /* aVersion */)
 
     color = ToColor(ds.readUint32());
 
-    spdlog::trace("color = {}", ::to_string(color));
+    mCtx.mLogger.trace("color = {}", ::to_string(color));
 
     startX = ds.readInt32();
     startY = ds.readInt32();
 
-    spdlog::trace("startX = {}", startX);
-    spdlog::trace("startY = {}", startY);
+    mCtx.mLogger.trace("startX = {}", startX);
+    mCtx.mLogger.trace("startY = {}", startY);
 
     endX = ds.readInt32();
     endY = ds.readInt32();
 
-    spdlog::trace("endX = {}", endX);
-    spdlog::trace("endY = {}", endY);
+    mCtx.mLogger.trace("endX = {}", endX);
+    mCtx.mLogger.trace("endY = {}", endY);
 
     ds.printUnknownData(8, getMethodName(this, __func__) + ": 0");
 
@@ -48,6 +48,6 @@ void StructBusEntry::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.sanitizeCheckpoints();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

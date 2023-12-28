@@ -12,7 +12,7 @@ void StreamType::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     // File can be completely empty (size of 0 Byte)
     while(!ds.isEoF())
@@ -30,6 +30,6 @@ void StreamType::read(FileFormatVersion /* aVersion */)
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::info(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.info(to_string());
 }

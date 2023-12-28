@@ -2,6 +2,8 @@
 #define HELPER_HPP
 
 
+#include <chrono>
+#include <cstdio>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
@@ -15,6 +17,8 @@
 
 
 namespace fs = std::filesystem;
+
+using namespace std::chrono_literals;
 
 
 [[maybe_unused]]
@@ -63,15 +67,35 @@ inline void check_error_count(const fs::path& aFilePath, size_t aActualErrCnt, s
         std::clog << msg;
     }
 
-    const fs::path logPath = fs::current_path() / "test_err_cnt.log";
+    const fs::path errCntFilePath = fs::current_path() / "test_err_cnt.log";
+    fs::path lockFilePath = errCntFilePath;
+    lockFilePath += std::string{".lock"};
 
-    std::ofstream logFile;
+    // Ensure that we acquire the test_err_cnt.log.lock file before writing
+    // to test_err_cnt.log to ensure syncronization across multiple processes
+    // that want to write to this file.
+    while(true)
+    {
+        std::FILE* lockFile = std::fopen(lockFilePath.c_str(), "ax");
 
-    logFile.open(logPath, std::ios_base::app);
+        if(nullptr != lockFile)
+        {
+            std::ofstream errCntFile;
 
-    logFile << msg;
+            errCntFile.open(errCntFilePath, std::ios_base::app);
 
-    logFile.close();
+            errCntFile << msg;
+
+            errCntFile.close();
+
+            std::fclose(lockFile);
+            fs::remove(lockFilePath);
+
+            break;
+        }
+
+        std::this_thread::sleep_for(25ms);
+    }
 }
 
 

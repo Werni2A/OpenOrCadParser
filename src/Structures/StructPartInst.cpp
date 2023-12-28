@@ -20,7 +20,7 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -34,25 +34,25 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     const std::string pkgName = ds.readStringLenZeroTerm();
 
-    spdlog::trace("pkgName = {}", pkgName);
+    mCtx.mLogger.trace("pkgName = {}", pkgName);
 
     const uint32_t dbId = ds.readUint32();
 
-    spdlog::trace("dbId = {}", dbId);
+    mCtx.mLogger.trace("dbId = {}", dbId);
 
     ds.printUnknownData(8, getMethodName(this, __func__) + ": 1");
 
     const int16_t locX = ds.readInt16();
     const int16_t locY = ds.readInt16();
 
-    spdlog::trace("locX = {}", locX);
-    spdlog::trace("locY = {}", locY);
+    mCtx.mLogger.trace("locX = {}", locX);
+    mCtx.mLogger.trace("locY = {}", locY);
 
     ds.printUnknownData(4, getMethodName(this, __func__) + ": 2");
 
     const uint16_t lenSymbolDisplayProps = ds.readUint16();
 
-    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
+    mCtx.mLogger.trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
     for(size_t i = 0; i < lenSymbolDisplayProps; ++i)
     {
@@ -65,13 +65,13 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     const std::string reference = ds.readStringLenZeroTerm();
 
-    spdlog::trace("reference = {}", reference);
+    mCtx.mLogger.trace("reference = {}", reference);
 
     ds.printUnknownData(14, getMethodName(this, __func__) + ": 4");
 
     const uint16_t lenT0x10s = ds.readUint16();
 
-    spdlog::trace("lenT0x10s = {}", lenT0x10s);
+    mCtx.mLogger.trace("lenT0x10s = {}", lenT0x10s);
 
     for(size_t i = 0u; i < lenT0x10s; ++i)
     {
@@ -82,7 +82,7 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     const std::string sth1 = ds.readStringLenZeroTerm(); // @todo needs verification
 
-    spdlog::trace("sth1 = {}", sth1);
+    mCtx.mLogger.trace("sth1 = {}", sth1);
 
     ds.printUnknownData(2, getMethodName(this, __func__) + ": 5");
 
@@ -90,6 +90,6 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.sanitizeCheckpoints();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

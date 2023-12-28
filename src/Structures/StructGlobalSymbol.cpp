@@ -15,7 +15,7 @@ void StructGlobalSymbol::read(FileFormatVersion aVersion)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -29,7 +29,7 @@ void StructGlobalSymbol::read(FileFormatVersion aVersion)
 
     const uint16_t lenSymbolPins = ds.readUint16();
 
-    spdlog::trace("lenSymbolPins = {}", lenSymbolPins);
+    mCtx.mLogger.trace("lenSymbolPins = {}", lenSymbolPins);
 
     for(size_t i = 0u; i < lenSymbolPins; ++i)
     {
@@ -38,7 +38,7 @@ void StructGlobalSymbol::read(FileFormatVersion aVersion)
 
     const uint16_t lenSymbolDisplayProps = ds.readUint16();
 
-    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
+    mCtx.mLogger.trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
     for(size_t i = 0u; i < lenSymbolDisplayProps; ++i)
     {
@@ -49,6 +49,6 @@ void StructGlobalSymbol::read(FileFormatVersion aVersion)
 
     localFutureLst.sanitizeCheckpoints();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

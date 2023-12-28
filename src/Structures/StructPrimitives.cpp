@@ -19,7 +19,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -31,11 +31,11 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     name = ds.readStringLenZeroTerm();
 
-    spdlog::trace("name = {}", name);
+    mCtx.mLogger.trace("name = {}", name);
 
     const std::string someStr791411 = ds.readStringLenZeroTerm();
 
-    spdlog::trace("someStr791411 = {}", someStr791411);
+    mCtx.mLogger.trace("someStr791411 = {}", someStr791411);
 
     localFutureLst.checkpoint();
 
@@ -45,7 +45,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     const size_t nextCheckpointPos = localFutureLst.getNextCheckpointPos().value_or(0U);
 
-    spdlog::trace("len0 = {}", len0);
+    mCtx.mLogger.trace("len0 = {}", len0);
 
     for(size_t i = 0u; i < len0; ++i)
     {
@@ -99,7 +99,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     const uint16_t lenSymbolPins = ds.readUint16();
 
-    spdlog::trace("lenSymbolPins = {}", lenSymbolPins);
+    mCtx.mLogger.trace("lenSymbolPins = {}", lenSymbolPins);
 
     for(size_t i = 0u; i < lenSymbolPins; ++i)
     {
@@ -122,7 +122,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     const uint16_t lenSymbolDisplayProps = ds.readUint16();
 
-    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
+    mCtx.mLogger.trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
     for(size_t i = 0u; i < lenSymbolDisplayProps; ++i)
     {
@@ -133,7 +133,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     if(!localFutureLst.empty())
     {
-        spdlog::debug("Checking {} vs {}", localFutureLst.cbegin()->getStopOffset(), ds.getCurrentOffset());
+        mCtx.mLogger.debug("Checking {} vs {}", localFutureLst.cbegin()->getStopOffset(), ds.getCurrentOffset());
         if(localFutureLst.cbegin()->getStopOffset() > ds.getCurrentOffset())
         {
             parser.readPreamble();
@@ -141,7 +141,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
             for(std::size_t i{0U}; i < std::size_t{4U}; ++i)
             {
                 const std::string s = ds.readStringLenZeroTerm();
-                spdlog::trace("s[{}] = {}", i, s);
+                mCtx.mLogger.trace("s[{}] = {}", i, s);
             }
 
             if(localFutureLst.cbegin()->getStopOffset() > ds.getCurrentOffset())
@@ -155,6 +155,6 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.sanitizeCheckpoints();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

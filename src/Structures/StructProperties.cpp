@@ -19,7 +19,7 @@ void StructProperties::read(FileFormatVersion /* aVersion */)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -31,11 +31,11 @@ void StructProperties::read(FileFormatVersion /* aVersion */)
 
     ref = ds.readStringLenZeroTerm();
 
-    spdlog::trace("ref = {}", ref);
+    mCtx.mLogger.trace("ref = {}", ref);
 
     const std::string some_str = ds.readStringLenZeroTerm();
 
-    spdlog::trace("some_str = {}", some_str);
+    mCtx.mLogger.trace("some_str = {}", some_str);
 
     localFutureLst.checkpoint();
 
@@ -45,7 +45,7 @@ void StructProperties::read(FileFormatVersion /* aVersion */)
                                                // 2 with (.Normal and .Convert)
                                                // @todo Add to obj
 
-    spdlog::trace("viewNumber = {}", viewNumber);
+    mCtx.mLogger.trace("viewNumber = {}", viewNumber);
 
     if(viewNumber == 1U) // Contains ".Normal"
     {
@@ -58,15 +58,15 @@ void StructProperties::read(FileFormatVersion /* aVersion */)
         convertName = ds.readStringLenZeroTerm();
     }
 
-    spdlog::trace("normalName  = {}", normalName);
-    spdlog::trace("convertName = {}", convertName);
+    mCtx.mLogger.trace("normalName  = {}", normalName);
+    mCtx.mLogger.trace("convertName = {}", convertName);
 
     if(viewNumber != 1U && viewNumber != 2U)
     {
         const std::string msg = fmt::format("viewNumber = {} but expected it to be 1 or 2!",
             viewNumber);
 
-        spdlog::error(msg);
+        mCtx.mLogger.error(msg);
         throw std::runtime_error(msg);
     }
 
@@ -74,6 +74,6 @@ void StructProperties::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.sanitizeCheckpoints();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }

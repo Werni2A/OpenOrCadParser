@@ -12,14 +12,14 @@ void StreamAdminData::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     uint8_t sth0 = ds.readUint8();
 
     // @todo only those two values have been observed until now
     if(sth0 != 0 && sth0 != 1)
     {
-        spdlog::warn("{}: Found new value. Check it out!", getMethodName(this, __func__));
+        mCtx.mLogger.warn("{}: Found new value. Check it out!", getMethodName(this, __func__));
     }
 
     ds.assumeData({0x00, 0x00, 0x00, 0x00, 0x00},
@@ -30,6 +30,6 @@ void StreamAdminData::read(FileFormatVersion /* aVersion */)
         throw std::runtime_error("Expected EoF but did not reach it!");
     }
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::info(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.info(to_string());
 }

@@ -23,33 +23,33 @@ void StructGraphicInst::read(FutureDataLst& mLocalFutureLst, FileFormatVersion /
 
     name = ds.readStringLenZeroTerm();
 
-    spdlog::trace("name = {}", name);
+    mCtx.mLogger.trace("name = {}", name);
 
     dbId = ds.readUint32();
 
-    spdlog::trace("dbId = {}", dbId);
+    mCtx.mLogger.trace("dbId = {}", dbId);
 
     locY = ds.readInt16();
     locX = ds.readInt16();
 
-    spdlog::trace("locX = {}", locX);
-    spdlog::trace("locY = {}", locY);
+    mCtx.mLogger.trace("locX = {}", locX);
+    mCtx.mLogger.trace("locY = {}", locY);
 
     y2 = ds.readInt16();
     x2 = ds.readInt16();
 
-    spdlog::trace("y2 = {}", y2);
-    spdlog::trace("x2 = {}", x2);
+    mCtx.mLogger.trace("y2 = {}", y2);
+    mCtx.mLogger.trace("x2 = {}", x2);
 
     x1 = ds.readInt16();
     y1 = ds.readInt16();
 
-    spdlog::trace("x1 = {}", x1);
-    spdlog::trace("y1 = {}", y1);
+    mCtx.mLogger.trace("x1 = {}", x1);
+    mCtx.mLogger.trace("y1 = {}", y1);
 
     color = ToColor(ds.readUint8());
 
-    spdlog::trace("color = {}", ::to_string(color));
+    mCtx.mLogger.trace("color = {}", ::to_string(color));
 
     ds.printUnknownData(1, getMethodName(this, __func__) + ": StructGraphicInst - 1");
     ds.printUnknownData(1, getMethodName(this, __func__) + ": StructGraphicInst - 2"); // @todo Probably structure ID of current structure
@@ -57,7 +57,7 @@ void StructGraphicInst::read(FutureDataLst& mLocalFutureLst, FileFormatVersion /
 
     const uint16_t lenSymbolDisplayProps = ds.readUint16();
 
-    spdlog::trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
+    mCtx.mLogger.trace("lenSymbolDisplayProps = {}", lenSymbolDisplayProps);
 
     for(size_t i = 0; i < lenSymbolDisplayProps; ++i)
     {
@@ -71,7 +71,7 @@ void StructGraphicInst::read(FutureDataLst& mLocalFutureLst, FileFormatVersion /
     //            StructPort   -> StructPortSymbol
     const uint8_t unknownFlag = ds.readUint8();
 
-    spdlog::trace("unknownFlag = {}", unknownFlag);
+    mCtx.mLogger.trace("unknownFlag = {}", unknownFlag);
 
     // @todo Add some sanity check
     switch(unknownFlag)

@@ -4,6 +4,7 @@
 
 #include <cstdint>
 #include <iostream>
+#include <optional>
 #include <ostream>
 #include <stdexcept>
 #include <string>
@@ -126,7 +127,7 @@ static ShapeType ToShapeType(const PinShape& pinShape)
 
 
 [[maybe_unused]]
-static PinShape ToPinShape(uint16_t val)
+static PinShape ToPinShape(uint16_t val, std::optional<spdlog::logger> aLogger = std::nullopt)
 {
     PinShape pinShape;
 
@@ -149,14 +150,20 @@ static PinShape ToPinShape(uint16_t val)
             {
                 const std::string msg = fmt::format("{}: PinShape bit {} is set but not known!", __func__, i);
 
-                spdlog::warn(msg);
+                if(aLogger.has_value())
+                {
+                    aLogger.value().warn(msg);
+                }
                 continue;
             }
             else
             {
                 const std::string msg = fmt::format("{}: PinShape bit {} is set but 0 was expected!", __func__, i);
 
-                spdlog::error(msg);
+                if(aLogger.has_value())
+                {
+                    aLogger.value().error(msg);
+                }
                 throw std::runtime_error(msg);
             }
         }

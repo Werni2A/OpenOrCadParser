@@ -26,7 +26,7 @@ void PrimBitmap::read(FileFormatVersion /* aVersion */)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     const size_t startOffset = ds.getCurrentOffset();
 
@@ -37,28 +37,28 @@ void PrimBitmap::read(FileFormatVersion /* aVersion */)
     locX = ds.readInt32();
     locY = ds.readInt32();
 
-    spdlog::trace("locX = {}", locX);
-    spdlog::trace("locY = {}", locY);
+    mCtx.mLogger.trace("locX = {}", locX);
+    mCtx.mLogger.trace("locY = {}", locY);
 
     x2 = ds.readInt32();
     y2 = ds.readInt32();
     x1 = ds.readInt32();
     y1 = ds.readInt32();
 
-    spdlog::trace("x2 = {}", x2);
-    spdlog::trace("y2 = {}", y2);
-    spdlog::trace("x1 = {}", x1);
-    spdlog::trace("y1 = {}", y1);
+    mCtx.mLogger.trace("x2 = {}", x2);
+    mCtx.mLogger.trace("y2 = {}", y2);
+    mCtx.mLogger.trace("x1 = {}", x1);
+    mCtx.mLogger.trace("y1 = {}", y1);
 
     bmpWidth  = ds.readUint32();
     bmpHeight = ds.readUint32();
 
-    spdlog::trace("bmpWidth  = {}", bmpWidth);
-    spdlog::trace("bmpHeight = {}", bmpHeight);
+    mCtx.mLogger.trace("bmpWidth  = {}", bmpWidth);
+    mCtx.mLogger.trace("bmpHeight = {}", bmpHeight);
 
     const uint32_t dataSize = ds.readUint32();
 
-    spdlog::trace("dataSize = {}", dataSize);
+    mCtx.mLogger.trace("dataSize = {}", dataSize);
 
     rawImgData.clear();
     rawImgData.reserve(dataSize);
@@ -68,12 +68,12 @@ void PrimBitmap::read(FileFormatVersion /* aVersion */)
         rawImgData.push_back(ds.readUint8());
     }
 
-    fs::path filename = mCtx.mExtractedCfbfPath / "data" / fmt::format("{}_img_{}.bmp",
+    fs::path filename = mCtx.mExtractedCfbfPath.parent_path() / "data" / fmt::format("{}_img_{}.bmp",
         mCtx.mInputStream.stem().string(), mCtx.mImgCtr);
 
     filename = writeImgToFile(filename);
 
-    spdlog::info("{}: Wrote bitmap file to {}", __func__, filename.string());
+    mCtx.mLogger.info("{}: Wrote bitmap file to {}", __func__, filename.string());
 
     ++mCtx.mImgCtr;
 
@@ -89,13 +89,13 @@ void PrimBitmap::read(FileFormatVersion /* aVersion */)
 
     parser.readPreamble();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }
 
 
 // Returns path to the written image file
-static fs::path writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData)
+fs::path PrimBitmap::writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData) const
 {
     aFilePath.replace_extension(".bmp");
 
@@ -107,7 +107,7 @@ static fs::path writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>& aRa
         const std::string msg = fmt::format("{}: Can not open file for writing: {}",
             __func__, aFilePath.string());
 
-        spdlog::error(msg);
+        mCtx.mLogger.error(msg);
         throw std::runtime_error(msg);
     }
 
@@ -134,7 +134,7 @@ static fs::path writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>& aRa
     img.write(reinterpret_cast<const char*>(&header.reserved), sizeof(header.reserved));
     img.write(reinterpret_cast<const char*>(&header.offset), sizeof(header.offset));
 
-    spdlog::debug("Writing header is done");
+    mCtx.mLogger.debug("Writing header is done");
 
     for(const auto& data : aRawImgData)
     {
@@ -150,7 +150,7 @@ static fs::path writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>& aRa
 // aFilePath is the requested path to the image file, but the function will change the file
 // extension, depending on the corresponding file type that was found.
 // Returns path to the actually written image file
-static fs::path writeNoBmpFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData)
+fs::path PrimBitmap::writeDifferentImageFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData) const
 {
     // Discard the header for non BMP images. After that, they start
     // with a complete image, e.g. PNG or JPG
@@ -204,7 +204,7 @@ static fs::path writeNoBmpFile(fs::path aFilePath, const std::vector<uint8_t>& a
     else
     {
         aFilePath.replace_extension(".unknown");
-        spdlog::warn("Unknown image file format");
+        mCtx.mLogger.warn("Unknown image file format");
     }
 
     fs::create_directories(aFilePath.parent_path());
@@ -215,7 +215,7 @@ static fs::path writeNoBmpFile(fs::path aFilePath, const std::vector<uint8_t>& a
         const std::string msg = fmt::format("{}: Can not open file for writing: {}",
             __func__, aFilePath.string());
 
-        spdlog::error(msg);
+        mCtx.mLogger.error(msg);
         throw std::runtime_error(msg);
     }
 
@@ -229,7 +229,7 @@ static fs::path writeNoBmpFile(fs::path aFilePath, const std::vector<uint8_t>& a
 // The images are not always bitmaps where we need to prepend its header
 // but its also possible that they are PNG, JPG and probably other formats
 // that have some header that needs to be trimmed away.
-static bool isBmpImage(const std::vector<uint8_t>& aRawImgData)
+bool PrimBitmap::isBmpImage(const std::vector<uint8_t>& aRawImgData) const
 {
     bool hasMagicId = false;
 
@@ -259,15 +259,15 @@ fs::path PrimBitmap::writeImgToFile(fs::path aFilePath) const
     //       we can simplify this logic by just checking the file format version.
     if(isBmpImage(rawImgData))
     {
-        spdlog::info("{}: Detected BMP file", getMethodName(this, __func__));
+        mCtx.mLogger.info("{}: Detected BMP file", getMethodName(this, __func__));
 
         aFilePath = writeBmpFile(aFilePath, rawImgData);
     }
     else
     {
-        spdlog::info("{}: Detected some non BMP file", getMethodName(this, __func__));
+        mCtx.mLogger.info("{}: Detected some non BMP file", getMethodName(this, __func__));
 
-        aFilePath = writeNoBmpFile(aFilePath, rawImgData);
+        aFilePath = writeDifferentImageFile(aFilePath, rawImgData);
     }
 
     return aFilePath;

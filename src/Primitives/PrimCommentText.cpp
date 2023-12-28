@@ -17,7 +17,7 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
 
-    spdlog::debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     const size_t startOffset = ds.getCurrentOffset();
 
@@ -36,23 +36,23 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
     locX = ds.readInt32();
     locY = ds.readInt32();
 
-    spdlog::trace("locX = {}", locX);
-    spdlog::trace("locY = {}", locY);
+    mCtx.mLogger.trace("locX = {}", locX);
+    mCtx.mLogger.trace("locY = {}", locY);
 
     x2 = ds.readInt32();
     y2 = ds.readInt32();
     x1 = ds.readInt32();
     y1 = ds.readInt32();
 
-    spdlog::trace("x2 = {}", x2);
-    spdlog::trace("y2 = {}", y2);
-    spdlog::trace("x1 = {}", x1);
-    spdlog::trace("y1 = {}", y1);
+    mCtx.mLogger.trace("x2 = {}", x2);
+    mCtx.mLogger.trace("y2 = {}", y2);
+    mCtx.mLogger.trace("x1 = {}", x1);
+    mCtx.mLogger.trace("y1 = {}", y1);
 
     // @todo Check if fontIdx with 4 byte fits. I.e. are the following 2 Byte all 0?
     textFontIdx = ds.readUint16();
 
-    spdlog::trace("textFontIdx = {}", textFontIdx);
+    mCtx.mLogger.trace("textFontIdx = {}", textFontIdx);
 
     if(gLibrary != nullptr)
     {
@@ -70,7 +70,7 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
 
     name = ds.readStringLenZeroTerm();
 
-    spdlog::trace("name = {}", name);
+    mCtx.mLogger.trace("name = {}", name);
 
     if(ds.getCurrentOffset() != startOffset + byteLength)
     {
@@ -84,8 +84,8 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
 
     parser.readPreamble();
 
-    spdlog::debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
-    spdlog::trace(to_string());
+    mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
+    mCtx.mLogger.trace(to_string());
 }
 
 

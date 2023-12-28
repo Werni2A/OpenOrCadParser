@@ -77,7 +77,7 @@ public:
 
     std::optional<FutureData> getByStartOffset(std::size_t aAbsStartOffset) const
     {
-        spdlog::debug("Searching for StartOffset 0x{:08x}", aAbsStartOffset);
+        mCtx.get().mLogger.debug("Searching for StartOffset 0x{:08x}", aAbsStartOffset);
 
         const auto cmp = [&aAbsStartOffset] (FutureData aFutureData) -> bool
             { return aFutureData.getStartOffset() == aAbsStartOffset; };
@@ -94,7 +94,7 @@ public:
 
     std::optional<FutureData> getByStopOffset(std::size_t aAbsStopOffset) const
     {
-        spdlog::debug("Searching for StopOffset 0x{:08x}", aAbsStopOffset);
+        mCtx.get().mLogger.debug("Searching for StopOffset 0x{:08x}", aAbsStopOffset);
 
         const auto cmp = [&aAbsStopOffset] (FutureData aFutureData) -> bool
             { return aFutureData.getStopOffset() == aAbsStopOffset; };
@@ -159,14 +159,14 @@ public:
                 const std::string msg = fmt::format("{}: Checkpoint position at 0x{:08x} is duplicated",
                     getMethodName(this, __func__), currOffset);
 
-                spdlog::error(msg);
+                mCtx.get().mLogger.error(msg);
                 throw std::runtime_error(msg);
             }
             else
             {
                 futureData.setParsed(true);
 
-                spdlog::debug("{}: Checkpoint at 0x{:08x} was successful",
+                mCtx.get().mLogger.debug("{}: Checkpoint at 0x{:08x} was successful",
                     getMethodName(this, __func__), currOffset);
             }
         }
@@ -177,11 +177,11 @@ public:
                 const std::string msg = fmt::format("{}: Checkpoint position at 0x{:08x} is incorrect",
                     getMethodName(this, __func__), currOffset);
 
-                spdlog::error(msg);
+                mCtx.get().mLogger.error(msg);
                 throw std::runtime_error(msg);
             }
 
-            spdlog::trace("{}: Checkpoint at 0x{:08x} was not found",
+            mCtx.get().mLogger.trace("{}: Checkpoint at 0x{:08x} was not found",
                 getMethodName(this, __func__), currOffset);
         }
     }
@@ -196,7 +196,7 @@ public:
             {
                 checkpoint_missing = true;
 
-                spdlog::debug("{}: Checkpoint missing for 0x{:08x} -> 0x{:08x}",
+                mCtx.get().mLogger.debug("{}: Checkpoint missing for 0x{:08x} -> 0x{:08x}",
                     getMethodName(this, __func__),
                     data.getStartOffset(), data.getStopOffset());
             }
@@ -207,7 +207,7 @@ public:
             const std::string msg = fmt::format("{}: Check your code for missing checkpoints!\n{}",
                 getMethodName(this, __func__), string());
 
-            spdlog::debug(msg);
+            mCtx.get().mLogger.debug(msg);
             throw std::runtime_error(msg);
         }
     }
@@ -266,14 +266,14 @@ public:
         }
         else
         {
-            spdlog::debug("{}: Did not find any future data following current offset 0x{:08x}",
+            mCtx.get().mLogger.debug("{}: Did not find any future data following current offset 0x{:08x}",
                 getMethodName(this, __func__), curPos);
         }
     }
 
     void readRestOfStructure()
     {
-        spdlog::trace(string());
+        mCtx.get().mLogger.trace(string());
 
         // We don't know anything about the
         // structure, therefore do nothing
@@ -314,7 +314,7 @@ public:
                 " Expected it to end at 0x{:08x} but ended at 0x{:08x}. Too large by {} Byte.",
                 getMethodName(this, __func__), endPos, curPos, std::abs(byteDiff));
 
-            spdlog::debug(msg);
+            mCtx.get().mLogger.debug(msg);
             throw std::runtime_error(msg);
         }
     }
