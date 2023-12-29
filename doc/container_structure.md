@@ -5,6 +5,7 @@ The file structure for DSN and OLB files is almost similar, DSN files only inclu
 In front of each entry is a specifier placed that shows of which type the entry is. [D] represents a directory and [S] a stream (file). Directories are also bold. Cursive texts represent names that are provided by the designer. E.g. *Package Name 1* might become `NE555`.
 
 - [S] `AdminData` (DSN only)
+- [S] `BundleMapData`
 - [S] `Cache`
 - [D] **`Cells`**
 - [S] `Cells Directory`
@@ -14,8 +15,14 @@ In front of each entry is a specifier placed that shows of which type the entry 
   - [D] **`VariantStore`**
     - [D] **`BOM`**
       - [S] `BOMDataStream`
+      - [D] ***BOM Name 1***
+        - [S] `BOMAmbugity`
+        - [S] `BOMPartData`
+        - [S] *BOM Name 1*
     - [D] **`Groups`**
       - [S] `GroupsDataStream`
+      - [D] ***Group Name 1***
+        - [S] *Group Name 1*
     - [S] `VariantNames`
 - [S] `DsnStream` (DSN only)
 - [D] **`ExportBlocks`**
