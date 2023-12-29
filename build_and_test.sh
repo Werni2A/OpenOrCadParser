@@ -19,8 +19,7 @@ cmake --build build -j $(nproc)
 echo Running Unit Tests...
 
 # Run unit tests
-./build/test/test > OpenOrCadParser.log 2>&1
-# ./run_parallel_tests.sh
+python3 run_tests.py
 
 echo Writing Back Error Counter Log into Database...
 
