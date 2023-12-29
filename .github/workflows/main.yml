@@ -34,5 +34,4 @@ jobs:
 
     - name: Run Tests
       run: |
-        ./run_parallel_tests.sh
-        # ./build/test/test
+        python3 run_tests.py
