@@ -11,8 +11,5 @@
     "spdlog",
     "tinyxml2"
   ],
-  "overrides": [
-    {"name": "fmt", "version": "9.1.0"}
-  ],
-  "builtin-baseline": "8be970aaeaf19fd2663aaf5888478483f9742e55"
+  "builtin-baseline": "83972272512ce4ede5fc3b2ba98f6468b179f192"
 }
