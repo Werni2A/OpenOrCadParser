@@ -83,7 +83,7 @@ repositories:
   - errors: 114
     options: null
     path: ./library/fpga/atmel/AT40K.OLB
-  - errors: 244
+  - errors: 243
     options: null
     path: ./library/fpga/atmel/AT6K.OLB
   - errors: 7
@@ -251,7 +251,7 @@ repositories:
   - errors: 53
     options: null
     path: ./library/oldlibs/MPS.OLB
-  - errors: 56
+  - errors: 55
     options: null
     path: ./library/oldlibs/INTEL_P.OLB
   - errors: 9
@@ -305,7 +305,7 @@ repositories:
   - errors: 8
     options: null
     path: ./library/oldlibs/BIT.OLB
-  - errors: 34
+  - errors: 33
     options: null
     path: ./library/oldlibs/RF.OLB
   - errors: 148
@@ -332,7 +332,7 @@ repositories:
   - errors: 45
     options: null
     path: ./library/oldlibs/TILSI.OLB
-  - errors: 22
+  - errors: 20
     options: null
     path: ./library/oldlibs/PSPICE.OLB
   - errors: 64
@@ -729,7 +729,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/altera/ALTERA_M.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/altera/ALTERA_P.OLB
   - errors: 0
@@ -747,7 +747,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/amd/PLDPRIMS.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/atmel/AT6K.OLB
   - errors: 0
@@ -777,7 +777,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/PWRGND.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/fpga/lattice/REG.OLB
   - errors: 0
@@ -1080,7 +1080,7 @@ repositories:
   - errors: 113
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/INTEL_M.OLB
-  - errors: 56
+  - errors: 55
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/INTEL_P.OLB
   - errors: 53
@@ -1182,10 +1182,10 @@ repositories:
   - errors: 13
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/POWER.OLB
-  - errors: 22
+  - errors: 20
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/PSPICE.OLB
-  - errors: 34
+  - errors: 33
     options: null
     path: ./orcad capture/unsorted/_archive/oldlibs/RF.OLB
   - errors: 36
@@ -2200,7 +2200,7 @@ repositories:
   - errors: 0
     options: null
     path: ./LIBRARY1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./NIXIE_0.DBK
   project: nixie
@@ -2583,7 +2583,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/GATE_MIKE_0.OBK
-  - errors: 3
+  - errors: 0
     options: null
     path: ./OrCAD/CAP_JERRY_0.OBK
   - errors: 0
@@ -2752,7 +2752,7 @@ repositories:
   - errors: 4
     options: null
     path: ./schematic/5M570Z.OLB
-  - errors: 7
+  - errors: 5
     options: null
     path: ./schematic/EP2C20.OLB
   - errors: 2
@@ -3451,7 +3451,7 @@ repositories:
   - errors: 40
     options: null
     path: ./oldlibs/MICRON_9_0_0.OBK
-  - errors: 34
+  - errors: 33
     options: null
     path: ./oldlibs/RF_9_0_0.OBK
   - errors: 5
@@ -3508,7 +3508,7 @@ repositories:
   - errors: 56
     options: null
     path: ./oldlibs/MOTO5_9_0_0.OBK
-  - errors: 22
+  - errors: 20
     options: null
     path: ./oldlibs/PSPICE_9_0_0.OBK
   - errors: 144
@@ -3544,7 +3544,7 @@ repositories:
   - errors: 53
     options: null
     path: ./oldlibs/INTEL_9_0_0.OBK
-  - errors: 56
+  - errors: 55
     options: null
     path: ./oldlibs/INTEL_P_9_0_0.OBK
   - errors: 1
@@ -3661,7 +3661,7 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/atmel/AT40K.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./fpga/atmel/AT6K.OLB
   - errors: 0
@@ -3709,7 +3709,7 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/altera/PCI_A.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./fpga/altera/ALTERA_P.OLB
   - errors: 0
@@ -3727,7 +3727,7 @@ repositories:
   - errors: 0
     options: null
     path: ./fpga/lattice/LOGIC.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./fpga/lattice/REG.OLB
   - errors: 0
@@ -4222,7 +4222,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/MPS.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./oldlibs/INTEL_P.OLB
   - errors: 0
@@ -4276,7 +4276,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/BIT.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./oldlibs/RF.OLB
   - errors: 0
@@ -4288,7 +4288,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/EXEL.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./oldlibs/PCBDEV.OLB
   - errors: 0
@@ -4303,7 +4303,7 @@ repositories:
   - errors: 0
     options: null
     path: ./oldlibs/TILSI.OLB
-  - errors: 2
+  - errors: 0
     options: null
     path: ./oldlibs/PSPICE.OLB
   - errors: 0
