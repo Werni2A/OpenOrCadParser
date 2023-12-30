@@ -37,10 +37,7 @@ void StreamDsnStream::read(FileFormatVersion /* aVersion */)
     // @todo Add checkpoint sanitization
     // localFutureLst.sanitizeCheckpoints();
 
-    if(!ds.isEoF())
-    {
-        throw std::runtime_error("Expected EoF but did not reach it!");
-    }
+    ds.sanitizeEoF();
 
     mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     mCtx.mLogger.info(to_string());

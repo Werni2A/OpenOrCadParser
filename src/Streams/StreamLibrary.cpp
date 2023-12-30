@@ -146,10 +146,7 @@ void StreamLibrary::read(FileFormatVersion aVersion)
         mCtx.mLogger.trace("schematicName = {}", schematicName);
     }
 
-    if(!ds.isEoF())
-    {
-        throw std::runtime_error("Expected EoF but did not reach it!");
-    }
+    ds.sanitizeEoF();
 
     mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     mCtx.mLogger.info(to_string());

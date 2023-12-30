@@ -18,10 +18,7 @@ void StreamSymbol::read(FileFormatVersion /* aVersion */)
 
     symbol = dynamic_pointer_cast<StructSymbol>(parser.readStructure());
 
-    if(!ds.isEoF())
-    {
-        throw std::runtime_error("Expected EoF but did not reach it!");
-    }
+    ds.sanitizeEoF();
 
     mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     mCtx.mLogger.info(to_string());
