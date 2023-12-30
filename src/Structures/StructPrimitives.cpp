@@ -23,7 +23,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     FutureDataLst localFutureLst{mCtx};
 
-    parser.auto_read_prefixes(Structure::Primitives, localFutureLst);
+    parser.auto_read_prefixes(localFutureLst);
 
     parser.readPreamble();
 
