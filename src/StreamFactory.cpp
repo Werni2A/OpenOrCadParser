@@ -12,23 +12,17 @@
 #include "StreamFactory.hpp"
 #include "Streams/StreamAdminData.hpp"
 #include "Streams/StreamCache.hpp"
-#include "Streams/StreamCellsDirectory.hpp"
+#include "Streams/StreamDirectoryStruct.hpp"
 #include "Streams/StreamDsnStream.hpp"
-#include "Streams/StreamExportBlocksDirectory.hpp"
-#include "Streams/StreamGraphicsDirectory.hpp"
 #include "Streams/StreamHierarchy.hpp"
 #include "Streams/StreamHSObjects.hpp"
 #include "Streams/StreamLibrary.hpp"
 #include "Streams/StreamNetBundleMapData.hpp"
 #include "Streams/StreamPackage.hpp"
-#include "Streams/StreamPackagesDirectory.hpp"
 #include "Streams/StreamPage.hpp"
-#include "Streams/StreamPartsDirectory.hpp"
 #include "Streams/StreamSchematic.hpp"
 #include "Streams/StreamSymbol.hpp"
-#include "Streams/StreamSymbolsDirectory.hpp"
 #include "Streams/StreamType.hpp"
-#include "Streams/StreamViewsDirectory.hpp"
 
 
 std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::path& aInputStream)
@@ -88,7 +82,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"Cells Directory"};
     if(streamLoc.matches_pattern(pattern))
     {
-        return std::make_unique<StreamCellsDirectory>(aCtx, aInputStream);
+        return std::make_unique<StreamDirectoryStruct>(aCtx, aInputStream);
     }
 
     // Match `/CIS/CISSchematicStore/CISSchematicStream`
@@ -174,7 +168,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"ExportBlocks Directory"};
     if(streamLoc.matches_pattern(pattern))
     {
-        return std::make_unique<StreamExportBlocksDirectory>(aCtx, aInputStream);
+        return std::make_unique<StreamDirectoryStruct>(aCtx, aInputStream);
     }
 
     // Match `/Graphics/$Types$`
@@ -196,7 +190,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"Graphics Directory"};
     if(streamLoc.matches_pattern(pattern))
     {
-        return std::make_unique<StreamGraphicsDirectory>(aCtx, aInputStream);
+        return std::make_unique<StreamDirectoryStruct>(aCtx, aInputStream);
     }
 
     // Match `/HSObjects`
@@ -239,7 +233,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"Packages Directory"};
     if(streamLoc.matches_pattern(pattern))
     {
-        return std::make_unique<StreamPackagesDirectory>(aCtx, aInputStream);
+        return std::make_unique<StreamDirectoryStruct>(aCtx, aInputStream);
     }
 
     // Match `/Parts/*`
@@ -254,7 +248,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"Parts Directory"};
     if(streamLoc.matches_pattern(pattern))
     {
-        return std::make_unique<StreamPartsDirectory>(aCtx, aInputStream);
+        return std::make_unique<StreamDirectoryStruct>(aCtx, aInputStream);
     }
 
     // Match `/Symbols/$Types$`
@@ -292,7 +286,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"Symbols Directory"};
     if(streamLoc.matches_pattern(pattern))
     {
-        return std::make_unique<StreamSymbolsDirectory>(aCtx, aInputStream);
+        return std::make_unique<StreamDirectoryStruct>(aCtx, aInputStream);
     }
 
     // Match `/Views/*/Hierarchy/Hierarchy`
@@ -320,7 +314,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"Views Directory"};
     if(streamLoc.matches_pattern(pattern))
     {
-        return std::make_unique<StreamViewsDirectory>(aCtx, aInputStream);
+        return std::make_unique<StreamDirectoryStruct>(aCtx, aInputStream);
     }
 
     const std::string errMsg = fmt::format(

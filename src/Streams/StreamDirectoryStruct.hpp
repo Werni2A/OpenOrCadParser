@@ -64,6 +64,14 @@ static std::ostream& operator<<(std::ostream& aOs, const DirItemType& aVal)
 }
 
 
+// Used to parse
+// - `Cells Directory`
+// - `ExportBlocks Directory`
+// - `Graphics Directory`
+// - `Packages Directory`
+// - `Parts Directory`
+// - `Symbols Directory`
+// - `Views Directory`
 class StreamDirectoryStruct : public Stream
 {
 public:
@@ -74,9 +82,12 @@ public:
 
     std::string to_string() const;
 
-    // @todo This is more a workaround to get inheritance working for e.g. StreamExportBlocksDirectory
-    void read(FileFormatVersion /* aVersion */ = FileFormatVersion::Unknown) override
-    { }
+    void read(FileFormatVersion /* aVersion */ = FileFormatVersion::Unknown);
+
+    void accept(Visitor& aVisitor) const override
+    {
+        aVisitor.visit(*this);
+    }
 
     time_t lastModifiedDate;
 
