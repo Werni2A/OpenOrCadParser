@@ -111,7 +111,6 @@ public:
     }
 
 private:
-    void exceptionHandling();
 
     size_t mFileCtr;    //!< Counts all files that were opened for parsing
     size_t mFileErrCtr; //!< Counts all files that failed somewhere

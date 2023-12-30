@@ -15,7 +15,6 @@
 #include <thread>
 #include <vector>
 
-#include <fmt/color.h>
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
@@ -96,7 +95,7 @@ void Container::parseLibraryThread(std::vector<std::unique_ptr<Stream>*> aStream
         catch(...)
         {
             parsedSuccessfully = false;
-            exceptionHandling();
+            (*stream)->exceptionHandling();
         }
 
         (*stream)->mCtx.mParsedSuccessfully = parsedSuccessfully;
@@ -201,29 +200,6 @@ void Container::parseLibrary()
     mCtx.mLogger.info(errCtrStr);
 
     // mCtx.mLogger.info(to_string(mLibrary));
-}
-
-
-void Container::exceptionHandling()
-{
-    try
-    {
-        throw;
-    }
-    catch(const std::exception& e)
-    {
-        mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
-        mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "Input Container: {}", mCtx.mInputCfbfFile.string()));
-        // @todo
-        // mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "Current File:    {}", mCtx.mInputStream.string()));
-        // mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), mCtx.mDs.getCurrentOffsetStrMsg()));
-        mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "\nError Message: {}\n\n", e.what()));
-    }
-    catch(...)
-    {
-        mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
-        mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "Unknown exception caught!\n"));
-    }
 }
 
 
