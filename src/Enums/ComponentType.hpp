@@ -16,11 +16,13 @@
 //       types?
 enum class ComponentType
 {
+    CT_0             =  0, // @todo Unknown
     Graphic          =  2,
 
     Cell             =  6,
 
     View             =  9,
+    CT_10            = 10, // @todo Unknown
 
     Part             = 24,
 
@@ -37,6 +39,14 @@ enum class ComponentType
 
     PinShapeSymbol   = 98,
 
+    // This value is returned by ToComponentType
+    // in case the passed integer is > 100 to
+    // cope with magic_enums limitations and keep
+    // compile times at a reasonable level
+    // https://github.com/Neargye/magic_enum/blob/master/doc/limitations.md
+    HACKY_VALUE      = 100,
+
+    CT_257           =   257, // @todo completly unknown and strange looking
     CT_3820          =  3820, // @todo completly unknown and strange looking
     CT_4704          =  4704, // @todo completly unknown and strange looking
     CT_11904         = 11904, // @todo completly unknown and strange looking
@@ -53,6 +63,12 @@ enum class ComponentType
 [[maybe_unused]]
 static constexpr ComponentType ToComponentType(uint16_t aVal)
 {
+    // See the explanation at HACKY_VALUE for this hack
+    if(aVal > 100U)
+    {
+        aVal = 100U;
+    }
+
     return ToEnum<ComponentType, decltype(aVal)>(aVal);
 }
 
