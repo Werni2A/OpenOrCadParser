@@ -65,24 +65,18 @@ public:
     virtual void visit(const PrimSymbolVector& aObj) override;
     virtual void visit(const StreamAdminData& /* aObj */) override { }
     virtual void visit(const StreamCache& /* aObj */) override { }
-    virtual void visit(const StreamCellsDirectory& /* aObj */) override { }
+    virtual void visit(const StreamDirectoryStruct& /* aObj */) override { }
     virtual void visit(const StreamDsnStream& /* aObj */) override { }
     virtual void visit(const StreamERC& /* aObj */) override { }
-    virtual void visit(const StreamExportBlocksDirectory& /* aObj */) override { }
-    virtual void visit(const StreamGraphicsDirectory& /* aObj */) override { }
     virtual void visit(const StreamHierarchy& /* aObj */) override { }
     virtual void visit(const StreamHSObjects& /* aObj */) override { }
     virtual void visit(const StreamLibrary& /* aObj */) override { }
     virtual void visit(const StreamNetBundleMapData& /* aObj */) override { }
     virtual void visit(const StreamPackage& aObj) override;
-    virtual void visit(const StreamPackagesDirectory& /* aObj */) override { }
     virtual void visit(const StreamPage& /* aObj */) override { }
-    virtual void visit(const StreamPartsDirectory& /* aObj */) override { }
     virtual void visit(const StreamSchematic& /* aObj */) override { }
     virtual void visit(const StreamSymbol& /* aObj */) override { }
-    virtual void visit(const StreamSymbolsDirectory& /* aObj */) override { }
     virtual void visit(const StreamType& /* aObj */) override { }
-    virtual void visit(const StreamViewsDirectory& /* aObj */) override { }
     virtual void visit(const StructAlias& /* aObj */) override { }
     virtual void visit(const StructBookMarkSymbolInst& /* aObj */) override { }
     virtual void visit(const StructBusEntry& /* aObj */) override { }

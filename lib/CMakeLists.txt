@@ -25,26 +25,18 @@ set(SOURCES
    ${LIB_SRC_DIR}/StreamFactory.cpp
    ${LIB_SRC_DIR}/Streams/StreamAdminData.cpp
    ${LIB_SRC_DIR}/Streams/StreamCache.cpp
-   ${LIB_SRC_DIR}/Streams/StreamCellsDirectory.cpp
-   ${LIB_SRC_DIR}/Streams/StreamCellsDirectory.hpp
+   ${LIB_SRC_DIR}/Streams/StreamDirectoryStruct.cpp
    ${LIB_SRC_DIR}/Streams/StreamDsnStream.cpp
    ${LIB_SRC_DIR}/Streams/StreamERC.cpp
-   ${LIB_SRC_DIR}/Streams/StreamExportBlocksDirectory.cpp
-   ${LIB_SRC_DIR}/Streams/StreamExportBlocksDirectory.hpp
-   ${LIB_SRC_DIR}/Streams/StreamGraphicsDirectory.cpp
    ${LIB_SRC_DIR}/Streams/StreamHierarchy.cpp
    ${LIB_SRC_DIR}/Streams/StreamHSObjects.cpp
    ${LIB_SRC_DIR}/Streams/StreamLibrary.cpp
    ${LIB_SRC_DIR}/Streams/StreamNetBundleMapData.cpp
    ${LIB_SRC_DIR}/Streams/StreamPackage.cpp
-   ${LIB_SRC_DIR}/Streams/StreamPackagesDirectory.cpp
    ${LIB_SRC_DIR}/Streams/StreamPage.cpp
-   ${LIB_SRC_DIR}/Streams/StreamPartsDirectory.cpp
    ${LIB_SRC_DIR}/Streams/StreamSchematic.cpp
    ${LIB_SRC_DIR}/Streams/StreamSymbol.cpp
-   ${LIB_SRC_DIR}/Streams/StreamSymbolsDirectory.cpp
    ${LIB_SRC_DIR}/Streams/StreamType.cpp
-   ${LIB_SRC_DIR}/Streams/StreamViewsDirectory.cpp
    ${LIB_SRC_DIR}/Structures/StructAlias.cpp
    ${LIB_SRC_DIR}/Structures/StructBookMarkSymbolInst.cpp
    ${LIB_SRC_DIR}/Structures/StructBusEntry.cpp
@@ -136,20 +128,15 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/Streams/StreamDirectoryStruct.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamDsnStream.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamERC.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamGraphicsDirectory.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamHierarchy.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamHSObjects.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamLibrary.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamNetBundleMapData.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamPackage.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamPackagesDirectory.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamPage.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamPartsDirectory.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamSchematic.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamSymbol.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamSymbolsDirectory.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamType.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamViewsDirectory.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructAlias.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructBookMarkSymbolInst.hpp
    ${LIB_INCLUDE_DIR}/Structures/StructBusEntry.hpp
