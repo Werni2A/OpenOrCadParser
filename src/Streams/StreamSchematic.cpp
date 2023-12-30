@@ -65,10 +65,7 @@ void StreamSchematic::read(FileFormatVersion /* aVersion */)
 
     ds.printUnknownData(4, getMethodName(this, __func__) + ": 3");
 
-    if(!ds.isEoF())
-    {
-        throw std::runtime_error("Expected EoF but did not reach it!");
-    }
+    ds.sanitizeEoF();
 
     mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     mCtx.mLogger.info(to_string());
