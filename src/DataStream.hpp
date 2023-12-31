@@ -170,8 +170,6 @@ public:
 
     std::vector<uint8_t> readBytes(size_t aLen);
 
-    std::vector<uint8_t> readBytesNoString(std::size_t aLen);
-
     /**
      * @brief Read string that has null byte termination.
      *
