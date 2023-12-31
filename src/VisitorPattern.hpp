@@ -16,6 +16,7 @@ class PrimPolyline;
 class PrimRect;
 class PrimSymbolVector;
 class StreamAdminData;
+class StreamBOMDataStream;
 class StreamCache;
 class StreamDirectoryStruct;
 class StreamDsnStream;
@@ -97,6 +98,7 @@ public:
     virtual void visit(const PrimRect& aObj) = 0;
     virtual void visit(const PrimSymbolVector& aObj) = 0;
     virtual void visit(const StreamAdminData& aObj) = 0;
+    virtual void visit(const StreamBOMDataStream& aObj) = 0;
     virtual void visit(const StreamCache& aObj) = 0;
     virtual void visit(const StreamDirectoryStruct& aObj) = 0;
     virtual void visit(const StreamDsnStream& aObj) = 0;
