@@ -60,9 +60,13 @@ void GenericParser::discard_until_preamble()
     }
 
     const size_t endOffset = mCtx.mDs.getCurrentOffset();
+    const size_t discardedByte = endOffset - startOffset;
 
     mCtx.mLogger.debug("{}: Discarded {} Byte until next preamble",
-        getMethodName(this, __func__), endOffset - startOffset);
+        getMethodName(this, __func__), discardedByte);
+
+    mCtx.mDs.setCurrentOffset(startOffset);
+    mCtx.mDs.printUnknownData(discardedByte, "Discarded Bytes");
 }
 
 
