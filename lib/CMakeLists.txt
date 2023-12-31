@@ -24,6 +24,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/RecordFactory.cpp
    ${LIB_SRC_DIR}/StreamFactory.cpp
    ${LIB_SRC_DIR}/Streams/StreamAdminData.cpp
+   ${LIB_SRC_DIR}/Streams/StreamBOMDataStream.cpp
    ${LIB_SRC_DIR}/Streams/StreamCache.cpp
    ${LIB_SRC_DIR}/Streams/StreamDirectoryStruct.cpp
    ${LIB_SRC_DIR}/Streams/StreamDsnStream.cpp
@@ -124,6 +125,7 @@ set(HEADERS
    ${LIB_INCLUDE_DIR}/StreamContext.hpp
    ${LIB_INCLUDE_DIR}/StreamFactory.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamAdminData.hpp
+   ${LIB_INCLUDE_DIR}/Streams/StreamBOMDataStream.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamCache.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamDirectoryStruct.hpp
    ${LIB_INCLUDE_DIR}/Streams/StreamDsnStream.hpp

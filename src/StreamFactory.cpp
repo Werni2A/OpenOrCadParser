@@ -11,6 +11,7 @@
 #include "Stream.hpp"
 #include "StreamFactory.hpp"
 #include "Streams/StreamAdminData.hpp"
+#include "Streams/StreamBOMDataStream.hpp"
 #include "Streams/StreamCache.hpp"
 #include "Streams/StreamDirectoryStruct.hpp"
 #include "Streams/StreamDsnStream.hpp"
@@ -97,8 +98,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     pattern = {"CIS", "VariantStore", "BOM", "BOMDataStream"};
     if(streamLoc.matches_pattern(pattern))
     {
-        aCtx.mLogger.warn(getErrMsg(pattern, streamLoc));
-        return std::unique_ptr<Stream>{};
+        return std::make_unique<StreamBOMDataStream>(aCtx, aInputStream);
     }
 
     // Match `/CIS/VariantStore/BOM/*/BOMAmbugity`
