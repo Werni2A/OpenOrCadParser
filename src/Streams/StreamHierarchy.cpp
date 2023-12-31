@@ -28,7 +28,22 @@ void StreamHierarchy::read(FileFormatVersion aVersion)
 
     mCtx.mLogger.trace("schematicName = {}", schematicName);
 
-    ds.printUnknownData(9, getMethodName(this, __func__) + ": 1");
+    ds.printUnknownData(7U, getMethodName(this, __func__) + ": 1");
+
+    const uint16_t lenSthInHierarchy2s = ds.readUint16();
+
+    mCtx.mLogger.trace("lenSthInHierarchy2s = {}", lenSthInHierarchy2s);
+
+    for(std::size_t i{0U}; i < lenSthInHierarchy2s; ++i)
+    {
+        sthInHierarchy2s.push_back(dynamic_pointer_cast<StructSthInHierarchy2>(parser.readStructure()));
+
+        ds.printUnknownData(4U, getMethodName(this, __func__) + ": 1.53");
+
+        const std::string someName = ds.readStringLenZeroTerm();
+
+        mCtx.mLogger.trace("someName = {}", someName);
+    }
 
     const uint16_t lenNetDbIdMappings = ds.readUint16();
 
