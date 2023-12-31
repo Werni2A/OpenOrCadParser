@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-
 import subprocess
 import threading
+from datetime import datetime, timedelta
 from pathlib import Path
 
 TEST_RUNNING_MSG = """
@@ -81,11 +81,18 @@ if __name__ == "__main__":
     for idx in range(TEST_SHARDS):
         threads += [TestThread(TEST_SHARDS, idx)]
 
+    start_time = datetime.now()
+
     for thread in threads:
         thread.start()
 
     for thread in threads:
         thread.join()
+
+    end_time = datetime.now()
+    test_duration = end_time - start_time
+
+    print(f"Test execution took {test_duration} (h:min:s)")
 
     if tests_ran_successfully:
         print(TEST_SUCC_MSG)
