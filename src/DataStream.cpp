@@ -30,36 +30,6 @@ std::vector<uint8_t> DataStream::readBytes(size_t aLen)
     return data;
 }
 
-std::vector<uint8_t> DataStream::readBytesNoString(std::size_t aLen)
-{
-    for(std::size_t i{0U}; i < aLen; ++i)
-    {
-        bool successful = true;
-
-        const auto startOffset = getCurrentOffset();
-
-        try
-        {
-            readStringLenZeroTerm();
-        }
-        catch(...)
-        {
-            successful = false;
-        }
-
-        setCurrentOffset(startOffset);
-
-        if(successful)
-        {
-            const std::string msg = fmt::format("Detected string at offset {} Byte but no string expected", i);
-            mCtx.mLogger.debug(msg);
-            throw std::runtime_error(msg);
-        }
-    }
-
-    return readBytes(aLen);
-}
-
 
 std::string DataStream::readStringZeroTerm()
 {

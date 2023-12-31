@@ -30,9 +30,9 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
         {
             mCtx.mLogger.trace("iteration i = {}", i);
 
-            const bool hasStrAfter8Byte = parser.tryRead([&](){ ds.readBytesNoString(8U); ds.readStringLenZeroTerm(); });
-            const bool hasStrAfter2Byte = parser.tryRead([&](){ ds.readBytesNoString(2U); ds.readStringLenZeroTerm(); });
-            const bool hasStrAfter0Byte = parser.tryRead([&](){ ds.readBytesNoString(0U); ds.readStringLenZeroTerm(); });
+            const bool hasStrAfter8Byte = parser.tryRead([&](){ ds.readBytes(8U); ds.readStringLenZeroTerm(); });
+            const bool hasStrAfter2Byte = parser.tryRead([&](){ ds.readBytes(2U); ds.readStringLenZeroTerm(); });
+            const bool hasStrAfter0Byte = parser.tryRead([&](){ ds.readBytes(0U); ds.readStringLenZeroTerm(); });
 
             mCtx.mLogger.trace("hasStrAfter8Byte = {}", hasStrAfter8Byte);
             mCtx.mLogger.trace("hasStrAfter2Byte = {}", hasStrAfter2Byte);
