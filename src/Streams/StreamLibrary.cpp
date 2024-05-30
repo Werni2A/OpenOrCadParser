@@ -51,6 +51,7 @@ void StreamLibrary::read(FileFormatVersion aVersion)
     // 2.0; 3.2; 3.3
     const uint16_t versionMajor = ds.readUint16();
     const uint16_t versionMinor = ds.readUint16();
+    const uint32_t version = versionMajor * 10 + versionMinor;
 
     mCtx.mLogger.trace("version = {}.{}", versionMajor, versionMinor);
 
@@ -107,8 +108,8 @@ void StreamLibrary::read(FileFormatVersion aVersion)
 
     uint32_t strLstLen = 0U;
 
-    // @todo Versions were chosen randomly
-    if(aVersion == FileFormatVersion::A)
+    // @todo Version were chosen randomly
+    if(version < 30)
     {
         strLstLen = ds.readUint16();
     }
