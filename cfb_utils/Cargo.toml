@@ -1,0 +1,19 @@
+[package]
+name = "cfb_utils"
+version = "0.0.1"
+edition = "2021"
+
+[dependencies]
+cfb = "0.10.0"
+walkdir = "2"
+pathdiff = "0.1.0"
+path-slash = "0.2.1"
+byteorder = "1.5.0"
+
+[[bin]]
+name = "cfb_pack"
+path = "src/bin/cfb_pack.rs"
+
+[[bin]]
+name = "cfb_unpack"
+path = "src/bin/cfb_unpack.rs"
