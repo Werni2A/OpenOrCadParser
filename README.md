@@ -1,9 +1,7 @@
 
 # OpenOrCadParser
 
-Purpose of this project is to provide a C++17 library for parsing [Cadence](https://en.wikipedia.org/wiki/Cadence_Design_Systems)'s OrCAD Capture binary file formats. This library can be linked to other software for reading/modifying?/writing? OrCAD binary files.
-
-**See also the complementary project [OpenAllegroParser](https://github.com/Werni2A/OpenAllegroParser).**
+Purpose of this project is to provide a C++17 library for parsing [Cadence](https://en.wikipedia.org/wiki/Cadence_Design_Systems)'s OrCAD Capture binary file formats. This library can be linked to other software for reading/modifying?/writing? OrCAD binary files. This repository does not cover every possible use case, maybe you find what you are looking for in section [Related Projects](doc/related_projects.md).
 
 The focus lies on schematics (`*.DSN`/`*.DBK`) and symbol libraries (`*.OLB`/`*.OBK`), the second file format is just the extension for its corresponding backup file. Backups should be identical, just with a different file extension.
 
@@ -121,14 +119,6 @@ python pyorlib2ki.py -i $XML_PATH -o $SYM_PATH
 # Unit Tests
 
 [Test Documentation](doc/tests.md)
-
----
-
-# Related Projects
-
-[orlib2ki](https://github.com/fjullien/orlib2ki) (C based OrCAD XML Library to KiCad Converter)
-
-[pyorlib2ki](https://github.com/fjullien/pyorlib2ki) (Python based OrCAD XML Library to KiCad Converter)
 
 ---
 

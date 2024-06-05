@@ -163,7 +163,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         const auto s = parser.readStructure();
         if(s)
         {
-            mCtx.mLogger.debug("VERIFYING Page Structure10 is {}", NAMEOF_TYPE_RTTI(*s));
+            mCtx.mLogger.trace("VERIFYING Page Structure10 is {}", NAMEOF_TYPE_RTTI(*s));
         }
     }
 
@@ -177,7 +177,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         const auto s = parser.readStructure();
         if(s)
         {
-            mCtx.mLogger.debug("VERIFYING Page Structure11 is {}", NAMEOF_TYPE_RTTI(*s));
+            mCtx.mLogger.trace("VERIFYING Page Structure11 is {}", NAMEOF_TYPE_RTTI(*s));
         }
     }
 
