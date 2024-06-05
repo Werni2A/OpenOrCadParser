@@ -80,9 +80,9 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     localFutureLst.checkpoint();
 
-    const std::string sth1 = ds.readStringLenZeroTerm(); // @todo needs verification
+    const std::string source_package = ds.readStringLenZeroTerm(); // @todo needs verification
 
-    mCtx.mLogger.trace("sth1 = {}", sth1);
+    mCtx.mLogger.trace("source_package = {}", source_package);
 
     ds.printUnknownData(2, getMethodName(this, __func__) + ": 5");
 

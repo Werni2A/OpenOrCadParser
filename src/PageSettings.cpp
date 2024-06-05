@@ -43,6 +43,7 @@ void PageSettings::read(FileFormatVersion /* aVersion */)
     mCtx.mLogger.trace("horizontalCount = {}", horizontalCount);
     mCtx.mLogger.trace("verticalCount   = {}", verticalCount);
 
+    // @todo Probably related to Spice simulations
     ds.printUnknownData(2, getMethodName(this, __func__) + ": 5");
 
     horizontalWidth = ds.readUint32();
