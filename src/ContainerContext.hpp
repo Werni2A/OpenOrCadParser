@@ -14,10 +14,12 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 
+// #include "Database.hpp"
 #include "General.hpp"
 
 
 class Container;
+class Database;
 
 
 namespace fs = std::filesystem;
@@ -138,7 +140,7 @@ static bool operator==(const CfbfStreamLocation& aLhs, const CfbfStreamLocation&
 
 struct ParserConfig
 {
-    std::size_t mThreadCount{1U}; //!< Number of threads used for parsing streams in parallel
+    std::size_t mThreadCount{std::thread::hardware_concurrency()}; //!< Number of threads used for parsing streams in parallel
 
     bool mSkipUnknownPrim{true}; //!< Unknown primitives should be skipped during parsing
     bool mSkipInvalidPrim{true}; //!< Invalid primitives should be skipped during parsing
@@ -146,7 +148,7 @@ struct ParserConfig
     bool mSkipUnknownStruct{true}; //!< Unknown structures should be skipped during parsing
     bool mSkipInvalidStruct{true}; //!< Invalid structures should be skipped during parsing
 
-    bool mKeepTmpFiles{false}; //!< Do not delete temporary files after parser completed
+    bool mKeepTmpFiles{true}; //!< Do not delete temporary files after parser completed
 };
 
 
@@ -169,7 +171,7 @@ class ContainerContext
 public:
 
     ContainerContext(const fs::path& aInputCfbfFile,
-        const fs::path& aExtractedCfbfPath, ParserConfig aCfg, Container& aContainer) : mContainer{aContainer},
+        const fs::path& aExtractedCfbfPath, ParserConfig aCfg, Container& aContainer, Database& aDb) : mDb{aDb}, mContainer{aContainer},
             mLogger{"tmp"}
     {
         mInputCfbfFile = aInputCfbfFile;
@@ -183,7 +185,7 @@ public:
         configureLogger(logPath);
     }
 
-    ContainerContext(const ContainerContext& aCtx) : mContainer{aCtx.mContainer}, mLogger{"tmp"}
+    ContainerContext(const ContainerContext& aCtx) : mDb{aCtx.mDb}, mContainer{aCtx.mContainer}, mLogger{"tmp"}
     {
         mInputCfbfFile = aCtx.mInputCfbfFile;
         mExtractedCfbfPath = aCtx.mExtractedCfbfPath;
@@ -209,6 +211,7 @@ public:
         spdlog::info("Created log file at {}", aLogPath.string());
     }
 
+    Database& mDb;
     Container& mContainer;
 
     fs::path mInputCfbfFile; //!< Input CFBF container

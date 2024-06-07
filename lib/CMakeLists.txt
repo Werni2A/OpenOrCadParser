@@ -28,6 +28,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Streams/StreamCache.cpp
    ${LIB_SRC_DIR}/Streams/StreamDirectoryStruct.cpp
    ${LIB_SRC_DIR}/Streams/StreamDsnStream.cpp
+   ${LIB_SRC_DIR}/Streams/StreamDTypeD.cpp
    ${LIB_SRC_DIR}/Streams/StreamERC.cpp
    ${LIB_SRC_DIR}/Streams/StreamHierarchy.cpp
    ${LIB_SRC_DIR}/Streams/StreamHSObjects.cpp
@@ -37,7 +38,6 @@ set(SOURCES
    ${LIB_SRC_DIR}/Streams/StreamPage.cpp
    ${LIB_SRC_DIR}/Streams/StreamSchematic.cpp
    ${LIB_SRC_DIR}/Streams/StreamSymbol.cpp
-   ${LIB_SRC_DIR}/Streams/StreamType.cpp
    ${LIB_SRC_DIR}/Structures/StructAlias.cpp
    ${LIB_SRC_DIR}/Structures/StructBookMarkSymbolInst.cpp
    ${LIB_SRC_DIR}/Structures/StructBusEntry.cpp
@@ -88,113 +88,11 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructWire.cpp
    ${LIB_SRC_DIR}/Structures/StructWireBus.cpp
    ${LIB_SRC_DIR}/Structures/StructWireScalar.cpp
-   ${LIB_SRC_DIR}/XmlExporter.cpp
-)
-
-set(HEADERS
-   ${LIB_INCLUDE_DIR}/Container.hpp
-   ${LIB_INCLUDE_DIR}/ContainerContext.hpp
-   ${LIB_INCLUDE_DIR}/ContainerExtractor.hpp
-   ${LIB_INCLUDE_DIR}/DataStream.hpp
-   ${LIB_INCLUDE_DIR}/Enums/Color.hpp
-   ${LIB_INCLUDE_DIR}/Enums/FillStyle.hpp
-   ${LIB_INCLUDE_DIR}/Enums/HatchStyle.hpp
-   ${LIB_INCLUDE_DIR}/Enums/ImplementationType.hpp
-   ${LIB_INCLUDE_DIR}/Enums/LineStyle.hpp
-   ${LIB_INCLUDE_DIR}/Enums/LineWidth.hpp
-   ${LIB_INCLUDE_DIR}/Enums/PortType.hpp
-   ${LIB_INCLUDE_DIR}/Enums/Primitive.hpp
-   ${LIB_INCLUDE_DIR}/Enums/Structure.hpp
-   ${LIB_INCLUDE_DIR}/FutureData.hpp
-   ${LIB_INCLUDE_DIR}/General.hpp
-   ${LIB_INCLUDE_DIR}/GenericParser.hpp
-   ${LIB_INCLUDE_DIR}/PageSettings.hpp
-   ${LIB_INCLUDE_DIR}/Primitives/Point.hpp
-   ${LIB_INCLUDE_DIR}/Primitives/PrimArc.hpp
-   ${LIB_INCLUDE_DIR}/Primitives/PrimBezier.hpp
-   ${LIB_INCLUDE_DIR}/Primitives/PrimBitmap.hpp
-   ${LIB_INCLUDE_DIR}/Primitives/PrimCommentText.hpp
-   ${LIB_INCLUDE_DIR}/Primitives/PrimEllipse.hpp
-   ${LIB_INCLUDE_DIR}/Primitives/PrimLine.hpp
-   ${LIB_INCLUDE_DIR}/Primitives/PrimPolygon.hpp
-   ${LIB_INCLUDE_DIR}/Primitives/PrimPolyline.hpp
-   ${LIB_INCLUDE_DIR}/Primitives/PrimRect.hpp
-   ${LIB_INCLUDE_DIR}/Record.hpp
-   ${LIB_INCLUDE_DIR}/RecordFactory.hpp
-   ${LIB_INCLUDE_DIR}/Stream.hpp
-   ${LIB_INCLUDE_DIR}/StreamContext.hpp
-   ${LIB_INCLUDE_DIR}/StreamFactory.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamAdminData.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamBOMDataStream.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamCache.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamDirectoryStruct.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamDsnStream.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamERC.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamHierarchy.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamHSObjects.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamLibrary.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamNetBundleMapData.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamPackage.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamPage.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamSchematic.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamSymbol.hpp
-   ${LIB_INCLUDE_DIR}/Streams/StreamType.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructAlias.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructBookMarkSymbolInst.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructBusEntry.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructERCSymbol.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructERCSymbolInst.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructGeneralProperties.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructGlobal.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructGlobalSymbol.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructGraphicArcInst.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructGraphicBezierInst.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructGraphicBitMapInst.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructGraphicBoxInst.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructGraphicCommentTextInst.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructGraphicEllipseInst.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructGraphicInst.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructGraphicLineInst.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructGraphicOleEmbedInst.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructGraphicPolygonInst.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructGraphicPolylineInst.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructHierarchicSymbol.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructNetDbIdMapping.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructOffPageConnector.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructOffPageSymbol.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructPartInst.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructPinIdxMapping.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructPinShapeSymbol.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructPort.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructPrimitives.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructProperties.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructSomeHierarchyBase.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructSthInHierarchy1.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructSthInHierarchy2.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructSthInHierarchy3.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructSthInPages0.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructSymbol.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructSymbolPin.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructSymbolPinBus.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructSymbolPinScalar.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructT0x10.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructT0x1f.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructT0x34.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructT0x35.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructT0x45.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructT0x5b.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructTitleBlock.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructTitleBlockSymbol.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructWire.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructWireBus.hpp
-   ${LIB_INCLUDE_DIR}/Structures/StructWireScalar.hpp
-   ${LIB_INCLUDE_DIR}/VisitorPattern.hpp
-   ${LIB_INCLUDE_DIR}/Win32/LOGFONTA.hpp
-   ${LIB_INCLUDE_DIR}/XmlExporter.hpp
+#    ${LIB_SRC_DIR}/XmlExporter.cpp
 )
 
 # Create library file from sources
-add_library(${NAME_LIB} SHARED ${SOURCES} ${HEADERS})
+add_library(${NAME_LIB} SHARED ${SOURCES})
 
 target_include_directories(${NAME_LIB} PRIVATE
                            ${COMPOUNDFILEREADER_INCLUDE_DIRS}

@@ -52,10 +52,10 @@ public:
         aCtx.mLogger.trace(to_string());
     }
 
-    void accept(Visitor& aVisitor) const
-    {
-        aVisitor.visit(*this);
-    }
+    // void accept(Visitor& aVisitor) const
+    // {
+    //     aVisitor.visit(*this);
+    // }
 
     std::string to_string() const
     {

@@ -127,7 +127,7 @@ TEST_CASE("{repo.author} - {repo.project} - {file_name} : Check File {full_path}
 
     Container parser{{inputFile, cfg}};
 
-    parser.parseLibrary();
+    parser.parseDatabaseFile();
     check_error_count(inputFile, parser.getFileErrCtr(), {file.errors});
     REQUIRE(parser.getFileErrCtr() <= {file.errors});
 }}"""

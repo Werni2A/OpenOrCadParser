@@ -6,10 +6,9 @@
 
 #include "General.hpp"
 #include "StreamContext.hpp"
-#include "VisitorPattern.hpp"
 
 
-class Record : public Component
+class Record
 {
 public:
     Record(StreamContext& aCtx) : mCtx{aCtx}

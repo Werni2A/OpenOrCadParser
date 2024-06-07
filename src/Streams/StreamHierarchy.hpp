@@ -32,9 +32,14 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    void accept(Visitor& aVisitor) const override
+    // void accept(Visitor& aVisitor) const override
+    // {
+    //     aVisitor.visit(*this);
+    // }
+
+    virtual StreamType getStreamType() const override
     {
-        aVisitor.visit(*this);
+        return StreamType::Hierarchy;
     }
 
     std::vector<std::unique_ptr<StructSthInHierarchy2>>   sthInHierarchy2s;

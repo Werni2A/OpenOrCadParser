@@ -10,14 +10,17 @@
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
+#include "Database.hpp"
 #include "Enums/Primitive.hpp"
 #include "Enums/Structure.hpp"
 #include "FutureData.hpp"
 #include "GenericParser.hpp"
-#include "Library.hpp"
 #include "Record.hpp"
 #include "RecordFactory.hpp"
 #include "Stream.hpp"
+#include "Streams/StreamLibrary.hpp"
+
+// class StreamLibrary;
 
 
 void GenericParser::discard_until_preamble()
@@ -299,12 +302,11 @@ std::pair<Structure, uint32_t> GenericParser::read_single_prefix_short()
                 const auto getStr = [&, this](uint32_t idx) -> std::string
                     {
                         int64_t newIdx = static_cast<int64_t>(idx);
-                        if(gLibrary != nullptr)
+
+                        if(mCtx.mDb.getLibrary().has_value())
                         {
-                            if(gLibrary->library)
-                            {
-                                return newIdx >= 0 ? gLibrary->library->strLst.at(newIdx) : "";
-                            }
+                            const StreamLibrary& lib = dynamic_cast<StreamLibrary&>(*mCtx.mDb.getLibrary().value());
+                            return newIdx >= 0 ? lib.strLst.at(newIdx) : "";
                         }
 
                         return "";

@@ -7,7 +7,7 @@
 #include <spdlog/spdlog.h>
 
 #include "Container.hpp"
-#include "XmlExporter.hpp"
+// #include "XmlExporter.hpp"
 
 
 namespace fs = std::filesystem;
@@ -179,16 +179,16 @@ int main(int argc, char* argv[])
 
     if(!printTree && !extract)
     {
-        parser.parseLibrary();
+        parser.parseDatabaseFile();
 
         const fs::path xmlDir = ctx.mExtractedCfbfPath / "xml";
         fs::create_directory(xmlDir);
 
         spdlog::info("Setting XML path to {}", xmlDir.string());
 
-        XmlExporter xml{xmlDir};
+        // XmlExporter xml{xmlDir};
 
-        xml.visit(parser.getLibrary());
+        // xml.visit(parser.getLibrary());
 
         // @todo Use CLI option for export
         // xml.exportXml();

@@ -24,10 +24,10 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    void accept(Visitor& aVisitor) const override
-    {
-        aVisitor.visit(*this);
-    }
+    // void accept(Visitor& aVisitor) const override
+    // {
+    //     aVisitor.visit(*this);
+    // }
 
     // @todo they are probably int16_t, see where those values are read.
     int32_t x1;

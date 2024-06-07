@@ -5,9 +5,9 @@
 
 #include <nameof.hpp>
 
+#include "Database.hpp"
 #include "General.hpp"
 #include "GenericParser.hpp"
-#include "Library.hpp"
 #include "Primitives/PrimCommentText.hpp"
 #include "Win32/LOGFONTA.hpp"
 
@@ -54,17 +54,17 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
 
     mCtx.mLogger.trace("textFontIdx = {}", textFontIdx);
 
-    if(gLibrary != nullptr)
-    {
-        if(gLibrary->library)
-        {
-            if(textFontIdx > gLibrary->library->textFonts.size())
-            {
-                throw std::out_of_range(fmt::format("{}: textFontIdx is out of range! Expected {} <= {}!",
-                    getMethodName(this, __func__), textFontIdx, gLibrary->library->textFonts.size()));
-            }
-        }
-    }
+    // if(gLibrary != nullptr)
+    // {
+    //     if(gLibrary->library)
+    //     {
+    //         if(textFontIdx > gLibrary->library->textFonts.size())
+    //         {
+    //             throw std::out_of_range(fmt::format("{}: textFontIdx is out of range! Expected {} <= {}!",
+    //                 getMethodName(this, __func__), textFontIdx, gLibrary->library->textFonts.size()));
+    //         }
+    //     }
+    // }
 
     ds.printUnknownData(2, getMethodName(this, __func__) + ": 1");
 
@@ -98,13 +98,13 @@ LOGFONTA PrimCommentText::getTextFont() const
     if(idx >= 0)
     {
         // Retrieve font from the library.
-        if(gLibrary != nullptr)
-        {
-            if(gLibrary->library)
-            {
-                textFont = gLibrary->library->textFonts.at(idx);
-            }
-        }
+        // if(gLibrary != nullptr)
+        // {
+        //     if(gLibrary->library)
+        //     {
+        //         textFont = gLibrary->library->textFonts.at(idx);
+        //     }
+        // }
         // @todo provide try catch block for better exception messages
     }
     else if(idx == -1)

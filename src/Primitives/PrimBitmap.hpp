@@ -29,10 +29,10 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    void accept(Visitor& aVisitor) const override
-    {
-        aVisitor.visit(*this);
-    }
+    // void accept(Visitor& aVisitor) const override
+    // {
+    //     aVisitor.visit(*this);
+    // }
 
     fs::path writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData) const;
     fs::path writeDifferentImageFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData) const;

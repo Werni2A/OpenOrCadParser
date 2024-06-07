@@ -3,6 +3,7 @@
 
 
 #include <any>
+#include <deque>
 #include <filesystem>
 #include <fstream>
 #include <functional>
@@ -15,17 +16,15 @@
 #include <spdlog/spdlog.h>
 
 #include "ContainerContext.hpp"
+#include "Database.hpp"
 #include "DataStream.hpp"
 #include "Enums/Primitive.hpp"
 #include "Enums/Structure.hpp"
 #include "FutureData.hpp"
 #include "General.hpp"
-#include "Library.hpp"
 #include "Primitives/PrimBase.hpp"
 #include "Stream.hpp"
 
-
-class StreamLibrary;
 
 
 namespace fs = std::filesystem;
@@ -83,34 +82,12 @@ public:
     // -------------- Read Container ---------------
     // ---------------------------------------------
 
-    void parseLibraryThread(std::vector<std::unique_ptr<Stream>*> aStreamList);
-    void parseLibrary();
-
-    Library& getLibrary() const
-    {
-        return *gLibrary;
-    }
-
-    std::optional<StreamLibrary*> getStreamLibrary() const
-    {
-        for(auto& stream : mStreams)
-        {
-            if(!stream)
-            {
-                continue;
-            }
-
-            const std::vector<std::optional<std::string>> pattern = {"Library"};
-            if(stream->mCtx.mCfbfStreamLocation.matches_pattern(pattern))
-            {
-                return dynamic_cast<StreamLibrary*>(stream.get());
-            }
-        }
-
-        return std::nullopt;
-    }
+    void parseDatabaseFileThread(std::deque<std::shared_ptr<Stream>> aStreamList);
+    void parseDatabaseFile();
 
 private:
+
+    Database mDb;
 
     size_t mFileCtr;    //!< Counts all files that were opened for parsing
     size_t mFileErrCtr; //!< Counts all files that failed somewhere
@@ -118,9 +95,6 @@ private:
     ContainerContext mCtx;
 
     ParserConfig mCfg;
-
-    // List of streams in the CFBF container
-    std::vector<std::unique_ptr<Stream>> mStreams;
 };
 
 

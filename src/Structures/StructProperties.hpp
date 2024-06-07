@@ -24,10 +24,10 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    void accept(Visitor& aVisitor) const override
-    {
-        aVisitor.visit(*this);
-    }
+    // void accept(Visitor& aVisitor) const override
+    // {
+    //     aVisitor.visit(*this);
+    // }
 
     std::string ref;
     std::string normalName;
