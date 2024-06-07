@@ -29,7 +29,7 @@ public:
 
     StreamContext(const ContainerContext& aCtx, const fs::path& aInputStream)
         : ContainerContext{aCtx}, mInputStream{aInputStream}, mCfbfStreamLocation{mInputStream, mExtractedCfbfPath},
-          mDs{aInputStream, *this}, mMtx{}
+          mDs{aInputStream, *this}
     {
         mImgCtr = 0U;
         mAttemptedParsing = false;
@@ -59,8 +59,6 @@ public:
     // was no attempt to parse the stream yet, this variable
     // is null.
     std::optional<bool> mParsedSuccessfully;
-
-    std::mutex mMtx;
 };
 
 

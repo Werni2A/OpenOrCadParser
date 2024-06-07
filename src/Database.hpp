@@ -4,7 +4,6 @@
 
 #include <cstdint>
 #include <memory>
-#include <mutex>
 #include <optional>
 #include <ostream>
 #include <string>
@@ -61,7 +60,6 @@ public:
 
     // List of streams in the CFBF container
     std::vector<std::shared_ptr<Stream>> mStreams;
-    std::mutex mMtx;
 };
 
 
