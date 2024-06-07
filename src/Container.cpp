@@ -41,7 +41,7 @@ namespace fs = std::filesystem;
 
 
 Container::Container(const fs::path& aCfbfContainer, ParserConfig aCfg) :
-    mDb{}, mFileCtr{0U}, mFileErrCtr{0U}, mCtx{aCfbfContainer, "", aCfg, *this, mDb}, mCfg{aCfg}
+    mDb{}, mFileCtr{0U}, mFileErrCtr{0U}, mCtx{aCfbfContainer, "", aCfg, mDb}, mCfg{aCfg}
 {
     mCtx.mFileType = getFileTypeByExtension(aCfbfContainer);
 

@@ -171,7 +171,7 @@ class ContainerContext
 public:
 
     ContainerContext(const fs::path& aInputCfbfFile,
-        const fs::path& aExtractedCfbfPath, ParserConfig aCfg, Container& aContainer, Database& aDb) : mDb{aDb}, mContainer{aContainer},
+        const fs::path& aExtractedCfbfPath, ParserConfig aCfg, Database& aDb) : mDb{aDb},
             mLogger{"tmp"}
     {
         mInputCfbfFile = aInputCfbfFile;
@@ -185,7 +185,7 @@ public:
         configureLogger(logPath);
     }
 
-    ContainerContext(const ContainerContext& aCtx) : mDb{aCtx.mDb}, mContainer{aCtx.mContainer}, mLogger{"tmp"}
+    ContainerContext(const ContainerContext& aCtx) : mDb{aCtx.mDb}, mLogger{"tmp"}
     {
         mInputCfbfFile = aCtx.mInputCfbfFile;
         mExtractedCfbfPath = aCtx.mExtractedCfbfPath;
@@ -212,7 +212,6 @@ public:
     }
 
     Database& mDb;
-    Container& mContainer;
 
     fs::path mInputCfbfFile; //!< Input CFBF container
     fs::path mExtractedCfbfPath;
