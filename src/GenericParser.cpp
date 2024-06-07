@@ -297,31 +297,31 @@ std::pair<Structure, uint32_t> GenericParser::read_single_prefix_short()
 
         for(size_t i = 0u; i < nameValueMapping.size(); ++i)
         {
-            try
-            {
-                const auto getStr = [&, this](uint32_t idx) -> std::string
-                    {
-                        int64_t newIdx = static_cast<int64_t>(idx);
+            // try
+            // {
+            //     const auto getStr = [&, this](uint32_t idx) -> std::string
+            //         {
+            //             // int64_t newIdx = static_cast<int64_t>(idx);
 
-                        if(mCtx.mDb.getLibrary().has_value())
-                        {
-                            const StreamLibrary& lib = dynamic_cast<StreamLibrary&>(*mCtx.mDb.getLibrary().value());
-                            return newIdx >= 0 ? lib.strLst.at(newIdx) : "";
-                        }
+            //             // if(mCtx.mDb.getLibrary().has_value())
+            //             // {
+            //             //     const StreamLibrary& lib = dynamic_cast<StreamLibrary&>(*mCtx.mDb.getLibrary().value());
+            //             //     return newIdx >= 0 ? lib.strLst.at(newIdx) : "";
+            //             // }
 
-                        return "";
-                    };
+            //             return "";
+            //         };
 
-                mCtx.mLogger.debug("  {}: {} <- {}", i, getStr(nameValueMapping.at(i).first), getStr(nameValueMapping.at(i).second));
-            }
-            catch(const std::exception& e)
-            {
-                const std::string msg = fmt::format("{}: Tried to access strLst out of range!\n{}",
-                    getMethodName(this, __func__), e.what());
+            //     mCtx.mLogger.debug("  {}: {} <- {}", i, getStr(nameValueMapping.at(i).first), getStr(nameValueMapping.at(i).second));
+            // }
+            // catch(const std::exception& e)
+            // {
+            //     const std::string msg = fmt::format("{}: Tried to access strLst out of range!\n{}",
+            //         getMethodName(this, __func__), e.what());
 
-                mCtx.mLogger.debug(msg);
-                throw std::out_of_range(msg);
-            }
+            //     mCtx.mLogger.debug(msg);
+            //     throw std::out_of_range(msg);
+            // }
         }
     }
     else // size < 0
