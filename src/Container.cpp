@@ -4,6 +4,7 @@
 #include <cctype>
 #include <cmath>
 #include <cstdio>
+#include <deque>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -31,7 +32,6 @@
 #include "Enums/Structure.hpp"
 #include "Exception.hpp"
 #include "General.hpp"
-#include "Library.hpp"
 #include "PinShape.hpp"
 #include "Stream.hpp"
 #include "StreamFactory.hpp"
@@ -40,14 +40,10 @@
 namespace fs = std::filesystem;
 
 
-// @todo Add ContainerContext and ParserContext where ContainerContext is shared by all ParserContexts, maybe even derived from it?
-Library* gLibrary = new Library{};
-
-
 Container::Container(const fs::path& aCfbfContainer, ParserConfig aCfg) :
-    mFileCtr{0U}, mFileErrCtr{0U}, mCtx{aCfbfContainer, "", aCfg, *this}, mCfg{aCfg}, mStreams{}
+    mDb{}, mFileCtr{0U}, mFileErrCtr{0U}, mCtx{aCfbfContainer, "", aCfg, mDb}, mCfg{aCfg}
 {
-    mCtx.mFileType = getFileTypeByExtension(aCfbfContainer);
+    mCtx.mDbType = getFileTypeByExtension(aCfbfContainer);
 
     // Extract to a unique folder in case two similar named files
     // are extracted at the same time. E.g. in parallel execution.
@@ -80,53 +76,75 @@ Container::~Container()
 }
 
 
-void Container::parseLibraryThread(std::vector<std::unique_ptr<Stream>*> aStreamList)
+void Container::parseDatabaseFileThread(std::deque<std::shared_ptr<Stream>> aStreamList)
 {
     for(auto& stream : aStreamList)
     {
         bool parsedSuccessfully = true;
         try
         {
-            (*stream)->mCtx.mAttemptedParsing = true;
-            (*stream)->openFile();
-            (*stream)->read();
-            (*stream)->closeFile();
+            stream->mCtx.mAttemptedParsing = true;
+            stream->openFile();
+            stream->read();
+            stream->closeFile();
         }
         catch(...)
         {
             parsedSuccessfully = false;
-            (*stream)->exceptionHandling();
+            stream->exceptionHandling();
         }
 
-        (*stream)->mCtx.mParsedSuccessfully = parsedSuccessfully;
+        stream->mCtx.mParsedSuccessfully = parsedSuccessfully;
     }
 }
 
 
 // Equally distribute elements into new lists of pointers to the original elements
-template<typename ElementType>
-std::vector<std::vector<ElementType*>> equallyDistributeElementsIntoLists(
-    std::size_t aListCount, std::vector<ElementType>& aElements)
+void distributeStreamsToThreadJobsForParsing(
+    std::size_t aNumberParallelJobs,
+    const std::vector<std::shared_ptr<Stream>>& aStreams, //!< Streams to distribute
+    std::deque<std::shared_ptr<Stream>>& aSequentialJobList,
+    std::vector<std::deque<std::shared_ptr<Stream>>>& aParallelJobLists)
 {
-    std::vector<std::vector<ElementType*>> lists{};
+    aSequentialJobList.clear();
+    aParallelJobLists.clear();
 
-    lists.resize(aListCount);
+    aParallelJobLists.resize(aNumberParallelJobs);
 
     std::size_t listIdx{0U};
 
-    for(auto& element : aElements)
+    for(auto& stream : aStreams)
     {
-        lists.at(listIdx).push_back(&element);
-        listIdx = (listIdx + 1U) % aListCount;
+        const auto streamPath = stream->mCtx.mCfbfStreamLocation.get_vector();
+        // All streams located at the root-directory should be parsed
+        // ahead of parallel execution
+        if(streamPath.size() == 1U)
+        {
+            // Put in sequential list
+            if(streamPath.back() == "Library")
+            {
+                // `Library` needs to be parsed first
+                aSequentialJobList.push_front(stream);
+            }
+            else
+            {
+                aSequentialJobList.push_back(stream);
+            }
+        }
+        else
+        {
+            // Put in parallel list
+            aParallelJobLists.at(listIdx).push_back(stream);
+            listIdx = (listIdx + 1U) % aNumberParallelJobs;
+        }
     }
-
-    return lists;
 }
 
+
 /**
- * @brief Parse the whole library.
+ * @brief Parse the whole database file.
  */
-void Container::parseLibrary()
+void Container::parseDatabaseFile()
 {
     mCtx.mLogger.info("Using {} threads", mCtx.mCfg.mThreadCount);
 
@@ -151,40 +169,76 @@ void Container::parseLibrary()
             continue;
         }
 
-        mStreams.push_back(std::move(stream));
+        mDb.mStreams.push_back(std::move(stream));
     }
 
-    auto threadJobList = equallyDistributeElementsIntoLists<std::unique_ptr<Stream>>(mCtx.mCfg.mThreadCount, mStreams);
+    // We parse the database in two steps, first we parse all root-level streams in the
+    // CFB container because they contain information that is referenced in other streams.
+    // E.g. a package streams might reference the name of the package by an index into
+    // to the string list in the `Library` stream. Therefore `Library` must be parsed
+    // before attempting to parse the package to retrieve all required information.
+    // In this first step we parse all streams sequentially in the main thread to avoid
+    // synchronization issues.
+    // In the second step we parse all other streams and distribute them among different
+    // threads. Those threads do not interact with each other but only access information
+    // from streams parsed in the first step. They are not allowed to modify streams other
+    // than themself, i.e. streams access other streams in a read-only fashion s.t. no
+    // synchronization is required here.
+    // Note that `Library` contains meta information about the database so it's parsed ahead
+    // of all other streams.
 
-    for(std::size_t i{0U}; i < threadJobList.size(); ++i)
+    std::deque<std::shared_ptr<Stream>> sequentialJobList{};
+    std::vector<std::deque<std::shared_ptr<Stream>>> parallelJobsLists{};
+
+    distributeStreamsToThreadJobsForParsing(mCtx.mCfg.mThreadCount, mDb.mStreams, sequentialJobList, parallelJobsLists);
+
+    // Print sequential job assignment
     {
-        mCtx.mLogger.info("Assigning thread {} with the following {}/{} jobs:",
-            i, threadJobList.at(i).size(), mFileCtr);
+        mCtx.mLogger.info("Assigning main thread with the following {}/{} jobs (sequential):",
+            sequentialJobList.size(), mFileCtr);
 
-        const auto& threadJobs = threadJobList.at(i);
-
-        for(const auto& job : threadJobs)
+        for(const auto& job : sequentialJobList)
         {
-            mCtx.mLogger.debug("    {}", (*job)->mCtx.mInputStream.string());
+            mCtx.mLogger.debug("    {}", job->mCtx.mInputStream.string());
         }
     }
 
-    std::vector<std::thread> threadList;
-
-    for(auto& threadJobs : threadJobList)
+    // Print parallel job assignment
+    for(std::size_t i{0U}; i < parallelJobsLists.size(); ++i)
     {
-        if(threadJobs.size() > 0U)
+        mCtx.mLogger.info("Assigning thread {} with the following {}/{} jobs (parallel):",
+            i, parallelJobsLists.at(i).size(), mFileCtr);
+
+        const auto& parallelJobList = parallelJobsLists.at(i);
+
+        for(const auto& job : parallelJobList)
         {
-            threadList.push_back(std::thread{&Container::parseLibraryThread, this, threadJobs});
+            mCtx.mLogger.debug("    {}", job->mCtx.mInputStream.string());
         }
     }
 
-    for(auto& thread : threadList)
+    // Run sequential jobs before parallel execution
+    parseDatabaseFileThread(sequentialJobList);
+
+    // Run parallel jobs
     {
-        thread.join();
+        std::vector<std::thread> threadList;
+
+        for(auto& threadJobs : parallelJobsLists)
+        {
+            if(threadJobs.size() > 0U)
+            {
+                threadList.push_back(std::thread{&Container::parseDatabaseFileThread, this, threadJobs});
+            }
+        }
+
+        for(auto& thread : threadList)
+        {
+            thread.join();
+        }
     }
 
-    for(const auto& stream : mStreams)
+    for(const auto& stream : mDb.mStreams)
     {
         if(!stream->mCtx.mParsedSuccessfully.value_or(false))
         {
@@ -226,7 +280,7 @@ void Container::printContainerTree() const
 }
 
 
-FileType Container::getFileTypeByExtension(const fs::path& aFile) const
+DatabaseType Container::getFileTypeByExtension(const fs::path& aFile) const
 {
     std::string extension = aFile.extension().string();
 
@@ -234,15 +288,15 @@ FileType Container::getFileTypeByExtension(const fs::path& aFile) const
     std::transform(extension.begin(), extension.end(), extension.begin(),
         [] (unsigned char c) { return std::toupper(c); });
 
-    const std::map<std::string, FileType> extensionFileTypeMap =
+    const std::map<std::string, DatabaseType> extensionFileTypeMap =
         {
-            {".OLB", FileType::Library},
-            {".OBK", FileType::Library},
-            {".DSN", FileType::Schematic},
-            {".DBK", FileType::Schematic}
+            {".OLB", DatabaseType::Library},
+            {".OBK", DatabaseType::Library},
+            {".DSN", DatabaseType::Schematic},
+            {".DBK", DatabaseType::Schematic}
         };
 
-    FileType fileType;
+    DatabaseType fileType;
 
     try
     {

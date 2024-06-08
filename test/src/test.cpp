@@ -19,7 +19,7 @@ TEST_CASE("0000: Check Line - Complex", "[Line]")
     const fs::path inputFile{"test/test_cases/0000.OLB"};
 
     Container parser{inputFile};
-    parser.parseLibrary();
+    parser.parseDatabaseFile();
     Library& lib = *gLibrary;
 
     const Line& line = lib.packages.at(0).primitives.at(0).lines.at(0);
@@ -42,7 +42,7 @@ TEST_CASE("0000: Check CommentText - Complex", "[CommentText]")
     const fs::path inputFile{"test/test_cases/0001.OLB"};
 
     Container parser{inputFile};
-    parser.parseLibrary();
+    parser.parseDatabaseFile();
     Library& lib = *gLibrary;
 
     const CommentText& text = lib.packages.at(0).primitives.at(0).commentTexts.at(0);
@@ -76,7 +76,7 @@ TEST_CASE("0002: Check Rect - Complex", "[Rect]")
     const fs::path inputFile{"test/test_cases/0002.OLB"};
 
     Container parser{inputFile};
-    parser.parseLibrary();
+    parser.parseDatabaseFile();
     Library& lib = *gLibrary;
 
     const Rect& rect = lib.packages.at(0).primitives.at(0).rects.at(0);
@@ -102,7 +102,7 @@ TEST_CASE("0003: Check Ellipse - Complex", "[Ellipse]")
     const fs::path inputFile{"test/test_cases/0003.OLB"};
 
     Container parser{inputFile};
-    parser.parseLibrary();
+    parser.parseDatabaseFile();
     Library& lib = *gLibrary;
 
     const Ellipse& ellipse = lib.packages.at(0).primitives.at(0).ellipses.at(0);
@@ -128,7 +128,7 @@ TEST_CASE("0004: Check Arc - Complex", "[Arc]")
     const fs::path inputFile{"test/test_cases/0004.OLB"};
 
     Container parser{inputFile};
-    parser.parseLibrary();
+    parser.parseDatabaseFile();
     Library& lib = *gLibrary;
 
     const Arc& arc = lib.packages.at(0).primitives.at(0).arcs.at(0);
@@ -157,7 +157,7 @@ TEST_CASE("0005: Check Bezier - Complex", "[Bezier]")
     const fs::path inputFile{"test/test_cases/0005.OLB"};
 
     Container parser{inputFile};
-    parser.parseLibrary();
+    parser.parseDatabaseFile();
     Library& lib = *gLibrary;
 
     const Bezier& bezier = lib.packages.at(0).primitives.at(0).beziers.at(0);
@@ -213,7 +213,7 @@ TEST_CASE("0006: Check Polyline - Complex", "[Polyline]")
     const fs::path inputFile{"test/test_cases/0006.OLB"};
 
     Container parser{inputFile};
-    parser.parseLibrary();
+    parser.parseDatabaseFile();
     Library& lib = *gLibrary;
 
     const Polyline& polyline = lib.packages.at(0).primitives.at(0).polylines.at(0);
@@ -242,7 +242,7 @@ TEST_CASE("0007: Check Bitmap - Complex", "[Bitmap]")
     const fs::path inputFile{"test/test_cases/0007.OLB"};
 
     Container parser{inputFile};
-    parser.parseLibrary();
+    parser.parseDatabaseFile();
     Library& lib = *gLibrary;
 
     const Bitmap& bitmap = lib.packages.at(0).primitives.at(0).bitmaps.at(0);

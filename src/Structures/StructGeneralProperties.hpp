@@ -29,10 +29,10 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    void accept(Visitor& aVisitor) const override
-    {
-        aVisitor.visit(*this);
-    }
+    // void accept(Visitor& aVisitor) const override
+    // {
+    //     aVisitor.visit(*this);
+    // }
 
     // Implementation path to open the corresponding folder.
     // See OrCAD: 'Property Sheet' -> 'Part Properties' -> 'Implementation Path'

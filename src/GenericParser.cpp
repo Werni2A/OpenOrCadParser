@@ -10,14 +10,17 @@
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
+#include "Database.hpp"
 #include "Enums/Primitive.hpp"
 #include "Enums/Structure.hpp"
 #include "FutureData.hpp"
 #include "GenericParser.hpp"
-#include "Library.hpp"
 #include "Record.hpp"
 #include "RecordFactory.hpp"
 #include "Stream.hpp"
+#include "Streams/StreamLibrary.hpp"
+
+// class StreamLibrary;
 
 
 void GenericParser::discard_until_preamble()
@@ -294,32 +297,31 @@ std::pair<Structure, uint32_t> GenericParser::read_single_prefix_short()
 
         for(size_t i = 0u; i < nameValueMapping.size(); ++i)
         {
-            try
-            {
-                const auto getStr = [&, this](uint32_t idx) -> std::string
-                    {
-                        int64_t newIdx = static_cast<int64_t>(idx);
-                        if(gLibrary != nullptr)
-                        {
-                            if(gLibrary->library)
-                            {
-                                return newIdx >= 0 ? gLibrary->library->strLst.at(newIdx) : "";
-                            }
-                        }
+            // try
+            // {
+            //     const auto getStr = [&, this](uint32_t idx) -> std::string
+            //         {
+            //             // int64_t newIdx = static_cast<int64_t>(idx);
 
-                        return "";
-                    };
+            //             // if(mCtx.mDb.getLibrary().has_value())
+            //             // {
+            //             //     const StreamLibrary& lib = dynamic_cast<StreamLibrary&>(*mCtx.mDb.getLibrary().value());
+            //             //     return newIdx >= 0 ? lib.strLst.at(newIdx) : "";
+            //             // }
 
-                mCtx.mLogger.debug("  {}: {} <- {}", i, getStr(nameValueMapping.at(i).first), getStr(nameValueMapping.at(i).second));
-            }
-            catch(const std::exception& e)
-            {
-                const std::string msg = fmt::format("{}: Tried to access strLst out of range!\n{}",
-                    getMethodName(this, __func__), e.what());
+            //             return "";
+            //         };
 
-                mCtx.mLogger.debug(msg);
-                throw std::out_of_range(msg);
-            }
+            //     mCtx.mLogger.debug("  {}: {} <- {}", i, getStr(nameValueMapping.at(i).first), getStr(nameValueMapping.at(i).second));
+            // }
+            // catch(const std::exception& e)
+            // {
+            //     const std::string msg = fmt::format("{}: Tried to access strLst out of range!\n{}",
+            //         getMethodName(this, __func__), e.what());
+
+            //     mCtx.mLogger.debug(msg);
+            //     throw std::out_of_range(msg);
+            // }
         }
     }
     else // size < 0

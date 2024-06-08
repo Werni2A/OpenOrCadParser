@@ -7,8 +7,8 @@
 // @todo Why does the compiler not find the lib? Check target_include_directory
 #include "../build/vcpkg_installed/x64-linux/include/tinyxml2.h"
 
+#include "Database.hpp"
 #include "Enums/Color.hpp"
-#include "Library.hpp"
 #include "Primitives/PrimArc.hpp"
 #include "Primitives/PrimBezier.hpp"
 #include "Primitives/PrimEllipse.hpp"
@@ -68,6 +68,7 @@ public:
     virtual void visit(const StreamCache& /* aObj */) override { }
     virtual void visit(const StreamDirectoryStruct& /* aObj */) override { }
     virtual void visit(const StreamDsnStream& /* aObj */) override { }
+    virtual void visit(const StreamDTypeD& /* aObj */) override { }
     virtual void visit(const StreamERC& /* aObj */) override { }
     virtual void visit(const StreamHierarchy& /* aObj */) override { }
     virtual void visit(const StreamHSObjects& /* aObj */) override { }
@@ -77,7 +78,6 @@ public:
     virtual void visit(const StreamPage& /* aObj */) override { }
     virtual void visit(const StreamSchematic& /* aObj */) override { }
     virtual void visit(const StreamSymbol& /* aObj */) override { }
-    virtual void visit(const StreamType& /* aObj */) override { }
     virtual void visit(const StructAlias& /* aObj */) override { }
     virtual void visit(const StructBookMarkSymbolInst& /* aObj */) override { }
     virtual void visit(const StructBusEntry& /* aObj */) override { }

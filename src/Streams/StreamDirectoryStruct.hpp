@@ -84,10 +84,10 @@ public:
 
     void read(FileFormatVersion /* aVersion */ = FileFormatVersion::Unknown);
 
-    void accept(Visitor& aVisitor) const override
-    {
-        aVisitor.visit(*this);
-    }
+    // void accept(Visitor& aVisitor) const override
+    // {
+    //     aVisitor.visit(*this);
+    // }
 
     time_t lastModifiedDate;
 
@@ -125,6 +125,91 @@ static std::ostream& operator<<(std::ostream& aOs, const StreamDirectoryStruct& 
     aOs << to_string(aVal);
     return aOs;
 }
+
+
+class StreamCellsDirectory : public StreamDirectoryStruct
+{
+public:
+    StreamCellsDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
+    { }
+
+    virtual StreamType getStreamType() const override
+    {
+        return StreamType::CellsDirectory;
+    }
+};
+
+class StreamExportBlocksDirectory : public StreamDirectoryStruct
+{
+public:
+    StreamExportBlocksDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
+    { }
+
+    virtual StreamType getStreamType() const override
+    {
+        return StreamType::ExportBlocksDirectory;
+    }
+};
+
+class StreamGraphicsDirectory : public StreamDirectoryStruct
+{
+public:
+    StreamGraphicsDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
+    { }
+
+    virtual StreamType getStreamType() const override
+    {
+        return StreamType::GraphicsDirectory;
+    }
+};
+
+class StreamPackagesDirectory : public StreamDirectoryStruct
+{
+public:
+    StreamPackagesDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
+    { }
+
+    virtual StreamType getStreamType() const override
+    {
+        return StreamType::PackagesDirectory;
+    }
+};
+
+class StreamPartsDirectory : public StreamDirectoryStruct
+{
+public:
+    StreamPartsDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
+    { }
+
+    virtual StreamType getStreamType() const override
+    {
+        return StreamType::PartsDirectory;
+    }
+};
+
+class StreamSymbolsDirectory : public StreamDirectoryStruct
+{
+public:
+    StreamSymbolsDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
+    { }
+
+    virtual StreamType getStreamType() const override
+    {
+        return StreamType::SymbolsDirectory;
+    }
+};
+
+class StreamViewsDirectory : public StreamDirectoryStruct
+{
+public:
+    StreamViewsDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
+    { }
+
+    virtual StreamType getStreamType() const override
+    {
+        return StreamType::ViewsDirectory;
+    }
+};
 
 
 #endif // STREAMDIRECTORYSTRUCT_HPP

@@ -12,14 +12,14 @@
 #include <spdlog/spdlog.h>
 
 #include "ContainerContext.hpp"
+#include "Enums/StreamType.hpp"
 #include "Enums/Structure.hpp"
 #include "FutureData.hpp"
 #include "General.hpp"
 #include "Record.hpp"
-#include "VisitorPattern.hpp"
 
 
-class Stream : public Component
+class Stream
 {
 public:
     Stream(ContainerContext& aCtx, const fs::path& aInputStream) : mCtx{aCtx, aInputStream}
@@ -63,6 +63,8 @@ public:
             mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "Unknown exception caught!\n"));
         }
     }
+
+    virtual StreamType getStreamType() const = 0;
 
 // protected:
     StreamContext mCtx;

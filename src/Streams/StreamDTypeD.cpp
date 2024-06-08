@@ -5,10 +5,10 @@
 #include <spdlog/spdlog.h>
 
 #include "General.hpp"
-#include "Streams/StreamType.hpp"
+#include "Streams/StreamDTypeD.hpp"
 
 
-void StreamType::read(FileFormatVersion /* aVersion */)
+void StreamDTypeD::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
 

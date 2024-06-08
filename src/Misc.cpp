@@ -41,7 +41,7 @@ std::string SymbolUserProp::getName() const
     if(nameIdx >= 0)
     {
         // Retrieve string from the library.
-        name = gLibrary->library->strLst.at(nameIdx);
+        // name = gLibrary->library->strLst.at(nameIdx);
         // @todo provide try catch block for better exception messages
     }
     else if(nameIdx == -1U)
@@ -66,7 +66,7 @@ std::string SymbolUserProp::getVal() const
     if(valIdx >= 0)
     {
         // Retrieve string from the library.
-        val = gLibrary->library->strLst.at(valIdx);
+        // val = gLibrary->library->strLst.at(valIdx);
         // @todo provide try catch block for better exception messages
     }
     else if(valIdx == -1U)

@@ -1,5 +1,5 @@
-#ifndef STREAMTYPE_HPP
-#define STREAMTYPE_HPP
+#ifndef STREAMDTYPED_HPP
+#define STREAMDTYPED_HPP
 
 
 #include <cstdint>
@@ -57,20 +57,25 @@ static std::ostream& operator<<(std::ostream& aOs, const Type& aObj)
 }
 
 
-class StreamType : public Stream
+class StreamDTypeD : public Stream
 {
 public:
 
-    StreamType(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, types{}
+    StreamDTypeD(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, types{}
     { }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    void accept(Visitor& aVisitor) const override
+    // void accept(Visitor& aVisitor) const override
+    // {
+    //     aVisitor.visit(*this);
+    // }
+
+    virtual StreamType getStreamType() const override
     {
-        aVisitor.visit(*this);
+        return StreamType::DTypeD;
     }
 
     std::vector<Type> types;
@@ -78,7 +83,7 @@ public:
 
 
 [[maybe_unused]]
-static std::string to_string(const StreamType& aObj)
+static std::string to_string(const StreamDTypeD& aObj)
 {
     std::string str;
 
@@ -95,14 +100,14 @@ static std::string to_string(const StreamType& aObj)
 }
 
 
-inline std::string StreamType::to_string() const
+inline std::string StreamDTypeD::to_string() const
 {
     return ::to_string(*this);
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StreamType& aObj)
+static std::ostream& operator<<(std::ostream& aOs, const StreamDTypeD& aObj)
 {
     aOs << to_string(aObj);
 
@@ -110,4 +115,4 @@ static std::ostream& operator<<(std::ostream& aOs, const StreamType& aObj)
 }
 
 
-#endif // STREAMTYPE_HPP
+#endif // STREAMDTYPED_HPP
