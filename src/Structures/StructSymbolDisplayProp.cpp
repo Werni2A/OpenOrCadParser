@@ -8,6 +8,7 @@
 #include "Enums/Structure.hpp"
 #include "General.hpp"
 #include "GenericParser.hpp"
+#include "GetStreamHelper.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 
 
@@ -15,6 +16,8 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
+
+    const auto lib = getLibraryStreamFromDb(mCtx.mDb);
 
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
@@ -31,13 +34,17 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
     // @todo move to left shift operator
     // @bug The required string is not this one but the value of the associated property!!!!
     //      This is just the name of the property!!
-    // if(gLibrary != nullptr)
-    // {
-    //     if(gLibrary->library)
-    //     {
-    //         mCtx.mLogger.trace("strLst Item = {}", gLibrary->library->strLst.at(nameIdx));
-    //     }
-    // }
+    if(lib)
+    {
+        if(nameIdx < lib->strLst.size())
+        {
+            mCtx.mLogger.trace("strLst Item @ {} = {}", nameIdx, lib->strLst.at(nameIdx));
+        }
+        else
+        {
+            mCtx.mLogger.warn("Index is out-of-range: {} vs {}", nameIdx, lib->strLst.size());
+        }
+    }
 
     x = ds.readInt16();
     y = ds.readInt16();
@@ -64,20 +71,17 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
     //       code we had a similar issue. The solution was that the actual vector
     //       index is textFontIdx - 1 and index = 0 is a special case that represents
     //       an empty string i.e. does not need to be loaded from the vector.
-    // if(gLibrary != nullptr)
-    // {
-    //     if(gLibrary->library)
-    //     {
-    //         if(textFontIdx >= gLibrary->library->textFonts.size())
-    //         {
-    //             const std::string msg = fmt::format("{}: textFontIdx is out of range! Expected {} < {}!",
-    //                 __func__, textFontIdx, gLibrary->library->textFonts.size());
+    if(lib)
+    {
+        if(textFontIdx >= lib->textFonts.size())
+        {
+            const std::string msg = fmt::format("{}: textFontIdx is out of range! Expected {} < {}!",
+                __func__, textFontIdx, lib->textFonts.size());
 
-    //             mCtx.mLogger.warn(msg);
-    //             // throw std::out_of_range(msg);
-    //         }
-    //     }
-    // }
+            mCtx.mLogger.warn(msg);
+            // throw std::out_of_range(msg);
+        }
+    }
 
     rotation = ToRotation(rotFontIdBitField.rotation);
 

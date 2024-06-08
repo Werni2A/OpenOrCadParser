@@ -43,7 +43,7 @@ namespace fs = std::filesystem;
 Container::Container(const fs::path& aCfbfContainer, ParserConfig aCfg) :
     mDb{}, mFileCtr{0U}, mFileErrCtr{0U}, mCtx{aCfbfContainer, "", aCfg, mDb}, mCfg{aCfg}
 {
-    mCtx.mFileType = getFileTypeByExtension(aCfbfContainer);
+    mCtx.mDbType = getFileTypeByExtension(aCfbfContainer);
 
     // Extract to a unique folder in case two similar named files
     // are extracted at the same time. E.g. in parallel execution.
@@ -172,6 +172,21 @@ void Container::parseDatabaseFile()
         mDb.mStreams.push_back(std::move(stream));
     }
 
+    // We parse the database in two steps, first we parse all root-level streams in the
+    // CFB container because they contain information that is referenced in other streams.
+    // E.g. a package streams might reference the name of the package by an index into
+    // to the string list in the `Library` stream. Therefore `Library` must be parsed
+    // before attempting to parse the package to retrieve all required information.
+    // In this first step we parse all streams sequentially in the main thread to avoid
+    // synchronization issues.
+    // In the second step we parse all other streams and distribute them among different
+    // threads. Those threads do not interact with each other but only access information
+    // from streams parsed in the first step. They are not allowed to modify streams other
+    // than themself, i.e. streams access other streams in a read-only fashion s.t. no
+    // synchronization is required here.
+    // Note that `Library` contains meta information about the database so it's parsed ahead
+    // of all other streams.
+
     std::deque<std::shared_ptr<Stream>> sequentialJobList{};
     std::vector<std::deque<std::shared_ptr<Stream>>> parallelJobsLists{};
 
@@ -265,7 +280,7 @@ void Container::printContainerTree() const
 }
 
 
-FileType Container::getFileTypeByExtension(const fs::path& aFile) const
+DatabaseType Container::getFileTypeByExtension(const fs::path& aFile) const
 {
     std::string extension = aFile.extension().string();
 
@@ -273,15 +288,15 @@ FileType Container::getFileTypeByExtension(const fs::path& aFile) const
     std::transform(extension.begin(), extension.end(), extension.begin(),
         [] (unsigned char c) { return std::toupper(c); });
 
-    const std::map<std::string, FileType> extensionFileTypeMap =
+    const std::map<std::string, DatabaseType> extensionFileTypeMap =
         {
-            {".OLB", FileType::Library},
-            {".OBK", FileType::Library},
-            {".DSN", FileType::Schematic},
-            {".DBK", FileType::Schematic}
+            {".OLB", DatabaseType::Library},
+            {".OBK", DatabaseType::Library},
+            {".DSN", DatabaseType::Schematic},
+            {".DBK", DatabaseType::Schematic}
         };
 
-    FileType fileType;
+    DatabaseType fileType;
 
     try
     {

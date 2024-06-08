@@ -178,7 +178,7 @@ public:
         mExtractedCfbfPath = aExtractedCfbfPath;
         mCfg = aCfg;
         mFileFormatVersion = FileFormatVersion::C;
-        mFileType = FileType::Library;
+        mDbType = DatabaseType::Library;
         mLogLevel = spdlog::level::trace;
 
         const fs::path logPath = mExtractedCfbfPath / "logs" / "OpenOrCadParser.log";
@@ -191,7 +191,7 @@ public:
         mExtractedCfbfPath = aCtx.mExtractedCfbfPath;
         mCfg = aCtx.mCfg;
         mFileFormatVersion = aCtx.mFileFormatVersion;
-        mFileType = aCtx.mFileType;
+        mDbType = aCtx.mDbType;
         mLogLevel = aCtx.mLogLevel;
     }
 
@@ -219,7 +219,7 @@ public:
     ParserConfig mCfg;
 
     FileFormatVersion mFileFormatVersion;
-    FileType mFileType;
+    DatabaseType mDbType;
 
     spdlog::level::level_enum mLogLevel;
     spdlog::logger mLogger;

@@ -181,6 +181,8 @@ int main(int argc, char* argv[])
     {
         parser.parseDatabaseFile();
 
+        // Database db = parser.getDb();
+
         const fs::path xmlDir = ctx.mExtractedCfbfPath / "xml";
         fs::create_directory(xmlDir);
 

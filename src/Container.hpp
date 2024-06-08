@@ -30,6 +30,7 @@
 namespace fs = std::filesystem;
 
 
+// @todo rename to DatabaseParser
 class Container
 {
 public:
@@ -46,6 +47,11 @@ public:
     ContainerContext& getContext()
     {
         return mCtx;
+    }
+
+    Database getDb() const
+    {
+        return mDb;
     }
 
     /**
@@ -71,12 +77,12 @@ public:
     void printContainerTree() const;
 
     /**
-     * @brief Get the file type from file extension.
+     * @brief Get the DatabaseType type from file extension.
      *
      * @param aFile File name including its extension.
-     * @return FileType Type of the file.
+     * @return DatabaseType Type of the database.
      */
-    FileType getFileTypeByExtension(const fs::path& aFile) const;
+    DatabaseType getFileTypeByExtension(const fs::path& aFile) const;
 
     // ---------------------------------------------
     // -------------- Read Container ---------------

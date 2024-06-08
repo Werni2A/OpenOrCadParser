@@ -139,7 +139,7 @@ void StreamLibrary::read(FileFormatVersion aVersion)
         mCtx.mLogger.trace("partAliases[{}] = (alias = {}, package = {})", i, alias, package);
     }
 
-    if(mCtx.mFileType == FileType::Schematic)
+    if(mCtx.mDbType == DatabaseType::Schematic)
     {
         ds.printUnknownData(8, getMethodName(this, __func__) + ": 5");
         std::string schematicName = ds.readStringLenZeroTerm();

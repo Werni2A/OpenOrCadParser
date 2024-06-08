@@ -21,7 +21,7 @@
 namespace fs = std::filesystem;
 
 
-enum class FileType;
+enum class DatabaseType;
 enum class FileFormatVersion;
 
 
@@ -53,7 +53,7 @@ enum class FileFormatVersion
 };
 
 
-enum class FileType
+enum class DatabaseType
 {
     Library,
     Schematic

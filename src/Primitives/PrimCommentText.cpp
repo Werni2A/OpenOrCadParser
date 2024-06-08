@@ -8,6 +8,7 @@
 #include "Database.hpp"
 #include "General.hpp"
 #include "GenericParser.hpp"
+#include "GetStreamHelper.hpp"
 #include "Primitives/PrimCommentText.hpp"
 #include "Win32/LOGFONTA.hpp"
 
@@ -16,6 +17,8 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
+
+    const auto lib = getLibraryStreamFromDb(mCtx.mDb);
 
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
@@ -54,17 +57,14 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
 
     mCtx.mLogger.trace("textFontIdx = {}", textFontIdx);
 
-    // if(gLibrary != nullptr)
-    // {
-    //     if(gLibrary->library)
-    //     {
-    //         if(textFontIdx > gLibrary->library->textFonts.size())
-    //         {
-    //             throw std::out_of_range(fmt::format("{}: textFontIdx is out of range! Expected {} <= {}!",
-    //                 getMethodName(this, __func__), textFontIdx, gLibrary->library->textFonts.size()));
-    //         }
-    //     }
-    // }
+    if(lib)
+    {
+        if(textFontIdx > lib->textFonts.size())
+        {
+            throw std::out_of_range(fmt::format("{}: textFontIdx is out of range! Expected {} <= {}!",
+                getMethodName(this, __func__), textFontIdx, lib->textFonts.size()));
+        }
+    }
 
     ds.printUnknownData(2, getMethodName(this, __func__) + ": 1");
 
@@ -91,21 +91,26 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
 
 LOGFONTA PrimCommentText::getTextFont() const
 {
+    const auto lib = getLibraryStreamFromDb(mCtx.mDb);
+
     const int64_t idx = static_cast<int64_t>(textFontIdx) - 1;
 
     LOGFONTA textFont{};
 
     if(idx >= 0)
     {
-        // Retrieve font from the library.
-        // if(gLibrary != nullptr)
-        // {
-        //     if(gLibrary->library)
-        //     {
-        //         textFont = gLibrary->library->textFonts.at(idx);
-        //     }
-        // }
-        // @todo provide try catch block for better exception messages
+        // Retrieve font from `Library`
+        if(lib)
+        {
+            if(static_cast<std::size_t>(idx) < lib->textFonts.size())
+            {
+                textFont = lib->textFonts.at(idx);
+            }
+            else
+            {
+                mCtx.mLogger.warn("Index is out-of-range: {} vs {}", idx, lib->textFonts.size());
+            }
+        }
     }
     else if(idx == -1)
     {

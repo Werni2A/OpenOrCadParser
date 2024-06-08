@@ -32,32 +32,6 @@ public:
     //     aVisitor.visit(*this);
     // }
 
-    std::optional<std::shared_ptr<Stream>> getLibrary() const
-    {
-        for(const auto& stream : mStreams)
-        {
-            if(stream->mCtx.mCfbfStreamLocation.matches_pattern({"Library"}))
-            {
-                return std::make_optional(stream);
-            }
-        }
-
-        return std::nullopt;
-    }
-
-    std::optional<std::shared_ptr<Stream>> getDirectory(DirectoryType aDirType) const
-    {
-        for(const auto& stream : mStreams)
-        {
-            if(stream->mCtx.mCfbfStreamLocation.matches_pattern({to_string(aDirType)}))
-            {
-                return std::make_optional(stream);
-            }
-        }
-
-        return std::nullopt;
-    }
-
     // List of streams in the CFBF container
     std::vector<std::shared_ptr<Stream>> mStreams;
 };
