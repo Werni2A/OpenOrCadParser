@@ -11,6 +11,7 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "Primitives/PrimBase.hpp"
 #include "Record.hpp"
 #include "Structures/StructGeneralProperties.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
@@ -34,9 +35,14 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Structure getObjectType() const override
+    {
+        return Structure::Primitives;
+    }
+
     std::string name;
 
-    std::vector<std::unique_ptr<Record>>                  primitives;
+    std::vector<std::unique_ptr<PrimBase>>                primitives;
     std::vector<std::unique_ptr<StructSymbolPin>>         symbolPins;
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 

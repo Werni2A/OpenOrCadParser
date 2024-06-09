@@ -30,6 +30,11 @@ public:
     // {
     //     aVisitor.visit(*this);
     // }
+
+    Structure getObjectType() const override
+    {
+        return Structure::GraphicOleEmbedInst;
+    }
 };
 
 

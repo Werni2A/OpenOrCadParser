@@ -34,6 +34,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Structure getObjectType() const override
+    {
+        return Structure::T0x34;
+    }
+
     uint32_t  id;
 
     Color     color;

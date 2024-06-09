@@ -13,11 +13,11 @@
 #include "Record.hpp"
 
 
-class PageSettings : public Record
+class PageSettings : public Other
 {
 public:
 
-    PageSettings(StreamContext& aCtx) : Record{aCtx},
+    PageSettings(StreamContext& aCtx) : Other{aCtx},
         createDateTime{0}, modifyDateTime{0},
         width{0}, height{0},
         pinToPin{0},

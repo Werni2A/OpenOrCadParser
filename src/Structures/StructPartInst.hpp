@@ -35,6 +35,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Structure getObjectType() const override
+    {
+        return Structure::PartInst;
+    }
+
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
     std::vector<std::unique_ptr<StructT0x10>>             t0x10s;
 };

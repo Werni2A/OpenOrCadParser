@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <any>
 #include <array>
 #include <cctype>
 #include <cmath>

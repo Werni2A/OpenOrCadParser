@@ -30,6 +30,10 @@ public:
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
+    Structure getObjectType() const override
+    {
+        return Structure::SthInHierarchy3;
+    }
 };
 
 

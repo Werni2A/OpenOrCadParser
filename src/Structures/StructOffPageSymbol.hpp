@@ -35,6 +35,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Structure getObjectType() const override
+    {
+        return Structure::OffPageSymbol;
+    }
+
     std::vector<std::unique_ptr<StructSymbolPin>>         symbolPins;
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };

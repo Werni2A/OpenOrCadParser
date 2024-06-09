@@ -5,10 +5,10 @@
 #include "Record.hpp"
 
 
-class PrimBase : public Record
+class PrimBase : public Base
 {
 public:
-    PrimBase(StreamContext& aCtx) : Record{aCtx}
+    PrimBase(StreamContext& aCtx) : Base{aCtx}
     { }
 };
 

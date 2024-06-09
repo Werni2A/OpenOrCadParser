@@ -34,6 +34,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Structure getObjectType() const override
+    {
+        return Structure::GlobalSymbol;
+    }
+
     std::vector<std::unique_ptr<StructSymbolPin>>         symbolPins;
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };

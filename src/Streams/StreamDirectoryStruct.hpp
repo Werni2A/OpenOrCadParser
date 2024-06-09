@@ -80,9 +80,9 @@ public:
         lastModifiedDate{0}, items{}
     { }
 
-    std::string to_string() const;
+    std::string to_string() const override;
 
-    void read(FileFormatVersion /* aVersion */ = FileFormatVersion::Unknown);
+    void read(FileFormatVersion /* aVersion */ = FileFormatVersion::Unknown) override;
 
     // void accept(Visitor& aVisitor) const override
     // {

@@ -31,6 +31,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Structure getObjectType() const override
+    {
+        return Structure::SymbolDisplayProp;
+    }
+
     uint32_t nameIdx;
     uint16_t textFontIdx;
 

@@ -22,6 +22,7 @@ static const std::map<DirectoryType, StreamType> DirectoryType2StreamType = {
 };
 
 
+[[maybe_unused]]
 static std::shared_ptr<StreamLibrary> getLibraryStreamFromDb(Database& aDb)
 {
     for(auto& stream : aDb.mStreams)
@@ -37,19 +38,20 @@ static std::shared_ptr<StreamLibrary> getLibraryStreamFromDb(Database& aDb)
 
 
 // T is of type `DirectoryStream`
-// template<T>
-// static std::shared_ptr<T> getDirectoryStreamFromDb(Database& aDb, DirectoryType aDirType)
-// {
-//     for(auto& stream : aDb.mStreams)
-//     {
-//         if(stream->getStreamType() == DirectoryType2StreamType[aDirType])
-//         {
-//             return std::dynamic_pointer_cast<T>(stream);
-//         }
-//     }
+template<typename T>
+[[maybe_unused]]
+static std::shared_ptr<T> getDirectoryStreamFromDb(Database& aDb, DirectoryType aDirType)
+{
+    for(auto& stream : aDb.mStreams)
+    {
+        if(stream->getStreamType() == DirectoryType2StreamType.at(aDirType))
+        {
+            return std::dynamic_pointer_cast<T>(stream);
+        }
+    }
 
-//     return std::shared_ptr<T>{};
-// }
+    return std::shared_ptr<T>{};
+}
 
 
 #endif // GETSTREAMHELPER_HPP

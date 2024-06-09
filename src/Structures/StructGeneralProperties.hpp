@@ -16,11 +16,11 @@
 // @todo This is just a helper class but not a real structure
 //       Check if the same code is used multiple times, otherwise
 //       Inline this structure?
-class StructGeneralProperties : public Record
+class StructGeneralProperties : public Other
 {
 public:
 
-    StructGeneralProperties(StreamContext& aCtx) : Record{aCtx}, implementationPath{},
+    StructGeneralProperties(StreamContext& aCtx) : Other{aCtx}, implementationPath{},
         implementation{}, refDes{}, partValue{}, implementationType{ImplementationType::None},
         pinNameVisible{true}, pinNameRotate{false}, pinNumberVisible{true}
     { }

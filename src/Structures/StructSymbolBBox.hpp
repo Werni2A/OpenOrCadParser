@@ -13,11 +13,11 @@
 #include "Record.hpp"
 
 
-class StructSymbolBBox : public Record
+class StructSymbolBBox : public Other
 {
 public:
 
-    StructSymbolBBox(StreamContext& aCtx) : Record{aCtx}, x1{0}, y1{0}, x2{0}, y2{0}
+    StructSymbolBBox(StreamContext& aCtx) : Other{aCtx}, x1{0}, y1{0}, x2{0}, y2{0}
     { }
 
     std::string to_string() const override;

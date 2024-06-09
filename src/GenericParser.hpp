@@ -16,6 +16,7 @@
 #include "Enums/Primitive.hpp"
 #include "Enums/Structure.hpp"
 #include "General.hpp"
+#include "Primitives/PrimBase.hpp"
 #include "StreamContext.hpp"
 
 
@@ -51,8 +52,8 @@ public:
 
     FileFormatVersion predictVersion(std::function<void(FileFormatVersion)> aFunc);
 
-    std::unique_ptr<Record> readPrimitive();
-    std::unique_ptr<Record> readPrimitive(Primitive aPrimitive);
+    std::unique_ptr<PrimBase> readPrimitive();
+    std::unique_ptr<PrimBase> readPrimitive(Primitive aPrimitive);
 
     std::unique_ptr<Record> readStructure();
     std::unique_ptr<Record> readStructure(Structure aStructure);
