@@ -6,6 +6,7 @@
 
 #include "Enums/Primitive.hpp"
 #include "Enums/Structure.hpp"
+#include "Primitives/PrimBase.hpp"
 #include "Record.hpp"
 #include "StreamContext.hpp"
 
@@ -14,7 +15,7 @@ class RecordFactory
 {
 public:
     static std::unique_ptr<Record> build(StreamContext& aCtx, Structure aStructure);
-    static std::unique_ptr<Record> build(StreamContext& aCtx, Primitive aPrimitive);
+    static std::unique_ptr<PrimBase> build(StreamContext& aCtx, Primitive aPrimitive);
 };
 
 

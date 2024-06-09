@@ -36,6 +36,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Structure getObjectType() const override
+    {
+        return Structure::SthInPages0;
+    }
+
     void read_raw(FileFormatVersion aVersion, FutureDataLst& aLocalFutureLst);
 
     std::string name;

@@ -2,18 +2,13 @@
 #define CONTAINER_HPP
 
 
-#include <any>
 #include <deque>
 #include <filesystem>
 #include <fstream>
-#include <functional>
 #include <iostream>
 #include <memory>
-#include <optional>
 #include <string>
 #include <vector>
-
-#include <spdlog/spdlog.h>
 
 #include "ContainerContext.hpp"
 #include "Database.hpp"

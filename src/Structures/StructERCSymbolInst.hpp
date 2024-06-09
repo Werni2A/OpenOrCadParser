@@ -32,6 +32,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Structure getObjectType() const override
+    {
+        return Structure::ERCSymbolInst;
+    }
+
     std::string s0;
     std::string s1;
     std::string s2;

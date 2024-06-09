@@ -29,6 +29,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Structure getObjectType() const override
+    {
+        return Structure::Properties;
+    }
+
     std::string ref;
     std::string normalName;
     std::string convertName;

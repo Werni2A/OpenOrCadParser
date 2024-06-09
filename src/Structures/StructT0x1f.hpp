@@ -31,6 +31,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Structure getObjectType() const override
+    {
+        return Structure::T0x1f;
+    }
+
     std::string name;
     std::string refDes;
 

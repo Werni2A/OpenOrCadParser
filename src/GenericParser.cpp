@@ -386,13 +386,13 @@ Primitive GenericParser::readPrefixPrimitive()
 }
 
 
-std::unique_ptr<Record> GenericParser::readPrimitive()
+std::unique_ptr<PrimBase> GenericParser::readPrimitive()
 {
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     Primitive typeId = ToPrimitive(mCtx.mDs.peek(1)[0]);
 
-    std::unique_ptr<Record> obj = readPrimitive(typeId);
+    std::unique_ptr<PrimBase> obj = readPrimitive(typeId);
 
     mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
@@ -400,13 +400,13 @@ std::unique_ptr<Record> GenericParser::readPrimitive()
 }
 
 
-std::unique_ptr<Record> GenericParser::readPrimitive(Primitive aPrimitive)
+std::unique_ptr<PrimBase> GenericParser::readPrimitive(Primitive aPrimitive)
 {
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
     const size_t startOffset = mCtx.mDs.getCurrentOffset();
 
-    std::unique_ptr<Record> obj = RecordFactory::build(mCtx, aPrimitive);
+    std::unique_ptr<PrimBase> obj = RecordFactory::build(mCtx, aPrimitive);
 
     if(obj)
     {

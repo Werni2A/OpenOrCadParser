@@ -38,6 +38,11 @@ public:
     // void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
     void read(FutureDataLst& mLocalFutureLst, FileFormatVersion aVersion = FileFormatVersion::Unknown);
 
+    Structure getObjectType() const override
+    {
+        return Structure::GraphicArcInst;
+    }
+
     std::string name;
 
     uint32_t dbId;

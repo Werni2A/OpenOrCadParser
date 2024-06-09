@@ -33,6 +33,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Structure getObjectType() const override
+    {
+        return Structure::WireScalar;
+    }
+
     // uint32_t dbId;
 
     // Color wireColor;

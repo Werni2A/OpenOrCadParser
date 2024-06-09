@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+#include "CfbfStreamLocation.hpp"
 #include "ContainerContext.hpp"
 #include "DataStream.hpp"
 #include "General.hpp"

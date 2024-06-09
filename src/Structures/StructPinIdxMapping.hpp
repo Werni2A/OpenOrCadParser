@@ -36,6 +36,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Structure getObjectType() const override
+    {
+        return Structure::PinIdxMapping;
+    }
+
     std::string unitRef;
     std::string refDes;
 

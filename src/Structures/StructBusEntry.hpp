@@ -32,6 +32,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Structure getObjectType() const override
+    {
+        return Structure::BusEntry;
+    }
+
     Color    color;
 
     int32_t  startX;

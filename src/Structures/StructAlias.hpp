@@ -33,6 +33,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Structure getObjectType() const override
+    {
+        return Structure::Alias;
+    }
+
     int32_t  locX;
     int32_t  locY;
 

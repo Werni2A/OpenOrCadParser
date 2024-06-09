@@ -128,7 +128,7 @@ std::unique_ptr<Record> RecordFactory::build(StreamContext& aCtx, Structure aStr
 }
 
 
-std::unique_ptr<Record> RecordFactory::build(StreamContext& aCtx, Primitive aPrimitive)
+std::unique_ptr<PrimBase> RecordFactory::build(StreamContext& aCtx, Primitive aPrimitive)
 {
     switch(aPrimitive)
     {
@@ -150,5 +150,5 @@ std::unique_ptr<Record> RecordFactory::build(StreamContext& aCtx, Primitive aPri
             }
     }
 
-    return std::unique_ptr<Record>{};
+    return std::unique_ptr<PrimBase>{};
 }
