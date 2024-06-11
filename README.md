@@ -1,7 +1,7 @@
 
 # OpenOrCadParser
 
-Purpose of this project is to provide a C++17 library for parsing [Cadence](https://en.wikipedia.org/wiki/Cadence_Design_Systems)'s OrCAD Capture binary file formats. This library can be linked to other software for reading/modifying?/writing? OrCAD binary files. This repository does not cover every possible use case, maybe you find what you are looking for in section [Related Projects](doc/related_projects.md).
+Purpose of this project is to provide a C++20 library for parsing [Cadence](https://en.wikipedia.org/wiki/Cadence_Design_Systems)'s OrCAD Capture binary file formats. This library can be linked to other software for reading/modifying?/writing? OrCAD binary files. This repository does not cover every possible use case, maybe you find what you are looking for in section [Related Projects](doc/related_projects.md).
 
 The focus lies on schematics (`*.DSN`/`*.DBK`) and symbol libraries (`*.OLB`/`*.OBK`), the second file format is just the extension for its corresponding backup file. Backups should be identical, just with a different file extension.
 
@@ -56,7 +56,7 @@ cmake --build build
 
 ## Dependencies
 
-- Compiler with C++17 Support
+- Compiler with C++20 Support
 - [CMake](https://cmake.org/) >= 3.8
 - [Boost](https://www.boost.org/) - Program Options
 - [compoundfilereader](https://github.com/Microsoft/compoundfilereader)
