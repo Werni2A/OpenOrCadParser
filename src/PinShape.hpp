@@ -19,10 +19,9 @@
 
 struct PinShape // @todo rename to something like PinProperties as it contains more than the shape
 {
-    // @todo Move comments into Kaitai file
-    bool isLong;  // ---  // Is always 0. Probably the bit position is wrong.
-    bool isClock; // |>
-    bool isDot;   // o|
+    bool isLong;  // ------|  (doubles the pin length iff set)
+    bool isClock; //    ---|>
+    bool isDot;   //    --o|
     bool isLeftPointing;
     bool isRightPointing;  // @note this can be derived from isLeftPointing... is it really in the file? or is
                            // there the possibility to point in both directions as there is to point in none?
