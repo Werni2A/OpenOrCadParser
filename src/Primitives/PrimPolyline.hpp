@@ -33,6 +33,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Primitive getObjectType() const override
+    {
+        return Primitive::Polyline;
+    }
+
     static size_t getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount);
 
     void setLineStyle(const LineStyle& aVal)

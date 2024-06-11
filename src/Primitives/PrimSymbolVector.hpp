@@ -29,6 +29,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Primitive getObjectType() const override
+    {
+        return Primitive::SymbolVector;
+    }
+
     int16_t locX;
     int16_t locY;
 

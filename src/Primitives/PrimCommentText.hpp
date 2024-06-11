@@ -32,6 +32,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Primitive getObjectType() const override
+    {
+        return Primitive::CommentText;
+    }
+
     LOGFONTA getTextFont() const;
 
     int32_t locX;
