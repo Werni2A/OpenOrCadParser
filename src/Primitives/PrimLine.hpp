@@ -31,6 +31,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Primitive getObjectType() const override
+    {
+        return Primitive::Line;
+    }
+
     static size_t getExpectedStructSize(FileFormatVersion aVersion);
 
     void setLineStyle(const LineStyle& aVal)

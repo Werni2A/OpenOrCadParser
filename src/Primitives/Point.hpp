@@ -15,11 +15,11 @@
 
 /// @note Represents 'BezierPoint', 'PolygonPoint' and 'PolylinePoint' because
 ///       all of them use the same point structure.
-class Point : public PrimBase
+class Point : public Other
 {
 public:
 
-    Point(StreamContext& aCtx) : PrimBase{aCtx}, x{0}, y{0}
+    Point(StreamContext& aCtx) : Other{aCtx}, x{0}, y{0}
     { }
 
     std::string to_string() const override;

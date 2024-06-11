@@ -34,6 +34,11 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    Primitive getObjectType() const override
+    {
+        return Primitive::Bitmap;
+    }
+
     fs::path writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData) const;
     fs::path writeDifferentImageFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData) const;
     bool isBmpImage(const std::vector<uint8_t>& aRawImgData) const;
