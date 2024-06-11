@@ -12,6 +12,7 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
+#include "General.hpp"
 #include "PageSettings.hpp"
 #include "Stream.hpp"
 #include "Win32/LOGFONTA.hpp"
@@ -21,7 +22,8 @@ class StreamLibrary : public Stream
 {
 public:
 
-    StreamLibrary(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, introduction{}, createDate{0}, modifyDate{0},
+    StreamLibrary(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream},
+        introduction{}, mDbType{DatabaseType::Design}, createDate{0}, modifyDate{0},
         textFonts{}, strLstPartField{}, pageSettings{mCtx}, strLst{}, partAliases{}
     { }
 
@@ -39,7 +41,11 @@ public:
         return StreamType::Library;
     }
 
+    // Specifies whether the database is a design or library.
+    // The file extension in contrast is not relevant.
     std::string introduction;
+
+    DatabaseType mDbType;
 
     time_t createDate;
     time_t modifyDate;

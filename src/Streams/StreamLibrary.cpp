@@ -43,9 +43,29 @@ void StreamLibrary::read(FileFormatVersion aVersion)
     // char buffer[32];
     // strcpy(buffer, srcStr);
     // write_data_to_file(buffer, sizeof(buffer));
+    // This issues was fixed in later versions of OrCAD that fill
+    // the remaining buffer size with spaces (0x20).
     ds.padRest(startOffset, 32, false);
 
     mCtx.mLogger.trace("introduction = {}", introduction);
+
+    const std::string orcadWinDesign{"OrCAD Windows Design"};
+    const std::string orcadWinLibrary{"OrCAD Windows Library"};
+
+    if(introduction.starts_with(orcadWinDesign))
+    {
+        mDbType = DatabaseType::Design;
+    }
+    else if(introduction.starts_with(orcadWinLibrary))
+    {
+        mDbType = DatabaseType::Library;
+    }
+    else
+    {
+        const std::string msg = "Detected unknown database type!";
+        mCtx.mLogger.warn(msg);
+        throw std::runtime_error(msg);
+    }
 
     // I saw versions:
     // 2.0; 3.2; 3.3
@@ -139,7 +159,7 @@ void StreamLibrary::read(FileFormatVersion aVersion)
         mCtx.mLogger.trace("partAliases[{}] = (alias = {}, package = {})", i, alias, package);
     }
 
-    if(mCtx.mDbType == DatabaseType::Schematic)
+    if(mDbType == DatabaseType::Design)
     {
         ds.printUnknownData(8, getMethodName(this, __func__) + ": 5");
         std::string schematicName = ds.readStringLenZeroTerm();

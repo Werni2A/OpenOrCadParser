@@ -55,8 +55,8 @@ enum class FileFormatVersion
 
 enum class DatabaseType
 {
-    Library,
-    Schematic
+    Design,
+    Library
 };
 
 

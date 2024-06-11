@@ -9,6 +9,7 @@
 #include <iostream>
 #include <map>
 #include <memory>
+#include <optional>
 #include <random>
 #include <stdexcept>
 #include <string>
@@ -42,8 +43,6 @@ namespace fs = std::filesystem;
 Container::Container(const fs::path& aCfbfContainer, ParserConfig aCfg) :
     mDb{}, mFileCtr{0U}, mFileErrCtr{0U}, mCtx{aCfbfContainer, "", aCfg, mDb}, mCfg{aCfg}
 {
-    mCtx.mDbType = getFileTypeByExtension(aCfbfContainer);
-
     // Extract to a unique folder in case two similar named files
     // are extracted at the same time. E.g. in parallel execution.
     std::random_device rnd;
@@ -279,7 +278,7 @@ void Container::printContainerTree() const
 }
 
 
-DatabaseType Container::getFileTypeByExtension(const fs::path& aFile) const
+std::optional<DatabaseType> Container::getDatabaseTypeByFileExtension(const fs::path& aFile) const
 {
     std::string extension = aFile.extension().string();
 
@@ -289,22 +288,16 @@ DatabaseType Container::getFileTypeByExtension(const fs::path& aFile) const
 
     const std::map<std::string, DatabaseType> extensionFileTypeMap =
         {
+            {".DSN", DatabaseType::Design},
+            {".DBK", DatabaseType::Design}, // Backup file
             {".OLB", DatabaseType::Library},
-            {".OBK", DatabaseType::Library},
-            {".DSN", DatabaseType::Schematic},
-            {".DBK", DatabaseType::Schematic}
+            {".OBK", DatabaseType::Library} // Backup file
         };
 
-    DatabaseType fileType;
-
-    try
+    if(extensionFileTypeMap.count(extension) == 0U)
     {
-        fileType = extensionFileTypeMap.at(extension);
-    }
-    catch(...)
-    {
-        throw std::runtime_error("Unknown file extension `" + extension + "`");
+        return std::nullopt;
     }
 
-    return fileType;
+    return {extensionFileTypeMap.at(extension)};
 }
