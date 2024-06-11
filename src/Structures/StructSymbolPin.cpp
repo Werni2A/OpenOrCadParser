@@ -1,3 +1,4 @@
+#include <cmath>
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -60,4 +61,25 @@ void StructSymbolPin::read(FileFormatVersion /* aVersion */)
 
     mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     mCtx.mLogger.trace(to_string());
+}
+
+
+int32_t StructSymbolPin::getPinLength() const
+{
+    const int32_t dx = hotptX - startX;
+    const int32_t dy = hotptY - startY;
+
+    int32_t pinLength = static_cast<int32_t>(std::round(std::sqrt(dx * dx + dy * dy)));
+
+    if(pinShape.isLong)
+    {
+        pinLength *= 2;
+    }
+
+    if(ToShapeType(pinShape) == ShapeType::ZeroLength)
+    {
+        pinLength = 0;
+    }
+
+    return pinLength;
 }

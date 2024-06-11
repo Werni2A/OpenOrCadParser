@@ -40,6 +40,8 @@ public:
     //     aVisitor.visit(*this);
     // }
 
+    int32_t getPinLength() const;
+
     std::string name;
     int32_t startX;
     int32_t startY;
