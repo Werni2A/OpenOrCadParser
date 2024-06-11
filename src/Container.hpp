@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -72,12 +73,15 @@ public:
     void printContainerTree() const;
 
     /**
-     * @brief Get the DatabaseType type from file extension.
+     * @brief Get the DatabaseType from file extension.
+     *
+     * @note This is just a hint for the database type but
+     *       note that the file extension is irrelevant.
      *
      * @param aFile File name including its extension.
      * @return DatabaseType Type of the database.
      */
-    DatabaseType getFileTypeByExtension(const fs::path& aFile) const;
+    std::optional<DatabaseType> getDatabaseTypeByFileExtension(const fs::path& aFile) const;
 
     // ---------------------------------------------
     // -------------- Read Container ---------------
