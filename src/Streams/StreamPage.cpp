@@ -126,13 +126,13 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         ds.printUnknownData(5, fmt::format("{}: 1", getMethodName(this, __func__)));
     }
 
-    const uint16_t lenERCSymbolInsts = ds.readUint16();
+    const uint16_t lenERCObjects = ds.readUint16();
 
-    mCtx.mLogger.trace("lenERCSymbolInsts = {}", lenERCSymbolInsts);
+    mCtx.mLogger.trace("lenERCObjects = {}", lenERCObjects);
 
-    for(size_t i = 0u; i < lenERCSymbolInsts; ++i)
+    for(size_t i = 0u; i < lenERCObjects; ++i)
     {
-        ercSymbolInsts.push_back(dynamic_pointer_cast<StructERCSymbolInst>(parser.readStructure()));
+        ercObjects.push_back(dynamic_pointer_cast<StructERCObject>(parser.readStructure()));
     }
 
     const uint16_t lenBusEntries = ds.readUint16();

@@ -87,7 +87,7 @@ void StructGraphicInst::read(FutureDataLst& mLocalFutureLst, FileFormatVersion /
         case 0x22: // StructPort
         case 0x23: // OffPageConnector
         case 0x40: // TitleBlock
-        case 0x4b: // StructERCSymbolInst
+        case 0x4b: // StructERCObject
             // Do nothing
             break;
 

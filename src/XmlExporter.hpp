@@ -81,8 +81,9 @@ public:
     virtual void visit(const StructAlias& /* aObj */) override { }
     virtual void visit(const StructBookMarkSymbolInst& /* aObj */) override { }
     virtual void visit(const StructBusEntry& /* aObj */) override { }
+    virtual void visit(const StructDevice& /* aObj */) override { }
+    virtual void visit(const StructERCObject& /* aObj */) override { }
     virtual void visit(const StructERCSymbol& /* aObj */) override { }
-    virtual void visit(const StructERCSymbolInst& /* aObj */) override { }
     virtual void visit(const StructGeneralProperties& /* aObj */) override { }
     virtual void visit(const StructGlobal& /* aObj */) override { }
     virtual void visit(const StructGlobalSymbol& /* aObj */) override { }
@@ -97,15 +98,15 @@ public:
     virtual void visit(const StructGraphicPolygonInst& /* aObj */) override { }
     virtual void visit(const StructGraphicPolylineInst& /* aObj */) override { }
     virtual void visit(const StructHierarchicSymbol& /* aObj */) override { }
+    virtual void visit(const StructLibraryPart& aObj) override;
     virtual void visit(const StructNetDbIdMapping& /* aObj */) override { }
     virtual void visit(const StructOffPageConnector& /* aObj */) override { }
     virtual void visit(const StructOffPageSymbol& /* aObj */) override { }
+    virtual void visit(const StructPackage& aObj) override;
+    virtual void visit(const StructPartCell& /* aObj */) override { }
     virtual void visit(const StructPartInst& /* aObj */) override { }
-    virtual void visit(const StructPinIdxMapping& /* aObj */) override { }
     virtual void visit(const StructPinShapeSymbol& /* aObj */) override { }
     virtual void visit(const StructPort& /* aObj */) override { }
-    virtual void visit(const StructPrimitives& aObj) override;
-    virtual void visit(const StructProperties& /* aObj */) override { }
     virtual void visit(const StructSthInHierarchy1& /* aObj */) override { }
     virtual void visit(const StructSthInHierarchy2& /* aObj */) override { }
     virtual void visit(const StructSthInHierarchy3& /* aObj */) override { }
@@ -117,7 +118,6 @@ public:
     virtual void visit(const StructSymbolPinBus& aObj) override;
     virtual void visit(const StructSymbolPinScalar& aObj) override;
     virtual void visit(const StructT0x10& /* aObj */) override { }
-    virtual void visit(const StructT0x1f& aObj) override;
     virtual void visit(const StructT0x34& /* aObj */) override { }
     virtual void visit(const StructT0x35& /* aObj */) override { }
     virtual void visit(const StructT0x45& /* aObj */) override { }

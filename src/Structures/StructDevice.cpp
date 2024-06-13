@@ -10,10 +10,10 @@
 #include "FutureData.hpp"
 #include "General.hpp"
 #include "GenericParser.hpp"
-#include "Structures/StructPinIdxMapping.hpp"
+#include "Structures/StructDevice.hpp"
 
 
-void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
+void StructDevice::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
@@ -22,7 +22,7 @@ void StructPinIdxMapping::read(FileFormatVersion /* aVersion */)
 
     FutureDataLst localFutureLst{mCtx};
 
-    parser.auto_read_prefixes(Structure::PinIdxMapping, localFutureLst);
+    parser.auto_read_prefixes(Structure::Device, localFutureLst);
 
     parser.readPreamble();
 

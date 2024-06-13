@@ -24,7 +24,7 @@ void StructPartInst::read(FileFormatVersion /* aVersion */)
 
     FutureDataLst localFutureLst{mCtx};
 
-    parser.auto_read_prefixes(Structure::PartInst, localFutureLst);
+    parser.auto_read_prefixes(Structure::PlacedInstance, localFutureLst);
 
     parser.readPreamble();
 

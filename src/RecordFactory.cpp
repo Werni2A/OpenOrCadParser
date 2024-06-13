@@ -23,8 +23,9 @@
 #include "Structures/StructAlias.hpp"
 #include "Structures/StructBookMarkSymbolInst.hpp"
 #include "Structures/StructBusEntry.hpp"
+#include "Structures/StructDevice.hpp"
+#include "Structures/StructERCObject.hpp"
 #include "Structures/StructERCSymbol.hpp"
-#include "Structures/StructERCSymbolInst.hpp"
 #include "Structures/StructGeneralProperties.hpp"
 #include "Structures/StructGlobal.hpp"
 #include "Structures/StructGlobalSymbol.hpp"
@@ -39,15 +40,15 @@
 #include "Structures/StructGraphicPolygonInst.hpp"
 #include "Structures/StructGraphicPolylineInst.hpp"
 #include "Structures/StructHierarchicSymbol.hpp"
+#include "Structures/StructLibraryPart.hpp"
 #include "Structures/StructNetDbIdMapping.hpp"
 #include "Structures/StructOffPageConnector.hpp"
 #include "Structures/StructOffPageSymbol.hpp"
+#include "Structures/StructPackage.hpp"
+#include "Structures/StructPartCell.hpp"
 #include "Structures/StructPartInst.hpp"
-#include "Structures/StructPinIdxMapping.hpp"
 #include "Structures/StructPinShapeSymbol.hpp"
 #include "Structures/StructPort.hpp"
-#include "Structures/StructPrimitives.hpp"
-#include "Structures/StructProperties.hpp"
 #include "Structures/StructSthInHierarchy1.hpp"
 #include "Structures/StructSthInHierarchy2.hpp"
 #include "Structures/StructSthInHierarchy3.hpp"
@@ -57,7 +58,6 @@
 #include "Structures/StructSymbolPinBus.hpp"
 #include "Structures/StructSymbolPinScalar.hpp"
 #include "Structures/StructT0x10.hpp"
-#include "Structures/StructT0x1f.hpp"
 #include "Structures/StructT0x34.hpp"
 #include "Structures/StructT0x35.hpp"
 #include "Structures/StructT0x45.hpp"
@@ -75,8 +75,9 @@ std::unique_ptr<Record> RecordFactory::build(StreamContext& aCtx, Structure aStr
         case Structure::Alias:                  return std::make_unique<StructAlias>(aCtx);                  break;
         case Structure::BookMarkSymbolInst:     return std::make_unique<StructBookMarkSymbolInst>(aCtx);     break;
         case Structure::BusEntry:               return std::make_unique<StructBusEntry>(aCtx);               break;
+        case Structure::Device:                 return std::make_unique<StructDevice>(aCtx);                 break;
+        case Structure::ERCObject:              return std::make_unique<StructERCObject>(aCtx);              break;
         case Structure::ERCSymbol:              return std::make_unique<StructERCSymbol>(aCtx);              break;
-        case Structure::ERCSymbolInst:          return std::make_unique<StructERCSymbolInst>(aCtx);          break;
         case Structure::Global:                 return std::make_unique<StructGlobal>(aCtx);                 break;
         case Structure::GlobalSymbol:           return std::make_unique<StructGlobalSymbol>(aCtx);           break;
         case Structure::GraphicArcInst:         return std::make_unique<StructGraphicArcInst>(aCtx);         break;
@@ -89,16 +90,16 @@ std::unique_ptr<Record> RecordFactory::build(StreamContext& aCtx, Structure aStr
         case Structure::GraphicOleEmbedInst:    return std::make_unique<StructGraphicOleEmbedInst>(aCtx);    break;
         case Structure::GraphicPolygonInst:     return std::make_unique<StructGraphicPolygonInst>(aCtx);     break;
         case Structure::GraphicPolylineInst:    return std::make_unique<StructGraphicPolylineInst>(aCtx);    break;
+        case Structure::LibraryPart:            return std::make_unique<StructLibraryPart>(aCtx);            break;
         case Structure::NetDbIdMapping:         return std::make_unique<StructNetDbIdMapping>(aCtx);         break;
         case Structure::OffPageConnector:       return std::make_unique<StructOffPageConnector>(aCtx);       break;
         case Structure::OffPageSymbol:          return std::make_unique<StructOffPageSymbol>(aCtx);          break;
-        case Structure::PartInst:               return std::make_unique<StructPartInst>(aCtx);               break;
-        case Structure::PinIdxMapping:          return std::make_unique<StructPinIdxMapping>(aCtx);          break;
+        case Structure::Package:                return std::make_unique<StructPackage>(aCtx);                break;
+        case Structure::PartCell:               return std::make_unique<StructPartCell>(aCtx);               break;
         case Structure::PinShapeSymbol:         return std::make_unique<StructPinShapeSymbol>(aCtx);         break;
+        case Structure::PlacedInstance:         return std::make_unique<StructPartInst>(aCtx);               break;
         case Structure::Port:                   return std::make_unique<StructPort>(aCtx);                   break;
         case Structure::PortSymbol:             return std::make_unique<StructHierarchicSymbol>(aCtx);       break;
-        case Structure::Primitives:             return std::make_unique<StructPrimitives>(aCtx);             break;
-        case Structure::Properties:             return std::make_unique<StructProperties>(aCtx);             break;
         case Structure::SthInHierarchy1:        return std::make_unique<StructSthInHierarchy1>(aCtx);        break;
         case Structure::SthInHierarchy2:        return std::make_unique<StructSthInHierarchy2>(aCtx);        break;
         case Structure::SthInHierarchy3:        return std::make_unique<StructSthInHierarchy3>(aCtx);        break;
@@ -107,7 +108,6 @@ std::unique_ptr<Record> RecordFactory::build(StreamContext& aCtx, Structure aStr
         case Structure::SymbolPinBus:           return std::make_unique<StructSymbolPinBus>(aCtx);           break;
         case Structure::SymbolPinScalar:        return std::make_unique<StructSymbolPinScalar>(aCtx);        break;
         case Structure::T0x10:                  return std::make_unique<StructT0x10>(aCtx);                  break;
-        case Structure::T0x1f:                  return std::make_unique<StructT0x1f>(aCtx);                  break;
         case Structure::T0x34:                  return std::make_unique<StructT0x34>(aCtx);                  break;
         case Structure::T0x35:                  return std::make_unique<StructT0x35>(aCtx);                  break;
         case Structure::T0x45:                  return std::make_unique<StructT0x45>(aCtx);                  break;

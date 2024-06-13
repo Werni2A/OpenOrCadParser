@@ -41,8 +41,9 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructAlias.cpp
    ${LIB_SRC_DIR}/Structures/StructBookMarkSymbolInst.cpp
    ${LIB_SRC_DIR}/Structures/StructBusEntry.cpp
+   ${LIB_SRC_DIR}/Structures/StructDevice.cpp
+   ${LIB_SRC_DIR}/Structures/StructERCObject.cpp
    ${LIB_SRC_DIR}/Structures/StructERCSymbol.cpp
-   ${LIB_SRC_DIR}/Structures/StructERCSymbolInst.cpp
    ${LIB_SRC_DIR}/Structures/StructGeneralProperties.cpp
    ${LIB_SRC_DIR}/Structures/StructGlobal.cpp
    ${LIB_SRC_DIR}/Structures/StructGlobalSymbol.cpp
@@ -58,15 +59,15 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructGraphicPolygonInst.cpp
    ${LIB_SRC_DIR}/Structures/StructGraphicPolylineInst.cpp
    ${LIB_SRC_DIR}/Structures/StructHierarchicSymbol.cpp
+   ${LIB_SRC_DIR}/Structures/StructLibraryPart.cpp
    ${LIB_SRC_DIR}/Structures/StructNetDbIdMapping.cpp
    ${LIB_SRC_DIR}/Structures/StructOffPageConnector.cpp
    ${LIB_SRC_DIR}/Structures/StructOffPageSymbol.cpp
+   ${LIB_SRC_DIR}/Structures/StructPackage.cpp
+   ${LIB_SRC_DIR}/Structures/StructPartCell.cpp
    ${LIB_SRC_DIR}/Structures/StructPartInst.cpp
-   ${LIB_SRC_DIR}/Structures/StructPinIdxMapping.cpp
    ${LIB_SRC_DIR}/Structures/StructPinShapeSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructPort.cpp
-   ${LIB_SRC_DIR}/Structures/StructPrimitives.cpp
-   ${LIB_SRC_DIR}/Structures/StructProperties.cpp
    ${LIB_SRC_DIR}/Structures/StructSthInHierarchy1.cpp
    ${LIB_SRC_DIR}/Structures/StructSthInHierarchy2.cpp
    ${LIB_SRC_DIR}/Structures/StructSthInHierarchy3.cpp
@@ -78,7 +79,6 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructSymbolPinBus.cpp
    ${LIB_SRC_DIR}/Structures/StructSymbolPinScalar.cpp
    ${LIB_SRC_DIR}/Structures/StructT0x10.cpp
-   ${LIB_SRC_DIR}/Structures/StructT0x1f.cpp
    ${LIB_SRC_DIR}/Structures/StructT0x34.cpp
    ${LIB_SRC_DIR}/Structures/StructT0x35.cpp
    ${LIB_SRC_DIR}/Structures/StructT0x45.cpp

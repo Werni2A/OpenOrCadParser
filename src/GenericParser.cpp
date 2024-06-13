@@ -327,7 +327,7 @@ std::pair<Structure, uint32_t> GenericParser::read_single_prefix_short()
     else // size < 0
     {
         // @todo Why is -1 used? The value 0 would also suffice...
-        // Until now I only saw it for PinIdxMapping, Properties and SymbolDisplayProp
+        // Until now I only saw it for Device, PartCell and SymbolDisplayProp
         mCtx.mLogger.debug("{}: What does {} mean?", ::to_string(typeId), size); // @todo Figure out
     }
 

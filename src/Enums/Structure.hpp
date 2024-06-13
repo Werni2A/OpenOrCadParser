@@ -18,14 +18,13 @@ enum class Structure
 
     DsnStream              =   4, //!< Used in the 'DsnStream' stream //@todo figure out real name and rename it
 
-    // @todo Probably `PackageBegin` or more a generic `ItemBegin`
-    Properties             =   6, // @todo Probably PackageProperties or 'Cell' but already the one before should be the properties. Maybe a bit more generic such that this one works for all, packages, symbols,...
+    PartCell               =   6,
 
     SchLib                 =   9, //!< Used in the 'Schematic' stream //@todo figure out real name and rename it
     Page                   =  10, // @todo Probably Page in schematic
-
-    HierarchicalBlock      =  12, // @todo Not sure and what is it called in the XSD? Rename it!
-    PartInst               =  13, // @todo This needs verification
+    PartInstance           =  11,
+    DrawnInstance          =  12,
+    PlacedInstance         =  13,
 
     T0x10                  =  16, // @todo Is this probably DrawnInst? Place a part in the schematic and this will also appear. Or rather PinInst
 
@@ -33,16 +32,15 @@ enum class Structure
     WireBus                =  21,
 
     Port                   =  23, //!< Hierarchical port in schematic
-    Primitives             =  24,
+    LibraryPart            =  24,
 
     SymbolPinScalar        =  26,
     SymbolPinBus           =  27,
 
     BusEntry               =  29,
 
-    // @todo Probably `PackageEnd` or a more generic `ItemEnd`
-    T0x1f                  =  31, // @todo rename
-    PinIdxMapping          =  32,
+    Package                =  31,
+    Device                 =  32,
     GlobalSymbol           =  33, //!< Power symbol in library
     PortSymbol             =  34, //!< Hierarchical port symbol in library
     OffPageSymbol          =  35, //!< Off-page connector symbol in library
@@ -76,7 +74,7 @@ enum class Structure
 
     ERCSymbol              =  75, //!< ERC symbol in the library
     BookMarkSymbol         =  76, //!< Book mark symbol in the library
-    ERCSymbolInst          =  77, //!< ERC marker instance in the schematic
+    ERCObject              =  77, //!< ERC marker instance in the schematic
     BookMarkSymbolInst     =  78, //!< Book mark instance in the schematic
 
     SthInHierarchy3        =  82, // @todo

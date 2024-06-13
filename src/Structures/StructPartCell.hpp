@@ -1,5 +1,5 @@
-#ifndef STRUCTPROPERTIES_HPP
-#define STRUCTPROPERTIES_HPP
+#ifndef STRUCTPARTCELL_HPP
+#define STRUCTPARTCELL_HPP
 
 
 #include <cstdint>
@@ -12,11 +12,11 @@
 #include "Record.hpp"
 
 
-class StructProperties : public Record
+class StructPartCell : public Record
 {
 public:
 
-    StructProperties(StreamContext& aCtx) : Record{aCtx}, ref{},
+    StructPartCell(StreamContext& aCtx) : Record{aCtx}, ref{},
         normalName{}, convertName{}
     { }
 
@@ -31,7 +31,7 @@ public:
 
     Structure getObjectType() const override
     {
-        return Structure::Properties;
+        return Structure::PartCell;
     }
 
     std::string ref;
@@ -41,7 +41,7 @@ public:
 
 
 [[maybe_unused]]
-static std::string to_string(const StructProperties& aObj)
+static std::string to_string(const StructPartCell& aObj)
 {
     std::string str;
 
@@ -54,14 +54,14 @@ static std::string to_string(const StructProperties& aObj)
 }
 
 
-inline std::string StructProperties::to_string() const
+inline std::string StructPartCell::to_string() const
 {
     return ::to_string(*this);
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructProperties& aVal)
+static std::ostream& operator<<(std::ostream& aOs, const StructPartCell& aVal)
 {
     aOs << to_string(aVal);
 
@@ -69,4 +69,4 @@ static std::ostream& operator<<(std::ostream& aOs, const StructProperties& aVal)
 }
 
 
-#endif // STRUCTPROPERTIES_HPP
+#endif // STRUCTPARTCELL_HPP

@@ -37,7 +37,7 @@ public:
 
     Structure getObjectType() const override
     {
-        return Structure::PartInst;
+        return Structure::PlacedInstance;
     }
 
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;

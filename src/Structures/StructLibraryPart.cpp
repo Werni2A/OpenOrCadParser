@@ -11,10 +11,10 @@
 #include "FutureData.hpp"
 #include "General.hpp"
 #include "GenericParser.hpp"
-#include "Structures/StructPrimitives.hpp"
+#include "Structures/StructLibraryPart.hpp"
 
 
-void StructPrimitives::read(FileFormatVersion /* aVersion */)
+void StructLibraryPart::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
@@ -93,7 +93,7 @@ void StructPrimitives::read(FileFormatVersion /* aVersion */)
 
     // @todo Parts of it probably belong to the upper trailing data
     if(ds.getCurrentOffset() < nextCheckpointPos)
-        localFutureLst.readUntilNextFutureData("See FuturData of StructPrimitives");
+        localFutureLst.readUntilNextFutureData("See FuturData of StructLibraryPart");
 
     localFutureLst.checkpoint();
 
