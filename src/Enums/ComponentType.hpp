@@ -27,7 +27,7 @@ enum class ComponentType
     Part             = 24,
 
     Package          = 31,
-    PinIdxMapping    = 32, // @todo verify this
+    Device           = 32, // @todo verify this
     GlobalSymbol     = 33,
     PortSymbol       = 34,
     OffPageSymbol    = 35,

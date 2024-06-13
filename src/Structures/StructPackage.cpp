@@ -10,11 +10,11 @@
 #include "FutureData.hpp"
 #include "General.hpp"
 #include "GenericParser.hpp"
-#include "Structures/StructT0x1f.hpp"
+#include "Structures/StructPackage.hpp"
 
 
 // @todo Probably specifies the 'Package Properties'
-void StructT0x1f::read(FileFormatVersion /* aVersion */)
+void StructPackage::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
@@ -23,7 +23,7 @@ void StructT0x1f::read(FileFormatVersion /* aVersion */)
 
     FutureDataLst localFutureLst{mCtx};
 
-    parser.auto_read_prefixes(Structure::T0x1f, localFutureLst);
+    parser.auto_read_prefixes(Structure::Package, localFutureLst);
 
     parser.readPreamble();
 
@@ -47,13 +47,13 @@ void StructT0x1f::read(FileFormatVersion /* aVersion */)
 
     pcbFootprint = ds.readStringLenZeroTerm();
 
-    const uint16_t lenPinIdxMappings = ds.readUint16();
+    const uint16_t lenDevices = ds.readUint16();
 
-    mCtx.mLogger.trace("lenPinIdxMappings = {}", lenPinIdxMappings);
+    mCtx.mLogger.trace("lenDevices = {}", lenDevices);
 
-    for(size_t i = 0u; i < lenPinIdxMappings; ++i)
+    for(size_t i = 0u; i < lenDevices; ++i)
     {
-        pinIdxMappings.push_back(dynamic_pointer_cast<StructPinIdxMapping>(parser.readStructure()));
+        devices.push_back(dynamic_pointer_cast<StructDevice>(parser.readStructure()));
     }
 
     localFutureLst.checkpoint();

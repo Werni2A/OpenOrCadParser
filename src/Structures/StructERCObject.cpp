@@ -8,10 +8,10 @@
 #include "Enums/Structure.hpp"
 #include "General.hpp"
 #include "GenericParser.hpp"
-#include "Structures/StructERCSymbolInst.hpp"
+#include "Structures/StructERCObject.hpp"
 
 
-void StructERCSymbolInst::read(FileFormatVersion /* aVersion */)
+void StructERCObject::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
@@ -20,7 +20,7 @@ void StructERCSymbolInst::read(FileFormatVersion /* aVersion */)
 
     FutureDataLst localFutureLst{mCtx};
 
-    parser.auto_read_prefixes(Structure::ERCSymbolInst, localFutureLst);
+    parser.auto_read_prefixes(Structure::ERCObject, localFutureLst);
 
     StructGraphicInst::read(localFutureLst);
 

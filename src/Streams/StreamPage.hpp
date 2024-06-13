@@ -13,7 +13,7 @@
 #include "PageSettings.hpp"
 #include "Stream.hpp"
 #include "Structures/StructBusEntry.hpp"
-#include "Structures/StructERCSymbolInst.hpp"
+#include "Structures/StructERCObject.hpp"
 #include "Structures/StructGlobal.hpp"
 #include "Structures/StructGraphicInst.hpp"
 #include "Structures/StructOffPageConnector.hpp"
@@ -31,7 +31,7 @@ public:
 
     StreamPage(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, name{}, pageSize{}, pageSettings{mCtx},
         titleBlocks{}, t0x34s{}, t0x35s{}, wires{}, partInsts{}, ports{}, globals{}, offPageConnectors{},
-        ercSymbolInsts{}, busEntries{}, graphicInsts{}
+        ercObjects{}, busEntries{}, graphicInsts{}
     { }
 
     std::string to_string() const override;
@@ -60,7 +60,7 @@ public:
     std::vector<std::unique_ptr<StructPort>>             ports;
     std::vector<std::unique_ptr<StructGlobal>>           globals;
     std::vector<std::unique_ptr<StructOffPageConnector>> offPageConnectors;
-    std::vector<std::unique_ptr<StructERCSymbolInst>>    ercSymbolInsts;
+    std::vector<std::unique_ptr<StructERCObject>>        ercObjects;
     std::vector<std::unique_ptr<StructBusEntry>>         busEntries;
     std::vector<std::unique_ptr<StructGraphicInst>>      graphicInsts;
 };
@@ -149,12 +149,12 @@ static std::string to_string(const StreamPage& aObj)
         }
     }
 
-    str += fmt::format("{}ercSymbolInsts:\n", indent(1));
-    for(size_t i = 0u; i < aObj.ercSymbolInsts.size(); ++i)
+    str += fmt::format("{}ercObjects:\n", indent(1));
+    for(size_t i = 0u; i < aObj.ercObjects.size(); ++i)
     {
-        if(aObj.ercSymbolInsts[i])
+        if(aObj.ercObjects[i])
         {
-            str += indent(fmt::format("[{}]: {}", i, aObj.ercSymbolInsts[i]->to_string()), 2);
+            str += indent(fmt::format("[{}]: {}", i, aObj.ercObjects[i]->to_string()), 2);
         }
     }
 

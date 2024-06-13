@@ -445,7 +445,7 @@ void XmlExporter::visit(const StructSymbolPinScalar& aObj)
 }
 
 
-void XmlExporter::visit(const StructT0x1f& aObj)
+void XmlExporter::visit(const StructPackage& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
@@ -454,16 +454,16 @@ void XmlExporter::visit(const StructT0x1f& aObj)
 
     mCurXmlElem = ePhysicalPart;
 
-    for(size_t i = 0U; i < aObj.pinIdxMappings.size(); ++i)
+    for(size_t i = 0U; i < aObj.devices.size(); ++i)
     {
-        assert(aObj.pinIdxMappings.at(i)->pinMap.size() == aObj.pinIdxMappings.at(i)->pinIgnore.size());
-        assert(aObj.pinIdxMappings.at(i)->pinMap.size() == aObj.pinIdxMappings.at(i)->pinGroup.size());
+        assert(aObj.devices.at(i)->pinMap.size() == aObj.devices.at(i)->pinIgnore.size());
+        assert(aObj.devices.at(i)->pinMap.size() == aObj.devices.at(i)->pinGroup.size());
 
-        for(size_t position = 0U; position < aObj.pinIdxMappings.at(i)->pinMap.size(); ++position)
+        for(size_t position = 0U; position < aObj.devices.at(i)->pinMap.size(); ++position)
         {
-            const auto& number = aObj.pinIdxMappings.at(i)->pinMap.at(position);
-            const auto& shared = aObj.pinIdxMappings.at(i)->pinIgnore.at(position);
-            const auto& swapid = aObj.pinIdxMappings.at(i)->pinGroup.at(position);
+            const auto& number = aObj.devices.at(i)->pinMap.at(position);
+            const auto& shared = aObj.devices.at(i)->pinIgnore.at(position);
+            const auto& swapid = aObj.devices.at(i)->pinGroup.at(position);
 
             {
                 XMLElement* parent = mCurXmlElem;
@@ -571,9 +571,9 @@ void XmlExporter::visit(const StreamPackage& aObj)
             }
         }
 
-        if(aObj.t0x1f)
+        if(aObj.package)
         {
-            visit(*aObj.t0x1f);
+            visit(*aObj.package);
         }
 
         mCurXmlElem = parent;
@@ -583,7 +583,7 @@ void XmlExporter::visit(const StreamPackage& aObj)
 }
 
 
-void XmlExporter::visit(const StructPrimitives& aObj)
+void XmlExporter::visit(const StructLibraryPart& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 

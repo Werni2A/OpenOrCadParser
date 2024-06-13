@@ -1,5 +1,5 @@
-#ifndef STRUCTERCSYMBOLINST_HPP
-#define STRUCTERCSYMBOLINST_HPP
+#ifndef STRUCTERCOBJECT_HPP
+#define STRUCTERCOBJECT_HPP
 
 
 #include <cstdint>
@@ -16,11 +16,11 @@
 #include "Structures/StructGraphicInst.hpp"
 
 
-class StructERCSymbolInst : public StructGraphicInst
+class StructERCObject : public StructGraphicInst
 {
 public:
 
-    StructERCSymbolInst(StreamContext& aCtx) : StructGraphicInst{aCtx}, s0{}, s1{}, s2{}
+    StructERCObject(StreamContext& aCtx) : StructGraphicInst{aCtx}, s0{}, s1{}, s2{}
     { }
 
     std::string to_string() const override;
@@ -34,7 +34,7 @@ public:
 
     Structure getObjectType() const override
     {
-        return Structure::ERCSymbolInst;
+        return Structure::ERCObject;
     }
 
     std::string s0;
@@ -44,13 +44,13 @@ public:
 
 
 [[maybe_unused]]
-static std::string to_string(const StructERCSymbolInst& aObj)
+static std::string to_string(const StructERCObject& aObj)
 {
     return aObj.to_string();
 }
 
 
-inline std::string StructERCSymbolInst::to_string() const
+inline std::string StructERCObject::to_string() const
 {
     std::string str;
 
@@ -67,7 +67,7 @@ inline std::string StructERCSymbolInst::to_string() const
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructERCSymbolInst& aObj)
+static std::ostream& operator<<(std::ostream& aOs, const StructERCObject& aObj)
 {
     aOs << to_string(aObj);
 
@@ -75,4 +75,4 @@ static std::ostream& operator<<(std::ostream& aOs, const StructERCSymbolInst& aO
 }
 
 
-#endif // STRUCTERCSYMBOLINST_HPP
+#endif // STRUCTERCOBJECT_HPP

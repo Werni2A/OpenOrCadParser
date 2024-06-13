@@ -2,8 +2,8 @@
 
 
 
-#ifndef STRUCTPINIDXMAPPING_HPP
-#define STRUCTPINIDXMAPPING_HPP
+#ifndef STRUCTDEVICE_HPP
+#define STRUCTDEVICE_HPP
 
 
 #include <cstdint>
@@ -19,11 +19,11 @@
 
 // @todo Probably called 'PhysicalPart' in the XSD
 //       Structure should also contain 'PinShared' and 'PinSwap'
-class StructPinIdxMapping : public Record
+class StructDevice : public Record
 {
 public:
 
-    StructPinIdxMapping(StreamContext& aCtx) : Record{aCtx}, unitRef{}, refDes{},
+    StructDevice(StreamContext& aCtx) : Record{aCtx}, unitRef{}, refDes{},
         pinMap{}, pinIgnore{}, pinGroup{}
     { }
 
@@ -38,7 +38,7 @@ public:
 
     Structure getObjectType() const override
     {
-        return Structure::PinIdxMapping;
+        return Structure::Device;
     }
 
     std::string unitRef;
@@ -56,7 +56,7 @@ public:
 
 
 [[maybe_unused]]
-static std::string to_string(const StructPinIdxMapping& aObj)
+static std::string to_string(const StructDevice& aObj)
 {
     std::string str;
 
@@ -86,14 +86,14 @@ static std::string to_string(const StructPinIdxMapping& aObj)
 }
 
 
-inline std::string StructPinIdxMapping::to_string() const
+inline std::string StructDevice::to_string() const
 {
     return ::to_string(*this);
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructPinIdxMapping& aVal)
+static std::ostream& operator<<(std::ostream& aOs, const StructDevice& aVal)
 {
     aOs << to_string(aVal);
 
@@ -101,4 +101,4 @@ static std::ostream& operator<<(std::ostream& aOs, const StructPinIdxMapping& aV
 }
 
 
-#endif // STRUCTPINIDXMAPPING_HPP
+#endif // STRUCTDEVICE_HPP

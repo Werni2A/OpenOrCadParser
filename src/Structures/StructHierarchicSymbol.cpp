@@ -6,7 +6,7 @@
 
 #include "General.hpp"
 #include "Structures/StructHierarchicSymbol.hpp"
-#include "Structures/StructPrimitives.hpp"
+#include "Structures/StructLibraryPart.hpp"
 
 
 void StructHierarchicSymbol::read(FileFormatVersion /* aVersion */)
@@ -15,8 +15,8 @@ void StructHierarchicSymbol::read(FileFormatVersion /* aVersion */)
 
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    StructPrimitives primitives{mCtx};
-    primitives.read();
+    StructLibraryPart libraryPart{mCtx};
+    libraryPart.read();
 
     mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     mCtx.mLogger.trace(to_string());

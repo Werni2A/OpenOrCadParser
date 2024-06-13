@@ -16,25 +16,25 @@ void StreamPackage::read(FileFormatVersion /* aVersion */)
 
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    const uint16_t lenProperties = ds.readUint16();
+    const uint16_t lenPartCells = ds.readUint16();
 
-    mCtx.mLogger.trace("lenProperties = {}", lenProperties);
+    mCtx.mLogger.trace("lenPartCells = {}", lenPartCells);
 
-    for(size_t i = 0u; i < lenProperties; ++i)
+    for(size_t i = 0u; i < lenPartCells; ++i)
     {
-        properties.push_back(dynamic_pointer_cast<StructProperties>(parser.readStructure()));
+        partCells.push_back(dynamic_pointer_cast<StructPartCell>(parser.readStructure()));
 
-        const uint16_t lenPrimitives = ds.readUint16();
+        const uint16_t lenLibraryParts = ds.readUint16();
 
-        mCtx.mLogger.trace("lenPrimitives = {}", lenPrimitives);
+        mCtx.mLogger.trace("lenLibraryParts = {}", lenLibraryParts);
 
-        for(size_t i = 0u; i < lenPrimitives; ++i)
+        for(size_t i = 0u; i < lenLibraryParts; ++i)
         {
-            primitives.push_back(dynamic_pointer_cast<StructPrimitives>(parser.readStructure()));
+            libraryParts.push_back(dynamic_pointer_cast<StructLibraryPart>(parser.readStructure()));
         }
     }
 
-    t0x1f = dynamic_pointer_cast<StructT0x1f>(parser.readStructure());
+    package = dynamic_pointer_cast<StructPackage>(parser.readStructure());
 
     ds.sanitizeEoF();
 

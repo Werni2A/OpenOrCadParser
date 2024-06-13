@@ -11,10 +11,10 @@
 #include "FutureData.hpp"
 #include "General.hpp"
 #include "GenericParser.hpp"
-#include "Structures/StructProperties.hpp"
+#include "Structures/StructPartCell.hpp"
 
 
-void StructProperties::read(FileFormatVersion /* aVersion */)
+void StructPartCell::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
@@ -23,7 +23,7 @@ void StructProperties::read(FileFormatVersion /* aVersion */)
 
     FutureDataLst localFutureLst{mCtx};
 
-    parser.auto_read_prefixes(Structure::Properties, localFutureLst);
+    parser.auto_read_prefixes(Structure::PartCell, localFutureLst);
 
     parser.readPreamble();
 

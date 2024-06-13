@@ -1,5 +1,5 @@
-#ifndef STRUCTT0X1F_HPP
-#define STRUCTT0X1F_HPP
+#ifndef STRUCTPACKAGE_HPP
+#define STRUCTPACKAGE_HPP
 
 
 #include <cstdint>
@@ -12,13 +12,13 @@
 #include <nameof.hpp>
 
 #include "Record.hpp"
-#include "Structures/StructPinIdxMapping.hpp"
+#include "Structures/StructDevice.hpp"
 
-class StructT0x1f : public Record
+class StructPackage : public Record
 {
 public:
 
-    StructT0x1f(StreamContext& aCtx) : Record{aCtx}, name{},
+    StructPackage(StreamContext& aCtx) : Record{aCtx}, name{},
         refDes{}, pcbFootprint{}
     { }
 
@@ -33,7 +33,7 @@ public:
 
     Structure getObjectType() const override
     {
-        return Structure::T0x1f;
+        return Structure::Package;
     }
 
     std::string name;
@@ -42,12 +42,12 @@ public:
     // OrCAD GUI: `Property Sheet` -> `Package Properties` -> `PCB Footprint`
     std::string pcbFootprint;
 
-    std::vector<std::unique_ptr<StructPinIdxMapping>> pinIdxMappings;
+    std::vector<std::unique_ptr<StructDevice>> devices;
 };
 
 
 [[maybe_unused]]
-static std::string to_string(const StructT0x1f& aObj)
+static std::string to_string(const StructPackage& aObj)
 {
     std::string str;
 
@@ -56,12 +56,12 @@ static std::string to_string(const StructT0x1f& aObj)
     str += fmt::format("{}refDes = {}\n", indent(1), aObj.refDes);
     str += fmt::format("{}pcbFootprint = {}\n", indent(1), aObj.pcbFootprint);
 
-    str += fmt::format("{}pinIdxMappings:\n", indent(1));
-    for(size_t i = 0u; i < aObj.pinIdxMappings.size(); ++i)
+    str += fmt::format("{}devices:\n", indent(1));
+    for(size_t i = 0u; i < aObj.devices.size(); ++i)
     {
-        if(aObj.pinIdxMappings[i])
+        if(aObj.devices[i])
         {
-            str += indent(fmt::format("[{}]: {}", i, aObj.pinIdxMappings[i]->to_string()), 2);
+            str += indent(fmt::format("[{}]: {}", i, aObj.devices[i]->to_string()), 2);
         }
     }
 
@@ -69,14 +69,14 @@ static std::string to_string(const StructT0x1f& aObj)
 }
 
 
-inline std::string StructT0x1f::to_string() const
+inline std::string StructPackage::to_string() const
 {
     return ::to_string(*this);
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructT0x1f& aVal)
+static std::ostream& operator<<(std::ostream& aOs, const StructPackage& aVal)
 {
     aOs << to_string(aVal);
 
@@ -84,4 +84,4 @@ static std::ostream& operator<<(std::ostream& aOs, const StructT0x1f& aVal)
 }
 
 
-#endif // STRUCTT0X1F_HPP
+#endif // STRUCTPACKAGE_HPP

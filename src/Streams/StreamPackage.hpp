@@ -12,18 +12,18 @@
 #include <nameof.hpp>
 
 #include "Stream.hpp"
-#include "Structures/StructPinIdxMapping.hpp"
-#include "Structures/StructPrimitives.hpp"
-#include "Structures/StructProperties.hpp"
-#include "Structures/StructT0x1f.hpp"
+#include "Structures/StructDevice.hpp"
+#include "Structures/StructLibraryPart.hpp"
+#include "Structures/StructPackage.hpp"
+#include "Structures/StructPartCell.hpp"
 
 
 class StreamPackage : public Stream
 {
 public:
 
-    StreamPackage(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, properties{}, primitives{},
-        t0x1f{}
+    StreamPackage(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, partCells{}, libraryParts{},
+        package{}
     { }
 
     std::string to_string() const override;
@@ -40,10 +40,10 @@ public:
         return StreamType::Package;
     }
 
-    std::vector<std::unique_ptr<StructProperties>>    properties;
-    std::vector<std::unique_ptr<StructPrimitives>>    primitives;
+    std::vector<std::unique_ptr<StructPartCell>>      partCells;
+    std::vector<std::unique_ptr<StructLibraryPart>>   libraryParts;
 
-    std::unique_ptr<StructT0x1f>                      t0x1f;
+    std::unique_ptr<StructPackage>                    package;
 };
 
 
@@ -54,28 +54,28 @@ static std::string to_string(const StreamPackage& aObj)
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
 
-    str += fmt::format("{}properties:\n", indent(1));
-    for(size_t i = 0u; i < aObj.properties.size(); ++i)
+    str += fmt::format("{}partCells:\n", indent(1));
+    for(size_t i = 0u; i < aObj.partCells.size(); ++i)
     {
-        if(aObj.properties[i])
+        if(aObj.partCells[i])
         {
-            str += indent(fmt::format("[{}]: {}", i, aObj.properties[i]->to_string()), 2);
+            str += indent(fmt::format("[{}]: {}", i, aObj.partCells[i]->to_string()), 2);
         }
     }
 
-    str += fmt::format("{}primitives:\n", indent(1));
-    for(size_t i = 0u; i < aObj.primitives.size(); ++i)
+    str += fmt::format("{}libraryParts:\n", indent(1));
+    for(size_t i = 0u; i < aObj.libraryParts.size(); ++i)
     {
-        if(aObj.primitives[i])
+        if(aObj.libraryParts[i])
         {
-            str += indent(fmt::format("[{}]: {}", i, aObj.primitives[i]->to_string()), 2);
+            str += indent(fmt::format("[{}]: {}", i, aObj.libraryParts[i]->to_string()), 2);
         }
     }
 
-    str += fmt::format("{}t0x1f:\n", indent(1));
-    if(aObj.t0x1f)
+    str += fmt::format("{}package:\n", indent(1));
+    if(aObj.package)
     {
-        str += indent(aObj.t0x1f->to_string(), 2);
+        str += indent(aObj.package->to_string(), 2);
     }
 
     return str;

@@ -1,5 +1,5 @@
-#ifndef STRUCTPRIMITIVES_HPP
-#define STRUCTPRIMITIVES_HPP
+#ifndef STRUCTLIBRARYPART_HPP
+#define STRUCTLIBRARYPART_HPP
 
 
 #include <cstdint>
@@ -18,11 +18,11 @@
 #include "Structures/StructSymbolPin.hpp"
 
 
-class StructPrimitives : public Record
+class StructLibraryPart : public Record
 {
 public:
 
-    StructPrimitives(StreamContext& aCtx) : Record{aCtx}, name{}, symbolPins{},
+    StructLibraryPart(StreamContext& aCtx) : Record{aCtx}, name{}, symbolPins{},
         symbolDisplayProps{}, generalProperties{aCtx}
     { }
 
@@ -37,7 +37,7 @@ public:
 
     Structure getObjectType() const override
     {
-        return Structure::Primitives;
+        return Structure::LibraryPart;
     }
 
     std::string name;
@@ -51,7 +51,7 @@ public:
 
 
 [[maybe_unused]]
-static std::string to_string(const StructPrimitives& aObj)
+static std::string to_string(const StructLibraryPart& aObj)
 {
     std::string str;
 
@@ -92,14 +92,14 @@ static std::string to_string(const StructPrimitives& aObj)
 }
 
 
-inline std::string StructPrimitives::to_string() const
+inline std::string StructLibraryPart::to_string() const
 {
     return ::to_string(*this);
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructPrimitives& aVal)
+static std::ostream& operator<<(std::ostream& aOs, const StructLibraryPart& aVal)
 {
     aOs << to_string(aVal);
 
@@ -107,4 +107,4 @@ static std::ostream& operator<<(std::ostream& aOs, const StructPrimitives& aVal)
 }
 
 
-#endif // STRUCTPRIMITIVES_HPP
+#endif // STRUCTLIBRARYPART_HPP
