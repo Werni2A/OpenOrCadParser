@@ -77,7 +77,10 @@ static ShapeType ToShapeType(const PinShape& pinShape)
 {
     const auto& pin = pinShape;
 
-    ShapeType shapeType;
+    ShapeType shapeType = ShapeType::Line;
+
+    // All possible combinations are covered
+    // by the if-statements
 
     if( pin.isLong &&  pin.isClock && !pin.isDot)
     {
@@ -111,15 +114,11 @@ static ShapeType ToShapeType(const PinShape& pinShape)
     {
         shapeType = ShapeType::ShortDotClock;
     }
+
     if(false) // @todo Not sure how this is generated
     {
         shapeType = ShapeType::ZeroLength;
     }
-    else
-    {
-        throw std::runtime_error("Strange combination of PinShape that is unknown!");
-    }
-
 
     return shapeType;
 }

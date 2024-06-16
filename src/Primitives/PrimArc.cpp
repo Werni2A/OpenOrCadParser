@@ -51,6 +51,7 @@ void PrimArc::read(FileFormatVersion aVersion)
 
     x1 = ds.readInt32();
     y1 = ds.readInt32();
+
     x2 = ds.readInt32();
     y2 = ds.readInt32();
 
