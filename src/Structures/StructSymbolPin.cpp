@@ -71,9 +71,9 @@ int32_t StructSymbolPin::getPinLength() const
 
     int32_t pinLength = static_cast<int32_t>(std::round(std::sqrt(dx * dx + dy * dy)));
 
-    if(pinShape.isLong)
+    if(!pinShape.isLong)
     {
-        pinLength *= 2;
+        pinLength /= 2;
     }
 
     if(ToShapeType(pinShape) == ShapeType::ZeroLength)

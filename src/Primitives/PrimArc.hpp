@@ -16,7 +16,7 @@
 #include "Primitives/PrimBase.hpp"
 
 
-// @note This is additionally defines an elliptic arc.
+// @note This defines an elliptic arc.
 class PrimArc : public PrimBase
 {
 public:
@@ -61,15 +61,29 @@ public:
         return mLineWidth.value_or(LineWidth::Default);
     }
 
+    // Elliptic Arc
+    // See:
+    // PlaceArc: http://www.wictronic.ch/Downloads/PSpice/Version_10_5/manuals/Capture_Users_Guide_10_5.pdf#page=316
+    // http://geocities.ws/web_sketches/ellipse_notes/ellipse_arc_length/ellipse_arc_length.html
+
+    // Vertex 1 and Vertex 2 span up a rectangle that limits the ellipse.
+    // I.e. width and height of the rectangle define the two radiuses of
+    // the ellipse. Note that a vertex plus the radiuses gives the center
+    // of the ellipse (position where its placed).
+
+    // Vertex 1
     int32_t x1;
     int32_t y1;
 
+    // Vertex 2
     int32_t x2;
     int32_t y2;
 
+    // Start point of the arc
     int32_t startX;
     int32_t startY;
 
+    // End point of the arc
     int32_t endX;
     int32_t endY;
 
