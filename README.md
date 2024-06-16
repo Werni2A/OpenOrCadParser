@@ -25,12 +25,9 @@ The following two XSD files provide a good overview of the `XML` file structure,
 
 ---
 
-# Current State &mdash; January 2023
+# Current State &mdash; June 2024
 
-- I plan on implementing a very basic XML exporter for `Package`
-  - This allows to generate images by importing into KiCad via [pyorlib2ki](https://github.com/fjullien/pyorlib2ki)
-- It's planned to finish the `Package` parser around spring 2023
-- A PoC KiCad importer should follow in summer 2023
+- Working on a native KiCad 'Library' Importer
 
 ---
 
@@ -88,31 +85,17 @@ Allowed options:
 ./cli/OpenOrCadParser-cli --input file.OLB --verbosity 6 --keep >> file.txt
 ```
 
-## Generate Image from Library `Package`
+## :construction: KiCad Import
 
-[pyorlib2ki](https://github.com/fjullien/pyorlib2ki) makes it possible to import XML files into KiCad getting a graphical representation of the `Package`.
+An initial draft of the KiCad importer is provided on my [`add-orcad-importer`-Branch](https://gitlab.com/Werni2A/kicad/-/tree/add-orcad-importer?ref_type=heads). Current focus is to get the 'Library' import into a mature enough state to display most important features and merge it into upstream KiCad.
 
-Pictures make it easy to compare against OrCAD's original but do not expect much of it at the moment. The required XML export feature is still in a very early stage. See the following image as an example.
+'Design' imports are not yet supported nor worked on, this will probably take some more time.
 
-![Example XML import into KiCad](/doc/img/example_xml_kicad_import.png)
+![KiCad Imported Package](/doc/img/example_kicad_import_package.png)
 
-```bash
-#!/bin/bash
+## :skull: XML Export
 
-# Generate XML file
-./build/cli/OpenOrCadParser-cli -k -i "Library.OLB"
-
-# Copy XML path to this variable
-XML_PATH=/tmp/OpenOrCadParser/bffb65106f5b2365049dfc9de4a8b7e3/Package.OLB/xml/PackageName0.xml
-
-SYM_PATH=PackageName0.kicad_sym
-
-# Use https://github.com/fjullien/pyorlib2ki
-python pyorlib2ki.py -i $XML_PATH -o $SYM_PATH
-
-# Import symbol into KiCad and export graphical representation
-```
-
+:warning: Previously I provided a preliminary XML export that could be used with [pyorlib2ki](https://github.com/fjullien/pyorlib2ki) to import into KiCad. I abandoned the XML exporter in favor of a native KiCad importer. :warning:
 
 ---
 
