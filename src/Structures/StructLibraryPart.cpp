@@ -138,16 +138,7 @@ void StructLibraryPart::read(FileFormatVersion /* aVersion */)
         {
             parser.readPreamble();
 
-            for(std::size_t i{0U}; i < std::size_t{4U}; ++i)
-            {
-                const std::string s = ds.readStringLenZeroTerm();
-                mCtx.mLogger.trace("s[{}] = {}", i, s);
-            }
-
-            if(localFutureLst.cbegin()->getStopOffset() > ds.getCurrentOffset())
-            {
-                ds.printUnknownData(2, getMethodName(this, __func__) + ": Interesting but weird bytes");
-            }
+            generalProperties.read();
 
             localFutureLst.checkpoint();
         }
