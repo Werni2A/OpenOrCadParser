@@ -33,11 +33,9 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
             mCtx.mLogger.trace("iteration i = {}", i);
 
             const bool hasStrAfter8Byte = parser.tryRead([&](){ ds.readBytes(8U); ds.readStringLenZeroTerm(); });
-            const bool hasStrAfter2Byte = parser.tryRead([&](){ ds.readBytes(2U); ds.readStringLenZeroTerm(); });
             const bool hasStrAfter0Byte = parser.tryRead([&](){ ds.readBytes(0U); ds.readStringLenZeroTerm(); });
 
             mCtx.mLogger.trace("hasStrAfter8Byte = {}", hasStrAfter8Byte);
-            mCtx.mLogger.trace("hasStrAfter2Byte = {}", hasStrAfter2Byte);
             mCtx.mLogger.trace("hasStrAfter0Byte = {}", hasStrAfter0Byte);
 
             if(!hasStrAfter0Byte)
@@ -51,10 +49,7 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
                     mCtx.mLogger.trace("someRefDes = {}", someRefDes);
                 }
 
-                if(hasStrAfter2Byte)
-                {
-                    ds.printUnknownData(2U, getMethodName(this, __func__) + ": 10");
-                }
+                ds.printUnknownData(2U, getMethodName(this, __func__) + ": 10");
             }
 
             const std::string name = ds.readStringLenZeroTerm();
