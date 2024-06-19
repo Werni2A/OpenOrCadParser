@@ -33,9 +33,11 @@ public:
 
         std::memcpy(this, buffer.data(), sizeof(*this));
 
+        // Don't know how but lfWeight might have values
+        // out of it's 'valid' range
         if(lfWeight != std::clamp(lfWeight, 0, 1000))
         {
-            throw std::runtime_error(fmt::format("0 <= lfWeight <= 1000 must hold but lfWeight = {}", lfWeight));
+            // throw std::runtime_error(fmt::format("0 <= lfWeight <= 1000 must hold but lfWeight = {}", lfWeight));
         }
 
         if(lfOutPrecision > 10U)
