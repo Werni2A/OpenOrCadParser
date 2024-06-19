@@ -25,7 +25,8 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
     }
     else
     {
-        ds.printUnknownData(4, getMethodName(this, __func__) + ": 1");
+        ds.assumeData({0x00, 0x00}, getMethodName(this, __func__) + ": 1.0");
+        ds.printUnknownData(2, getMethodName(this, __func__) + ": 1.1");
 
         std::size_t i{0U};
         for(i = 0U; !ds.isEoF(); ++i)
