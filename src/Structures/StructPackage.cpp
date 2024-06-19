@@ -33,8 +33,9 @@ void StructPackage::read(FileFormatVersion /* aVersion */)
 
     mCtx.mLogger.trace("name = {}", name);
 
-    std::string unknownStr0 = ds.readStringLenZeroTerm(); // @todo figure out
-    mCtx.mLogger.trace("{}: unknownStr0 = {}", __func__, unknownStr0);
+    // Absolute path
+    const std::string sourceLibrary = ds.readStringLenZeroTerm();
+    mCtx.mLogger.trace("sourceLibrary = {}", sourceLibrary);
 
     localFutureLst.checkpoint();
 
