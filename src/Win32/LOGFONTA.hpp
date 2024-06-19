@@ -40,9 +40,11 @@ public:
             // throw std::runtime_error(fmt::format("0 <= lfWeight <= 1000 must hold but lfWeight = {}", lfWeight));
         }
 
+        // Don't know how but lfOutPrecision might have values
+        // out of it's 'valid' range
         if(lfOutPrecision > 10U)
         {
-            throw std::runtime_error(fmt::format("lfOutPrecision <= 10 must hold but lfOutPrecision = {}", lfOutPrecision));
+            // throw std::runtime_error(fmt::format("lfOutPrecision <= 10 must hold but lfOutPrecision = {}", lfOutPrecision));
         }
 
         if(lfQuality > 6U)
