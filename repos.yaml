@@ -1575,7 +1575,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/fairchild.olb
-  - errors: 14
+  - errors: 13
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/filtsub.olb
   - errors: 0
