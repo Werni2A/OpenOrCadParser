@@ -20,13 +20,15 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
     // Early out for empty caches
     if(parser.tryRead([&](){ ds.readBytes(10U); ds.sanitizeEoF(); }))
     {
-        ds.printUnknownData(10U, getMethodName(this, __func__) + ": 0");
+        // 10 zero bytes
+        ds.assumeData({0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, getMethodName(this, __func__) + ": 0");
     }
     else
     {
         ds.printUnknownData(4, getMethodName(this, __func__) + ": 1");
 
-        for(std::size_t i{0U}; !ds.isEoF(); ++i)
+        std::size_t i{0U};
+        for(i = 0U; !ds.isEoF(); ++i)
         {
             mCtx.mLogger.trace("iteration i = {}", i);
 
@@ -42,7 +44,11 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
             {
                 if(hasStrAfter8Byte)
                 {
-                    ds.printUnknownData(8U, getMethodName(this, __func__) + ": 11");
+                    ds.printUnknownData(2U, getMethodName(this, __func__) + ": 11");
+
+                    // Some 3 letter descriptions like: "LED", "VDC", "POT", "USB", "BUF", ...
+                    const std::string someRefDes = ds.readStringLenZeroTerm();
+                    mCtx.mLogger.trace("someRefDes = {}", someRefDes);
                 }
 
                 if(hasStrAfter2Byte)
@@ -112,6 +118,8 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
 
             parser.readStructure();
         }
+
+        mCtx.mLogger.trace("unknownLen5176 = {}", i);
     }
 
     ds.sanitizeEoF();
