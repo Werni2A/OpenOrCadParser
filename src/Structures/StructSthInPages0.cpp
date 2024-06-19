@@ -48,9 +48,9 @@ void StructSthInPages0::read_raw(FileFormatVersion /* aVersion */, FutureDataLst
 
     mCtx.mLogger.trace("name = {}", name);
 
-    someStr0 = ds.readStringLenZeroTerm();
+    sourceLibrary = ds.readStringLenZeroTerm();
 
-    mCtx.mLogger.trace("someStr0 = {}", someStr0);
+    mCtx.mLogger.trace("sourceLibrary = {}", sourceLibrary);
 
     aLocalFutureLst.checkpoint();
 
