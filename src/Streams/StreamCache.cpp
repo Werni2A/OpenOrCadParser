@@ -64,6 +64,12 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
                 uint16_t someVal;
                 do
                 {
+                    // Indicates what follows
+                    // 0 = Package Name
+                    // 1 = Probably Source Library
+                    // 2 = Probably Source Library
+                    // 3 = Probably Source Library
+                    // Other values have not been observed
                     someVal = ds.readUint16();
 
                     mCtx.mLogger.trace("someVal = {}", someVal);
