@@ -5079,7 +5079,7 @@ repositories:
   - errors: 0
     options: null
     path: ./TB8.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./TB1.DSN
   - errors: 0
@@ -5088,13 +5088,13 @@ repositories:
   - errors: 0
     options: null
     path: ./TB5.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./TB2.DSN
   - errors: 1
     options: null
     path: ./TB7.dsn
-  - errors: 3
+  - errors: 2
     options: null
     path: ./TB3.DSN
   - errors: 0
