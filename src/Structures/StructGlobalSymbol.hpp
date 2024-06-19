@@ -50,9 +50,9 @@ static std::string to_string(const StructGlobalSymbol& aObj)
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
-    str += fmt::format("{}name     = {}\n", indent(1), aObj.name);
-    str += fmt::format("{}someStr0 = {}\n", indent(1), aObj.someStr0);
-    str += fmt::format("{}color    = {}\n", indent(1), ::to_string(aObj.color));
+    str += fmt::format("{}name          = {}\n", indent(1), aObj.name);
+    str += fmt::format("{}sourceLibrary = {}\n", indent(1), aObj.sourceLibrary);
+    str += fmt::format("{}color         = {}\n", indent(1), ::to_string(aObj.color));
 
     str += fmt::format("{}symbolPins:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbolPins.size(); ++i)
