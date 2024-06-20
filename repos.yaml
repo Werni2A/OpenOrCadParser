@@ -2148,7 +2148,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/SmartGardenShield/LIBRARY1.OLB
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrCAD/DESIGN1.DSN
   - errors: 0
@@ -2160,7 +2160,7 @@ repositories:
   - errors: 0
     options: null
     path: ./OrCAD/Schematic/CC1310LAUNCHPAD.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OrCAD/SmartGardenShield/DESIGN1.DSN
   - errors: 0
@@ -2387,7 +2387,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/RINGCOUNTER_EXAM.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/ATMEGA.DSN
   - errors: 0
@@ -2468,13 +2468,13 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/RINGCOUNTER_EXAM_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/SPICE_RESONANCECIRCUIT_0.DBK
   - errors: 0
     options: null
     path: ./orcadData/SPICE_MULTIVIBRATOR_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/stm32_f103c8_interrupt/STM32F103C8_INTERRUPT_0.DBK
   - errors: 0
@@ -2492,7 +2492,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/wheatstonebridge/WHEATSTONEBRIDGE_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/LED/LED_0.DBK
   - errors: 0
@@ -2510,7 +2510,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcadData/start1/LED_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcadData/start1/BRIDGEDIODE_0.DBK
   - errors: 0
@@ -4548,16 +4548,16 @@ repositories:
   - errors: 0
     options: null
     path: ./ATmegaStart/ATMEGASTART.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./555timer/DESIGN3.DSN
   - errors: 1
     options: null
     path: ./555timer/555TIMER.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./555timer/DESIGN1.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./555timer/DESIGN2.DSN
   - errors: 0
@@ -4569,7 +4569,7 @@ repositories:
   - errors: 0
     options: null
     path: ./LED5/LED5.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./OP_AMP/OP_AMP.DSN
   - errors: 0
@@ -4590,7 +4590,7 @@ repositories:
   - errors: 0
     options: null
     path: ./Digital_Convertor/DIGITAL_CONVERTOR.DSN
-  - errors: 1
+  - errors: 0
     options: null
     path: ./practice/PRACTICE.DSN
   - errors: 0
@@ -4602,7 +4602,7 @@ repositories:
   - errors: 0
     options: null
     path: ./ATmegaStart/ATMEGASTART_0.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./555timer/555TIMER_0.DBK
   - errors: 0
@@ -4635,7 +4635,7 @@ repositories:
   - errors: 0
     options: null
     path: ./Digital_Convertor/DIGITAL_CONVERTOR.DBK
-  - errors: 1
+  - errors: 0
     options: null
     path: ./practice/PRACTICE_0.DBK
   - errors: 0
