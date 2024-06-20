@@ -17,6 +17,9 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
 
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
+    const auto hasStrAfter0Byte = [&]() -> bool { return parser.tryRead([&](){ ds.readBytes(0U); ds.readStringLenZeroTerm(); }); };
+    const auto hasStrAfter8Byte = [&]() -> bool { return parser.tryRead([&](){ ds.readBytes(8U); ds.readStringLenZeroTerm(); }); };
+
     // Early out for empty caches
     if(parser.tryRead([&](){ ds.readBytes(10U); ds.sanitizeEoF(); }))
     {
@@ -33,15 +36,9 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
         {
             mCtx.mLogger.trace("iteration i = {}", i);
 
-            const bool hasStrAfter8Byte = parser.tryRead([&](){ ds.readBytes(8U); ds.readStringLenZeroTerm(); });
-            const bool hasStrAfter0Byte = parser.tryRead([&](){ ds.readBytes(0U); ds.readStringLenZeroTerm(); });
-
-            mCtx.mLogger.trace("hasStrAfter8Byte = {}", hasStrAfter8Byte);
-            mCtx.mLogger.trace("hasStrAfter0Byte = {}", hasStrAfter0Byte);
-
-            if(!hasStrAfter0Byte)
+            if(!hasStrAfter0Byte())
             {
-                if(hasStrAfter8Byte)
+                if(hasStrAfter8Byte())
                 {
                     ds.printUnknownData(2U, getMethodName(this, __func__) + ": 11");
 
@@ -54,7 +51,6 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
             }
 
             const std::string name = ds.readStringLenZeroTerm();
-
             mCtx.mLogger.trace("name = {}", name);
 
             const auto ids = ds.peek(8U);
@@ -63,9 +59,12 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
 
             if(id0 != id1)
             {
+                std::size_t j{0U};
                 uint16_t someVal;
                 do
                 {
+                    mCtx.mLogger.trace("iteration j = {}", j);
+
                     // Indicates what follows
                     // 0 = Package Name
                     // 1 = Probably Source Library
@@ -74,7 +73,7 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
                     // Other values have not been observed
                     someVal = ds.readUint16();
 
-                    mCtx.mLogger.trace("someVal = {}", someVal);
+                    mCtx.mLogger.trace("someVal[{}][{}] = {}", i, j, someVal);
 
                     if(ds.isEoF())
                     {
@@ -85,12 +84,14 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
 
                     if(hasMysterious2Byte)
                     {
-                        ds.printUnknownData(2U, "Encountered weird values");
+                        ds.printUnknownData(2U, fmt::format("Encountered weird values for someVal = {}", someVal));
                     }
 
                     const std::string someStr = ds.readStringLenZeroTerm();
 
-                    mCtx.mLogger.trace("someStr[{}] = {}", i, someStr);
+                    mCtx.mLogger.trace("someStr[{}][{}] = {}", i, j, someStr);
+
+                    j++;
                 } while (someVal == 0x0U);
 
                 if(ds.isEoF())
