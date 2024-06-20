@@ -80,6 +80,12 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
                         break;
                     }
 
+                    if(parser.tryRead([&](){ ds.readBytes(1U); ds.sanitizeEoF(); }))
+                    {
+                        ds.printUnknownData(1U, "Unknown Byte before end");
+                        break;
+                    }
+
                     const bool hasMysterious2Byte = !parser.tryRead([&](){ ds.readStringLenZeroTerm(); });
 
                     if(hasMysterious2Byte)
