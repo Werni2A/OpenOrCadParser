@@ -1,5 +1,5 @@
-#ifndef STRUCTHIERARCHICSYMBOL_HPP
-#define STRUCTHIERARCHICSYMBOL_HPP
+#ifndef STRUCTPORTSYMBOL_HPP
+#define STRUCTPORTSYMBOL_HPP
 
 
 #include <cstdint>
@@ -11,14 +11,14 @@
 #include <nameof.hpp>
 
 #include "General.hpp"
-#include "Record.hpp"
+#include "Structures/StructSymbol.hpp"
 
 
-class StructHierarchicSymbol : public Record
+class StructPortSymbol : public StructSymbol
 {
 public:
 
-    StructHierarchicSymbol(StreamContext& aCtx) : Record{aCtx}
+    StructPortSymbol(StreamContext& aCtx) : StructSymbol{aCtx}
     { }
 
     std::string to_string() const override;
@@ -38,7 +38,7 @@ public:
 
 
 [[maybe_unused]]
-static std::string to_string(const StructHierarchicSymbol& aObj)
+static std::string to_string(const StructPortSymbol& aObj)
 {
     std::string str;
 
@@ -48,14 +48,14 @@ static std::string to_string(const StructHierarchicSymbol& aObj)
 }
 
 
-inline std::string StructHierarchicSymbol::to_string() const
+inline std::string StructPortSymbol::to_string() const
 {
     return ::to_string(*this);
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructHierarchicSymbol& aVal)
+static std::ostream& operator<<(std::ostream& aOs, const StructPortSymbol& aVal)
 {
     aOs << to_string(aVal);
 
@@ -63,4 +63,4 @@ static std::ostream& operator<<(std::ostream& aOs, const StructHierarchicSymbol&
 }
 
 
-#endif // STRUCTHIERARCHICSYMBOL_HPP
+#endif // STRUCTPORTSYMBOL_HPP

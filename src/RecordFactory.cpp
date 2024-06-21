@@ -39,7 +39,6 @@
 #include "Structures/StructGraphicOleEmbedInst.hpp"
 #include "Structures/StructGraphicPolygonInst.hpp"
 #include "Structures/StructGraphicPolylineInst.hpp"
-#include "Structures/StructHierarchicSymbol.hpp"
 #include "Structures/StructLibraryPart.hpp"
 #include "Structures/StructNetDbIdMapping.hpp"
 #include "Structures/StructOffPageConnector.hpp"
@@ -49,6 +48,7 @@
 #include "Structures/StructPartInst.hpp"
 #include "Structures/StructPinShapeSymbol.hpp"
 #include "Structures/StructPort.hpp"
+#include "Structures/StructPortSymbol.hpp"
 #include "Structures/StructSthInHierarchy1.hpp"
 #include "Structures/StructSthInHierarchy2.hpp"
 #include "Structures/StructSthInHierarchy3.hpp"
@@ -99,7 +99,7 @@ std::unique_ptr<Record> RecordFactory::build(StreamContext& aCtx, Structure aStr
         case Structure::PinShapeSymbol:         return std::make_unique<StructPinShapeSymbol>(aCtx);         break;
         case Structure::PlacedInstance:         return std::make_unique<StructPartInst>(aCtx);               break;
         case Structure::Port:                   return std::make_unique<StructPort>(aCtx);                   break;
-        case Structure::PortSymbol:             return std::make_unique<StructHierarchicSymbol>(aCtx);       break;
+        case Structure::PortSymbol:             return std::make_unique<StructPortSymbol>(aCtx);             break;
         case Structure::SthInHierarchy1:        return std::make_unique<StructSthInHierarchy1>(aCtx);        break;
         case Structure::SthInHierarchy2:        return std::make_unique<StructSthInHierarchy2>(aCtx);        break;
         case Structure::SthInHierarchy3:        return std::make_unique<StructSthInHierarchy3>(aCtx);        break;

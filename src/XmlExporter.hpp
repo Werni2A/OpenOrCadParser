@@ -97,7 +97,6 @@ public:
     virtual void visit(const StructGraphicOleEmbedInst& /* aObj */) override { }
     virtual void visit(const StructGraphicPolygonInst& /* aObj */) override { }
     virtual void visit(const StructGraphicPolylineInst& /* aObj */) override { }
-    virtual void visit(const StructHierarchicSymbol& /* aObj */) override { }
     virtual void visit(const StructLibraryPart& aObj) override;
     virtual void visit(const StructNetDbIdMapping& /* aObj */) override { }
     virtual void visit(const StructOffPageConnector& /* aObj */) override { }
@@ -107,6 +106,7 @@ public:
     virtual void visit(const StructPartInst& /* aObj */) override { }
     virtual void visit(const StructPinShapeSymbol& /* aObj */) override { }
     virtual void visit(const StructPort& /* aObj */) override { }
+    virtual void visit(const StructPortSymbol& /* aObj */) override { }
     virtual void visit(const StructSthInHierarchy1& /* aObj */) override { }
     virtual void visit(const StructSthInHierarchy2& /* aObj */) override { }
     virtual void visit(const StructSthInHierarchy3& /* aObj */) override { }
