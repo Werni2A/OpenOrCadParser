@@ -30,7 +30,7 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
      //       Maybe the byte length does not count itself and
      //       the following 4 zero bytes.
      //       This issue is somehow related to the disabled
-     //       readOptionalTrailingFuture check in StructPartInst
+     //       readOptionalTrailingFuture check in StructPlacedInstance
      //       and readOptionalTrailingFuture in StructT0x10
     const uint32_t byteLength = ds.readUint32() + 8U;
 

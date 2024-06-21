@@ -64,8 +64,8 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructOffPageSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructPackage.cpp
    ${LIB_SRC_DIR}/Structures/StructPartCell.cpp
-   ${LIB_SRC_DIR}/Structures/StructPartInst.cpp
    ${LIB_SRC_DIR}/Structures/StructPinShapeSymbol.cpp
+   ${LIB_SRC_DIR}/Structures/StructPlacedInstance.cpp
    ${LIB_SRC_DIR}/Structures/StructPort.cpp
    ${LIB_SRC_DIR}/Structures/StructPortSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructSthInHierarchy1.cpp

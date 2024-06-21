@@ -1,5 +1,5 @@
-#ifndef STRUCTPARTINST_HPP
-#define STRUCTPARTINST_HPP
+#ifndef STRUCTPLACEDINSTANCE_HPP
+#define STRUCTPLACEDINSTANCE_HPP
 
 
 #include <cstdint>
@@ -18,11 +18,11 @@
 #include "Structures/StructT0x10.hpp"
 
 
-class StructPartInst : public Record
+class StructPlacedInstance : public Record
 {
 public:
 
-    StructPartInst(StreamContext& aCtx) : Record{aCtx}, symbolDisplayProps{},
+    StructPlacedInstance(StreamContext& aCtx) : Record{aCtx}, symbolDisplayProps{},
         t0x10s{}
     { }
 
@@ -46,7 +46,7 @@ public:
 
 
 [[maybe_unused]]
-static std::string to_string(const StructPartInst& aObj)
+static std::string to_string(const StructPlacedInstance& aObj)
 {
     std::string str;
 
@@ -74,14 +74,14 @@ static std::string to_string(const StructPartInst& aObj)
 }
 
 
-inline std::string StructPartInst::to_string() const
+inline std::string StructPlacedInstance::to_string() const
 {
     return ::to_string(*this);
 }
 
 
 [[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructPartInst& aVal)
+static std::ostream& operator<<(std::ostream& aOs, const StructPlacedInstance& aVal)
 {
     aOs << to_string(aVal);
 
@@ -89,4 +89,4 @@ static std::ostream& operator<<(std::ostream& aOs, const StructPartInst& aVal)
 }
 
 
-#endif // STRUCTPARTINST_HPP
+#endif // STRUCTPLACEDINSTANCE_HPP

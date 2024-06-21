@@ -17,7 +17,7 @@
 #include "Structures/StructGlobal.hpp"
 #include "Structures/StructGraphicInst.hpp"
 #include "Structures/StructOffPageConnector.hpp"
-#include "Structures/StructPartInst.hpp"
+#include "Structures/StructPlacedInstance.hpp"
 #include "Structures/StructPort.hpp"
 #include "Structures/StructT0x34.hpp"
 #include "Structures/StructT0x35.hpp"
@@ -30,7 +30,7 @@ class StreamPage : public Stream
 public:
 
     StreamPage(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, name{}, pageSize{}, pageSettings{mCtx},
-        titleBlocks{}, t0x34s{}, t0x35s{}, wires{}, partInsts{}, ports{}, globals{}, offPageConnectors{},
+        titleBlocks{}, t0x34s{}, t0x35s{}, wires{}, placedInstances{}, ports{}, globals{}, offPageConnectors{},
         ercObjects{}, busEntries{}, graphicInsts{}
     { }
 
@@ -56,7 +56,7 @@ public:
     std::vector<std::unique_ptr<StructT0x34>>            t0x34s;
     std::vector<std::unique_ptr<StructT0x35>>            t0x35s;
     std::vector<std::unique_ptr<StructWire>>             wires;
-    std::vector<std::unique_ptr<StructPartInst>>         partInsts;
+    std::vector<std::unique_ptr<StructPlacedInstance>>   placedInstances;
     std::vector<std::unique_ptr<StructPort>>             ports;
     std::vector<std::unique_ptr<StructGlobal>>           globals;
     std::vector<std::unique_ptr<StructOffPageConnector>> offPageConnectors;
@@ -113,12 +113,12 @@ static std::string to_string(const StreamPage& aObj)
         }
     }
 
-    str += fmt::format("{}partInsts:\n", indent(1));
-    for(size_t i = 0u; i < aObj.partInsts.size(); ++i)
+    str += fmt::format("{}placedInstances:\n", indent(1));
+    for(size_t i = 0u; i < aObj.placedInstances.size(); ++i)
     {
-        if(aObj.partInsts[i])
+        if(aObj.placedInstances[i])
         {
-            str += indent(fmt::format("[{}]: {}", i, aObj.partInsts[i]->to_string()), 2);
+            str += indent(fmt::format("[{}]: {}", i, aObj.placedInstances[i]->to_string()), 2);
         }
     }
 

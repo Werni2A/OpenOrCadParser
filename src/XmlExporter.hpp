@@ -103,8 +103,8 @@ public:
     virtual void visit(const StructOffPageSymbol& /* aObj */) override { }
     virtual void visit(const StructPackage& aObj) override;
     virtual void visit(const StructPartCell& /* aObj */) override { }
-    virtual void visit(const StructPartInst& /* aObj */) override { }
     virtual void visit(const StructPinShapeSymbol& /* aObj */) override { }
+    virtual void visit(const StructPlacedInstance& /* aObj */) override { }
     virtual void visit(const StructPort& /* aObj */) override { }
     virtual void visit(const StructPortSymbol& /* aObj */) override { }
     virtual void visit(const StructSthInHierarchy1& /* aObj */) override { }
