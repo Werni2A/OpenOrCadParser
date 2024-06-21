@@ -35,7 +35,7 @@ repositories:
   - errors: 0
     options: null
     path: ./library/GATE.OLB
-  - errors: 9
+  - errors: 1
     options: null
     path: ./library/CAPSYM.OLB
   - errors: 681
@@ -684,7 +684,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/BusDriverTransceiver.olb
-  - errors: 9
+  - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/capsym.olb
   - errors: 0
@@ -1434,7 +1434,7 @@ repositories:
   - errors: 1
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/analog.olb
-  - errors: 1
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/anl_misc.olb
   - errors: 0
@@ -1473,7 +1473,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/darlngtn.olb
-  - errors: 3
+  - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/dataconv.olb
   - errors: 1
@@ -1575,7 +1575,7 @@ repositories:
   - errors: 0
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/fairchild.olb
-  - errors: 13
+  - errors: 12
     options: null
     path: ./orcad capture/unsorted/_archive/pspice/filtsub.olb
   - errors: 0

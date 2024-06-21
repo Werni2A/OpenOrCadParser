@@ -58,7 +58,6 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructGraphicOleEmbedInst.cpp
    ${LIB_SRC_DIR}/Structures/StructGraphicPolygonInst.cpp
    ${LIB_SRC_DIR}/Structures/StructGraphicPolylineInst.cpp
-   ${LIB_SRC_DIR}/Structures/StructHierarchicSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructLibraryPart.cpp
    ${LIB_SRC_DIR}/Structures/StructNetDbIdMapping.cpp
    ${LIB_SRC_DIR}/Structures/StructOffPageConnector.cpp
@@ -68,6 +67,7 @@ set(SOURCES
    ${LIB_SRC_DIR}/Structures/StructPartInst.cpp
    ${LIB_SRC_DIR}/Structures/StructPinShapeSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructPort.cpp
+   ${LIB_SRC_DIR}/Structures/StructPortSymbol.cpp
    ${LIB_SRC_DIR}/Structures/StructSthInHierarchy1.cpp
    ${LIB_SRC_DIR}/Structures/StructSthInHierarchy2.cpp
    ${LIB_SRC_DIR}/Structures/StructSthInHierarchy3.cpp

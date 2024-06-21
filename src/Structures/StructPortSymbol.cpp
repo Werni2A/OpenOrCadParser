@@ -5,11 +5,11 @@
 #include <nameof.hpp>
 
 #include "General.hpp"
-#include "Structures/StructHierarchicSymbol.hpp"
 #include "Structures/StructLibraryPart.hpp"
+#include "Structures/StructPortSymbol.hpp"
 
 
-void StructHierarchicSymbol::read(FileFormatVersion /* aVersion */)
+void StructPortSymbol::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
 
