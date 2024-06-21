@@ -45,8 +45,8 @@
 #include "Structures/StructOffPageSymbol.hpp"
 #include "Structures/StructPackage.hpp"
 #include "Structures/StructPartCell.hpp"
-#include "Structures/StructPartInst.hpp"
 #include "Structures/StructPinShapeSymbol.hpp"
+#include "Structures/StructPlacedInstance.hpp"
 #include "Structures/StructPort.hpp"
 #include "Structures/StructPortSymbol.hpp"
 #include "Structures/StructSthInHierarchy1.hpp"
@@ -97,7 +97,7 @@ std::unique_ptr<Record> RecordFactory::build(StreamContext& aCtx, Structure aStr
         case Structure::Package:                return std::make_unique<StructPackage>(aCtx);                break;
         case Structure::PartCell:               return std::make_unique<StructPartCell>(aCtx);               break;
         case Structure::PinShapeSymbol:         return std::make_unique<StructPinShapeSymbol>(aCtx);         break;
-        case Structure::PlacedInstance:         return std::make_unique<StructPartInst>(aCtx);               break;
+        case Structure::PlacedInstance:         return std::make_unique<StructPlacedInstance>(aCtx);         break;
         case Structure::Port:                   return std::make_unique<StructPort>(aCtx);                   break;
         case Structure::PortSymbol:             return std::make_unique<StructPortSymbol>(aCtx);             break;
         case Structure::SthInHierarchy1:        return std::make_unique<StructSthInHierarchy1>(aCtx);        break;

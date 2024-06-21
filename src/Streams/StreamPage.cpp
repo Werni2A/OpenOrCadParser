@@ -86,13 +86,13 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
         wires.push_back(dynamic_pointer_cast<StructWire>(parser.readStructure()));
     }
 
-    const uint16_t lenPartInsts = ds.readUint16();
+    const uint16_t lenPlacedInstances = ds.readUint16();
 
-    mCtx.mLogger.trace("lenPartInsts = {}", lenPartInsts);
+    mCtx.mLogger.trace("lenPlacedInstances = {}", lenPlacedInstances);
 
-    for(size_t i = 0u; i < lenPartInsts; ++i)
+    for(size_t i = 0u; i < lenPlacedInstances; ++i)
     {
-        partInsts.push_back(dynamic_pointer_cast<StructPartInst>(parser.readStructure()));
+        placedInstances.push_back(dynamic_pointer_cast<StructPlacedInstance>(parser.readStructure()));
     }
 
     const uint16_t lenPorts = ds.readUint16();

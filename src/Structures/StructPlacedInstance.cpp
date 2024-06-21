@@ -12,10 +12,10 @@
 #include "FutureData.hpp"
 #include "General.hpp"
 #include "GenericParser.hpp"
-#include "Structures/StructPartInst.hpp"
+#include "Structures/StructPlacedInstance.hpp"
 
 
-void StructPartInst::read(FileFormatVersion /* aVersion */)
+void StructPlacedInstance::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
