@@ -39,7 +39,10 @@ git clone https://github.com/microsoft/vcpkg.git
 ./vcpkg/bootstrap-vcpkg.sh
 
 # Set path to vcpkg
-VCPKG_DIR=$(realpath ./vcpkg)
+VCPKG_ROOT=$(realpath ./vcpkg)
+
+# Allow parallel builds
+export CMAKE_BUILD_PARALLEL_LEVEL=$(nproc)
 
 # Get OpenOrCadParser
 git clone https://github.com/Werni2A/OpenOrCadParser.git
@@ -47,8 +50,8 @@ git clone https://github.com/Werni2A/OpenOrCadParser.git
 cd OpenOrCadParser
 
 # Build
-cmake -B build -DCMAKE_BUILD_TYPE=Release -S . -DCMAKE_TOOLCHAIN_FILE=$VCPKG_DIR/scripts/buildsystems/vcpkg.cmake
-cmake --build build
+cmake --preset release
+cmake --build --preset release
 ```
 
 ## Dependencies

@@ -29,8 +29,9 @@ jobs:
 
     - name: Build Library, CLI Application and Tests
       run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=Release -S . -DENABLE_UNIT_TESTING=1 -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake
-        cmake --build build -j $(nproc)
+        export VCPKG_ROOT=$(realpath ./vcpkg)
+        cmake --preset release -DENABLE_UNIT_TESTING=ON
+        cmake --build --preset release -j $(nproc)
 
     - name: Run Tests
       run: |
