@@ -107,3 +107,34 @@ target_link_libraries(${NAME_LIB} PRIVATE
                       spdlog::spdlog_header_only
                       tinyxml2::tinyxml2
 )
+
+set_target_properties(${NAME_LIB} PROPERTIES
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+)
+
+include(GNUInstallDirs)
+
+install(TARGETS ${NAME_LIB}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/OpenOrCadParser
+)
+
+# Install library headers
+file(GLOB HEADERS ${LIB_INCLUDE_DIR}/*.hpp)
+install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/OpenOrCadParser)
+
+file(GLOB HEADERS ${LIB_INCLUDE_DIR}/Enums/*.hpp)
+install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/OpenOrCadParser/Enums)
+
+file(GLOB HEADERS ${LIB_INCLUDE_DIR}/Primitives/*.hpp)
+install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/OpenOrCadParser/Primitives)
+
+file(GLOB HEADERS ${LIB_INCLUDE_DIR}/Streams/*.hpp)
+install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/OpenOrCadParser/Streams)
+
+file(GLOB HEADERS ${LIB_INCLUDE_DIR}/Structures/*.hpp)
+install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/OpenOrCadParser/Structures)
+
+file(GLOB HEADERS ${LIB_INCLUDE_DIR}/Win32/*.hpp)
+install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/OpenOrCadParser/Win32)

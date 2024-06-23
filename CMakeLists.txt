@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(OpenOrCadParser)
+project(OpenOrCadParser VERSION 0.1.0)
 
 option(ENABLE_UNIT_TESTING "Enable unit testing" OFF)
 
