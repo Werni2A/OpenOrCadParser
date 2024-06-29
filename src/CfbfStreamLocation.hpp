@@ -26,17 +26,17 @@ public:
 
         // The layout in the filesystem is equal
         // to the one inside the CFBF container
-        fs::path relPathStreamLoc = fs::relative(aStreamPath, aExtractedCfbfPath);
+        const fs::path relPathStreamLoc = fs::relative(aStreamPath, aExtractedCfbfPath);
 
         for(const auto& pathPart : relPathStreamLoc)
         {
-            streamLocation.push_back(pathPart);
+            streamLocation.push_back(pathPart.string());
         }
 
         if(!streamLocation.empty())
         {
             // Remove file extension (`.bin`)
-            streamLocation.back() = fs::path{streamLocation.back()}.replace_extension();
+            streamLocation.back() = fs::path{streamLocation.back()}.replace_extension().string();
         }
 
         mStreamLocation = std::move(streamLocation);

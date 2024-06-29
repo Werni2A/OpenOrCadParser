@@ -73,7 +73,8 @@ static std::string to_string(const StructDevice& aObj)
     str += fmt::format("{}pinIgnore:\n", indent(1));
     for(size_t i = 0u; i < aObj.pinIgnore.size(); ++i)
     {
-        str += indent(fmt::format("[{}]: {}\n", i, aObj.pinIgnore[i]), 2);
+        const bool pinIgnore = aObj.pinIgnore[i];
+        str += indent(fmt::format("[{}]: {}\n", i, pinIgnore), 2);
     }
 
     str += fmt::format("{}pinGroup:\n", indent(1));

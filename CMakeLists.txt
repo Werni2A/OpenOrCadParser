@@ -17,7 +17,7 @@ add_compile_options($<$<COMPILE_LANG_AND_ID:CXX,GNU>:-Werror>)
 add_compile_options($<$<COMPILE_LANG_AND_ID:CXX,GNU>:-Wextra>)
 
 # @todo enable /WX
-add_compile_options($<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/Wall>)
+# add_compile_options($<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/Wall>)
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     add_compile_options($<$<COMPILE_LANG_AND_ID:CXX,GNU>:-g3>)

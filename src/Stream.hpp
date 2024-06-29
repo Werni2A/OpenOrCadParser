@@ -25,6 +25,9 @@ public:
     Stream(ContainerContext& aCtx, const fs::path& aInputStream) : mCtx{aCtx, aInputStream}
     { }
 
+    virtual ~Stream()
+    { }
+
     virtual std::string to_string() const = 0;
 
     virtual void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) = 0;

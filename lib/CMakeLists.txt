@@ -6,6 +6,7 @@ find_package(tinyxml2 CONFIG REQUIRED)
 
 set(SOURCES
    ${LIB_SRC_DIR}/Container.cpp
+   ${LIB_SRC_DIR}/ContainerContext.cpp
    ${LIB_SRC_DIR}/ContainerExtractor.cpp
    ${LIB_SRC_DIR}/DataStream.cpp
    ${LIB_SRC_DIR}/GenericParser.cpp

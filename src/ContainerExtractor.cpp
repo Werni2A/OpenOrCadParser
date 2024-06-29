@@ -34,7 +34,7 @@ ContainerExtractor::ContainerExtractor(const fs::path& aContainer)
         throw std::runtime_error("The following path does not point to a file: " + mContainer.string());
     }
 
-    std::FILE* fp = std::fopen(mContainer.c_str(), "rb");
+    std::FILE* fp = std::fopen(mContainer.string().c_str(), "rb");
 
     if(fp == nullptr)
     {
@@ -260,7 +260,7 @@ fs::path ContainerExtractor::extract(const fs::path& aOutputDir)
 
 void ContainerExtractor::dumpBuffer(const fs::path& aPath, const void* aBuffer, size_t aLen)
 {
-    FILE* fp = std::fopen(aPath.c_str(), "wb");
+    FILE* fp = std::fopen(aPath.string().c_str(), "wb");
 
     if(fp == nullptr)
     {

@@ -15,6 +15,9 @@ public:
     Base(StreamContext& aCtx) : mCtx{aCtx}
     { }
 
+    virtual ~Base()
+    { }
+
     virtual std::string to_string() const = 0;
 
     virtual void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) = 0;
@@ -28,6 +31,9 @@ class Record : public Base
 {
 public:
     Record(StreamContext& aCtx) : Base{aCtx}
+    { }
+
+    virtual ~Record()
     { }
 
     virtual Structure getObjectType() const = 0;

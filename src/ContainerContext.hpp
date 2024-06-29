@@ -11,7 +11,6 @@
 #include <vector>
 
 #include <fmt/core.h>
-#include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 
 // #include "Database.hpp"
@@ -57,43 +56,11 @@ class ContainerContext
 public:
 
     ContainerContext(const fs::path& aInputCfbfFile,
-        const fs::path& aExtractedCfbfPath, ParserConfig aCfg, Database& aDb) : mDb{aDb},
-            mLogger{"tmp"}
-    {
-        mInputCfbfFile = aInputCfbfFile;
-        mExtractedCfbfPath = aExtractedCfbfPath;
-        mCfg = aCfg;
-        mFileFormatVersion = FileFormatVersion::C;
-        mLogLevel = spdlog::level::trace;
+        const fs::path& aExtractedCfbfPath, ParserConfig aCfg, Database& aDb);
 
-        const fs::path logPath = mExtractedCfbfPath / "logs" / "OpenOrCadParser.log";
-        configureLogger(logPath);
-    }
+    ContainerContext(const ContainerContext& aCtx);
 
-    ContainerContext(const ContainerContext& aCtx) : mDb{aCtx.mDb}, mLogger{"tmp"}
-    {
-        mInputCfbfFile = aCtx.mInputCfbfFile;
-        mExtractedCfbfPath = aCtx.mExtractedCfbfPath;
-        mCfg = aCtx.mCfg;
-        mFileFormatVersion = aCtx.mFileFormatVersion;
-        mLogLevel = aCtx.mLogLevel;
-    }
-
-    void configureLogger(const fs::path& aLogPath)
-    {
-        if(aLogPath.has_parent_path())
-        {
-            fs::create_directories(aLogPath.parent_path());
-        }
-
-        auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(aLogPath);
-        mLogger = spdlog::logger{"file logger", {file_sink}};
-        mLogger.set_pattern("[%^%l%$] %v");
-        mLogger.set_level(mLogLevel);
-
-        mLogger.info("Created log file at {}", aLogPath.string());
-        spdlog::info("Created log file at {}", aLogPath.string());
-    }
+    void configureLogger(const fs::path& aLogPath);
 
     Database& mDb;
 

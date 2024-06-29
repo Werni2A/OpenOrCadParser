@@ -12,6 +12,9 @@ public:
     PrimBase(StreamContext& aCtx) : Base{aCtx}
     { }
 
+    virtual ~PrimBase()
+    { }
+
     virtual Primitive getObjectType() const = 0;
 };
 
