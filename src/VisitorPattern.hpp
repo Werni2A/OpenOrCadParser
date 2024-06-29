@@ -84,6 +84,9 @@ class tagLOGFONTA;
 class Visitor
 {
 public:
+    virtual ~Visitor()
+    { }
+
     virtual void visit(const Library& aObj) = 0;
     virtual void visit(const PageSettings& aObj) = 0;
     virtual void visit(const Point& aObj) = 0;
