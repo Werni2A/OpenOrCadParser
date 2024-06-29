@@ -4,8 +4,8 @@ on: [push]
 
 jobs:
 
-  build:
-    runs-on: ubuntu-latest
+  build-ubuntu:
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - name: Set up vcpkg
@@ -30,9 +30,45 @@ jobs:
     - name: Build Library, CLI Application and Tests
       run: |
         export VCPKG_ROOT=$(realpath ./vcpkg)
+        export CMAKE_BUILD_PARALLEL_LEVEL=$(nproc)
         cmake --preset release -DENABLE_UNIT_TESTING=ON
-        cmake --build --preset release -j $(nproc)
+        cmake --build --preset release
 
     - name: Run Tests
       run: |
         python3 run_tests.py
+
+  build-macos:
+    runs-on: macos-14
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up vcpkg
+      run: |
+        brew install cmake git
+        git clone https://github.com/microsoft/vcpkg.git
+        ./vcpkg/bootstrap-vcpkg.sh
+
+    - name: Build Library and CLI Application
+      run: |
+        export VCPKG_ROOT=$(realpath ./vcpkg)
+        export CMAKE_BUILD_PARALLEL_LEVEL=2
+        cmake --preset release -DENABLE_UNIT_TESTING=OFF
+        cmake --build --preset release
+
+
+  build-windows:
+    runs-on: windows-2022
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up vcpkg
+      run: |
+        git clone https://github.com/microsoft/vcpkg.git
+        .\vcpkg\bootstrap-vcpkg.bat
+
+
+    - name: Build Library and CLI Application
+      run: |
+        ${ENV:VCPKG_ROOT}=$(Resolve-Path ./vcpkg)
+        ${ENV:CMAKE_BUILD_PARALLEL_LEVEL}=2
+        cmake --preset release -DENABLE_UNIT_TESTING=OFF
+        cmake --build --preset release
