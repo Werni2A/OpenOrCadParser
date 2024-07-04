@@ -10,12 +10,12 @@
 #include "General.hpp"
 #include "StreamContext.hpp"
 
-void DataStream::discardBytes(size_t aLen)
+void OOCP::DataStream::discardBytes(size_t aLen)
 {
     seekg(aLen, std::ios_base::cur);
 }
 
-std::vector<uint8_t> DataStream::readBytes(size_t aLen)
+std::vector<uint8_t> OOCP::DataStream::readBytes(size_t aLen)
 {
     std::vector<uint8_t> data;
     data.resize(aLen);
@@ -28,7 +28,7 @@ std::vector<uint8_t> DataStream::readBytes(size_t aLen)
     return data;
 }
 
-std::string DataStream::readStringZeroTerm()
+std::string OOCP::DataStream::readStringZeroTerm()
 {
     std::string str;
 
@@ -67,7 +67,7 @@ std::string DataStream::readStringZeroTerm()
     return str;
 }
 
-std::string DataStream::readStringLenTerm()
+std::string OOCP::DataStream::readStringLenTerm()
 {
     const uint16_t len = readUint16();
 
@@ -111,7 +111,7 @@ std::string DataStream::readStringLenTerm()
     return str;
 }
 
-std::string DataStream::readStringLenZeroTerm()
+std::string OOCP::DataStream::readStringLenZeroTerm()
 {
     const uint16_t len = readUint16();
 
@@ -132,7 +132,7 @@ std::string DataStream::readStringLenZeroTerm()
     return str;
 }
 
-void DataStream::printUnknownData(size_t aLen, const std::string& aComment)
+void OOCP::DataStream::printUnknownData(size_t aLen, const std::string& aComment)
 {
     const auto data = readBytes(aLen);
 
@@ -143,7 +143,7 @@ void DataStream::printUnknownData(size_t aLen, const std::string& aComment)
     }
 }
 
-void DataStream::padRest(size_t aStartOffset, size_t aBlockSize, bool aPadIsZero)
+void OOCP::DataStream::padRest(size_t aStartOffset, size_t aBlockSize, bool aPadIsZero)
 {
     const size_t currOffset = getCurrentOffset();
     const size_t offsetDiff = currOffset - aStartOffset;
@@ -183,17 +183,17 @@ void DataStream::padRest(size_t aStartOffset, size_t aBlockSize, bool aPadIsZero
     }
 }
 
-std::string DataStream::getCurrentOffsetStrMsg()
+std::string OOCP::DataStream::getCurrentOffsetStrMsg()
 {
     return fmt::format("Offset at 0x{:08x}", getCurrentOffset());
 }
 
-void DataStream::printData(const std::vector<uint8_t>& aData)
+void OOCP::DataStream::printData(const std::vector<uint8_t>& aData)
 {
     mCtx.mLogger.info(dataToStr(aData));
 }
 
-std::string DataStream::dataToStr(const std::vector<uint8_t>& aData)
+std::string OOCP::DataStream::dataToStr(const std::vector<uint8_t>& aData)
 {
     const unsigned int line_width = 16u;
     const std::string hex_spacing = " ";
@@ -244,7 +244,7 @@ std::string DataStream::dataToStr(const std::vector<uint8_t>& aData)
     return output;
 }
 
-void DataStream::assumeData(const std::vector<uint8_t>& aExpectedData, const std::string& aComment)
+void OOCP::DataStream::assumeData(const std::vector<uint8_t>& aExpectedData, const std::string& aComment)
 {
     const std::vector<uint8_t> data = readBytes(aExpectedData.size());
 

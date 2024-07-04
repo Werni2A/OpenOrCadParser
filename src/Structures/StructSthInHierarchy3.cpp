@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructSthInHierarchy3.hpp"
 
-void StructSthInHierarchy3::read(FileFormatVersion /* aVersion */)
+void OOCP::StructSthInHierarchy3::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

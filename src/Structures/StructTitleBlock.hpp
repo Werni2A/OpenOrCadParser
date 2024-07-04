@@ -14,6 +14,8 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
+namespace OOCP
+{
 class StructTitleBlock : public StructGraphicInst
 {
 public:
@@ -59,5 +61,5 @@ inline std::string StructTitleBlock::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STRUCTTITLEBLOCK_HPP

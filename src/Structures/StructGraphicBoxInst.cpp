@@ -10,7 +10,7 @@
 #include "Structures/StructGraphicBoxInst.hpp"
 
 // @todo is this a specialized instance for Rects or general for all types?
-void StructGraphicBoxInst::read(FileFormatVersion /* aVersion */)
+void OOCP::StructGraphicBoxInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

@@ -14,6 +14,8 @@
 #include "General.hpp"
 #include "Primitives/PrimBase.hpp"
 
+namespace OOCP
+{
 // @note This defines an elliptic arc.
 class PrimArc : public PrimBase
 {
@@ -121,7 +123,7 @@ private:
 
 inline std::string PrimArc::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimArc& aVal)
@@ -130,5 +132,5 @@ inline std::string PrimArc::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // PRIMARC_HPP

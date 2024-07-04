@@ -10,7 +10,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructBusEntry.hpp"
 
-void StructBusEntry::read(FileFormatVersion /* aVersion */)
+void OOCP::StructBusEntry::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
@@ -27,7 +27,7 @@ void StructBusEntry::read(FileFormatVersion /* aVersion */)
 
     color = ToColor(ds.readUint32());
 
-    mCtx.mLogger.trace("color = {}", ::to_string(color));
+    mCtx.mLogger.trace("color = {}", OOCP::to_string(color));
 
     startX = ds.readInt32();
     startY = ds.readInt32();

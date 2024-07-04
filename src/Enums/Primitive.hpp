@@ -9,6 +9,8 @@
 
 #include "General.hpp"
 
+namespace OOCP
+{
 enum class Primitive
 {
     Rect         = 40,
@@ -38,5 +40,5 @@ enum class Primitive
     aOs << to_string(aVal);
     return aOs;
 }
-
+} // namespace OOCP
 #endif // PRIMITIVE_HPP

@@ -10,7 +10,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructERCObject.hpp"
 
-void StructERCObject::read(FileFormatVersion /* aVersion */)
+void OOCP::StructERCObject::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

@@ -9,6 +9,8 @@
 
 #include "General.hpp"
 
+namespace OOCP
+{
 // @todo there are a few consecutive items missing
 enum class Structure
 {
@@ -108,5 +110,5 @@ enum class Structure
     aOs << to_string(aVal);
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STRUCTURE_HPP

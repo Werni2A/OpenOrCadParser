@@ -10,7 +10,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructAlias.hpp"
 
-void StructAlias::read(FileFormatVersion /* aVersion */)
+void OOCP::StructAlias::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
@@ -33,11 +33,11 @@ void StructAlias::read(FileFormatVersion /* aVersion */)
 
     color = ToColor(ds.readUint32());
 
-    mCtx.mLogger.trace("color = {}", ::to_string(color));
+    mCtx.mLogger.trace("color = {}", OOCP::to_string(color));
 
     rotation = ToRotation(ds.readUint32()); // @todo Why is it 4 byte? Probably increase Rotation size
 
-    mCtx.mLogger.trace("rotation = {}", ::to_string(rotation));
+    mCtx.mLogger.trace("rotation = {}", OOCP::to_string(rotation));
 
     uint32_t textFontIdx = ds.readUint32();
 

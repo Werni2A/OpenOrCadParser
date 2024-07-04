@@ -9,6 +9,9 @@
 
 #include "General.hpp"
 
+namespace OOCP
+{
+
 enum class Color
 {
     VeryLightRed            = 0,  // Color code: #ff8080
@@ -77,5 +80,6 @@ enum class Color
     aOs << to_string(aVal);
     return aOs;
 }
+} // namespace OOCP
 
 #endif // COLOR_HPP

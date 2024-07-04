@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Streams/StreamNetBundleMapData.hpp"
 
-void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
+void OOCP::StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

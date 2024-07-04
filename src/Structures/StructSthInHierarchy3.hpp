@@ -12,6 +12,8 @@
 #include "General.hpp"
 #include "Record.hpp"
 
+namespace OOCP
+{
 class StructSthInHierarchy3 : public Record
 {
 public:
@@ -46,7 +48,7 @@ public:
 
 inline std::string StructSthInHierarchy3::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSthInHierarchy3& aVal)
@@ -55,5 +57,5 @@ inline std::string StructSthInHierarchy3::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STRUCTSTHINHIERARCHY3_HPP

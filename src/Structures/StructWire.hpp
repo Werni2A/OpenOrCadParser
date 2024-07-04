@@ -19,6 +19,8 @@
 #include "Structures/StructAlias.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 
+namespace OOCP
+{
 /*!
  * @brief Pseudo structure that does not exist itself.
           It's only provided to group structures that
@@ -98,7 +100,7 @@ public:
 
 inline std::string StructWire::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructWire& aObj)
@@ -107,5 +109,5 @@ inline std::string StructWire::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STRUCTWIRE_HPP

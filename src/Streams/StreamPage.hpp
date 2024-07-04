@@ -23,6 +23,8 @@
 #include "Structures/StructTitleBlock.hpp"
 #include "Structures/StructWire.hpp"
 
+namespace OOCP
+{
 class StreamPage : public Stream
 {
 public:
@@ -190,7 +192,7 @@ public:
 
 inline std::string StreamPage::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamPage& aVal)
@@ -199,5 +201,5 @@ inline std::string StreamPage::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STREAMPAGE_HPP

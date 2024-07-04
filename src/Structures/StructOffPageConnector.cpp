@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructOffPageConnector.hpp"
 
-void StructOffPageConnector::read(FileFormatVersion /* aVersion */)
+void OOCP::StructOffPageConnector::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

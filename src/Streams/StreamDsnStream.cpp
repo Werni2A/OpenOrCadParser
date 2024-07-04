@@ -12,7 +12,7 @@
 // @note Printing the content of this structure needs to be done after parsing
 //       `Library`, because there are some references to the string lists.
 //       I.e. parse `Library` first and later on `DsnStream` to avoid issues.
-void StreamDsnStream::read(FileFormatVersion /* aVersion */)
+void OOCP::StreamDsnStream::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

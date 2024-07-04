@@ -28,6 +28,8 @@ namespace fs = std::filesystem;
 
 using namespace tinyxml2;
 
+namespace OOCP
+{
 class XmlExporter : public Visitor
 {
 public:
@@ -329,5 +331,5 @@ private:
 
     const Library* mLib;
 };
-
+} // namespace OOCP
 #endif // XMLEXPORTER_HPP

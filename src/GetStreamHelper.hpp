@@ -10,6 +10,8 @@
 #include "Streams/StreamDirectoryStruct.hpp"
 #include "Streams/StreamLibrary.hpp"
 
+namespace OOCP
+{
 static const std::map<DirectoryType, StreamType> DirectoryType2StreamType = {
     {DirectoryType::CellsDirectory,        StreamType::CellsDirectory       },
     {DirectoryType::ExportBlocksDirectory, StreamType::ExportBlocksDirectory},
@@ -47,5 +49,5 @@ template <typename T>
 
     return std::shared_ptr<T>{};
 }
-
+} // namespace OOCP
 #endif // GETSTREAMHELPER_HPP

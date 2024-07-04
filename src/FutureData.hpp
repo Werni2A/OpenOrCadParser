@@ -14,6 +14,8 @@
 #include "General.hpp"
 #include "StreamContext.hpp"
 
+namespace OOCP
+{
 class FutureData
 {
 public:
@@ -320,5 +322,5 @@ public:
 private:
     std::reference_wrapper<StreamContext> mCtx;
 };
-
+} // namespace OOCP
 #endif // FUTUREDATA_HPP

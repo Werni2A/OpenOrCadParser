@@ -15,6 +15,8 @@
 #include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
+namespace OOCP
+{
 class StructGlobalSymbol : public StructSymbol
 {
 public:
@@ -50,7 +52,7 @@ public:
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
     str += fmt::format("{}name          = {}\n", indent(1), aObj.name);
     str += fmt::format("{}sourceLibrary = {}\n", indent(1), aObj.sourceLibrary);
-    str += fmt::format("{}color         = {}\n", indent(1), ::to_string(aObj.color));
+    str += fmt::format("{}color         = {}\n", indent(1), OOCP::to_string(aObj.color));
 
     str += fmt::format("{}symbolPins:\n", indent(1));
     for(size_t i = 0u; i < aObj.symbolPins.size(); ++i)
@@ -75,7 +77,7 @@ public:
 
 inline std::string StructGlobalSymbol::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGlobalSymbol& aVal)
@@ -84,5 +86,6 @@ inline std::string StructGlobalSymbol::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STRUCTGLOBALSYMBOL_HPP

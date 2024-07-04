@@ -12,6 +12,8 @@
 #include "General.hpp"
 #include "StructSomeHierarchyBase.hpp"
 
+namespace OOCP
+{
 class StructT0x45 : public StructSomeHierarchyBase
 {
 public:
@@ -46,7 +48,7 @@ public:
 
 inline std::string StructT0x45::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructT0x45& aVal)
@@ -55,5 +57,6 @@ inline std::string StructT0x45::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STRUCTT0X45_HPP

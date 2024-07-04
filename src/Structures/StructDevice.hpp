@@ -13,6 +13,8 @@
 
 #include "Record.hpp"
 
+namespace OOCP
+{
 // @todo Probably called 'PhysicalPart' in the XSD
 //       Structure should also contain 'PinShared' and 'PinSwap'
 class StructDevice : public Record
@@ -87,7 +89,7 @@ public:
 
 inline std::string StructDevice::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructDevice& aVal)
@@ -96,5 +98,6 @@ inline std::string StructDevice::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STRUCTDEVICE_HPP

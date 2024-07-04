@@ -12,6 +12,8 @@
 #include "Enums/ComponentType.hpp"
 #include "Stream.hpp"
 
+namespace OOCP
+{
 // @note This is used in `$Type$` files
 class Type
 {
@@ -41,7 +43,7 @@ public:
 
 inline std::string Type::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const Type& aObj)
@@ -95,7 +97,7 @@ public:
 
 inline std::string StreamDTypeD::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamDTypeD& aObj)
@@ -104,5 +106,5 @@ inline std::string StreamDTypeD::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STREAMDTYPED_HPP

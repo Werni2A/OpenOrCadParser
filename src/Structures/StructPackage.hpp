@@ -13,6 +13,8 @@
 #include "Record.hpp"
 #include "Structures/StructDevice.hpp"
 
+namespace OOCP
+{
 class StructPackage : public Record
 {
 public:
@@ -70,7 +72,7 @@ public:
 
 inline std::string StructPackage::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructPackage& aVal)
@@ -79,5 +81,5 @@ inline std::string StructPackage::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STRUCTPACKAGE_HPP

@@ -10,7 +10,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructGlobal.hpp"
 
-void StructGlobal::read(FileFormatVersion /* aVersion */)
+void OOCP::StructGlobal::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

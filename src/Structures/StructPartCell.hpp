@@ -10,6 +10,8 @@
 
 #include "Record.hpp"
 
+namespace OOCP
+{
 class StructPartCell : public Record
 {
 public:
@@ -54,7 +56,7 @@ public:
 
 inline std::string StructPartCell::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructPartCell& aVal)
@@ -63,5 +65,5 @@ inline std::string StructPartCell::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STRUCTPARTCELL_HPP

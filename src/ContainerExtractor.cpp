@@ -18,7 +18,9 @@
 
 namespace fs = std::filesystem;
 
-ContainerExtractor::ContainerExtractor(const fs::path& aContainer)
+using namespace OOCP;
+
+OOCP::ContainerExtractor::ContainerExtractor(const fs::path& aContainer)
 {
     mContainer = aContainer;
 
@@ -50,7 +52,7 @@ ContainerExtractor::ContainerExtractor(const fs::path& aContainer)
     // mReader->GetFileInfo();
 }
 
-void ContainerExtractor::outputFileInfo() const
+void OOCP::ContainerExtractor::outputFileInfo() const
 {
     const CFB::COMPOUND_FILE_HDR* hdr = mReader->GetFileInfo();
     std::clog << "file version: " << hdr->majorVersion << "." << hdr->minorVersion << std::endl
@@ -75,7 +77,7 @@ void ContainerExtractor::outputEntryInfo(const CFB::COMPOUND_FILE_ENTRY* aEntry)
               << "size: " << aEntry->size << std::endl;
 }
 
-std::vector<const CFB::COMPOUND_FILE_ENTRY*> ContainerExtractor::getSiblings(
+std::vector<const CFB::COMPOUND_FILE_ENTRY*> OOCP::ContainerExtractor::getSiblings(
     const CFB::COMPOUND_FILE_ENTRY* aChild) const
 {
     std::vector<const CFB::COMPOUND_FILE_ENTRY*> siblings;
@@ -98,7 +100,7 @@ std::vector<const CFB::COMPOUND_FILE_ENTRY*> ContainerExtractor::getSiblings(
     return siblings;
 }
 
-const CFB::COMPOUND_FILE_ENTRY* ContainerExtractor::getParent(const CFB::COMPOUND_FILE_ENTRY* aChild) const
+const CFB::COMPOUND_FILE_ENTRY* OOCP::ContainerExtractor::getParent(const CFB::COMPOUND_FILE_ENTRY* aChild) const
 {
     if(aChild == mReader->GetRootEntry() || aChild == nullptr)
     {
@@ -125,7 +127,7 @@ const CFB::COMPOUND_FILE_ENTRY* ContainerExtractor::getParent(const CFB::COMPOUN
     return parent;
 }
 
-void ContainerExtractor::printContainerTree() const
+void OOCP::ContainerExtractor::printContainerTree() const
 {
     mReader->EnumFiles(mReader->GetRootEntry(), -1,
         [&](const CFB::COMPOUND_FILE_ENTRY* entry, const CFB::utf16string& /* dir */, int level) -> void
@@ -154,7 +156,7 @@ void ContainerExtractor::printContainerTree() const
         });
 }
 
-std::string ContainerExtractor::getInternalPath(const CFB::COMPOUND_FILE_ENTRY* aEntry) const
+std::string OOCP::ContainerExtractor::getInternalPath(const CFB::COMPOUND_FILE_ENTRY* aEntry) const
 {
     if(aEntry == nullptr)
     {
@@ -179,7 +181,7 @@ std::string ContainerExtractor::getInternalPath(const CFB::COMPOUND_FILE_ENTRY* 
     return internalPath;
 }
 
-fs::path ContainerExtractor::extract(const fs::path& aOutputDir)
+fs::path OOCP::ContainerExtractor::extract(const fs::path& aOutputDir)
 {
     const fs::path baseOutputDir = aOutputDir / mContainer.filename();
 
@@ -247,7 +249,7 @@ fs::path ContainerExtractor::extract(const fs::path& aOutputDir)
     return baseOutputDir;
 }
 
-void ContainerExtractor::dumpBuffer(const fs::path& aPath, const void* aBuffer, size_t aLen)
+void OOCP::ContainerExtractor::dumpBuffer(const fs::path& aPath, const void* aBuffer, size_t aLen)
 {
     FILE* fp = std::fopen(aPath.string().c_str(), "wb");
 

@@ -25,11 +25,11 @@
 #include "Streams/StreamSchematic.hpp"
 #include "Streams/StreamSymbol.hpp"
 
-std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::path& aInputStream)
+std::unique_ptr<OOCP::Stream> OOCP::StreamFactory::build(ContainerContext& aCtx, const fs::path& aInputStream)
 {
     auto streamLoc = CfbfStreamLocation{aInputStream, aCtx.mExtractedCfbfPath};
 
-    aCtx.mLogger.debug("Got stream location: {}", ::to_string(streamLoc));
+    aCtx.mLogger.debug("Got stream location: {}", OOCP::to_string(streamLoc));
 
     const auto getErrMsg =
         [](const std::vector<std::optional<std::string>>& aPattern, const CfbfStreamLocation& aStreamLoc)
@@ -42,7 +42,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
         }
 
         return fmt::format("Detected `{}` matching `{}` but stream parser is not yet implemented!",
-            ::to_string(aStreamLoc), strPattern);
+            OOCP::to_string(aStreamLoc), strPattern);
     };
 
     std::vector<std::optional<std::string>> pattern;
@@ -316,7 +316,7 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
     }
 
     const std::string errMsg =
-        fmt::format("Didn't find a suitable stream parser for stream location `{}`", ::to_string(streamLoc));
+        fmt::format("Didn't find a suitable stream parser for stream location `{}`", OOCP::to_string(streamLoc));
 
     aCtx.mLogger.warn(errMsg);
 

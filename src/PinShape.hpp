@@ -14,7 +14,8 @@
 #include "General.hpp"
 
 // @todo this file is highly experimental and needs further testing
-
+namespace OOCP
+{
 struct PinShape // @todo rename to something like PinProperties as it contains more than the shape
 {
     bool isLong;  // ------|  (doubles the pin length iff set)
@@ -185,5 +186,6 @@ enum class ShapeType
     aOs << to_string(aVal);
     return aOs;
 }
+} // namespace OOCP
 
 #endif // PINSHAPE_HPP

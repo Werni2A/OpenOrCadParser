@@ -10,6 +10,7 @@
 #include "General.hpp"
 #include "GenericParser.hpp"
 #include "Primitives/PrimLine.hpp"
+using namespace OOCP;
 
 size_t PrimLine::getExpectedStructSize(FileFormatVersion aVersion)
 {

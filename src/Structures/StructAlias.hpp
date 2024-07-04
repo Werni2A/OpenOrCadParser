@@ -14,6 +14,8 @@
 #include "General.hpp"
 #include "Record.hpp"
 
+namespace OOCP
+{
 class StructAlias : public Record
 {
 public:
@@ -66,7 +68,7 @@ public:
 
 inline std::string StructAlias::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructAlias& aVal)
@@ -75,5 +77,6 @@ inline std::string StructAlias::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STRUCTALIAS_HPP

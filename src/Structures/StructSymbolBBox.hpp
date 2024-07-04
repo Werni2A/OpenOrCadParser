@@ -11,6 +11,8 @@
 #include "General.hpp"
 #include "Record.hpp"
 
+namespace OOCP
+{
 class StructSymbolBBox : public Other
 {
 public:
@@ -55,7 +57,7 @@ public:
 
 inline std::string StructSymbolBBox::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSymbolBBox& aVal)
@@ -64,5 +66,5 @@ inline std::string StructSymbolBBox::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STRUCTSYMBOLBBOX_HPP

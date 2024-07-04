@@ -11,6 +11,7 @@
 #include "GetStreamHelper.hpp"
 #include "Primitives/PrimCommentText.hpp"
 #include "Win32/LOGFONTA.hpp"
+using namespace OOCP;
 
 void PrimCommentText::read(FileFormatVersion /* aVersion */)
 {

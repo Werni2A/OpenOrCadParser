@@ -9,6 +9,8 @@
 
 #include "General.hpp"
 
+namespace OOCP
+{
 // @todo compare to Structure type. Some of the elements are exactly the same. But it
 //       does not seem like we can merge it. Maybe we can split them up into 2 distinct
 //       types?
@@ -78,5 +80,6 @@ enum class ComponentType
     aOs << to_string(aVal);
     return aOs;
 }
+} // namespace OOCP
 
 #endif // COMPONENTTYPE_HPP

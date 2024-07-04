@@ -9,6 +9,8 @@
 
 #include "General.hpp"
 
+namespace OOCP
+{
 enum class DirectoryType
 {
     CellsDirectory,
@@ -55,5 +57,5 @@ enum class DirectoryType
     aOs << to_string(aVal);
     return aOs;
 }
-
+} // namespace OOCP
 #endif // DIRECTORYTYPE_HPP

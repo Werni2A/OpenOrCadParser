@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructGraphicArcInst.hpp"
 
-void StructGraphicArcInst::read(FileFormatVersion /* aVersion */)
+void OOCP::StructGraphicArcInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

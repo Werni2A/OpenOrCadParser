@@ -15,6 +15,8 @@
 #include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
+namespace OOCP
+{
 class StreamSymbol : public Stream
 {
 public:
@@ -80,7 +82,7 @@ public:
 
 inline std::string StreamSymbol::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamSymbol& aVal)
@@ -89,5 +91,5 @@ inline std::string StreamSymbol::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STREAMSYMBOL_HPP

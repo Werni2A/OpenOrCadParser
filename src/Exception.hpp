@@ -10,6 +10,9 @@
 
 #include "General.hpp"
 
+namespace OOCP
+{
+
 // Forward declaration
 enum class FileFormatVersion;
 
@@ -48,5 +51,5 @@ struct MissingFileFormatCheck : public std::runtime_error
     {
     }
 };
-
+} // namespace OOCP
 #endif // EXCEPTION_HPP

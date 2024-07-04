@@ -15,6 +15,8 @@
 #include "General.hpp"
 #include "Record.hpp"
 
+namespace OOCP
+{
 class StructT0x35 : public Record
 {
 public:
@@ -62,7 +64,7 @@ public:
 
 inline std::string StructT0x35::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructT0x35& aObj)
@@ -71,5 +73,5 @@ inline std::string StructT0x35::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STRUCTT0X35_HPP

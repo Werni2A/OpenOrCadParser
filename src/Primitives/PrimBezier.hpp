@@ -16,6 +16,8 @@
 #include "Primitives/Point.hpp"
 #include "Primitives/PrimBase.hpp"
 
+namespace OOCP
+{
 class PrimBezier : public PrimBase
 {
 public:
@@ -90,7 +92,7 @@ public:
 
 inline std::string PrimBezier::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimBezier& aVal)
@@ -99,5 +101,5 @@ inline std::string PrimBezier::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // PRIMBEZIER_HPP

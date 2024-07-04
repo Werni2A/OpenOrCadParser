@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
-void StructGraphicInst::read(FutureDataLst& mLocalFutureLst, FileFormatVersion /* aVersion */)
+void OOCP::StructGraphicInst::read(FutureDataLst& mLocalFutureLst, FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
@@ -48,7 +48,7 @@ void StructGraphicInst::read(FutureDataLst& mLocalFutureLst, FileFormatVersion /
 
     color = ToColor(ds.readUint8());
 
-    mCtx.mLogger.trace("color = {}", ::to_string(color));
+    mCtx.mLogger.trace("color = {}", OOCP::to_string(color));
 
     ds.printUnknownData(1, getMethodName(this, __func__) + ": StructGraphicInst - 1");
     ds.printUnknownData(1,

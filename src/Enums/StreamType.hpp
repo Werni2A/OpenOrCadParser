@@ -9,6 +9,8 @@
 
 #include "General.hpp"
 
+namespace OOCP
+{
 // @todo Incomplete list
 enum class StreamType
 {
@@ -49,5 +51,5 @@ enum class StreamType
     aOs << to_string(aVal);
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STREAMTYPE_HPP

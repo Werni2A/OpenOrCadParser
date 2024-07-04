@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructGlobalSymbol.hpp"
 
-void StructGlobalSymbol::read(FileFormatVersion aVersion)
+void OOCP::StructGlobalSymbol::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

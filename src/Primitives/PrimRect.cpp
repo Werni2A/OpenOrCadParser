@@ -12,6 +12,7 @@
 #include "General.hpp"
 #include "GenericParser.hpp"
 #include "Primitives/PrimRect.hpp"
+using namespace OOCP;
 
 size_t PrimRect::getExpectedStructSize(FileFormatVersion aVersion)
 {

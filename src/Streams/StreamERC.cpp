@@ -8,7 +8,7 @@
 #include "GenericParser.hpp"
 #include "Streams/StreamERC.hpp"
 
-void StreamERC::read(FileFormatVersion /* aVersion */)
+void OOCP::StreamERC::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

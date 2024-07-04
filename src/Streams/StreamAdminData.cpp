@@ -7,7 +7,7 @@
 #include "General.hpp"
 #include "Streams/StreamAdminData.hpp"
 
-void StreamAdminData::read(FileFormatVersion /* aVersion */)
+void OOCP::StreamAdminData::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
 

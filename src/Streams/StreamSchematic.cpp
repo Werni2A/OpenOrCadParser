@@ -8,7 +8,7 @@
 #include "GenericParser.hpp"
 #include "Streams/StreamSchematic.hpp"
 
-void StreamSchematic::read(FileFormatVersion /* aVersion */)
+void OOCP::StreamSchematic::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

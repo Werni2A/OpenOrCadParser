@@ -10,6 +10,8 @@
 #include "General.hpp"
 #include "Stream.hpp"
 
+namespace OOCP
+{
 class StreamCache : public Stream
 {
 public:
@@ -44,7 +46,7 @@ public:
 
 inline std::string StreamCache::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamCache& aVal)
@@ -53,5 +55,5 @@ inline std::string StreamCache::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STREAMCACHE_HPP

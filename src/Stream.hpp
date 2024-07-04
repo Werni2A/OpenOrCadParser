@@ -17,6 +17,8 @@
 #include "General.hpp"
 #include "Record.hpp"
 
+namespace OOCP
+{
 class Stream
 {
 public:
@@ -74,5 +76,5 @@ public:
     // protected:
     StreamContext mCtx;
 };
-
+} // namespace OOCP
 #endif // STREAM_HPP

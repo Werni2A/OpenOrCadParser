@@ -8,7 +8,7 @@
 #include "General.hpp"
 #include "Structures/StructT0x35.hpp"
 
-void StructT0x35::read(FileFormatVersion /* aVersion */)
+void OOCP::StructT0x35::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
 
@@ -41,15 +41,15 @@ void StructT0x35::read(FileFormatVersion /* aVersion */)
 
     color = ToColor(ds.readUint32());
 
-    mCtx.mLogger.trace("color = {}", ::to_string(color));
+    mCtx.mLogger.trace("color = {}", OOCP::to_string(color));
 
     lineStyle = ToLineStyle(ds.readUint32());
 
-    mCtx.mLogger.trace("lineStyle = {}", ::to_string(lineStyle));
+    mCtx.mLogger.trace("lineStyle = {}", OOCP::to_string(lineStyle));
 
     lineWidth = ToLineWidth(ds.readUint32());
 
-    mCtx.mLogger.trace("lineWidth = {}", ::to_string(lineWidth));
+    mCtx.mLogger.trace("lineWidth = {}", OOCP::to_string(lineWidth));
 
     const uint32_t len0 = ds.readUint16();
 

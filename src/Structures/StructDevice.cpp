@@ -12,7 +12,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructDevice.hpp"
 
-void StructDevice::read(FileFormatVersion /* aVersion */)
+void OOCP::StructDevice::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

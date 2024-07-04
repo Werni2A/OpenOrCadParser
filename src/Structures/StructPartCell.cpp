@@ -13,7 +13,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructPartCell.hpp"
 
-void StructPartCell::read(FileFormatVersion /* aVersion */)
+void OOCP::StructPartCell::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

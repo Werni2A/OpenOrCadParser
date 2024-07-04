@@ -17,6 +17,8 @@
 #include "Primitives/PrimBase.hpp"
 #include "Record.hpp"
 
+namespace OOCP
+{
 class StructSthInPages0 : public Record
 {
 public:
@@ -62,7 +64,7 @@ public:
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
     str += fmt::format("{}name          = {}\n", indent(1), aObj.name);
     str += fmt::format("{}sourceLibrary = {}\n", indent(1), aObj.sourceLibrary);
-    str += fmt::format("{}color         = {}\n", indent(1), ::to_string(aObj.color));
+    str += fmt::format("{}color         = {}\n", indent(1), OOCP::to_string(aObj.color));
 
     str += fmt::format("{}primitives:\n", indent(1));
     for(size_t i = 0u; i < aObj.primitives.size(); ++i)
@@ -78,7 +80,7 @@ public:
 
 inline std::string StructSthInPages0::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSthInPages0& aVal)
@@ -87,5 +89,6 @@ inline std::string StructSthInPages0::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STRUCTSTHINPAGES0_HPP

@@ -14,6 +14,8 @@
 
 namespace fs = std::filesystem;
 
+namespace OOCP
+{
 class PrimBitmap : public PrimBase
 {
 public:
@@ -88,7 +90,7 @@ public:
 
 inline std::string PrimBitmap::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimBitmap& aVal)
@@ -97,5 +99,6 @@ inline std::string PrimBitmap::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // PRIMBITMAP_HPP

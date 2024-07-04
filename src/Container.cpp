@@ -38,7 +38,7 @@
 
 namespace fs = std::filesystem;
 
-Container::Container(const fs::path& aCfbfContainer, ParserConfig aCfg)
+OOCP::Container::Container(const fs::path& aCfbfContainer, ParserConfig aCfg)
     : mDb{},
       mFileCtr{0U},
       mFileErrCtr{0U},
@@ -63,7 +63,7 @@ Container::Container(const fs::path& aCfbfContainer, ParserConfig aCfg)
     mCtx.mLogger.debug(to_string(mCfg));
 }
 
-Container::~Container()
+OOCP::Container::~Container()
 {
     if(!mCfg.mKeepTmpFiles)
     {
@@ -74,7 +74,7 @@ Container::~Container()
     }
 }
 
-void Container::parseDatabaseFileThread(std::deque<std::shared_ptr<Stream>> aStreamList)
+void OOCP::Container::parseDatabaseFileThread(std::deque<std::shared_ptr<Stream>> aStreamList)
 {
     for(auto& stream : aStreamList)
     {
@@ -98,9 +98,9 @@ void Container::parseDatabaseFileThread(std::deque<std::shared_ptr<Stream>> aStr
 
 // Equally distribute elements into new lists of pointers to the original elements
 void distributeStreamsToThreadJobsForParsing(std::size_t aNumberParallelJobs,
-    const std::vector<std::shared_ptr<Stream>>& aStreams, //!< Streams to distribute
-    std::deque<std::shared_ptr<Stream>>& aSequentialJobList,
-    std::vector<std::deque<std::shared_ptr<Stream>>>& aParallelJobLists)
+    const std::vector<std::shared_ptr<OOCP::Stream>>& aStreams, //!< Streams to distribute
+    std::deque<std::shared_ptr<OOCP::Stream>>& aSequentialJobList,
+    std::vector<std::deque<std::shared_ptr<OOCP::Stream>>>& aParallelJobLists)
 {
     aSequentialJobList.clear();
     aParallelJobLists.clear();
@@ -139,7 +139,7 @@ void distributeStreamsToThreadJobsForParsing(std::size_t aNumberParallelJobs,
 /**
  * @brief Parse the whole database file.
  */
-void Container::parseDatabaseFile()
+void OOCP::Container::parseDatabaseFile()
 {
     mCtx.mLogger.info("Using {} threads", mCtx.mCfg.mThreadCount);
 
@@ -250,7 +250,7 @@ void Container::parseDatabaseFile()
     // mCtx.mLogger.info(to_string(mLibrary));
 }
 
-fs::path Container::extractContainer(const fs::path& aFile, const fs::path& aOutDir) const
+fs::path OOCP::Container::extractContainer(const fs::path& aFile, const fs::path& aOutDir) const
 {
     ContainerExtractor extractor{aFile};
 
@@ -259,18 +259,18 @@ fs::path Container::extractContainer(const fs::path& aFile, const fs::path& aOut
     return extractor.extract(aOutDir);
 }
 
-fs::path Container::extractContainer(const fs::path& aOutDir) const
+fs::path OOCP::Container::extractContainer(const fs::path& aOutDir) const
 {
     return extractContainer(mCtx.mInputCfbfFile, aOutDir);
 }
 
-void Container::printContainerTree() const
+void OOCP::Container::printContainerTree() const
 {
     ContainerExtractor extractor{mCtx.mInputCfbfFile};
     extractor.printContainerTree();
 }
 
-std::optional<DatabaseType> Container::getDatabaseTypeByFileExtension(const fs::path& aFile) const
+std::optional<OOCP::DatabaseType> OOCP::Container::getDatabaseTypeByFileExtension(const fs::path& aFile) const
 {
     std::string extension = aFile.extension().string();
 

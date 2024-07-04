@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructTitleBlockSymbol.hpp"
 
-void StructTitleBlockSymbol::read(FileFormatVersion aVersion)
+void OOCP::StructTitleBlockSymbol::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

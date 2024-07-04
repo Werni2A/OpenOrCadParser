@@ -13,6 +13,8 @@
 #include "General.hpp"
 #include "Stream.hpp"
 
+namespace OOCP
+{
 class DirItemType
 {
 public:
@@ -49,7 +51,7 @@ public:
 
 inline std::string DirItemType::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const DirItemType& aVal)
@@ -109,7 +111,7 @@ public:
 
 inline std::string StreamDirectoryStruct::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamDirectoryStruct& aVal)
@@ -215,5 +217,5 @@ public:
         return StreamType::ViewsDirectory;
     }
 };
-
+} // namespace OOCP
 #endif // STREAMDIRECTORYSTRUCT_HPP

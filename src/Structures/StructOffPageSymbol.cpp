@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructOffPageSymbol.hpp"
 
-void StructOffPageSymbol::read(FileFormatVersion aVersion)
+void OOCP::StructOffPageSymbol::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

@@ -16,6 +16,8 @@
 #include "Structures/StructSthInPages0.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 
+namespace OOCP
+{
 /*!
  * @brief Pseudo structure that does not exist itself.
           It's only provided to group structures that
@@ -89,7 +91,7 @@ inline std::string StructGraphicInst::to_string() const
     str += fmt::format("{}y1    = {}\n", indent(1), y1);
     str += fmt::format("{}x2    = {}\n", indent(1), x2);
     str += fmt::format("{}y2    = {}\n", indent(1), y2);
-    str += fmt::format("{}color = {}\n", indent(1), ::to_string(color));
+    str += fmt::format("{}color = {}\n", indent(1), OOCP::to_string(color));
 
     str += fmt::format("{}symbolDisplayProps:\n", indent(1));
     for(size_t i = 0u; i < symbolDisplayProps.size(); ++i)
@@ -115,5 +117,6 @@ inline std::string StructGraphicInst::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STRUCTGRAPHICINST_HPP

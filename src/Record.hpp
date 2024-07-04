@@ -7,6 +7,8 @@
 #include "General.hpp"
 #include "StreamContext.hpp"
 
+namespace OOCP
+{
 class Base
 {
 public:
@@ -51,5 +53,5 @@ public:
     {
     }
 };
-
+} // namespace OOCP
 #endif // RECORD_HPP

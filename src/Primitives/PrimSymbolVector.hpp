@@ -11,6 +11,8 @@
 
 #include "Primitives/PrimBase.hpp"
 
+namespace OOCP
+{
 class PrimSymbolVector
     : public PrimBase // @todo probably derive from PrimBase, s.t. we can add itself to primitives list
 {
@@ -69,7 +71,7 @@ public:
 
 inline std::string PrimSymbolVector::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimSymbolVector& aVal)
@@ -78,5 +80,6 @@ inline std::string PrimSymbolVector::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // PRIMSYMBOLVECTOR_HPP

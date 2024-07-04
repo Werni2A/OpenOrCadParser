@@ -22,9 +22,9 @@ using namespace std::chrono_literals;
 
 
 [[maybe_unused]]
-inline ParserConfig get_parser_config()
+inline OOCP::ParserConfig get_parser_config()
 {
-    ParserConfig cfg{};
+    OOCP::ParserConfig cfg{};
 
     cfg.mThreadCount       = std::size_t{std::thread::hardware_concurrency()};
     cfg.mSkipUnknownPrim   = false;

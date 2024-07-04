@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructNetDbIdMapping.hpp"
 
-void StructNetDbIdMapping::read(FileFormatVersion /* aVersion */)
+void OOCP::StructNetDbIdMapping::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

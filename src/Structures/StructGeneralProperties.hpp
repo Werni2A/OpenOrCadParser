@@ -11,6 +11,8 @@
 #include "Enums/ImplementationType.hpp"
 #include "Record.hpp"
 
+namespace OOCP
+{
 // @todo This is just a helper class but not a real structure
 //       Check if the same code is used multiple times, otherwise
 //       Inline this structure?
@@ -87,7 +89,7 @@ public:
 
 inline std::string StructGeneralProperties::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGeneralProperties& aVal)
@@ -96,5 +98,5 @@ inline std::string StructGeneralProperties::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STRUCTGENERALPROPERTIES_HPP

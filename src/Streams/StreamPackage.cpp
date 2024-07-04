@@ -8,7 +8,7 @@
 #include "GenericParser.hpp"
 #include "Streams/StreamPackage.hpp"
 
-void StreamPackage::read(FileFormatVersion /* aVersion */)
+void OOCP::StreamPackage::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructGraphicOleEmbedInst.hpp"
 
-void StructGraphicOleEmbedInst::read(FileFormatVersion /* aVersion */)
+void OOCP::StructGraphicOleEmbedInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

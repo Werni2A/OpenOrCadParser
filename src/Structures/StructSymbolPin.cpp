@@ -14,7 +14,7 @@
 #include "PinShape.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
-void StructSymbolPin::read(FileFormatVersion /* aVersion */)
+void OOCP::StructSymbolPin::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
@@ -61,7 +61,7 @@ void StructSymbolPin::read(FileFormatVersion /* aVersion */)
     mCtx.mLogger.trace(to_string());
 }
 
-int32_t StructSymbolPin::getPinLength() const
+int32_t OOCP::StructSymbolPin::getPinLength() const
 {
     const int32_t dx = hotptX - startX;
     const int32_t dy = hotptY - startY;

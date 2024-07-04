@@ -10,6 +10,8 @@
 #include "General.hpp"
 #include "Stream.hpp"
 
+namespace OOCP
+{
 class StreamBOMDataStream : public Stream
 {
 public:
@@ -44,7 +46,7 @@ public:
 
 inline std::string StreamBOMDataStream::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamBOMDataStream& aVal)
@@ -53,5 +55,6 @@ inline std::string StreamBOMDataStream::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STREAMBOMDATASTREAM_HPP

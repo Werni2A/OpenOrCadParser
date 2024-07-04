@@ -67,7 +67,7 @@
 #include "Structures/StructWireBus.hpp"
 #include "Structures/StructWireScalar.hpp"
 
-std::unique_ptr<Record> RecordFactory::build(StreamContext& aCtx, Structure aStructure)
+std::unique_ptr<OOCP::Record> OOCP::RecordFactory::build(StreamContext& aCtx, Structure aStructure)
 {
     switch(aStructure)
     {
@@ -213,7 +213,7 @@ std::unique_ptr<Record> RecordFactory::build(StreamContext& aCtx, Structure aStr
     return std::unique_ptr<Record>{};
 }
 
-std::unique_ptr<PrimBase> RecordFactory::build(StreamContext& aCtx, Primitive aPrimitive)
+std::unique_ptr<OOCP::PrimBase> OOCP::RecordFactory::build(StreamContext& aCtx, Primitive aPrimitive)
 {
     switch(aPrimitive)
     {

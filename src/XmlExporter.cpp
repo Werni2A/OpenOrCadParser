@@ -1,6 +1,6 @@
 #include "XmlExporter.hpp"
 
-void XmlExporter::visit(const Library& aObj)
+void OOCP::XmlExporter::visit(const Library& aObj)
 {
     mLib = &aObj;
 
@@ -31,7 +31,7 @@ void XmlExporter::visit(const Library& aObj)
     }
 }
 
-void XmlExporter::visit(const PrimArc& aObj)
+void OOCP::XmlExporter::visit(const PrimArc& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
@@ -57,7 +57,7 @@ void XmlExporter::visit(const PrimArc& aObj)
     mCurXmlElem = parent;
 }
 
-void XmlExporter::visit(const PrimBezier& aObj)
+void OOCP::XmlExporter::visit(const PrimBezier& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
@@ -87,7 +87,7 @@ void XmlExporter::visit(const PrimBezier& aObj)
     mCurXmlElem = parent;
 }
 
-void XmlExporter::visit(const PrimEllipse& aObj)
+void OOCP::XmlExporter::visit(const PrimEllipse& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
@@ -111,7 +111,7 @@ void XmlExporter::visit(const PrimEllipse& aObj)
     mCurXmlElem = parent;
 }
 
-void XmlExporter::visit(const PrimRect& aObj)
+void OOCP::XmlExporter::visit(const PrimRect& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
@@ -135,7 +135,7 @@ void XmlExporter::visit(const PrimRect& aObj)
     mCurXmlElem = parent;
 }
 
-void XmlExporter::visit(const PrimPolygon& aObj)
+void OOCP::XmlExporter::visit(const PrimPolygon& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
@@ -167,7 +167,7 @@ void XmlExporter::visit(const PrimPolygon& aObj)
     mCurXmlElem = parent;
 }
 
-void XmlExporter::visit(const PrimPolyline& aObj)
+void OOCP::XmlExporter::visit(const PrimPolyline& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
@@ -197,7 +197,7 @@ void XmlExporter::visit(const PrimPolyline& aObj)
     mCurXmlElem = parent;
 }
 
-void XmlExporter::visit(const PrimLine& aObj)
+void OOCP::XmlExporter::visit(const PrimLine& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
@@ -219,7 +219,7 @@ void XmlExporter::visit(const PrimLine& aObj)
     mCurXmlElem = parent;
 }
 
-void XmlExporter::visit(const PrimSymbolVector& aObj)
+void OOCP::XmlExporter::visit(const PrimSymbolVector& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
@@ -245,7 +245,7 @@ void XmlExporter::visit(const PrimSymbolVector& aObj)
     mCurXmlElem = parent;
 }
 
-void XmlExporter::visit(const StructSymbolDisplayProp& aObj)
+void OOCP::XmlExporter::visit(const StructSymbolDisplayProp& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
@@ -297,7 +297,7 @@ void XmlExporter::visit(const StructSymbolDisplayProp& aObj)
     mCurXmlElem = parent;
 }
 
-void XmlExporter::visit(const StructSymbolPin& aObj)
+void OOCP::XmlExporter::visit(const StructSymbolPin& aObj)
 {
     XMLElement* eDefn = mXml.NewElement("Defn");
     mCurXmlElem->InsertEndChild(eDefn);
@@ -402,7 +402,7 @@ void XmlExporter::visit(const StructSymbolPin& aObj)
     }
 }
 
-void XmlExporter::visit(const StructSymbolPinBus& aObj)
+void OOCP::XmlExporter::visit(const StructSymbolPinBus& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
@@ -416,7 +416,7 @@ void XmlExporter::visit(const StructSymbolPinBus& aObj)
     mCurXmlElem = parent;
 }
 
-void XmlExporter::visit(const StructSymbolPinScalar& aObj)
+void OOCP::XmlExporter::visit(const StructSymbolPinScalar& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
@@ -430,7 +430,7 @@ void XmlExporter::visit(const StructSymbolPinScalar& aObj)
     mCurXmlElem = parent;
 }
 
-void XmlExporter::visit(const StructPackage& aObj)
+void OOCP::XmlExporter::visit(const StructPackage& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
@@ -506,7 +506,7 @@ void XmlExporter::visit(const StructPackage& aObj)
     mCurXmlElem = parent;
 }
 
-void XmlExporter::visit(const StreamPackage& aObj)
+void OOCP::XmlExporter::visit(const StreamPackage& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
@@ -566,7 +566,7 @@ void XmlExporter::visit(const StreamPackage& aObj)
     mCurXmlElem = parent;
 }
 
-void XmlExporter::visit(const StructLibraryPart& aObj)
+void OOCP::XmlExporter::visit(const StructLibraryPart& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
@@ -655,7 +655,7 @@ void XmlExporter::visit(const StructLibraryPart& aObj)
     mCurXmlElem = parent;
 }
 
-void XmlExporter::visit(const tagLOGFONTA& aObj)
+void OOCP::XmlExporter::visit(const tagLOGFONTA& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 

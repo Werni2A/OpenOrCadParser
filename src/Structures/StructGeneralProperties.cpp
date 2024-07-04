@@ -11,7 +11,7 @@
 #include "General.hpp"
 #include "Structures/StructGeneralProperties.hpp"
 
-void StructGeneralProperties::read(FileFormatVersion /* aVersion */)
+void OOCP::StructGeneralProperties::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
 

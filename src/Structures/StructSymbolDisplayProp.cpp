@@ -11,7 +11,7 @@
 #include "GetStreamHelper.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 
-void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
+void OOCP::StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
