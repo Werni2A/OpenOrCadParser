@@ -15,9 +15,11 @@
 // #include "Database.hpp"
 #include "General.hpp"
 
-class Database;
-
 namespace fs = std::filesystem;
+
+namespace OOCP
+{
+class Database;
 
 struct ParserConfig
 {
@@ -67,5 +69,6 @@ public:
     spdlog::level::level_enum mLogLevel;
     spdlog::logger mLogger;
 };
+} // namespace OOCP
 
 #endif // CONTAINERCONTEXT_HPP

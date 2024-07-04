@@ -13,6 +13,9 @@
 
 namespace fs = std::filesystem;
 
+namespace OOCP
+{
+
 class CfbfStreamLocation
 {
 public:
@@ -117,5 +120,5 @@ private:
 {
     return aLhs.get_vector() == aRhs.get_vector();
 }
-
+} // namespace OOCP
 #endif // CFBFSTREAMLOCATION_HPP

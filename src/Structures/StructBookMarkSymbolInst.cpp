@@ -10,7 +10,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructBookMarkSymbolInst.hpp"
 
-void StructBookMarkSymbolInst::read(FileFormatVersion /* aVersion */)
+void OOCP::StructBookMarkSymbolInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

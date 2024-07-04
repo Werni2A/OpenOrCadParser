@@ -14,6 +14,8 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
+namespace OOCP
+{
 class StructOffPageConnector : public StructGraphicInst
 {
 public:
@@ -59,5 +61,6 @@ inline std::string StructOffPageConnector::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STRUCTOFFPAGECONNECTOR_HPP

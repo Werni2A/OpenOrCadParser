@@ -11,6 +11,8 @@
 #include "General.hpp"
 #include "Record.hpp"
 
+namespace OOCP
+{
 class PageSettings : public Other
 {
 public:
@@ -126,7 +128,7 @@ public:
 
 inline std::string PageSettings::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PageSettings& aObj)
@@ -135,5 +137,5 @@ inline std::string PageSettings::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // PAGESETTINGS_HPP

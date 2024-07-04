@@ -22,7 +22,7 @@
 
 // class StreamLibrary;
 
-void GenericParser::discard_until_preamble()
+void OOCP::GenericParser::discard_until_preamble()
 {
     const int patternSize                   = 4;
     std::array<uint8_t, patternSize> buffer = {0};
@@ -69,7 +69,7 @@ void GenericParser::discard_until_preamble()
     mCtx.mDs.printUnknownData(discardedByte, "Discarded Bytes");
 }
 
-Structure GenericParser::auto_read_prefixes(FutureDataLst& aFutureDataLst)
+OOCP::Structure OOCP::GenericParser::auto_read_prefixes(FutureDataLst& aFutureDataLst)
 {
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
@@ -140,7 +140,7 @@ Structure GenericParser::auto_read_prefixes(FutureDataLst& aFutureDataLst)
     //       parsing code into the structure specific parser. This should
     //       get rid of auto_read_prefixes.
     mCtx.mLogger.debug(
-        "{}: Found {} prefixes for {}\n", getMethodName(this, __func__), prefixCtr, ::to_string(structure));
+        "{}: Found {} prefixes for {}\n", getMethodName(this, __func__), prefixCtr, OOCP::to_string(structure));
     mCtx.mLogger.debug("    {}", aFutureDataLst.string());
 
     mCtx.mDs.sanitizeNoEoF();
@@ -150,14 +150,14 @@ Structure GenericParser::auto_read_prefixes(FutureDataLst& aFutureDataLst)
     return structure;
 }
 
-Structure GenericParser::auto_read_prefixes(Structure aExpectedStruct, FutureDataLst& aFutureDataLst)
+OOCP::Structure OOCP::GenericParser::auto_read_prefixes(Structure aExpectedStruct, FutureDataLst& aFutureDataLst)
 {
     const Structure actualStruct = auto_read_prefixes(aFutureDataLst);
 
     if(actualStruct != aExpectedStruct)
     {
         const std::string err = fmt::format("{}: Expected {} but got {}", getMethodName(this, __func__),
-            ::to_string(aExpectedStruct), ::to_string(actualStruct));
+            OOCP::to_string(aExpectedStruct), OOCP::to_string(actualStruct));
 
         mCtx.mLogger.debug(err);
         throw std::runtime_error(err);
@@ -166,7 +166,7 @@ Structure GenericParser::auto_read_prefixes(Structure aExpectedStruct, FutureDat
     return actualStruct;
 }
 
-Structure GenericParser::auto_read_prefixes(
+OOCP::Structure OOCP::GenericParser::auto_read_prefixes(
     const std::vector<Structure>& aExpectedOneOfStruct, FutureDataLst& aFutureDataLst)
 {
     const Structure actualStruct = auto_read_prefixes(aFutureDataLst);
@@ -178,11 +178,11 @@ Structure GenericParser::auto_read_prefixes(
     {
         std::vector<std::string> expectedStrStructs{};
         std::transform(aExpectedOneOfStruct.cbegin(), aExpectedOneOfStruct.cend(), expectedStrStructs.begin(),
-            [](Structure a) { return ::to_string(a); });
+            [](Structure a) { return OOCP::to_string(a); });
 
         const std::string err = fmt::format("{}: Expected one of [{}] but got {}", getMethodName(this, __func__),
             std::accumulate(expectedStrStructs.cbegin(), expectedStrStructs.cend(), std::string{", "}),
-            ::to_string(actualStruct));
+            OOCP::to_string(actualStruct));
 
         mCtx.mLogger.debug(err);
         throw std::runtime_error(err);
@@ -192,7 +192,7 @@ Structure GenericParser::auto_read_prefixes(
 }
 
 // Read number of prefixes, where the last one is a short prefix
-Structure GenericParser::read_prefixes(size_t aNumber, FutureDataLst& aFutureDataLst)
+OOCP::Structure OOCP::GenericParser::read_prefixes(size_t aNumber, FutureDataLst& aFutureDataLst)
 {
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
@@ -233,8 +233,8 @@ Structure GenericParser::read_prefixes(size_t aNumber, FutureDataLst& aFutureDat
 
         if(currStruct != firstStruct)
         {
-            const std::string msg = fmt::format(
-                "{}: {} != {}", getMethodName(this, __func__), ::to_string(currStruct), ::to_string(firstStruct));
+            const std::string msg = fmt::format("{}: {} != {}", getMethodName(this, __func__),
+                OOCP::to_string(currStruct), OOCP::to_string(firstStruct));
 
             mCtx.mLogger.debug(msg);
             throw std::runtime_error(msg);
@@ -246,7 +246,7 @@ Structure GenericParser::read_prefixes(size_t aNumber, FutureDataLst& aFutureDat
     return firstStruct;
 }
 
-std::pair<Structure, uint32_t> GenericParser::read_single_prefix()
+std::pair<OOCP::Structure, uint32_t> OOCP::GenericParser::read_single_prefix()
 {
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
@@ -254,7 +254,7 @@ std::pair<Structure, uint32_t> GenericParser::read_single_prefix()
 
     const uint32_t byteOffset = mCtx.mDs.readUint32();
 
-    mCtx.mLogger.debug("{:>2} = {}: Offset = {}\n", static_cast<int>(typeId), ::to_string(typeId), byteOffset);
+    mCtx.mLogger.debug("{:>2} = {}: Offset = {}\n", static_cast<int>(typeId), OOCP::to_string(typeId), byteOffset);
 
     mCtx.mDs.printUnknownData(4, getMethodName(this, __func__) + ": 0");
     // assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
@@ -264,7 +264,7 @@ std::pair<Structure, uint32_t> GenericParser::read_single_prefix()
     return std::pair<Structure, uint32_t>{typeId, byteOffset};
 }
 
-std::pair<Structure, uint32_t> GenericParser::read_single_prefix_short()
+std::pair<OOCP::Structure, uint32_t> OOCP::GenericParser::read_single_prefix_short()
 {
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
@@ -272,7 +272,7 @@ std::pair<Structure, uint32_t> GenericParser::read_single_prefix_short()
 
     const int16_t size = mCtx.mDs.readInt16();
 
-    mCtx.mLogger.debug("{:>2} = {}: Size = {}\n", static_cast<int>(typeId), ::to_string(typeId), size);
+    mCtx.mLogger.debug("{:>2} = {}: Size = {}\n", static_cast<int>(typeId), OOCP::to_string(typeId), size);
 
     if(size >= 0)
     {
@@ -322,7 +322,7 @@ std::pair<Structure, uint32_t> GenericParser::read_single_prefix_short()
     {
         // @todo Why is -1 used? The value 0 would also suffice...
         // Until now I only saw it for Device, PartCell and SymbolDisplayProp
-        mCtx.mLogger.debug("{}: What does {} mean?", ::to_string(typeId), size); // @todo Figure out
+        mCtx.mLogger.debug("{}: What does {} mean?", OOCP::to_string(typeId), size); // @todo Figure out
     }
 
     mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
@@ -330,7 +330,7 @@ std::pair<Structure, uint32_t> GenericParser::read_single_prefix_short()
     return std::pair<Structure, uint32_t>{typeId, size};
 }
 
-void GenericParser::readPreamble()
+void OOCP::GenericParser::readPreamble()
 {
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
@@ -358,15 +358,15 @@ void GenericParser::readPreamble()
     mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 }
 
-Primitive GenericParser::readPrefixPrimitive()
+OOCP::Primitive OOCP::GenericParser::readPrefixPrimitive()
 {
     Primitive primitive1 = ToPrimitive(mCtx.mDs.readUint8());
     Primitive primitive2 = ToPrimitive(mCtx.mDs.readUint8());
 
     if(primitive1 != primitive2)
     {
-        const std::string msg = fmt::format(
-            "{}: Primitives {} != {}", getMethodName(this, __func__), ::to_string(primitive1), ::to_string(primitive2));
+        const std::string msg = fmt::format("{}: Primitives {} != {}", getMethodName(this, __func__),
+            OOCP::to_string(primitive1), OOCP::to_string(primitive2));
 
         mCtx.mLogger.debug(msg);
         throw std::runtime_error(msg);
@@ -375,7 +375,7 @@ Primitive GenericParser::readPrefixPrimitive()
     return primitive1;
 }
 
-std::unique_ptr<PrimBase> GenericParser::readPrimitive()
+std::unique_ptr<OOCP::PrimBase> OOCP::GenericParser::readPrimitive()
 {
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
@@ -388,7 +388,7 @@ std::unique_ptr<PrimBase> GenericParser::readPrimitive()
     return obj;
 }
 
-std::unique_ptr<PrimBase> GenericParser::readPrimitive(Primitive aPrimitive)
+std::unique_ptr<OOCP::PrimBase> OOCP::GenericParser::readPrimitive(Primitive aPrimitive)
 {
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
@@ -407,7 +407,7 @@ std::unique_ptr<PrimBase> GenericParser::readPrimitive(Primitive aPrimitive)
             if(mCtx.mCfg.mSkipInvalidPrim)
             {
                 mCtx.mLogger.debug(
-                    "{}: Skipping invalid Primitive {}", getMethodName(this, __func__), ::to_string(aPrimitive));
+                    "{}: Skipping invalid Primitive {}", getMethodName(this, __func__), OOCP::to_string(aPrimitive));
 
                 // Reset file position to the state before
                 // the structure was parsed and failed
@@ -420,7 +420,7 @@ std::unique_ptr<PrimBase> GenericParser::readPrimitive(Primitive aPrimitive)
                 const uint32_t byteLength = mCtx.mDs.readUint32();
 
                 mCtx.mDs.printUnknownData(
-                    byteLength - sizeof(byteLength), fmt::format("{} data", ::to_string(aPrimitive)));
+                    byteLength - sizeof(byteLength), fmt::format("{} data", OOCP::to_string(aPrimitive)));
 
                 readPreamble();
             }
@@ -432,8 +432,8 @@ std::unique_ptr<PrimBase> GenericParser::readPrimitive(Primitive aPrimitive)
     }
     else
     {
-        const std::string msg =
-            fmt::format("{}: Primitive {} is not implemented!", getMethodName(this, __func__), ::to_string(aPrimitive));
+        const std::string msg = fmt::format(
+            "{}: Primitive {} is not implemented!", getMethodName(this, __func__), OOCP::to_string(aPrimitive));
 
         mCtx.mLogger.debug(msg);
 
@@ -443,11 +443,11 @@ std::unique_ptr<PrimBase> GenericParser::readPrimitive(Primitive aPrimitive)
         }
 
         mCtx.mLogger.debug(
-            "{}: Skipping unimplemented Primitive {}", getMethodName(this, __func__), ::to_string(aPrimitive));
+            "{}: Skipping unimplemented Primitive {}", getMethodName(this, __func__), OOCP::to_string(aPrimitive));
 
         const uint32_t byteLength = mCtx.mDs.readUint32();
 
-        mCtx.mDs.printUnknownData(byteLength - sizeof(byteLength), fmt::format("{} data", ::to_string(aPrimitive)));
+        mCtx.mDs.printUnknownData(byteLength - sizeof(byteLength), fmt::format("{} data", OOCP::to_string(aPrimitive)));
 
         readPreamble();
     }
@@ -457,7 +457,7 @@ std::unique_ptr<PrimBase> GenericParser::readPrimitive(Primitive aPrimitive)
     return obj;
 }
 
-std::unique_ptr<Record> GenericParser::readStructure()
+std::unique_ptr<OOCP::Record> OOCP::GenericParser::readStructure()
 {
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
@@ -470,7 +470,7 @@ std::unique_ptr<Record> GenericParser::readStructure()
     return obj;
 }
 
-std::unique_ptr<Record> GenericParser::readStructure(Structure aStructure)
+std::unique_ptr<OOCP::Record> OOCP::GenericParser::readStructure(Structure aStructure)
 {
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), mCtx.mDs.getCurrentOffset()));
 
@@ -489,7 +489,7 @@ std::unique_ptr<Record> GenericParser::readStructure(Structure aStructure)
             if(mCtx.mCfg.mSkipInvalidStruct)
             {
                 mCtx.mLogger.debug(
-                    "{}: Skipping invalid Structure {}", getMethodName(this, __func__), ::to_string(aStructure));
+                    "{}: Skipping invalid Structure {}", getMethodName(this, __func__), OOCP::to_string(aStructure));
 
                 // Reset file position to the state before
                 // the structure was parsed and failed
@@ -513,8 +513,8 @@ std::unique_ptr<Record> GenericParser::readStructure(Structure aStructure)
     }
     else
     {
-        const std::string msg =
-            fmt::format("{}: Structure {} is unimplemented!", getMethodName(this, __func__), ::to_string(aStructure));
+        const std::string msg = fmt::format(
+            "{}: Structure {} is unimplemented!", getMethodName(this, __func__), OOCP::to_string(aStructure));
 
         mCtx.mLogger.debug(msg);
 
@@ -524,7 +524,7 @@ std::unique_ptr<Record> GenericParser::readStructure(Structure aStructure)
         }
 
         mCtx.mLogger.debug(
-            "{}: Skipping unimplemented Structure {}", getMethodName(this, __func__), ::to_string(aStructure));
+            "{}: Skipping unimplemented Structure {}", getMethodName(this, __func__), OOCP::to_string(aStructure));
 
         FutureDataLst localFutureDataLst{mCtx};
 
@@ -538,7 +538,7 @@ std::unique_ptr<Record> GenericParser::readStructure(Structure aStructure)
     return obj;
 }
 
-bool GenericParser::tryRead(std::function<void(void)> aFunction)
+bool OOCP::GenericParser::tryRead(std::function<void(void)> aFunction)
 {
     const auto offsetBeforeTest = mCtx.mDs.getCurrentOffset();
     bool checkFailed            = false;
@@ -557,7 +557,7 @@ bool GenericParser::tryRead(std::function<void(void)> aFunction)
     return !checkFailed;
 }
 
-void GenericParser::checkInterpretedDataLen(
+void OOCP::GenericParser::checkInterpretedDataLen(
     const std::string& aFuncName, size_t aStartOffset, size_t aEndOffset, size_t aExpectedLen)
 {
     if(aStartOffset > aEndOffset)
@@ -573,7 +573,7 @@ void GenericParser::checkInterpretedDataLen(
     }
 }
 
-FileFormatVersion GenericParser::predictVersion(std::function<void(FileFormatVersion)> aFunc)
+OOCP::FileFormatVersion OOCP::GenericParser::predictVersion(std::function<void(FileFormatVersion)> aFunc)
 {
     FileFormatVersion prediction = FileFormatVersion::Unknown;
 

@@ -9,6 +9,8 @@
 
 #include "General.hpp"
 
+namespace OOCP
+{
 enum class PortType
 {
     Input         = 0,
@@ -36,5 +38,5 @@ enum class PortType
     aOs << to_string(aVal);
     return aOs;
 }
-
+} // namespace OOCP
 #endif // PORTTYPE_HPP

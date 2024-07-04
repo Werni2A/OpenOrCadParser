@@ -12,6 +12,8 @@
 #include "Stream.hpp"
 #include "Structures/StructERCSymbol.hpp"
 
+namespace OOCP
+{
 class StreamERC : public Stream
 {
 public:
@@ -55,7 +57,7 @@ public:
 
 inline std::string StreamERC::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamERC& aVal)
@@ -64,5 +66,5 @@ inline std::string StreamERC::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STREAMERC_HPP

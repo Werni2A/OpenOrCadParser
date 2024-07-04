@@ -14,6 +14,8 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
+namespace OOCP
+{
 class StructPort : public StructGraphicInst
 {
 public:
@@ -59,5 +61,6 @@ inline std::string StructPort::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STRUCTPORT_HPP

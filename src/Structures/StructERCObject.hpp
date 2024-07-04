@@ -14,6 +14,8 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
+namespace OOCP
+{
 class StructERCObject : public StructGraphicInst
 {
 public:
@@ -70,5 +72,6 @@ inline std::string StructERCObject::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STRUCTERCOBJECT_HPP

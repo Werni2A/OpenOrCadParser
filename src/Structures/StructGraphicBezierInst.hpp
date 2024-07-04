@@ -13,6 +13,8 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
+namespace OOCP
+{
 class StructGraphicBezierInst : public StructGraphicInst
 {
 public:
@@ -58,5 +60,6 @@ inline std::string StructGraphicBezierInst::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STRUCTGRAPHICBEZIERINST_HPP

@@ -9,6 +9,8 @@
 
 #include "General.hpp"
 
+namespace OOCP
+{
 enum class LineStyle
 {
     Solid      = 0, // ______
@@ -34,5 +36,5 @@ enum class LineStyle
     aOs << to_string(aVal);
     return aOs;
 }
-
+} // namespace OOCP
 #endif // LINESTYLE_HPP

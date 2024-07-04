@@ -11,6 +11,7 @@
 #include "General.hpp"
 #include "GenericParser.hpp"
 #include "Primitives/PrimPolygon.hpp"
+using namespace OOCP;
 
 size_t PrimPolygon::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount)
 {

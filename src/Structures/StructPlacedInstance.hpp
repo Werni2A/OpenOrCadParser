@@ -16,6 +16,8 @@
 #include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructT0x10.hpp"
 
+namespace OOCP
+{
 class StructPlacedInstance : public Record
 {
 public:
@@ -73,7 +75,7 @@ public:
 
 inline std::string StructPlacedInstance::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructPlacedInstance& aVal)
@@ -82,5 +84,5 @@ inline std::string StructPlacedInstance::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STRUCTPLACEDINSTANCE_HPP

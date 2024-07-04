@@ -9,6 +9,7 @@
 #include "General.hpp"
 #include "GenericParser.hpp"
 #include "Primitives/PrimPolyline.hpp"
+using namespace OOCP;
 
 size_t PrimPolyline::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount)
 {

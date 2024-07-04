@@ -14,6 +14,8 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
+namespace OOCP
+{
 class StructGlobal : public StructGraphicInst
 {
 public:
@@ -59,5 +61,6 @@ inline std::string StructGlobal::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STRUCTGLOBAL_HPP

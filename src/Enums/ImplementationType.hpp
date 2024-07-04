@@ -9,6 +9,8 @@
 
 #include "General.hpp"
 
+namespace OOCP
+{
 enum class ImplementationType
 {
     None           = 0,
@@ -36,5 +38,5 @@ enum class ImplementationType
     aOs << to_string(aVal);
     return aOs;
 }
-
+} // namespace OOCP
 #endif // IMPLEMENTATIONTYPE_HPP

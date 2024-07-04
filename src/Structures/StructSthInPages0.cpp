@@ -12,7 +12,7 @@
 #include "Structures/StructSthInPages0.hpp"
 
 // @todo Probably a wrapper for Inst (Instances)
-void StructSthInPages0::read(FileFormatVersion aVersion)
+void OOCP::StructSthInPages0::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
@@ -35,7 +35,7 @@ void StructSthInPages0::read(FileFormatVersion aVersion)
     mCtx.mLogger.trace(to_string());
 }
 
-void StructSthInPages0::read_raw(FileFormatVersion /* aVersion */, FutureDataLst& aLocalFutureLst)
+void OOCP::StructSthInPages0::read_raw(FileFormatVersion /* aVersion */, FutureDataLst& aLocalFutureLst)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
@@ -54,7 +54,7 @@ void StructSthInPages0::read_raw(FileFormatVersion /* aVersion */, FutureDataLst
 
     color = ToColor(ds.readUint32());
 
-    mCtx.mLogger.trace("color = {}", ::to_string(color));
+    mCtx.mLogger.trace("color = {}", OOCP::to_string(color));
 
     const uint16_t lenPrimitives = ds.readUint16();
 

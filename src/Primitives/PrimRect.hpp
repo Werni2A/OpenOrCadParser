@@ -17,6 +17,8 @@
 #include "Primitives/Point.hpp"
 #include "Primitives/PrimBase.hpp"
 
+namespace OOCP
+{
 class PrimRect : public PrimBase
 {
 public:
@@ -103,7 +105,7 @@ public:
 
 inline std::string PrimRect::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimRect& aVal)
@@ -112,5 +114,5 @@ inline std::string PrimRect::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // PRIMRECT_HPP

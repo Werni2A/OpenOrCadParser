@@ -11,6 +11,7 @@
 #include "General.hpp"
 #include "GenericParser.hpp"
 #include "Primitives/PrimSymbolVector.hpp"
+using namespace OOCP;
 
 void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
 {

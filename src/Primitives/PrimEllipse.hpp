@@ -17,6 +17,8 @@
 #include "Enums/LineWidth.hpp"
 #include "Primitives/PrimBase.hpp"
 
+namespace OOCP
+{
 class PrimEllipse : public PrimBase
 {
 public:
@@ -122,7 +124,7 @@ private:
 
 inline std::string PrimEllipse::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimEllipse& aVal)
@@ -131,5 +133,5 @@ inline std::string PrimEllipse::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // PRIMELLIPSE_HPP

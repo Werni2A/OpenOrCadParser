@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructGraphicEllipseInst.hpp"
 
-void StructGraphicEllipseInst::read(FileFormatVersion /* aVersion */)
+void OOCP::StructGraphicEllipseInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

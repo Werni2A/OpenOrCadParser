@@ -7,7 +7,7 @@
 #include "General.hpp"
 #include "Streams/StreamDTypeD.hpp"
 
-void StreamDTypeD::read(FileFormatVersion /* aVersion */)
+void OOCP::StreamDTypeD::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
 

@@ -16,6 +16,8 @@
 #include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
+namespace OOCP
+{
 class StructLibraryPart : public Record
 {
 public:
@@ -93,7 +95,7 @@ public:
 
 inline std::string StructLibraryPart::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructLibraryPart& aVal)
@@ -102,5 +104,5 @@ inline std::string StructLibraryPart::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STRUCTLIBRARYPART_HPP

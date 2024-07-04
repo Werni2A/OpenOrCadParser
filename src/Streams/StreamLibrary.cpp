@@ -16,7 +16,7 @@
 #include "Streams/StreamLibrary.hpp"
 #include "Win32/LOGFONTA.hpp"
 
-void StreamLibrary::read(FileFormatVersion aVersion)
+void OOCP::StreamLibrary::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructPort.hpp"
 
-void StructPort::read(FileFormatVersion /* aVersion */)
+void OOCP::StructPort::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

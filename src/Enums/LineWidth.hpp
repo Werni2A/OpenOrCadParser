@@ -9,6 +9,8 @@
 
 #include "General.hpp"
 
+namespace OOCP
+{
 enum class LineWidth
 {
     Thin    = 0,
@@ -33,5 +35,6 @@ enum class LineWidth
     aOs << to_string(aVal);
     return aOs;
 }
+} // namespace OOCP
 
 #endif // LINEWIDTH_HPP

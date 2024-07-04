@@ -13,6 +13,8 @@
 
 namespace fs = std::filesystem;
 
+namespace OOCP
+{
 class ContainerExtractor
 {
 
@@ -96,5 +98,6 @@ private:
     std::unique_ptr<uint8_t[]> mBuffer; //!< Contains the content of the container
     size_t mBufferLen;                  //!< Container length
 };
+} // namespace OOCP
 
 #endif // CONTAINEREXTRACTOR_HPP

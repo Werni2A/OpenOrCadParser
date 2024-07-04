@@ -8,7 +8,7 @@
 #include "GenericParser.hpp"
 #include "Streams/StreamHierarchy.hpp"
 
-void StreamHierarchy::read(FileFormatVersion aVersion)
+void OOCP::StreamHierarchy::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

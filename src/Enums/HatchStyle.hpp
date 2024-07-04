@@ -9,6 +9,8 @@
 
 #include "General.hpp"
 
+namespace OOCP
+{
 enum class HatchStyle
 {
     // @todo NotValid is probably a new value in later OrCad versions. I think
@@ -37,5 +39,6 @@ enum class HatchStyle
     aOs << to_string(aVal);
     return aOs;
 }
+} // namespace OOCP
 
 #endif // HATCHSTYLE_HPP

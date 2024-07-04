@@ -12,6 +12,8 @@
 #include "General.hpp"
 #include "Record.hpp"
 
+namespace OOCP
+{
 /*!
  * @brief Pseudo structure that does not exist itself.
           It's only provided to group structures that
@@ -51,5 +53,5 @@ public:
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STRUCTSOMEHIERARCHYBASE_HPP

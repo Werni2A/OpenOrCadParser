@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructGraphicBezierInst.hpp"
 
-void StructGraphicBezierInst::read(FileFormatVersion /* aVersion */)
+void OOCP::StructGraphicBezierInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

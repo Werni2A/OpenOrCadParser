@@ -13,7 +13,7 @@
 #include "Structures/StructPackage.hpp"
 
 // @todo Probably specifies the 'Package Properties'
-void StructPackage::read(FileFormatVersion /* aVersion */)
+void OOCP::StructPackage::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

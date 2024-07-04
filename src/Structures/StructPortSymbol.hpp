@@ -12,6 +12,8 @@
 #include "General.hpp"
 #include "Structures/StructSymbol.hpp"
 
+namespace OOCP
+{
 class StructPortSymbol : public StructSymbol
 {
 public:
@@ -46,7 +48,7 @@ public:
 
 inline std::string StructPortSymbol::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructPortSymbol& aVal)
@@ -55,5 +57,6 @@ inline std::string StructPortSymbol::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STRUCTPORTSYMBOL_HPP

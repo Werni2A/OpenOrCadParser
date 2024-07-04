@@ -17,6 +17,8 @@
 #include "Primitives/Point.hpp"
 #include "Primitives/PrimBase.hpp"
 
+namespace OOCP
+{
 class PrimPolygon : public PrimBase
 {
 public:
@@ -98,7 +100,7 @@ public:
 
 inline std::string PrimPolygon::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimPolygon& aVal)
@@ -106,5 +108,6 @@ inline std::string PrimPolygon::to_string() const
     aOs << to_string(aVal);
     return aOs;
 }
+} // namespace OOCP
 
 #endif // PRIMPOLYGON_HPP

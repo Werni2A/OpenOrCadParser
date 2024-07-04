@@ -18,9 +18,10 @@
 
 namespace fs = std::filesystem;
 
+namespace OOCP
+{
 enum class DatabaseType;
 enum class FileFormatVersion;
-
 /**
  * @brief Version of the file format.
  * @warning This is not an official version but was introduced
@@ -183,5 +184,5 @@ template <typename TEnum, typename TVal> static constexpr TEnum ToEnum(TVal aVal
 
     return enumEntry.value();
 }
-
+} // namespace OOCP
 #endif // GENERAL_HPP

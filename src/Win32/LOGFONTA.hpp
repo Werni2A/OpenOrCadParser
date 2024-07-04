@@ -12,6 +12,8 @@
 #include "General.hpp"
 #include "StreamContext.hpp"
 
+namespace OOCP
+{
 // See Win32 API for reference, where the original structure was copied from
 // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-logfonta
 class tagLOGFONTA
@@ -127,5 +129,5 @@ typedef tagLOGFONTA LOGFONTA, *PLOGFONTA, *NPLOGFONTA, *LPLOGFONTA;
 
 // Check that structure size is as defined by the Windows API
 static_assert(sizeof(LOGFONTA) == 60U);
-
+} // namespace OOCP
 #endif // LOGFONTA_HPP

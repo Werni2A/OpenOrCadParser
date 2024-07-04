@@ -7,7 +7,7 @@
 #include "General.hpp"
 #include "PageSettings.hpp"
 
-void PageSettings::read(FileFormatVersion /* aVersion */)
+void OOCP::PageSettings::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
 

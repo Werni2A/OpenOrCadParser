@@ -11,6 +11,8 @@
 #include "General.hpp"
 #include "Structures/StructSthInPages0.hpp"
 
+namespace OOCP
+{
 /*!
  * @brief Pseudo structure that does not exist itself.
           It's only provided to group structures that
@@ -41,7 +43,7 @@ public:
 
 inline std::string StructSymbol::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSymbol& aObj)
@@ -50,5 +52,5 @@ inline std::string StructSymbol::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STRUCTSYMBOL_HPP

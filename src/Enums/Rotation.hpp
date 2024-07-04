@@ -9,6 +9,8 @@
 
 #include "General.hpp"
 
+namespace OOCP
+{
 enum class Rotation
 {
     Deg_0   = 0,
@@ -32,5 +34,6 @@ enum class Rotation
     aOs << to_string(aVal);
     return aOs;
 }
+} // namespace OOCP
 
 #endif // ROTATION_HPP

@@ -11,8 +11,9 @@
 #include "General.hpp"
 #include "GenericParser.hpp"
 #include "Primitives/PrimBezier.hpp"
+using namespace OOCP;
 
-size_t PrimBezier::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount)
+size_t OOCP::PrimBezier::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount)
 {
     size_t expectedByteLength;
 
@@ -28,7 +29,7 @@ size_t PrimBezier::getExpectedStructSize(FileFormatVersion aVersion, size_t aPoi
     return expectedByteLength;
 }
 
-void PrimBezier::read(FileFormatVersion aVersion)
+void OOCP::PrimBezier::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

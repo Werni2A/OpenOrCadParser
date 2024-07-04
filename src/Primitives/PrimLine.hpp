@@ -14,6 +14,8 @@
 #include "Primitives/PrimBase.hpp"
 #include "Primitives/PrimLine.hpp"
 
+namespace OOCP
+{
 class PrimLine : public PrimBase
 {
 public:
@@ -92,7 +94,7 @@ private:
 
 inline std::string PrimLine::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimLine& aVal)
@@ -101,5 +103,5 @@ inline std::string PrimLine::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // PRIMLINE_HPP

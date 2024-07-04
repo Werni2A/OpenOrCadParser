@@ -11,6 +11,9 @@
 #include "General.hpp"
 #include "PrimBase.hpp"
 
+namespace OOCP
+{
+
 /// @note Represents 'BezierPoint', 'PolygonPoint' and 'PolylinePoint' because
 ///       all of them use the same point structure.
 class Point : public Other
@@ -48,7 +51,7 @@ public:
 
 inline std::string Point::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const Point& aVal)
@@ -57,5 +60,5 @@ inline std::string Point::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // COORDINATE_HPP

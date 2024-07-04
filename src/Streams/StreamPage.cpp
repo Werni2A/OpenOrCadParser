@@ -9,7 +9,7 @@
 #include "PageSettings.hpp"
 #include "Streams/StreamPage.hpp"
 
-void StreamPage::read(FileFormatVersion /* aVersion */)
+void OOCP::StreamPage::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

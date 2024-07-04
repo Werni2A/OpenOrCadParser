@@ -19,7 +19,9 @@
 
 namespace fs = std::filesystem;
 
-void PrimBitmap::read(FileFormatVersion /* aVersion */)
+using namespace OOCP;
+
+void OOCP::PrimBitmap::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
@@ -92,7 +94,7 @@ void PrimBitmap::read(FileFormatVersion /* aVersion */)
 }
 
 // Returns path to the written image file
-fs::path PrimBitmap::writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData) const
+fs::path OOCP::PrimBitmap::writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData) const
 {
     aFilePath.replace_extension(".bmp");
 

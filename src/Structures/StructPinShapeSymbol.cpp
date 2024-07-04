@@ -10,7 +10,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructPinShapeSymbol.hpp"
 
-void StructPinShapeSymbol::read(FileFormatVersion aVersion)
+void OOCP::StructPinShapeSymbol::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

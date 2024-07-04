@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructGraphicPolygonInst.hpp"
 
-void StructGraphicPolygonInst::read(FileFormatVersion /* aVersion */)
+void OOCP::StructGraphicPolygonInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

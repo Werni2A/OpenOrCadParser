@@ -18,6 +18,8 @@
 #include "Structures/StructSthInHierarchy3.hpp"
 #include "Structures/StructT0x5b.hpp"
 
+namespace OOCP
+{
 class StreamHierarchy : public Stream
 {
 public:
@@ -118,7 +120,7 @@ public:
 
 inline std::string StreamHierarchy::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamHierarchy& aObj)
@@ -127,5 +129,6 @@ inline std::string StreamHierarchy::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STREAMHIERARCHY_HPP

@@ -16,6 +16,8 @@
 #include "Stream.hpp"
 #include "Win32/LOGFONTA.hpp"
 
+namespace OOCP
+{
 class StreamLibrary : public Stream
 {
 public:
@@ -109,7 +111,7 @@ public:
 
 inline std::string StreamLibrary::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamLibrary& aVal)
@@ -117,5 +119,5 @@ inline std::string StreamLibrary::to_string() const
     aOs << to_string(aVal);
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STREAMSYMBOLSLIBRARY_HPP

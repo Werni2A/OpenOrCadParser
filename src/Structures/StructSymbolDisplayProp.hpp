@@ -12,6 +12,8 @@
 #include "Enums/Rotation.hpp"
 #include "Record.hpp"
 
+namespace OOCP
+{
 class StructSymbolDisplayProp : public Record
 {
 public:
@@ -70,7 +72,7 @@ public:
 
 inline std::string StructSymbolDisplayProp::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSymbolDisplayProp& aVal)
@@ -79,5 +81,5 @@ inline std::string StructSymbolDisplayProp::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STRUCTSYMBOLDISPLAYPROP_HPP

@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructGraphicBitMapInst.hpp"
 
-void StructGraphicBitMapInst::read(FileFormatVersion /* aVersion */)
+void OOCP::StructGraphicBitMapInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

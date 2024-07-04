@@ -9,6 +9,8 @@
 
 #include "General.hpp"
 
+namespace OOCP
+{
 // This configuration dominates the hatch_style.
 // I.e. when solid/none is set, the hatch_style
 // value is ignored.
@@ -34,5 +36,6 @@ enum class FillStyle
     aOs << to_string(aVal);
     return aOs;
 }
+} // namespace OOCP
 
 #endif // FILLSTYLE_HPP

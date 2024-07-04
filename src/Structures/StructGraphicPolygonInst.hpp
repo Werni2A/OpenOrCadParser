@@ -13,6 +13,8 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
+namespace OOCP
+{
 class StructGraphicPolygonInst : public StructGraphicInst
 {
 public:
@@ -58,5 +60,6 @@ inline std::string StructGraphicPolygonInst::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STRUCTGRAPHICPOLYGONINST_HPP

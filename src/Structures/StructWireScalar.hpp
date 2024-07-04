@@ -15,6 +15,8 @@
 #include "General.hpp"
 #include "Structures/StructWire.hpp"
 
+namespace OOCP
+{
 class StructWireScalar : public StructWire
 {
 public:
@@ -49,5 +51,5 @@ public:
     // LineWidth wireLineWidth;
     // LineStyle wireLineStyle;
 };
-
+} // namespace OOCP
 #endif // STRUCTWIRESCALAR_HPP

@@ -10,7 +10,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructWire.hpp"
 
-void StructWire::read(FileFormatVersion /* aVersion */)
+void OOCP::StructWire::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
@@ -35,7 +35,7 @@ void StructWire::read(FileFormatVersion /* aVersion */)
 
     color = ToColor(ds.readUint32());
 
-    mCtx.mLogger.trace("color = {}", ::to_string(color));
+    mCtx.mLogger.trace("color = {}", OOCP::to_string(color));
 
     startX = ds.readInt32();
     startY = ds.readInt32();
@@ -71,11 +71,11 @@ void StructWire::read(FileFormatVersion /* aVersion */)
 
     lineWidth = ToLineWidth(ds.readUint32());
 
-    mCtx.mLogger.trace("lineWidth = {}", ::to_string(lineWidth));
+    mCtx.mLogger.trace("lineWidth = {}", OOCP::to_string(lineWidth));
 
     lineStyle = ToLineStyle(ds.readUint32());
 
-    mCtx.mLogger.trace("lineStyle = {}", ::to_string(lineStyle));
+    mCtx.mLogger.trace("lineStyle = {}", OOCP::to_string(lineStyle));
 
     localFutureLst.checkpoint();
 

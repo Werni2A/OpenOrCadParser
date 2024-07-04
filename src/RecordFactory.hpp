@@ -9,11 +9,13 @@
 #include "Record.hpp"
 #include "StreamContext.hpp"
 
+namespace OOCP
+{
 class RecordFactory
 {
 public:
     static std::unique_ptr<Record> build(StreamContext& aCtx, Structure aStructure);
     static std::unique_ptr<PrimBase> build(StreamContext& aCtx, Primitive aPrimitive);
 };
-
+} // namespace OOCP
 #endif // RECORDFACTORY_HPP

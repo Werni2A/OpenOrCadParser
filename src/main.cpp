@@ -162,7 +162,7 @@ int main(int argc, char* argv[])
     // Allow skipping of unknown or invalid components
     const bool allowSkipping = !stopParsing;
 
-    ParserConfig cfg{};
+    OOCP::ParserConfig cfg{};
 
     cfg.mThreadCount       = jobs;
     cfg.mSkipUnknownStruct = allowSkipping;
@@ -171,9 +171,9 @@ int main(int argc, char* argv[])
     cfg.mSkipInvalidPrim   = allowSkipping;
     cfg.mKeepTmpFiles      = keepTmpFiles;
 
-    Container parser{inputFile, cfg};
+    OOCP::Container parser{inputFile, cfg};
 
-    ContainerContext& ctx = parser.getContext();
+    OOCP::ContainerContext& ctx = parser.getContext();
 
     if(printTree)
     {

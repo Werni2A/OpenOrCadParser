@@ -7,7 +7,7 @@
 #include "General.hpp"
 #include "Streams/StreamHSObjects.hpp"
 
-void StreamHSObjects::read(FileFormatVersion /* aVersion */)
+void OOCP::StreamHSObjects::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
 

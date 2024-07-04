@@ -18,7 +18,7 @@ class Database;
 
 namespace fs = std::filesystem;
 
-ContainerContext::ContainerContext(
+OOCP::ContainerContext::ContainerContext(
     const fs::path& aInputCfbfFile, const fs::path& aExtractedCfbfPath, ParserConfig aCfg, Database& aDb)
     : mDb{aDb},
       mLogger{"tmp"}
@@ -33,7 +33,7 @@ ContainerContext::ContainerContext(
     configureLogger(logPath);
 }
 
-ContainerContext::ContainerContext(const ContainerContext& aCtx)
+OOCP::ContainerContext::ContainerContext(const ContainerContext& aCtx)
     : mDb{aCtx.mDb},
       mLogger{"tmp"}
 {
@@ -44,7 +44,7 @@ ContainerContext::ContainerContext(const ContainerContext& aCtx)
     mLogLevel          = aCtx.mLogLevel;
 }
 
-void ContainerContext::configureLogger(const fs::path& aLogPath)
+void OOCP::ContainerContext::configureLogger(const fs::path& aLogPath)
 {
     if(aLogPath.has_parent_path())
     {

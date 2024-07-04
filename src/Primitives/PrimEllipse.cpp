@@ -9,6 +9,7 @@
 #include "General.hpp"
 #include "GenericParser.hpp"
 #include "Primitives/PrimEllipse.hpp"
+using namespace OOCP;
 
 size_t PrimEllipse::getExpectedStructSize(FileFormatVersion aVersion)
 {

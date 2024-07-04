@@ -14,7 +14,7 @@
 #include "GenericParser.hpp"
 #include "Structures/StructPlacedInstance.hpp"
 
-void StructPlacedInstance::read(FileFormatVersion /* aVersion */)
+void OOCP::StructPlacedInstance::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

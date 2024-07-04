@@ -15,6 +15,8 @@
 #include "Primitives/Point.hpp"
 #include "Primitives/PrimBase.hpp"
 
+namespace OOCP
+{
 class PrimPolyline : public PrimBase
 {
 public:
@@ -89,7 +91,7 @@ public:
 
 inline std::string PrimPolyline::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimPolyline& aVal)
@@ -97,5 +99,5 @@ inline std::string PrimPolyline::to_string() const
     aOs << to_string(aVal);
     return aOs;
 }
-
+} // namespace OOCP
 #endif // PRIMPOLYLINE_HPP

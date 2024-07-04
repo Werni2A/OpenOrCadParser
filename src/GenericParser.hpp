@@ -18,8 +18,10 @@
 #include "Primitives/PrimBase.hpp"
 #include "StreamContext.hpp"
 
-class FutureDataLst;
+namespace OOCP
+{
 class Record;
+class FutureDataLst;
 
 class GenericParser
 {
@@ -63,5 +65,5 @@ public:
 private:
     StreamContext& mCtx;
 };
-
+} // namespace OOCP
 #endif // GENERICPARSER_HPP

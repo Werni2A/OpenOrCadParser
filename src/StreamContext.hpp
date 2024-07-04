@@ -16,9 +16,11 @@
 #include "General.hpp"
 // #include "Stream.hpp"
 
-class Stream;
-
 namespace fs = std::filesystem;
+
+namespace OOCP
+{
+class Stream;
 
 class StreamContext : public ContainerContext
 {
@@ -56,5 +58,5 @@ public:
     // is null.
     std::optional<bool> mParsedSuccessfully;
 };
-
+} // namespace OOCP
 #endif // STREAMCONTEXT_HPP

@@ -13,6 +13,8 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
+namespace OOCP
+{
 class StructGraphicCommentTextInst : public StructGraphicInst
 {
 public:
@@ -58,5 +60,6 @@ inline std::string StructGraphicCommentTextInst::to_string() const
 
     return aOs;
 }
+} // namespace OOCP
 
 #endif // STRUCTGRAPHICCOMMENTTEXTINST_HPP

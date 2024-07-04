@@ -12,6 +12,8 @@
 #include "PinShape.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
+namespace OOCP
+{
 class StructSymbolPinScalar : public StructSymbolPin
 {
 public:
@@ -34,5 +36,5 @@ public:
         return Structure::SymbolPinScalar;
     }
 };
-
+} // namespace OOCP
 #endif // STRUCTSYMBOLPINSCALAR_HPP

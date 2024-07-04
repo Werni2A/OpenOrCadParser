@@ -15,6 +15,8 @@
 #include "Enums/StreamType.hpp"
 #include "Stream.hpp"
 
+namespace OOCP
+{
 class Database
 {
 public:
@@ -56,5 +58,5 @@ public:
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // DATABASE_HPP

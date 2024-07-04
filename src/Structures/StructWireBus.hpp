@@ -15,6 +15,8 @@
 #include "General.hpp"
 #include "Structures/StructWire.hpp"
 
+namespace OOCP
+{
 class StructWireBus : public StructWire
 {
 public:
@@ -48,5 +50,6 @@ public:
     // LineWidth lineWidth;
     // LineStyle lineStyle;
 };
+} // namespace OOCP
 
 #endif // STRUCTWIREBUS_HPP

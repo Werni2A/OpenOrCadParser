@@ -11,6 +11,8 @@
 #include "General.hpp"
 #include "Stream.hpp"
 
+namespace OOCP
+{
 class StreamSchematic : public Stream
 {
 public:
@@ -45,7 +47,7 @@ public:
 
 inline std::string StreamSchematic::to_string() const
 {
-    return ::to_string(*this);
+    return OOCP::to_string(*this);
 }
 
 [[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamSchematic& aVal)
@@ -54,5 +56,5 @@ inline std::string StreamSchematic::to_string() const
 
     return aOs;
 }
-
+} // namespace OOCP
 #endif // STREAMSCHEMATIC_HPP

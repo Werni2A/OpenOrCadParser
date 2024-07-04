@@ -9,7 +9,7 @@
 #include "GenericParser.hpp"
 #include "Streams/StreamCache.hpp"
 
-void StreamCache::read(FileFormatVersion /* aVersion */)
+void OOCP::StreamCache::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
@@ -142,7 +142,7 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
             }
 
             const Structure my_struct = ToStructure(ds.readUint16());
-            mCtx.mLogger.trace(::to_string(my_struct));
+            mCtx.mLogger.trace(OOCP::to_string(my_struct));
 
             parser.readStructure();
         }

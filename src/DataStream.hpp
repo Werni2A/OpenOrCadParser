@@ -16,11 +16,13 @@
 #include "Enums/Structure.hpp"
 #include "General.hpp"
 
+namespace fs = std::filesystem;
+
+namespace OOCP
+{
 class FutureDataLst;
 class Record;
 class StreamContext;
-
-namespace fs = std::filesystem;
 
 class DataStream : public std::ifstream
 {
@@ -216,5 +218,5 @@ public:
 
     StreamContext& mCtx;
 };
-
+} // namespace OOCP
 #endif // DATASTREAM_HPP

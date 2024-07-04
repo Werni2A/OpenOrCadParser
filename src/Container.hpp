@@ -22,6 +22,8 @@
 
 namespace fs = std::filesystem;
 
+namespace OOCP
+{
 // @todo rename to DatabaseParser
 class Container
 {
@@ -95,5 +97,6 @@ private:
 
     ParserConfig mCfg;
 };
+} // namespace OOCP
 
 #endif // CONTAINER_HPP

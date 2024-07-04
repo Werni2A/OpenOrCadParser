@@ -8,7 +8,7 @@
 #include "General.hpp"
 #include "Streams/StreamDirectoryStruct.hpp"
 
-void StreamDirectoryStruct::read(FileFormatVersion /* aVersion */)
+void OOCP::StreamDirectoryStruct::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
 
@@ -30,7 +30,7 @@ void StreamDirectoryStruct::read(FileFormatVersion /* aVersion */)
 
         item.componentType = ToComponentType(ds.readUint16());
 
-        mCtx.mLogger.trace("componentType = {}", ::to_string(item.componentType));
+        mCtx.mLogger.trace("componentType = {}", OOCP::to_string(item.componentType));
 
         // @todo This changes with the version of the file format, so maybe it contains
         //       more details for the format? Or some hash of the specified stream?

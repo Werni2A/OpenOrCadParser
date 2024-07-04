@@ -123,9 +123,9 @@ TEST_CASE("{repo.author} - {repo.project} - {file_name} : Check File {full_path}
 
     const fs::path inputFile{{"{full_path}"}};
 
-    ParserConfig cfg = get_parser_config();
+    OOCP::ParserConfig cfg = get_parser_config();
 
-    Container parser{{inputFile, cfg}};
+    OOCP::Container parser{{inputFile, cfg}};
 
     parser.parseDatabaseFile();
     check_error_count(inputFile, parser.getFileErrCtr(), {file.errors});
