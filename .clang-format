@@ -1,6 +1,5 @@
 ---
 Language: Cpp
-IndentWidth: 4
 AccessModifierOffset: -4
 AlignAfterOpenBracket: DontAlign
 AlignArrayOfStructures: Left
@@ -12,10 +11,14 @@ AllowShortBlocksOnASingleLine: Never
 AllowShortEnumsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: None
 BraceWrapping:
+  AfterNamespace: true
   BeforeWhile: true
+# BreakAfterAttributes: Always # clang-format-16
 BreakBeforeBraces: Allman
 ColumnLimit: 120
+FixNamespaceComments: true
 IncludeBlocks: Preserve
+IndentWidth: 4
 IndentCaseBlocks: true
 IndentCaseLabels: true
 InsertBraces: true
@@ -31,3 +34,5 @@ SpaceBeforeParensOptions:
 SpaceBeforeRangeBasedForLoopColon: true
 SpacesInAngles: Never
 SpacesInParentheses: false
+Standard: c++20
+UseTab: Never
