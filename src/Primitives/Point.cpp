@@ -7,7 +7,6 @@
 #include "General.hpp"
 #include "Primitives/Point.hpp"
 
-
 void Point::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

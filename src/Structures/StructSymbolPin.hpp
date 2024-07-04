@@ -1,7 +1,6 @@
 #ifndef STRUCTSYMBOLPIN_HPP
 #define STRUCTSYMBOLPIN_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <ostream>
@@ -16,7 +15,6 @@
 #include "Record.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 
-
 /*!
  * @brief Pseudo structure that does not exist itself.
           It's only provided to group structures that
@@ -26,10 +24,18 @@
 class StructSymbolPin : public Record
 {
 public:
-
-    StructSymbolPin(StreamContext& aCtx) : Record{aCtx}, name{}, startX{0}, startY{0},
-        hotptX{0}, hotptY{0}, pinShape{}, portType{PortType::Input}, symbolDisplayProps{}
-    { }
+    StructSymbolPin(StreamContext& aCtx)
+        : Record{aCtx},
+          name{},
+          startX{0},
+          startY{0},
+          hotptX{0},
+          hotptY{0},
+          pinShape{},
+          portType{PortType::Input},
+          symbolDisplayProps{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -55,9 +61,7 @@ public:
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructSymbolPin& aObj)
+[[maybe_unused]] static std::string to_string(const StructSymbolPin& aObj)
 {
     std::string str;
 
@@ -85,20 +89,16 @@ static std::string to_string(const StructSymbolPin& aObj)
     return str;
 }
 
-
 inline std::string StructSymbolPin::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructSymbolPin& aObj)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSymbolPin& aObj)
 {
     aOs << to_string(aObj);
 
     return aOs;
 }
-
 
 #endif // STRUCTSYMBOLPIN_HPP

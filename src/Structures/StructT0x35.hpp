@@ -1,7 +1,6 @@
 #ifndef STRUCTT0X35_HPP
 #define STRUCTT0X35_HPP
 
-
 #include <cstdint>
 #include <optional>
 #include <ostream>
@@ -16,14 +15,17 @@
 #include "General.hpp"
 #include "Record.hpp"
 
-
 class StructT0x35 : public Record
 {
 public:
-
-    StructT0x35(StreamContext& aCtx) : Record{aCtx}, id{0}, color{Color::Default},
-        lineStyle{LineStyle::Default}, lineWidth{LineWidth::Default}
-    { }
+    StructT0x35(StreamContext& aCtx)
+        : Record{aCtx},
+          id{0},
+          color{Color::Default},
+          lineStyle{LineStyle::Default},
+          lineWidth{LineWidth::Default}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -39,15 +41,13 @@ public:
         return Structure::T0x35;
     }
 
-    uint32_t  id;
-    Color     color;
+    uint32_t id;
+    Color color;
     LineStyle lineStyle;
     LineWidth lineWidth;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructT0x35& aObj)
+[[maybe_unused]] static std::string to_string(const StructT0x35& aObj)
 {
     std::string str;
 
@@ -60,20 +60,16 @@ static std::string to_string(const StructT0x35& aObj)
     return str;
 }
 
-
 inline std::string StructT0x35::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructT0x35& aObj)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructT0x35& aObj)
 {
     aOs << to_string(aObj);
 
     return aOs;
 }
-
 
 #endif // STRUCTT0X35_HPP

@@ -11,7 +11,6 @@
 #include "GetStreamHelper.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 
-
 void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -54,12 +53,12 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
     {
         RotFontIdBitField(uint16_t aInit)
         {
-            textFontIdx = (aInit & 0x3fff) >>  0U;
+            textFontIdx = (aInit & 0x3fff) >> 0U;
             rotation    = (aInit & 0xc000) >> 14U;
         }
 
         uint16_t textFontIdx : 14; // 13 downto  0
-        uint16_t rotation    :  2; // 15 downto 14
+        uint16_t rotation : 2;     // 15 downto 14
     };
 
     const RotFontIdBitField rotFontIdBitField{ds.readUint16()};
@@ -75,8 +74,8 @@ void StructSymbolDisplayProp::read(FileFormatVersion /* aVersion */)
     {
         if(textFontIdx >= lib->textFonts.size())
         {
-            const std::string msg = fmt::format("{}: textFontIdx is out of range! Expected {} < {}!",
-                __func__, textFontIdx, lib->textFonts.size());
+            const std::string msg = fmt::format(
+                "{}: textFontIdx is out of range! Expected {} < {}!", __func__, textFontIdx, lib->textFonts.size());
 
             mCtx.mLogger.warn(msg);
             // throw std::out_of_range(msg);

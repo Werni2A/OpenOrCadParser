@@ -1,7 +1,6 @@
 #ifndef STRUCTGLOBALSYMBOL_HPP
 #define STRUCTGLOBALSYMBOL_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <ostream>
@@ -16,14 +15,15 @@
 #include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
-
 class StructGlobalSymbol : public StructSymbol
 {
 public:
-
-    StructGlobalSymbol(StreamContext& aCtx) : StructSymbol{aCtx},
-        symbolPins{}, symbolDisplayProps{}
-    { }
+    StructGlobalSymbol(StreamContext& aCtx)
+        : StructSymbol{aCtx},
+          symbolPins{},
+          symbolDisplayProps{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -39,13 +39,11 @@ public:
         return Structure::GlobalSymbol;
     }
 
-    std::vector<std::unique_ptr<StructSymbolPin>>         symbolPins;
+    std::vector<std::unique_ptr<StructSymbolPin>> symbolPins;
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructGlobalSymbol& aObj)
+[[maybe_unused]] static std::string to_string(const StructGlobalSymbol& aObj)
 {
     std::string str;
 
@@ -75,20 +73,16 @@ static std::string to_string(const StructGlobalSymbol& aObj)
     return str;
 }
 
-
 inline std::string StructGlobalSymbol::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructGlobalSymbol& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGlobalSymbol& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTGLOBALSYMBOL_HPP

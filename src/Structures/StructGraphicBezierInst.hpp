@@ -1,7 +1,6 @@
 #ifndef STRUCTGRAPHICBEZIERINST_HPP
 #define STRUCTGRAPHICBEZIERINST_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -14,13 +13,13 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
-
 class StructGraphicBezierInst : public StructGraphicInst
 {
 public:
-
-    StructGraphicBezierInst(StreamContext& aCtx) : StructGraphicInst{aCtx}
-    { }
+    StructGraphicBezierInst(StreamContext& aCtx)
+        : StructGraphicInst{aCtx}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -37,13 +36,10 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructGraphicBezierInst& aObj)
+[[maybe_unused]] static std::string to_string(const StructGraphicBezierInst& aObj)
 {
     return aObj.to_string();
 }
-
 
 inline std::string StructGraphicBezierInst::to_string() const
 {
@@ -56,14 +52,11 @@ inline std::string StructGraphicBezierInst::to_string() const
     return str;
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructGraphicBezierInst& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGraphicBezierInst& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTGRAPHICBEZIERINST_HPP

@@ -1,7 +1,6 @@
 #ifndef STRUCTGRAPHICBOXINST_HPP
 #define STRUCTGRAPHICBOXINST_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -14,13 +13,13 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
-
 class StructGraphicBoxInst : public StructGraphicInst
 {
 public:
-
-    StructGraphicBoxInst(StreamContext& aCtx) : StructGraphicInst{aCtx}
-    { }
+    StructGraphicBoxInst(StreamContext& aCtx)
+        : StructGraphicInst{aCtx}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -37,13 +36,10 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructGraphicBoxInst& aObj)
+[[maybe_unused]] static std::string to_string(const StructGraphicBoxInst& aObj)
 {
     return aObj.to_string();
 }
-
 
 inline std::string StructGraphicBoxInst::to_string() const
 {
@@ -56,14 +52,11 @@ inline std::string StructGraphicBoxInst::to_string() const
     return str;
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructGraphicBoxInst& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGraphicBoxInst& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTGRAPHICBOXINST_HPP

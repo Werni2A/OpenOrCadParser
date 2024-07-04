@@ -1,7 +1,6 @@
 #ifndef CFBFSTREAMLOCATION_HPP
 #define CFBFSTREAMLOCATION_HPP
 
-
 #include <cstdint>
 #include <filesystem>
 #include <functional>
@@ -12,15 +11,12 @@
 
 #include "General.hpp"
 
-
 namespace fs = std::filesystem;
-
 
 class CfbfStreamLocation
 {
 public:
-    CfbfStreamLocation(
-        const fs::path& aStreamPath, const fs::path& aExtractedCfbfPath)
+    CfbfStreamLocation(const fs::path& aStreamPath, const fs::path& aExtractedCfbfPath)
     {
         std::vector<std::string> streamLocation{};
 
@@ -65,7 +61,7 @@ public:
      * Check if the CfbfStreamLocation matches the given pattern. Note
      * that the vector size needs to be equal and all given string parts
      * need to match. As a wildcard part, you can use std::nullopt
-    */
+     */
     bool matches_pattern(const std::vector<std::optional<std::string>>& aPattern)
     {
         if(get_vector().size() != aPattern.size())
@@ -93,13 +89,10 @@ public:
     }
 
 private:
-
     std::vector<std::string> mStreamLocation{};
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const CfbfStreamLocation& aLocation)
+[[maybe_unused]] static std::string to_string(const CfbfStreamLocation& aLocation)
 {
     std::string locStr{};
     for(const auto& locPart : aLocation.get_vector())
@@ -110,23 +103,19 @@ static std::string to_string(const CfbfStreamLocation& aLocation)
     return locStr;
 }
 
-[[maybe_unused]]
-static bool operator==(const CfbfStreamLocation& aLhs, const std::vector<std::string>& aRhs)
+[[maybe_unused]] static bool operator==(const CfbfStreamLocation& aLhs, const std::vector<std::string>& aRhs)
 {
     return aLhs.get_vector() == aRhs;
 }
 
-[[maybe_unused]]
-static bool operator==(const std::vector<std::string>& aLhs, const CfbfStreamLocation& aRhs)
+[[maybe_unused]] static bool operator==(const std::vector<std::string>& aLhs, const CfbfStreamLocation& aRhs)
 {
     return aRhs == aLhs;
 }
 
-[[maybe_unused]]
-static bool operator==(const CfbfStreamLocation& aLhs, const CfbfStreamLocation& aRhs)
+[[maybe_unused]] static bool operator==(const CfbfStreamLocation& aLhs, const CfbfStreamLocation& aRhs)
 {
     return aLhs.get_vector() == aRhs.get_vector();
 }
-
 
 #endif // CFBFSTREAMLOCATION_HPP

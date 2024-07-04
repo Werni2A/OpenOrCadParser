@@ -1,7 +1,6 @@
 #ifndef STRUCTGLOBAL_HPP
 #define STRUCTGLOBAL_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -15,13 +14,13 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
-
 class StructGlobal : public StructGraphicInst
 {
 public:
-
-    StructGlobal(StreamContext& aCtx) : StructGraphicInst{aCtx}
-    { }
+    StructGlobal(StreamContext& aCtx)
+        : StructGraphicInst{aCtx}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -38,13 +37,10 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructGlobal& aObj)
+[[maybe_unused]] static std::string to_string(const StructGlobal& aObj)
 {
     return aObj.to_string();
 }
-
 
 inline std::string StructGlobal::to_string() const
 {
@@ -57,14 +53,11 @@ inline std::string StructGlobal::to_string() const
     return str;
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructGlobal& aObj)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGlobal& aObj)
 {
     aOs << to_string(aObj);
 
     return aOs;
 }
-
 
 #endif // STRUCTGLOBAL_HPP

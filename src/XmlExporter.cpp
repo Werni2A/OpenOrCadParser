@@ -1,6 +1,5 @@
 #include "XmlExporter.hpp"
 
-
 void XmlExporter::visit(const Library& aObj)
 {
     mLib = &aObj;
@@ -24,14 +23,13 @@ void XmlExporter::visit(const Library& aObj)
 
             // @todo Use Package name
             static uint32_t PackageCtr = 0;
-            const std::string pkgName = "PackageName" + std::to_string(PackageCtr++) + ".xml";
-            mExportFilePath = mExportBasePath / pkgName;
+            const std::string pkgName  = "PackageName" + std::to_string(PackageCtr++) + ".xml";
+            mExportFilePath            = mExportBasePath / pkgName;
 
             exportXml();
         }
     }
 }
-
 
 void XmlExporter::visit(const PrimArc& aObj)
 {
@@ -58,7 +56,6 @@ void XmlExporter::visit(const PrimArc& aObj)
 
     mCurXmlElem = parent;
 }
-
 
 void XmlExporter::visit(const PrimBezier& aObj)
 {
@@ -90,7 +87,6 @@ void XmlExporter::visit(const PrimBezier& aObj)
     mCurXmlElem = parent;
 }
 
-
 void XmlExporter::visit(const PrimEllipse& aObj)
 {
     XMLElement* parent = mCurXmlElem;
@@ -115,7 +111,6 @@ void XmlExporter::visit(const PrimEllipse& aObj)
     mCurXmlElem = parent;
 }
 
-
 void XmlExporter::visit(const PrimRect& aObj)
 {
     XMLElement* parent = mCurXmlElem;
@@ -139,7 +134,6 @@ void XmlExporter::visit(const PrimRect& aObj)
 
     mCurXmlElem = parent;
 }
-
 
 void XmlExporter::visit(const PrimPolygon& aObj)
 {
@@ -173,7 +167,6 @@ void XmlExporter::visit(const PrimPolygon& aObj)
     mCurXmlElem = parent;
 }
 
-
 void XmlExporter::visit(const PrimPolyline& aObj)
 {
     XMLElement* parent = mCurXmlElem;
@@ -204,7 +197,6 @@ void XmlExporter::visit(const PrimPolyline& aObj)
     mCurXmlElem = parent;
 }
 
-
 void XmlExporter::visit(const PrimLine& aObj)
 {
     XMLElement* parent = mCurXmlElem;
@@ -226,7 +218,6 @@ void XmlExporter::visit(const PrimLine& aObj)
 
     mCurXmlElem = parent;
 }
-
 
 void XmlExporter::visit(const PrimSymbolVector& aObj)
 {
@@ -254,7 +245,6 @@ void XmlExporter::visit(const PrimSymbolVector& aObj)
     mCurXmlElem = parent;
 }
 
-
 void XmlExporter::visit(const StructSymbolDisplayProp& aObj)
 {
     XMLElement* parent = mCurXmlElem;
@@ -276,8 +266,7 @@ void XmlExporter::visit(const StructSymbolDisplayProp& aObj)
     XMLElement* ePropFont = mXml.NewElement("PropFont");
     mCurXmlElem->InsertEndChild(ePropFont);
 
-    if(mLib && mLib->library &&
-        aObj.textFontIdx < mLib->library->textFonts.size())
+    if(mLib && mLib->library && aObj.textFontIdx < mLib->library->textFonts.size())
     {
         XMLElement* parent = mCurXmlElem;
 
@@ -303,11 +292,10 @@ void XmlExporter::visit(const StructSymbolDisplayProp& aObj)
     ePropDispType->InsertEndChild(eDefn3);
 
     eDefn3->SetAttribute("ValueIfValueExist", 1); // @todo
-    eDefn3->SetAttribute("val", 1); // @todo
+    eDefn3->SetAttribute("val", 1);               // @todo
 
     mCurXmlElem = parent;
 }
-
 
 void XmlExporter::visit(const StructSymbolPin& aObj)
 {
@@ -414,7 +402,6 @@ void XmlExporter::visit(const StructSymbolPin& aObj)
     }
 }
 
-
 void XmlExporter::visit(const StructSymbolPinBus& aObj)
 {
     XMLElement* parent = mCurXmlElem;
@@ -429,7 +416,6 @@ void XmlExporter::visit(const StructSymbolPinBus& aObj)
     mCurXmlElem = parent;
 }
 
-
 void XmlExporter::visit(const StructSymbolPinScalar& aObj)
 {
     XMLElement* parent = mCurXmlElem;
@@ -443,7 +429,6 @@ void XmlExporter::visit(const StructSymbolPinScalar& aObj)
 
     mCurXmlElem = parent;
 }
-
 
 void XmlExporter::visit(const StructPackage& aObj)
 {
@@ -521,13 +506,12 @@ void XmlExporter::visit(const StructPackage& aObj)
     mCurXmlElem = parent;
 }
 
-
 void XmlExporter::visit(const StreamPackage& aObj)
 {
     XMLElement* parent = mCurXmlElem;
 
     const std::string normal = ".Normal";
-    std::string normalName = aObj.properties.at(0)->normalName;
+    std::string normalName   = aObj.properties.at(0)->normalName;
     normalName.resize(normalName.size() - normal.size());
 
     XMLElement* ePackage = mXml.NewElement("Package");
@@ -539,14 +523,14 @@ void XmlExporter::visit(const StreamPackage& aObj)
     mCurXmlElem->InsertEndChild(eDefn);
 
     eDefn->SetAttribute("alphabeticNumbering", "0"); // @todo
-    eDefn->SetAttribute("isHomogeneous", "1"); // @todo
+    eDefn->SetAttribute("isHomogeneous", "1");       // @todo
     eDefn->SetAttribute("name", normalName.c_str());
     eDefn->SetAttribute("refdesPrefix", "unimplemented"); // @todo
-    eDefn->SetAttribute("pcbLib", "unimplemented"); // @todo
+    eDefn->SetAttribute("pcbLib", "unimplemented");       // @todo
     eDefn->SetAttribute("pcbFootprint", "unimplemented"); // @todo
-    eDefn->SetAttribute("sourcelib", "unimplemented"); // @todo
-    eDefn->SetAttribute("timestamp", "0"); // @todo
-    eDefn->SetAttribute("timezone", "0"); // @todo
+    eDefn->SetAttribute("sourcelib", "unimplemented");    // @todo
+    eDefn->SetAttribute("timestamp", "0");                // @todo
+    eDefn->SetAttribute("timezone", "0");                 // @todo
 
     {
         XMLElement* parent = mCurXmlElem;
@@ -582,7 +566,6 @@ void XmlExporter::visit(const StreamPackage& aObj)
     mCurXmlElem = parent;
 }
 
-
 void XmlExporter::visit(const StructLibraryPart& aObj)
 {
     XMLElement* parent = mCurXmlElem;
@@ -599,9 +582,9 @@ void XmlExporter::visit(const StructLibraryPart& aObj)
         XMLElement* eDefn = mXml.NewElement("Defn");
         eSymbolBBox->InsertEndChild(eDefn);
 
-        eDefn->SetAttribute("x1", "0"); // @todo
+        eDefn->SetAttribute("x1", "0");  // @todo
         eDefn->SetAttribute("x2", "30"); // @todo
-        eDefn->SetAttribute("y1", "0"); // @todo
+        eDefn->SetAttribute("y1", "0");  // @todo
         eDefn->SetAttribute("y2", "60"); // @todo
     }
 
@@ -671,7 +654,6 @@ void XmlExporter::visit(const StructLibraryPart& aObj)
 
     mCurXmlElem = parent;
 }
-
 
 void XmlExporter::visit(const tagLOGFONTA& aObj)
 {

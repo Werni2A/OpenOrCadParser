@@ -1,7 +1,6 @@
 #ifndef COORDINATE_HPP
 #define COORDINATE_HPP
 
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -12,15 +11,17 @@
 #include "General.hpp"
 #include "PrimBase.hpp"
 
-
 /// @note Represents 'BezierPoint', 'PolygonPoint' and 'PolylinePoint' because
 ///       all of them use the same point structure.
 class Point : public Other
 {
 public:
-
-    Point(StreamContext& aCtx) : Other{aCtx}, x{0}, y{0}
-    { }
+    Point(StreamContext& aCtx)
+        : Other{aCtx},
+          x{0},
+          y{0}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -35,9 +36,7 @@ public:
     uint16_t y;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const Point& aObj)
+[[maybe_unused]] static std::string to_string(const Point& aObj)
 {
     std::string str;
 
@@ -47,20 +46,16 @@ static std::string to_string(const Point& aObj)
     return str;
 }
 
-
 inline std::string Point::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const Point& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const Point& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // COORDINATE_HPP

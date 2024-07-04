@@ -1,7 +1,6 @@
 #ifndef PRIMPOLYLINE_HPP
 #define PRIMPOLYLINE_HPP
 
-
 #include <cstdint>
 #include <optional>
 #include <ostream>
@@ -16,13 +15,16 @@
 #include "Primitives/Point.hpp"
 #include "Primitives/PrimBase.hpp"
 
-
 class PrimPolyline : public PrimBase
 {
 public:
-
-    PrimPolyline(StreamContext& aCtx) : PrimBase{aCtx}, mLineStyle{}, mLineWidth{}, points{}
-    { }
+    PrimPolyline(StreamContext& aCtx)
+        : PrimBase{aCtx},
+          mLineStyle{},
+          mLineWidth{},
+          points{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -61,18 +63,14 @@ public:
     }
 
 private:
-
     std::optional<LineStyle> mLineStyle;
     std::optional<LineWidth> mLineWidth;
 
 public:
-
     std::vector<Point> points;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const PrimPolyline& aObj)
+[[maybe_unused]] static std::string to_string(const PrimPolyline& aObj)
 {
     std::string str;
 
@@ -89,19 +87,15 @@ static std::string to_string(const PrimPolyline& aObj)
     return str;
 }
 
-
 inline std::string PrimPolyline::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const PrimPolyline& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimPolyline& aVal)
 {
     aOs << to_string(aVal);
     return aOs;
 }
-
 
 #endif // PRIMPOLYLINE_HPP

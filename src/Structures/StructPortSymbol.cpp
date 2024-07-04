@@ -8,7 +8,6 @@
 #include "Structures/StructLibraryPart.hpp"
 #include "Structures/StructPortSymbol.hpp"
 
-
 void StructPortSymbol::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

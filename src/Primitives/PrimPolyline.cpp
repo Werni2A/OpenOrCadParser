@@ -10,7 +10,6 @@
 #include "GenericParser.hpp"
 #include "Primitives/PrimPolyline.hpp"
 
-
 size_t PrimPolyline::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount)
 {
     size_t expectedByteLength;
@@ -27,7 +26,6 @@ size_t PrimPolyline::getExpectedStructSize(FileFormatVersion aVersion, size_t aP
     return expectedByteLength;
 }
 
-
 void PrimPolyline::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
@@ -37,8 +35,8 @@ void PrimPolyline::read(FileFormatVersion aVersion)
 
     if(aVersion == FileFormatVersion::Unknown)
     {
-        const auto predictionFunc = [this](FileFormatVersion aVersion){ this->read(aVersion); };
-        aVersion = parser.predictVersion(predictionFunc);
+        const auto predictionFunc = [this](FileFormatVersion aVersion) { this->read(aVersion); };
+        aVersion                  = parser.predictVersion(predictionFunc);
     }
 
     const size_t startOffset = ds.getCurrentOffset();
@@ -59,8 +57,8 @@ void PrimPolyline::read(FileFormatVersion aVersion)
 
     if(pointCount < 2)
     {
-        throw std::runtime_error("At minimum 2 'PolylinePoint's must occur but got " + std::to_string(pointCount)
-                                 + " points!");
+        throw std::runtime_error(
+            "At minimum 2 'PolylinePoint's must occur but got " + std::to_string(pointCount) + " points!");
     }
 
     for(size_t i = 0u; i < pointCount; ++i)

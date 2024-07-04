@@ -12,7 +12,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructPackage.hpp"
 
-
 // @todo Probably specifies the 'Package Properties'
 void StructPackage::read(FileFormatVersion /* aVersion */)
 {

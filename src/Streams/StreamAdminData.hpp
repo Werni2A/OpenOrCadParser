@@ -1,7 +1,6 @@
 #ifndef STREAMADMINDATA_HPP
 #define STREAMADMINDATA_HPP
 
-
 #include <ostream>
 #include <string>
 
@@ -11,13 +10,13 @@
 #include "General.hpp"
 #include "Stream.hpp"
 
-
 class StreamAdminData : public Stream
 {
 public:
-
-    StreamAdminData(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}
-    { }
+    StreamAdminData(ContainerContext& aCtx, const fs::path& aInputStream)
+        : Stream{aCtx, aInputStream}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -34,9 +33,7 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StreamAdminData& aObj)
+[[maybe_unused]] static std::string to_string(const StreamAdminData& aObj)
 {
     std::string str;
 
@@ -45,20 +42,16 @@ static std::string to_string(const StreamAdminData& aObj)
     return str;
 }
 
-
 inline std::string StreamAdminData::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StreamAdminData& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamAdminData& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STREAMADMINDATA_HPP

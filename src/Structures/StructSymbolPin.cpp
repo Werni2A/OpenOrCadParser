@@ -14,12 +14,10 @@
 #include "PinShape.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
-
 void StructSymbolPin::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
-
 
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
@@ -62,7 +60,6 @@ void StructSymbolPin::read(FileFormatVersion /* aVersion */)
     mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     mCtx.mLogger.trace(to_string());
 }
-
 
 int32_t StructSymbolPin::getPinLength() const
 {

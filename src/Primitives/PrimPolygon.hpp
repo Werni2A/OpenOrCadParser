@@ -1,7 +1,6 @@
 #ifndef PRIMPOLYGON_HPP
 #define PRIMPOLYGON_HPP
 
-
 #include <cstdint>
 #include <optional>
 #include <ostream>
@@ -18,14 +17,18 @@
 #include "Primitives/Point.hpp"
 #include "Primitives/PrimBase.hpp"
 
-
 class PrimPolygon : public PrimBase
 {
 public:
-
-    PrimPolygon(StreamContext& aCtx) : PrimBase{aCtx}, mLineStyle{}, mLineWidth{},
-        fillStyle{}, hatchStyle{}, points{}
-    { }
+    PrimPolygon(StreamContext& aCtx)
+        : PrimBase{aCtx},
+          mLineStyle{},
+          mLineWidth{},
+          fillStyle{},
+          hatchStyle{},
+          points{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -64,21 +67,17 @@ public:
     }
 
 private:
-
     std::optional<LineStyle> mLineStyle;
     std::optional<LineWidth> mLineWidth;
 
 public:
-
     FillStyle fillStyle;
     HatchStyle hatchStyle;
 
     std::vector<Point> points;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const PrimPolygon& aObj)
+[[maybe_unused]] static std::string to_string(const PrimPolygon& aObj)
 {
     std::string str;
 
@@ -97,19 +96,15 @@ static std::string to_string(const PrimPolygon& aObj)
     return str;
 }
 
-
 inline std::string PrimPolygon::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const PrimPolygon& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimPolygon& aVal)
 {
     aOs << to_string(aVal);
     return aOs;
 }
-
 
 #endif // PRIMPOLYGON_HPP

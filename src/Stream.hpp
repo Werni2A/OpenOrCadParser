@@ -1,7 +1,6 @@
 #ifndef STREAM_HPP
 #define STREAM_HPP
 
-
 #include <functional>
 #include <memory>
 #include <optional>
@@ -18,15 +17,17 @@
 #include "General.hpp"
 #include "Record.hpp"
 
-
 class Stream
 {
 public:
-    Stream(ContainerContext& aCtx, const fs::path& aInputStream) : mCtx{aCtx, aInputStream}
-    { }
+    Stream(ContainerContext& aCtx, const fs::path& aInputStream)
+        : mCtx{aCtx, aInputStream}
+    {
+    }
 
     virtual ~Stream()
-    { }
+    {
+    }
 
     virtual std::string to_string() const = 0;
 
@@ -55,7 +56,8 @@ public:
         catch(const std::exception& e)
         {
             mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "--------ERROR REPORT--------"));
-            mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "Input Container: {}", mCtx.mInputCfbfFile.string()));
+            mCtx.mLogger.error(
+                fmt::format(fg(fmt::color::crimson), "Input Container: {}", mCtx.mInputCfbfFile.string()));
             mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "Current File:    {}", mCtx.mInputStream.string()));
             mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), mCtx.mDs.getCurrentOffsetStrMsg()));
             mCtx.mLogger.error(fmt::format(fg(fmt::color::crimson), "\nError Message: {}\n\n", e.what()));
@@ -69,9 +71,8 @@ public:
 
     virtual StreamType getStreamType() const = 0;
 
-// protected:
+    // protected:
     StreamContext mCtx;
 };
-
 
 #endif // STREAM_HPP

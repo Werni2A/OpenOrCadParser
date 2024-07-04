@@ -9,7 +9,6 @@
 #include "PageSettings.hpp"
 #include "Streams/StreamPage.hpp"
 
-
 void StreamPage::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -71,7 +70,7 @@ void StreamPage::read(FileFormatVersion /* aVersion */)
     {
         // @todo Add attributes
         const std::string net = ds.readStringLenZeroTerm();
-        const uint32_t id = ds.readUint32();
+        const uint32_t id     = ds.readUint32();
 
         mCtx.mLogger.trace("net = {}", net);
         mCtx.mLogger.trace("id  = {}", id);

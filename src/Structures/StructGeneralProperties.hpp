@@ -1,7 +1,6 @@
 #ifndef STRUCTGENERALPROPERTIES_HPP
 #define STRUCTGENERALPROPERTIES_HPP
 
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -12,18 +11,24 @@
 #include "Enums/ImplementationType.hpp"
 #include "Record.hpp"
 
-
 // @todo This is just a helper class but not a real structure
 //       Check if the same code is used multiple times, otherwise
 //       Inline this structure?
 class StructGeneralProperties : public Other
 {
 public:
-
-    StructGeneralProperties(StreamContext& aCtx) : Other{aCtx}, implementationPath{},
-        implementation{}, refDes{}, partValue{}, implementationType{ImplementationType::None},
-        pinNameVisible{true}, pinNameRotate{false}, pinNumberVisible{true}
-    { }
+    StructGeneralProperties(StreamContext& aCtx)
+        : Other{aCtx},
+          implementationPath{},
+          implementation{},
+          refDes{},
+          partValue{},
+          implementationType{ImplementationType::None},
+          pinNameVisible{true},
+          pinNameRotate{false},
+          pinNumberVisible{true}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -63,9 +68,7 @@ public:
     bool pinNumberVisible;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructGeneralProperties& aObj)
+[[maybe_unused]] static std::string to_string(const StructGeneralProperties& aObj)
 {
     std::string str;
 
@@ -82,20 +85,16 @@ static std::string to_string(const StructGeneralProperties& aObj)
     return str;
 }
 
-
 inline std::string StructGeneralProperties::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructGeneralProperties& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGeneralProperties& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTGENERALPROPERTIES_HPP

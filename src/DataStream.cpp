@@ -1,6 +1,6 @@
 #include <algorithm>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <string>
 
 #include <fmt/core.h>
@@ -10,12 +10,10 @@
 #include "General.hpp"
 #include "StreamContext.hpp"
 
-
 void DataStream::discardBytes(size_t aLen)
 {
     seekg(aLen, std::ios_base::cur);
 }
-
 
 std::vector<uint8_t> DataStream::readBytes(size_t aLen)
 {
@@ -29,7 +27,6 @@ std::vector<uint8_t> DataStream::readBytes(size_t aLen)
 
     return data;
 }
-
 
 std::string DataStream::readStringZeroTerm()
 {
@@ -57,7 +54,8 @@ std::string DataStream::readStringZeroTerm()
     if(str.length() == max_chars)
     {
         const std::string msg = fmt::format("Loop canceled because the string is unexpectedly large.\n"
-            "More than {} characters! The following string was read until now:\n{}", max_chars, str);
+                                            "More than {} characters! The following string was read until now:\n{}",
+            max_chars, str);
 
         mCtx.mLogger.error(msg);
 
@@ -68,7 +66,6 @@ std::string DataStream::readStringZeroTerm()
 
     return str;
 }
-
 
 std::string DataStream::readStringLenTerm()
 {
@@ -101,8 +98,8 @@ std::string DataStream::readStringLenTerm()
     //       stable because strings can actually be very long.
     if(str.length() == max_chars)
     {
-        const std::string msg = "Loop cancled because the string is unexpectedly large. More than "
-                                 + std::to_string(max_chars) + " characters!";
+        const std::string msg = "Loop cancled because the string is unexpectedly large. More than " +
+                                std::to_string(max_chars) + " characters!";
 
         mCtx.mLogger.error(msg);
 
@@ -113,7 +110,6 @@ std::string DataStream::readStringLenTerm()
 
     return str;
 }
-
 
 std::string DataStream::readStringLenZeroTerm()
 {
@@ -123,9 +119,8 @@ std::string DataStream::readStringLenZeroTerm()
 
     if(str.length() != len)
     {
-        const std::string msg = "Zero terminated string length (" + std::to_string(str.length())
-                                 + ") does not match the preceding length ("
-                                 + std::to_string(len) + ") definition!";
+        const std::string msg = "Zero terminated string length (" + std::to_string(str.length()) +
+                                ") does not match the preceding length (" + std::to_string(len) + ") definition!";
 
         mCtx.mLogger.error(msg);
 
@@ -136,7 +131,6 @@ std::string DataStream::readStringLenZeroTerm()
 
     return str;
 }
-
 
 void DataStream::printUnknownData(size_t aLen, const std::string& aComment)
 {
@@ -149,7 +143,6 @@ void DataStream::printUnknownData(size_t aLen, const std::string& aComment)
     }
 }
 
-
 void DataStream::padRest(size_t aStartOffset, size_t aBlockSize, bool aPadIsZero)
 {
     const size_t currOffset = getCurrentOffset();
@@ -157,9 +150,8 @@ void DataStream::padRest(size_t aStartOffset, size_t aBlockSize, bool aPadIsZero
 
     if(offsetDiff > aBlockSize)
     {
-        const std::string msg = "Already parsed " + std::to_string(offsetDiff)
-                                 + " bytes but should have only been "
-                                 + std::to_string(aBlockSize) + "!";
+        const std::string msg = "Already parsed " + std::to_string(offsetDiff) + " bytes but should have only been " +
+                                std::to_string(aBlockSize) + "!";
 
         mCtx.mLogger.debug(msg);
 
@@ -191,18 +183,15 @@ void DataStream::padRest(size_t aStartOffset, size_t aBlockSize, bool aPadIsZero
     }
 }
 
-
 std::string DataStream::getCurrentOffsetStrMsg()
 {
     return fmt::format("Offset at 0x{:08x}", getCurrentOffset());
 }
 
-
 void DataStream::printData(const std::vector<uint8_t>& aData)
 {
     mCtx.mLogger.info(dataToStr(aData));
 }
-
 
 std::string DataStream::dataToStr(const std::vector<uint8_t>& aData)
 {
@@ -240,7 +229,7 @@ std::string DataStream::dataToStr(const std::vector<uint8_t>& aData)
             for(size_t i = 0u; i < line_width - (aData.size() % line_width); ++i)
             {
                 line_hex += "  " + hex_spacing; // 2 spaces for 1 byte
-                line_str += " "  + str_spacing; // 1 character for 1 byte
+                line_str += " " + str_spacing;  // 1 character for 1 byte
             }
 
             output += preamble + line_hex + " | " + line_str + '\n';
@@ -255,23 +244,18 @@ std::string DataStream::dataToStr(const std::vector<uint8_t>& aData)
     return output;
 }
 
-
 void DataStream::assumeData(const std::vector<uint8_t>& aExpectedData, const std::string& aComment)
 {
     const std::vector<uint8_t> data = readBytes(aExpectedData.size());
 
     size_t ctr = 0u;
 
-    const auto checkByte = [&ctr, &aExpectedData](uint8_t byte)
-    {
-        return byte == aExpectedData[ctr++];
-    };
+    const auto checkByte = [&ctr, &aExpectedData](uint8_t byte) { return byte == aExpectedData[ctr++]; };
 
     if(!std::all_of(data.cbegin(), data.cend(), checkByte))
     {
-        const std::string msg = "Assumption failed: " + aComment + '\n'
-            + "Expected:\n" + dataToStr(aExpectedData) +
-            + "but got:\n" + dataToStr(data);
+        const std::string msg = "Assumption failed: " + aComment + '\n' + "Expected:\n" + dataToStr(aExpectedData) +
+                                +"but got:\n" + dataToStr(data);
 
         mCtx.mLogger.debug(msg);
 

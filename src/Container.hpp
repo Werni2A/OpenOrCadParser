@@ -1,7 +1,6 @@
 #ifndef CONTAINER_HPP
 #define CONTAINER_HPP
 
-
 #include <deque>
 #include <filesystem>
 #include <fstream>
@@ -12,8 +11,8 @@
 #include <vector>
 
 #include "ContainerContext.hpp"
-#include "Database.hpp"
 #include "DataStream.hpp"
+#include "Database.hpp"
 #include "Enums/Primitive.hpp"
 #include "Enums/Structure.hpp"
 #include "FutureData.hpp"
@@ -21,16 +20,12 @@
 #include "Primitives/PrimBase.hpp"
 #include "Stream.hpp"
 
-
-
 namespace fs = std::filesystem;
-
 
 // @todo rename to DatabaseParser
 class Container
 {
 public:
-
     Container(const fs::path& aFile, ParserConfig aCfg);
 
     ~Container();
@@ -91,7 +86,6 @@ public:
     void parseDatabaseFile();
 
 private:
-
     Database mDb;
 
     size_t mFileCtr;    //!< Counts all files that were opened for parsing
@@ -101,6 +95,5 @@ private:
 
     ParserConfig mCfg;
 };
-
 
 #endif // CONTAINER_HPP

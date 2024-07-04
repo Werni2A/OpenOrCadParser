@@ -12,7 +12,6 @@
 #include "GenericParser.hpp"
 #include "Primitives/PrimBezier.hpp"
 
-
 size_t PrimBezier::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount)
 {
     size_t expectedByteLength;
@@ -29,7 +28,6 @@ size_t PrimBezier::getExpectedStructSize(FileFormatVersion aVersion, size_t aPoi
     return expectedByteLength;
 }
 
-
 void PrimBezier::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
@@ -39,8 +37,8 @@ void PrimBezier::read(FileFormatVersion aVersion)
 
     if(aVersion == FileFormatVersion::Unknown)
     {
-        const auto predictionFunc = [this](FileFormatVersion aVersion){ this->read(aVersion); };
-        aVersion = parser.predictVersion(predictionFunc);
+        const auto predictionFunc = [this](FileFormatVersion aVersion) { this->read(aVersion); };
+        aVersion                  = parser.predictVersion(predictionFunc);
     }
 
     const size_t startOffset = ds.getCurrentOffset();
@@ -61,8 +59,8 @@ void PrimBezier::read(FileFormatVersion aVersion)
 
     if(pointCount < 4)
     {
-        throw std::runtime_error("At minimum 4 'BezierPoint's must occur but got " + std::to_string(pointCount)
-                                 + " points!");
+        throw std::runtime_error(
+            "At minimum 4 'BezierPoint's must occur but got " + std::to_string(pointCount) + " points!");
     }
     else
     {
@@ -93,8 +91,8 @@ void PrimBezier::read(FileFormatVersion aVersion)
 
         if(!isDivisible(pointCount - 1, 3))
         {
-            throw std::runtime_error("Number of 'BezierPoint's is incorrect. Got " + std::to_string(pointCount)
-                                    + " points!");
+            throw std::runtime_error(
+                "Number of 'BezierPoint's is incorrect. Got " + std::to_string(pointCount) + " points!");
         }
     }
 

@@ -10,7 +10,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructBusEntry.hpp"
 
-
 void StructBusEntry::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

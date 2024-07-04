@@ -9,7 +9,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructGraphicCommentTextInst.hpp"
 
-
 void StructGraphicCommentTextInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

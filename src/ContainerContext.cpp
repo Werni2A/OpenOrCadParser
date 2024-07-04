@@ -14,34 +14,34 @@
 // #include "Database.hpp"
 #include "General.hpp"
 
-
 class Database;
-
 
 namespace fs = std::filesystem;
 
-
-ContainerContext::ContainerContext(const fs::path& aInputCfbfFile,
-    const fs::path& aExtractedCfbfPath, ParserConfig aCfg, Database& aDb) : mDb{aDb},
-        mLogger{"tmp"}
+ContainerContext::ContainerContext(
+    const fs::path& aInputCfbfFile, const fs::path& aExtractedCfbfPath, ParserConfig aCfg, Database& aDb)
+    : mDb{aDb},
+      mLogger{"tmp"}
 {
-    mInputCfbfFile = aInputCfbfFile;
+    mInputCfbfFile     = aInputCfbfFile;
     mExtractedCfbfPath = aExtractedCfbfPath;
-    mCfg = aCfg;
+    mCfg               = aCfg;
     mFileFormatVersion = FileFormatVersion::C;
-    mLogLevel = spdlog::level::trace;
+    mLogLevel          = spdlog::level::trace;
 
     const fs::path logPath = mExtractedCfbfPath / "logs" / "OpenOrCadParser.log";
     configureLogger(logPath);
 }
 
-ContainerContext::ContainerContext(const ContainerContext& aCtx) : mDb{aCtx.mDb}, mLogger{"tmp"}
+ContainerContext::ContainerContext(const ContainerContext& aCtx)
+    : mDb{aCtx.mDb},
+      mLogger{"tmp"}
 {
-    mInputCfbfFile = aCtx.mInputCfbfFile;
+    mInputCfbfFile     = aCtx.mInputCfbfFile;
     mExtractedCfbfPath = aCtx.mExtractedCfbfPath;
-    mCfg = aCtx.mCfg;
+    mCfg               = aCtx.mCfg;
     mFileFormatVersion = aCtx.mFileFormatVersion;
-    mLogLevel = aCtx.mLogLevel;
+    mLogLevel          = aCtx.mLogLevel;
 }
 
 void ContainerContext::configureLogger(const fs::path& aLogPath)
@@ -52,7 +52,7 @@ void ContainerContext::configureLogger(const fs::path& aLogPath)
     }
 
     auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(aLogPath.string());
-    mLogger = spdlog::logger{"file logger", {file_sink}};
+    mLogger        = spdlog::logger{"file logger", {file_sink}};
     mLogger.set_pattern("[%^%l%$] %v");
     mLogger.set_level(mLogLevel);
 

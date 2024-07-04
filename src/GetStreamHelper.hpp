@@ -10,20 +10,17 @@
 #include "Streams/StreamDirectoryStruct.hpp"
 #include "Streams/StreamLibrary.hpp"
 
-
 static const std::map<DirectoryType, StreamType> DirectoryType2StreamType = {
-    {DirectoryType::CellsDirectory,        StreamType::CellsDirectory},
+    {DirectoryType::CellsDirectory,        StreamType::CellsDirectory       },
     {DirectoryType::ExportBlocksDirectory, StreamType::ExportBlocksDirectory},
-    {DirectoryType::GraphicsDirectory,     StreamType::GraphicsDirectory},
-    {DirectoryType::PackagesDirectory,     StreamType::PackagesDirectory},
-    {DirectoryType::PartsDirectory,        StreamType::PartsDirectory},
-    {DirectoryType::SymbolsDirectory,      StreamType::SymbolsDirectory},
-    {DirectoryType::ViewsDirectory,         StreamType::ViewsDirectory}
+    {DirectoryType::GraphicsDirectory,     StreamType::GraphicsDirectory    },
+    {DirectoryType::PackagesDirectory,     StreamType::PackagesDirectory    },
+    {DirectoryType::PartsDirectory,        StreamType::PartsDirectory       },
+    {DirectoryType::SymbolsDirectory,      StreamType::SymbolsDirectory     },
+    {DirectoryType::ViewsDirectory,        StreamType::ViewsDirectory       }
 };
 
-
-[[maybe_unused]]
-static std::shared_ptr<StreamLibrary> getLibraryStreamFromDb(Database& aDb)
+[[maybe_unused]] static std::shared_ptr<StreamLibrary> getLibraryStreamFromDb(Database& aDb)
 {
     for(auto& stream : aDb.mStreams)
     {
@@ -36,11 +33,9 @@ static std::shared_ptr<StreamLibrary> getLibraryStreamFromDb(Database& aDb)
     return std::shared_ptr<StreamLibrary>{};
 }
 
-
 // T is of type `DirectoryStream`
-template<typename T>
-[[maybe_unused]]
-static std::shared_ptr<T> getDirectoryStreamFromDb(Database& aDb, DirectoryType aDirType)
+template <typename T>
+[[maybe_unused]] static std::shared_ptr<T> getDirectoryStreamFromDb(Database& aDb, DirectoryType aDirType)
 {
     for(auto& stream : aDb.mStreams)
     {
@@ -52,6 +47,5 @@ static std::shared_ptr<T> getDirectoryStreamFromDb(Database& aDb, DirectoryType 
 
     return std::shared_ptr<T>{};
 }
-
 
 #endif // GETSTREAMHELPER_HPP

@@ -8,7 +8,6 @@
 #include "GenericParser.hpp"
 #include "Streams/StreamSchematic.hpp"
 
-
 void StreamSchematic::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

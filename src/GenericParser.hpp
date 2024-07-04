@@ -1,7 +1,6 @@
 #ifndef GENERICPARSER_HPP
 #define GENERICPARSER_HPP
 
-
 #include <filesystem>
 #include <fstream>
 #include <functional>
@@ -19,17 +18,16 @@
 #include "Primitives/PrimBase.hpp"
 #include "StreamContext.hpp"
 
-
 class FutureDataLst;
 class Record;
-
 
 class GenericParser
 {
 public:
-
-    GenericParser(StreamContext& aCtx) : mCtx{aCtx}
-    { }
+    GenericParser(StreamContext& aCtx)
+        : mCtx{aCtx}
+    {
+    }
 
     void discard_until_preamble();
 
@@ -48,7 +46,8 @@ public:
     void readPreamble();
     Primitive readPrefixPrimitive();
 
-    void checkInterpretedDataLen(const std::string &aFuncName, size_t aStartOffset, size_t aEndOffset, size_t aExpectedLen);
+    void checkInterpretedDataLen(
+        const std::string& aFuncName, size_t aStartOffset, size_t aEndOffset, size_t aExpectedLen);
 
     FileFormatVersion predictVersion(std::function<void(FileFormatVersion)> aFunc);
 
@@ -62,9 +61,7 @@ public:
     bool tryRead(std::function<void(void)> aFunction);
 
 private:
-
     StreamContext& mCtx;
 };
-
 
 #endif // GENERICPARSER_HPP

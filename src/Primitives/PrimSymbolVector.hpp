@@ -1,7 +1,6 @@
 #ifndef PRIMSYMBOLVECTOR_HPP
 #define PRIMSYMBOLVECTOR_HPP
 
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -12,13 +11,18 @@
 
 #include "Primitives/PrimBase.hpp"
 
-
-class PrimSymbolVector : public PrimBase // @todo probably derive from PrimBase, s.t. we can add itself to primitives list
+class PrimSymbolVector
+    : public PrimBase // @todo probably derive from PrimBase, s.t. we can add itself to primitives list
 {
 public:
-
-    PrimSymbolVector(StreamContext& aCtx) : PrimBase{aCtx}, locX{0}, locY{0}, name{}, primitives{}
-    { }
+    PrimSymbolVector(StreamContext& aCtx)
+        : PrimBase{aCtx},
+          locX{0},
+          locY{0},
+          name{},
+          primitives{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -45,9 +49,7 @@ public:
     std::vector<PrimBase*> primitives;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const PrimSymbolVector& aObj)
+[[maybe_unused]] static std::string to_string(const PrimSymbolVector& aObj)
 {
     std::string str;
 
@@ -65,20 +67,16 @@ static std::string to_string(const PrimSymbolVector& aObj)
     return str;
 }
 
-
 inline std::string PrimSymbolVector::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const PrimSymbolVector& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimSymbolVector& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // PRIMSYMBOLVECTOR_HPP

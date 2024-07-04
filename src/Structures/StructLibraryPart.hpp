@@ -1,7 +1,6 @@
 #ifndef STRUCTLIBRARYPART_HPP
 #define STRUCTLIBRARYPART_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <ostream>
@@ -17,14 +16,17 @@
 #include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
-
 class StructLibraryPart : public Record
 {
 public:
-
-    StructLibraryPart(StreamContext& aCtx) : Record{aCtx}, name{}, symbolPins{},
-        symbolDisplayProps{}, generalProperties{aCtx}
-    { }
+    StructLibraryPart(StreamContext& aCtx)
+        : Record{aCtx},
+          name{},
+          symbolPins{},
+          symbolDisplayProps{},
+          generalProperties{aCtx}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -42,16 +44,14 @@ public:
 
     std::string name;
 
-    std::vector<std::unique_ptr<PrimBase>>                primitives;
-    std::vector<std::unique_ptr<StructSymbolPin>>         symbolPins;
+    std::vector<std::unique_ptr<PrimBase>> primitives;
+    std::vector<std::unique_ptr<StructSymbolPin>> symbolPins;
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 
     StructGeneralProperties generalProperties;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructLibraryPart& aObj)
+[[maybe_unused]] static std::string to_string(const StructLibraryPart& aObj)
 {
     std::string str;
 
@@ -91,20 +91,16 @@ static std::string to_string(const StructLibraryPart& aObj)
     return str;
 }
 
-
 inline std::string StructLibraryPart::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructLibraryPart& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructLibraryPart& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTLIBRARYPART_HPP

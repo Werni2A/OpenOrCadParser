@@ -1,7 +1,6 @@
 #ifndef DATABASE_HPP
 #define DATABASE_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -16,16 +15,17 @@
 #include "Enums/StreamType.hpp"
 #include "Stream.hpp"
 
-
 class Database
 {
 public:
-
-    Database() : mStreams{}
-    { }
+    Database()
+        : mStreams{}
+    {
+    }
 
     ~Database()
-    { }
+    {
+    }
 
     // void accept(Visitor& aVisitor) const override
     // {
@@ -36,9 +36,7 @@ public:
     std::vector<std::shared_ptr<Stream>> mStreams;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const Database& aObj)
+[[maybe_unused]] static std::string to_string(const Database& aObj)
 {
     std::string str;
 
@@ -52,14 +50,11 @@ static std::string to_string(const Database& aObj)
     return str;
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const Database& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const Database& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // DATABASE_HPP

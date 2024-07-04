@@ -12,7 +12,6 @@
 #include "GenericParser.hpp"
 #include "Primitives/PrimPolygon.hpp"
 
-
 size_t PrimPolygon::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount)
 {
     size_t expectedByteLength;
@@ -33,7 +32,6 @@ size_t PrimPolygon::getExpectedStructSize(FileFormatVersion aVersion, size_t aPo
     return expectedByteLength;
 }
 
-
 void PrimPolygon::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
@@ -43,8 +41,8 @@ void PrimPolygon::read(FileFormatVersion aVersion)
 
     if(aVersion == FileFormatVersion::Unknown)
     {
-        const auto predictionFunc = [this](FileFormatVersion aVersion){ this->read(aVersion); };
-        aVersion = parser.predictVersion(predictionFunc);
+        const auto predictionFunc = [this](FileFormatVersion aVersion) { this->read(aVersion); };
+        aVersion                  = parser.predictVersion(predictionFunc);
     }
 
     const size_t startOffset = ds.getCurrentOffset();

@@ -20,19 +20,18 @@
 #include "Streams/StreamPackage.hpp"
 #include "Streams/StreamSymbol.hpp"
 
-
 struct SymbolUserProp
 {
     uint32_t nameIdx;
     uint32_t valIdx;
 
     SymbolUserProp()
-    { }
+    {
+    }
 
     std::string getName() const;
     std::string getVal() const;
 };
-
 
 std::string SymbolUserProp::getName() const
 {
@@ -58,7 +57,6 @@ std::string SymbolUserProp::getName() const
     return name;
 }
 
-
 std::string SymbolUserProp::getVal() const
 {
     std::string val;
@@ -83,7 +81,6 @@ std::string SymbolUserProp::getVal() const
     return val;
 }
 
-
 // @todo this is a whole file parser. Split it up into the title block structure and move the rest to the symbol parser?
 void Container::readTitleBlockSymbol()
 {
@@ -101,8 +98,10 @@ void Container::readTitleBlockSymbol()
     {
         SymbolUserProp symbolUserProp{};
 
-        symbolUserProp.nameIdx = ds.readUint32(); // @todo move to Kaitai OrCAD: 'Symbol Properties' (Fixed value on the left)
-        symbolUserProp.valIdx  = ds.readUint32(); // @todo move to Kaitai OrCAD: 'Symbol Properties' (Adjustable value on the right)
+        symbolUserProp.nameIdx =
+            ds.readUint32(); // @todo move to Kaitai OrCAD: 'Symbol Properties' (Fixed value on the left)
+        symbolUserProp.valIdx =
+            ds.readUint32(); // @todo move to Kaitai OrCAD: 'Symbol Properties' (Adjustable value on the right)
 
         symbolUserProps.push_back(symbolUserProp);
     }

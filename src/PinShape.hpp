@@ -1,7 +1,6 @@
 #ifndef PINSHAPE_HPP
 #define PINSHAPE_HPP
 
-
 #include <cstdint>
 #include <iostream>
 #include <optional>
@@ -14,7 +13,6 @@
 
 #include "General.hpp"
 
-
 // @todo this file is highly experimental and needs further testing
 
 struct PinShape // @todo rename to something like PinProperties as it contains more than the shape
@@ -23,14 +21,13 @@ struct PinShape // @todo rename to something like PinProperties as it contains m
     bool isClock; //    ---|>
     bool isDot;   //    --o|
     bool isLeftPointing;
-    bool isRightPointing;  // @note this can be derived from isLeftPointing... is it really in the file? or is
-                           // there the possibility to point in both directions as there is to point in none?
+    bool isRightPointing; // @note this can be derived from isLeftPointing... is it really in the file? or is
+                          // there the possibility to point in both directions as there is to point in none?
     bool isNetStyle;
     bool isNoConnect;
     bool isGlobal;
     bool isNumberVisible;
 };
-
 
 enum class ShapeType
 {
@@ -45,21 +42,16 @@ enum class ShapeType
     ZeroLength
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const ShapeType& aVal)
+[[maybe_unused]] static std::string to_string(const ShapeType& aVal)
 {
     return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const ShapeType& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const ShapeType& aVal)
 {
     aOs << to_string(aVal);
     return aOs;
 }
-
 
 // @todo Move table to Kaitai file
 // See OrCAD: 'Pin Properties' -> 'Shape'
@@ -72,8 +64,7 @@ static std::ostream& operator<<(std::ostream& aOs, const ShapeType& aVal)
 // 'Short Dot'         <- !isLong && !isClock &&  isDot
 // 'Short Dot Clock'   <- !isLong &&  isClock &&  isDot
 // 'Zero Length'       // Not sure how this is generated
-[[maybe_unused]]
-static ShapeType ToShapeType(const PinShape& pinShape)
+[[maybe_unused]] static ShapeType ToShapeType(const PinShape& pinShape)
 {
     const auto& pin = pinShape;
 
@@ -82,19 +73,19 @@ static ShapeType ToShapeType(const PinShape& pinShape)
     // All possible combinations are covered
     // by the if-statements
 
-    if( pin.isLong &&  pin.isClock && !pin.isDot)
+    if(pin.isLong && pin.isClock && !pin.isDot)
     {
         shapeType = ShapeType::Clock;
     }
-    if( pin.isLong && !pin.isClock &&  pin.isDot)
+    if(pin.isLong && !pin.isClock && pin.isDot)
     {
         shapeType = ShapeType::Dot;
     }
-    if( pin.isLong &&  pin.isClock &&  pin.isDot)
+    if(pin.isLong && pin.isClock && pin.isDot)
     {
         shapeType = ShapeType::DotClock;
     }
-    if( pin.isLong && !pin.isClock && !pin.isDot)
+    if(pin.isLong && !pin.isClock && !pin.isDot)
     {
         shapeType = ShapeType::Line;
     }
@@ -102,15 +93,15 @@ static ShapeType ToShapeType(const PinShape& pinShape)
     {
         shapeType = ShapeType::Short;
     }
-    if(!pin.isLong &&  pin.isClock && !pin.isDot)
+    if(!pin.isLong && pin.isClock && !pin.isDot)
     {
         shapeType = ShapeType::ShortClock;
     }
-    if(!pin.isLong && !pin.isClock &&  pin.isDot)
+    if(!pin.isLong && !pin.isClock && pin.isDot)
     {
         shapeType = ShapeType::ShortDot;
     }
-    if(!pin.isLong &&  pin.isClock &&  pin.isDot)
+    if(!pin.isLong && pin.isClock && pin.isDot)
     {
         shapeType = ShapeType::ShortDotClock;
     }
@@ -123,9 +114,7 @@ static ShapeType ToShapeType(const PinShape& pinShape)
     return shapeType;
 }
 
-
-[[maybe_unused]]
-static PinShape ToPinShape(uint16_t val, std::optional<spdlog::logger> aLogger = std::nullopt)
+[[maybe_unused]] static PinShape ToPinShape(uint16_t val, std::optional<spdlog::logger> aLogger = std::nullopt)
 {
     PinShape pinShape;
 
@@ -170,9 +159,7 @@ static PinShape ToPinShape(uint16_t val, std::optional<spdlog::logger> aLogger =
     return pinShape;
 }
 
-
-[[maybe_unused]]
-static std::string to_string(const PinShape& aObj)
+[[maybe_unused]] static std::string to_string(const PinShape& aObj)
 {
     std::string str;
 
@@ -193,13 +180,10 @@ static std::string to_string(const PinShape& aObj)
     return str;
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const PinShape& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PinShape& aVal)
 {
     aOs << to_string(aVal);
     return aOs;
 }
-
 
 #endif // PINSHAPE_HPP

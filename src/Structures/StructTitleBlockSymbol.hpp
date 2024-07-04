@@ -1,7 +1,6 @@
 #ifndef STRUCTTITLEBLOCKSYMBOL_HPP
 #define STRUCTTITLEBLOCKSYMBOL_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <ostream>
@@ -16,14 +15,15 @@
 #include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
-
 class StructTitleBlockSymbol : public StructSymbol
 {
 public:
-
-    StructTitleBlockSymbol(StreamContext& aCtx) : StructSymbol{aCtx},
-        symbolPins{}, symbolDisplayProps{}
-    { }
+    StructTitleBlockSymbol(StreamContext& aCtx)
+        : StructSymbol{aCtx},
+          symbolPins{},
+          symbolDisplayProps{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -39,13 +39,11 @@ public:
         return Structure::TitleBlockSymbol;
     }
 
-    std::vector<std::unique_ptr<StructSymbolPin>>         symbolPins;
+    std::vector<std::unique_ptr<StructSymbolPin>> symbolPins;
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructTitleBlockSymbol& aObj)
+[[maybe_unused]] static std::string to_string(const StructTitleBlockSymbol& aObj)
 {
     std::string str;
 
@@ -75,20 +73,16 @@ static std::string to_string(const StructTitleBlockSymbol& aObj)
     return str;
 }
 
-
 inline std::string StructTitleBlockSymbol::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructTitleBlockSymbol& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructTitleBlockSymbol& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTTITLEBLOCKSYMBOL_HPP

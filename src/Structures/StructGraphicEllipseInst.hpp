@@ -1,7 +1,6 @@
 #ifndef STRUCTGRAPHICELLIPSEINST_HPP
 #define STRUCTGRAPHICELLIPSEINST_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -14,13 +13,13 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
-
 class StructGraphicEllipseInst : public StructGraphicInst
 {
 public:
-
-    StructGraphicEllipseInst(StreamContext& aCtx) : StructGraphicInst{aCtx}
-    { }
+    StructGraphicEllipseInst(StreamContext& aCtx)
+        : StructGraphicInst{aCtx}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -37,13 +36,10 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructGraphicEllipseInst& aObj)
+[[maybe_unused]] static std::string to_string(const StructGraphicEllipseInst& aObj)
 {
     return aObj.to_string();
 }
-
 
 inline std::string StructGraphicEllipseInst::to_string() const
 {
@@ -56,14 +52,11 @@ inline std::string StructGraphicEllipseInst::to_string() const
     return str;
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructGraphicEllipseInst& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGraphicEllipseInst& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTGRAPHICELLIPSEINST_HPP

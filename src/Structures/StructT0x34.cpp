@@ -8,7 +8,6 @@
 #include "General.hpp"
 #include "Structures/StructT0x34.hpp"
 
-
 void StructT0x34::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

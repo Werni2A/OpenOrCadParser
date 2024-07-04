@@ -1,10 +1,7 @@
 
 
-
-
 #ifndef STRUCTDEVICE_HPP
 #define STRUCTDEVICE_HPP
-
 
 #include <cstdint>
 #include <ostream>
@@ -16,16 +13,20 @@
 
 #include "Record.hpp"
 
-
 // @todo Probably called 'PhysicalPart' in the XSD
 //       Structure should also contain 'PinShared' and 'PinSwap'
 class StructDevice : public Record
 {
 public:
-
-    StructDevice(StreamContext& aCtx) : Record{aCtx}, unitRef{}, refDes{},
-        pinMap{}, pinIgnore{}, pinGroup{}
-    { }
+    StructDevice(StreamContext& aCtx)
+        : Record{aCtx},
+          unitRef{},
+          refDes{},
+          pinMap{},
+          pinIgnore{},
+          pinGroup{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -50,13 +51,11 @@ public:
     std::vector<std::string> pinMap;
 
     // @todo add to a separate pin struct
-    std::vector<bool>        pinIgnore;
-    std::vector<uint8_t>     pinGroup; // @todo Probably convert to std::optional<uint8_t>
+    std::vector<bool> pinIgnore;
+    std::vector<uint8_t> pinGroup; // @todo Probably convert to std::optional<uint8_t>
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructDevice& aObj)
+[[maybe_unused]] static std::string to_string(const StructDevice& aObj)
 {
     std::string str;
 
@@ -86,20 +85,16 @@ static std::string to_string(const StructDevice& aObj)
     return str;
 }
 
-
 inline std::string StructDevice::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructDevice& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructDevice& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTDEVICE_HPP

@@ -1,10 +1,7 @@
 
 
-
-
 #ifndef PRIMELLIPSE_HPP
 #define PRIMELLIPSE_HPP
-
 
 #include <cstdint>
 #include <optional>
@@ -14,20 +11,27 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "Enums/HatchStyle.hpp"
 #include "Enums/FillStyle.hpp"
+#include "Enums/HatchStyle.hpp"
 #include "Enums/LineStyle.hpp"
 #include "Enums/LineWidth.hpp"
 #include "Primitives/PrimBase.hpp"
 
-
 class PrimEllipse : public PrimBase
 {
 public:
-
-    PrimEllipse(StreamContext& aCtx) : PrimBase{aCtx}, x1{0}, y1{0}, x2{0}, y2{0},
-        mLineStyle{}, mLineWidth{}, mFillStyle{}, mHatchStyle{}
-    { }
+    PrimEllipse(StreamContext& aCtx)
+        : PrimBase{aCtx},
+          x1{0},
+          y1{0},
+          x2{0},
+          y2{0},
+          mLineStyle{},
+          mLineWidth{},
+          mFillStyle{},
+          mHatchStyle{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -92,17 +96,14 @@ public:
     int32_t y2;
 
 private:
+    std::optional<LineStyle> mLineStyle;
+    std::optional<LineWidth> mLineWidth;
 
-    std::optional<LineStyle>  mLineStyle;
-    std::optional<LineWidth>  mLineWidth;
-
-    std::optional<FillStyle>  mFillStyle;
+    std::optional<FillStyle> mFillStyle;
     std::optional<HatchStyle> mHatchStyle;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const PrimEllipse& aObj)
+[[maybe_unused]] static std::string to_string(const PrimEllipse& aObj)
 {
     std::string str;
 
@@ -119,20 +120,16 @@ static std::string to_string(const PrimEllipse& aObj)
     return str;
 }
 
-
 inline std::string PrimEllipse::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const PrimEllipse& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimEllipse& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // PRIMELLIPSE_HPP

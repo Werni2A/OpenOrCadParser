@@ -9,7 +9,6 @@
 #include "GenericParser.hpp"
 #include "Streams/StreamDsnStream.hpp"
 
-
 // @note Printing the content of this structure needs to be done after parsing
 //       `Library`, because there are some references to the string lists.
 //       I.e. parse `Library` first and later on `DsnStream` to avoid issues.

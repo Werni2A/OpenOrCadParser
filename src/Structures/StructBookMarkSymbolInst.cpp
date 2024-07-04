@@ -10,7 +10,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructBookMarkSymbolInst.hpp"
 
-
 void StructBookMarkSymbolInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

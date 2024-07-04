@@ -1,7 +1,6 @@
 #ifndef CONTAINEREXTRACTOR_HPP
 #define CONTAINEREXTRACTOR_HPP
 
-
 #include <filesystem>
 #include <iostream>
 #include <string>
@@ -12,15 +11,12 @@
 #include <compoundfilereader.h>
 #endif // COMPOUNDFILEREADER_H
 
-
 namespace fs = std::filesystem;
-
 
 class ContainerExtractor
 {
 
 public:
-
     ContainerExtractor() = delete;
 
     ContainerExtractor(const fs::path& aContainer);
@@ -67,7 +63,6 @@ public:
      */
     std::string getInternalPath(const CFB::COMPOUND_FILE_ENTRY* aEntry) const;
 
-
     /**
      * @brief Extract CFBF container.
      *
@@ -75,7 +70,6 @@ public:
      * @return fs::path Path to extracted container.
      */
     fs::path extract(const fs::path& aOutputDir);
-
 
     /**
      * @brief Get path of container.
@@ -88,7 +82,6 @@ public:
     }
 
 private:
-
     /**
      * @brief Write buffer to file.
      *
@@ -101,8 +94,7 @@ private:
     fs::path mContainer; //!< Path to the container file
     std::unique_ptr<CFB::CompoundFileReader> mReader;
     std::unique_ptr<uint8_t[]> mBuffer; //!< Contains the content of the container
-    size_t mBufferLen; //!< Container length
+    size_t mBufferLen;                  //!< Container length
 };
-
 
 #endif // CONTAINEREXTRACTOR_HPP

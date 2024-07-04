@@ -1,7 +1,6 @@
 #ifndef STRUCTWIRE_HPP
 #define STRUCTWIRE_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -29,34 +28,39 @@
 class StructWire : public Record
 {
 public:
-
-    StructWire(StreamContext& aCtx) : Record{aCtx}, id{0}, color{Color::Default},
-        startX{0}, startY{0}, endX{0}, endY{0},
-        lineWidth{LineWidth::Default}, lineStyle{LineStyle::Default}
-    { }
+    StructWire(StreamContext& aCtx)
+        : Record{aCtx},
+          id{0},
+          color{Color::Default},
+          startX{0},
+          startY{0},
+          endX{0},
+          endY{0},
+          lineWidth{LineWidth::Default},
+          lineStyle{LineStyle::Default}
+    {
+    }
 
     std::string to_string() const override;
 
     void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 
-    uint32_t  id;
-    Color     color;
+    uint32_t id;
+    Color color;
 
-    int32_t   startX;
-    int32_t   startY;
-    int32_t   endX;
-    int32_t   endY;
+    int32_t startX;
+    int32_t startY;
+    int32_t endX;
+    int32_t endY;
 
-    std::vector<std::unique_ptr<StructAlias>>             aliases;
+    std::vector<std::unique_ptr<StructAlias>> aliases;
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 
     LineWidth lineWidth;
     LineStyle lineStyle;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructWire& aObj)
+[[maybe_unused]] static std::string to_string(const StructWire& aObj)
 {
     std::string str;
 
@@ -92,20 +96,16 @@ static std::string to_string(const StructWire& aObj)
     return str;
 }
 
-
 inline std::string StructWire::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructWire& aObj)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructWire& aObj)
 {
     aOs << to_string(aObj);
 
     return aOs;
 }
-
 
 #endif // STRUCTWIRE_HPP

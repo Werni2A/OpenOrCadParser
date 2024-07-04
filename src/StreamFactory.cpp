@@ -13,11 +13,11 @@
 #include "Streams/StreamAdminData.hpp"
 #include "Streams/StreamBOMDataStream.hpp"
 #include "Streams/StreamCache.hpp"
+#include "Streams/StreamDTypeD.hpp"
 #include "Streams/StreamDirectoryStruct.hpp"
 #include "Streams/StreamDsnStream.hpp"
-#include "Streams/StreamDTypeD.hpp"
-#include "Streams/StreamHierarchy.hpp"
 #include "Streams/StreamHSObjects.hpp"
+#include "Streams/StreamHierarchy.hpp"
 #include "Streams/StreamLibrary.hpp"
 #include "Streams/StreamNetBundleMapData.hpp"
 #include "Streams/StreamPackage.hpp"
@@ -25,27 +25,25 @@
 #include "Streams/StreamSchematic.hpp"
 #include "Streams/StreamSymbol.hpp"
 
-
 std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::path& aInputStream)
 {
     auto streamLoc = CfbfStreamLocation{aInputStream, aCtx.mExtractedCfbfPath};
 
     aCtx.mLogger.debug("Got stream location: {}", ::to_string(streamLoc));
 
-    const auto getErrMsg = [](const std::vector<std::optional<std::string>>& aPattern, const CfbfStreamLocation& aStreamLoc)
+    const auto getErrMsg =
+        [](const std::vector<std::optional<std::string>>& aPattern, const CfbfStreamLocation& aStreamLoc)
+    {
+        std::string strPattern{};
+
+        for(const auto& part : aPattern)
         {
-            std::string strPattern{};
+            strPattern += "/" + part.value_or("*");
+        }
 
-            for(const auto& part : aPattern)
-            {
-                strPattern += "/" + part.value_or("*");
-            }
-
-            return fmt::format(
-                "Detected `{}` matching `{}` but stream parser is not yet implemented!",
-                ::to_string(aStreamLoc), strPattern
-                );
-        };
+        return fmt::format("Detected `{}` matching `{}` but stream parser is not yet implemented!",
+            ::to_string(aStreamLoc), strPattern);
+    };
 
     std::vector<std::optional<std::string>> pattern;
 
@@ -317,10 +315,8 @@ std::unique_ptr<Stream> StreamFactory::build(ContainerContext& aCtx, const fs::p
         return std::make_unique<StreamViewsDirectory>(aCtx, aInputStream);
     }
 
-    const std::string errMsg = fmt::format(
-        "Didn't find a suitable stream parser for stream location `{}`",
-        ::to_string(streamLoc)
-        );
+    const std::string errMsg =
+        fmt::format("Didn't find a suitable stream parser for stream location `{}`", ::to_string(streamLoc));
 
     aCtx.mLogger.warn(errMsg);
 

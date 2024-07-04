@@ -8,7 +8,6 @@
 #include "GenericParser.hpp"
 #include "Streams/StreamSymbol.hpp"
 
-
 void StreamSymbol::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

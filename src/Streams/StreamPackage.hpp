@@ -1,7 +1,6 @@
 #ifndef STREAMPACKAGE_HPP
 #define STREAMPACKAGE_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <ostream>
@@ -17,14 +16,16 @@
 #include "Structures/StructPackage.hpp"
 #include "Structures/StructPartCell.hpp"
 
-
 class StreamPackage : public Stream
 {
 public:
-
-    StreamPackage(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, partCells{}, libraryParts{},
-        package{}
-    { }
+    StreamPackage(ContainerContext& aCtx, const fs::path& aInputStream)
+        : Stream{aCtx, aInputStream},
+          partCells{},
+          libraryParts{},
+          package{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -40,15 +41,13 @@ public:
         return StreamType::Package;
     }
 
-    std::vector<std::unique_ptr<StructPartCell>>      partCells;
-    std::vector<std::unique_ptr<StructLibraryPart>>   libraryParts;
+    std::vector<std::unique_ptr<StructPartCell>> partCells;
+    std::vector<std::unique_ptr<StructLibraryPart>> libraryParts;
 
-    std::unique_ptr<StructPackage>                    package;
+    std::unique_ptr<StructPackage> package;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StreamPackage& aObj)
+[[maybe_unused]] static std::string to_string(const StreamPackage& aObj)
 {
     std::string str;
 
@@ -81,20 +80,16 @@ static std::string to_string(const StreamPackage& aObj)
     return str;
 }
 
-
 inline std::string StreamPackage::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StreamPackage& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamPackage& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STREAMPACKAGE_HPP

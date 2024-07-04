@@ -13,7 +13,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructPartCell.hpp"
 
-
 void StructPartCell::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -41,9 +40,9 @@ void StructPartCell::read(FileFormatVersion /* aVersion */)
 
     // @todo use enum for the view (normal/convert)
     const uint16_t viewNumber = ds.readUint16(); // @todo I assume that this is the amount of views
-                                               // the symbol has. Typically 1 (.Normal) or maybe
-                                               // 2 with (.Normal and .Convert)
-                                               // @todo Add to obj
+                                                 // the symbol has. Typically 1 (.Normal) or maybe
+                                                 // 2 with (.Normal and .Convert)
+                                                 // @todo Add to obj
 
     mCtx.mLogger.trace("viewNumber = {}", viewNumber);
 
@@ -54,7 +53,7 @@ void StructPartCell::read(FileFormatVersion /* aVersion */)
 
     if(viewNumber == 2U) // Contains ".Normal" and ".Convert"
     {
-        normalName = ds.readStringLenZeroTerm();
+        normalName  = ds.readStringLenZeroTerm();
         convertName = ds.readStringLenZeroTerm();
     }
 
@@ -63,8 +62,7 @@ void StructPartCell::read(FileFormatVersion /* aVersion */)
 
     if(viewNumber != 1U && viewNumber != 2U)
     {
-        const std::string msg = fmt::format("viewNumber = {} but expected it to be 1 or 2!",
-            viewNumber);
+        const std::string msg = fmt::format("viewNumber = {} but expected it to be 1 or 2!", viewNumber);
 
         mCtx.mLogger.error(msg);
         throw std::runtime_error(msg);

@@ -1,7 +1,6 @@
 #ifndef DIRECTORYTYPE_HPP
 #define DIRECTORYTYPE_HPP
 
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -9,7 +8,6 @@
 #include <magic_enum.hpp>
 
 #include "General.hpp"
-
 
 enum class DirectoryType
 {
@@ -22,9 +20,7 @@ enum class DirectoryType
     ViewsDirectory
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const DirectoryType& aVal)
+[[maybe_unused]] static std::string to_string(const DirectoryType& aVal)
 {
     switch(aVal)
     {
@@ -54,15 +50,10 @@ static std::string to_string(const DirectoryType& aVal)
     }
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const DirectoryType& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const DirectoryType& aVal)
 {
     aOs << to_string(aVal);
     return aOs;
 }
 
-
 #endif // DIRECTORYTYPE_HPP
-
-

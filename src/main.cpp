@@ -9,26 +9,21 @@
 #include "Container.hpp"
 // #include "XmlExporter.hpp"
 
-
 namespace fs = std::filesystem;
 namespace po = boost::program_options;
 
-
-void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& extract,
-    fs::path& output, int& verbosity, bool& stopParsing, bool& keep, unsigned int& jobs)
+void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& extract, fs::path& output,
+    int& verbosity, bool& stopParsing, bool& keep, unsigned int& jobs)
 {
     po::options_description desc("Allowed options");
-    desc.add_options()
-        ("help,h",                                                     "produce help message")
-        ("print_tree,t", po::bool_switch()->default_value(false),      "print container tree")
-        ("extract,e",    po::bool_switch()->default_value(false),      "extract binary files from CFBF container")
-        ("input,i",      po::value<std::string>(),                     "input file to parse")
-        ("output,o",     po::value<std::string>(),                     "output path (required iff extract is set)")
-        ("verbosity,v",  po::value<int>()->default_value(4),           "verbosity level (0 = off, 6 = highest)")
-        ("stop,s",       po::bool_switch()->default_value(false),      "stop parsing on low severity errors")
-        ("keep,k",       po::bool_switch()->default_value(false),      "keep temporary files after parser completed")
-        ("jobs,j",       po::value<unsigned int>()->default_value(1U), "number of threads (jobs) to run stream parsing in parallel")
-    ;
+    desc.add_options()("help,h", "produce help message")("print_tree,t", po::bool_switch()->default_value(false),
+        "print container tree")("extract,e", po::bool_switch()->default_value(false),
+        "extract binary files from CFBF container")("input,i", po::value<std::string>(), "input file to parse")(
+        "output,o", po::value<std::string>(), "output path (required iff extract is set)")(
+        "verbosity,v", po::value<int>()->default_value(4), "verbosity level (0 = off, 6 = highest)")(
+        "stop,s", po::bool_switch()->default_value(false), "stop parsing on low severity errors")(
+        "keep,k", po::bool_switch()->default_value(false), "keep temporary files after parser completed")("jobs,j",
+        po::value<unsigned int>()->default_value(1U), "number of threads (jobs) to run stream parsing in parallel");
 
     po::variables_map vm;
     po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -108,44 +103,57 @@ void parseArgs(int argc, char* argv[], fs::path& input, bool& printTree, bool& e
     }
 }
 
-
 int main(int argc, char* argv[])
 {
-    fs::path     inputFile;
-    bool         printTree;
-    bool         extract;
-    fs::path     outputPath;
-    int          verbosity;
-    bool         stopParsing; // on low severity errors
-    bool         keepTmpFiles;
+    fs::path inputFile;
+    bool printTree;
+    bool extract;
+    fs::path outputPath;
+    int verbosity;
+    bool stopParsing; // on low severity errors
+    bool keepTmpFiles;
     unsigned int jobs;
 
-    parseArgs(argc, argv, inputFile, printTree, extract,
-        outputPath, verbosity, stopParsing, keepTmpFiles, jobs);
+    parseArgs(argc, argv, inputFile, printTree, extract, outputPath, verbosity, stopParsing, keepTmpFiles, jobs);
 
-   // Creating console logger
+    // Creating console logger
     auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
 
     // Creating file logger
     auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>("OpenOrCadParser.log");
 
     // Creating multi-logger
-    spdlog::logger logger{"console and file", {console_sink, file_sink}};
+    spdlog::logger logger{
+        "console and file", {console_sink, file_sink}
+    };
 
     spdlog::set_default_logger(std::make_shared<spdlog::logger>(logger));
 
     switch(verbosity)
     {
-        case 0: spdlog::set_level(spdlog::level::off);      break;
-        case 1: spdlog::set_level(spdlog::level::critical); break;
-        case 2: spdlog::set_level(spdlog::level::err);      break;
-        case 3: spdlog::set_level(spdlog::level::warn);     break;
-        case 4: spdlog::set_level(spdlog::level::info);     break;
-        case 5: spdlog::set_level(spdlog::level::debug);    break;
-        case 6: spdlog::set_level(spdlog::level::trace);    break;
+        case 0:
+            spdlog::set_level(spdlog::level::off);
+            break;
+        case 1:
+            spdlog::set_level(spdlog::level::critical);
+            break;
+        case 2:
+            spdlog::set_level(spdlog::level::err);
+            break;
+        case 3:
+            spdlog::set_level(spdlog::level::warn);
+            break;
+        case 4:
+            spdlog::set_level(spdlog::level::info);
+            break;
+        case 5:
+            spdlog::set_level(spdlog::level::debug);
+            break;
+        case 6:
+            spdlog::set_level(spdlog::level::trace);
+            break;
         default:
-            throw std::runtime_error(
-                fmt::format("Invalid verbosity argument {}", verbosity));
+            throw std::runtime_error(fmt::format("Invalid verbosity argument {}", verbosity));
             break;
     }
 

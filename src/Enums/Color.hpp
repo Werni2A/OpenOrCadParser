@@ -1,7 +1,6 @@
 #ifndef COLOR_HPP
 #define COLOR_HPP
 
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -10,19 +9,18 @@
 
 #include "General.hpp"
 
-
 enum class Color
 {
-    VeryLightRed            =  0, // Color code: #ff8080
-    VeryLightYellow         =  1, // Color code: #ffff80
-    VeryLightLimeGreen      =  2, // Color code: #80ff80
-    Cyan2                   =  3, // Color code: #00ff80
-    VeryLightCyan           =  4, // Color code: #80ffff
-    Blue2                   =  5, // Color code: #0080ff
-    VeryLightPink           =  6, // Color code: #ff80c0
-    VeryLightMagenta        =  7, // Color code: #ff80ff
-    Red                     =  8, // Color code: #ff0000
-    Yellow                  =  9, // Color code: #ffff00
+    VeryLightRed            = 0,  // Color code: #ff8080
+    VeryLightYellow         = 1,  // Color code: #ffff80
+    VeryLightLimeGreen      = 2,  // Color code: #80ff80
+    Cyan2                   = 3,  // Color code: #00ff80
+    VeryLightCyan           = 4,  // Color code: #80ffff
+    Blue2                   = 5,  // Color code: #0080ff
+    VeryLightPink           = 6,  // Color code: #ff80c0
+    VeryLightMagenta        = 7,  // Color code: #ff80ff
+    Red                     = 8,  // Color code: #ff0000
+    Yellow                  = 9,  // Color code: #ffff00
     Green                   = 10, // Color code: #80ff00
     Cyan1                   = 11, // Color code: #00ff40
     Cyan3                   = 12, // Color code: #00ffff
@@ -64,27 +62,20 @@ enum class Color
     Default                 = 48
 };
 
-
-[[maybe_unused]]
-static constexpr Color ToColor(uint32_t aVal)
+[[maybe_unused]] static constexpr Color ToColor(uint32_t aVal)
 {
     return ToEnum<Color, decltype(aVal)>(aVal);
 }
 
-
-[[maybe_unused]]
-static std::string to_string(const Color& aVal)
+[[maybe_unused]] static std::string to_string(const Color& aVal)
 {
     return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const Color& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const Color& aVal)
 {
     aOs << to_string(aVal);
     return aOs;
 }
-
 
 #endif // COLOR_HPP

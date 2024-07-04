@@ -10,7 +10,6 @@
 #include "GenericParser.hpp"
 #include "Primitives/PrimArc.hpp"
 
-
 size_t PrimArc::getExpectedStructSize(FileFormatVersion aVersion)
 {
     size_t expectedByteLength;
@@ -27,7 +26,6 @@ size_t PrimArc::getExpectedStructSize(FileFormatVersion aVersion)
     return expectedByteLength;
 }
 
-
 void PrimArc::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
@@ -42,9 +40,14 @@ void PrimArc::read(FileFormatVersion aVersion)
     // Predict version
     switch(byteLength)
     {
-        case 40: aVersion = FileFormatVersion::A; break;
-        case 48: aVersion = FileFormatVersion::B; break;
-        default:                                  break;
+        case 40:
+            aVersion = FileFormatVersion::A;
+            break;
+        case 48:
+            aVersion = FileFormatVersion::B;
+            break;
+        default:
+            break;
     }
 
     ds.assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");

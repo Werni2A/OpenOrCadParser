@@ -1,7 +1,6 @@
 #ifndef STRUCTSTHINHIERARCHY1_HPP
 #define STRUCTSTHINHIERARCHY1_HPP
 
-
 #include <cstdint>
 #include <optional>
 #include <ostream>
@@ -13,13 +12,13 @@
 #include "General.hpp"
 #include "Record.hpp"
 
-
 class StructSthInHierarchy1 : public Record
 {
 public:
-
-    StructSthInHierarchy1(StreamContext& aCtx) : Record{aCtx}
-    { }
+    StructSthInHierarchy1(StreamContext& aCtx)
+        : Record{aCtx}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -34,12 +33,9 @@ public:
     {
         return Structure::SthInHierarchy1;
     }
-
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructSthInHierarchy1& aObj)
+[[maybe_unused]] static std::string to_string(const StructSthInHierarchy1& aObj)
 {
     std::string str;
 
@@ -48,20 +44,16 @@ static std::string to_string(const StructSthInHierarchy1& aObj)
     return str;
 }
 
-
 inline std::string StructSthInHierarchy1::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructSthInHierarchy1& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSthInHierarchy1& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTSTHINHIERARCHY1_HPP

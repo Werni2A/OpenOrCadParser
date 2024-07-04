@@ -1,7 +1,6 @@
 #ifndef STRUCTPARTCELL_HPP
 #define STRUCTPARTCELL_HPP
 
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -11,14 +10,16 @@
 
 #include "Record.hpp"
 
-
 class StructPartCell : public Record
 {
 public:
-
-    StructPartCell(StreamContext& aCtx) : Record{aCtx}, ref{},
-        normalName{}, convertName{}
-    { }
+    StructPartCell(StreamContext& aCtx)
+        : Record{aCtx},
+          ref{},
+          normalName{},
+          convertName{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -39,9 +40,7 @@ public:
     std::string convertName;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructPartCell& aObj)
+[[maybe_unused]] static std::string to_string(const StructPartCell& aObj)
 {
     std::string str;
 
@@ -53,20 +52,16 @@ static std::string to_string(const StructPartCell& aObj)
     return str;
 }
 
-
 inline std::string StructPartCell::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructPartCell& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructPartCell& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTPARTCELL_HPP

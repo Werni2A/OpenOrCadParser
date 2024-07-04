@@ -10,7 +10,6 @@
 #include "GenericParser.hpp"
 #include "Primitives/PrimEllipse.hpp"
 
-
 size_t PrimEllipse::getExpectedStructSize(FileFormatVersion aVersion)
 {
     size_t expectedByteLength;
@@ -37,7 +36,6 @@ size_t PrimEllipse::getExpectedStructSize(FileFormatVersion aVersion)
     return expectedByteLength;
 }
 
-
 void PrimEllipse::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
@@ -52,10 +50,17 @@ void PrimEllipse::read(FileFormatVersion aVersion)
     // Predict version
     switch(byteLength)
     {
-        case 24: aVersion = FileFormatVersion::A; break;
-        case 32: aVersion = FileFormatVersion::B; break;
-        case 40: aVersion = FileFormatVersion::C; break;
-        default:                                  break;
+        case 24:
+            aVersion = FileFormatVersion::A;
+            break;
+        case 32:
+            aVersion = FileFormatVersion::B;
+            break;
+        case 40:
+            aVersion = FileFormatVersion::C;
+            break;
+        default:
+            break;
     }
 
     ds.assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");

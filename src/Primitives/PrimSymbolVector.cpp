@@ -12,7 +12,6 @@
 #include "GenericParser.hpp"
 #include "Primitives/PrimSymbolVector.hpp"
 
-
 void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -21,13 +20,13 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
     const auto readSmallPrefixPrimitive = [&, this]() -> Primitive
-        {
-            Primitive primitive = ToPrimitive(ds.readUint8());
-            ds.assumeData({0x00}, getMethodName(this, __func__) + ": 0");
-            ds.assumeData({static_cast<uint8_t>(primitive)}, getMethodName(this, __func__) + ": 1");
+    {
+        Primitive primitive = ToPrimitive(ds.readUint8());
+        ds.assumeData({0x00}, getMethodName(this, __func__) + ": 0");
+        ds.assumeData({static_cast<uint8_t>(primitive)}, getMethodName(this, __func__) + ": 1");
 
-            return primitive;
-        };
+        return primitive;
+    };
 
     FutureDataLst localFutureLst{mCtx};
 
@@ -52,9 +51,8 @@ void PrimSymbolVector::read(FileFormatVersion /* aVersion */)
     name = ds.readStringLenZeroTerm();
 
     // @todo contains smallPrefixPrimitive
-    // ds.assumeData({0x00, 0x00, 0x00, 0x00, 0x32, 0x00, 0x32, 0x00, 0x00, 0x00, 0x02, 0x00}, getMethodName(this, __func__) + ": 2");
-    // ds.printUnknownData(12, getMethodName(this, __func__) + ": 2");
-
+    // ds.assumeData({0x00, 0x00, 0x00, 0x00, 0x32, 0x00, 0x32, 0x00, 0x00, 0x00, 0x02, 0x00}, getMethodName(this,
+    // __func__) + ": 2"); ds.printUnknownData(12, getMethodName(this, __func__) + ": 2");
 
     mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     mCtx.mLogger.trace(to_string());

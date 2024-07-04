@@ -9,7 +9,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
-
 void StructGraphicInst::read(FutureDataLst& mLocalFutureLst, FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -52,7 +51,8 @@ void StructGraphicInst::read(FutureDataLst& mLocalFutureLst, FileFormatVersion /
     mCtx.mLogger.trace("color = {}", ::to_string(color));
 
     ds.printUnknownData(1, getMethodName(this, __func__) + ": StructGraphicInst - 1");
-    ds.printUnknownData(1, getMethodName(this, __func__) + ": StructGraphicInst - 2"); // @todo Probably structure ID of current structure
+    ds.printUnknownData(1,
+        getMethodName(this, __func__) + ": StructGraphicInst - 2"); // @todo Probably structure ID of current structure
     ds.printUnknownData(1, getMethodName(this, __func__) + ": StructGraphicInst - 3");
 
     const uint16_t lenSymbolDisplayProps = ds.readUint16();
@@ -92,8 +92,7 @@ void StructGraphicInst::read(FutureDataLst& mLocalFutureLst, FileFormatVersion /
             break;
 
         default:
-            throw std::runtime_error(fmt::format("Unexpected value {} for unknownFlag",
-                unknownFlag));
+            throw std::runtime_error(fmt::format("Unexpected value {} for unknownFlag", unknownFlag));
             break;
     }
 

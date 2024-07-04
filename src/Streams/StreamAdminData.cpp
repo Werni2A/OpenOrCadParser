@@ -7,7 +7,6 @@
 #include "General.hpp"
 #include "Streams/StreamAdminData.hpp"
 
-
 void StreamAdminData::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -22,8 +21,8 @@ void StreamAdminData::read(FileFormatVersion /* aVersion */)
         mCtx.mLogger.warn("{}: Found new value. Check it out!", getMethodName(this, __func__));
     }
 
-    ds.assumeData({0x00, 0x00, 0x00, 0x00, 0x00},
-        fmt::format("{}: Found actually useful data!", getMethodName(this, __func__)));
+    ds.assumeData(
+        {0x00, 0x00, 0x00, 0x00, 0x00}, fmt::format("{}: Found actually useful data!", getMethodName(this, __func__)));
 
     ds.sanitizeEoF();
 

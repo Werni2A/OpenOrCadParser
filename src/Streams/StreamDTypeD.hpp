@@ -1,7 +1,6 @@
 #ifndef STREAMDTYPED_HPP
 #define STREAMDTYPED_HPP
 
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -10,17 +9,18 @@
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "Stream.hpp"
 #include "Enums/ComponentType.hpp"
-
+#include "Stream.hpp"
 
 // @note This is used in `$Type$` files
 class Type
 {
 public:
-
-    Type() : name{}, componentType{ComponentType::Graphic}
-    { }
+    Type()
+        : name{},
+          componentType{ComponentType::Graphic}
+    {
+    }
 
     std::string to_string() const;
 
@@ -28,9 +28,7 @@ public:
     ComponentType componentType;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const Type& aObj)
+[[maybe_unused]] static std::string to_string(const Type& aObj)
 {
     std::string str;
 
@@ -41,28 +39,26 @@ static std::string to_string(const Type& aObj)
     return str;
 }
 
-
 inline std::string Type::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const Type& aObj)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const Type& aObj)
 {
     aOs << to_string(aObj);
 
     return aOs;
 }
 
-
 class StreamDTypeD : public Stream
 {
 public:
-
-    StreamDTypeD(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, types{}
-    { }
+    StreamDTypeD(ContainerContext& aCtx, const fs::path& aInputStream)
+        : Stream{aCtx, aInputStream},
+          types{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -81,9 +77,7 @@ public:
     std::vector<Type> types;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StreamDTypeD& aObj)
+[[maybe_unused]] static std::string to_string(const StreamDTypeD& aObj)
 {
     std::string str;
 
@@ -99,20 +93,16 @@ static std::string to_string(const StreamDTypeD& aObj)
     return str;
 }
 
-
 inline std::string StreamDTypeD::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StreamDTypeD& aObj)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamDTypeD& aObj)
 {
     aOs << to_string(aObj);
 
     return aOs;
 }
-
 
 #endif // STREAMDTYPED_HPP

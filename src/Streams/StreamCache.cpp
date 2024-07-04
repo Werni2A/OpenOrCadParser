@@ -9,7 +9,6 @@
 #include "GenericParser.hpp"
 #include "Streams/StreamCache.hpp"
 
-
 void StreamCache::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -17,11 +16,32 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
 
     mCtx.mLogger.debug(getOpeningMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
 
-    const auto hasStrAfter0Byte = [&]() -> bool { return parser.tryRead([&](){ ds.readBytes(0U); ds.readStringLenZeroTerm(); }); };
-    const auto hasStrAfter8Byte = [&]() -> bool { return parser.tryRead([&](){ ds.readBytes(8U); ds.readStringLenZeroTerm(); }); };
+    const auto hasStrAfter0Byte = [&]() -> bool
+    {
+        return parser.tryRead(
+            [&]()
+            {
+                ds.readBytes(0U);
+                ds.readStringLenZeroTerm();
+            });
+    };
+    const auto hasStrAfter8Byte = [&]() -> bool
+    {
+        return parser.tryRead(
+            [&]()
+            {
+                ds.readBytes(8U);
+                ds.readStringLenZeroTerm();
+            });
+    };
 
     // Early out for empty caches
-    if(parser.tryRead([&](){ ds.readBytes(10U); ds.sanitizeEoF(); }))
+    if(parser.tryRead(
+           [&]()
+           {
+               ds.readBytes(10U);
+               ds.sanitizeEoF();
+           }))
     {
         // 10 zero bytes
         ds.assumeData({0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, getMethodName(this, __func__) + ": 0");
@@ -80,13 +100,18 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
                         break;
                     }
 
-                    if(parser.tryRead([&](){ ds.readBytes(1U); ds.sanitizeEoF(); }))
+                    if(parser.tryRead(
+                           [&]()
+                           {
+                               ds.readBytes(1U);
+                               ds.sanitizeEoF();
+                           }))
                     {
                         ds.printUnknownData(1U, "Unknown Byte before end");
                         break;
                     }
 
-                    const bool hasMysterious2Byte = !parser.tryRead([&](){ ds.readStringLenZeroTerm(); });
+                    const bool hasMysterious2Byte = !parser.tryRead([&]() { ds.readStringLenZeroTerm(); });
 
                     if(hasMysterious2Byte)
                     {
@@ -98,7 +123,7 @@ void StreamCache::read(FileFormatVersion /* aVersion */)
                     mCtx.mLogger.trace("someStr[{}][{}] = {}", i, j, someStr);
 
                     j++;
-                } while (someVal == 0x0U);
+                } while(someVal == 0x0U);
 
                 if(ds.isEoF())
                 {
