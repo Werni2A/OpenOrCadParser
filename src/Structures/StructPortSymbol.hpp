@@ -1,7 +1,6 @@
 #ifndef STRUCTPORTSYMBOL_HPP
 #define STRUCTPORTSYMBOL_HPP
 
-
 #include <cstdint>
 #include <optional>
 #include <ostream>
@@ -13,13 +12,13 @@
 #include "General.hpp"
 #include "Structures/StructSymbol.hpp"
 
-
 class StructPortSymbol : public StructSymbol
 {
 public:
-
-    StructPortSymbol(StreamContext& aCtx) : StructSymbol{aCtx}
-    { }
+    StructPortSymbol(StreamContext& aCtx)
+        : StructSymbol{aCtx}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -36,9 +35,7 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructPortSymbol& aObj)
+[[maybe_unused]] static std::string to_string(const StructPortSymbol& aObj)
 {
     std::string str;
 
@@ -47,20 +44,16 @@ static std::string to_string(const StructPortSymbol& aObj)
     return str;
 }
 
-
 inline std::string StructPortSymbol::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructPortSymbol& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructPortSymbol& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTPORTSYMBOL_HPP

@@ -1,7 +1,6 @@
 #ifndef STRUCTBUSENTRY_HPP
 #define STRUCTBUSENTRY_HPP
 
-
 #include <cstdint>
 #include <optional>
 #include <ostream>
@@ -14,14 +13,18 @@
 #include "General.hpp"
 #include "Record.hpp"
 
-
 class StructBusEntry : public Record
 {
 public:
-
-    StructBusEntry(StreamContext& aCtx) : Record{aCtx}, color{Color::Default},
-        startX{0}, startY{0}, endX{0}, endY{0}
-    { }
+    StructBusEntry(StreamContext& aCtx)
+        : Record{aCtx},
+          color{Color::Default},
+          startX{0},
+          startY{0},
+          endX{0},
+          endY{0}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -37,18 +40,16 @@ public:
         return Structure::BusEntry;
     }
 
-    Color    color;
+    Color color;
 
-    int32_t  startX;
-    int32_t  startY;
+    int32_t startX;
+    int32_t startY;
 
-    int32_t  endX;
-    int32_t  endY;
+    int32_t endX;
+    int32_t endY;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructBusEntry& aObj)
+[[maybe_unused]] static std::string to_string(const StructBusEntry& aObj)
 {
     std::string str;
 
@@ -62,20 +63,16 @@ static std::string to_string(const StructBusEntry& aObj)
     return str;
 }
 
-
 inline std::string StructBusEntry::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructBusEntry& aObj)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructBusEntry& aObj)
 {
     aOs << to_string(aObj);
 
     return aOs;
 }
-
 
 #endif // STRUCTBUSENTRY_HPP

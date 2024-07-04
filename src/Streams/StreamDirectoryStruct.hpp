@@ -1,7 +1,6 @@
 #ifndef STREAMDIRECTORYSTRUCT_HPP
 #define STREAMDIRECTORYSTRUCT_HPP
 
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -14,14 +13,16 @@
 #include "General.hpp"
 #include "Stream.hpp"
 
-
 class DirItemType
 {
 public:
-
-    DirItemType() : name{}, componentType{ComponentType::Graphic},
-        fileFormatVersion{0}, timezone{0}
-    { }
+    DirItemType()
+        : name{},
+          componentType{ComponentType::Graphic},
+          fileFormatVersion{0},
+          timezone{0}
+    {
+    }
 
     std::string to_string() const;
 
@@ -34,9 +35,7 @@ public:
     int16_t timezone; //!< Refer to http://time.unitarium.com/military/ for more details.
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const DirItemType& aObj)
+[[maybe_unused]] static std::string to_string(const DirItemType& aObj)
 {
     std::string str;
 
@@ -48,21 +47,17 @@ static std::string to_string(const DirItemType& aObj)
     return str;
 }
 
-
 inline std::string DirItemType::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const DirItemType& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const DirItemType& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 // Used to parse
 // - `Cells Directory`
@@ -75,10 +70,12 @@ static std::ostream& operator<<(std::ostream& aOs, const DirItemType& aVal)
 class StreamDirectoryStruct : public Stream
 {
 public:
-
-    StreamDirectoryStruct(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream},
-        lastModifiedDate{0}, items{}
-    { }
+    StreamDirectoryStruct(ContainerContext& aCtx, const fs::path& aInputStream)
+        : Stream{aCtx, aInputStream},
+          lastModifiedDate{0},
+          items{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -94,9 +91,7 @@ public:
     std::vector<DirItemType> items;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StreamDirectoryStruct& aObj)
+[[maybe_unused]] static std::string to_string(const StreamDirectoryStruct& aObj)
 {
     std::string str;
 
@@ -112,26 +107,24 @@ static std::string to_string(const StreamDirectoryStruct& aObj)
     return str;
 }
 
-
 inline std::string StreamDirectoryStruct::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StreamDirectoryStruct& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamDirectoryStruct& aVal)
 {
     aOs << to_string(aVal);
     return aOs;
 }
 
-
 class StreamCellsDirectory : public StreamDirectoryStruct
 {
 public:
-    StreamCellsDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
-    { }
+    StreamCellsDirectory(ContainerContext& aCtx, const fs::path& aInputStream)
+        : StreamDirectoryStruct{aCtx, aInputStream}
+    {
+    }
 
     virtual StreamType getStreamType() const override
     {
@@ -142,8 +135,10 @@ public:
 class StreamExportBlocksDirectory : public StreamDirectoryStruct
 {
 public:
-    StreamExportBlocksDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
-    { }
+    StreamExportBlocksDirectory(ContainerContext& aCtx, const fs::path& aInputStream)
+        : StreamDirectoryStruct{aCtx, aInputStream}
+    {
+    }
 
     virtual StreamType getStreamType() const override
     {
@@ -154,8 +149,10 @@ public:
 class StreamGraphicsDirectory : public StreamDirectoryStruct
 {
 public:
-    StreamGraphicsDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
-    { }
+    StreamGraphicsDirectory(ContainerContext& aCtx, const fs::path& aInputStream)
+        : StreamDirectoryStruct{aCtx, aInputStream}
+    {
+    }
 
     virtual StreamType getStreamType() const override
     {
@@ -166,8 +163,10 @@ public:
 class StreamPackagesDirectory : public StreamDirectoryStruct
 {
 public:
-    StreamPackagesDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
-    { }
+    StreamPackagesDirectory(ContainerContext& aCtx, const fs::path& aInputStream)
+        : StreamDirectoryStruct{aCtx, aInputStream}
+    {
+    }
 
     virtual StreamType getStreamType() const override
     {
@@ -178,8 +177,10 @@ public:
 class StreamPartsDirectory : public StreamDirectoryStruct
 {
 public:
-    StreamPartsDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
-    { }
+    StreamPartsDirectory(ContainerContext& aCtx, const fs::path& aInputStream)
+        : StreamDirectoryStruct{aCtx, aInputStream}
+    {
+    }
 
     virtual StreamType getStreamType() const override
     {
@@ -190,8 +191,10 @@ public:
 class StreamSymbolsDirectory : public StreamDirectoryStruct
 {
 public:
-    StreamSymbolsDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
-    { }
+    StreamSymbolsDirectory(ContainerContext& aCtx, const fs::path& aInputStream)
+        : StreamDirectoryStruct{aCtx, aInputStream}
+    {
+    }
 
     virtual StreamType getStreamType() const override
     {
@@ -202,14 +205,15 @@ public:
 class StreamViewsDirectory : public StreamDirectoryStruct
 {
 public:
-    StreamViewsDirectory(ContainerContext& aCtx, const fs::path& aInputStream) : StreamDirectoryStruct{aCtx, aInputStream}
-    { }
+    StreamViewsDirectory(ContainerContext& aCtx, const fs::path& aInputStream)
+        : StreamDirectoryStruct{aCtx, aInputStream}
+    {
+    }
 
     virtual StreamType getStreamType() const override
     {
         return StreamType::ViewsDirectory;
     }
 };
-
 
 #endif // STREAMDIRECTORYSTRUCT_HPP

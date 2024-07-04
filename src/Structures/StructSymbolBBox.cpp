@@ -8,7 +8,6 @@
 #include "General.hpp"
 #include "Structures/StructSymbolBBox.hpp"
 
-
 // @todo is probably trailing data and not a struct object!
 void StructSymbolBBox::read(FileFormatVersion /* aVersion */)
 {

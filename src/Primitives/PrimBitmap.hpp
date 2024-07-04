@@ -1,7 +1,6 @@
 #ifndef PRIMBITMAP_HPP
 #define PRIMBITMAP_HPP
 
-
 #include <cstdint>
 #include <filesystem>
 #include <ostream>
@@ -13,17 +12,23 @@
 #include "General.hpp"
 #include "Primitives/PrimBase.hpp"
 
-
 namespace fs = std::filesystem;
-
 
 class PrimBitmap : public PrimBase
 {
 public:
-
-    PrimBitmap(StreamContext& aCtx) : PrimBase{aCtx}, locX{0}, locY{0},
-        x1{0}, y1{0}, x2{0}, y2{0}, bmpWidth{0}, bmpHeight{0}
-    { }
+    PrimBitmap(StreamContext& aCtx)
+        : PrimBase{aCtx},
+          locX{0},
+          locY{0},
+          x1{0},
+          y1{0},
+          x2{0},
+          y2{0},
+          bmpWidth{0},
+          bmpHeight{0}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -62,9 +67,7 @@ public:
     std::vector<uint8_t> rawImgData; // @todo called val in the XSD file
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const PrimBitmap& aObj)
+[[maybe_unused]] static std::string to_string(const PrimBitmap& aObj)
 {
     std::string str;
 
@@ -83,20 +86,16 @@ static std::string to_string(const PrimBitmap& aObj)
     return str;
 }
 
-
 inline std::string PrimBitmap::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const PrimBitmap& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimBitmap& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // PRIMBITMAP_HPP

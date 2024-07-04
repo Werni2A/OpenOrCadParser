@@ -1,7 +1,6 @@
 #ifndef STRUCTGRAPHICPOLYLINEINST_HPP
 #define STRUCTGRAPHICPOLYLINEINST_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -14,13 +13,13 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
-
 class StructGraphicPolylineInst : public StructGraphicInst
 {
 public:
-
-    StructGraphicPolylineInst(StreamContext& aCtx) : StructGraphicInst{aCtx}
-    { }
+    StructGraphicPolylineInst(StreamContext& aCtx)
+        : StructGraphicInst{aCtx}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -37,13 +36,10 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructGraphicPolylineInst& aObj)
+[[maybe_unused]] static std::string to_string(const StructGraphicPolylineInst& aObj)
 {
     return aObj.to_string();
 }
-
 
 inline std::string StructGraphicPolylineInst::to_string() const
 {
@@ -56,14 +52,11 @@ inline std::string StructGraphicPolylineInst::to_string() const
     return str;
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructGraphicPolylineInst& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGraphicPolylineInst& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTGRAPHICPOLYLINEINST_HPP

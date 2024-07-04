@@ -1,7 +1,6 @@
 #ifndef STRUCTGRAPHICOLEEMBEDINST_HPP
 #define STRUCTGRAPHICOLEEMBEDINST_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -14,13 +13,13 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
-
 class StructGraphicOleEmbedInst : public StructGraphicInst
 {
 public:
-
-    StructGraphicOleEmbedInst(StreamContext& aCtx) : StructGraphicInst{aCtx}
-    { }
+    StructGraphicOleEmbedInst(StreamContext& aCtx)
+        : StructGraphicInst{aCtx}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -37,13 +36,10 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructGraphicOleEmbedInst& aObj)
+[[maybe_unused]] static std::string to_string(const StructGraphicOleEmbedInst& aObj)
 {
     return aObj.to_string();
 }
-
 
 inline std::string StructGraphicOleEmbedInst::to_string() const
 {
@@ -56,14 +52,11 @@ inline std::string StructGraphicOleEmbedInst::to_string() const
     return str;
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructGraphicOleEmbedInst& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGraphicOleEmbedInst& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTGRAPHICOLEEMBEDINST_HPP

@@ -1,7 +1,6 @@
 #ifndef STRUCTWIRESCALAR_HPP
 #define STRUCTWIRESCALAR_HPP
 
-
 #include <cstdint>
 #include <optional>
 #include <ostream>
@@ -16,13 +15,13 @@
 #include "General.hpp"
 #include "Structures/StructWire.hpp"
 
-
 class StructWireScalar : public StructWire
 {
 public:
-
-    StructWireScalar(StreamContext& aCtx) : StructWire{aCtx}
-    { }
+    StructWireScalar(StreamContext& aCtx)
+        : StructWire{aCtx}
+    {
+    }
 
     // std::string to_string() const override;
 
@@ -50,6 +49,5 @@ public:
     // LineWidth wireLineWidth;
     // LineStyle wireLineStyle;
 };
-
 
 #endif // STRUCTWIRESCALAR_HPP

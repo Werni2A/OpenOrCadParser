@@ -1,7 +1,6 @@
 #ifndef PRIMLINE_HPP
 #define PRIMLINE_HPP
 
-
 #include <cstdint>
 #include <optional>
 #include <ostream>
@@ -15,12 +14,19 @@
 #include "Primitives/PrimBase.hpp"
 #include "Primitives/PrimLine.hpp"
 
-
 class PrimLine : public PrimBase
 {
 public:
-    PrimLine(StreamContext& aCtx) : PrimBase{aCtx}, x1{0}, y1{0}, x2{0}, y2{0}, mLineStyle{}, mLineWidth{}
-    { }
+    PrimLine(StreamContext& aCtx)
+        : PrimBase{aCtx},
+          x1{0},
+          y1{0},
+          x2{0},
+          y2{0},
+          mLineStyle{},
+          mLineWidth{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -65,14 +71,11 @@ public:
     int32_t y2;
 
 private:
-
     std::optional<LineStyle> mLineStyle;
     std::optional<LineWidth> mLineWidth;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const PrimLine& aObj)
+[[maybe_unused]] static std::string to_string(const PrimLine& aObj)
 {
     std::string str;
 
@@ -87,20 +90,16 @@ static std::string to_string(const PrimLine& aObj)
     return str;
 }
 
-
 inline std::string PrimLine::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const PrimLine& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimLine& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // PRIMLINE_HPP

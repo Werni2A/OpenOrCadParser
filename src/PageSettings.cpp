@@ -7,7 +7,6 @@
 #include "General.hpp"
 #include "PageSettings.hpp"
 
-
 void PageSettings::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -75,7 +74,7 @@ void PageSettings::read(FileFormatVersion /* aVersion */)
 
     mCtx.mLogger.trace("horizontalAscending = {}", horizontalAscending);
 
-    verticalChar   = ds.readUint32();
+    verticalChar = ds.readUint32();
 
     mCtx.mLogger.trace("verticalChar = {}", verticalChar);
 

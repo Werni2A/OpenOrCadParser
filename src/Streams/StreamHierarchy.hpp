@@ -1,7 +1,6 @@
 #ifndef STREAMHIERARCHY_HPP
 #define STREAMHIERARCHY_HPP
 
-
 #include <memory>
 #include <ostream>
 #include <string>
@@ -19,14 +18,18 @@
 #include "Structures/StructSthInHierarchy3.hpp"
 #include "Structures/StructT0x5b.hpp"
 
-
 class StreamHierarchy : public Stream
 {
 public:
-
-    StreamHierarchy(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, netDbIdMappings{},
-        sthInHierarchy3s{}, t0x5bs{}, sthInHierarchy1s{}, someHierarchyBases{}
-    { }
+    StreamHierarchy(ContainerContext& aCtx, const fs::path& aInputStream)
+        : Stream{aCtx, aInputStream},
+          netDbIdMappings{},
+          sthInHierarchy3s{},
+          t0x5bs{},
+          sthInHierarchy1s{},
+          someHierarchyBases{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -42,17 +45,15 @@ public:
         return StreamType::Hierarchy;
     }
 
-    std::vector<std::unique_ptr<StructSthInHierarchy2>>   sthInHierarchy2s;
-    std::vector<std::unique_ptr<StructNetDbIdMapping>>    netDbIdMappings;
-    std::vector<std::unique_ptr<StructSthInHierarchy3>>   sthInHierarchy3s;
-    std::vector<std::unique_ptr<StructT0x5b>>             t0x5bs;
-    std::vector<std::unique_ptr<StructSthInHierarchy1>>   sthInHierarchy1s;
+    std::vector<std::unique_ptr<StructSthInHierarchy2>> sthInHierarchy2s;
+    std::vector<std::unique_ptr<StructNetDbIdMapping>> netDbIdMappings;
+    std::vector<std::unique_ptr<StructSthInHierarchy3>> sthInHierarchy3s;
+    std::vector<std::unique_ptr<StructT0x5b>> t0x5bs;
+    std::vector<std::unique_ptr<StructSthInHierarchy1>> sthInHierarchy1s;
     std::vector<std::unique_ptr<StructSomeHierarchyBase>> someHierarchyBases;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StreamHierarchy& aObj)
+[[maybe_unused]] static std::string to_string(const StreamHierarchy& aObj)
 {
     std::string str;
 
@@ -115,20 +116,16 @@ static std::string to_string(const StreamHierarchy& aObj)
     return str;
 }
 
-
 inline std::string StreamHierarchy::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StreamHierarchy& aObj)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamHierarchy& aObj)
 {
     aOs << to_string(aObj);
 
     return aOs;
 }
-
 
 #endif // STREAMHIERARCHY_HPP

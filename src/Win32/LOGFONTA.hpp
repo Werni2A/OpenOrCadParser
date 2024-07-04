@@ -1,7 +1,6 @@
 #ifndef LOGFONTA_HPP
 #define LOGFONTA_HPP
 
-
 #include <algorithm>
 #include <cstdint>
 #include <string>
@@ -13,17 +12,28 @@
 #include "General.hpp"
 #include "StreamContext.hpp"
 
-
 // See Win32 API for reference, where the original structure was copied from
 // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-logfonta
 class tagLOGFONTA
 {
 public:
-    tagLOGFONTA() : lfHeight{0}, lfWidth{0}, lfEscapement{0}, lfOrientation{0},
-        lfWeight{0}, lfItalic{0}, lfUnderline{0}, lfStrikeOut{0}, lfCharSet{0},
-        lfOutPrecision{0}, lfClipPrecision{0}, lfQuality{0}, lfPitchAndFamily{0},
-        lfFaceName{""}
-    { }
+    tagLOGFONTA()
+        : lfHeight{0},
+          lfWidth{0},
+          lfEscapement{0},
+          lfOrientation{0},
+          lfWeight{0},
+          lfItalic{0},
+          lfUnderline{0},
+          lfStrikeOut{0},
+          lfCharSet{0},
+          lfOutPrecision{0},
+          lfClipPrecision{0},
+          lfQuality{0},
+          lfPitchAndFamily{0},
+          lfFaceName{""}
+    {
+    }
 
     void read(StreamContext& aCtx)
     {
@@ -44,7 +54,8 @@ public:
         // out of it's 'valid' range
         if(lfOutPrecision > 10U)
         {
-            // throw std::runtime_error(fmt::format("lfOutPrecision <= 10 must hold but lfOutPrecision = {}", lfOutPrecision));
+            // throw std::runtime_error(fmt::format("lfOutPrecision <= 10 must hold but lfOutPrecision = {}",
+            // lfOutPrecision));
         }
 
         if(lfQuality > 6U)
@@ -109,15 +120,12 @@ public:
     // char buffer[60];
     // strcpy(buffer, srcStr);
     // write_data_to_file(buffer, sizeof(buffer));
-    char    lfFaceName[32];
+    char lfFaceName[32];
 };
-
 
 typedef tagLOGFONTA LOGFONTA, *PLOGFONTA, *NPLOGFONTA, *LPLOGFONTA;
 
-
 // Check that structure size is as defined by the Windows API
 static_assert(sizeof(LOGFONTA) == 60U);
-
 
 #endif // LOGFONTA_HPP

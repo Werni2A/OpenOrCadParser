@@ -1,7 +1,6 @@
 #ifndef STRUCTSYMBOLPINSCALAR_HPP
 #define STRUCTSYMBOLPINSCALAR_HPP
 
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -13,13 +12,13 @@
 #include "PinShape.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
-
 class StructSymbolPinScalar : public StructSymbolPin
 {
 public:
-
-    StructSymbolPinScalar(StreamContext& aCtx) : StructSymbolPin{aCtx}
-    { }
+    StructSymbolPinScalar(StreamContext& aCtx)
+        : StructSymbolPin{aCtx}
+    {
+    }
 
     // std::string to_string() const override;
 
@@ -35,6 +34,5 @@ public:
         return Structure::SymbolPinScalar;
     }
 };
-
 
 #endif // STRUCTSYMBOLPINSCALAR_HPP

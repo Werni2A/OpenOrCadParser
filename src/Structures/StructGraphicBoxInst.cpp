@@ -9,7 +9,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructGraphicBoxInst.hpp"
 
-
 // @todo is this a specialized instance for Rects or general for all types?
 void StructGraphicBoxInst::read(FileFormatVersion /* aVersion */)
 {

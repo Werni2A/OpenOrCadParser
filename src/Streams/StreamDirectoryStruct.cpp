@@ -8,7 +8,6 @@
 #include "General.hpp"
 #include "Streams/StreamDirectoryStruct.hpp"
 
-
 void StreamDirectoryStruct::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -45,14 +44,11 @@ void StreamDirectoryStruct::read(FileFormatVersion /* aVersion */)
         // Known versions that I observed in different files
         // 471 in 17.4-2019 S012 (3898062) [10/18/202]
         // 472 in 17.4-2019 S019 (3959056) [7/8/2021]
-        std::vector<uint16_t> knownFileVersions{
-                                         445, 446, 447, 448, 449,
-                450, 451, 452, 453, 454, 455, 456, 457, 458, 459,
-                460, 461, 462, 463, 464, 465, 466, 467, 468, 469,
-                470, 471, 472
-            };
+        std::vector<uint16_t> knownFileVersions{445, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458,
+            459, 460, 461, 462, 463, 464, 465, 466, 467, 468, 469, 470, 471, 472};
 
-        if(!std::any_of(knownFileVersions.begin(), knownFileVersions.end(), [&](unsigned version){ return version == item.fileFormatVersion; }))
+        if(!std::any_of(knownFileVersions.begin(), knownFileVersions.end(),
+               [&](unsigned version) { return version == item.fileFormatVersion; }))
         {
             mCtx.mLogger.warn("Unexpected File Version {}", item.fileFormatVersion);
         }

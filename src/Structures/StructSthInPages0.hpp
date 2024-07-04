@@ -1,7 +1,6 @@
 #ifndef STRUCTSTHINPAGES0_HPP
 #define STRUCTSTHINPAGES0_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -18,14 +17,17 @@
 #include "Primitives/PrimBase.hpp"
 #include "Record.hpp"
 
-
 class StructSthInPages0 : public Record
 {
 public:
-
-    StructSthInPages0(StreamContext& aCtx) : Record{aCtx},
-        name{}, sourceLibrary{}, color{Color::Default}, primitives{}
-    { }
+    StructSthInPages0(StreamContext& aCtx)
+        : Record{aCtx},
+          name{},
+          sourceLibrary{},
+          color{Color::Default},
+          primitives{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -48,14 +50,12 @@ public:
     // Absolute path
     std::string sourceLibrary;
 
-    Color       color;
+    Color color;
 
     std::vector<std::unique_ptr<PrimBase>> primitives;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructSthInPages0& aObj)
+[[maybe_unused]] static std::string to_string(const StructSthInPages0& aObj)
 {
     std::string str;
 
@@ -76,20 +76,16 @@ static std::string to_string(const StructSthInPages0& aObj)
     return str;
 }
 
-
 inline std::string StructSthInPages0::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructSthInPages0& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSthInPages0& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTSTHINPAGES0_HPP

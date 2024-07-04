@@ -1,7 +1,6 @@
 #ifndef CONTAINERCONTEXT_HPP
 #define CONTAINERCONTEXT_HPP
 
-
 #include <cstdint>
 #include <filesystem>
 #include <functional>
@@ -16,16 +15,14 @@
 // #include "Database.hpp"
 #include "General.hpp"
 
-
 class Database;
-
 
 namespace fs = std::filesystem;
 
-
 struct ParserConfig
 {
-    std::size_t mThreadCount{std::thread::hardware_concurrency()}; //!< Number of threads used for parsing streams in parallel
+    std::size_t mThreadCount{
+        std::thread::hardware_concurrency()}; //!< Number of threads used for parsing streams in parallel
 
     bool mSkipUnknownPrim{true}; //!< Unknown primitives should be skipped during parsing
     bool mSkipInvalidPrim{true}; //!< Invalid primitives should be skipped during parsing
@@ -36,9 +33,7 @@ struct ParserConfig
     bool mKeepTmpFiles{true}; //!< Do not delete temporary files after parser completed
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const ParserConfig& aCfg)
+[[maybe_unused]] static std::string to_string(const ParserConfig& aCfg)
 {
     std::string str;
     str += fmt::format("mSkipUnknownPrim   = {}\n", aCfg.mSkipUnknownPrim);
@@ -50,13 +45,11 @@ static std::string to_string(const ParserConfig& aCfg)
     return str;
 }
 
-
 class ContainerContext
 {
 public:
-
-    ContainerContext(const fs::path& aInputCfbfFile,
-        const fs::path& aExtractedCfbfPath, ParserConfig aCfg, Database& aDb);
+    ContainerContext(
+        const fs::path& aInputCfbfFile, const fs::path& aExtractedCfbfPath, ParserConfig aCfg, Database& aDb);
 
     ContainerContext(const ContainerContext& aCtx);
 
@@ -74,6 +67,5 @@ public:
     spdlog::level::level_enum mLogLevel;
     spdlog::logger mLogger;
 };
-
 
 #endif // CONTAINERCONTEXT_HPP

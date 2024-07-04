@@ -8,7 +8,6 @@
 #include "General.hpp"
 #include "Structures/StructT0x35.hpp"
 
-
 void StructT0x35::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -58,8 +57,7 @@ void StructT0x35::read(FileFormatVersion /* aVersion */)
 
     for(size_t i = 0; i < len0; ++i)
     {
-        ds.printUnknownData(4, fmt::format("{}: 1 - {}",
-            getMethodName(this, __func__), i));
+        ds.printUnknownData(4, fmt::format("{}: 1 - {}", getMethodName(this, __func__), i));
     }
 
     // localFutureLst.readRestOfStructure();

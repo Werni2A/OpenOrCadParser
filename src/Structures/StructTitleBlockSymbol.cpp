@@ -9,7 +9,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructTitleBlockSymbol.hpp"
 
-
 void StructTitleBlockSymbol::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
@@ -19,8 +18,8 @@ void StructTitleBlockSymbol::read(FileFormatVersion aVersion)
 
     if(aVersion == FileFormatVersion::Unknown)
     {
-        const auto predictionFunc = [this](FileFormatVersion aVersion){ this->read(aVersion); };
-        aVersion = parser.predictVersion(predictionFunc);
+        const auto predictionFunc = [this](FileFormatVersion aVersion) { this->read(aVersion); };
+        aVersion                  = parser.predictVersion(predictionFunc);
     }
 
     FutureDataLst localFutureLst{mCtx};

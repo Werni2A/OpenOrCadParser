@@ -1,7 +1,6 @@
 #ifndef STRUCTALIAS_HPP
 #define STRUCTALIAS_HPP
 
-
 #include <cstdint>
 #include <optional>
 #include <ostream>
@@ -15,14 +14,18 @@
 #include "General.hpp"
 #include "Record.hpp"
 
-
 class StructAlias : public Record
 {
 public:
-
-    StructAlias(StreamContext& aCtx) : Record{aCtx}, locX{0}, locY{0},
-        color{Color::Default}, rotation{Rotation::Deg_0}, name{}
-    { }
+    StructAlias(StreamContext& aCtx)
+        : Record{aCtx},
+          locX{0},
+          locY{0},
+          color{Color::Default},
+          rotation{Rotation::Deg_0},
+          name{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -38,18 +41,16 @@ public:
         return Structure::Alias;
     }
 
-    int32_t  locX;
-    int32_t  locY;
+    int32_t locX;
+    int32_t locY;
 
-    Color    color;
+    Color color;
     Rotation rotation;
 
     std::string name;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructAlias& aObj)
+[[maybe_unused]] static std::string to_string(const StructAlias& aObj)
 {
     std::string str;
 
@@ -63,20 +64,16 @@ static std::string to_string(const StructAlias& aObj)
     return str;
 }
 
-
 inline std::string StructAlias::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructAlias& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructAlias& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTALIAS_HPP

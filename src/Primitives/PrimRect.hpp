@@ -1,7 +1,6 @@
 #ifndef PRIMRECT_HPP
 #define PRIMRECT_HPP
 
-
 #include <cstdint>
 #include <optional>
 #include <ostream>
@@ -18,13 +17,21 @@
 #include "Primitives/Point.hpp"
 #include "Primitives/PrimBase.hpp"
 
-
 class PrimRect : public PrimBase
 {
 public:
-    PrimRect(StreamContext& aCtx) : PrimBase{aCtx}, x1{0}, y1{0}, x2{0}, y2{0},
-        mLineStyle{}, mLineWidth{}, fillStyle{}, hatchStyle{}
-    { }
+    PrimRect(StreamContext& aCtx)
+        : PrimBase{aCtx},
+          x1{0},
+          y1{0},
+          x2{0},
+          y2{0},
+          mLineStyle{},
+          mLineWidth{},
+          fillStyle{},
+          hatchStyle{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -69,19 +76,15 @@ public:
     int32_t y2;
 
 private:
-
     std::optional<LineStyle> mLineStyle;
     std::optional<LineWidth> mLineWidth;
 
 public:
-
     FillStyle fillStyle;
     HatchStyle hatchStyle;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const PrimRect& aObj)
+[[maybe_unused]] static std::string to_string(const PrimRect& aObj)
 {
     std::string str;
 
@@ -98,20 +101,16 @@ static std::string to_string(const PrimRect& aObj)
     return str;
 }
 
-
 inline std::string PrimRect::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const PrimRect& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimRect& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // PRIMRECT_HPP

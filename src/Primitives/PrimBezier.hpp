@@ -1,7 +1,6 @@
 #ifndef PRIMBEZIER_HPP
 #define PRIMBEZIER_HPP
 
-
 #include <cstdint>
 #include <optional>
 #include <ostream>
@@ -17,12 +16,16 @@
 #include "Primitives/Point.hpp"
 #include "Primitives/PrimBase.hpp"
 
-
 class PrimBezier : public PrimBase
 {
 public:
-    PrimBezier(StreamContext& aCtx) : PrimBase{aCtx}, mLineStyle{}, mLineWidth{}, points{}
-    { }
+    PrimBezier(StreamContext& aCtx)
+        : PrimBase{aCtx},
+          mLineStyle{},
+          mLineWidth{},
+          points{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -61,18 +64,14 @@ public:
     }
 
 private:
-
     std::optional<LineStyle> mLineStyle;
     std::optional<LineWidth> mLineWidth;
 
 public:
-
     std::vector<Point> points;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const PrimBezier& aObj)
+[[maybe_unused]] static std::string to_string(const PrimBezier& aObj)
 {
     std::string str;
 
@@ -89,20 +88,16 @@ static std::string to_string(const PrimBezier& aObj)
     return str;
 }
 
-
 inline std::string PrimBezier::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const PrimBezier& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimBezier& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // PRIMBEZIER_HPP

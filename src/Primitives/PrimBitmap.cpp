@@ -17,9 +17,7 @@
 #include "GenericParser.hpp"
 #include "Primitives/PrimBitmap.hpp"
 
-
 namespace fs = std::filesystem;
-
 
 void PrimBitmap::read(FileFormatVersion /* aVersion */)
 {
@@ -68,8 +66,8 @@ void PrimBitmap::read(FileFormatVersion /* aVersion */)
         rawImgData.push_back(ds.readUint8());
     }
 
-    fs::path filename = mCtx.mExtractedCfbfPath.parent_path() / "data" / fmt::format("{}_img_{}.bmp",
-        mCtx.mInputStream.stem().string(), mCtx.mImgCtr);
+    fs::path filename = mCtx.mExtractedCfbfPath.parent_path() / "data" /
+                        fmt::format("{}_img_{}.bmp", mCtx.mInputStream.stem().string(), mCtx.mImgCtr);
 
     filename = writeImgToFile(filename);
 
@@ -93,7 +91,6 @@ void PrimBitmap::read(FileFormatVersion /* aVersion */)
     mCtx.mLogger.trace(to_string());
 }
 
-
 // Returns path to the written image file
 fs::path PrimBitmap::writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData) const
 {
@@ -104,8 +101,7 @@ fs::path PrimBitmap::writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>
 
     if(!img)
     {
-        const std::string msg = fmt::format("{}: Can not open file for writing: {}",
-            __func__, aFilePath.string());
+        const std::string msg = fmt::format("{}: Can not open file for writing: {}", __func__, aFilePath.string());
 
         mCtx.mLogger.error(msg);
         throw std::runtime_error(msg);
@@ -117,8 +113,8 @@ fs::path PrimBitmap::writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>
     struct BmpHeader
     {
         uint16_t magicBytes = 0x4d42;
-        uint32_t bmpSize    =  0; // Will be set later
-        uint32_t reserved   =  0;
+        uint32_t bmpSize    = 0; // Will be set later
+        uint32_t reserved   = 0;
         uint32_t offset     = 54; // @note Maybe this offset needs to be adjusted according to the bitmap
     } header;
 
@@ -146,7 +142,6 @@ fs::path PrimBitmap::writeBmpFile(fs::path aFilePath, const std::vector<uint8_t>
     return aFilePath;
 }
 
-
 // aFilePath is the requested path to the image file, but the function will change the file
 // extension, depending on the corresponding file type that was found.
 // Returns path to the actually written image file
@@ -172,8 +167,8 @@ fs::path PrimBitmap::writeDifferentImageFile(fs::path aFilePath, const std::vect
     // for magic bytes like e.g. {0xaa, 0xbb} vs {0xaa}. There we
     // want to evaluate for {0xaa, 0xbb} first.
     const std::vector<ImageFileType> fileTypes = {
-        { "JPG", ".jpg", {0xff, 0xd8}             },
-        { "PNG", ".png", {0x89, 0x50, 0x4e, 0x47} }
+        {"JPG", ".jpg", {0xff, 0xd8}            },
+        {"PNG", ".png", {0x89, 0x50, 0x4e, 0x47}}
     };
 
     std::optional<ImageFileType> foundFileType;
@@ -187,8 +182,7 @@ fs::path PrimBitmap::writeDifferentImageFile(fs::path aFilePath, const std::vect
             continue;
         }
 
-        bool isType = 0 == std::memcmp(fileType.magicBytes.data(), aRawImgData.data() + startOffset,
-            minCmpLen);
+        bool isType = 0 == std::memcmp(fileType.magicBytes.data(), aRawImgData.data() + startOffset, minCmpLen);
 
         if(isType)
         {
@@ -212,8 +206,7 @@ fs::path PrimBitmap::writeDifferentImageFile(fs::path aFilePath, const std::vect
 
     if(!img)
     {
-        const std::string msg = fmt::format("{}: Can not open file for writing: {}",
-            __func__, aFilePath.string());
+        const std::string msg = fmt::format("{}: Can not open file for writing: {}", __func__, aFilePath.string());
 
         mCtx.mLogger.error(msg);
         throw std::runtime_error(msg);
@@ -236,18 +229,17 @@ bool PrimBitmap::isBmpImage(const std::vector<uint8_t>& aRawImgData) const
     // Non BMP images contain a header that seems to be the same everywhere
     // one characteristic section contains the string `CI_IMAGE` that is
     // used for recognizing this kind of headers.
-    const size_t MAGIC_ID_OFFSET = 0xaa;
+    const size_t MAGIC_ID_OFFSET          = 0xaa;
     const std::array<uint8_t, 8> MAGIC_ID = {'C', 'I', '_', 'I', 'M', 'A', 'G', 'E'};
 
     if(aRawImgData.size() >= 0xbb)
     {
         hasMagicId = 0 == std::memcmp(MAGIC_ID.data(), aRawImgData.data() + MAGIC_ID_OFFSET,
-            std::min(MAGIC_ID.size(), aRawImgData.size() - MAGIC_ID_OFFSET));
+                              std::min(MAGIC_ID.size(), aRawImgData.size() - MAGIC_ID_OFFSET));
     }
 
     return !hasMagicId;
 }
-
 
 fs::path PrimBitmap::writeImgToFile(fs::path aFilePath) const
 {

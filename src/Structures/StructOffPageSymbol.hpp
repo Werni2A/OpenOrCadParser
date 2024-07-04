@@ -1,7 +1,6 @@
 #ifndef STRUCTOFFPAGESYMBOL_HPP
 #define STRUCTOFFPAGESYMBOL_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -17,14 +16,15 @@
 #include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
-
 class StructOffPageSymbol : public StructSymbol
 {
 public:
-
-    StructOffPageSymbol(StreamContext& aCtx) : StructSymbol{aCtx},
-        symbolPins{}, symbolDisplayProps{}
-    { }
+    StructOffPageSymbol(StreamContext& aCtx)
+        : StructSymbol{aCtx},
+          symbolPins{},
+          symbolDisplayProps{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -40,13 +40,11 @@ public:
         return Structure::OffPageSymbol;
     }
 
-    std::vector<std::unique_ptr<StructSymbolPin>>         symbolPins;
+    std::vector<std::unique_ptr<StructSymbolPin>> symbolPins;
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructOffPageSymbol& aObj)
+[[maybe_unused]] static std::string to_string(const StructOffPageSymbol& aObj)
 {
     std::string str;
 
@@ -76,20 +74,16 @@ static std::string to_string(const StructOffPageSymbol& aObj)
     return str;
 }
 
-
 inline std::string StructOffPageSymbol::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructOffPageSymbol& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructOffPageSymbol& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTOFFPAGESYMBOL_HPP

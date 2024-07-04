@@ -1,7 +1,6 @@
 #ifndef PRIMARC_HPP
 #define PRIMARC_HPP
 
-
 #include <cstdint>
 #include <optional>
 #include <ostream>
@@ -15,15 +14,24 @@
 #include "General.hpp"
 #include "Primitives/PrimBase.hpp"
 
-
 // @note This defines an elliptic arc.
 class PrimArc : public PrimBase
 {
 public:
-
-    PrimArc(StreamContext& aCtx) : PrimBase{aCtx}, x1{0}, y1{0}, x2{0}, y2{0},
-        startX{0}, startY{0}, endX{0}, endY{0}, mLineStyle{}, mLineWidth{}
-    { }
+    PrimArc(StreamContext& aCtx)
+        : PrimBase{aCtx},
+          x1{0},
+          y1{0},
+          x2{0},
+          y2{0},
+          startX{0},
+          startY{0},
+          endX{0},
+          endY{0},
+          mLineStyle{},
+          mLineWidth{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -88,14 +96,11 @@ public:
     int32_t endY;
 
 private:
-
     std::optional<LineStyle> mLineStyle;
     std::optional<LineWidth> mLineWidth;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const PrimArc& aObj)
+[[maybe_unused]] static std::string to_string(const PrimArc& aObj)
 {
     std::string str;
 
@@ -114,20 +119,16 @@ static std::string to_string(const PrimArc& aObj)
     return str;
 }
 
-
 inline std::string PrimArc::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const PrimArc& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimArc& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // PRIMARC_HPP

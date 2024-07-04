@@ -1,7 +1,6 @@
 #ifndef STREAMSCHEMATIC_HPP
 #define STREAMSCHEMATIC_HPP
 
-
 #include <memory>
 #include <ostream>
 #include <string>
@@ -12,13 +11,13 @@
 #include "General.hpp"
 #include "Stream.hpp"
 
-
 class StreamSchematic : public Stream
 {
 public:
-
-    StreamSchematic(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}
-    { }
+    StreamSchematic(ContainerContext& aCtx, const fs::path& aInputStream)
+        : Stream{aCtx, aInputStream}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -35,9 +34,7 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StreamSchematic& aObj)
+[[maybe_unused]] static std::string to_string(const StreamSchematic& aObj)
 {
     std::string str;
 
@@ -46,20 +43,16 @@ static std::string to_string(const StreamSchematic& aObj)
     return str;
 }
 
-
 inline std::string StreamSchematic::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StreamSchematic& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamSchematic& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STREAMSCHEMATIC_HPP

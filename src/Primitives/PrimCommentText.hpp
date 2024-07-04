@@ -1,7 +1,6 @@
 #ifndef PRIMCOMMENTTEXT_HPP
 #define PRIMCOMMENTTEXT_HPP
 
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -12,16 +11,24 @@
 #include "Primitives/PrimBase.hpp"
 #include "Win32/LOGFONTA.hpp"
 
-
 // Forward declaration
 struct Library;
-
 
 class PrimCommentText : public PrimBase
 {
 public:
-    PrimCommentText(StreamContext& aCtx) : PrimBase{aCtx}, locX{0}, locY{0}, name{}, x1{0}, y1{0}, x2{0}, y2{0}, textFontIdx{0}
-    { }
+    PrimCommentText(StreamContext& aCtx)
+        : PrimBase{aCtx},
+          locX{0},
+          locY{0},
+          name{},
+          x1{0},
+          y1{0},
+          x2{0},
+          y2{0},
+          textFontIdx{0}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -56,9 +63,7 @@ public:
     uint16_t textFontIdx;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const PrimCommentText& aObj)
+[[maybe_unused]] static std::string to_string(const PrimCommentText& aObj)
 {
     std::string str;
 
@@ -76,20 +81,16 @@ static std::string to_string(const PrimCommentText& aObj)
     return str;
 }
 
-
 inline std::string PrimCommentText::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const PrimCommentText& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimCommentText& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // PRIMCOMMENTTEXT_HPP

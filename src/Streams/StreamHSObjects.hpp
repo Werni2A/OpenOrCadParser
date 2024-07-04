@@ -1,7 +1,6 @@
 #ifndef STREAMHSOBJECTS_HPP
 #define STREAMHSOBJECTS_HPP
 
-
 #include <ostream>
 #include <string>
 
@@ -11,13 +10,13 @@
 #include "General.hpp"
 #include "Stream.hpp"
 
-
 class StreamHSObjects : public Stream
 {
 public:
-
-    StreamHSObjects(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}
-    { }
+    StreamHSObjects(ContainerContext& aCtx, const fs::path& aInputStream)
+        : Stream{aCtx, aInputStream}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -34,9 +33,7 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StreamHSObjects& aObj)
+[[maybe_unused]] static std::string to_string(const StreamHSObjects& aObj)
 {
     std::string str;
 
@@ -45,20 +42,16 @@ static std::string to_string(const StreamHSObjects& aObj)
     return str;
 }
 
-
 inline std::string StreamHSObjects::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StreamHSObjects& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamHSObjects& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STREAMHSOBJECTS_HPP

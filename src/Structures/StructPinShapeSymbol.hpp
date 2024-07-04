@@ -1,7 +1,6 @@
 #ifndef STRUCTPINSHAPESYMBOL_HPP
 #define STRUCTPINSHAPESYMBOL_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <ostream>
@@ -16,14 +15,15 @@
 #include "Structures/StructSymbolDisplayProp.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
-
 class StructPinShapeSymbol : public StructSymbol
 {
 public:
-
-    StructPinShapeSymbol(StreamContext& aCtx) : StructSymbol{aCtx},
-        symbolPins{}, symbolDisplayProps{}
-    { }
+    StructPinShapeSymbol(StreamContext& aCtx)
+        : StructSymbol{aCtx},
+          symbolPins{},
+          symbolDisplayProps{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -39,13 +39,11 @@ public:
         return Structure::PinShapeSymbol;
     }
 
-    std::vector<std::unique_ptr<StructSymbolPin>>         symbolPins;
+    std::vector<std::unique_ptr<StructSymbolPin>> symbolPins;
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructPinShapeSymbol& aObj)
+[[maybe_unused]] static std::string to_string(const StructPinShapeSymbol& aObj)
 {
     std::string str;
 
@@ -75,20 +73,16 @@ static std::string to_string(const StructPinShapeSymbol& aObj)
     return str;
 }
 
-
 inline std::string StructPinShapeSymbol::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructPinShapeSymbol& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructPinShapeSymbol& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTPINSHAPESYMBOL_HPP

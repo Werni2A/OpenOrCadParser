@@ -1,7 +1,6 @@
 #ifndef STREAMSYMBOLSLIBRARY_HPP
 #define STREAMSYMBOLSLIBRARY_HPP
 
-
 #include <cstdint>
 #include <ctime>
 #include <ostream>
@@ -17,15 +16,22 @@
 #include "Stream.hpp"
 #include "Win32/LOGFONTA.hpp"
 
-
 class StreamLibrary : public Stream
 {
 public:
-
-    StreamLibrary(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream},
-        introduction{}, mDbType{DatabaseType::Design}, createDate{0}, modifyDate{0},
-        textFonts{}, strLstPartField{}, pageSettings{mCtx}, strLst{}, partAliases{}
-    { }
+    StreamLibrary(ContainerContext& aCtx, const fs::path& aInputStream)
+        : Stream{aCtx, aInputStream},
+          introduction{},
+          mDbType{DatabaseType::Design},
+          createDate{0},
+          modifyDate{0},
+          textFonts{},
+          strLstPartField{},
+          pageSettings{mCtx},
+          strLst{},
+          partAliases{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -62,9 +68,7 @@ public:
     std::vector<std::pair<std::string, std::string>> partAliases; //!< .first = Alias, .second = Package
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StreamLibrary& aObj)
+[[maybe_unused]] static std::string to_string(const StreamLibrary& aObj)
 {
     std::string str;
 
@@ -103,19 +107,15 @@ static std::string to_string(const StreamLibrary& aObj)
     return str;
 }
 
-
 inline std::string StreamLibrary::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StreamLibrary& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamLibrary& aVal)
 {
     aOs << to_string(aVal);
     return aOs;
 }
-
 
 #endif // STREAMSYMBOLSLIBRARY_HPP

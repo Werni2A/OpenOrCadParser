@@ -1,7 +1,6 @@
 #ifndef DATASTREAM_HPP
 #define DATASTREAM_HPP
 
-
 #include <filesystem>
 #include <fstream>
 #include <functional>
@@ -17,24 +16,23 @@
 #include "Enums/Structure.hpp"
 #include "General.hpp"
 
-
 class FutureDataLst;
 class Record;
 class StreamContext;
 
-
 namespace fs = std::filesystem;
-
 
 class DataStream : public std::ifstream
 {
 public:
-
     // DataStream() : std::ifstream{}
     // { }
 
-    DataStream(const fs::path& aFile, StreamContext& aCtx) : std::ifstream{aFile, std::ifstream::binary}, mCtx{aCtx}
-    { }
+    DataStream(const fs::path& aFile, StreamContext& aCtx)
+        : std::ifstream{aFile, std::ifstream::binary},
+          mCtx{aCtx}
+    {
+    }
 
     // Checks whether the stream has reached the end of the file.
     // I.e. reading another Byte would result in an error.
@@ -218,6 +216,5 @@ public:
 
     StreamContext& mCtx;
 };
-
 
 #endif // DATASTREAM_HPP

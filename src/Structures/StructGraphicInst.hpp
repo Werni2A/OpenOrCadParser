@@ -1,7 +1,6 @@
 #ifndef STRUCTGRAPHICINST_HPP
 #define STRUCTGRAPHICINST_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <ostream>
@@ -17,7 +16,6 @@
 #include "Structures/StructSthInPages0.hpp"
 #include "Structures/StructSymbolDisplayProp.hpp"
 
-
 /*!
  * @brief Pseudo structure that does not exist itself.
           It's only provided to group structures that
@@ -27,11 +25,21 @@
 class StructGraphicInst : public Record
 {
 public:
-
-    StructGraphicInst(StreamContext& aCtx) : Record{aCtx}, name{}, dbId{0},
-    locX{0}, locY{0}, x1{0}, y1{0}, x2{0}, y2{0}, color{Color::Default}, symbolDisplayProps{},
-    sthInPages0{}
-    { }
+    StructGraphicInst(StreamContext& aCtx)
+        : Record{aCtx},
+          name{},
+          dbId{0},
+          locX{0},
+          locY{0},
+          x1{0},
+          y1{0},
+          x2{0},
+          y2{0},
+          color{Color::Default},
+          symbolDisplayProps{},
+          sthInPages0{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -63,13 +71,10 @@ public:
     std::unique_ptr<StructSthInPages0> sthInPages0;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructGraphicInst& aObj)
+[[maybe_unused]] static std::string to_string(const StructGraphicInst& aObj)
 {
     return aObj.to_string();
 }
-
 
 inline std::string StructGraphicInst::to_string() const
 {
@@ -104,14 +109,11 @@ inline std::string StructGraphicInst::to_string() const
     return str;
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructGraphicInst& aObj)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGraphicInst& aObj)
 {
     aOs << to_string(aObj);
 
     return aOs;
 }
-
 
 #endif // STRUCTGRAPHICINST_HPP

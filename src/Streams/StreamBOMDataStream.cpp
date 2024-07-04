@@ -7,7 +7,6 @@
 #include "General.hpp"
 #include "Streams/StreamBOMDataStream.hpp"
 
-
 void StreamBOMDataStream::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -45,8 +44,7 @@ void StreamBOMDataStream::read(FileFormatVersion /* aVersion */)
             {
                 tmpStr += static_cast<char>(byte);
             }
-        }
-        while(!ds.isEoF() && byte != MAGIC_NEXT_STRING_IDENTIFIER);
+        } while(!ds.isEoF() && byte != MAGIC_NEXT_STRING_IDENTIFIER);
 
         strings.push_back(tmpStr);
         mCtx.mLogger.trace("strings[{}] = `{}`", strings.size() - 1, strings.back());

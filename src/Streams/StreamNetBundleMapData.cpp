@@ -9,7 +9,6 @@
 #include "GenericParser.hpp"
 #include "Streams/StreamNetBundleMapData.hpp"
 
-
 void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -58,7 +57,9 @@ void StreamNetBundleMapData::read(FileFormatVersion /* aVersion */)
             // @todo 0x01 is probably a scalar wire
             //       0x02 is probably a bus
             uint16_t wire_type = ds.readUint16();
-            mCtx.mLogger.trace("       wire_type = {}", wire_type == 0x01 ? "Scalar" : wire_type == 0x02 ? "Bus" : "Unknown");
+            mCtx.mLogger.trace("       wire_type = {}", wire_type == 0x01   ? "Scalar"
+                                                        : wire_type == 0x02 ? "Bus"
+                                                                            : "Unknown");
         }
     }
 

@@ -11,7 +11,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructSthInPages0.hpp"
 
-
 // @todo Probably a wrapper for Inst (Instances)
 void StructSthInPages0::read(FileFormatVersion aVersion)
 {
@@ -35,7 +34,6 @@ void StructSthInPages0::read(FileFormatVersion aVersion)
     mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     mCtx.mLogger.trace(to_string());
 }
-
 
 void StructSthInPages0::read_raw(FileFormatVersion /* aVersion */, FutureDataLst& aLocalFutureLst)
 {

@@ -1,7 +1,6 @@
 #ifndef STRUCTT0X5B_HPP
 #define STRUCTT0X5B_HPP
 
-
 #include <cstdint>
 #include <optional>
 #include <ostream>
@@ -13,13 +12,13 @@
 #include "General.hpp"
 #include "Record.hpp"
 
-
 class StructT0x5b : public Record
 {
 public:
-
-    StructT0x5b(StreamContext& aCtx) : Record{aCtx}
-    { }
+    StructT0x5b(StreamContext& aCtx)
+        : Record{aCtx}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -36,9 +35,7 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructT0x5b& aObj)
+[[maybe_unused]] static std::string to_string(const StructT0x5b& aObj)
 {
     std::string str;
 
@@ -47,20 +44,16 @@ static std::string to_string(const StructT0x5b& aObj)
     return str;
 }
 
-
 inline std::string StructT0x5b::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructT0x5b& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructT0x5b& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTT0X5B_HPP

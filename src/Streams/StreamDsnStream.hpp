@@ -1,23 +1,22 @@
 #ifndef STREAMDSNSTREAM_HPP
 #define STREAMDSNSTREAM_HPP
 
-
 #include <ostream>
 #include <string>
 
 #include <fmt/core.h>
 #include <nameof.hpp>
 
-#include "Stream.hpp"
 #include "General.hpp"
-
+#include "Stream.hpp"
 
 class StreamDsnStream : public Stream
 {
 public:
-
-    StreamDsnStream(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}
-    { }
+    StreamDsnStream(ContainerContext& aCtx, const fs::path& aInputStream)
+        : Stream{aCtx, aInputStream}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -34,9 +33,7 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StreamDsnStream& aObj)
+[[maybe_unused]] static std::string to_string(const StreamDsnStream& aObj)
 {
     std::string str;
 
@@ -45,20 +42,16 @@ static std::string to_string(const StreamDsnStream& aObj)
     return str;
 }
 
-
 inline std::string StreamDsnStream::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StreamDsnStream& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamDsnStream& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STREAMDSNSTREAM_HPP

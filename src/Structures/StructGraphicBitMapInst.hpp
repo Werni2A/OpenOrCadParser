@@ -1,7 +1,6 @@
 #ifndef STRUCTGRAPHICBITMAPEINST_HPP
 #define STRUCTGRAPHICBITMAPEINST_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -14,13 +13,13 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
-
 class StructGraphicBitMapInst : public StructGraphicInst
 {
 public:
-
-    StructGraphicBitMapInst(StreamContext& aCtx) : StructGraphicInst{aCtx}
-    { }
+    StructGraphicBitMapInst(StreamContext& aCtx)
+        : StructGraphicInst{aCtx}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -37,13 +36,10 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructGraphicBitMapInst& aObj)
+[[maybe_unused]] static std::string to_string(const StructGraphicBitMapInst& aObj)
 {
     return aObj.to_string();
 }
-
 
 inline std::string StructGraphicBitMapInst::to_string() const
 {
@@ -56,14 +52,11 @@ inline std::string StructGraphicBitMapInst::to_string() const
     return str;
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructGraphicBitMapInst& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGraphicBitMapInst& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTGRAPHICBITMAPEINST_HPP

@@ -10,7 +10,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructAlias.hpp"
 
-
 void StructAlias::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

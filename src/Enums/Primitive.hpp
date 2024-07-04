@@ -1,7 +1,6 @@
 #ifndef PRIMITIVE_HPP
 #define PRIMITIVE_HPP
 
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -9,7 +8,6 @@
 #include <magic_enum.hpp>
 
 #include "General.hpp"
-
 
 enum class Primitive
 {
@@ -25,27 +23,20 @@ enum class Primitive
     Bezier       = 87
 };
 
-
-[[maybe_unused]]
-static constexpr Primitive ToPrimitive(uint8_t aVal)
+[[maybe_unused]] static constexpr Primitive ToPrimitive(uint8_t aVal)
 {
     return ToEnum<Primitive, decltype(aVal)>(aVal);
 }
 
-
-[[maybe_unused]]
-static std::string to_string(const Primitive& aVal)
+[[maybe_unused]] static std::string to_string(const Primitive& aVal)
 {
     return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const Primitive& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const Primitive& aVal)
 {
     aOs << to_string(aVal);
     return aOs;
 }
-
 
 #endif // PRIMITIVE_HPP

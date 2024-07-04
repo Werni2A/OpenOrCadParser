@@ -1,7 +1,6 @@
 #ifndef PAGESETTINGS_HPP
 #define PAGESETTINGS_HPP
 
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -12,25 +11,34 @@
 #include "General.hpp"
 #include "Record.hpp"
 
-
 class PageSettings : public Other
 {
 public:
-
-    PageSettings(StreamContext& aCtx) : Other{aCtx},
-        createDateTime{0}, modifyDateTime{0},
-        width{0}, height{0},
-        pinToPin{0},
-        horizontalCount{0}, verticalCount{0},
-        horizontalWidth{0}, verticalWidth{0},
-        horizontalChar{0}, horizontalAscending{0},
-        verticalChar{0}, verticalAscending{0},
-        isMetric{0},
-        borderDisplayed{0}, borderPrinted{0},
-        gridRefDisplayed{0}, gridRefPrinted{0},
-        titleblockDisplayed{0}, titleblockPrinted{0},
-        ansiGridRefs{0}
-    { }
+    PageSettings(StreamContext& aCtx)
+        : Other{aCtx},
+          createDateTime{0},
+          modifyDateTime{0},
+          width{0},
+          height{0},
+          pinToPin{0},
+          horizontalCount{0},
+          verticalCount{0},
+          horizontalWidth{0},
+          verticalWidth{0},
+          horizontalChar{0},
+          horizontalAscending{0},
+          verticalChar{0},
+          verticalAscending{0},
+          isMetric{0},
+          borderDisplayed{0},
+          borderPrinted{0},
+          gridRefDisplayed{0},
+          gridRefPrinted{0},
+          titleblockDisplayed{0},
+          titleblockPrinted{0},
+          ansiGridRefs{0}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -86,16 +94,14 @@ public:
     uint32_t ansiGridRefs;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const PageSettings& aObj)
+[[maybe_unused]] static std::string to_string(const PageSettings& aObj)
 {
     std::string str;
 
     str += fmt::format("{}:\n", nameof::nameof_type<decltype(aObj)>());
     str += fmt::format("{}createDateTime      = {}\n", indent(1), DateTimeToStr(aObj.createDateTime));
     str += fmt::format("{}modifyDateTime      = {}\n", indent(1), DateTimeToStr(aObj.modifyDateTime));
-    str += fmt::format("{}width               = {}\n", indent(1), aObj. width);
+    str += fmt::format("{}width               = {}\n", indent(1), aObj.width);
     str += fmt::format("{}height              = {}\n", indent(1), aObj.height);
     str += fmt::format("{}pinToPin            = {}\n", indent(1), aObj.pinToPin);
     str += fmt::format("{}horizontalCount     = {}\n", indent(1), aObj.horizontalCount);
@@ -118,20 +124,16 @@ static std::string to_string(const PageSettings& aObj)
     return str;
 }
 
-
 inline std::string PageSettings::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const PageSettings& aObj)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PageSettings& aObj)
 {
     aOs << to_string(aObj);
 
     return aOs;
 }
-
 
 #endif // PAGESETTINGS_HPP

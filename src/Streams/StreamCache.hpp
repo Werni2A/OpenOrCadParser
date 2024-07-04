@@ -1,7 +1,6 @@
 #ifndef STREAMCACHE_HPP
 #define STREAMCACHE_HPP
 
-
 #include <ostream>
 #include <string>
 
@@ -11,13 +10,13 @@
 #include "General.hpp"
 #include "Stream.hpp"
 
-
 class StreamCache : public Stream
 {
 public:
-
-    StreamCache(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}
-    { }
+    StreamCache(ContainerContext& aCtx, const fs::path& aInputStream)
+        : Stream{aCtx, aInputStream}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -34,9 +33,7 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StreamCache& aObj)
+[[maybe_unused]] static std::string to_string(const StreamCache& aObj)
 {
     std::string str;
 
@@ -45,20 +42,16 @@ static std::string to_string(const StreamCache& aObj)
     return str;
 }
 
-
 inline std::string StreamCache::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StreamCache& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamCache& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STREAMCACHE_HPP

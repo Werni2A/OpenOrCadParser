@@ -16,7 +16,6 @@
 #include "Streams/StreamLibrary.hpp"
 #include "Win32/LOGFONTA.hpp"
 
-
 void StreamLibrary::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
@@ -26,8 +25,8 @@ void StreamLibrary::read(FileFormatVersion aVersion)
 
     if(aVersion == FileFormatVersion::Unknown)
     {
-        const auto predictionFunc = [this](FileFormatVersion aVersion){ this->read(aVersion); };
-        aVersion = parser.predictVersion(predictionFunc);
+        const auto predictionFunc = [this](FileFormatVersion aVersion) { this->read(aVersion); };
+        aVersion                  = parser.predictVersion(predictionFunc);
     }
 
     size_t startOffset = ds.getCurrentOffset();

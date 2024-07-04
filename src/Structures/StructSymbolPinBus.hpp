@@ -1,7 +1,6 @@
 #ifndef STRUCTSYMBOLPINBUS_HPP
 #define STRUCTSYMBOLPINBUS_HPP
 
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -13,13 +12,13 @@
 #include "PinShape.hpp"
 #include "Structures/StructSymbolPin.hpp"
 
-
 class StructSymbolPinBus : public StructSymbolPin
 {
 public:
-
-    StructSymbolPinBus(StreamContext& aCtx) : StructSymbolPin{aCtx}
-    { }
+    StructSymbolPinBus(StreamContext& aCtx)
+        : StructSymbolPin{aCtx}
+    {
+    }
 
     // std::string to_string() const override;
 
@@ -35,6 +34,5 @@ public:
         return Structure::SymbolPinBus;
     }
 };
-
 
 #endif // STRUCTSYMBOLPINBUS_HPP

@@ -1,7 +1,6 @@
 #ifndef STRUCTSYMBOLBBOX_HPP
 #define STRUCTSYMBOLBBOX_HPP
 
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -12,13 +11,17 @@
 #include "General.hpp"
 #include "Record.hpp"
 
-
 class StructSymbolBBox : public Other
 {
 public:
-
-    StructSymbolBBox(StreamContext& aCtx) : Other{aCtx}, x1{0}, y1{0}, x2{0}, y2{0}
-    { }
+    StructSymbolBBox(StreamContext& aCtx)
+        : Other{aCtx},
+          x1{0},
+          y1{0},
+          x2{0},
+          y2{0}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -37,9 +40,7 @@ public:
     int32_t y2;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructSymbolBBox& aObj)
+[[maybe_unused]] static std::string to_string(const StructSymbolBBox& aObj)
 {
     std::string str;
 
@@ -52,20 +53,16 @@ static std::string to_string(const StructSymbolBBox& aObj)
     return str;
 }
 
-
 inline std::string StructSymbolBBox::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructSymbolBBox& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSymbolBBox& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTSYMBOLBBOX_HPP

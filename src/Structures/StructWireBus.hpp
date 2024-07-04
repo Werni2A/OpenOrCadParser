@@ -1,7 +1,6 @@
 #ifndef STRUCTWIREBUS_HPP
 #define STRUCTWIREBUS_HPP
 
-
 #include <cstdint>
 #include <optional>
 #include <ostream>
@@ -16,13 +15,13 @@
 #include "General.hpp"
 #include "Structures/StructWire.hpp"
 
-
 class StructWireBus : public StructWire
 {
 public:
-
-    StructWireBus(StreamContext& aCtx) : StructWire{aCtx}
-    { }
+    StructWireBus(StreamContext& aCtx)
+        : StructWire{aCtx}
+    {
+    }
 
     // std::string to_string() const override;
 
@@ -49,6 +48,5 @@ public:
     // LineWidth lineWidth;
     // LineStyle lineStyle;
 };
-
 
 #endif // STRUCTWIREBUS_HPP

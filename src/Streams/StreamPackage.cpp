@@ -8,7 +8,6 @@
 #include "GenericParser.hpp"
 #include "Streams/StreamPackage.hpp"
 
-
 void StreamPackage::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

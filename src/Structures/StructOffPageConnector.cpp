@@ -9,7 +9,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructOffPageConnector.hpp"
 
-
 void StructOffPageConnector::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

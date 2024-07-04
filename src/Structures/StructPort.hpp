@@ -1,7 +1,6 @@
 #ifndef STRUCTPORT_HPP
 #define STRUCTPORT_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -15,13 +14,13 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
-
 class StructPort : public StructGraphicInst
 {
 public:
-
-    StructPort(StreamContext& aCtx) : StructGraphicInst{aCtx}
-    { }
+    StructPort(StreamContext& aCtx)
+        : StructGraphicInst{aCtx}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -38,13 +37,10 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructPort& aObj)
+[[maybe_unused]] static std::string to_string(const StructPort& aObj)
 {
     return aObj.to_string();
 }
-
 
 inline std::string StructPort::to_string() const
 {
@@ -57,14 +53,11 @@ inline std::string StructPort::to_string() const
     return str;
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructPort& aObj)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructPort& aObj)
 {
     aOs << to_string(aObj);
 
     return aOs;
 }
-
 
 #endif // STRUCTPORT_HPP

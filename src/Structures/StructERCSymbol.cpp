@@ -11,7 +11,6 @@
 #include "Structures/StructERCSymbol.hpp"
 #include "Structures/StructSymbolBBox.hpp"
 
-
 void StructERCSymbol::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;

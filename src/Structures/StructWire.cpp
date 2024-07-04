@@ -10,7 +10,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructWire.hpp"
 
-
 void StructWire::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

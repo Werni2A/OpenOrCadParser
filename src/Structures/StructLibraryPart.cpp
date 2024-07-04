@@ -13,7 +13,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructLibraryPart.hpp"
 
-
 void StructLibraryPart::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -94,7 +93,9 @@ void StructLibraryPart::read(FileFormatVersion /* aVersion */)
 
     // @todo Parts of it probably belong to the upper trailing data
     if(ds.getCurrentOffset() < nextCheckpointPos)
+    {
         localFutureLst.readUntilNextFutureData("See FuturData of StructLibraryPart");
+    }
 
     localFutureLst.checkpoint();
 

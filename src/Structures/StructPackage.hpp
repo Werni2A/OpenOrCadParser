@@ -1,7 +1,6 @@
 #ifndef STRUCTPACKAGE_HPP
 #define STRUCTPACKAGE_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <ostream>
@@ -17,10 +16,13 @@
 class StructPackage : public Record
 {
 public:
-
-    StructPackage(StreamContext& aCtx) : Record{aCtx}, name{},
-        refDes{}, pcbFootprint{}
-    { }
+    StructPackage(StreamContext& aCtx)
+        : Record{aCtx},
+          name{},
+          refDes{},
+          pcbFootprint{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -45,9 +47,7 @@ public:
     std::vector<std::unique_ptr<StructDevice>> devices;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructPackage& aObj)
+[[maybe_unused]] static std::string to_string(const StructPackage& aObj)
 {
     std::string str;
 
@@ -68,20 +68,16 @@ static std::string to_string(const StructPackage& aObj)
     return str;
 }
 
-
 inline std::string StructPackage::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructPackage& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructPackage& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTPACKAGE_HPP

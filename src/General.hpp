@@ -1,7 +1,6 @@
 #ifndef GENERAL_HPP
 #define GENERAL_HPP
 
-
 #include <cstdint>
 #include <ctime>
 #include <filesystem>
@@ -17,13 +16,10 @@
 
 #include "Exception.hpp"
 
-
 namespace fs = std::filesystem;
-
 
 enum class DatabaseType;
 enum class FileFormatVersion;
-
 
 /**
  * @brief Version of the file format.
@@ -52,19 +48,16 @@ enum class FileFormatVersion
     Unknown,
 };
 
-
 enum class DatabaseType
 {
     Design,
     Library
 };
 
-
 // Copied from StackExchange [1] and slightly modified
 // to throw on invalid cast and pass nullptrs through
 // [1] https://codereview.stackexchange.com/a/280784
-template<typename T, typename S>
-static std::unique_ptr<T> dynamic_pointer_cast(std::unique_ptr<S>&& p)
+template <typename T, typename S> static std::unique_ptr<T> dynamic_pointer_cast(std::unique_ptr<S>&& p)
 {
     // Do not try to cast nullptr
     if(!p)
@@ -72,50 +65,42 @@ static std::unique_ptr<T> dynamic_pointer_cast(std::unique_ptr<S>&& p)
         return {};
     }
 
-    if (T* const converted = dynamic_cast<T*>(p.get())) {
+    if(T* const converted = dynamic_cast<T*>(p.get()))
+    {
         // cast succeeded; clear input
         p.release();
         return std::unique_ptr<T>{converted};
     }
 
-    throw std::runtime_error{fmt::format("{} is not of type {}",
-        NAMEOF_FULL_TYPE_RTTI(*p.get()),
-        nameof::nameof_type<T>())};
+    throw std::runtime_error{
+        fmt::format("{} is not of type {}", NAMEOF_FULL_TYPE_RTTI(*p.get()), nameof::nameof_type<T>())};
 }
 
-
-template<typename T>
-static std::string getMethodName(const T* aClass, const char* aFuncName)
+template <typename T> static std::string getMethodName(const T* aClass, const char* aFuncName)
 {
     return fmt::format("{}::{}", NAMEOF_TYPE_RTTI(*aClass), aFuncName);
 }
 
-
-[[maybe_unused]]
-static std::string getOpeningMsg(const std::string& aClassFuncName, size_t aCurrOffset)
+[[maybe_unused]] static std::string getOpeningMsg(const std::string& aClassFuncName, size_t aCurrOffset)
 {
     return fmt::format("0x{:08x}: Beginning {}", aCurrOffset, aClassFuncName);
 }
 
-
-[[maybe_unused]]
-static std::string getClosingMsg(const std::string& aClassFuncName, size_t aCurrOffset)
+[[maybe_unused]] static std::string getClosingMsg(const std::string& aClassFuncName, size_t aCurrOffset)
 {
     return fmt::format("0x{:08x}: Ending {}", aCurrOffset, aClassFuncName);
 }
 
-
-[[maybe_unused]]
-static std::string indent(std::string str, size_t level)
+[[maybe_unused]] static std::string indent(std::string str, size_t level)
 {
-    const std::string indent = "  ";
+    const std::string indent    = "  ";
     const std::string delimiter = fmt::format("\n");
 
     std::vector<std::string> lines;
 
     size_t pos = 0;
     std::string token;
-    while ((pos = str.find(delimiter)) != std::string::npos)
+    while((pos = str.find(delimiter)) != std::string::npos)
     {
         token = str.substr(0, pos);
         lines.push_back(fmt::format("{}\n", std::move(token)));
@@ -137,13 +122,10 @@ static std::string indent(std::string str, size_t level)
     return indentedStr;
 }
 
-
-[[maybe_unused]]
-static std::string indent(size_t level)
+[[maybe_unused]] static std::string indent(size_t level)
 {
     return indent("", level);
 }
-
 
 [[maybe_unused]] static uint8_t GetBit(size_t bitPos, uint32_t val)
 {
@@ -155,32 +137,27 @@ static std::string indent(size_t level)
     return (val >> bitPos) & 0x01;
 }
 
-
-[[maybe_unused]]
-static std::string DateTimeToStr(const time_t& unixts)
+[[maybe_unused]] static std::string DateTimeToStr(const time_t& unixts)
 {
     return std::string(std::ctime(&unixts));
 }
 
-
 // @todo not implemented yet
-[[maybe_unused]]
-static std::string TimezoneToStr(int16_t timezone)
+[[maybe_unused]] static std::string TimezoneToStr(int16_t timezone)
 {
-//   std::time_t rawtime;
-//   std::tm* timeInfo;
+    //   std::time_t rawtime;
+    //   std::tm* timeInfo;
 
-//   const size_t lenBuffer = 24u;
-//   char buffer[lenBuffer];
+    //   const size_t lenBuffer = 24u;
+    //   char buffer[lenBuffer];
 
-//   std::time(&rawtime);
-//   timeInfo = std::localtime(&rawtime);
+    //   std::time(&rawtime);
+    //   timeInfo = std::localtime(&rawtime);
 
-//   std::strftime(buffer, lenBuffer, "%z %Z", timeInfo);
+    //   std::strftime(buffer, lenBuffer, "%z %Z", timeInfo);
 
-  return std::to_string(timezone);
+    return std::to_string(timezone);
 }
-
 
 /**
  * @brief Convert fix point coordinate to floating point.
@@ -190,15 +167,12 @@ static std::string TimezoneToStr(int16_t timezone)
  * @param point Fix point coordiante.
  * @return double Floating point coordinate.
  */
-[[maybe_unused]]
-static double ToFP(int16_t point)
+[[maybe_unused]] static double ToFP(int16_t point)
 {
     return static_cast<double>(point) / 100.0;
 }
 
-
-template<typename TEnum, typename TVal>
-static constexpr TEnum ToEnum(TVal aVal)
+template <typename TEnum, typename TVal> static constexpr TEnum ToEnum(TVal aVal)
 {
     const auto enumEntry = magic_enum::enum_cast<TEnum>(aVal);
 
@@ -209,6 +183,5 @@ static constexpr TEnum ToEnum(TVal aVal)
 
     return enumEntry.value();
 }
-
 
 #endif // GENERAL_HPP

@@ -1,7 +1,6 @@
 #ifndef STRUCTSYMBOLDISPLAYPROP_HPP
 #define STRUCTSYMBOLDISPLAYPROP_HPP
 
-
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -13,14 +12,19 @@
 #include "Enums/Rotation.hpp"
 #include "Record.hpp"
 
-
 class StructSymbolDisplayProp : public Record
 {
 public:
-
-    StructSymbolDisplayProp(StreamContext& aCtx) : Record{aCtx}, nameIdx{0}, textFontIdx{0},
-        rotation{Rotation::Deg_0}, x{0}, y{0}, propColor{Color::Default}
-    { }
+    StructSymbolDisplayProp(StreamContext& aCtx)
+        : Record{aCtx},
+          nameIdx{0},
+          textFontIdx{0},
+          rotation{Rotation::Deg_0},
+          x{0},
+          y{0},
+          propColor{Color::Default}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -49,8 +53,7 @@ public:
 
 // @todo implement getter methods for name and textFont
 
-[[maybe_unused]]
-static std::string to_string(const StructSymbolDisplayProp& aObj)
+[[maybe_unused]] static std::string to_string(const StructSymbolDisplayProp& aObj)
 {
     std::string str;
 
@@ -65,20 +68,16 @@ static std::string to_string(const StructSymbolDisplayProp& aObj)
     return str;
 }
 
-
 inline std::string StructSymbolDisplayProp::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructSymbolDisplayProp& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSymbolDisplayProp& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTSYMBOLDISPLAYPROP_HPP

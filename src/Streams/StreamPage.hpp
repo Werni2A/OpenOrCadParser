@@ -1,7 +1,6 @@
 #ifndef STREAMPAGE_HPP
 #define STREAMPAGE_HPP
 
-
 #include <memory>
 #include <string>
 #include <vector>
@@ -24,15 +23,27 @@
 #include "Structures/StructTitleBlock.hpp"
 #include "Structures/StructWire.hpp"
 
-
 class StreamPage : public Stream
 {
 public:
-
-    StreamPage(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, name{}, pageSize{}, pageSettings{mCtx},
-        titleBlocks{}, t0x34s{}, t0x35s{}, wires{}, placedInstances{}, ports{}, globals{}, offPageConnectors{},
-        ercObjects{}, busEntries{}, graphicInsts{}
-    { }
+    StreamPage(ContainerContext& aCtx, const fs::path& aInputStream)
+        : Stream{aCtx, aInputStream},
+          name{},
+          pageSize{},
+          pageSettings{mCtx},
+          titleBlocks{},
+          t0x34s{},
+          t0x35s{},
+          wires{},
+          placedInstances{},
+          ports{},
+          globals{},
+          offPageConnectors{},
+          ercObjects{},
+          busEntries{},
+          graphicInsts{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -48,26 +59,24 @@ public:
         return StreamType::Page;
     }
 
-    std::string  name;
-    std::string  pageSize;
+    std::string name;
+    std::string pageSize;
     PageSettings pageSettings;
 
-    std::vector<std::unique_ptr<StructTitleBlock>>       titleBlocks;
-    std::vector<std::unique_ptr<StructT0x34>>            t0x34s;
-    std::vector<std::unique_ptr<StructT0x35>>            t0x35s;
-    std::vector<std::unique_ptr<StructWire>>             wires;
-    std::vector<std::unique_ptr<StructPlacedInstance>>   placedInstances;
-    std::vector<std::unique_ptr<StructPort>>             ports;
-    std::vector<std::unique_ptr<StructGlobal>>           globals;
+    std::vector<std::unique_ptr<StructTitleBlock>> titleBlocks;
+    std::vector<std::unique_ptr<StructT0x34>> t0x34s;
+    std::vector<std::unique_ptr<StructT0x35>> t0x35s;
+    std::vector<std::unique_ptr<StructWire>> wires;
+    std::vector<std::unique_ptr<StructPlacedInstance>> placedInstances;
+    std::vector<std::unique_ptr<StructPort>> ports;
+    std::vector<std::unique_ptr<StructGlobal>> globals;
     std::vector<std::unique_ptr<StructOffPageConnector>> offPageConnectors;
-    std::vector<std::unique_ptr<StructERCObject>>        ercObjects;
-    std::vector<std::unique_ptr<StructBusEntry>>         busEntries;
-    std::vector<std::unique_ptr<StructGraphicInst>>      graphicInsts;
+    std::vector<std::unique_ptr<StructERCObject>> ercObjects;
+    std::vector<std::unique_ptr<StructBusEntry>> busEntries;
+    std::vector<std::unique_ptr<StructGraphicInst>> graphicInsts;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StreamPage& aObj)
+[[maybe_unused]] static std::string to_string(const StreamPage& aObj)
 {
     std::string str;
 
@@ -179,20 +188,16 @@ static std::string to_string(const StreamPage& aObj)
     return str;
 }
 
-
 inline std::string StreamPage::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StreamPage& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamPage& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STREAMPAGE_HPP

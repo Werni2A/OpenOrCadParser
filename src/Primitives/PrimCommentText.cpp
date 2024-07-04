@@ -12,7 +12,6 @@
 #include "Primitives/PrimCommentText.hpp"
 #include "Win32/LOGFONTA.hpp"
 
-
 void PrimCommentText::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -24,14 +23,14 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
 
     const size_t startOffset = ds.getCurrentOffset();
 
-     // @todo Adding 8 Byte does not make any sense, why did it
-     //       work previously and why does it work in other
-     //       primitives that use similar data structures?
-     //       Maybe the byte length does not count itself and
-     //       the following 4 zero bytes.
-     //       This issue is somehow related to the disabled
-     //       readOptionalTrailingFuture check in StructPlacedInstance
-     //       and readOptionalTrailingFuture in StructT0x10
+    // @todo Adding 8 Byte does not make any sense, why did it
+    //       work previously and why does it work in other
+    //       primitives that use similar data structures?
+    //       Maybe the byte length does not count itself and
+    //       the following 4 zero bytes.
+    //       This issue is somehow related to the disabled
+    //       readOptionalTrailingFuture check in StructPlacedInstance
+    //       and readOptionalTrailingFuture in StructT0x10
     const uint32_t byteLength = ds.readUint32() + 8U;
 
     ds.assumeData({0x00, 0x00, 0x00, 0x00}, getMethodName(this, __func__) + ": 0");
@@ -87,7 +86,6 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
     mCtx.mLogger.debug(getClosingMsg(getMethodName(this, __func__), ds.getCurrentOffset()));
     mCtx.mLogger.trace(to_string());
 }
-
 
 LOGFONTA PrimCommentText::getTextFont() const
 {

@@ -36,12 +36,14 @@
 #include "Stream.hpp"
 #include "StreamFactory.hpp"
 
-
 namespace fs = std::filesystem;
 
-
-Container::Container(const fs::path& aCfbfContainer, ParserConfig aCfg) :
-    mDb{}, mFileCtr{0U}, mFileErrCtr{0U}, mCtx{aCfbfContainer, "", aCfg, mDb}, mCfg{aCfg}
+Container::Container(const fs::path& aCfbfContainer, ParserConfig aCfg)
+    : mDb{},
+      mFileCtr{0U},
+      mFileErrCtr{0U},
+      mCtx{aCfbfContainer, "", aCfg, mDb},
+      mCfg{aCfg}
 {
     // Extract to a unique folder in case two similar named files
     // are extracted at the same time. E.g. in parallel execution.
@@ -51,7 +53,7 @@ Container::Container(const fs::path& aCfbfContainer, ParserConfig aCfg) :
     const std::string uuid = fmt::format("{:08x}{:08x}{:08x}{:08x}", gen(), gen(), gen(), gen());
 
     const fs::path extractTo = fs::temp_directory_path() / "OpenOrCadParser" / uuid;
-    mCtx.mExtractedCfbfPath = extractContainer(aCfbfContainer, extractTo);
+    mCtx.mExtractedCfbfPath  = extractContainer(aCfbfContainer, extractTo);
 
     // @todo This is a hack, since mExtractedCfbfPath is not available at construction of the context
     const fs::path logPath = extractTo / "logs" / "OpenOrCadParser.log";
@@ -60,7 +62,6 @@ Container::Container(const fs::path& aCfbfContainer, ParserConfig aCfg) :
     mCtx.mLogger.debug("Using parser configuration:");
     mCtx.mLogger.debug(to_string(mCfg));
 }
-
 
 Container::~Container()
 {
@@ -72,7 +73,6 @@ Container::~Container()
         mCtx.mLogger.debug("Deleted CFBF container at `{}`", mCtx.mExtractedCfbfPath.string());
     }
 }
-
 
 void Container::parseDatabaseFileThread(std::deque<std::shared_ptr<Stream>> aStreamList)
 {
@@ -96,10 +96,8 @@ void Container::parseDatabaseFileThread(std::deque<std::shared_ptr<Stream>> aStr
     }
 }
 
-
 // Equally distribute elements into new lists of pointers to the original elements
-void distributeStreamsToThreadJobsForParsing(
-    std::size_t aNumberParallelJobs,
+void distributeStreamsToThreadJobsForParsing(std::size_t aNumberParallelJobs,
     const std::vector<std::shared_ptr<Stream>>& aStreams, //!< Streams to distribute
     std::deque<std::shared_ptr<Stream>>& aSequentialJobList,
     std::vector<std::deque<std::shared_ptr<Stream>>>& aParallelJobLists)
@@ -137,7 +135,6 @@ void distributeStreamsToThreadJobsForParsing(
         }
     }
 }
-
 
 /**
  * @brief Parse the whole database file.
@@ -192,8 +189,8 @@ void Container::parseDatabaseFile()
 
     // Print sequential job assignment
     {
-        mCtx.mLogger.info("Assigning main thread with the following {}/{} jobs (sequential):",
-            sequentialJobList.size(), mFileCtr);
+        mCtx.mLogger.info(
+            "Assigning main thread with the following {}/{} jobs (sequential):", sequentialJobList.size(), mFileCtr);
 
         for(const auto& job : sequentialJobList)
         {
@@ -204,8 +201,8 @@ void Container::parseDatabaseFile()
     // Print parallel job assignment
     for(std::size_t i{0U}; i < parallelJobsLists.size(); ++i)
     {
-        mCtx.mLogger.info("Assigning thread {} with the following {}/{} jobs (parallel):",
-            i, parallelJobsLists.at(i).size(), mFileCtr);
+        mCtx.mLogger.info("Assigning thread {} with the following {}/{} jobs (parallel):", i,
+            parallelJobsLists.at(i).size(), mFileCtr);
 
         const auto& parallelJobList = parallelJobsLists.at(i);
 
@@ -246,14 +243,12 @@ void Container::parseDatabaseFile()
 
     std::string errCtrStr = fmt::format("Errors in {}/{} files!", mFileErrCtr, mFileCtr);
 
-    errCtrStr = fmt::format((mFileErrCtr == 0u) ? fg(fmt::color::green) : fg(fmt::color::crimson),
-        errCtrStr);
+    errCtrStr = fmt::format((mFileErrCtr == 0u) ? fg(fmt::color::green) : fg(fmt::color::crimson), errCtrStr);
 
     mCtx.mLogger.info(errCtrStr);
 
     // mCtx.mLogger.info(to_string(mLibrary));
 }
-
 
 fs::path Container::extractContainer(const fs::path& aFile, const fs::path& aOutDir) const
 {
@@ -264,12 +259,10 @@ fs::path Container::extractContainer(const fs::path& aFile, const fs::path& aOut
     return extractor.extract(aOutDir);
 }
 
-
 fs::path Container::extractContainer(const fs::path& aOutDir) const
 {
     return extractContainer(mCtx.mInputCfbfFile, aOutDir);
 }
-
 
 void Container::printContainerTree() const
 {
@@ -277,22 +270,20 @@ void Container::printContainerTree() const
     extractor.printContainerTree();
 }
 
-
 std::optional<DatabaseType> Container::getDatabaseTypeByFileExtension(const fs::path& aFile) const
 {
     std::string extension = aFile.extension().string();
 
     // Ignore case of extension
-    std::transform(extension.begin(), extension.end(), extension.begin(),
-        [] (unsigned char c) { return std::toupper(c); });
+    std::transform(
+        extension.begin(), extension.end(), extension.begin(), [](unsigned char c) { return std::toupper(c); });
 
-    const std::map<std::string, DatabaseType> extensionFileTypeMap =
-        {
-            {".DSN", DatabaseType::Design},
-            {".DBK", DatabaseType::Design}, // Backup file
-            {".OLB", DatabaseType::Library},
-            {".OBK", DatabaseType::Library} // Backup file
-        };
+    const std::map<std::string, DatabaseType> extensionFileTypeMap = {
+        {".DSN", DatabaseType::Design },
+        {".DBK", DatabaseType::Design }, // Backup file
+        {".OLB", DatabaseType::Library},
+        {".OBK", DatabaseType::Library}  // Backup file
+    };
 
     if(extensionFileTypeMap.count(extension) == 0U)
     {

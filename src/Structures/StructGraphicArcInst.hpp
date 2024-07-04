@@ -1,7 +1,6 @@
 #ifndef STRUCTGRAPHICARCINST_HPP
 #define STRUCTGRAPHICARCINST_HPP
 
-
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -14,13 +13,13 @@
 #include "General.hpp"
 #include "Structures/StructGraphicInst.hpp"
 
-
 class StructGraphicArcInst : public StructGraphicInst
 {
 public:
-
-    StructGraphicArcInst(StreamContext& aCtx) : StructGraphicInst{aCtx}
-    { }
+    StructGraphicArcInst(StreamContext& aCtx)
+        : StructGraphicInst{aCtx}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -37,13 +36,10 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructGraphicArcInst& aObj)
+[[maybe_unused]] static std::string to_string(const StructGraphicArcInst& aObj)
 {
     return aObj.to_string();
 }
-
 
 inline std::string StructGraphicArcInst::to_string() const
 {
@@ -56,14 +52,11 @@ inline std::string StructGraphicArcInst::to_string() const
     return str;
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructGraphicArcInst& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGraphicArcInst& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTGRAPHICARCINST_HPP

@@ -1,7 +1,6 @@
 #ifndef STRUCTSOMEHIERARCHYBASE_HPP
 #define STRUCTSOMEHIERARCHYBASE_HPP
 
-
 #include <cstdint>
 #include <optional>
 #include <ostream>
@@ -13,7 +12,6 @@
 #include "General.hpp"
 #include "Record.hpp"
 
-
 /*!
  * @brief Pseudo structure that does not exist itself.
           It's only provided to group structures that
@@ -23,9 +21,10 @@
 class StructSomeHierarchyBase : public Record
 {
 public:
-
-    StructSomeHierarchyBase(StreamContext& aCtx) : Record{aCtx}
-    { }
+    StructSomeHierarchyBase(StreamContext& aCtx)
+        : Record{aCtx}
+    {
+    }
 
     // std::string to_string() const override;
 
@@ -35,12 +34,9 @@ public:
     // }
 
     // void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
-
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StructSomeHierarchyBase& aObj)
+[[maybe_unused]] static std::string to_string(const StructSomeHierarchyBase& aObj)
 {
     std::string str;
 
@@ -49,14 +45,11 @@ static std::string to_string(const StructSomeHierarchyBase& aObj)
     return str;
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StructSomeHierarchyBase& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSomeHierarchyBase& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STRUCTSOMEHIERARCHYBASE_HPP

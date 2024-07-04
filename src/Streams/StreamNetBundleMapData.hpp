@@ -1,7 +1,6 @@
 #ifndef STREAMNETBUNDLEMAPDATA_HPP
 #define STREAMNETBUNDLEMAPDATA_HPP
 
-
 #include <string>
 
 #include <fmt/core.h>
@@ -10,13 +9,13 @@
 #include "General.hpp"
 #include "Stream.hpp"
 
-
 class StreamNetBundleMapData : public Stream
 {
 public:
-
-    StreamNetBundleMapData(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}
-    { }
+    StreamNetBundleMapData(ContainerContext& aCtx, const fs::path& aInputStream)
+        : Stream{aCtx, aInputStream}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -33,9 +32,7 @@ public:
     }
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StreamNetBundleMapData& aObj)
+[[maybe_unused]] static std::string to_string(const StreamNetBundleMapData& aObj)
 {
     std::string str;
 
@@ -44,20 +41,16 @@ static std::string to_string(const StreamNetBundleMapData& aObj)
     return str;
 }
 
-
 inline std::string StreamNetBundleMapData::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StreamNetBundleMapData& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamNetBundleMapData& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STREAMNETBUNDLEMAPDATA_HPP

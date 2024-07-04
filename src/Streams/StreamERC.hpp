@@ -1,7 +1,6 @@
 #ifndef STREAMERC_HPP
 #define STREAMERC_HPP
 
-
 #include <memory>
 #include <ostream>
 #include <string>
@@ -13,13 +12,14 @@
 #include "Stream.hpp"
 #include "Structures/StructERCSymbol.hpp"
 
-
 class StreamERC : public Stream
 {
 public:
-
-    StreamERC(ContainerContext& aCtx, const fs::path& aInputStream) : Stream{aCtx, aInputStream}, ercSymbol{}
-    { }
+    StreamERC(ContainerContext& aCtx, const fs::path& aInputStream)
+        : Stream{aCtx, aInputStream},
+          ercSymbol{}
+    {
+    }
 
     std::string to_string() const override;
 
@@ -38,9 +38,7 @@ public:
     std::unique_ptr<StructERCSymbol> ercSymbol;
 };
 
-
-[[maybe_unused]]
-static std::string to_string(const StreamERC& aObj)
+[[maybe_unused]] static std::string to_string(const StreamERC& aObj)
 {
     std::string str;
 
@@ -55,20 +53,16 @@ static std::string to_string(const StreamERC& aObj)
     return str;
 }
 
-
 inline std::string StreamERC::to_string() const
 {
     return ::to_string(*this);
 }
 
-
-[[maybe_unused]]
-static std::ostream& operator<<(std::ostream& aOs, const StreamERC& aVal)
+[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamERC& aVal)
 {
     aOs << to_string(aVal);
 
     return aOs;
 }
-
 
 #endif // STREAMERC_HPP

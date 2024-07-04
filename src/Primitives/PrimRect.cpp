@@ -13,7 +13,6 @@
 #include "GenericParser.hpp"
 #include "Primitives/PrimRect.hpp"
 
-
 size_t PrimRect::getExpectedStructSize(FileFormatVersion aVersion)
 {
     size_t expectedByteLength;
@@ -34,7 +33,6 @@ size_t PrimRect::getExpectedStructSize(FileFormatVersion aVersion)
     return expectedByteLength;
 }
 
-
 void PrimRect::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
@@ -44,8 +42,8 @@ void PrimRect::read(FileFormatVersion aVersion)
 
     if(aVersion == FileFormatVersion::Unknown)
     {
-        const auto predictionFunc = [this](FileFormatVersion aVersion){ this->read(aVersion); };
-        aVersion = parser.predictVersion(predictionFunc);
+        const auto predictionFunc = [this](FileFormatVersion aVersion) { this->read(aVersion); };
+        aVersion                  = parser.predictVersion(predictionFunc);
     }
 
     const size_t startOffset = ds.getCurrentOffset();

@@ -9,7 +9,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructGraphicBitMapInst.hpp"
 
-
 void StructGraphicBitMapInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

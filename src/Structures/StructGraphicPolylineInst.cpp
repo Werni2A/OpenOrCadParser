@@ -9,7 +9,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructGraphicPolylineInst.hpp"
 
-
 void StructGraphicPolylineInst::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

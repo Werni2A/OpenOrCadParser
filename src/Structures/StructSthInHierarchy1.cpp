@@ -9,7 +9,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructSthInHierarchy1.hpp"
 
-
 void StructSthInHierarchy1::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

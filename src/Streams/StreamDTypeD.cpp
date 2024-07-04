@@ -7,7 +7,6 @@
 #include "General.hpp"
 #include "Streams/StreamDTypeD.hpp"
 
-
 void StreamDTypeD::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -19,7 +18,7 @@ void StreamDTypeD::read(FileFormatVersion /* aVersion */)
     {
         Type type;
 
-        type.name = ds.readStringLenZeroTerm();
+        type.name          = ds.readStringLenZeroTerm();
         type.componentType = ToComponentType(ds.readUint16());
 
         types.push_back(type);

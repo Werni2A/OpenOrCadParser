@@ -1,7 +1,6 @@
 #ifndef STREAMCONTEXT_HPP
 #define STREAMCONTEXT_HPP
 
-
 #include <cstdint>
 #include <filesystem>
 #include <functional>
@@ -17,30 +16,26 @@
 #include "General.hpp"
 // #include "Stream.hpp"
 
-
 class Stream;
 
-
 namespace fs = std::filesystem;
-
 
 class StreamContext : public ContainerContext
 {
 public:
-
     StreamContext(const ContainerContext& aCtx, const fs::path& aInputStream)
-        : ContainerContext{aCtx}, mInputStream{aInputStream}, mCfbfStreamLocation{mInputStream, mExtractedCfbfPath},
+        : ContainerContext{aCtx},
+          mInputStream{aInputStream},
+          mCfbfStreamLocation{mInputStream, mExtractedCfbfPath},
           mDs{aInputStream, *this}
     {
-        mImgCtr = 0U;
-        mAttemptedParsing = false;
+        mImgCtr             = 0U;
+        mAttemptedParsing   = false;
         mParsedSuccessfully = std::nullopt;
 
         // Create stream specific logger
-        const fs::path logPath{
-            mExtractedCfbfPath.parent_path() / "logs"
-            / mInputCfbfFile.filename()
-            / mCfbfStreamLocation.get_relative_fs_path().concat(".log")};
+        const fs::path logPath{mExtractedCfbfPath.parent_path() / "logs" / mInputCfbfFile.filename() /
+                               mCfbfStreamLocation.get_relative_fs_path().concat(".log")};
         configureLogger(logPath);
     }
 
@@ -61,6 +56,5 @@ public:
     // is null.
     std::optional<bool> mParsedSuccessfully;
 };
-
 
 #endif // STREAMCONTEXT_HPP

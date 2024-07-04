@@ -8,7 +8,6 @@
 #include "GenericParser.hpp"
 #include "Streams/StreamHierarchy.hpp"
 
-
 void StreamHierarchy::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
@@ -18,8 +17,8 @@ void StreamHierarchy::read(FileFormatVersion aVersion)
 
     if(aVersion == FileFormatVersion::Unknown)
     {
-        const auto predictionFunc = [this](FileFormatVersion aVersion){ this->read(aVersion); };
-        aVersion = parser.predictVersion(predictionFunc);
+        const auto predictionFunc = [this](FileFormatVersion aVersion) { this->read(aVersion); };
+        aVersion                  = parser.predictVersion(predictionFunc);
     }
 
     ds.printUnknownData(9, getMethodName(this, __func__) + ": 0");

@@ -14,12 +14,13 @@
 #include "General.hpp"
 #include "StreamContext.hpp"
 
-
 class FutureData
 {
 public:
-
-    FutureData(std::size_t aPreambleOffset, std::size_t aSize) : mAbsStartOffset{0U}, mAbsStopOffset{0U}, mParsed{false}
+    FutureData(std::size_t aPreambleOffset, std::size_t aSize)
+        : mAbsStartOffset{0U},
+          mAbsStopOffset{0U},
+          mParsed{false}
     {
         const size_t PREAMBLE_STRIDE = 9U; //!< Stride from one preamble to the next one in byte
 
@@ -59,28 +60,27 @@ public:
     }
 
 private:
-
     std::size_t mAbsStartOffset; //!< Absolute offset from the beginning of the file where the data starts
-    std::size_t mAbsStopOffset; //!< Absolute offset from the beginning of the file where the data ends
+    std::size_t mAbsStopOffset;  //!< Absolute offset from the beginning of the file where the data ends
 
     bool mParsed; //!< Set if the specified range has been parsed
 };
 
-
-
 class FutureDataLst : public std::vector<FutureData>
 {
 public:
-
-    FutureDataLst(StreamContext& aCtx) : std::vector<FutureData>{}, mCtx{aCtx}
-    { }
+    FutureDataLst(StreamContext& aCtx)
+        : std::vector<FutureData>{},
+          mCtx{aCtx}
+    {
+    }
 
     std::optional<FutureData> getByStartOffset(std::size_t aAbsStartOffset) const
     {
         mCtx.get().mLogger.debug("Searching for StartOffset 0x{:08x}", aAbsStartOffset);
 
-        const auto cmp = [&aAbsStartOffset] (FutureData aFutureData) -> bool
-            { return aFutureData.getStartOffset() == aAbsStartOffset; };
+        const auto cmp = [&aAbsStartOffset](FutureData aFutureData) -> bool
+        { return aFutureData.getStartOffset() == aAbsStartOffset; };
 
         const auto res = std::find_if(this->begin(), this->end(), cmp);
 
@@ -96,8 +96,8 @@ public:
     {
         mCtx.get().mLogger.debug("Searching for StopOffset 0x{:08x}", aAbsStopOffset);
 
-        const auto cmp = [&aAbsStopOffset] (FutureData aFutureData) -> bool
-            { return aFutureData.getStopOffset() == aAbsStopOffset; };
+        const auto cmp = [&aAbsStopOffset](FutureData aFutureData) -> bool
+        { return aFutureData.getStopOffset() == aAbsStopOffset; };
 
         const auto res = std::find_if(this->begin(), this->end(), cmp);
 
@@ -111,8 +111,8 @@ public:
 
     bool removeByStartOffset(std::size_t aAbsStartOffset)
     {
-        const auto cmp = [&aAbsStartOffset] (FutureData aFutureData) -> bool
-            { return aFutureData.getStartOffset() == aAbsStartOffset; };
+        const auto cmp = [&aAbsStartOffset](FutureData aFutureData) -> bool
+        { return aFutureData.getStartOffset() == aAbsStartOffset; };
 
         const auto res = std::find_if(this->begin(), this->end(), cmp);
 
@@ -127,8 +127,8 @@ public:
 
     bool removeByStopOffset(std::size_t aAbsStopOffset)
     {
-        const auto cmp = [&aAbsStopOffset] (FutureData aFutureData) -> bool
-            { return aFutureData.getStopOffset() == aAbsStopOffset; };
+        const auto cmp = [&aAbsStopOffset](FutureData aFutureData) -> bool
+        { return aFutureData.getStopOffset() == aAbsStopOffset; };
 
         const auto res = std::find_if(this->begin(), this->end(), cmp);
 
@@ -145,8 +145,8 @@ public:
     {
         const size_t currOffset = mCtx.get().mDs.getCurrentOffset();
 
-        const auto cmp = [&currOffset] (FutureData aFutureData) -> bool
-            { return aFutureData.getStopOffset() == currOffset; };
+        const auto cmp = [&currOffset](FutureData aFutureData) -> bool
+        { return aFutureData.getStopOffset() == currOffset; };
 
         auto res = std::find_if(this->begin(), this->end(), cmp);
 
@@ -156,8 +156,8 @@ public:
 
             if(futureData.getParsed())
             {
-                const std::string msg = fmt::format("{}: Checkpoint position at 0x{:08x} is duplicated",
-                    getMethodName(this, __func__), currOffset);
+                const std::string msg = fmt::format(
+                    "{}: Checkpoint position at 0x{:08x} is duplicated", getMethodName(this, __func__), currOffset);
 
                 mCtx.get().mLogger.error(msg);
                 throw std::runtime_error(msg);
@@ -166,23 +166,23 @@ public:
             {
                 futureData.setParsed(true);
 
-                mCtx.get().mLogger.debug("{}: Checkpoint at 0x{:08x} was successful",
-                    getMethodName(this, __func__), currOffset);
+                mCtx.get().mLogger.debug(
+                    "{}: Checkpoint at 0x{:08x} was successful", getMethodName(this, __func__), currOffset);
             }
         }
         else
         {
             if(!empty())
             {
-                const std::string msg = fmt::format("{}: Checkpoint position at 0x{:08x} is incorrect",
-                    getMethodName(this, __func__), currOffset);
+                const std::string msg = fmt::format(
+                    "{}: Checkpoint position at 0x{:08x} is incorrect", getMethodName(this, __func__), currOffset);
 
                 mCtx.get().mLogger.error(msg);
                 throw std::runtime_error(msg);
             }
 
-            mCtx.get().mLogger.trace("{}: Checkpoint at 0x{:08x} was not found",
-                getMethodName(this, __func__), currOffset);
+            mCtx.get().mLogger.trace(
+                "{}: Checkpoint at 0x{:08x} was not found", getMethodName(this, __func__), currOffset);
         }
     }
 
@@ -197,15 +197,14 @@ public:
                 checkpoint_missing = true;
 
                 mCtx.get().mLogger.debug("{}: Checkpoint missing for 0x{:08x} -> 0x{:08x}",
-                    getMethodName(this, __func__),
-                    data.getStartOffset(), data.getStopOffset());
+                    getMethodName(this, __func__), data.getStartOffset(), data.getStopOffset());
             }
         }
 
         if(checkpoint_missing)
         {
-            const std::string msg = fmt::format("{}: Check your code for missing checkpoints!\n{}",
-                getMethodName(this, __func__), string());
+            const std::string msg = fmt::format(
+                "{}: Check your code for missing checkpoints!\n{}", getMethodName(this, __func__), string());
 
             mCtx.get().mLogger.debug(msg);
             throw std::runtime_error(msg);
@@ -214,8 +213,7 @@ public:
 
     std::string string() const
     {
-        std::string txt{fmt::format("Future Data List with {} Element{}:",
-            size(), size() > 1U ? "s" : "")};
+        std::string txt{fmt::format("Future Data List with {} Element{}:", size(), size() > 1U ? "s" : "")};
 
         for(const auto& e : *this)
         {
@@ -231,9 +229,8 @@ public:
 
         const size_t curPos = ds.getCurrentOffset();
 
-        const auto pred = [&curPos] (const FutureData aFutureData) -> bool {
-                return curPos < aFutureData.getStopOffset();
-            };
+        const auto pred = [&curPos](const FutureData aFutureData) -> bool
+        { return curPos < aFutureData.getStopOffset(); };
 
         const auto res = std::find_if(this->crbegin(), this->crend(), pred);
 
@@ -251,9 +248,8 @@ public:
 
         const size_t curPos = ds.getCurrentOffset();
 
-        const auto pred = [&curPos] (const FutureData aFutureData) -> bool {
-                return curPos < aFutureData.getStopOffset();
-            };
+        const auto pred = [&curPos](const FutureData aFutureData) -> bool
+        { return curPos < aFutureData.getStopOffset(); };
 
         auto res = std::find_if(this->rbegin(), this->rend(), pred);
 
@@ -262,7 +258,7 @@ public:
             size_t byteDiff = res->getStopOffset() - curPos;
 
             ds.printUnknownData(byteDiff, fmt::format("{}: Reading rest of future data ({} Byte) - {}",
-                getMethodName(this, __func__), byteDiff, aComment));
+                                              getMethodName(this, __func__), byteDiff, aComment));
         }
         else
         {
@@ -295,9 +291,10 @@ public:
 
         if(byteDiff > 0)
         {
-            const std::string msg = fmt::format("{}: Your structure implementation is too small."
-                " Expected it to end at 0x{:08x} but ended at 0x{:08x}. Too small by {} Byte.",
-                getMethodName(this, __func__), endPos, curPos, std::abs(byteDiff));
+            const std::string msg =
+                fmt::format("{}: Your structure implementation is too small."
+                            " Expected it to end at 0x{:08x} but ended at 0x{:08x}. Too small by {} Byte.",
+                    getMethodName(this, __func__), endPos, curPos, std::abs(byteDiff));
 
             mCtx.get().mDs.printUnknownData(byteDiff, msg);
         }
@@ -310,9 +307,10 @@ public:
             //       parser fails. With the current method the
             //       structure as a whole would be skipped
 
-            const std::string msg = fmt::format("{}: Your structure implementation is too large."
-                " Expected it to end at 0x{:08x} but ended at 0x{:08x}. Too large by {} Byte.",
-                getMethodName(this, __func__), endPos, curPos, std::abs(byteDiff));
+            const std::string msg =
+                fmt::format("{}: Your structure implementation is too large."
+                            " Expected it to end at 0x{:08x} but ended at 0x{:08x}. Too large by {} Byte.",
+                    getMethodName(this, __func__), endPos, curPos, std::abs(byteDiff));
 
             mCtx.get().mLogger.debug(msg);
             throw std::runtime_error(msg);
@@ -320,9 +318,7 @@ public:
     }
 
 private:
-
     std::reference_wrapper<StreamContext> mCtx;
-
 };
 
 #endif // FUTUREDATA_HPP

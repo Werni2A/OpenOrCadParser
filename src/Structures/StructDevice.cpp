@@ -12,7 +12,6 @@
 #include "GenericParser.hpp"
 #include "Structures/StructDevice.hpp"
 
-
 void StructDevice::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -40,7 +39,7 @@ void StructDevice::read(FileFormatVersion /* aVersion */)
     for(size_t i = 0u; i < pinCount; ++i)
     {
         const auto currOffset = ds.getCurrentOffset();
-        const int16_t strLen = ds.readInt16();
+        const int16_t strLen  = ds.readInt16();
         ds.setCurrentOffset(currOffset);
 
         // @todo What means a string length of -1?
@@ -72,10 +71,8 @@ void StructDevice::read(FileFormatVersion /* aVersion */)
         // @note The special case of value 127 that represents an empty group
         pinGroup.push_back(bitMapPinGrpCfg & 0x7f);
 
-        mCtx.mLogger.trace("pinIgnore = {}", (bool) GetBit(7, bitMapPinGrpCfg));
-        const std::string strPinGroup = (pinGroup.back() != 127U)
-            ? std::to_string(pinGroup.back())
-            : std::string{};
+        mCtx.mLogger.trace("pinIgnore = {}", (bool)GetBit(7, bitMapPinGrpCfg));
+        const std::string strPinGroup = (pinGroup.back() != 127U) ? std::to_string(pinGroup.back()) : std::string{};
         mCtx.mLogger.trace("pinGroup  = {:>3}", strPinGroup);
     }
 
