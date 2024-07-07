@@ -1,7 +1,9 @@
 #include <algorithm>
+#include <cstdint>
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
@@ -213,7 +215,7 @@ std::string OOCP::DataStream::dataToStr(const std::vector<uint8_t>& aData)
             preamble = fmt::format("0x{:08x}: ", getCurrentOffset());
         }
 
-        char c = static_cast<char>(aData[i]);
+        const char c = static_cast<char>(aData[i]);
         line_hex += fmt::format("{:02x}", aData[i]);
         line_str += std::isprint(c) ? c : '.';
 

@@ -21,14 +21,13 @@ namespace fs = std::filesystem;
 OOCP::ContainerContext::ContainerContext(
     const fs::path& aInputCfbfFile, const fs::path& aExtractedCfbfPath, ParserConfig aCfg, Database& aDb)
     : mDb{aDb},
+      mInputCfbfFile{aInputCfbfFile},
+      mExtractedCfbfPath{aExtractedCfbfPath},
+      mCfg{aCfg},
+      mFileFormatVersion{FileFormatVersion::C},
+      mLogLevel{spdlog::level::trace},
       mLogger{"tmp"}
 {
-    mInputCfbfFile     = aInputCfbfFile;
-    mExtractedCfbfPath = aExtractedCfbfPath;
-    mCfg               = aCfg;
-    mFileFormatVersion = FileFormatVersion::C;
-    mLogLevel          = spdlog::level::trace;
-
     const fs::path logPath = mExtractedCfbfPath / "logs" / "OpenOrCadParser.log";
     configureLogger(logPath);
 }
