@@ -114,8 +114,8 @@ class FileErrorDatabase:
 
         try:
             fs_repo = Repo.clone_from(repo.url, export_dir)
-        except:
-            raise Exception(f'Failed cloning repository from `{repo.url}`!')
+        except Exception as ex:
+            raise Exception(f'Failed cloning repository from `{repo.url}`!\n{ex}')
 
         # Commit differs from currently downloaded master
         if str(fs_repo.head.commit) != repo.commit:

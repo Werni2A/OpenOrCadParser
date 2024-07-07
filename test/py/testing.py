@@ -50,8 +50,8 @@ def add_new_repo_to_database(db: FileErrorDatabase, url: str, base_path: str) ->
     else:
         try:
             fs_repo = Repo.clone_from(url, base_path)
-        except:
-            raise Exception(f'Failed cloning repository from `{url}`!')
+        except Exception as ex:
+            raise Exception(f'Failed cloning repository from `{url}`!\n{ex}')
 
     commit = fs_repo.head.commit
 
