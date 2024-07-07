@@ -38,7 +38,8 @@ public:
     }
 };
 
-[[maybe_unused]] static std::string to_string(const StructGraphicEllipseInst& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructGraphicEllipseInst& aObj)
 {
     return aObj.to_string();
 }
@@ -54,7 +55,8 @@ inline std::string StructGraphicEllipseInst::to_string() const
     return str;
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGraphicEllipseInst& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructGraphicEllipseInst& aVal)
 {
     aOs << to_string(aVal);
 

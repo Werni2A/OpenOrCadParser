@@ -37,7 +37,8 @@ public:
     }
 };
 
-[[maybe_unused]] static std::string to_string(const StructSthInHierarchy2& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructSthInHierarchy2& aObj)
 {
     std::string str;
 
@@ -51,7 +52,8 @@ inline std::string StructSthInHierarchy2::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSthInHierarchy2& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructSthInHierarchy2& aVal)
 {
     aOs << to_string(aVal);
 

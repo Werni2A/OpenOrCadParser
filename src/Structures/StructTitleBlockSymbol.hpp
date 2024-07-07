@@ -45,7 +45,8 @@ public:
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };
 
-[[maybe_unused]] static std::string to_string(const StructTitleBlockSymbol& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructTitleBlockSymbol& aObj)
 {
     std::string str;
 
@@ -80,7 +81,8 @@ inline std::string StructTitleBlockSymbol::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructTitleBlockSymbol& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructTitleBlockSymbol& aVal)
 {
     aOs << to_string(aVal);
 

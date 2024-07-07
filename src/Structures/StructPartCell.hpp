@@ -42,7 +42,8 @@ public:
     std::string convertName;
 };
 
-[[maybe_unused]] static std::string to_string(const StructPartCell& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructPartCell& aObj)
 {
     std::string str;
 
@@ -59,7 +60,8 @@ inline std::string StructPartCell::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructPartCell& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructPartCell& aVal)
 {
     aOs << to_string(aVal);
 

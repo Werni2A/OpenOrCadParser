@@ -38,7 +38,8 @@ public:
     }
 };
 
-[[maybe_unused]] static std::string to_string(const StructGraphicCommentTextInst& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructGraphicCommentTextInst& aObj)
 {
     return aObj.to_string();
 }
@@ -54,7 +55,8 @@ inline std::string StructGraphicCommentTextInst::to_string() const
     return str;
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGraphicCommentTextInst& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructGraphicCommentTextInst& aVal)
 {
     aOs << to_string(aVal);
 

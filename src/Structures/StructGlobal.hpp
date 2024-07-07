@@ -39,7 +39,8 @@ public:
     }
 };
 
-[[maybe_unused]] static std::string to_string(const StructGlobal& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructGlobal& aObj)
 {
     return aObj.to_string();
 }
@@ -55,7 +56,8 @@ inline std::string StructGlobal::to_string() const
     return str;
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGlobal& aObj)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructGlobal& aObj)
 {
     aOs << to_string(aObj);
 

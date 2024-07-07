@@ -38,7 +38,8 @@ public:
     // void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 };
 
-[[maybe_unused]] static std::string to_string(const StructSomeHierarchyBase& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructSomeHierarchyBase& aObj)
 {
     std::string str;
 
@@ -47,7 +48,8 @@ public:
     return str;
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSomeHierarchyBase& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructSomeHierarchyBase& aVal)
 {
     aOs << to_string(aVal);
 

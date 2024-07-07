@@ -39,7 +39,8 @@ public:
     uint16_t y;
 };
 
-[[maybe_unused]] static std::string to_string(const Point& aObj)
+[[maybe_unused]]
+static std::string to_string(const Point& aObj)
 {
     std::string str;
 
@@ -54,7 +55,8 @@ inline std::string Point::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const Point& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const Point& aVal)
 {
     aOs << to_string(aVal);
 

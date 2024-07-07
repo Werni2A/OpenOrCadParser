@@ -35,7 +35,8 @@ public:
     }
 };
 
-[[maybe_unused]] static std::string to_string(const StreamDsnStream& aObj)
+[[maybe_unused]]
+static std::string to_string(const StreamDsnStream& aObj)
 {
     std::string str;
 
@@ -49,7 +50,8 @@ inline std::string StreamDsnStream::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamDsnStream& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StreamDsnStream& aVal)
 {
     aOs << to_string(aVal);
 

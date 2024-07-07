@@ -40,7 +40,8 @@ public:
     std::unique_ptr<StructERCSymbol> ercSymbol;
 };
 
-[[maybe_unused]] static std::string to_string(const StreamERC& aObj)
+[[maybe_unused]]
+static std::string to_string(const StreamERC& aObj)
 {
     std::string str;
 
@@ -60,7 +61,8 @@ inline std::string StreamERC::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamERC& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StreamERC& aVal)
 {
     aOs << to_string(aVal);
 

@@ -24,17 +24,20 @@ enum class HatchStyle
     Mesh            = 5   // x
 };
 
-[[maybe_unused]] static constexpr HatchStyle ToHatchStyle(int32_t aVal)
+[[maybe_unused]]
+static constexpr HatchStyle ToHatchStyle(int32_t aVal)
 {
     return ToEnum<HatchStyle, decltype(aVal)>(aVal);
 }
 
-[[maybe_unused]] static std::string to_string(const HatchStyle& aVal)
+[[maybe_unused]]
+static std::string to_string(const HatchStyle& aVal)
 {
     return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const HatchStyle& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const HatchStyle& aVal)
 {
     aOs << to_string(aVal);
     return aOs;

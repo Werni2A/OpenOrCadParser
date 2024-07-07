@@ -9,9 +9,8 @@
 #include "General.hpp"
 #include "GenericParser.hpp"
 #include "Primitives/PrimPolyline.hpp"
-using namespace OOCP;
 
-size_t PrimPolyline::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount)
+size_t OOCP::PrimPolyline::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount)
 {
     size_t expectedByteLength;
 
@@ -27,7 +26,7 @@ size_t PrimPolyline::getExpectedStructSize(FileFormatVersion aVersion, size_t aP
     return expectedByteLength;
 }
 
-void PrimPolyline::read(FileFormatVersion aVersion)
+void OOCP::PrimPolyline::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

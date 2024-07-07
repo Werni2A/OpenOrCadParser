@@ -59,7 +59,8 @@ enum class ComponentType
     //       too often to be a realistic corruption issue but I need to confirm this.
 };
 
-[[maybe_unused]] static constexpr ComponentType ToComponentType(uint16_t aVal)
+[[maybe_unused]]
+static constexpr ComponentType ToComponentType(uint16_t aVal)
 {
     // See the explanation at HACKY_VALUE for this hack
     if(aVal > 100U)
@@ -70,12 +71,14 @@ enum class ComponentType
     return ToEnum<ComponentType, decltype(aVal)>(aVal);
 }
 
-[[maybe_unused]] static std::string to_string(const ComponentType& aVal)
+[[maybe_unused]]
+static std::string to_string(const ComponentType& aVal)
 {
     return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const ComponentType& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const ComponentType& aVal)
 {
     aOs << to_string(aVal);
     return aOs;

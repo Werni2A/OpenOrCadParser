@@ -95,17 +95,20 @@ enum class Structure
     NetGroup = 103 //!< Specifies which wires/busses belong to a given net group
 };
 
-[[maybe_unused]] static constexpr Structure ToStructure(uint8_t aVal)
+[[maybe_unused]]
+static constexpr Structure ToStructure(uint8_t aVal)
 {
     return ToEnum<Structure, decltype(aVal)>(aVal);
 }
 
-[[maybe_unused]] static std::string to_string(const Structure& aVal)
+[[maybe_unused]]
+static std::string to_string(const Structure& aVal)
 {
     return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const Structure& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const Structure& aVal)
 {
     aOs << to_string(aVal);
     return aOs;

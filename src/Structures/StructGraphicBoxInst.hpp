@@ -38,7 +38,8 @@ public:
     }
 };
 
-[[maybe_unused]] static std::string to_string(const StructGraphicBoxInst& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructGraphicBoxInst& aObj)
 {
     return aObj.to_string();
 }
@@ -54,7 +55,8 @@ inline std::string StructGraphicBoxInst::to_string() const
     return str;
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGraphicBoxInst& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructGraphicBoxInst& aVal)
 {
     aOs << to_string(aVal);
 

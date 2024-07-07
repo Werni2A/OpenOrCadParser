@@ -30,7 +30,8 @@ public:
     ComponentType componentType;
 };
 
-[[maybe_unused]] static std::string to_string(const Type& aObj)
+[[maybe_unused]]
+static std::string to_string(const Type& aObj)
 {
     std::string str;
 
@@ -46,7 +47,8 @@ inline std::string Type::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const Type& aObj)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const Type& aObj)
 {
     aOs << to_string(aObj);
 
@@ -79,7 +81,8 @@ public:
     std::vector<Type> types;
 };
 
-[[maybe_unused]] static std::string to_string(const StreamDTypeD& aObj)
+[[maybe_unused]]
+static std::string to_string(const StreamDTypeD& aObj)
 {
     std::string str;
 
@@ -100,7 +103,8 @@ inline std::string StreamDTypeD::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamDTypeD& aObj)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StreamDTypeD& aObj)
 {
     aOs << to_string(aObj);
 

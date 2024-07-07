@@ -19,8 +19,6 @@
 
 namespace fs = std::filesystem;
 
-using namespace OOCP;
-
 void OOCP::PrimBitmap::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
@@ -147,7 +145,7 @@ fs::path OOCP::PrimBitmap::writeBmpFile(fs::path aFilePath, const std::vector<ui
 // aFilePath is the requested path to the image file, but the function will change the file
 // extension, depending on the corresponding file type that was found.
 // Returns path to the actually written image file
-fs::path PrimBitmap::writeDifferentImageFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData) const
+fs::path OOCP::PrimBitmap::writeDifferentImageFile(fs::path aFilePath, const std::vector<uint8_t>& aRawImgData) const
 {
     // Discard the header for non BMP images. After that, they start
     // with a complete image, e.g. PNG or JPG
@@ -224,7 +222,7 @@ fs::path PrimBitmap::writeDifferentImageFile(fs::path aFilePath, const std::vect
 // The images are not always bitmaps where we need to prepend its header
 // but its also possible that they are PNG, JPG and probably other formats
 // that have some header that needs to be trimmed away.
-bool PrimBitmap::isBmpImage(const std::vector<uint8_t>& aRawImgData) const
+bool OOCP::PrimBitmap::isBmpImage(const std::vector<uint8_t>& aRawImgData) const
 {
     bool hasMagicId = false;
 
@@ -243,7 +241,7 @@ bool PrimBitmap::isBmpImage(const std::vector<uint8_t>& aRawImgData) const
     return !hasMagicId;
 }
 
-fs::path PrimBitmap::writeImgToFile(fs::path aFilePath) const
+fs::path OOCP::PrimBitmap::writeImgToFile(fs::path aFilePath) const
 {
     // @todo Probably its file format version dependent if it supports
     //       only bitmaps where we need to prepend its header or supports

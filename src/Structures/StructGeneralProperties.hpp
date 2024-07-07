@@ -70,7 +70,8 @@ public:
     bool pinNumberVisible;
 };
 
-[[maybe_unused]] static std::string to_string(const StructGeneralProperties& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructGeneralProperties& aObj)
 {
     std::string str;
 
@@ -92,7 +93,8 @@ inline std::string StructGeneralProperties::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGeneralProperties& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructGeneralProperties& aVal)
 {
     aOs << to_string(aVal);
 

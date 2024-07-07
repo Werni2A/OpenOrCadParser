@@ -10,9 +10,8 @@
 #include "General.hpp"
 #include "GenericParser.hpp"
 #include "Primitives/PrimLine.hpp"
-using namespace OOCP;
 
-size_t PrimLine::getExpectedStructSize(FileFormatVersion aVersion)
+size_t OOCP::PrimLine::getExpectedStructSize(FileFormatVersion aVersion)
 {
     size_t expectedByteLength;
 
@@ -28,7 +27,7 @@ size_t PrimLine::getExpectedStructSize(FileFormatVersion aVersion)
     return expectedByteLength;
 }
 
-void PrimLine::read(FileFormatVersion aVersion)
+void OOCP::PrimLine::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

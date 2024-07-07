@@ -46,7 +46,8 @@ public:
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };
 
-[[maybe_unused]] static std::string to_string(const StructOffPageSymbol& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructOffPageSymbol& aObj)
 {
     std::string str;
 
@@ -81,7 +82,8 @@ inline std::string StructOffPageSymbol::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructOffPageSymbol& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructOffPageSymbol& aVal)
 {
     aOs << to_string(aVal);
 

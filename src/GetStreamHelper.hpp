@@ -22,7 +22,8 @@ static const std::map<DirectoryType, StreamType> DirectoryType2StreamType = {
     {DirectoryType::ViewsDirectory,        StreamType::ViewsDirectory       }
 };
 
-[[maybe_unused]] static std::shared_ptr<StreamLibrary> getLibraryStreamFromDb(Database& aDb)
+[[maybe_unused]]
+static std::shared_ptr<StreamLibrary> getLibraryStreamFromDb(Database& aDb)
 {
     for(auto& stream : aDb.mStreams)
     {
@@ -37,7 +38,8 @@ static const std::map<DirectoryType, StreamType> DirectoryType2StreamType = {
 
 // T is of type `DirectoryStream`
 template <typename T>
-[[maybe_unused]] static std::shared_ptr<T> getDirectoryStreamFromDb(Database& aDb, DirectoryType aDirType)
+[[maybe_unused]]
+static std::shared_ptr<T> getDirectoryStreamFromDb(Database& aDb, DirectoryType aDirType)
 {
     for(auto& stream : aDb.mStreams)
     {

@@ -65,7 +65,8 @@ public:
     uint16_t textFontIdx;
 };
 
-[[maybe_unused]] static std::string to_string(const PrimCommentText& aObj)
+[[maybe_unused]]
+static std::string to_string(const PrimCommentText& aObj)
 {
     std::string str;
 
@@ -88,7 +89,8 @@ inline std::string PrimCommentText::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimCommentText& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const PrimCommentText& aVal)
 {
     aOs << to_string(aVal);
 

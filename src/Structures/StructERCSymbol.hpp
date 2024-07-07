@@ -40,7 +40,8 @@ public:
     StructSymbolBBox symbolBBox;
 };
 
-[[maybe_unused]] static std::string to_string(const StructERCSymbol& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructERCSymbol& aObj)
 {
     std::string str;
 
@@ -58,7 +59,8 @@ inline std::string StructERCSymbol::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructERCSymbol& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructERCSymbol& aVal)
 {
     aOs << to_string(aVal);
 

@@ -57,7 +57,8 @@ public:
     std::vector<std::unique_ptr<PrimBase>> primitives;
 };
 
-[[maybe_unused]] static std::string to_string(const StructSthInPages0& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructSthInPages0& aObj)
 {
     std::string str;
 
@@ -83,7 +84,8 @@ inline std::string StructSthInPages0::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSthInPages0& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructSthInPages0& aVal)
 {
     aOs << to_string(aVal);
 

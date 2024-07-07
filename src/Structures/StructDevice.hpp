@@ -57,7 +57,8 @@ public:
     std::vector<uint8_t> pinGroup; // @todo Probably convert to std::optional<uint8_t>
 };
 
-[[maybe_unused]] static std::string to_string(const StructDevice& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructDevice& aObj)
 {
     std::string str;
 
@@ -92,7 +93,8 @@ inline std::string StructDevice::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructDevice& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructDevice& aVal)
 {
     aOs << to_string(aVal);
 

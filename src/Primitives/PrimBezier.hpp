@@ -73,7 +73,8 @@ public:
     std::vector<Point> points;
 };
 
-[[maybe_unused]] static std::string to_string(const PrimBezier& aObj)
+[[maybe_unused]]
+static std::string to_string(const PrimBezier& aObj)
 {
     std::string str;
 
@@ -95,7 +96,8 @@ inline std::string PrimBezier::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimBezier& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const PrimBezier& aVal)
 {
     aOs << to_string(aVal);
 

@@ -45,7 +45,8 @@ public:
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };
 
-[[maybe_unused]] static std::string to_string(const StructGlobalSymbol& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructGlobalSymbol& aObj)
 {
     std::string str;
 
@@ -80,7 +81,8 @@ inline std::string StructGlobalSymbol::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGlobalSymbol& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructGlobalSymbol& aVal)
 {
     aOs << to_string(aVal);
 

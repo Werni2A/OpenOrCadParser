@@ -20,17 +20,20 @@ enum class LineWidth
                 // Thin and Medium
 };
 
-[[maybe_unused]] static constexpr LineWidth ToLineWidth(uint32_t aVal)
+[[maybe_unused]]
+static constexpr LineWidth ToLineWidth(uint32_t aVal)
 {
     return ToEnum<LineWidth, decltype(aVal)>(aVal);
 }
 
-[[maybe_unused]] static std::string to_string(const LineWidth& aVal)
+[[maybe_unused]]
+static std::string to_string(const LineWidth& aVal)
 {
     return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const LineWidth& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const LineWidth& aVal)
 {
     aOs << to_string(aVal);
     return aOs;

@@ -46,7 +46,8 @@ public:
     std::string s2;
 };
 
-[[maybe_unused]] static std::string to_string(const StructERCObject& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructERCObject& aObj)
 {
     return aObj.to_string();
 }
@@ -66,7 +67,8 @@ inline std::string StructERCObject::to_string() const
     return str;
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructERCObject& aObj)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructERCObject& aObj)
 {
     aOs << to_string(aObj);
 

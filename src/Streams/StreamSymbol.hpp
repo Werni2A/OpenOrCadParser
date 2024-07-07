@@ -47,7 +47,8 @@ public:
     std::vector<std::unique_ptr<StructSymbolDisplayProp>> symbolDisplayProps;
 };
 
-[[maybe_unused]] static std::string to_string(const StreamSymbol& aObj)
+[[maybe_unused]]
+static std::string to_string(const StreamSymbol& aObj)
 {
     std::string str;
 
@@ -85,7 +86,8 @@ inline std::string StreamSymbol::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamSymbol& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StreamSymbol& aVal)
 {
     aOs << to_string(aVal);
 

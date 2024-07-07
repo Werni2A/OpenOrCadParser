@@ -73,7 +73,8 @@ public:
     std::unique_ptr<StructSthInPages0> sthInPages0;
 };
 
-[[maybe_unused]] static std::string to_string(const StructGraphicInst& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructGraphicInst& aObj)
 {
     return aObj.to_string();
 }
@@ -111,7 +112,8 @@ inline std::string StructGraphicInst::to_string() const
     return str;
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructGraphicInst& aObj)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructGraphicInst& aObj)
 {
     aOs << to_string(aObj);
 

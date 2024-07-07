@@ -105,7 +105,8 @@ private:
     std::optional<HatchStyle> mHatchStyle;
 };
 
-[[maybe_unused]] static std::string to_string(const PrimEllipse& aObj)
+[[maybe_unused]]
+static std::string to_string(const PrimEllipse& aObj)
 {
     std::string str;
 
@@ -127,7 +128,8 @@ inline std::string PrimEllipse::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimEllipse& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const PrimEllipse& aVal)
 {
     aOs << to_string(aVal);
 

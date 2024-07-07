@@ -69,7 +69,8 @@ public:
     std::vector<uint8_t> rawImgData; // @todo called val in the XSD file
 };
 
-[[maybe_unused]] static std::string to_string(const PrimBitmap& aObj)
+[[maybe_unused]]
+static std::string to_string(const PrimBitmap& aObj)
 {
     std::string str;
 
@@ -93,7 +94,8 @@ inline std::string PrimBitmap::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimBitmap& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const PrimBitmap& aVal)
 {
     aOs << to_string(aVal);
 

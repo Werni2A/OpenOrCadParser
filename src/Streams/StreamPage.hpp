@@ -78,7 +78,8 @@ public:
     std::vector<std::unique_ptr<StructGraphicInst>> graphicInsts;
 };
 
-[[maybe_unused]] static std::string to_string(const StreamPage& aObj)
+[[maybe_unused]]
+static std::string to_string(const StreamPage& aObj)
 {
     std::string str;
 
@@ -195,7 +196,8 @@ inline std::string StreamPage::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamPage& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StreamPage& aVal)
 {
     aOs << to_string(aVal);
 
