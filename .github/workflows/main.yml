@@ -38,6 +38,7 @@ jobs:
       run: |
         python3 run_tests.py
 
+
   build-macos:
     runs-on: macos-14
     steps:
@@ -48,12 +49,26 @@ jobs:
         git clone https://github.com/microsoft/vcpkg.git
         ./vcpkg/bootstrap-vcpkg.sh
 
+    - name: Download Unit Test Designs
+      run: |
+        python -m pip install -r test/py/requirements.txt
+        python test/py/testing.py --download_repos true --database_file_path repos.yaml --third_party_path test/designs
+
+    - name: Create Unit Tests
+      run: |
+        python test/py/testing.py --generate_unit_tests true --database_file_path repos.yaml --unit_test_path test/src/generated_tests --third_party_path test/designs
+
+
     - name: Build Library and CLI Application
       run: |
         export VCPKG_ROOT=$(realpath ./vcpkg)
         export CMAKE_BUILD_PARALLEL_LEVEL=2
-        cmake --preset release -DENABLE_UNIT_TESTING=OFF
+        cmake --preset release -DENABLE_UNIT_TESTING=ON
         cmake --build --preset release
+
+    - name: Run Tests
+      run: |
+        python3 run_tests.py
 
 
   build-windows:
@@ -65,10 +80,22 @@ jobs:
         git clone https://github.com/microsoft/vcpkg.git
         .\vcpkg\bootstrap-vcpkg.bat
 
+    - name: Download Unit Test Designs
+      run: |
+        ${ENV:PYTHONUTF8}=1
+        git config --system core.longpaths true
+        python -m pip install -r test/py/requirements.txt
+        python test/py/testing.py --download_repos true --database_file_path repos.yaml --third_party_path test\designs
+
+    - name: Create Unit Tests
+      run: |
+        ${ENV:PYTHONUTF8}=1
+        git config --system core.longpaths true
+        python test/py/testing.py --generate_unit_tests true --database_file_path repos.yaml --unit_test_path test\src\generated_tests --third_party_path test\designs
 
     - name: Build Library and CLI Application
       run: |
         ${ENV:VCPKG_ROOT}=$(Resolve-Path ./vcpkg)
         ${ENV:CMAKE_BUILD_PARALLEL_LEVEL}=2
-        cmake --preset release -DENABLE_UNIT_TESTING=OFF
+        cmake --preset release -DENABLE_UNIT_TESTING=ON
         cmake --build --preset release
