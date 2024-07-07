@@ -11,9 +11,8 @@
 #include "GetStreamHelper.hpp"
 #include "Primitives/PrimCommentText.hpp"
 #include "Win32/LOGFONTA.hpp"
-using namespace OOCP;
 
-void PrimCommentText::read(FileFormatVersion /* aVersion */)
+void OOCP::PrimCommentText::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};
@@ -88,7 +87,7 @@ void PrimCommentText::read(FileFormatVersion /* aVersion */)
     mCtx.mLogger.trace(to_string());
 }
 
-LOGFONTA PrimCommentText::getTextFont() const
+OOCP::LOGFONTA OOCP::PrimCommentText::getTextFont() const
 {
     const auto lib = getLibraryStreamFromDb(mCtx.mDb);
 

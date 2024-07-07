@@ -51,7 +51,8 @@ public:
     std::vector<PrimBase*> primitives;
 };
 
-[[maybe_unused]] static std::string to_string(const PrimSymbolVector& aObj)
+[[maybe_unused]]
+static std::string to_string(const PrimSymbolVector& aObj)
 {
     std::string str;
 
@@ -74,7 +75,8 @@ inline std::string PrimSymbolVector::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimSymbolVector& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const PrimSymbolVector& aVal)
 {
     aOs << to_string(aVal);
 

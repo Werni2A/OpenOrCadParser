@@ -77,7 +77,8 @@ private:
     std::optional<LineWidth> mLineWidth;
 };
 
-[[maybe_unused]] static std::string to_string(const PrimLine& aObj)
+[[maybe_unused]]
+static std::string to_string(const PrimLine& aObj)
 {
     std::string str;
 
@@ -97,7 +98,8 @@ inline std::string PrimLine::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimLine& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const PrimLine& aVal)
 {
     aOs << to_string(aVal);
 

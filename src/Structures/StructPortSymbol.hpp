@@ -37,7 +37,8 @@ public:
     }
 };
 
-[[maybe_unused]] static std::string to_string(const StructPortSymbol& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructPortSymbol& aObj)
 {
     std::string str;
 
@@ -51,7 +52,8 @@ inline std::string StructPortSymbol::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructPortSymbol& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructPortSymbol& aVal)
 {
     aOs << to_string(aVal);
 

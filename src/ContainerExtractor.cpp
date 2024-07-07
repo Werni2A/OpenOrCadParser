@@ -18,8 +18,6 @@
 
 namespace fs = std::filesystem;
 
-using namespace OOCP;
-
 OOCP::ContainerExtractor::ContainerExtractor(const fs::path& aContainer)
 {
     mContainer = aContainer;
@@ -62,7 +60,7 @@ void OOCP::ContainerExtractor::outputFileInfo() const
               << "mini fat sector: " << hdr->numMiniFATSector << std::endl;
 }
 
-void ContainerExtractor::outputEntryInfo(const CFB::COMPOUND_FILE_ENTRY* aEntry) const
+void OOCP::ContainerExtractor::outputEntryInfo(const CFB::COMPOUND_FILE_ENTRY* aEntry) const
 {
     std::clog << "entry type: "
               << (mReader->IsPropertyStream(aEntry) ? "property" : (mReader->IsStream(aEntry) ? "stream" : "directory"))

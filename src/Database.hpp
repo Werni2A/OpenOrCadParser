@@ -38,7 +38,8 @@ public:
     std::vector<std::shared_ptr<Stream>> mStreams;
 };
 
-[[maybe_unused]] static std::string to_string(const Database& aObj)
+[[maybe_unused]]
+static std::string to_string(const Database& aObj)
 {
     std::string str;
 
@@ -52,7 +53,8 @@ public:
     return str;
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const Database& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const Database& aVal)
 {
     aOs << to_string(aVal);
 

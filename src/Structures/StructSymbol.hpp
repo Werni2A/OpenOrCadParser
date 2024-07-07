@@ -32,7 +32,8 @@ public:
     // void read(FileFormatVersion aVersion = FileFormatVersion::Unknown) override;
 };
 
-[[maybe_unused]] static std::string to_string(const StructSymbol& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructSymbol& aObj)
 {
     std::string str;
 
@@ -46,7 +47,8 @@ inline std::string StructSymbol::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSymbol& aObj)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructSymbol& aObj)
 {
     aOs << to_string(aObj);
 

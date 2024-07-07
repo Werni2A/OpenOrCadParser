@@ -11,9 +11,8 @@
 #include "General.hpp"
 #include "GenericParser.hpp"
 #include "Primitives/PrimPolygon.hpp"
-using namespace OOCP;
 
-size_t PrimPolygon::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount)
+size_t OOCP::PrimPolygon::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount)
 {
     size_t expectedByteLength;
 
@@ -33,7 +32,7 @@ size_t PrimPolygon::getExpectedStructSize(FileFormatVersion aVersion, size_t aPo
     return expectedByteLength;
 }
 
-void PrimPolygon::read(FileFormatVersion aVersion)
+void OOCP::PrimPolygon::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

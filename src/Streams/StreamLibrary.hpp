@@ -70,7 +70,8 @@ public:
     std::vector<std::pair<std::string, std::string>> partAliases; //!< .first = Alias, .second = Package
 };
 
-[[maybe_unused]] static std::string to_string(const StreamLibrary& aObj)
+[[maybe_unused]]
+static std::string to_string(const StreamLibrary& aObj)
 {
     std::string str;
 
@@ -114,7 +115,8 @@ inline std::string StreamLibrary::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamLibrary& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StreamLibrary& aVal)
 {
     aOs << to_string(aVal);
     return aOs;

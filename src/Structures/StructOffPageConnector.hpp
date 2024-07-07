@@ -39,7 +39,8 @@ public:
     }
 };
 
-[[maybe_unused]] static std::string to_string(const StructOffPageConnector& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructOffPageConnector& aObj)
 {
     return aObj.to_string();
 }
@@ -55,7 +56,8 @@ inline std::string StructOffPageConnector::to_string() const
     return str;
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructOffPageConnector& aObj)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructOffPageConnector& aObj)
 {
     aOs << to_string(aObj);
 

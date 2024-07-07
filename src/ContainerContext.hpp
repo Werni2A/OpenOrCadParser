@@ -35,7 +35,8 @@ struct ParserConfig
     bool mKeepTmpFiles{true}; //!< Do not delete temporary files after parser completed
 };
 
-[[maybe_unused]] static std::string to_string(const ParserConfig& aCfg)
+[[maybe_unused]]
+static std::string to_string(const ParserConfig& aCfg)
 {
     std::string str;
     str += fmt::format("mSkipUnknownPrim   = {}\n", aCfg.mSkipUnknownPrim);

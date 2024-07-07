@@ -9,9 +9,8 @@
 #include "General.hpp"
 #include "GenericParser.hpp"
 #include "Primitives/PrimEllipse.hpp"
-using namespace OOCP;
 
-size_t PrimEllipse::getExpectedStructSize(FileFormatVersion aVersion)
+size_t OOCP::PrimEllipse::getExpectedStructSize(FileFormatVersion aVersion)
 {
     size_t expectedByteLength;
 
@@ -37,7 +36,7 @@ size_t PrimEllipse::getExpectedStructSize(FileFormatVersion aVersion)
     return expectedByteLength;
 }
 
-void PrimEllipse::read(FileFormatVersion aVersion)
+void OOCP::PrimEllipse::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

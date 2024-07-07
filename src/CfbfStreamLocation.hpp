@@ -95,7 +95,8 @@ private:
     std::vector<std::string> mStreamLocation{};
 };
 
-[[maybe_unused]] static std::string to_string(const CfbfStreamLocation& aLocation)
+[[maybe_unused]]
+static std::string to_string(const CfbfStreamLocation& aLocation)
 {
     std::string locStr{};
     for(const auto& locPart : aLocation.get_vector())
@@ -106,17 +107,20 @@ private:
     return locStr;
 }
 
-[[maybe_unused]] static bool operator==(const CfbfStreamLocation& aLhs, const std::vector<std::string>& aRhs)
+[[maybe_unused]]
+static bool operator==(const CfbfStreamLocation& aLhs, const std::vector<std::string>& aRhs)
 {
     return aLhs.get_vector() == aRhs;
 }
 
-[[maybe_unused]] static bool operator==(const std::vector<std::string>& aLhs, const CfbfStreamLocation& aRhs)
+[[maybe_unused]]
+static bool operator==(const std::vector<std::string>& aLhs, const CfbfStreamLocation& aRhs)
 {
     return aRhs == aLhs;
 }
 
-[[maybe_unused]] static bool operator==(const CfbfStreamLocation& aLhs, const CfbfStreamLocation& aRhs)
+[[maybe_unused]]
+static bool operator==(const CfbfStreamLocation& aLhs, const CfbfStreamLocation& aRhs)
 {
     return aLhs.get_vector() == aRhs.get_vector();
 }

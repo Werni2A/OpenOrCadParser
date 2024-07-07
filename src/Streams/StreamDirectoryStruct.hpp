@@ -37,7 +37,8 @@ public:
     int16_t timezone; //!< Refer to http://time.unitarium.com/military/ for more details.
 };
 
-[[maybe_unused]] static std::string to_string(const DirItemType& aObj)
+[[maybe_unused]]
+static std::string to_string(const DirItemType& aObj)
 {
     std::string str;
 
@@ -54,7 +55,8 @@ inline std::string DirItemType::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const DirItemType& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const DirItemType& aVal)
 {
     aOs << to_string(aVal);
 
@@ -93,7 +95,8 @@ public:
     std::vector<DirItemType> items;
 };
 
-[[maybe_unused]] static std::string to_string(const StreamDirectoryStruct& aObj)
+[[maybe_unused]]
+static std::string to_string(const StreamDirectoryStruct& aObj)
 {
     std::string str;
 
@@ -114,7 +117,8 @@ inline std::string StreamDirectoryStruct::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamDirectoryStruct& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StreamDirectoryStruct& aVal)
 {
     aOs << to_string(aVal);
     return aOs;

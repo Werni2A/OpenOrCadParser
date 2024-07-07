@@ -86,7 +86,8 @@ public:
     HatchStyle hatchStyle;
 };
 
-[[maybe_unused]] static std::string to_string(const PrimRect& aObj)
+[[maybe_unused]]
+static std::string to_string(const PrimRect& aObj)
 {
     std::string str;
 
@@ -108,7 +109,8 @@ inline std::string PrimRect::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimRect& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const PrimRect& aVal)
 {
     aOs << to_string(aVal);
 

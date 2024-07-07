@@ -55,7 +55,8 @@ public:
 
 // @todo implement getter methods for name and textFont
 
-[[maybe_unused]] static std::string to_string(const StructSymbolDisplayProp& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructSymbolDisplayProp& aObj)
 {
     std::string str;
 
@@ -75,7 +76,8 @@ inline std::string StructSymbolDisplayProp::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSymbolDisplayProp& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructSymbolDisplayProp& aVal)
 {
     aOs << to_string(aVal);
 

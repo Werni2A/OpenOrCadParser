@@ -42,7 +42,8 @@ public:
     int32_t y2;
 };
 
-[[maybe_unused]] static std::string to_string(const StructSymbolBBox& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructSymbolBBox& aObj)
 {
     std::string str;
 
@@ -60,7 +61,8 @@ inline std::string StructSymbolBBox::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructSymbolBBox& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructSymbolBBox& aVal)
 {
     aOs << to_string(aVal);
 

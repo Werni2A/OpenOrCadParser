@@ -41,12 +41,14 @@ enum class StreamType
     ViewsDirectory
 };
 
-[[maybe_unused]] static std::string to_string(const StreamType& aVal)
+[[maybe_unused]]
+static std::string to_string(const StreamType& aVal)
 {
     return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StreamType& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StreamType& aVal)
 {
     aOs << to_string(aVal);
     return aOs;

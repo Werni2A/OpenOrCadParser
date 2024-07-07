@@ -46,7 +46,8 @@ public:
     std::vector<std::unique_ptr<StructT0x10>> t0x10s;
 };
 
-[[maybe_unused]] static std::string to_string(const StructPlacedInstance& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructPlacedInstance& aObj)
 {
     std::string str;
 
@@ -78,7 +79,8 @@ inline std::string StructPlacedInstance::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructPlacedInstance& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructPlacedInstance& aVal)
 {
     aOs << to_string(aVal);
 

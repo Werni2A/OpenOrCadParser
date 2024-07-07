@@ -51,7 +51,8 @@ public:
     int32_t endY;
 };
 
-[[maybe_unused]] static std::string to_string(const StructBusEntry& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructBusEntry& aObj)
 {
     std::string str;
 
@@ -70,7 +71,8 @@ inline std::string StructBusEntry::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructBusEntry& aObj)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructBusEntry& aObj)
 {
     aOs << to_string(aObj);
 

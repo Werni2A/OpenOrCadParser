@@ -96,7 +96,8 @@ public:
     uint32_t ansiGridRefs;
 };
 
-[[maybe_unused]] static std::string to_string(const PageSettings& aObj)
+[[maybe_unused]]
+static std::string to_string(const PageSettings& aObj)
 {
     std::string str;
 
@@ -131,7 +132,8 @@ inline std::string PageSettings::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PageSettings& aObj)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const PageSettings& aObj)
 {
     aOs << to_string(aObj);
 

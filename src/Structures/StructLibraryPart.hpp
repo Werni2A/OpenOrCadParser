@@ -53,7 +53,8 @@ public:
     StructGeneralProperties generalProperties;
 };
 
-[[maybe_unused]] static std::string to_string(const StructLibraryPart& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructLibraryPart& aObj)
 {
     std::string str;
 
@@ -98,7 +99,8 @@ inline std::string StructLibraryPart::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructLibraryPart& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructLibraryPart& aVal)
 {
     aOs << to_string(aVal);
 

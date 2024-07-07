@@ -7,8 +7,6 @@
 #include "General.hpp"
 #include "Primitives/Point.hpp"
 
-using namespace OOCP;
-
 void OOCP::Point::read(FileFormatVersion /* aVersion */)
 {
     auto& ds = mCtx.mDs;

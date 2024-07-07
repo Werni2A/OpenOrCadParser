@@ -19,17 +19,20 @@ enum class Rotation
     Deg_270 = 3
 };
 
-[[maybe_unused]] static constexpr Rotation ToRotation(uint8_t aVal)
+[[maybe_unused]]
+static constexpr Rotation ToRotation(uint8_t aVal)
 {
     return ToEnum<Rotation, decltype(aVal)>(aVal);
 }
 
-[[maybe_unused]] static std::string to_string(const Rotation& aVal)
+[[maybe_unused]]
+static std::string to_string(const Rotation& aVal)
 {
     return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const Rotation& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const Rotation& aVal)
 {
     aOs << to_string(aVal);
     return aOs;

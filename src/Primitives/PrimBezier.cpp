@@ -11,7 +11,6 @@
 #include "General.hpp"
 #include "GenericParser.hpp"
 #include "Primitives/PrimBezier.hpp"
-using namespace OOCP;
 
 size_t OOCP::PrimBezier::getExpectedStructSize(FileFormatVersion aVersion, size_t aPointCount)
 {

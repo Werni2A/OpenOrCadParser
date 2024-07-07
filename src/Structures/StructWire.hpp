@@ -62,7 +62,8 @@ public:
     LineStyle lineStyle;
 };
 
-[[maybe_unused]] static std::string to_string(const StructWire& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructWire& aObj)
 {
     std::string str;
 
@@ -103,7 +104,8 @@ inline std::string StructWire::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructWire& aObj)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructWire& aObj)
 {
     aOs << to_string(aObj);
 

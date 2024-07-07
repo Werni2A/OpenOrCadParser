@@ -82,17 +82,20 @@ template <typename T> static std::string getMethodName(const T* aClass, const ch
     return fmt::format("{}::{}", NAMEOF_TYPE_RTTI(*aClass), aFuncName);
 }
 
-[[maybe_unused]] static std::string getOpeningMsg(const std::string& aClassFuncName, size_t aCurrOffset)
+[[maybe_unused]]
+static std::string getOpeningMsg(const std::string& aClassFuncName, size_t aCurrOffset)
 {
     return fmt::format("0x{:08x}: Beginning {}", aCurrOffset, aClassFuncName);
 }
 
-[[maybe_unused]] static std::string getClosingMsg(const std::string& aClassFuncName, size_t aCurrOffset)
+[[maybe_unused]]
+static std::string getClosingMsg(const std::string& aClassFuncName, size_t aCurrOffset)
 {
     return fmt::format("0x{:08x}: Ending {}", aCurrOffset, aClassFuncName);
 }
 
-[[maybe_unused]] static std::string indent(std::string str, size_t level)
+[[maybe_unused]]
+static std::string indent(std::string str, size_t level)
 {
     const std::string indent    = "  ";
     const std::string delimiter = fmt::format("\n");
@@ -123,12 +126,14 @@ template <typename T> static std::string getMethodName(const T* aClass, const ch
     return indentedStr;
 }
 
-[[maybe_unused]] static std::string indent(size_t level)
+[[maybe_unused]]
+static std::string indent(size_t level)
 {
     return indent("", level);
 }
 
-[[maybe_unused]] static uint8_t GetBit(size_t bitPos, uint32_t val)
+[[maybe_unused]]
+static uint8_t GetBit(size_t bitPos, uint32_t val)
 {
     if(bitPos >= sizeof(val) * 8u)
     {
@@ -138,13 +143,15 @@ template <typename T> static std::string getMethodName(const T* aClass, const ch
     return (val >> bitPos) & 0x01;
 }
 
-[[maybe_unused]] static std::string DateTimeToStr(const time_t& unixts)
+[[maybe_unused]]
+static std::string DateTimeToStr(const time_t& unixts)
 {
     return std::string(std::ctime(&unixts));
 }
 
 // @todo not implemented yet
-[[maybe_unused]] static std::string TimezoneToStr(int16_t timezone)
+[[maybe_unused]]
+static std::string TimezoneToStr(int16_t timezone)
 {
     //   std::time_t rawtime;
     //   std::tm* timeInfo;
@@ -168,7 +175,8 @@ template <typename T> static std::string getMethodName(const T* aClass, const ch
  * @param point Fix point coordiante.
  * @return double Floating point coordinate.
  */
-[[maybe_unused]] static double ToFP(int16_t point)
+[[maybe_unused]]
+static double ToFP(int16_t point)
 {
     return static_cast<double>(point) / 100.0;
 }

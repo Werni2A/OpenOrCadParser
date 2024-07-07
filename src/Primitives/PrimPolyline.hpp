@@ -72,7 +72,8 @@ public:
     std::vector<Point> points;
 };
 
-[[maybe_unused]] static std::string to_string(const PrimPolyline& aObj)
+[[maybe_unused]]
+static std::string to_string(const PrimPolyline& aObj)
 {
     std::string str;
 
@@ -94,7 +95,8 @@ inline std::string PrimPolyline::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PrimPolyline& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const PrimPolyline& aVal)
 {
     aOs << to_string(aVal);
     return aOs;

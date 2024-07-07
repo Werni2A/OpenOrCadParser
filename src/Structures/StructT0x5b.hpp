@@ -37,7 +37,8 @@ public:
     }
 };
 
-[[maybe_unused]] static std::string to_string(const StructT0x5b& aObj)
+[[maybe_unused]]
+static std::string to_string(const StructT0x5b& aObj)
 {
     std::string str;
 
@@ -51,7 +52,8 @@ inline std::string StructT0x5b::to_string() const
     return OOCP::to_string(*this);
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const StructT0x5b& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const StructT0x5b& aVal)
 {
     aOs << to_string(aVal);
 

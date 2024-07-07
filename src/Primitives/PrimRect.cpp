@@ -12,9 +12,8 @@
 #include "General.hpp"
 #include "GenericParser.hpp"
 #include "Primitives/PrimRect.hpp"
-using namespace OOCP;
 
-size_t PrimRect::getExpectedStructSize(FileFormatVersion aVersion)
+size_t OOCP::PrimRect::getExpectedStructSize(FileFormatVersion aVersion)
 {
     size_t expectedByteLength;
 
@@ -34,7 +33,7 @@ size_t PrimRect::getExpectedStructSize(FileFormatVersion aVersion)
     return expectedByteLength;
 }
 
-void PrimRect::read(FileFormatVersion aVersion)
+void OOCP::PrimRect::read(FileFormatVersion aVersion)
 {
     auto& ds = mCtx.mDs;
     GenericParser parser{mCtx};

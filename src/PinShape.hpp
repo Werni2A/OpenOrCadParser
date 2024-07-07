@@ -43,12 +43,14 @@ enum class ShapeType
     ZeroLength
 };
 
-[[maybe_unused]] static std::string to_string(const ShapeType& aVal)
+[[maybe_unused]]
+static std::string to_string(const ShapeType& aVal)
 {
     return std::string{magic_enum::enum_name<decltype(aVal)>(aVal)};
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const ShapeType& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const ShapeType& aVal)
 {
     aOs << to_string(aVal);
     return aOs;
@@ -65,7 +67,8 @@ enum class ShapeType
 // 'Short Dot'         <- !isLong && !isClock &&  isDot
 // 'Short Dot Clock'   <- !isLong &&  isClock &&  isDot
 // 'Zero Length'       // Not sure how this is generated
-[[maybe_unused]] static ShapeType ToShapeType(const PinShape& pinShape)
+[[maybe_unused]]
+static ShapeType ToShapeType(const PinShape& pinShape)
 {
     const auto& pin = pinShape;
 
@@ -115,7 +118,8 @@ enum class ShapeType
     return shapeType;
 }
 
-[[maybe_unused]] static PinShape ToPinShape(uint16_t val, std::optional<spdlog::logger> aLogger = std::nullopt)
+[[maybe_unused]]
+static PinShape ToPinShape(uint16_t val, std::optional<spdlog::logger> aLogger = std::nullopt)
 {
     PinShape pinShape;
 
@@ -160,7 +164,8 @@ enum class ShapeType
     return pinShape;
 }
 
-[[maybe_unused]] static std::string to_string(const PinShape& aObj)
+[[maybe_unused]]
+static std::string to_string(const PinShape& aObj)
 {
     std::string str;
 
@@ -181,7 +186,8 @@ enum class ShapeType
     return str;
 }
 
-[[maybe_unused]] static std::ostream& operator<<(std::ostream& aOs, const PinShape& aVal)
+[[maybe_unused]]
+static std::ostream& operator<<(std::ostream& aOs, const PinShape& aVal)
 {
     aOs << to_string(aVal);
     return aOs;
