@@ -58,6 +58,7 @@
 #include "Structures/StructSymbolPinBus.hpp"
 #include "Structures/StructSymbolPinScalar.hpp"
 #include "Structures/StructT0x10.hpp"
+#include "Structures/StructT0x11.hpp"
 #include "Structures/StructT0x34.hpp"
 #include "Structures/StructT0x35.hpp"
 #include "Structures/StructT0x45.hpp"
@@ -178,6 +179,10 @@ std::unique_ptr<OOCP::Record> OOCP::RecordFactory::build(StreamContext& aCtx, St
             break;
         case Structure::T0x10:
             return std::make_unique<StructT0x10>(aCtx);
+            break;
+        // @todo Are they really identical? If so, derive from the same base class.
+        case Structure::T0x11:
+            return std::make_unique<StructT0x11>(aCtx);
             break;
         case Structure::T0x34:
             return std::make_unique<StructT0x34>(aCtx);

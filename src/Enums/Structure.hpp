@@ -30,6 +30,7 @@ enum class Structure
 
     T0x10 = 16, // @todo Is this probably DrawnInst? Place a part in the schematic and this will also appear. Or rather
                 // PinInst
+    T0x11 = 17,
 
     WireScalar = 20,
     WireBus    = 21,
