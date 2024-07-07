@@ -35,10 +35,11 @@ tests_ran_successfully = True
 
 
 class TestThread(threading.Thread):
-    def __init__(self, shard_count: int, shard_index: int):
+    def __init__(self, test_file: Path, shard_count: int, shard_index: int):
         threading.Thread.__init__(self)
         self.shard_count = shard_count
         self.shard_index = shard_index
+        self.test_file = test_file
 
     def run(self):
         global tests_ran_successfully
@@ -48,9 +49,16 @@ class TestThread(threading.Thread):
         print(f"Starting shard {self.shard_index + 1} / {self.shard_count}")
         lock.release()
 
+        cmd = [
+            str(self.test_file),
+            "--shard-count",
+            str(self.shard_count),
+            "--shard-index",
+            str(self.shard_index),
+        ]
+
         result = subprocess.run(
-            f"{test_file} --shard-count {self.shard_count} --shard-index {self.shard_index}",
-            shell=True,
+            cmd,
             capture_output=True,
             text=True,
         )
@@ -79,7 +87,7 @@ if __name__ == "__main__":
 
     TEST_SHARDS = 8
     for idx in range(TEST_SHARDS):
-        threads += [TestThread(TEST_SHARDS, idx)]
+        threads += [TestThread(test_file, TEST_SHARDS, idx)]
 
     start_time = datetime.now()
 

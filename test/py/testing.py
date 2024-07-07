@@ -10,6 +10,9 @@ from git import Repo
 
 from FileErrorDatabase import RepoFile, Repository, FileErrorDatabase
 
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 ExtensionsOfInterest = ['*.OBK', '*.OLB', '*.DSN', '*.DBK']
 
@@ -113,15 +116,15 @@ namespace fs = std::filesystem;"""
 
         for file in repo.files:
             file_name = os.path.basename(file.path)
-            full_path = os.path.normpath(os.path.join(path_repo, file.path))
+            full_path = Path(os.path.normpath(path_repo / file.path))
             unit_test = f"""
 
 
-TEST_CASE("{repo.author} - {repo.project} - {file_name} : Check File {full_path}", "[Misc]")
+TEST_CASE("{repo.author} - {repo.project} - {file_name} : Check File {full_path.as_posix()}", "[Misc]")
 {{
     configure_spdlog();
 
-    const fs::path inputFile{{"{full_path}"}};
+    const fs::path inputFile{{"{full_path.as_posix()}"}};
 
     OOCP::ParserConfig cfg = get_parser_config();
 

@@ -76,7 +76,7 @@ inline void check_error_count(const fs::path& aFilePath, size_t aActualErrCnt, s
     // that want to write to this file.
     while(true)
     {
-        std::FILE* lockFile = std::fopen(lockFilePath.c_str(), "ax");
+        std::FILE* lockFile = std::fopen(lockFilePath.string().c_str(), "ax");
 
         if(nullptr != lockFile)
         {
