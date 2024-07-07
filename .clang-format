@@ -13,7 +13,7 @@ AllowShortFunctionsOnASingleLine: None
 BraceWrapping:
   AfterNamespace: true
   BeforeWhile: true
-# BreakAfterAttributes: Always # clang-format-16
+BreakAfterAttributes: Always
 BreakBeforeBraces: Allman
 ColumnLimit: 120
 FixNamespaceComments: true
