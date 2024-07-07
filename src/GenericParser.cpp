@@ -281,8 +281,8 @@ std::pair<OOCP::Structure, uint32_t> OOCP::GenericParser::read_single_prefix_sho
 
         for(int i = 0; i < size; ++i)
         {
-            uint32_t strLstIdxName  = mCtx.mDs.readUint32();
-            uint32_t strLstIdxValue = mCtx.mDs.readUint32();
+            const uint32_t strLstIdxName  = mCtx.mDs.readUint32();
+            const uint32_t strLstIdxValue = mCtx.mDs.readUint32();
 
             nameValueMapping.push_back(std::make_pair(strLstIdxName, strLstIdxValue));
         }
@@ -360,8 +360,8 @@ void OOCP::GenericParser::readPreamble()
 
 OOCP::Primitive OOCP::GenericParser::readPrefixPrimitive()
 {
-    Primitive primitive1 = ToPrimitive(mCtx.mDs.readUint8());
-    Primitive primitive2 = ToPrimitive(mCtx.mDs.readUint8());
+    const Primitive primitive1 = ToPrimitive(mCtx.mDs.readUint8());
+    const Primitive primitive2 = ToPrimitive(mCtx.mDs.readUint8());
 
     if(primitive1 != primitive2)
     {

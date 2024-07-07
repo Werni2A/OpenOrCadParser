@@ -1,13 +1,11 @@
 #include <cstdint>
 #include <ostream>
+#include <stdexcept>
 #include <string>
 
-#include <nameof.hpp>
-#include <spdlog/spdlog.h>
+#include <fmt/core.h>
 
-#include "Enums/LineStyle.hpp"
-#include "Enums/LineWidth.hpp"
-#include "FutureData.hpp"
+#include "Enums/ImplementationType.hpp"
 #include "General.hpp"
 #include "Structures/StructGeneralProperties.hpp"
 
