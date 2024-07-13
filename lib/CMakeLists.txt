@@ -97,6 +97,11 @@ set(SOURCES
 # Create library file from sources
 add_library(${NAME_LIB} SHARED ${SOURCES})
 
+# Disable warnings
+# warning C4996: 'x': This function or variable may be unsafe. Consider using x instead.
+# To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+target_compile_options(${NAME_LIB} PRIVATE $<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/wd4996>)
+
 target_include_directories(${NAME_LIB} PRIVATE
                            ${COMPOUNDFILEREADER_INCLUDE_DIRS}
                            ${LIB_INCLUDE_DIR}
