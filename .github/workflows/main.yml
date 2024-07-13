@@ -99,3 +99,8 @@ jobs:
         ${ENV:CMAKE_BUILD_PARALLEL_LEVEL}=2
         cmake --preset release -DENABLE_UNIT_TESTING=ON
         cmake --build --preset release
+
+    - name: Run Tests
+      run: |
+        ./build/test/Debug/test.exe --help
+        python3 run_tests.py
