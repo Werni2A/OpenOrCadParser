@@ -99,3 +99,34 @@ jobs:
         ${ENV:CMAKE_BUILD_PARALLEL_LEVEL}=2
         cmake --preset release -DENABLE_UNIT_TESTING=ON
         cmake --build --preset release
+
+  build-mingw:
+    runs-on: windows-2022
+    container: amitie10g/msys2-mingw-w64-toolchain
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up vcpkg
+      run: |
+        git clone https://github.com/microsoft/vcpkg.git
+        .\vcpkg\bootstrap-vcpkg.bat
+
+    - name: Download Unit Test Designs
+      run: |
+        ${ENV:PYTHONUTF8}=1
+        git config --system core.longpaths true
+        python -m pip install -r test/py/requirements.txt
+        python test/py/testing.py --download_repos true --database_file_path repos.yaml --third_party_path test\designs
+
+    - name: Create Unit Tests
+      run: |
+        ${ENV:PYTHONUTF8}=1
+        git config --system core.longpaths true
+        python test/py/testing.py --generate_unit_tests true --database_file_path repos.yaml --unit_test_path test\src\generated_tests --third_party_path test\designs
+
+    - name: Build Library and CLI Application
+      run: |
+        ${ENV:MSYSTEM}=MINGW64
+        ${ENV:VCPKG_ROOT}=$(Resolve-Path ./vcpkg)
+        ${ENV:CMAKE_BUILD_PARALLEL_LEVEL}=2
+        cmake --preset release -DENABLE_UNIT_TESTING=ON
+        cmake --build --preset release
