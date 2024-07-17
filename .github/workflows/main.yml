@@ -129,7 +129,7 @@ jobs:
         sudo apt install -y g++-mingw-w64-x86-64-win32
         export VCPKG_ROOT=$(realpath ./vcpkg)
         export CMAKE_BUILD_PARALLEL_LEVEL=$(nproc)
-        cmake --preset release -DENABLE_UNIT_TESTING=ON -DCMAKE_TOOLCHAIN_FILE=./mingw-w64-x86_64.cmake
+        cmake --preset release -DENABLE_UNIT_TESTING=ON -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=./mingw-w64-x86_64.cmake
         cmake --build --preset release
 
     - name: Run Tests
