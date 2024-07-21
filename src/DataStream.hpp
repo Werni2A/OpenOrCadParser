@@ -36,6 +36,10 @@ public:
     {
     }
 
+    virtual ~DataStream()
+    {
+    }
+
     // Checks whether the stream has reached the end of the file.
     // I.e. reading another Byte would result in an error.
     bool isEoF()
