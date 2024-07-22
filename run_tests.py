@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
+import platform
 import subprocess
 import threading
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
 TEST_RUNNING_MSG = """
@@ -55,7 +56,11 @@ class TestThread(threading.Thread):
             str(self.shard_count),
             "--shard-index",
             str(self.shard_index),
+            "--verbosity",
+            "high",
         ]
+
+        print(f"Running {' '.join(cmd)}")
 
         result = subprocess.run(
             cmd,
@@ -72,7 +77,11 @@ class TestThread(threading.Thread):
 
 if __name__ == "__main__":
     lock_file = Path(__file__).parent / "test_err_cnt.log.lock"
-    test_file = Path(__file__).parent / "build" / "test" / "test"
+
+    if "Windows" == platform.system():
+        test_file = Path(__file__).parent / "build" / "test" / "Debug" / "test.exe"
+    else:
+        test_file = Path(__file__).parent / "build" / "test" / "test"
 
     if lock_file.exists():
         print(
