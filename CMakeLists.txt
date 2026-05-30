@@ -37,6 +37,11 @@ find_package(magic_enum CONFIG REQUIRED)
 # Add Nameof dependency
 find_package(nameof CONFIG REQUIRED)
 
+# Workaround: Apple Clang's strict consteval breaks fmt's FMT_STRING macro
+if(CMAKE_CXX_COMPILER_ID MATCHES "AppleClang")
+    add_compile_definitions(FMT_CONSTEVAL=constexpr)
+endif()
+
 # Add spdlog dependency
 find_package(spdlog CONFIG REQUIRED)
 
